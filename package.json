@@ -1,0 +1,43 @@
+{
+	"name": "tsg-irlich",
+	"private": true,
+	"type": "module",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"build": "turbo build",
+		"cspell": "cspell .",
+		"dev": "turbo dev",
+		"lint": "turbo lint",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*": [
+			"cspell",
+			"eslint --fix"
+		]
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.3.0",
+		"@cspell/dict-de-de": "^4.0.0",
+		"@mheob/commitlint-config": "^1.1.2",
+		"@mheob/eslint-config": "^6.1.1",
+		"@mheob/prettier-config": "^3.3.1",
+		"@mheob/tsconfig": "^2.1.0",
+		"commitizen": "^4.3.0",
+		"cspell": "^8.8.3",
+		"cz-git": "^1.9.2",
+		"eslint": "^9.4.0",
+		"husky": "^9.0.11",
+		"lint-staged": "^15.2.5",
+		"prettier": "^3.3.0",
+		"turbo": "^1.13.3",
+		"typescript": "^5.4.5"
+	},
+	"packageManager": "bun@1.1.9",
+	"engines": {
+		"node": "^20"
+	}
+}

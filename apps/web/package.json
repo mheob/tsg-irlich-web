@@ -1,0 +1,31 @@
+{
+	"name": "web",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "next build",
+		"dev": "next dev --turbo",
+		"lint": "eslint . --fix",
+		"start": "next start"
+	},
+	"dependencies": {
+		"babel-plugin-react-compiler": "0.0.0-experimental-938cd9a-20240601",
+		"next": "15.0.0-rc.0",
+		"react": "19.0.0-rc-f994737d14-20240522",
+		"react-dom": "19.0.0-rc-f994737d14-20240522"
+	},
+	"devDependencies": {
+		"@eslint-react/eslint-plugin": "^1.5.14",
+		"@types/node": "^20.13.0",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"eslint": "^9.4.0",
+		"eslint-config-next": "15.0.0-rc.0",
+		"eslint-plugin-react-hooks": "^4.6.2",
+		"eslint-plugin-react-refresh": "^0.4.7",
+		"postcss": "^8.4.38",
+		"tailwindcss": "^3.4.3",
+		"typescript": "^5.4.5"
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+	"version": "0.2",
+	"import": ["@cspell/dict-de-de/cspell-ext.json"],
+	"enabled": true,
+	"language": "en,de,lorem",
+	"ignorePaths": [
+		".git",
+		"**/bun.lockb",
+		"**/coverage",
+		"**/dist",
+		"**/logs",
+		"**/node_modules",
+		"**/package.json",
+		"**/turbo.json"
+	],
+	"words": [
+		"bunx",
+		"commitlint",
+		"dotenv",
+		"evenodd",
+		"GITHUB",
+		"github",
+		"hotspot",
+		"lockb",
+		"irlich",
+		"mheob",
+		"opengraph",
+		"OPENAI",
+		"pragent",
+		"sonarcloud",
+		"vercel",
+		"whatsapp",
+		"xlarge",
+		"youtube"
+	]
+}
