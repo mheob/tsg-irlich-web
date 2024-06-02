@@ -8,6 +8,9 @@ export default mheob(
 	},
 	// From the second arguments they are ESLint Flat Configs you can have multiple configs
 	{
+		ignores: ['apps/**/.next/**/*'],
+	},
+	{
 		files: ['apps/web/**/*.{ts,tsx}'],
 		plugins: {
 			'@next/next': nextPlugin,
