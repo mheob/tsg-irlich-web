@@ -5,7 +5,7 @@
 		"jsx": "preserve",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"module": "ESNext",
-		"moduleResolution": "bundler",
+		"moduleResolution": "Bundler",
 		"paths": {
 			"@/*": ["./src/*"]
 		},

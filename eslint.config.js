@@ -8,6 +8,9 @@ export default mheob(
 	},
 	// From the second arguments they are ESLint Flat Configs you can have multiple configs
 	{
+		ignores: ['apps/**/.next/**/*'],
+	},
+	{
 		files: ['apps/web/**/*.{ts,tsx}'],
 		plugins: {
 			'@next/next': nextPlugin,
@@ -15,6 +18,13 @@ export default mheob(
 		rules: {
 			...nextPlugin.configs.recommended.rules,
 			...nextPlugin.configs['core-web-vitals'].rules,
+		},
+	},
+	{
+		files: ['apps/studio/src/schemas/**/*.ts'],
+		// "extends": "@sanity/eslint-config-studio"
+		rules: {
+			'perfectionist/sort-objects': 'off',
 		},
 	},
 );

@@ -4,6 +4,6 @@ hasChanged() {
 	echo "$changedFiles" | grep -q "$1"
 }
 
-if hasChanged 'bun.lockb'; then
-	bun install
+if hasChanged 'pnpm-lock.yaml'; then
+	pnpm install
 fi
