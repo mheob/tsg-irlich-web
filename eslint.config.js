@@ -17,4 +17,11 @@ export default mheob(
 			...nextPlugin.configs['core-web-vitals'].rules,
 		},
 	},
+	{
+		files: ['apps/studio/src/schemas/**/*.ts'],
+		// "extends": "@sanity/eslint-config-studio"
+		rules: {
+			'perfectionist/sort-objects': 'off',
+		},
+	},
 );
