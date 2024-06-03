@@ -1,4 +1,5 @@
 import author from './documents/author';
+import group from './documents/group';
 import page from './documents/page';
 import person from './documents/person';
 import post from './documents/post';
@@ -18,10 +19,11 @@ import spacer from './sections/spacer';
 
 export const schemaTypes = [
 	// Documents
-	author,
 	page,
-	person,
 	post,
+	author,
+	person,
+	group,
 	siteSettings,
 
 	// Objects
