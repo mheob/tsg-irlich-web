@@ -10,7 +10,7 @@ export default defineConfig({
 	dataset: import.meta.env.SANITY_STUDIO_DATASET ?? 'production',
 	name: 'default',
 
-	plugins: [media(), structureTool({ structure: deskStructure }), visionTool()],
+	plugins: [structureTool({ structure: deskStructure }), media(), visionTool()],
 
 	projectId: import.meta.env.SANITY_STUDIO_PROJECT_ID ?? '',
 	schema: {
