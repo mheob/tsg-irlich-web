@@ -4,6 +4,7 @@ import person from './documents/person';
 import post from './documents/post';
 import siteSettings from './documents/site-settings';
 import columns from './objects/columns';
+import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
 import internalLink from './objects/internal-link';
 import link from './objects/link';
@@ -25,6 +26,7 @@ export const schemaTypes = [
 
 	// Objects
 	columns,
+	extendedImage,
 	externalLink,
 	internalLink,
 	link,
