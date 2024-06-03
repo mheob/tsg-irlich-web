@@ -4,6 +4,7 @@ import page from './documents/page';
 import person from './documents/person';
 import post from './documents/post';
 import siteSettings from './documents/site-settings';
+import testimonial from './documents/testimonial';
 import columns from './objects/columns';
 import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
@@ -21,9 +22,12 @@ export const schemaTypes = [
 	// Documents
 	page,
 	post,
+
 	author,
 	person,
+	testimonial,
 	group,
+
 	siteSettings,
 
 	// Objects

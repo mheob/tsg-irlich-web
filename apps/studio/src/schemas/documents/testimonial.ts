@@ -1,23 +1,19 @@
-import { RiParentLine } from 'react-icons/ri';
+import { RiChatQuoteLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
-const author = defineType({
-	title: 'Autor',
-	name: 'author',
+const testimonial = defineType({
+	title: 'Referenz',
+	name: 'testimonial',
 	type: 'document',
-	icon: RiParentLine,
+	icon: RiChatQuoteLine,
 	groups: [
 		{
 			title: 'Persönliches',
 			name: 'personal',
 		},
 		{
-			title: 'Kontaktdaten',
-			name: 'contact',
-		},
-		{
-			title: 'Information',
-			name: 'information',
+			title: 'Zitat',
+			name: 'quote',
 		},
 	],
 	fields: [
@@ -50,35 +46,48 @@ const author = defineType({
 			validation: rule => rule.required().error('Porträtbild ist erforderlich.'),
 		},
 		{
-			title: 'E-Mail',
-			name: 'email',
-			type: 'email',
-			group: 'contact',
+			title: 'Rolle',
+			name: 'role',
+			type: 'string',
+			description: 'Die Rolle oder Funktion des Zitierenden.',
+			group: 'personal',
 			validation: rule => [
-				rule.required().email().error('E-Mail ist erforderlich.'),
-				rule.max(128).warning('Die E-Mail-Adresse sollte maximal 128 Zeichen lang sein.'),
+				rule.required().min(5).error('Die Rolle muss mindestens 5 Zeichen lang sein.'),
+				rule.max(64).warning('Die Rolle sollte maximal 64 Zeichen lang sein.'),
 			],
 		},
 		{
-			title: 'Jobtitel',
-			name: 'jobTitle',
+			title: 'Zitat',
+			name: 'quote',
 			type: 'string',
-			description: 'Der Jobtitel bzw. Rolle oder Funktion des Autors.',
-			group: 'information',
+			description: 'Das Zitat über die TSG.',
+			group: 'quote',
 			validation: rule => [
-				rule.required().min(5).error('Der Jobtitel muss mindestens 5 Zeichen lang sein.'),
-				rule.max(64).warning('Der Jobtitel sollte maximal 64 Zeichen lang sein.'),
+				rule.required().min(64).error('Das muss mindestens 64 Zeichen lang sein.'),
+				rule.max(256).warning('Das sollte maximal 256 Zeichen lang sein.'),
 			],
+		},
+		{
+			title: 'Zitat immer anzeigen',
+			name: 'showAlways',
+			type: 'boolean',
+			description: 'Das Zitat soll immer angezeigt werden.',
+			group: 'quote',
+			initialValue: false,
 		},
 	],
 	preview: {
-		prepare: ({ media, firstName, lastName }) => ({ media, title: `${lastName}, ${firstName}` }),
+		prepare: ({ media, firstName, lastName, role }) => ({
+			media,
+			title: `${lastName}, ${firstName} - ${role}`,
+		}),
 		select: {
 			media: 'image.asset',
 			firstName: 'firstName',
 			lastName: 'lastName',
+			role: 'role',
 		},
 	},
 });
 
-export default author;
+export default testimonial;

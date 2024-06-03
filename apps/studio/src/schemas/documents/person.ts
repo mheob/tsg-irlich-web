@@ -38,7 +38,7 @@ const person = defineType({
 			group: 'personal',
 			validation: rule => [
 				rule.required().min(2).error('Der Nachname muss mindestens 2 Zeichen lang sein.'),
-				rule.max(64).warning('Der Nachname sollte weniger als 64 Zeichen lang sein.'),
+				rule.max(64).warning('Der Nachname sollte maximal 64 Zeichen lang sein.'),
 			],
 		},
 		{
@@ -56,7 +56,7 @@ const person = defineType({
 			group: 'contact',
 			validation: rule => [
 				rule.required().email().error('E-Mail ist erforderlich.'),
-				rule.max(128).warning('Die E-Mail-Adresse sollte weniger als 128 Zeichen lang sein.'),
+				rule.max(128).warning('Die E-Mail-Adresse sollte maximal 128 Zeichen lang sein.'),
 			],
 		},
 		{
@@ -81,7 +81,7 @@ const person = defineType({
 					.required()
 					.min(2)
 					.error('Die Gruppe oder Abteilung muss mindestens 2 Zeichen lang sein.'),
-				rule.max(64).warning('Die Gruppe oder Abteilung sollte weniger als 64 Zeichen lang sein.'),
+				rule.max(64).warning('Die Gruppe oder Abteilung sollte maximal 64 Zeichen lang sein.'),
 			],
 		},
 		{
@@ -101,7 +101,7 @@ const person = defineType({
 			group: 'information',
 			validation: rule => [
 				rule.required().min(32).error('Die Beschreibung muss mindestens 32 Zeichen lang sein.'),
-				rule.max(64).warning('Die Beschreibung sollte weniger als 64 Zeichen lang sein.'),
+				rule.max(64).warning('Die Beschreibung sollte maximal 64 Zeichen lang sein.'),
 			],
 		},
 	],
