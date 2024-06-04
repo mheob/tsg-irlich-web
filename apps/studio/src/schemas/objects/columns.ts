@@ -7,7 +7,7 @@ const columns = defineField({
 	type: 'object',
 	description: 'Items per row',
 	icon: RiLayoutColumnLine,
-	validation: Rule => Rule.required(),
+	validation: rule => rule.required(),
 	fields: [
 		{
 			title: 'Small screens',
@@ -16,22 +16,10 @@ const columns = defineField({
 			description: 'Items per row for phone',
 			options: {
 				list: [
-					{
-						title: '1 columns',
-						value: '1',
-					},
-					{
-						title: '2 columns',
-						value: '2',
-					},
-					{
-						title: '3 columns',
-						value: '3',
-					},
-					{
-						title: '4 columns',
-						value: '4',
-					},
+					{ title: '1 columns', value: '1' },
+					{ title: '2 columns', value: '2' },
+					{ title: '3 columns', value: '3' },
+					{ title: '4 columns', value: '4' },
 				],
 			},
 		},
@@ -42,22 +30,10 @@ const columns = defineField({
 			description: 'Items per row for tablet',
 			options: {
 				list: [
-					{
-						title: '1 columns',
-						value: '1',
-					},
-					{
-						title: '2 columns',
-						value: '2',
-					},
-					{
-						title: '3 columns',
-						value: '3',
-					},
-					{
-						title: '4 columns',
-						value: '4',
-					},
+					{ title: '1 columns', value: '1' },
+					{ title: '2 columns', value: '2' },
+					{ title: '3 columns', value: '3' },
+					{ title: '4 columns', value: '4' },
 				],
 			},
 		},
@@ -68,22 +44,10 @@ const columns = defineField({
 			description: 'Items per row for desktop',
 			options: {
 				list: [
-					{
-						title: '1 columns',
-						value: '1',
-					},
-					{
-						title: '2 columns',
-						value: '2',
-					},
-					{
-						title: '3 columns',
-						value: '3',
-					},
-					{
-						title: '4 columns',
-						value: '4',
-					},
+					{ title: '1 columns', value: '1' },
+					{ title: '2 columns', value: '2' },
+					{ title: '3 columns', value: '3' },
+					{ title: '4 columns', value: '4' },
 				],
 			},
 		},
