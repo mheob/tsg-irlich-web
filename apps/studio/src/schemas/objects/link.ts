@@ -10,8 +10,8 @@ const link = defineField({
 			title: 'URL',
 			name: 'href',
 			type: 'url',
-			validation: Rule =>
-				Rule.uri({
+			validation: rule =>
+				rule.uri({
 					allowRelative: true,
 					scheme: ['https', 'http', 'mailto', 'tel'],
 				}),

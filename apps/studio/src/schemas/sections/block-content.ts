@@ -21,10 +21,7 @@ const blockContent = defineField({
 						annotations: [{ type: 'link' }],
 						decorators: [
 							{ title: 'Strong', value: 'strong' },
-							{
-								title: 'Italic',
-								value: 'em',
-							},
+							{ title: 'Italic', value: 'em' },
 							{ title: 'Underline', value: 'underline' },
 							{ title: 'Code', value: 'code' },
 						],

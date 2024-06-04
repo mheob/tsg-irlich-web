@@ -3,16 +3,17 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
 
+import { dataset, projectId } from './env';
 import { schemaTypes } from './src/schemas';
 import { deskStructure } from './src/structure';
 
 export default defineConfig({
-	dataset: import.meta.env.SANITY_STUDIO_DATASET ?? 'production',
+	dataset,
 	name: 'default',
 
 	plugins: [structureTool({ structure: deskStructure }), media(), visionTool()],
 
-	projectId: import.meta.env.SANITY_STUDIO_PROJECT_ID ?? '',
+	projectId,
 	schema: {
 		types: schemaTypes,
 	},

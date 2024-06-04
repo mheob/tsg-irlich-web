@@ -12,7 +12,7 @@ const externalLink = defineField({
 			title: 'Title',
 			name: 'title',
 			type: 'string',
-			validation: Rule => Rule.required(),
+			validation: rule => rule.required(),
 		},
 		{
 			title: 'Slug',

@@ -1,5 +1,8 @@
 import { RiSettings5Line } from 'react-icons/ri';
-import { defineType } from 'sanity';
+import { defineField, defineType } from 'sanity';
+
+import { titleField } from '../../shared/general-fields';
+import { metaField } from '../../shared/meta-fields';
 
 const siteSettings = defineType({
 	title: 'Site Settings',
@@ -7,66 +10,40 @@ const siteSettings = defineType({
 	type: 'document',
 	icon: RiSettings5Line,
 	groups: [
-		{
-			title: 'General Information',
-			name: 'meta',
-		},
-		{
-			title: 'Main Navigation',
-			name: 'navigation',
-		},
-		{
-			title: 'Social',
-			name: 'social',
-		},
+		{ name: 'meta', title: 'General Information' },
+		{ name: 'navigation', title: 'Main Navigation' },
+		{ name: 'social', title: 'Social' },
 	],
 	fields: [
-		{
-			title: 'Title',
-			name: 'title',
-			type: 'string',
-			description: 'Title of the page',
-			group: 'meta',
-			validation: Rule => Rule.required(),
-		},
-		{
+		// meta
+		{ ...titleField, group: 'meta' },
+		defineField({
 			title: 'Description',
 			name: 'description',
 			type: 'text',
 			description: 'Description for search engines and social media.',
 			group: 'meta',
-			validation: Rule => Rule.required(),
-		},
-		{
-			title: 'Meta',
-			name: 'meta',
-			type: 'metaFields',
-			group: 'meta',
-		},
-		{
+			validation: rule => rule.required(),
+		}),
+		metaField,
+		defineField({
 			title: 'Navigation',
 			name: 'navigation',
 			type: 'array',
 			of: [
-				{
-					title: 'Internal Link',
-					type: 'internalLink',
-				},
-				{
-					title: 'External Link',
-					type: 'externalLink',
-				},
+				{ title: 'Internal Link', type: 'internalLink' },
+				{ title: 'External Link', type: 'externalLink' },
 			],
 			description: 'Select pages or link for main navigation',
 			group: 'navigation',
-		},
-		{
+		}),
+		defineField({
 			title: 'Social Media',
 			name: 'socialFields',
 			type: 'socialFields',
 			description: 'Social media',
 			group: 'social',
-		},
+		}),
 	],
 	preview: {
 		prepare: () => ({ title: 'Global Settings' }),
