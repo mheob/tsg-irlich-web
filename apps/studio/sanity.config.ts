@@ -1,3 +1,5 @@
+/* eslint-disable node/prefer-global/process */
+
 import { assist } from '@sanity/assist';
 import { deDELocale } from '@sanity/locale-de-de';
 import { visionTool } from '@sanity/vision';
@@ -10,7 +12,7 @@ import { schemaTypes } from './src/schemas';
 import { deskStructure } from './src/structure';
 
 export default defineConfig({
-	dataset: import.meta.env.SANITY_STUDIO_DATASET,
+	dataset: process.env.SANITY_API_DATASET || 'production',
 	icon: Logo,
 	name: 'default',
 	plugins: [
@@ -20,9 +22,10 @@ export default defineConfig({
 		deDELocale(),
 		assist(),
 	],
-	projectId: import.meta.env.SANITY_STUDIO_PROJECT_ID,
+	projectId: process.env.SANITY_API_PROJECT_ID || 'MISSING_PROJECT_ID_IN_ENV',
 	schema: {
 		types: schemaTypes,
 	},
 	title: 'TSG Irlich 1882',
+	token: process.env.SANITY_API_WRITE_TOKEN,
 });
