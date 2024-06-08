@@ -5,7 +5,7 @@ import { titleField } from '../../shared/general-fields';
 import { metaField } from '../../shared/meta-fields';
 
 const siteSettings = defineType({
-	title: 'Site Settings',
+	title: 'Generelle Einstellungen',
 	name: 'siteSettings',
 	type: 'document',
 	icon: RiSettings5Line,

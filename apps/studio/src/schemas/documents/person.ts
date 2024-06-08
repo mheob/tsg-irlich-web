@@ -6,7 +6,7 @@ import { firstNameField, lastNameField, portraitPictureField } from '../../share
 import { additionalInformation, contact, personal } from '../../shared/roles';
 
 const person = defineType({
-	title: 'Person',
+	title: 'Ansprechpartner',
 	name: 'person',
 	type: 'document',
 	icon: RiUserSmileLine,

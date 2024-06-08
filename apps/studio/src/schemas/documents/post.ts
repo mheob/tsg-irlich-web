@@ -8,7 +8,7 @@ import { authorField, metaField, publishedAtField } from '../../shared/meta-fiel
 import { content, excerpt, general, meta } from '../../shared/roles';
 
 const post = defineType({
-	title: 'Posts',
+	title: 'News-Artikel',
 	name: 'post',
 	type: 'document',
 	icon: RiArticleLine,
@@ -19,9 +19,9 @@ const post = defineType({
 		slugField,
 
 		// meta
-		metaField,
 		authorField,
 		publishedAtField,
+		metaField,
 
 		// excerpt
 		featuredImageField,

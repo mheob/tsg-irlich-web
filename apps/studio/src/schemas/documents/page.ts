@@ -7,7 +7,7 @@ import { metaField } from '../../shared/meta-fields';
 import { content, general, meta } from '../../shared/roles';
 
 const page = defineType({
-	title: 'Pages',
+	title: 'Seiten-Einstellungen',
 	name: 'page',
 	type: 'document',
 	icon: RiPagesLine,

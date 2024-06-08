@@ -5,7 +5,7 @@ import { firstNameField, lastNameField, portraitPictureField } from '../../share
 import { personal } from '../../shared/roles';
 
 const testimonial = defineType({
-	title: 'Referenz',
+	title: 'Zeugnis / Referenz',
 	name: 'testimonial',
 	type: 'document',
 	icon: RiChatQuoteLine,
@@ -31,7 +31,7 @@ const testimonial = defineType({
 		defineField({
 			title: 'Zitat',
 			name: 'quote',
-			type: 'string',
+			type: 'text',
 			description: 'Das Zitat über die TSG.',
 			group: 'quote',
 			validation: rule => [
