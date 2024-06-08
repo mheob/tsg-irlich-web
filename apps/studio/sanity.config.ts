@@ -5,13 +5,12 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
 
-import { dataset, projectId } from './env';
 import { Logo } from './src/components/logo';
 import { schemaTypes } from './src/schemas';
 import { deskStructure } from './src/structure';
 
 export default defineConfig({
-	dataset,
+	dataset: import.meta.env.SANITY_STUDIO_DATASET,
 	icon: Logo,
 	name: 'default',
 	plugins: [
@@ -21,7 +20,7 @@ export default defineConfig({
 		deDELocale(),
 		assist(),
 	],
-	projectId,
+	projectId: import.meta.env.SANITY_STUDIO_PROJECT_ID,
 	schema: {
 		types: schemaTypes,
 	},

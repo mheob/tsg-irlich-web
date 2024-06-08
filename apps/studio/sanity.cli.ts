@@ -1,10 +1,10 @@
-import { defineCliConfig } from 'sanity/cli';
+/* eslint-disable node/prefer-global/process */
 
-import { dataset, projectId } from './env';
+import { defineCliConfig } from 'sanity/cli';
 
 export default defineCliConfig({
 	api: {
-		dataset,
-		projectId,
+		dataset: process.env.SANITY_STUDIO_DATASET,
+		projectId: process.env.SANITY_STUDIO_PROJECT_ID,
 	},
 });
