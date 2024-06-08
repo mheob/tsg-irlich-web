@@ -1,3 +1,4 @@
+import { assist } from '@sanity/assist';
 import { deDELocale } from '@sanity/locale-de-de';
 import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
@@ -13,7 +14,13 @@ export default defineConfig({
 	dataset,
 	icon: Logo,
 	name: 'default',
-	plugins: [structureTool({ structure: deskStructure }), media(), visionTool(), deDELocale()],
+	plugins: [
+		structureTool({ structure: deskStructure }),
+		media(),
+		visionTool(),
+		deDELocale(),
+		assist(),
+	],
 	projectId,
 	schema: {
 		types: schemaTypes,
