@@ -16,8 +16,8 @@
 	},
 	"lint-staged": {
 		"*": [
-			"pnpm run lint:cspell",
-			"eslint --fix"
+			"eslint --fix",
+			"pnpm run lint:cspell"
 		]
 	},
 	"devDependencies": {
