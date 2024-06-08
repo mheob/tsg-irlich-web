@@ -6,6 +6,21 @@
 			"dependsOn": ["^build"],
 			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
 		},
+		"studio#build": {
+			"dependsOn": ["^build"],
+			"env": [
+				"SANITY_API_DATASET",
+				"SANITY_API_PROJECT_ID",
+				"SANITY_API_WRITE_TOKEN",
+				"SANITY_STUDIO_DATASET",
+				"SANITY_STUDIO_PROJECT_ID"
+			],
+			"outputs": ["dist/**"]
+		},
+		"web#build": {
+			"dependsOn": ["^build"],
+			"outputs": [".next/**", "!.next/cache/**"]
+		},
 		"dev": {
 			"cache": false,
 			"persistent": true

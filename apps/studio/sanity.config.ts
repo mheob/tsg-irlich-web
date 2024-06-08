@@ -12,7 +12,7 @@ import { schemaTypes } from './src/schemas';
 import { deskStructure } from './src/structure';
 
 export default defineConfig({
-	dataset: process.env.SANITY_API_DATASET || 'production',
+	dataset: process.env.SANITY_STUDIO_DATASET || 'production',
 	icon: Logo,
 	name: 'default',
 	plugins: [
@@ -22,10 +22,9 @@ export default defineConfig({
 		deDELocale(),
 		assist(),
 	],
-	projectId: process.env.SANITY_API_PROJECT_ID || 'MISSING_PROJECT_ID_IN_ENV',
+	projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'MISSING_PROJECT_ID_IN_ENV',
 	schema: {
 		types: schemaTypes,
 	},
 	title: 'TSG Irlich 1882',
-	token: process.env.SANITY_API_WRITE_TOKEN,
 });
