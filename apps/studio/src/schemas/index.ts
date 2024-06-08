@@ -1,8 +1,9 @@
 import author from './documents/author';
 import group from './documents/group';
+import newsArticle from './documents/news.article';
+import newsCategory from './documents/news.category';
 import page from './documents/page';
 import person from './documents/person';
-import post from './documents/post';
 import siteSettings from './documents/site-settings';
 import testimonial from './documents/testimonial';
 import columns from './objects/columns';
@@ -20,7 +21,8 @@ import spacer from './sections/spacer';
 
 export const schemaTypes = [
 	// Documents
-	post,
+	newsArticle,
+	newsCategory,
 
 	author,
 	person,

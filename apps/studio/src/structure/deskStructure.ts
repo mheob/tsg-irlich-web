@@ -11,7 +11,10 @@ export function deskStructure(S: StructureBuilder) {
 				.child(
 					S.list()
 						.title('News')
-						.items([S.documentTypeListItem('post')]),
+						.items([
+							S.documentTypeListItem('news.article'),
+							S.documentTypeListItem('news.category'),
+						]),
 				),
 
 			S.divider(),
@@ -19,7 +22,16 @@ export function deskStructure(S: StructureBuilder) {
 			...S.documentTypeListItems().filter(listItem => {
 				const id = listItem.getId();
 				return (
-					id && !['author', 'media.tag', 'page', 'person', 'post', 'siteSettings'].includes(id)
+					id &&
+					![
+						'author',
+						'media.tag',
+						'news.article',
+						'news.category',
+						'page',
+						'person',
+						'siteSettings',
+					].includes(id)
 				);
 			}),
 
