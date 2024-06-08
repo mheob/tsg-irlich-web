@@ -20,7 +20,6 @@ export const titleField = defineField({
 	title: 'Title',
 	type: 'string',
 	validation: rule => [
-		rule.required().min(3).error('Der Titel muss mindestens 3 Zeichen lang sein.'),
-		rule.min(55).max(65).warning('Der Titel sollte idealerweise von 55 bis 65 Zeichen lang sein.'),
+		rule.required().min(3).max(65).error('Der Titel muss mindestens 3 Zeichen lang sein.'),
 	],
 });

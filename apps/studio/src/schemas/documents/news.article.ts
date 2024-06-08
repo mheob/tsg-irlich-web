@@ -7,9 +7,9 @@ import { slugField, titleField } from '../../shared/general-fields';
 import { authorField, metaField, publishedAtField } from '../../shared/meta-fields';
 import { content, excerpt, general, meta } from '../../shared/roles';
 
-const post = defineType({
+const newsArticle = defineType({
 	title: 'News-Artikel',
-	name: 'post',
+	name: 'news.article',
 	type: 'document',
 	icon: RiArticleLine,
 	groups: [general, meta, excerpt, content],
@@ -43,4 +43,4 @@ const post = defineType({
 	},
 });
 
-export default post;
+export default newsArticle;
