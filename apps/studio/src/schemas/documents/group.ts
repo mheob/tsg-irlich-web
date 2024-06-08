@@ -2,7 +2,7 @@ import { RiTeamLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
 const group = defineType({
-	title: 'Gruppe',
+	title: 'Gruppe / Mannschaft',
 	name: 'group',
 	type: 'document',
 	icon: RiTeamLine,

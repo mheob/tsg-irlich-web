@@ -5,7 +5,7 @@ export const authorField = defineField({
 	group: 'meta',
 	name: 'author',
 	title: 'Autor',
-	to: [{ type: 'person' }],
+	to: [{ type: 'author' }],
 	type: 'reference',
 	validation: rule => rule.required(),
 });

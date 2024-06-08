@@ -23,7 +23,7 @@ const author = defineType({
 		// additionalInformation
 		defineField({
 			description: 'Der Jobtitel bzw. Rolle oder Funktion des Autors.',
-			group: 'information',
+			group: 'additionalInformation',
 			name: 'jobTitle',
 			title: 'Jobtitel',
 			type: 'string',

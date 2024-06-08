@@ -11,11 +11,12 @@
 		"cspell": "cspell .",
 		"dev": "turbo dev",
 		"lint": "turbo lint",
+		"lint:cspell": "cspell --unique --no-progress --no-must-find-files",
 		"prepare": "husky"
 	},
 	"lint-staged": {
 		"*": [
-			"cspell",
+			"pnpm run lint:cspell",
 			"eslint --fix"
 		]
 	},
@@ -27,16 +28,16 @@
 		"@mheob/prettier-config": "^3.3.1",
 		"@mheob/tsconfig": "^2.1.0",
 		"commitizen": "^4.3.0",
-		"cspell": "^8.8.3",
+		"cspell": "^8.8.4",
 		"cz-git": "^1.9.2",
 		"eslint": "^9.4.0",
 		"husky": "^9.0.11",
 		"lint-staged": "^15.2.5",
-		"prettier": "^3.3.0",
-		"turbo": "^1.13.3",
+		"prettier": "^3.3.1",
+		"turbo": "^2.0.3",
 		"typescript": "^5.4.5"
 	},
-	"packageManager": "pnpm@9.1.2",
+	"packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771",
 	"engines": {
 		"node": "^20"
 	}

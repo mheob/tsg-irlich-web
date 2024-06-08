@@ -20,14 +20,15 @@ import spacer from './sections/spacer';
 
 export const schemaTypes = [
 	// Documents
-	page,
 	post,
 
 	author,
 	person,
-	testimonial,
-	group,
 
+	group,
+	testimonial,
+
+	page,
 	siteSettings,
 
 	// Objects
