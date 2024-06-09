@@ -2,9 +2,7 @@ import author from './documents/author';
 import group from './documents/group';
 import newsArticle from './documents/news.article';
 import newsCategory from './documents/news.category';
-import page from './documents/page';
 import person from './documents/person';
-import siteSettings from './documents/site-settings';
 import testimonial from './documents/testimonial';
 import columns from './objects/columns';
 import extendedImage from './objects/extended-image';
@@ -18,6 +16,9 @@ import blockContent from './sections/block-content';
 import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
+import imprint from './singletons/imprint';
+import privacy from './singletons/privacy';
+import siteSettings from './singletons/site-settings';
 
 export const schemaTypes = [
 	// Documents
@@ -30,7 +31,6 @@ export const schemaTypes = [
 	group,
 	testimonial,
 
-	page,
 	siteSettings,
 
 	// Objects
@@ -48,4 +48,8 @@ export const schemaTypes = [
 	grid,
 	mainImage,
 	spacer,
+
+	// Singletons
+	privacy,
+	imprint,
 ];

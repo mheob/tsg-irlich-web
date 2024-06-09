@@ -1,29 +1,33 @@
-/* eslint-disable node/prefer-global/process */
-
-import { assist } from '@sanity/assist';
-import { deDELocale } from '@sanity/locale-de-de';
-import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
-import { structureTool } from 'sanity/structure';
-import { media } from 'sanity-plugin-media';
 
-import { Logo } from './src/components/logo';
-import { schemaTypes } from './src/schemas';
-import { deskStructure } from './src/structure';
+import { Logo } from './components/logo';
+import { dataset, projectId } from './env';
+import { getPlugins } from './plugins';
+import { schemaTypes } from './schemas';
+
+// Define the actions that should be available for singleton documents
+const singletonActions = new Set(['publish', 'discardChanges', 'restore']);
+
+// Define the singleton document types
+const singletonTypes = new Set(['privacy', 'site-settings']);
 
 export default defineConfig({
-	dataset: process.env.SANITY_STUDIO_DATASET || 'production',
+	dataset,
+	document: {
+		// For singleton types, filter out actions that are not explicitly included
+		// in the `singletonActions` list defined above
+		actions: (input, context) =>
+			singletonTypes.has(context.schemaType)
+				? input.filter(({ action }) => action && singletonActions.has(action))
+				: input,
+	},
 	icon: Logo,
 	name: 'default',
-	plugins: [
-		structureTool({ structure: deskStructure }),
-		media(),
-		visionTool(),
-		deDELocale(),
-		assist(),
-	],
-	projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'MISSING_PROJECT_ID_IN_ENV',
+	plugins: getPlugins(),
+	projectId,
 	schema: {
+		// Filter out singleton types from the global “New document” menu options
+		templates: templates => templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
 		types: schemaTypes,
 	},
 	title: 'TSG Irlich 1882',

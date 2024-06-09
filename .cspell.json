@@ -15,6 +15,10 @@
 		"**/turbo.json"
 	],
 	"words": [
+		"Aufzählungspunkte",
+		"Blogautor",
+		"Blogpost",
+		"Blogposts",
 		"commitlint",
 		"dotenv",
 		"evenodd",
@@ -26,10 +30,12 @@
 		"lockb",
 		"logomark",
 		"mheob",
+		"Openai",
 		"OPENAI",
 		"opengraph",
 		"Porträtbild",
 		"pragent",
+		"Shitposting",
 		"sonarcloud",
 		"vercel",
 		"whatsapp",

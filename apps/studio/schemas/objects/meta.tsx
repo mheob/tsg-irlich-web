@@ -1,0 +1,58 @@
+import { RiShareLine } from 'react-icons/ri';
+import { defineField } from 'sanity';
+
+const meta = defineField({
+	title: 'Meta Information',
+	name: 'metaFields',
+	type: 'object',
+	icon: RiShareLine,
+	fields: [
+		defineField({
+			title: 'Meta-Title (überschreibt den Standardtitel)',
+			name: 'metaTitle',
+			type: 'string',
+			validation: rule => [
+				rule.max(65).warning('Der Titel sollte idealerweise maximal 65 Zeichen lang sein.'),
+			],
+		}),
+		defineField({
+			title: 'Meta-Beschreibung',
+			name: 'metaDescription',
+			type: 'text',
+			validation: rule => [
+				rule
+					.min(130)
+					.max(160)
+					.warning('Die Beschreibung sollte idealerweise von 130 bis 160 Zeichen lang sein.'),
+			],
+		}),
+		defineField({
+			title: 'Open-Graph-Bild',
+			name: 'openGraphImage',
+			type: 'image',
+			description:
+				'Wird auf den Karten in sozialen Medien und in Suchmaschinenergebnissen angezeigt',
+			fields: [
+				defineField({
+					description: 'Wichtig für Barrierefreiheit und SEO.',
+					name: 'alt',
+					title: 'Alternativer Text',
+					type: 'string',
+					validation: rule => {
+						return rule.custom((alt, context) => {
+							// eslint-disable-next-line ts/no-explicit-any
+							if ((context.document?.ogImage as any)?.asset?._ref && !alt) return 'Required';
+							return true;
+						});
+					},
+				}),
+			],
+			options: {
+				hotspot: true,
+				aiAssist: { imageDescriptionField: 'alt' },
+			},
+		}),
+	],
+});
+
+export default meta;
