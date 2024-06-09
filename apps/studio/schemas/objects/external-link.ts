@@ -15,9 +15,9 @@ const externalLink = defineField({
 			validation: rule => rule.required(),
 		},
 		{
-			title: 'Slug',
-			name: 'slug',
-			type: 'slug',
+			title: 'URL',
+			name: 'url',
+			type: 'url',
 			description: 'Add external link',
 		},
 	],

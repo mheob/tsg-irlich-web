@@ -11,6 +11,12 @@ export default mheob(
 		ignores: ['apps/**/.next/**/*'],
 	},
 	{
+		rules: {
+			// TODO: remove rule after https://github.com/mheob/config/issues/185 is resolved
+			'import/order': 'off',
+		},
+	},
+	{
 		files: ['apps/web/**/*.{ts,tsx}'],
 		plugins: {
 			'@next/next': nextPlugin,
@@ -21,7 +27,7 @@ export default mheob(
 		},
 	},
 	{
-		files: ['apps/studio/src/schemas/**/*.ts'],
+		files: ['apps/studio/schemas/**/*.{ts,tsx}'],
 		// "extends": "@sanity/eslint-config-studio"
 		rules: {
 			'perfectionist/sort-objects': 'off',

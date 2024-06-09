@@ -1,8 +1,8 @@
 import { RiBookletLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
-import { slugField, titleField } from '../../shared/general-fields';
-import { general } from '../../shared/roles';
+import { general } from '@/shared/field-groups';
+import { slugField, titleField } from '@/shared/general-fields';
 
 const newsCategory = defineType({
 	title: 'News-Kategorie',

@@ -6,6 +6,9 @@
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"moduleDetection": "force",
 		"module": "Preserve",
+		"paths": {
+			"@/*": ["./*"]
+		},
 		"allowJs": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,

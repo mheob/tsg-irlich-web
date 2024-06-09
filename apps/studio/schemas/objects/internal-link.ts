@@ -18,7 +18,7 @@ const internalLink = defineField({
 			title: 'Link',
 			name: 'link',
 			type: 'reference',
-			to: [{ type: 'page' }],
+			to: [{ type: 'news.article' }],
 		},
 	],
 });
