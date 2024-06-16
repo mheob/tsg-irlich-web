@@ -1,25 +1,55 @@
 import { defineField } from 'sanity';
 import slug from 'slugify';
 
+import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from './validation-rules';
+
+export function getHiddenSlugField(slug: string) {
+	return defineField({
+		title: 'Slug',
+		name: 'slug',
+		type: 'slug',
+		group: 'general',
+		readOnly: true,
+		initialValue: { current: slug },
+		hidden: true,
+	});
+}
+
+export const introField = defineField({
+	title: 'Intro',
+	name: 'intro',
+	type: 'text',
+	group: 'general',
+});
+
 export const slugField = defineField({
+	title: 'Slug',
+	name: 'slug',
+	type: 'slug',
 	description: 'Ein Slug muss gesetzt werden, um die Seite anzeigen zu können.',
 	group: 'general',
-	name: 'slug',
 	options: {
 		slugify: (input: string) => slug(input, { lower: true, trim: true }),
 		source: 'title',
 	},
-	title: 'Slug',
-	type: 'slug',
-	validation: rule => rule.required().error('Slug ist erforderlich.'),
+	validation: rule => [getRequiredRole(rule, 'lug')],
+});
+
+export const subTitleField = defineField({
+	title: 'Untertitel',
+	name: 'subtitle',
+	type: 'string',
+	group: 'general',
+	validation: rule => [
+		getMinLengthRule(rule, 2, 'Untertitel'),
+		getMaxLengthRule(rule, 30, 'Untertitel'),
+	],
 });
 
 export const titleField = defineField({
-	group: 'general',
+	title: 'Titel',
 	name: 'title',
-	title: 'Title',
 	type: 'string',
-	validation: rule => [
-		rule.required().min(3).max(65).error('Der Titel muss mindestens 3 Zeichen lang sein.'),
-	],
+	group: 'general',
+	validation: rule => [getMinLengthRule(rule, 10, 'Titel'), getMaxLengthRule(rule, 65, 'Titel')],
 });

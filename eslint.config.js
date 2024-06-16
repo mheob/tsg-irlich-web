@@ -27,7 +27,7 @@ export default mheob(
 		},
 	},
 	{
-		files: ['apps/studio/schemas/**/*.{ts,tsx}'],
+		files: ['apps/studio/{schemas,shared}/**/*.{ts,tsx}'],
 		// "extends": "@sanity/eslint-config-studio"
 		rules: {
 			'perfectionist/sort-objects': 'off',
