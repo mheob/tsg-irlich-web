@@ -16,8 +16,9 @@ import blockContent from './sections/block-content';
 import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
-import imprint from './singletons/imprint';
-import privacy from './singletons/privacy';
+import imprintPage from './single-pages/imprint';
+import newsOverviewPage from './single-pages/news-overview';
+import privacyPage from './single-pages/privacy';
 import siteSettings from './singletons/site-settings';
 
 export const schemaTypes = [
@@ -49,7 +50,8 @@ export const schemaTypes = [
 	mainImage,
 	spacer,
 
-	// Singletons
-	privacy,
-	imprint,
+	// Single Pages
+	imprintPage,
+	newsOverviewPage,
+	privacyPage,
 ];

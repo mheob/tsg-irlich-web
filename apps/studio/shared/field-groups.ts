@@ -1,34 +1,34 @@
 export const additionalInformation = {
-	name: 'additionalInformation',
 	title: 'Zusätzliche Informationen',
+	name: 'additionalInformation',
 };
 
 export const contact = {
-	name: 'contact',
 	title: 'Kontaktdaten',
+	name: 'contact',
 };
 
 export const content = {
-	name: 'content',
 	title: 'Content',
+	name: 'content',
 };
 
 export const excerpt = {
-	name: 'excerpt',
 	title: 'Excerpt',
+	name: 'excerpt',
 };
 
 export const general = {
-	name: 'general',
 	title: 'General',
+	name: 'general',
 };
 
 export const meta = {
-	name: 'meta',
 	title: 'Meta information',
+	name: 'meta',
 };
 
 export const personal = {
-	name: 'personal',
 	title: 'Persönliches',
+	name: 'personal',
 };

@@ -1,12 +1,14 @@
 // cSpell:words impressum
-
 import { RiSettings5Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
+import { addressField, emailField, phoneField } from '@/shared/contact-fields';
 import { general, meta } from '@/shared/field-groups';
+import { getHiddenSlugField, introField, subTitleField, titleField } from '@/shared/general-fields';
 import { metaField } from '@/shared/meta-fields';
+import { getPhoneFieldRegexRule, getRequiredRole } from '@/shared/validation-rules';
 
-const imprint = defineType({
+const imprintPage = defineType({
 	title: 'Impressum',
 	name: 'imprint',
 	type: 'document',
@@ -14,23 +16,19 @@ const imprint = defineType({
 	groups: [general, meta, { name: 'content', title: 'Inhalt' }],
 	fields: [
 		// (hidden)
-		defineField({
-			title: 'Slug',
-			name: 'slug',
-			type: 'slug',
-			readOnly: true,
-			initialValue: { current: 'impressum' },
-			hidden: true,
-		}),
+		getHiddenSlugField('impressum'),
+
+		// general
+		titleField,
+		subTitleField,
+		introField,
 
 		// meta
 		metaField,
 
 		// content
 		defineField({
-			title: 'Anschrift',
-			name: 'address',
-			type: 'text',
+			...addressField,
 			group: 'content',
 		}),
 		defineField({
@@ -38,29 +36,29 @@ const imprint = defineType({
 			name: 'registerNo',
 			type: 'string',
 			group: 'content',
+			validation: rule => [getRequiredRole(rule, 'Registernummer')],
 		}),
 		defineField({
 			title: 'Registergericht',
 			name: 'registerCourt',
 			type: 'string',
 			group: 'content',
+			validation: rule => [getRequiredRole(rule, 'Registergericht')],
 		}),
 		defineField({
 			title: 'Vertreten durch',
 			name: 'represented',
 			type: 'string',
 			group: 'content',
+			validation: rule => [getRequiredRole(rule, '"Vertreten durch"')],
 		}),
 		defineField({
-			title: 'Telefonnummer',
-			name: 'phone',
-			type: 'url',
+			...phoneField,
 			group: 'content',
+			validation: rule => [getRequiredRole(rule, 'Telefon'), getPhoneFieldRegexRule(rule)],
 		}),
 		defineField({
-			title: 'E-Mail',
-			name: 'email',
-			type: 'email',
+			...emailField,
 			group: 'content',
 		}),
 		defineField({
@@ -68,30 +66,37 @@ const imprint = defineType({
 			name: 'responsible',
 			type: 'text',
 			group: 'content',
+			validation: rule => [getRequiredRole(rule, '"Redaktionell verantwortlich')],
 		}),
 		defineField({
 			title: 'Verbraucherstreitbeilegung / Universalschlichtungsstelle',
 			name: 'arbitrationBoard',
 			type: 'string',
 			group: 'content',
+			validation: rule => [
+				getRequiredRole(rule, '"Verbraucherstreitbeilegung / Universalschlichtungsstelle"'),
+			],
 		}),
 		defineField({
 			title: 'Name Technischer Ansprechpartner',
 			name: 'technicalQuestionsName',
 			type: 'text',
 			group: 'content',
+			validation: rule => [getRequiredRole(rule, '"Name Technischer Ansprechpartner"')],
 		}),
 		defineField({
 			title: 'E-Mail Technischer Ansprechpartner',
 			name: 'technicalQuestionsEmail',
 			type: 'email',
 			group: 'content',
+			validation: rule => [getRequiredRole(rule, '"E-Mail Technischer Ansprechpartner"')],
 		}),
 		defineField({
 			title: 'Freundliche Unterstützung durch',
 			name: 'support',
 			type: 'simpleBlockContent',
 			group: 'content',
+			validation: rule => [getRequiredRole(rule, '"Freundliche Unterstützung durch"')],
 		}),
 	],
 	preview: {
@@ -99,4 +104,4 @@ const imprint = defineType({
 	},
 });
 
-export default imprint;
+export default imprintPage;

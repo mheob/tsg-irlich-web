@@ -5,7 +5,7 @@ import { contentField } from '@/shared/content-fields';
 import { excerptField, featuredImageField } from '@/shared/excerpt-fields';
 import { content, excerpt, general, meta } from '@/shared/field-groups';
 import { slugField, titleField } from '@/shared/general-fields';
-import { authorField, metaField, publishedAtField } from '@/shared/meta-fields';
+import { authorField, metaField } from '@/shared/meta-fields';
 
 const newsArticle = defineType({
 	title: 'News-Artikel',
@@ -20,7 +20,6 @@ const newsArticle = defineType({
 
 		// meta
 		authorField,
-		publishedAtField,
 		metaField,
 
 		// excerpt

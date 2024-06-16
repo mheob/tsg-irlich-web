@@ -1,32 +1,31 @@
 import { defineField } from 'sanity';
 
+import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from './validation-rules';
+
 export const firstNameField = defineField({
-	group: 'personal',
-	name: 'firstName',
 	title: 'Vorname',
+	name: 'firstName',
 	type: 'string',
-	validation: rule => [
-		rule.required().min(2).error('Der Vorname muss mindestens 2 Zeichen lang sein.'),
-		rule.max(64).warning('Der Vorname muss weniger als 64 Zeichen lang sein.'),
-	],
+	group: 'personal',
+	validation: rule => [getMinLengthRule(rule, 2, 'Vorname'), getMaxLengthRule(rule, 64, 'Vorname')],
 });
 
 export const lastNameField = defineField({
-	group: 'personal',
-	name: 'lastName',
 	title: 'Nachname',
+	name: 'lastName',
 	type: 'string',
+	group: 'personal',
 	validation: rule => [
-		rule.required().min(2).error('Der Nachname muss mindestens 2 Zeichen lang sein.'),
-		rule.max(64).warning('Der Nachname sollte maximal 64 Zeichen lang sein.'),
+		getMinLengthRule(rule, 2, 'Nachname'),
+		getMaxLengthRule(rule, 64, 'Nachname'),
 	],
 });
 
 export const portraitPictureField = defineField({
+	title: 'Porträtbild',
+	name: 'image',
+	type: 'extendedImage',
 	description: 'Erweitertes Porträtbild des Autors mit einem Alt-Text.',
 	group: 'personal',
-	name: 'image',
-	title: 'Porträtbild',
-	type: 'extendedImage',
-	validation: rule => rule.required().error('Porträtbild ist erforderlich.'),
+	validation: rule => [getRequiredRole(rule, 'Porträtbild')],
 });

@@ -1,21 +1,25 @@
 import { defineField } from 'sanity';
 
-export const emailField = defineField({
+import { getPhoneFieldRegexRule } from './validation-rules';
+
+export const addressField = defineField({
+	title: 'Anschrift',
+	name: 'address',
+	type: 'text',
 	group: 'contact',
-	name: 'email',
+});
+
+export const emailField = defineField({
 	title: 'E-Mail',
+	name: 'email',
 	type: 'email',
-	validation: rule => [rule.required().error('E-Mail ist erforderlich.')],
+	group: 'contact',
 });
 
 export const phoneField = defineField({
-	group: 'contact',
-	name: 'phone',
 	title: 'Telefon',
+	name: 'phone',
 	type: 'string',
-	validation: rule => [
-		rule
-			.regex(/^\+\d{2}\s\d{2,5}\s\d+$/)
-			.warning('Die Telefonnummer sollte in der Form +49 123 456789 geschrieben werden.'),
-	],
+	group: 'contact',
+	validation: rule => [getPhoneFieldRegexRule(rule)],
 });

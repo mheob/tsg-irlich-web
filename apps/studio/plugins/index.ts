@@ -6,8 +6,9 @@ import type { PluginOptions } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
 
-import imprint from '@/schemas/singletons/imprint';
-import privacy from '@/schemas/singletons/privacy';
+import imprintPage from '@/schemas/single-pages/imprint';
+import newOverviewPage from '@/schemas/single-pages/news-overview';
+import privacyPage from '@/schemas/single-pages/privacy';
 import siteSettings from '@/schemas/singletons/site-settings';
 
 import { assistWithPresets } from './assist';
@@ -16,10 +17,12 @@ import { pageStructure, singletonPlugin } from './singleton';
 export function getPlugins() {
 	const plugins: PluginOptions[] = [
 		deDELocale(),
-		structureTool({ structure: pageStructure([privacy, imprint, siteSettings]) }),
+		structureTool({
+			structure: pageStructure([newOverviewPage, privacyPage, imprintPage, siteSettings]),
+		}),
 		// Configures the global "new document" button, and document actions,
 		// to suit the Settings document singleton
-		singletonPlugin([privacy.name, imprint.name, siteSettings.name]),
+		singletonPlugin([newOverviewPage.name, privacyPage.name, imprintPage.name, siteSettings.name]),
 		media(),
 		assistWithPresets(),
 	];
