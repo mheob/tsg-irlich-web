@@ -13,11 +13,13 @@ import link from './objects/link';
 import metFields from './objects/meta';
 import simpleBlockContent from './objects/simple-block-content';
 import socialFields from './objects/social-fields';
+import stats from './objects/stats';
 import blockContent from './sections/block-content';
 import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
 import contactPage from './single-pages/contact';
+import homePage from './single-pages/home';
 import imprintPage from './single-pages/imprint';
 import membershipPage from './single-pages/membership';
 import newsArticlePage from './single-pages/news-article';
@@ -48,6 +50,7 @@ export const schemaTypes = [
 	metFields,
 	simpleBlockContent,
 	socialFields,
+	stats,
 
 	// Sections
 	blockContent,
@@ -57,6 +60,7 @@ export const schemaTypes = [
 
 	// Single Pages
 	contactPage,
+	homePage,
 	imprintPage,
 	membershipPage,
 	newsArticlePage,

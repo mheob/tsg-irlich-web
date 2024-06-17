@@ -7,6 +7,7 @@ import { structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
 
 import contactPage from '@/schemas/single-pages/contact';
+import homePage from '@/schemas/single-pages/home';
 import imprintPage from '@/schemas/single-pages/imprint';
 import membershipPage from '@/schemas/single-pages/membership';
 import newsArticlePage from '@/schemas/single-pages/news-article';
@@ -22,6 +23,7 @@ export function getPlugins() {
 		deDELocale(),
 		structureTool({
 			structure: pageStructure([
+				homePage,
 				contactPage,
 				membershipPage,
 				newsArticlePage,
@@ -34,6 +36,7 @@ export function getPlugins() {
 		// Configures the global "new document" button, and document actions,
 		// to suit the Settings document singleton
 		singletonPlugin([
+			homePage.name,
 			contactPage.name,
 			membershipPage.name,
 			newsArticlePage.name,

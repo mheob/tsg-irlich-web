@@ -55,3 +55,7 @@ export const titleField = defineField({
 });
 
 export const defaultPageFields = [titleField, subTitleField, introField];
+
+export function getDefaultPageFieldsWithGroup(group?: string) {
+	return defaultPageFields.map(field => ({ ...field, group }));
+}

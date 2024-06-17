@@ -20,9 +20,8 @@ interface MaxLengthRule<Rule> extends BaseRule<Rule> {
 	max: (length: number) => Rule;
 }
 
-interface MinLengthRule<Rule> extends BaseRule<Rule> {
+interface MinLengthRule<Rule> extends BaseRule<Rule>, RequiredRule<Rule> {
 	min: (length: number) => Rule;
-	required: () => Rule;
 }
 
 export function getMaxLengthRule<Rule extends MaxLengthRule<Rule>>(
