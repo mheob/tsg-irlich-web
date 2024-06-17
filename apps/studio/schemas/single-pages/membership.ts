@@ -1,3 +1,4 @@
+// cSpell:words mitgliedschaft
 import { RiBookletLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
@@ -6,15 +7,15 @@ import { content, general, meta } from '@/shared/field-groups';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/general-fields';
 import { metaField } from '@/shared/meta-fields';
 
-const newsOverviewPage = defineType({
-	title: 'News Übersicht',
-	name: 'news.overview',
+const membershipPage = defineType({
+	title: 'Mitgliedschaft',
+	name: 'membership',
 	type: 'document',
 	icon: RiBookletLine,
 	groups: [general, meta, content],
 	fields: [
 		// (hidden)
-		getHiddenSlugField('news'),
+		getHiddenSlugField('mitgliedschaft'),
 
 		// general
 		...defaultPageFields,
@@ -26,8 +27,8 @@ const newsOverviewPage = defineType({
 		contactPersonsField,
 	],
 	preview: {
-		prepare: () => ({ title: 'News Übersicht' }),
+		prepare: () => ({ title: 'Mitgliedschaft' }),
 	},
 });
 
-export default newsOverviewPage;
+export default membershipPage;

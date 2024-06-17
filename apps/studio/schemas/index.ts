@@ -5,6 +5,7 @@ import newsCategory from './documents/news.category';
 import person from './documents/person';
 import testimonial from './documents/testimonial';
 import columns from './objects/columns';
+import contactTo from './objects/contact-to';
 import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
 import internalLink from './objects/internal-link';
@@ -16,7 +17,10 @@ import blockContent from './sections/block-content';
 import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
+import contactPage from './single-pages/contact';
 import imprintPage from './single-pages/imprint';
+import membershipPage from './single-pages/membership';
+import newsArticlePage from './single-pages/news-article';
 import newsOverviewPage from './single-pages/news-overview';
 import privacyPage from './single-pages/privacy';
 import siteSettings from './singletons/site-settings';
@@ -36,6 +40,7 @@ export const schemaTypes = [
 
 	// Objects
 	columns,
+	contactTo,
 	extendedImage,
 	externalLink,
 	internalLink,
@@ -51,7 +56,10 @@ export const schemaTypes = [
 	spacer,
 
 	// Single Pages
+	contactPage,
 	imprintPage,
+	membershipPage,
+	newsArticlePage,
 	newsOverviewPage,
 	privacyPage,
 ];

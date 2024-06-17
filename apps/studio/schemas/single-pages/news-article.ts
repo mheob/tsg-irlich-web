@@ -2,26 +2,20 @@ import { RiBookletLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
 import { contactPersonsField } from '@/shared/content-fields';
-import { content, general, meta } from '@/shared/field-groups';
-import { introField, subTitleField, titleField } from '@/shared/general-fields';
-import { metaField } from '@/shared/meta-fields';
+import { content, general } from '@/shared/field-groups';
+import { defaultPageFields } from '@/shared/general-fields';
 
 const newsArticlePage = defineType({
 	title: 'Einzelner News-Artikel',
-	name: 'news.article',
+	name: 'news.article.page',
 	type: 'document',
 	icon: RiBookletLine,
-	groups: [general, meta, content],
+	groups: [general, content],
 	fields: [
-		// ?: ATTENTION: the "slug" comes from the news article itself; this page os rather the layout
+		// ?: the "slug" and `meta` comes from the news article itself; this page os rather the layout
 
 		// general
-		titleField,
-		subTitleField,
-		introField,
-
-		// meta
-		metaField,
+		...defaultPageFields,
 
 		// content
 		contactPersonsField,

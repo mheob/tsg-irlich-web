@@ -53,3 +53,5 @@ export const titleField = defineField({
 	group: 'general',
 	validation: rule => [getMinLengthRule(rule, 10, 'Titel'), getMaxLengthRule(rule, 65, 'Titel')],
 });
+
+export const defaultPageFields = [titleField, subTitleField, introField];
