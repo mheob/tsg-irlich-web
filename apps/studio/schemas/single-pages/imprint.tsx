@@ -4,7 +4,7 @@ import { defineField, defineType } from 'sanity';
 
 import { addressField, emailField, phoneField } from '@/shared/contact-fields';
 import { general, meta } from '@/shared/field-groups';
-import { getHiddenSlugField, introField, subTitleField, titleField } from '@/shared/general-fields';
+import { defaultPageFields, getHiddenSlugField } from '@/shared/general-fields';
 import { metaField } from '@/shared/meta-fields';
 import { getPhoneFieldRegexRule, getRequiredRole } from '@/shared/validation-rules';
 
@@ -19,9 +19,7 @@ const imprintPage = defineType({
 		getHiddenSlugField('impressum'),
 
 		// general
-		titleField,
-		subTitleField,
-		introField,
+		...defaultPageFields,
 
 		// meta
 		metaField,
