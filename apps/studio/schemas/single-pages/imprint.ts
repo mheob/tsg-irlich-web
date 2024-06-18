@@ -3,7 +3,7 @@ import { RiSettings5Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { addressField, emailField, phoneField } from '@/shared/contact-fields';
-import { general, meta } from '@/shared/field-groups';
+import { content, general, meta } from '@/shared/field-groups';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/general-fields';
 import { metaField } from '@/shared/meta-fields';
 import { getPhoneFieldRegexRule, getRequiredRole } from '@/shared/validation-rules';
@@ -13,7 +13,7 @@ const imprintPage = defineType({
 	name: 'imprint',
 	type: 'document',
 	icon: RiSettings5Line,
-	groups: [general, meta, { name: 'content', title: 'Inhalt' }],
+	groups: [general, meta, content],
 	fields: [
 		// (hidden)
 		getHiddenSlugField('impressum'),

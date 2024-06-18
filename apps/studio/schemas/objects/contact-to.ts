@@ -8,7 +8,6 @@ const contactTo = defineField({
 	name: 'contactNameMail',
 	type: 'object',
 	icon: RiLinksLine,
-	hidden: true,
 	fields: [
 		{
 			title: 'Name',

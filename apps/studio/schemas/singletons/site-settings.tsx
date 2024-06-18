@@ -1,18 +1,25 @@
-import { RiSettings5Line } from 'react-icons/ri';
+import { RiLinksLine, RiSettings5Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/meta-fields';
+import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from '@/shared/validation-rules';
 
 const siteSettings = defineType({
 	title: 'Generelle Einstellungen',
 	name: 'site-settings',
 	type: 'document',
 	icon: RiSettings5Line,
-	groups: [meta, { name: 'navigation', title: 'Navigation' }, { name: 'social', title: 'Social' }],
+	groups: [
+		meta,
+		{ name: 'misc', title: 'Misc' },
+		{ name: 'navigation', title: 'Navigation' },
+		{ name: 'social', title: 'Social' },
+	],
 	fields: [
 		// meta
 		metaField,
+
 		defineField({
 			title: 'Metadata Base',
 			name: 'metadataBase',
@@ -29,6 +36,35 @@ const siteSettings = defineType({
 			),
 		}),
 
+		// misc
+		defineField({
+			title: 'Newsletter',
+			name: 'newsletter',
+			type: 'object',
+			icon: RiLinksLine,
+			group: 'misc',
+			fields: [
+				defineField({
+					title: 'Titel',
+					name: 'title',
+					type: 'string',
+					description: 'Titel des Newsletters',
+					validation: rule => [getRequiredRole(rule, '"Newsletter Titel"')],
+				}),
+
+				defineField({
+					title: 'Button Text',
+					name: 'cta',
+					type: 'string',
+					description: 'Text für den Newsletter Absende-Button',
+					validation: rule => [
+						getMinLengthRule(rule, 3, '"Newsletter Button Text"'),
+						getMaxLengthRule(rule, 18, '"Newsletter Button Text"'),
+					],
+				}),
+			],
+		}),
+
 		// navigation
 		defineField({
 			title: 'Hauptmenü',
@@ -41,6 +77,7 @@ const siteSettings = defineType({
 			description: 'Seiten und/oder Links für die Hauptnavigation hinzufügen',
 			group: 'navigation',
 		}),
+
 		defineField({
 			title: 'Rechtliches Menü',
 			name: 'legalNavigation',

@@ -9,12 +9,12 @@ export const contact = {
 };
 
 export const content = {
-	title: 'Content',
+	title: 'Inhalt',
 	name: 'content',
 };
 
 export const excerpt = {
-	title: 'Excerpt',
+	title: 'Zusammenfassung',
 	name: 'excerpt',
 };
 
