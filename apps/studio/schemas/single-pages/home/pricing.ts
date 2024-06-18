@@ -12,7 +12,102 @@ const pricingField = defineField({
 	fields: [
 		...getDefaultPageFieldsWithGroup(),
 
-		// TODO: add pricing fields
+		defineField({
+			title: 'Preistabelle Passiv',
+			name: 'pricingPassive',
+			type: 'object',
+			fields: [
+				...getDefaultPageFieldsWithGroup(),
+
+				defineField({
+					title: 'Preis',
+					name: 'pricingPassivePrice',
+					type: 'number',
+				}),
+
+				defineField({
+					title: 'Titel Vorteile',
+					name: 'pricingPassiveBenefitsTitle',
+					type: 'string',
+				}),
+
+				defineField({
+					title: 'Vorteile',
+					name: 'pricingPassiveBenefits',
+					type: 'text',
+				}),
+
+				defineField({
+					title: 'Button Text',
+					name: 'pricingPassiveCta',
+					type: 'string',
+				}),
+			],
+		}),
+		defineField({
+			title: 'Preistabelle Familie',
+			name: 'pricingFamily',
+			type: 'object',
+			fields: [
+				...getDefaultPageFieldsWithGroup(),
+
+				defineField({
+					title: 'Preis',
+					name: 'pricingFamilyPrice',
+					type: 'number',
+				}),
+
+				defineField({
+					title: 'Titel Vorteile',
+					name: 'pricingFamilyBenefitsTitle',
+					type: 'string',
+				}),
+
+				defineField({
+					title: 'Vorteile',
+					name: 'pricingFamilyBenefits',
+					type: 'text',
+				}),
+
+				defineField({
+					title: 'Button Text',
+					name: 'pricingFamilyCta',
+					type: 'string',
+				}),
+			],
+		}),
+		defineField({
+			title: 'Preistabelle Aktiv',
+			name: 'pricingActive',
+			type: 'object',
+			fields: [
+				...getDefaultPageFieldsWithGroup(),
+
+				defineField({
+					title: 'Preis',
+					name: 'pricingActivePrice',
+					type: 'number',
+				}),
+
+				defineField({
+					title: 'Titel Vorteile',
+					name: 'pricingActiveBenefitsTitle',
+					type: 'string',
+				}),
+
+				defineField({
+					title: 'Vorteile',
+					name: 'pricingActiveBenefits',
+					type: 'text',
+				}),
+
+				defineField({
+					title: 'Button Text',
+					name: 'pricingActiveCta',
+					type: 'string',
+				}),
+			],
+		}),
 	],
 });
 

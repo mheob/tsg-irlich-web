@@ -10,24 +10,8 @@ const groupsField = defineField({
 	icon: RiLinksLine,
 	group: 'groups',
 	fields: [
-		defineField({
-			...titleField,
-			group: undefined,
-		}),
-		defineField({
-			...subTitleField,
-			group: undefined,
-		}),
-
-		defineField({
-			title: 'Gruppen',
-			name: 'groups',
-			// TODO: use a reference to all the groups instead of an array
-			type: 'array',
-			// TODO: add icon List
-			of: [/*{ type: 'icon' },*/ { type: 'string' }, { type: 'number' }],
-			description: '',
-		}),
+		defineField({ ...titleField, group: undefined }),
+		defineField({ ...subTitleField, group: undefined }),
 	],
 });
 
