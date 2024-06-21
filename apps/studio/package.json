@@ -19,13 +19,13 @@
 	"dependencies": {
 		"@sanity/assist": "^3.0.4",
 		"@sanity/locale-de-de": "^1.1.3",
-		"@sanity/vision": "^3.46.1",
+		"@sanity/vision": "^3.47.1",
 		"dotenv": "^16.4.5",
 		"dotenv-expand": "^11.0.6",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-icons": "^5.2.1",
-		"sanity": "^3.46.1",
+		"sanity": "^3.47.1",
 		"sanity-plugin-media": "^2.2.5",
 		"slugify": "^1.6.6",
 		"styled-components": "^6.1.11",
@@ -35,6 +35,6 @@
 		"@sanity/eslint-config-studio": "^4.0.0",
 		"@types/react": "^18.3.3",
 		"eslint": "^9.5.0",
-		"typescript": "^5.4.5"
+		"typescript": "^5.5.2"
 	}
 }
