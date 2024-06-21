@@ -1,6 +1,6 @@
 import { defineField } from 'sanity';
 
-import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from './validation-rules';
+import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from '../validation-rules';
 
 export const firstNameField = defineField({
 	title: 'Vorname',

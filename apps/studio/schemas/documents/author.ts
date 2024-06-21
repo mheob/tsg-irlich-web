@@ -1,9 +1,9 @@
 import { RiParentLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { emailField } from '@/shared/contact-fields';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
-import { firstNameField, lastNameField, portraitPictureField } from '@/shared/personal-fields';
+import { emailField } from '@/shared/fields/contact';
+import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
 
 const author = defineType({
 	title: 'Autor',

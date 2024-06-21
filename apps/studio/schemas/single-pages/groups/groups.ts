@@ -1,7 +1,7 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { subTitleField, titleField } from '@/shared/fields/general';
+import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
 
 export const groupsField = defineField({
 	title: 'Gruppen',
@@ -9,8 +9,5 @@ export const groupsField = defineField({
 	type: 'object',
 	icon: RiLinksLine,
 	group: 'groups',
-	fields: [
-		defineField({ ...titleField, group: undefined }),
-		defineField({ ...subTitleField, group: undefined }),
-	],
+	fields: [...getDefaultPageFieldsWithGroup()],
 });

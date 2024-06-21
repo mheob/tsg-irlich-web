@@ -3,7 +3,7 @@ import { defineField } from 'sanity';
 
 import { getMaxLengthRule, getMinLengthRule } from '@/shared/validation-rules';
 
-const statsField = defineField({
+export const statsField = defineField({
 	title: 'Statistiken',
 	name: 'statsSection',
 	type: 'object',
@@ -23,5 +23,3 @@ const statsField = defineField({
 		}),
 	],
 });
-
-export default statsField;

@@ -1,9 +1,9 @@
 import { RiBookletLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
-import { contactPersonsField } from '@/shared/content-fields';
 import { content, general } from '@/shared/field-groups';
-import { defaultPageFields } from '@/shared/general-fields';
+import { contactPersonsField } from '@/shared/fields/content';
+import { defaultPageFields } from '@/shared/fields/general';
 
 const newsArticlePage = defineType({
 	title: 'Einzelner News-Artikel',

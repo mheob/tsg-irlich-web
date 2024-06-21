@@ -1,11 +1,11 @@
 import { RiArticleLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { contentField } from '@/shared/content-fields';
-import { excerptField, featuredImageField } from '@/shared/excerpt-fields';
 import { content, excerpt, general, meta } from '@/shared/field-groups';
-import { slugField, titleField } from '@/shared/general-fields';
-import { authorField, metaField } from '@/shared/meta-fields';
+import { contentField } from '@/shared/fields/content';
+import { excerptField, featuredImageField } from '@/shared/fields/excerpt';
+import { slugField, titleField } from '@/shared/fields/general';
+import { authorField, metaField } from '@/shared/fields/meta';
 
 const newsArticle = defineType({
 	title: 'News-Artikel',

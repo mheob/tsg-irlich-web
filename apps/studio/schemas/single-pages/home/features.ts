@@ -1,9 +1,9 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { getDefaultPageFieldsWithGroup } from '@/shared/general-fields';
+import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
 
-const featuresField = defineField({
+export const featuresField = defineField({
 	title: 'Merkmale',
 	name: 'featureSection',
 	type: 'object',
@@ -22,5 +22,3 @@ const featuresField = defineField({
 		}),
 	],
 });
-
-export default featuresField;

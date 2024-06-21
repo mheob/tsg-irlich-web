@@ -1,10 +1,10 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { contactPersonsField } from '@/shared/content-fields';
-import { getDefaultPageFieldsWithGroup } from '@/shared/general-fields';
+import { contactPersonsField } from '@/shared/fields/content';
+import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
 
-const contactPersonsSectionField = defineField({
+export const contactPersonsSectionField = defineField({
 	title: 'Ansprechpartner',
 	name: 'contactPersonsSection',
 	type: 'object',
@@ -12,5 +12,3 @@ const contactPersonsSectionField = defineField({
 	group: 'contactPersons',
 	fields: [...getDefaultPageFieldsWithGroup(), { ...contactPersonsField, group: undefined }],
 });
-
-export default contactPersonsSectionField;
