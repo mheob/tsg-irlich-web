@@ -19,6 +19,7 @@ import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
 import contactPage from './single-pages/contact';
+import groupsPage from './single-pages/groups';
 import homePage from './single-pages/home';
 import imprintPage from './single-pages/imprint';
 import membershipPage from './single-pages/membership';
@@ -60,6 +61,7 @@ export const schemaTypes = [
 
 	// Single Pages
 	contactPage,
+	groupsPage,
 	homePage,
 	imprintPage,
 	membershipPage,

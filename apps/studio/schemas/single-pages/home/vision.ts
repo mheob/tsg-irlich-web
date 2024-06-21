@@ -4,7 +4,7 @@ import { defineField } from 'sanity';
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
 import { getMaxLengthRule, getMinLengthRule } from '@/shared/validation-rules';
 
-const visionField = defineField({
+export const visionField = defineField({
 	title: 'Vision',
 	name: 'visionSection',
 	type: 'object',
@@ -25,5 +25,3 @@ const visionField = defineField({
 		}),
 	],
 });
-
-export default visionField;

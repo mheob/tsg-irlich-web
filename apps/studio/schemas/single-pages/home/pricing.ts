@@ -3,7 +3,7 @@ import { defineField } from 'sanity';
 
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
 
-const pricingField = defineField({
+export const pricingField = defineField({
 	title: 'Preistabelle',
 	name: 'pricingSection',
 	type: 'object',
@@ -110,5 +110,3 @@ const pricingField = defineField({
 		}),
 	],
 });
-
-export default pricingField;

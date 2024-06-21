@@ -20,6 +20,14 @@ const group = defineType({
 		}),
 
 		defineField({
+			title: 'Ist eine Sportgruppe',
+			name: 'isSportGroup',
+			type: 'boolean',
+			description: 'Wenn "Ja", wird die Gruppe bei den Sportgruppen angezeigt.',
+			initialValue: true,
+		}),
+
+		defineField({
 			title: 'Icon',
 			name: 'icon',
 			type: 'string',

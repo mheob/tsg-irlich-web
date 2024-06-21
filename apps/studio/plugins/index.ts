@@ -7,6 +7,7 @@ import { structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
 
 import contactPage from '@/schemas/single-pages/contact';
+import groupsPage from '@/schemas/single-pages/groups';
 import homePage from '@/schemas/single-pages/home';
 import imprintPage from '@/schemas/single-pages/imprint';
 import membershipPage from '@/schemas/single-pages/membership';
@@ -28,6 +29,7 @@ export function getPlugins() {
 				membershipPage,
 				newsArticlePage,
 				newOverviewPage,
+				groupsPage,
 				privacyPage,
 				imprintPage,
 				siteSettings,
@@ -41,6 +43,7 @@ export function getPlugins() {
 			membershipPage.name,
 			newsArticlePage.name,
 			newOverviewPage.name,
+			groupsPage.name,
 			privacyPage.name,
 			imprintPage.name,
 			siteSettings.name,
