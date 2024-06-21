@@ -1,10 +1,9 @@
-// cSpell:words kontakt
 import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
-import { defaultPageFields, getHiddenSlugField } from '@/shared/general-fields';
-import { metaField } from '@/shared/meta-fields';
+import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
+import { metaField } from '@/shared/fields/meta';
 
 import {
 	contactPersons,

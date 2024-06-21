@@ -2,7 +2,7 @@ import { RiChatQuoteLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { personal } from '@/shared/field-groups';
-import { firstNameField, lastNameField, portraitPictureField } from '@/shared/personal-fields';
+import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
 
 const testimonial = defineType({
 	title: 'Zeugnis / Referenz',

@@ -2,10 +2,10 @@
 import { RiSettings5Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { addressField, emailField, phoneField } from '@/shared/contact-fields';
 import { content, general, meta } from '@/shared/field-groups';
-import { defaultPageFields, getHiddenSlugField } from '@/shared/general-fields';
-import { metaField } from '@/shared/meta-fields';
+import { addressField, emailField, phoneField } from '@/shared/fields/contact';
+import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
+import { metaField } from '@/shared/fields/meta';
 import { getPhoneFieldRegexRule, getRequiredRole } from '@/shared/validation-rules';
 
 const imprintPage = defineType({

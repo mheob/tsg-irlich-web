@@ -1,7 +1,7 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { getDefaultPageFieldsWithGroup } from '@/shared/general-fields';
+import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
 
 const newsField = defineField({
 	title: 'News',

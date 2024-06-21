@@ -1,7 +1,7 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { subTitleField, titleField } from '@/shared/general-fields';
+import { subTitleField, titleField } from '@/shared/fields/general';
 import { getMaxLengthRule, getMinLengthRule } from '@/shared/validation-rules';
 
 const testimonialField = defineField({

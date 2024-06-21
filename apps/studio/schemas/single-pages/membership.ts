@@ -2,10 +2,10 @@
 import { RiBookletLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
-import { contactPersonsField } from '@/shared/content-fields';
 import { content, general, meta } from '@/shared/field-groups';
-import { defaultPageFields, getHiddenSlugField } from '@/shared/general-fields';
-import { metaField } from '@/shared/meta-fields';
+import { contactPersonsField } from '@/shared/fields/content';
+import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
+import { metaField } from '@/shared/fields/meta';
 
 const membershipPage = defineType({
 	title: 'Mitgliedschaft',

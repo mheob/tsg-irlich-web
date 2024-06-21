@@ -2,7 +2,7 @@ import { RiLinksLine, RiSettings5Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { meta } from '@/shared/field-groups';
-import { metaField } from '@/shared/meta-fields';
+import { metaField } from '@/shared/fields/meta';
 import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from '@/shared/validation-rules';
 
 const siteSettings = defineType({

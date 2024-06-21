@@ -1,6 +1,6 @@
 import { defineField } from 'sanity';
 
-import { getRequiredRole } from './validation-rules';
+import { getRequiredRole } from '../validation-rules';
 
 export const authorField = defineField({
 	title: 'Autor',

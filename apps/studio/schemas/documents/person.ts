@@ -1,9 +1,9 @@
 import { RiUserSmileLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { emailField, phoneField } from '@/shared/contact-fields';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
-import { firstNameField, lastNameField, portraitPictureField } from '@/shared/personal-fields';
+import { emailField, phoneField } from '@/shared/fields/contact';
+import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
 
 const person = defineType({
 	title: 'Ansprechpartner',
