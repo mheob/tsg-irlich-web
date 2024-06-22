@@ -1,15 +1,15 @@
 export const contactPersons = {
-	title: 'ContactPersons',
+	title: 'Ansprechpartner',
 	name: 'contactPersons',
 };
 
 export const features = {
-	title: 'Features',
+	title: 'Merkmale',
 	name: 'features',
 };
 
 export const groups = {
-	title: 'Groups',
+	title: 'Gruppen',
 	name: 'groups',
 };
 
@@ -19,7 +19,7 @@ export const news = {
 };
 
 export const pricing = {
-	title: 'Pricing',
+	title: 'Preise',
 	name: 'pricing',
 };
 
@@ -29,7 +29,7 @@ export const stats = {
 };
 
 export const testimonial = {
-	title: 'Testimonial',
+	title: 'Referenz',
 	name: 'testimonial',
 };
 

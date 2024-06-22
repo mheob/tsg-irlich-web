@@ -1,15 +1,15 @@
 export const contactPersons = {
-	title: 'ContactPersons',
+	title: 'Ansprechpartner',
 	name: 'contactPersons',
 };
 
 export const groups = {
-	title: 'Groups',
+	title: 'Gruppen',
 	name: 'groups',
 };
 
 export const venues = {
-	title: 'venues',
+	title: 'Sportstätten',
 	name: 'venues',
 };
 

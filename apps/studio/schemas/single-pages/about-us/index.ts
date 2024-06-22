@@ -1,3 +1,4 @@
+// cSpell:words verein
 import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
@@ -8,31 +9,19 @@ import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
 import { visionField } from '@/shared/sections/vision';
 
-import {
-	contactPersons,
-	features,
-	groups,
-	news,
-	pricing,
-	stats,
-	testimonial,
-	vision,
-} from './_groups';
-import { featuresField } from './features';
-import { groupsField } from './groups';
-import { newsField } from './news';
-import { pricingField } from './pricing';
-import { testimonialField } from './testimonial';
+import { chronicle, contactPersons, gallery, stats, vision } from './_groups';
+import { chronicleField } from './chronicle';
+import { galleryField } from './gallery';
 
-const homePage = defineType({
-	title: 'Home',
-	name: 'home',
+const aboutUsPage = defineType({
+	title: 'Über uns',
+	name: 'aboutUs',
 	type: 'document',
 	icon: RiBookletLine,
 	groups: [general, meta, content],
 	fields: [
 		// (hidden)
-		getHiddenSlugField('home'),
+		getHiddenSlugField('verein'),
 
 		// general
 		...defaultPageFields,
@@ -47,22 +36,13 @@ const homePage = defineType({
 			type: 'object',
 			icon: RiLinksLine,
 			group: 'content',
-			groups: [features, vision, groups, stats, pricing, testimonial, contactPersons, news],
-			fields: [
-				featuresField,
-				visionField,
-				groupsField,
-				statsField,
-				pricingField,
-				testimonialField,
-				contactPersonsSectionField,
-				newsField,
-			],
+			groups: [gallery, chronicle, vision, stats, contactPersons],
+			fields: [galleryField, chronicleField, visionField, statsField, contactPersonsSectionField],
 		}),
 	],
 	preview: {
-		prepare: () => ({ title: 'Home' }),
+		prepare: () => ({ title: 'Über uns' }),
 	},
 });
 
-export default homePage;
+export default aboutUsPage;

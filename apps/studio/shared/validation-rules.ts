@@ -1,11 +1,12 @@
 import type { StringRule } from 'sanity';
 
 interface RuleOptions {
+	inputType?: 'array' | 'text';
 	message?: string;
 	type?: 'error' | 'warning';
 }
 
-const defaultRuleOptions: RuleOptions = { type: 'error' };
+const defaultRuleOptions: RuleOptions = { inputType: 'text', type: 'error' };
 
 interface BaseRule<Rule> {
 	error: (message: string) => Rule;
@@ -16,12 +17,33 @@ interface RequiredRule<Rule> extends BaseRule<Rule> {
 	required: () => Rule;
 }
 
+interface LengthRule<Rule> extends BaseRule<Rule>, RequiredRule<Rule> {
+	length: (length: number) => Rule;
+}
+
 interface MaxLengthRule<Rule> extends BaseRule<Rule> {
 	max: (length: number) => Rule;
 }
 
 interface MinLengthRule<Rule> extends BaseRule<Rule>, RequiredRule<Rule> {
 	min: (length: number) => Rule;
+}
+
+function getTextByInputType(inputType: RuleOptions['inputType'], length: number) {
+	const arrayOutput = length === 1 ? 'Eintrag' : 'Einträge';
+	return inputType === 'array' ? arrayOutput : 'Zeichen';
+}
+
+export function getLengthRule<Rule extends LengthRule<Rule>>(
+	rule: Rule,
+	length: number,
+	title: string,
+	options = { ...defaultRuleOptions, type: 'warning' },
+) {
+	const validationRule = rule.length(length);
+	const itemText = getTextByInputType(options.inputType, length);
+	const message = options.message ?? `${title} muss genau ${length} ${itemText} lang sein`;
+	return options.type === 'error' ? validationRule.error(message) : validationRule.warning(message);
 }
 
 export function getMaxLengthRule<Rule extends MaxLengthRule<Rule>>(
@@ -31,7 +53,8 @@ export function getMaxLengthRule<Rule extends MaxLengthRule<Rule>>(
 	options = { ...defaultRuleOptions, type: 'warning' },
 ) {
 	const validationRule = rule.max(length);
-	const message = options.message ?? `${title} sollte maximal ${length} Zeichen lang sein`;
+	const itemText = getTextByInputType(options.inputType, length);
+	const message = options.message ?? `${title} sollte maximal ${length} ${itemText} lang sein`;
 	return options.type === 'error' ? validationRule.error(message) : validationRule.warning(message);
 }
 
@@ -42,7 +65,8 @@ export function getMinLengthRule<Rule extends MinLengthRule<Rule>>(
 	options = defaultRuleOptions,
 ) {
 	const validationRule = rule.required().min(length);
-	const message = options.message ?? `${title} muss mindestens ${length} Zeichen lang sein`;
+	const itemText = getTextByInputType(options.inputType, length);
+	const message = options.message ?? `${title} muss mindestens ${length} ${itemText} lang sein`;
 	return options.type === 'error' ? validationRule.error(message) : validationRule.warning(message);
 }
 

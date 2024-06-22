@@ -6,6 +6,7 @@ import type { PluginOptions } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
 
+import aboutUsPage from '@/schemas/single-pages/about-us';
 import contactPage from '@/schemas/single-pages/contact';
 import groupsPage from '@/schemas/single-pages/groups';
 import homePage from '@/schemas/single-pages/home';
@@ -26,6 +27,7 @@ export function getPlugins() {
 		structureTool({
 			structure: pageStructure([
 				homePage,
+				aboutUsPage,
 				contactPage,
 				membershipPage,
 				newsArticlePage,
@@ -41,6 +43,7 @@ export function getPlugins() {
 		// to suit the Settings document singleton
 		singletonPlugin([
 			homePage.name,
+			aboutUsPage.name,
 			contactPage.name,
 			membershipPage.name,
 			newsArticlePage.name,

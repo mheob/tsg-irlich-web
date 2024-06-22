@@ -8,6 +8,7 @@ import columns from './objects/columns';
 import contactTo from './objects/contact-to';
 import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
+import imageCard from './objects/image-card';
 import internalLink from './objects/internal-link';
 import link from './objects/link';
 import metFields from './objects/meta';
@@ -18,6 +19,7 @@ import blockContent from './sections/block-content';
 import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
+import aboutUsPage from './single-pages/about-us';
 import contactPage from './single-pages/contact';
 import groupsPage from './single-pages/groups';
 import homePage from './single-pages/home';
@@ -47,6 +49,7 @@ export const schemaTypes = [
 	contactTo,
 	extendedImage,
 	externalLink,
+	imageCard,
 	internalLink,
 	link,
 	metFields,
@@ -61,6 +64,7 @@ export const schemaTypes = [
 	spacer,
 
 	// Single Pages
+	aboutUsPage,
 	contactPage,
 	groupsPage,
 	homePage,

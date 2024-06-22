@@ -1,4 +1,3 @@
-// cSpell:words angebot
 import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
@@ -8,7 +7,7 @@ import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 
 import { contactPersons, gallery } from './_groups';
-import { galleryField } from './groups';
+import { galleryField } from './gallery';
 
 const singleGroupPage = defineType({
 	title: 'Einzel-Gruppe',
