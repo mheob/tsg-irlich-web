@@ -1,5 +1,5 @@
 export const contactPersons = {
-	title: 'ContactPersons',
+	title: 'Ansprechpartner',
 	name: 'contactPersons',
 };
 
