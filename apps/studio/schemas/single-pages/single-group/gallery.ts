@@ -15,7 +15,7 @@ export const galleryField = defineField({
 
 		defineField({
 			title: 'Bilder',
-			name: 'venues',
+			name: 'images',
 			type: 'array',
 			of: [{ type: 'extendedImage' }],
 			description: 'Diese gewählten Bilder werden in der gewünschten Reihenfolge angezeigt.',
