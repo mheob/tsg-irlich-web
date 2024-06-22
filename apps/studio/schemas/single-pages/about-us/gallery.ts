@@ -2,7 +2,7 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
-import { getLengthRule } from '@/shared/validation-rules';
+import { getExactLengthRule } from '@/shared/validation-rules';
 
 export const galleryField = defineField({
 	title: 'Galerie',
@@ -15,11 +15,13 @@ export const galleryField = defineField({
 
 		defineField({
 			title: 'Bilder',
-			name: 'venues',
+			name: 'images',
 			type: 'array',
 			of: [{ type: 'extendedImage' }],
 			description: 'Diese gewählten Bilder werden in der gewünschten Reihenfolge angezeigt.',
-			validation: rule => [getLengthRule(rule, 3, 'Es müssen genau 3 Bilder ausgewählt werden.')],
+			validation: rule => [
+				getExactLengthRule(rule, 3, 'Es müssen genau 3 Bilder ausgewählt werden.'),
+			],
 		}),
 	],
 });

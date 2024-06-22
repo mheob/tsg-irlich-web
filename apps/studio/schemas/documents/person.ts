@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { emailField, phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
+import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from '@/shared/validation-rules';
 
 const person = defineType({
 	title: 'Ansprechpartner',
@@ -23,27 +24,24 @@ const person = defineType({
 
 		// additionalInformation
 		defineField({
+			title: 'Abteilung, Gruppe etc.',
+			name: 'department',
+			type: 'string',
 			description: 'Die Gruppe oder Abteilung der Person.',
 			group: 'additionalInformation',
-			name: 'department',
-			title: 'Abteilung, Gruppe etc.',
-			type: 'string',
 			validation: rule => [
-				rule
-					.required()
-					.min(2)
-					.error('Die Gruppe oder Abteilung muss mindestens 2 Zeichen lang sein.'),
-				rule.max(64).warning('Die Gruppe oder Abteilung sollte maximal 64 Zeichen lang sein.'),
+				getMinLengthRule(rule, 2, 'Die Gruppe oder Abteilung'),
+				getMaxLengthRule(rule, 64, 'Die Gruppe oder Abteilung'),
 			],
 		}),
 		defineField({
+			title: 'Rolle',
+			name: 'role',
+			type: 'reference',
+			to: [{ type: 'group' }],
 			description: 'Die Rolle oder Funktion der Person (z.B. Vorstand Finanzen).',
 			group: 'additionalInformation',
-			name: 'role',
-			title: 'Rolle',
-			to: [{ type: 'group' }],
-			type: 'reference',
-			validation: rule => [rule.required().error('Die Rolle oder Funktion ist erforderlich.')],
+			validation: rule => [getRequiredRole(rule, 'Rolle oder Funktion')],
 		}),
 		defineField({
 			title: 'Beschreibung (Vision)',
@@ -52,8 +50,8 @@ const person = defineType({
 			description: 'Eine kurze Beschreibung der Person.',
 			group: 'additionalInformation',
 			validation: rule => [
-				rule.required().min(32).error('Die Beschreibung muss mindestens 32 Zeichen lang sein.'),
-				rule.max(64).warning('Die Beschreibung sollte maximal 64 Zeichen lang sein.'),
+				getMinLengthRule(rule, 32, 'Die Beschreibung (Vision)'),
+				getMaxLengthRule(rule, 200, 'Die Beschreibung (Vision)'),
 			],
 		}),
 	],

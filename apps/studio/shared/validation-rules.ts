@@ -17,7 +17,7 @@ interface RequiredRule<Rule> extends BaseRule<Rule> {
 	required: () => Rule;
 }
 
-interface LengthRule<Rule> extends BaseRule<Rule>, RequiredRule<Rule> {
+interface ExactLengthRule<Rule> extends BaseRule<Rule>, RequiredRule<Rule> {
 	length: (length: number) => Rule;
 }
 
@@ -34,7 +34,7 @@ function getTextByInputType(inputType: RuleOptions['inputType'], length: number)
 	return inputType === 'array' ? arrayOutput : 'Zeichen';
 }
 
-export function getLengthRule<Rule extends LengthRule<Rule>>(
+export function getExactLengthRule<Rule extends ExactLengthRule<Rule>>(
 	rule: Rule,
 	length: number,
 	title: string,
