@@ -12,7 +12,7 @@ const newsArticlePage = defineType({
 	icon: RiBookletLine,
 	groups: [general, content],
 	fields: [
-		// ?: the "slug" and `meta` comes from the news article itself; this page os rather the layout
+		// ?: the "slug" and `meta` comes from the news article itself; this page is rather the layout
 
 		// general
 		...defaultPageFields,
