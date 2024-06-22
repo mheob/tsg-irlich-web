@@ -14,6 +14,7 @@ import membershipPage from '@/schemas/single-pages/membership';
 import newsArticlePage from '@/schemas/single-pages/news-article';
 import newOverviewPage from '@/schemas/single-pages/news-overview';
 import privacyPage from '@/schemas/single-pages/privacy';
+import singleGroupPage from '@/schemas/single-pages/single-group';
 import siteSettings from '@/schemas/singletons/site-settings';
 
 import { assistWithPresets } from './assist';
@@ -30,6 +31,7 @@ export function getPlugins() {
 				newsArticlePage,
 				newOverviewPage,
 				groupsPage,
+				singleGroupPage,
 				privacyPage,
 				imprintPage,
 				siteSettings,
@@ -44,6 +46,7 @@ export function getPlugins() {
 			newsArticlePage.name,
 			newOverviewPage.name,
 			groupsPage.name,
+			singleGroupPage.name,
 			privacyPage.name,
 			imprintPage.name,
 			siteSettings.name,

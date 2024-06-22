@@ -26,6 +26,7 @@ import membershipPage from './single-pages/membership';
 import newsArticlePage from './single-pages/news-article';
 import newsOverviewPage from './single-pages/news-overview';
 import privacyPage from './single-pages/privacy';
+import singleGroupPage from './single-pages/single-group';
 import siteSettings from './singletons/site-settings';
 
 export const schemaTypes = [
@@ -68,4 +69,5 @@ export const schemaTypes = [
 	newsArticlePage,
 	newsOverviewPage,
 	privacyPage,
+	singleGroupPage,
 ];
