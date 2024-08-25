@@ -1,6 +1,6 @@
 import { defineField } from 'sanity';
 
-import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from '../validation-rules';
+import { getMaxLengthRule, getMinLengthRule, getRequiredRule } from '../validation-rules';
 
 export const firstNameField = defineField({
 	title: 'Vorname',
@@ -27,5 +27,5 @@ export const portraitPictureField = defineField({
 	type: 'extendedImage',
 	description: 'Erweitertes Porträtbild des Autors mit einem Alt-Text.',
 	group: 'personal',
-	validation: rule => [getRequiredRole(rule, 'Porträtbild')],
+	validation: rule => [getRequiredRule(rule, 'Porträtbild')],
 });

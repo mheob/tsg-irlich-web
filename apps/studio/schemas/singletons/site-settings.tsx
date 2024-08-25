@@ -3,7 +3,7 @@ import { defineField, defineType } from 'sanity';
 
 import { meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/fields/meta';
-import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from '@/shared/validation-rules';
+import { getMaxLengthRule, getMinLengthRule, getRequiredRule } from '@/shared/validation-rules';
 
 const siteSettings = defineType({
 	title: 'Generelle Einstellungen',
@@ -49,7 +49,7 @@ const siteSettings = defineType({
 					name: 'title',
 					type: 'string',
 					description: 'Titel des Newsletters',
-					validation: rule => [getRequiredRole(rule, '"Newsletter Titel"')],
+					validation: rule => [getRequiredRule(rule, '"Newsletter Titel"')],
 				}),
 
 				defineField({

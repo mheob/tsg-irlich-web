@@ -4,7 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { emailField, phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
-import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from '@/shared/validation-rules';
+import { getMaxLengthRule, getMinLengthRule, getRequiredRule } from '@/shared/validation-rules';
 
 const person = defineType({
 	title: 'Ansprechpartner',
@@ -24,37 +24,50 @@ const person = defineType({
 
 		// additionalInformation
 		defineField({
-			title: 'Abteilung, Gruppe etc.',
-			name: 'department',
-			type: 'string',
-			description: 'Die Gruppe oder Abteilung der Person.',
-			group: 'additionalInformation',
-			validation: rule => [
-				getMinLengthRule(rule, 2, 'Die Gruppe oder Abteilung'),
-				getMaxLengthRule(rule, 64, 'Die Gruppe oder Abteilung'),
+			title: 'Zugehörigkeiten',
+			name: 'affiliations',
+			type: 'array',
+			of: [
+				defineField({
+					title: 'Zugehörigkeit',
+					name: 'affiliation',
+					type: 'object',
+					fields: [
+						defineField({
+							title: 'Abteilung, Gruppe etc.',
+							name: 'department',
+							type: 'reference',
+							to: [{ type: 'group' }],
+							description: 'Die Gruppe oder Abteilung der Person.',
+							validation: rule => [getRequiredRule(rule, 'Rolle oder Funktion')],
+						}),
+
+						defineField({
+							title: 'Rolle',
+							name: 'role',
+							type: 'reference',
+							to: [{ type: 'role' }],
+							description: 'Die Rolle oder Funktion der Person (z.B. Vorstand Finanzen).',
+							validation: rule => [getRequiredRule(rule, 'Rolle oder Funktion')],
+						}),
+
+						defineField({
+							title: 'Beschreibung (Vision)',
+							name: 'description',
+							type: 'text',
+							description: 'Eine kurze Beschreibung der Person.',
+							validation: rule => [
+								getMinLengthRule(rule, 32, 'Die Beschreibung (Vision)'),
+								getMaxLengthRule(rule, 200, 'Die Beschreibung (Vision)'),
+							],
+						}),
+					],
+				}),
 			],
-		}),
-		defineField({
-			title: 'Rolle',
-			name: 'role',
-			type: 'reference',
-			to: [{ type: 'group' }],
-			description: 'Die Rolle oder Funktion der Person (z.B. Vorstand Finanzen).',
 			group: 'additionalInformation',
-			validation: rule => [getRequiredRole(rule, 'Rolle oder Funktion')],
-		}),
-		defineField({
-			title: 'Beschreibung (Vision)',
-			name: 'description',
-			type: 'text',
-			description: 'Eine kurze Beschreibung der Person.',
-			group: 'additionalInformation',
-			validation: rule => [
-				getMinLengthRule(rule, 32, 'Die Beschreibung (Vision)'),
-				getMaxLengthRule(rule, 200, 'Die Beschreibung (Vision)'),
-			],
 		}),
 	],
+
 	preview: {
 		prepare: ({ media, firstName, lastName }) => ({ media, title: `${lastName}, ${firstName}` }),
 		select: {

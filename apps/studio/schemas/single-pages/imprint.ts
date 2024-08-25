@@ -6,7 +6,7 @@ import { content, general, meta } from '@/shared/field-groups';
 import { addressField, emailField, phoneField } from '@/shared/fields/contact';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
-import { getPhoneFieldRegexRule, getRequiredRole } from '@/shared/validation-rules';
+import { getPhoneFieldRegexRule, getRequiredRule } from '@/shared/validation-rules';
 
 const imprintPage = defineType({
 	title: 'Impressum',
@@ -34,26 +34,26 @@ const imprintPage = defineType({
 			name: 'registerNo',
 			type: 'string',
 			group: 'content',
-			validation: rule => [getRequiredRole(rule, 'Registernummer')],
+			validation: rule => [getRequiredRule(rule, 'Registernummer')],
 		}),
 		defineField({
 			title: 'Registergericht',
 			name: 'registerCourt',
 			type: 'string',
 			group: 'content',
-			validation: rule => [getRequiredRole(rule, 'Registergericht')],
+			validation: rule => [getRequiredRule(rule, 'Registergericht')],
 		}),
 		defineField({
 			title: 'Vertreten durch',
 			name: 'represented',
 			type: 'string',
 			group: 'content',
-			validation: rule => [getRequiredRole(rule, '"Vertreten durch"')],
+			validation: rule => [getRequiredRule(rule, '"Vertreten durch"')],
 		}),
 		defineField({
 			...phoneField,
 			group: 'content',
-			validation: rule => [getRequiredRole(rule, 'Telefon'), getPhoneFieldRegexRule(rule)],
+			validation: rule => [getRequiredRule(rule, 'Telefon'), getPhoneFieldRegexRule(rule)],
 		}),
 		defineField({
 			...emailField,
@@ -64,7 +64,7 @@ const imprintPage = defineType({
 			name: 'responsible',
 			type: 'text',
 			group: 'content',
-			validation: rule => [getRequiredRole(rule, '"Redaktionell verantwortlich')],
+			validation: rule => [getRequiredRule(rule, '"Redaktionell verantwortlich')],
 		}),
 		defineField({
 			title: 'Verbraucherstreitbeilegung / Universalschlichtungsstelle',
@@ -72,7 +72,7 @@ const imprintPage = defineType({
 			type: 'string',
 			group: 'content',
 			validation: rule => [
-				getRequiredRole(rule, '"Verbraucherstreitbeilegung / Universalschlichtungsstelle"'),
+				getRequiredRule(rule, '"Verbraucherstreitbeilegung / Universalschlichtungsstelle"'),
 			],
 		}),
 		defineField({
@@ -80,21 +80,21 @@ const imprintPage = defineType({
 			name: 'technicalQuestionsName',
 			type: 'text',
 			group: 'content',
-			validation: rule => [getRequiredRole(rule, '"Name Technischer Ansprechpartner"')],
+			validation: rule => [getRequiredRule(rule, '"Name Technischer Ansprechpartner"')],
 		}),
 		defineField({
 			title: 'E-Mail Technischer Ansprechpartner',
 			name: 'technicalQuestionsEmail',
 			type: 'email',
 			group: 'content',
-			validation: rule => [getRequiredRole(rule, '"E-Mail Technischer Ansprechpartner"')],
+			validation: rule => [getRequiredRule(rule, '"E-Mail Technischer Ansprechpartner"')],
 		}),
 		defineField({
 			title: 'Freundliche Unterstützung durch',
 			name: 'support',
 			type: 'simpleBlockContent',
 			group: 'content',
-			validation: rule => [getRequiredRole(rule, '"Freundliche Unterstützung durch"')],
+			validation: rule => [getRequiredRule(rule, '"Freundliche Unterstützung durch"')],
 		}),
 	],
 	preview: {
