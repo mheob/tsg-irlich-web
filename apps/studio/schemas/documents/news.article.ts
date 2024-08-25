@@ -29,7 +29,13 @@ const newsArticle = defineType({
 		// content
 		defineField({
 			...contentField,
-			of: [{ type: 'grid' }, { type: 'mainImage' }, { type: 'blockContent' }, { type: 'spacer' }],
+			of: [
+				{ type: 'grid' },
+				{ type: 'mainImage' },
+				{ type: 'simpleBlockContent' },
+				{ type: 'blockquote' },
+				{ type: 'spacer' },
+			],
 		}),
 	],
 	initialValue: () => ({ publishedAt: new Date().toISOString() }),
