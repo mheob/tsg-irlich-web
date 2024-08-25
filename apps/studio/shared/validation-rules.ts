@@ -76,7 +76,7 @@ export function getPhoneFieldRegexRule(rule: StringRule) {
 		.warning('Telefonnummer sollte in der Form +49 123 456789 geschrieben werden');
 }
 
-export function getRequiredRole<Rule extends RequiredRule<Rule>>(
+export function getRequiredRule<Rule extends RequiredRule<Rule>>(
 	rule: Rule,
 	title: string,
 	options = defaultRuleOptions,

@@ -21,7 +21,6 @@ const simpleBlockContent = defineField({
 						decorators: [
 							{ title: 'Strong', value: 'strong' },
 							{ title: 'Italic', value: 'em' },
-							{ title: 'Underline', value: 'underline' },
 						],
 					},
 					styles: [{ title: 'Normal', value: 'normal' }],

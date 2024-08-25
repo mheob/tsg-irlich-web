@@ -1,6 +1,6 @@
 import { defineField } from 'sanity';
 
-import { getRequiredRole } from '../validation-rules';
+import { getRequiredRule } from '../validation-rules';
 
 export const excerptField = defineField({
 	title: 'Excerpt',
@@ -9,7 +9,7 @@ export const excerptField = defineField({
 	description:
 		'Kurze Beschreibung, die auf den Übersichtsseiten angezeigt wird und wenn Leute deinen Beitrag auf sozialen Medien teilen.',
 	group: 'excerpt',
-	validation: rule => [getRequiredRole(rule, 'Excerpt')],
+	validation: rule => [getRequiredRule(rule, 'Excerpt')],
 });
 
 export const featuredImageField = defineField({

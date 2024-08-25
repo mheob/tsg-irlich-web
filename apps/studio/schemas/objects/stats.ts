@@ -1,7 +1,7 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from '@/shared/validation-rules';
+import { getMaxLengthRule, getMinLengthRule, getRequiredRule } from '@/shared/validation-rules';
 
 const stats = defineField({
 	title: 'Statistiken',
@@ -22,7 +22,7 @@ const stats = defineField({
 			title: 'Wert',
 			name: 'value',
 			type: 'string',
-			validation: rule => [getRequiredRole(rule, 'Wert')],
+			validation: rule => [getRequiredRule(rule, 'Wert')],
 		},
 	],
 });

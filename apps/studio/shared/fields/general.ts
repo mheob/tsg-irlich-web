@@ -1,7 +1,7 @@
 import { defineField } from 'sanity';
 import slug from 'slugify';
 
-import { getMaxLengthRule, getMinLengthRule, getRequiredRole } from '../validation-rules';
+import { getMaxLengthRule, getMinLengthRule, getRequiredRule } from '../validation-rules';
 
 export function getHiddenSlugField(slug: string) {
 	return defineField({
@@ -32,7 +32,7 @@ export const slugField = defineField({
 		slugify: (input: string) => slug(input, { lower: true, trim: true }),
 		source: 'title',
 	},
-	validation: rule => [getRequiredRole(rule, 'lug')],
+	validation: rule => [getRequiredRule(rule, 'lug')],
 });
 
 export const subTitleField = defineField({

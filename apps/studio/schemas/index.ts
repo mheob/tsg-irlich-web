@@ -3,7 +3,9 @@ import group from './documents/group';
 import newsArticle from './documents/news.article';
 import newsCategory from './documents/news.category';
 import person from './documents/person';
+import role from './documents/role';
 import testimonial from './documents/testimonial';
+import venue from './documents/venue';
 import columns from './objects/columns';
 import contactTo from './objects/contact-to';
 import extendedImage from './objects/extended-image';
@@ -38,9 +40,11 @@ export const schemaTypes = [
 
 	author,
 	person,
+	role,
 
 	group,
 	testimonial,
+	venue,
 
 	siteSettings,
 

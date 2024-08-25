@@ -5,7 +5,7 @@ import { contact, general, meta } from '@/shared/field-groups';
 import { addressField, emailField, phoneField } from '@/shared/fields/contact';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
-import { getRequiredRole } from '@/shared/validation-rules';
+import { getRequiredRule } from '@/shared/validation-rules';
 
 const privacyPage = defineType({
 	title: 'Datenschutzerklärung',
@@ -29,7 +29,7 @@ const privacyPage = defineType({
 			name: 'introText',
 			type: 'simpleBlockContent',
 			group: 'contact',
-			validation: rule => [getRequiredRole(rule, 'Einleitungstext')],
+			validation: rule => [getRequiredRule(rule, 'Einleitungstext')],
 		}),
 		addressField,
 		phoneField,
@@ -41,7 +41,7 @@ const privacyPage = defineType({
 			name: 'content',
 			type: 'blockContent',
 			group: 'content',
-			validation: rule => [getRequiredRole(rule, 'Datenschutzerklärung')],
+			validation: rule => [getRequiredRule(rule, 'Datenschutzerklärung')],
 		}),
 	],
 	preview: {
