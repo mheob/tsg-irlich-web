@@ -46,7 +46,7 @@ const person = defineType({
 		defineField({
 			title: 'Beschreibung (Vision)',
 			name: 'description',
-			type: 'string',
+			type: 'text',
 			description: 'Eine kurze Beschreibung der Person.',
 			group: 'additionalInformation',
 			validation: rule => [
