@@ -19,7 +19,6 @@ const spacer = defineField({
 					{ title: 'Small', value: 'small' },
 					{ title: 'Medium', value: 'medium' },
 					{ title: 'Large', value: 'large' },
-					{ title: 'X-Large', value: 'xlarge' },
 				],
 			},
 		},

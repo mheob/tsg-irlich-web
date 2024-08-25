@@ -18,6 +18,7 @@ import simpleBlockContent from './objects/simple-block-content';
 import socialFields from './objects/social-fields';
 import stats from './objects/stats';
 import blockContent from './sections/block-content';
+import blockquote from './sections/blockquote';
 import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
@@ -63,6 +64,7 @@ export const schemaTypes = [
 
 	// Sections
 	blockContent,
+	blockquote,
 	grid,
 	mainImage,
 	spacer,
