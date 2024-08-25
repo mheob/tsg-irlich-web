@@ -36,5 +36,9 @@
 		"jsonc",
 		"yaml",
 		"toml"
-	]
+	],
+	"sonarlint.connectedMode.project": {
+		"connectionId": "mheob",
+		"projectKey": "mheob_tsg-irlich-web"
+	}
 }
