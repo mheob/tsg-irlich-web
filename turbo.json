@@ -4,7 +4,7 @@
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
+			"outputs": ["dist/**"]
 		},
 		"studio#build": {
 			"dependsOn": ["^build"],
@@ -18,8 +18,7 @@
 			"outputs": ["dist/**"]
 		},
 		"web#build": {
-			"dependsOn": ["^build"],
-			"outputs": [".next/**", "!.next/cache/**"]
+			"dependsOn": ["^build"]
 		},
 		"dev": {
 			"cache": false,

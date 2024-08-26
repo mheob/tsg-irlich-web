@@ -18,4 +18,4 @@ export const projectId = assertValue(
 /**
  * see https://www.sanity.io/docs/api-versioning for how versioning works
  */
-export const apiVersion = process.env.SANITY_API_VERSION || '2022-03-07';
+export const apiVersion = process.env.SANITY_API_VERSION ?? '2022-03-07';

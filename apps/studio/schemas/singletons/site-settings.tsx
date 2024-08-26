@@ -27,7 +27,7 @@ const siteSettings = defineType({
 			group: 'meta',
 			description: (
 				<a
-					href="https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase"
+					href="https://docs.astro.build/en/reference/api-reference/#astrourl"
 					rel="noreferrer noopener"
 					target="_blank"
 				>

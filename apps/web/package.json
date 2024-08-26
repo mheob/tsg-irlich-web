@@ -1,31 +1,21 @@
 {
 	"name": "web",
-	"version": "0.0.0",
-	"private": true,
+	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"build": "next build",
-		"dev": "next dev --turbo",
+		"astro": "astro",
+		"build": "astro check && astro build",
+		"dev": "astro dev",
 		"lint": "eslint . --fix",
-		"start": "next start"
+		"preview": "astro preview",
+		"start": "astro dev"
 	},
 	"dependencies": {
-		"babel-plugin-react-compiler": "0.0.0-experimental-938cd9a-20240601",
-		"next": "15.0.0-rc.0",
-		"react": "19.0.0-rc-f994737d14-20240522",
-		"react-dom": "19.0.0-rc-f994737d14-20240522"
-	},
-	"devDependencies": {
-		"@eslint-react/eslint-plugin": "^1.12.1",
-		"@types/node": "^22.5.0",
-		"@types/react": "^18.3.4",
-		"@types/react-dom": "^18.3.0",
-		"eslint": "^9.9.1",
-		"eslint-config-next": "15.0.0-rc.0",
-		"eslint-plugin-react-hooks": "^4.6.2",
-		"eslint-plugin-react-refresh": "^0.4.11",
-		"postcss": "^8.4.41",
-		"tailwindcss": "^3.4.10",
+		"@astrojs/check": "^0.9.3",
+		"astro": "^4.14.5",
+		"astro-eslint-parser": "^1.0.2",
+		"eslint-plugin-astro": "^1.2.3",
+		"prettier-plugin-astro": "^0.14.1",
 		"typescript": "^5.5.4"
 	}
 }

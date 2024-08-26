@@ -1,4 +1,4 @@
-import { type DocumentDefinition, definePlugin } from 'sanity';
+import { definePlugin, type DocumentDefinition } from 'sanity';
 import type { StructureResolver } from 'sanity/structure';
 
 import { getGroup, isExcludedDefaultListItem } from '@/structure';
@@ -11,18 +11,18 @@ export const singletonPlugin = definePlugin((types: string[]) => {
 		document: {
 			// Hide 'Singletons (such as Settings)' from new document options
 			// Removes the "duplicate" action on the Singletons (such as Home)
-			actions: (prev, { schemaType }) => {
+			actions: (previous, { schemaType }) => {
 				if (types.includes(schemaType)) {
-					return prev.filter(({ action }) => action !== 'duplicate');
+					return previous.filter(({ action }) => action !== 'duplicate');
 				}
-				return prev;
+				return previous;
 			},
 			// https://user-images.githubusercontent.com/81981/195728798-e0c6cf7e-d442-4e58-af3a-8cd99d7fcc28.png
-			newDocumentOptions: (prev, { creationContext }) => {
+			newDocumentOptions: (previous, { creationContext }) => {
 				if (creationContext.type === 'global') {
-					return prev.filter(templateItem => !types.includes(templateItem.templateId));
+					return previous.filter(templateItem => !types.includes(templateItem.templateId));
 				}
-				return prev;
+				return previous;
 			},
 		},
 		name: 'singletonPlugin',
@@ -33,15 +33,15 @@ export const singletonPlugin = definePlugin((types: string[]) => {
  * The StructureResolver is how we're changing the DeskTool structure to linking to document
  * (named Singleton) like how "Home" is handled.
  *
- * @param typeDefArray The array of document definitions that are singletons
+ * @param typeDefinitionArray The array of document definitions that are singletons
  * @returns The StructureResolver
  */
-export function pageStructure(typeDefArray: DocumentDefinition[]): StructureResolver {
+export function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureResolver {
 	return S => {
 		// The default root list items (except custom ones)
 		const defaultListItems = S.documentTypeListItems().filter(
 			listItem =>
-				!typeDefArray.find(singleton => singleton.name === listItem.getId()) &&
+				!typeDefinitionArray.some(singleton => singleton.name === listItem.getId()) &&
 				isExcludedDefaultListItem(listItem.getId()),
 		);
 
@@ -49,7 +49,7 @@ export function pageStructure(typeDefArray: DocumentDefinition[]): StructureReso
 			.title('Base')
 			.items([
 				...getGroup(S, 'default'),
-				...getGroup(S, 'singletons', typeDefArray),
+				...getGroup(S, 'singletons', typeDefinitionArray),
 				S.divider(),
 				...getGroup(S, 'persons'),
 				...defaultListItems,
