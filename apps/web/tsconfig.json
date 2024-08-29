@@ -1,3 +1,7 @@
 {
-	"extends": "@mheob/tsconfig/astro"
+	"extends": "@mheob/tsconfig/astro",
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "react"
+	}
 }

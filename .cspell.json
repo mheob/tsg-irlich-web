@@ -16,8 +16,9 @@
 		"**/turbo.json"
 	],
 	"words": [
-		"Aufzählungspunkte",
 		"astro",
+		"astrojs",
+		"Aufzählungspunkte",
 		"Blogautor",
 		"Blogpost",
 		"Blogposts",
