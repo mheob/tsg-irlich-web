@@ -1,14 +1,12 @@
 import { defineField } from 'sanity';
 
-import { getRequiredRule } from '../validation-rules';
-
 export const contactPersonsField = defineField({
 	title: 'Ansprechpartner',
 	name: 'contactPersons',
 	type: 'reference',
 	to: [{ type: 'person' }],
 	group: 'content',
-	validation: rule => [getRequiredRule(rule, 'Ansprechpartner')],
+	// validation: rule => [requiredRule(rule, 'Der Ansprechpartner')],
 });
 
 export const contentField = defineField({

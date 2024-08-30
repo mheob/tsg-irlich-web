@@ -13,7 +13,7 @@ const extendedImage = defineField({
 			name: 'alt',
 			type: 'string',
 			description: 'Beschreibe, was auf dem Bild zu sehen ist (für SEO und Barrierefreiheit).',
-			validation: rule => rule.required().error('Du musst den Alt-Text ausfüllen.'),
+			// validation: rule => rule.required().error('Du musst den Alt-Text ausfüllen.'),
 		},
 	],
 	options: {

@@ -2,7 +2,7 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { subTitleField, titleField } from '@/shared/fields/general';
-import { getMaxLengthRule, getMinLengthRule } from '@/shared/validation-rules';
+import { maxLengthRule } from '@/shared/validation-rules';
 
 export const testimonialField = defineField({
 	title: 'Zeugnis / Referenz',
@@ -20,8 +20,8 @@ export const testimonialField = defineField({
 			type: 'array',
 			of: [{ type: 'reference', to: { type: 'testimonial' } }],
 			validation: rule => [
-				getMinLengthRule(rule, 4, '"Zeugnis / Referenz"'),
-				getMaxLengthRule(rule, 8, '"Zeugnis / Referenz"'),
+				// minLengthRule(rule, 4, 'Das Zeugnis bzw. die Referenz'),
+				maxLengthRule(rule, 8, 'Das Zeugnis bzw. die Referenz'),
 			],
 		}),
 	],

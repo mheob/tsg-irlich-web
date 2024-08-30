@@ -1,7 +1,7 @@
 import { RiTeamLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { getMaxLengthRule, getMinLengthRule, getRequiredRule } from '@/shared/validation-rules';
+import { maxLengthRule } from '@/shared/validation-rules';
 
 const group = defineType({
 	title: 'Gruppe / Mannschaft',
@@ -14,9 +14,17 @@ const group = defineType({
 			name: 'title',
 			type: 'string',
 			validation: rule => [
-				getMinLengthRule(rule, 2, 'Bitte einen Namen eingeben.'),
-				getMaxLengthRule(rule, 64, 'Der Name darf maximal 64 Zeichen lang sein.'),
+				// minLengthRule(rule, 2, 'Der Name'),
+				maxLengthRule(rule, 64, 'Der Name'),
 			],
+		}),
+
+		defineField({
+			title: 'Beschreibung',
+			name: 'description',
+			type: 'simpleBlockContent',
+			description: 'Eine Beschreibung der Gruppe / Mannschaft.',
+			// validation: rule => [requiredRule(rule, 'Die Beschreibung')],
 		}),
 
 		defineField({
@@ -51,7 +59,7 @@ const group = defineType({
 					{ title: 'Layout Spalte Zeile', value: 'RiLayoutColumnLine' },
 				],
 			},
-			validation: rule => [getRequiredRule(rule, '"Icon"')],
+			// validation: rule => [requiredRule(rule, 'Das Icon')],
 		}),
 
 		defineField({

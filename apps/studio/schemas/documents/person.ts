@@ -4,7 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { emailField, phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
-import { getMaxLengthRule, getMinLengthRule, getRequiredRule } from '@/shared/validation-rules';
+import { maxLengthRule } from '@/shared/validation-rules';
 
 const person = defineType({
 	title: 'Ansprechpartner',
@@ -39,7 +39,7 @@ const person = defineType({
 							type: 'reference',
 							to: [{ type: 'group' }],
 							description: 'Die Gruppe oder Abteilung der Person.',
-							validation: rule => [getRequiredRule(rule, 'Rolle oder Funktion')],
+							// validation: rule => [requiredRule(rule, 'Die Rolle oder Funktion')],
 						}),
 
 						defineField({
@@ -48,7 +48,7 @@ const person = defineType({
 							type: 'reference',
 							to: [{ type: 'role' }],
 							description: 'Die Rolle oder Funktion der Person (z.B. Vorstand Finanzen).',
-							validation: rule => [getRequiredRule(rule, 'Rolle oder Funktion')],
+							// validation: rule => [requiredRule(rule, 'Die Rolle oder Funktion')],
 						}),
 
 						defineField({
@@ -57,8 +57,8 @@ const person = defineType({
 							type: 'text',
 							description: 'Eine kurze Beschreibung der Person.',
 							validation: rule => [
-								getMinLengthRule(rule, 32, 'Die Beschreibung (Vision)'),
-								getMaxLengthRule(rule, 200, 'Die Beschreibung (Vision)'),
+								// minLengthRule(rule, 32, 'Die Beschreibung (Vision)'),
+								maxLengthRule(rule, 200, 'Die Beschreibung (Vision)'),
 							],
 						}),
 					],

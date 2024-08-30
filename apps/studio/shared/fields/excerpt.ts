@@ -1,15 +1,13 @@
 import { defineField } from 'sanity';
 
-import { getRequiredRule } from '../validation-rules';
-
 export const excerptField = defineField({
-	title: 'Excerpt',
+	title: 'Vorschautext',
 	name: 'excerpt',
 	type: 'simpleBlockContent',
 	description:
 		'Kurze Beschreibung, die auf den Übersichtsseiten angezeigt wird und wenn Leute deinen Beitrag auf sozialen Medien teilen.',
 	group: 'excerpt',
-	validation: rule => [getRequiredRule(rule, 'Excerpt')],
+	// validation: rule => [requiredRule(rule, 'Der Vorschautext')],
 });
 
 export const featuredImageField = defineField({

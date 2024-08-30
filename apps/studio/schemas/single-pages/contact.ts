@@ -6,7 +6,6 @@ import { content, general, meta } from '@/shared/field-groups';
 import { contactPersonsField } from '@/shared/fields/content';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
-import { getRequiredRule } from '@/shared/validation-rules';
 
 const contactPage = defineType({
 	title: 'Kontakt',
@@ -32,7 +31,7 @@ const contactPage = defineType({
 			of: [{ type: 'contactNameMail' }],
 			description: 'Personen oder Bereiche, die im Kontaktformular kontaktiert werden können.',
 			group: 'content',
-			validation: rule => [getRequiredRule(rule, '"Kontakt zu"')],
+			// validation: rule => [requiredRule(rule, 'Das Feld "Kontakt zu")],
 		}),
 
 		contactPersonsField,

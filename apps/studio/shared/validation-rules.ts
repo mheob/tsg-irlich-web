@@ -34,31 +34,33 @@ function getTextByInputType(inputType: RuleOptions['inputType'], length: number)
 	return inputType === 'array' ? arrayOutput : 'Zeichen';
 }
 
-export function getExactLengthRule<Rule extends ExactLengthRule<Rule>>(
+export function exactLengthRule<Rule extends ExactLengthRule<Rule>>(
 	rule: Rule,
 	length: number,
 	title: string,
-	options = { ...defaultRuleOptions, type: 'warning' },
+	options = defaultRuleOptions,
 ) {
+	options = { ...defaultRuleOptions, type: 'warning', ...options };
 	const validationRule = rule.length(length);
 	const itemText = getTextByInputType(options.inputType, length);
 	const message = options.message ?? `${title} muss genau ${length} ${itemText} lang sein`;
 	return options.type === 'error' ? validationRule.error(message) : validationRule.warning(message);
 }
 
-export function getMaxLengthRule<Rule extends MaxLengthRule<Rule>>(
+export function maxLengthRule<Rule extends MaxLengthRule<Rule>>(
 	rule: Rule,
 	length: number,
 	title: string,
-	options = { ...defaultRuleOptions, type: 'warning' },
+	options = defaultRuleOptions,
 ) {
+	options = { ...defaultRuleOptions, type: 'warning', ...options };
 	const validationRule = rule.max(length);
 	const itemText = getTextByInputType(options.inputType, length);
 	const message = options.message ?? `${title} sollte maximal ${length} ${itemText} lang sein`;
 	return options.type === 'error' ? validationRule.error(message) : validationRule.warning(message);
 }
 
-export function getMinLengthRule<Rule extends MinLengthRule<Rule>>(
+export function minLengthRule<Rule extends MinLengthRule<Rule>>(
 	rule: Rule,
 	length: number,
 	title: string,
@@ -70,13 +72,13 @@ export function getMinLengthRule<Rule extends MinLengthRule<Rule>>(
 	return options.type === 'error' ? validationRule.error(message) : validationRule.warning(message);
 }
 
-export function getPhoneFieldRegexRule(rule: StringRule) {
+export function phoneFieldRegexRule(rule: StringRule) {
 	return rule
 		.regex(/^\+\d{2}\s\d{2,5}\s\d+$/)
-		.warning('Telefonnummer sollte in der Form +49 123 456789 geschrieben werden');
+		.warning('Die Telefonnummer sollte in der Form +49 123 456789 geschrieben werden.');
 }
 
-export function getRequiredRule<Rule extends RequiredRule<Rule>>(
+export function requiredRule<Rule extends RequiredRule<Rule>>(
 	rule: Rule,
 	title: string,
 	options = defaultRuleOptions,

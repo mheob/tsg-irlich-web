@@ -1,12 +1,7 @@
 import { RiMap2Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import {
-	getExactLengthRule,
-	getMaxLengthRule,
-	getMinLengthRule,
-	getRequiredRule,
-} from '@/shared/validation-rules';
+import { maxLengthRule } from '@/shared/validation-rules';
 
 const venue = defineType({
 	title: 'Sportstätte',
@@ -19,8 +14,8 @@ const venue = defineType({
 			name: 'title',
 			type: 'string',
 			validation: rule => [
-				getMinLengthRule(rule, 2, 'Bitte einen Namen eingeben.'),
-				getMaxLengthRule(rule, 64, 'Der Name darf maximal 64 Zeichen lang sein.'),
+				// minLengthRule(rule, 3, 'Der Name'),
+				maxLengthRule(rule, 64, 'Der Name'),
 			],
 		}),
 
@@ -29,7 +24,7 @@ const venue = defineType({
 			name: 'description',
 			type: 'simpleBlockContent',
 			description: 'Eine kurze Beschreibung der Sportstätte.',
-			validation: rule => [getRequiredRule(rule, '"Beschreibung"')],
+			// validation: rule => [requiredRule(rule, 'Die Beschreibung')],
 		}),
 
 		defineField({
@@ -48,7 +43,7 @@ const venue = defineType({
 					{ title: 'Rasenplatz', value: 'grass' },
 				],
 			},
-			validation: rule => [getRequiredRule(rule, '"Art"')],
+			// validation: rule => [requiredRule(rule, 'Die Art')],
 		}),
 
 		defineField({
@@ -62,8 +57,8 @@ const venue = defineType({
 					name: 'name',
 					type: 'string',
 					validation: rule => [
-						getMinLengthRule(rule, 2, 'Bitte einen Name des Standortes eingeben.'),
-						getMaxLengthRule(rule, 64, 'Der Name darf maximal 64 Zeichen lang sein.'),
+						// minLengthRule(rule, 2, 'Der Name'),
+						maxLengthRule(rule, 64, 'Der Name'),
 					],
 				}),
 
@@ -72,8 +67,8 @@ const venue = defineType({
 					name: 'street',
 					type: 'string',
 					validation: rule => [
-						getMinLengthRule(rule, 2, 'Bitte den Straßennamen eingeben.'),
-						getMaxLengthRule(rule, 128, 'Die Straße darf maximal 128 Zeichen lang sein.'),
+						// minLengthRule(rule, 2, 'Die Straße'),
+						maxLengthRule(rule, 128, 'Die Straße'),
 					],
 				}),
 
@@ -82,8 +77,8 @@ const venue = defineType({
 					name: 'houseNumber',
 					type: 'string',
 					validation: rule => [
-						getMinLengthRule(rule, 1, 'Bitte die Hausnummer eingeben.'),
-						getMaxLengthRule(rule, 8, 'Die Hausnummer darf maximal 16 Zeichen lang sein.'),
+						// minLengthRule(rule, 1, 'Die Hausnummer'),
+						maxLengthRule(rule, 8, 'Die Hausnummer'),
 					],
 				}),
 
@@ -91,9 +86,11 @@ const venue = defineType({
 					title: 'Postleitzahl',
 					name: 'zipCode',
 					type: 'string',
-					validation: rule => [
-						getExactLengthRule(rule, 5, 'Die Postleitzahl muss genau 5 Zeichen lang sein.'),
-					],
+					// validation: rule => [
+					// 	exactLengthRule(rule, 5, 'Die Postleitzahl muss genau 5 Zeichen lang sein.', {
+					// 		type: 'error',
+					// 	}),
+					// ],
 				}),
 
 				defineField({
@@ -101,8 +98,8 @@ const venue = defineType({
 					name: 'city',
 					type: 'string',
 					validation: rule => [
-						getMinLengthRule(rule, 2, 'Bitte den Stadtname eingeben.'),
-						getMaxLengthRule(rule, 64, 'Die Stadt darf maximal 64 Zeichen lang sein.'),
+						// minLengthRule(rule, 3, 'Die Stadt'),
+						maxLengthRule(rule, 64, 'Die Stadt'),
 					],
 				}),
 			],

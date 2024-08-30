@@ -28,7 +28,7 @@ const author = defineType({
 			description: 'Der Jobtitel bzw. Rolle oder Funktion des Autors.',
 			group: 'additionalInformation',
 			validation: rule => [
-				rule.required().min(5).error('Der Jobtitel muss mindestens 5 Zeichen lang sein.'),
+				// rule.required().min(5).error('Der Jobtitel muss mindestens 5 Zeichen lang sein.'),
 				rule.max(64).warning('Der Jobtitel sollte maximal 64 Zeichen lang sein.'),
 			],
 		}),

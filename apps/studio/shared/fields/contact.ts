@@ -1,6 +1,6 @@
 import { defineField } from 'sanity';
 
-import { getPhoneFieldRegexRule } from '../validation-rules';
+import { phoneFieldRegexRule } from '../validation-rules';
 
 export const addressField = defineField({
 	title: 'Anschrift',
@@ -21,5 +21,5 @@ export const phoneField = defineField({
 	name: 'phone',
 	type: 'string',
 	group: 'contact',
-	validation: rule => [getPhoneFieldRegexRule(rule)],
+	validation: rule => [phoneFieldRegexRule(rule)],
 });

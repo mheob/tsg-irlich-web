@@ -3,7 +3,7 @@ import { defineField, defineType } from 'sanity';
 
 import { meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/fields/meta';
-import { getMaxLengthRule, getMinLengthRule, getRequiredRule } from '@/shared/validation-rules';
+import { maxLengthRule } from '@/shared/validation-rules';
 
 const siteSettings = defineType({
 	title: 'Generelle Einstellungen',
@@ -49,7 +49,7 @@ const siteSettings = defineType({
 					name: 'title',
 					type: 'string',
 					description: 'Titel des Newsletters',
-					validation: rule => [getRequiredRule(rule, '"Newsletter Titel"')],
+					// validation: rule => [requiredRule(rule, 'Der "Newsletter Titel"')],
 				}),
 
 				defineField({
@@ -58,8 +58,8 @@ const siteSettings = defineType({
 					type: 'string',
 					description: 'Text für den Newsletter Absende-Button',
 					validation: rule => [
-						getMinLengthRule(rule, 3, '"Newsletter Button Text"'),
-						getMaxLengthRule(rule, 18, '"Newsletter Button Text"'),
+						// minLengthRule(rule, 3, 'Der "Newsletter Button Text"'),
+						maxLengthRule(rule, 18, 'Der "Newsletter Button Text"'),
 					],
 				}),
 			],
