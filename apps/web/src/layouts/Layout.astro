@@ -1,0 +1,61 @@
+---
+// https://docs.astro.build/en/guides/view-transitions/
+import { ViewTransitions } from 'astro:transitions';
+
+import MainNavi from '@/components/navigation/MainNavi.astro';
+
+import '@fontsource/anton';
+import '@fontsource/inter';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf8" />
+		<meta content="width=device-width" name="viewport" />
+		<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+		<meta content={Astro.generator} name="generator" />
+		<title>{title}</title>
+		<ViewTransitions />
+	</head>
+	<body>
+		<div class="h-dvh">
+			<header>
+				<MainNavi />
+			</header>
+
+			<main>
+				<slot />
+			</main>
+
+			<header class="bg-gray-light grid h-40 place-content-center">
+				FOOTER: TSG Irlich seit 1882
+			</header>
+		</div>
+	</body>
+</html>
+
+<style is:global>
+	@tailwind base;
+	@tailwind components;
+	@tailwind utilities;
+
+	@layer base {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		.title,
+		.sub-title {
+			@apply font-sans-serif;
+		}
+	}
+</style>

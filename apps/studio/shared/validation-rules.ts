@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-object-as-default-parameter */
+
 import type { StringRule } from 'sanity';
 
 interface RuleOptions {

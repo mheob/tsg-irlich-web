@@ -24,19 +24,24 @@ export function isExcludedSingletonListItem(id?: string) {
 export function getGroup(
 	S: StructureBuilder,
 	name: DocumentGroup,
-	typeDefArray?: DocumentDefinition[],
+	typeDefinitionArray?: DocumentDefinition[],
 ): ListItemBuilder[] {
 	switch (name) {
-		case 'default':
+		case 'default': {
 			return getGroupNews(S);
-		case 'persons':
+		}
+		case 'persons': {
 			return getGroupPersons(S);
-		case 'settings':
+		}
+		case 'settings': {
 			return getGroupSettings(S);
-		case 'singletons':
-			return getGroupSingletons(S, typeDefArray);
-		default:
+		}
+		case 'singletons': {
+			return getGroupSingletons(S, typeDefinitionArray);
+		}
+		default: {
 			return getGroupSettings(S);
+		}
 	}
 }
 
@@ -79,9 +84,9 @@ function getGroupSettings(S: StructureBuilder): ListItemBuilder[] {
 
 function getGroupSingletons(
 	S: StructureBuilder,
-	typeDefArray?: DocumentDefinition[],
+	typeDefinitionArray?: DocumentDefinition[],
 ): ListItemBuilder[] {
-	if (!typeDefArray) return [];
+	if (!typeDefinitionArray) return [];
 	return [
 		S.listItem()
 			.title('Einzelseiten')
@@ -91,15 +96,17 @@ function getGroupSingletons(
 				S.list()
 					.title('Einzelseiten')
 					.items(
-						typeDefArray
-							.map(typeDef => {
+						typeDefinitionArray
+							.map(typeDefinition => {
 								return S.listItem()
-									.title(typeDef.title || typeDef.name)
-									.id(typeDef.name)
-									.icon(typeDef.icon)
-									.child(S.document().schemaType(typeDef.name).documentId(typeDef.name));
+									.title(typeDefinition.title ?? typeDefinition.name)
+									.id(typeDefinition.name)
+									.icon(typeDefinition.icon)
+									.child(
+										S.document().schemaType(typeDefinition.name).documentId(typeDefinition.name),
+									);
 							})
-							.filter(typeDef => isExcludedSingletonListItem(typeDef.getId())),
+							.filter(typeDefinition => isExcludedSingletonListItem(typeDefinition.getId())),
 					),
 			),
 	];
