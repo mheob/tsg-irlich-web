@@ -26,6 +26,7 @@
 
 	// Enable eslint for all supported languages
 	"eslint.validate": [
+		"astro",
 		"javascript",
 		"javascriptreact",
 		"typescript",
@@ -37,6 +38,8 @@
 		"yaml",
 		"toml"
 	],
+
+	// SonarLint
 	"sonarlint.connectedMode.project": {
 		"connectionId": "mheob",
 		"projectKey": "mheob_tsg-irlich-web"

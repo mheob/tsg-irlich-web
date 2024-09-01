@@ -1,0 +1,32 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import CtaButton from '@/components/items/CtaButton.astro';
+
+const navItems = [
+	{ href: '#!', label: 'Home' },
+	{ href: '#!', label: 'Verein' },
+	{ href: '#!', label: 'Gruppen' },
+	{ href: '#!', label: 'Aktuelles' },
+	{ href: '#!', label: 'Kontakt' },
+	{ href: '#!', label: 'Mitgliedschaft' },
+];
+---
+
+<nav class="mx-auto flex max-w-screen-2xl flex-grow items-center justify-between gap-12 p-5">
+	<a href="#!"
+		><Icon class="drop-shadow-xl" height={120} name="logos/tsg-irlich-logo" width={160} /></a
+	>
+
+	<ul class="flex flex-wrap items-center justify-center gap-12 font-black">
+		{
+			navItems.map(({ href, label }) => (
+				<li class="uppercase first:border-b-4">
+					<a href={href}>{label}</a>
+				</li>
+			))
+		}
+	</ul>
+
+	<CtaButton href="#!" type="secondary">KONTAKT AUFNEHMEN</CtaButton>
+</nav>

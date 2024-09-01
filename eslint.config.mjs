@@ -17,6 +17,12 @@ export default mheob(
 		},
 	},
 	{
+		files: ['**/*.astro'],
+		rules: {
+			'unicorn/filename-case': ['error', { cases: { kebabCase: true, pascalCase: true } }],
+		},
+	},
+	{
 		files: ['apps/studio/{schemas,shared}/**/*.{ts,tsx}'],
 		// "extends": "@sanity/eslint-config-studio"
 		rules: {

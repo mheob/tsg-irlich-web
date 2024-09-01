@@ -15,13 +15,11 @@
 		"prepare": "husky"
 	},
 	"lint-staged": {
-		"*": [
-			"eslint --fix",
-			"pnpm run lint:cspell"
-		]
+		"*": "eslint --fix",
+		"!*.{svg}": "pnpm run lint:cspell"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^19.4.0",
+		"@commitlint/cli": "^19.4.1",
 		"@cspell/dict-de-de": "^4.0.0",
 		"@mheob/commitlint-config": "^1.1.2",
 		"@mheob/eslint-config": "^6.1.3",
@@ -34,7 +32,9 @@
 		"husky": "^9.1.5",
 		"lint-staged": "^15.2.9",
 		"prettier": "^3.3.3",
-		"turbo": "^2.0.14",
+		"prettier-plugin-astro": "^0.14.1",
+		"prettier-plugin-tailwindcss": "^0.6.6",
+		"turbo": "^2.1.0",
 		"typescript": "^5.5.4"
 	},
 	"packageManager": "pnpm@9.9.0+sha512.60c18acd138bff695d339be6ad13f7e936eea6745660d4cc4a776d5247c540d0edee1a563695c183a66eb917ef88f2b4feb1fc25f32a7adcadc7aaf3438e99c1",

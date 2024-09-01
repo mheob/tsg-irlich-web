@@ -1,21 +1,8 @@
 ---
-
+import Hero from '@/components/page-sections/home/hero.astro';
+import Layout from '@/layouts/Layout.astro';
 ---
 
-<html lang="de">
-	<head>
-		<meta charset="utf-8" />
-		<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-		<meta content="width=device-width" name="viewport" />
-		<meta content={Astro.generator} name="generator" />
-		<title>Astro</title>
-	</head>
-
-	<body>
-		<header>HEADER: TSG Irlich seit 1882</header>
-
-		<h1>CONTENT: TSG Irlich seit 1882</h1>
-
-		<header>FOOTER: TSG Irlich seit 1882</header>
-	</body>
-</html>
+<Layout title="TSG --> Welcome to Astro.">
+	<Hero />
+</Layout>
