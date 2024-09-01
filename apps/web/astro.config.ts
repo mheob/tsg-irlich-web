@@ -1,6 +1,6 @@
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel/static';
 import sanity from '@sanity/astro';
 import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
@@ -9,7 +9,14 @@ import { apiVersion, dataset, projectId } from './src/env';
 
 // https://astro.build/config
 export default defineConfig({
-	adapter: vercel(),
+	adapter: vercel({
+		imagesConfig: {
+			domains: ['cdn.sanity.io'],
+			formats: ['image/avif', 'image/webp'],
+			sizes: [320, 640, 1280],
+		},
+		imageService: true,
+	}),
 	integrations: [
 		icon(),
 		react(),
@@ -23,5 +30,5 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 	],
-	output: 'server',
+	output: 'static',
 });
