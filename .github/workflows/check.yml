@@ -4,6 +4,10 @@ on:
   pull_request:
   push:
 
+env:
+  PUBLIC_SANITY_DATASET: abc123
+  PUBLIC_SANITY_PROJECT_ID: abc123
+
 jobs:
   check:
     name: Check
