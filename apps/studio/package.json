@@ -23,12 +23,12 @@
 		"sanity": "^3.56.0",
 		"sanity-plugin-media": "^2.3.2",
 		"slugify": "^1.6.6",
-		"styled-components": "^6.1.12",
+		"styled-components": "^6.1.13",
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@sanity/eslint-config-studio": "^4.0.0",
-		"@types/react": "^18.3.4",
+		"@types/react": "^18.3.5",
 		"eslint": "^9.9.1",
 		"typescript": "^5.5.4"
 	}
