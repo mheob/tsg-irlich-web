@@ -1,7 +1,7 @@
 ---
 import CtaButton from '@/components/items/CtaButton.astro';
 
-import TSGLogo from '../icons/tsg-logo.astro';
+import TSGLogo from '../icons/TsgLogo.astro';
 
 const navItems = [
 	{ href: '#!', label: 'Home' },
@@ -13,10 +13,7 @@ const navItems = [
 ];
 ---
 
-<nav
-	class="mx-auto flex max-w-screen-2xl flex-grow items-center justify-between gap-12 p-5"
-	id="top"
->
+<nav class="container mx-auto flex flex-grow items-center justify-between gap-12 p-5" id="top">
 	<a aria-label="Logo der TSG Irlich 1882 e. V." href="/"><TSGLogo /></a>
 
 	<ul class="flex flex-wrap items-center justify-center gap-12 font-black">

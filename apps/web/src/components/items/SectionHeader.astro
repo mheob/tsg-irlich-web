@@ -1,13 +1,14 @@
 ---
 import { isHTML } from '@/utils/content';
 
-type Props = {
+interface Props {
+	isCentered?: boolean;
 	level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | undefined;
 	subTitle?: string | undefined;
 	title: string;
-};
+}
 
-const { level, subTitle, title } = Astro.props;
+const { isCentered = false, level = 'h2', subTitle, title } = Astro.props;
 
 const HeadingTag = level as keyof HTMLHeadingElement;
 
@@ -15,17 +16,21 @@ const slotContent = await Astro.slots.render('default');
 const isHTMLContent = isHTML(slotContent);
 ---
 
-{subTitle && <div class="sub-title">{subTitle}</div>}
-<HeadingTag class="title">{title}</HeadingTag>
-{
-	isHTMLContent ? (
-		<slot />
-	) : (
-		<p>
+<header class:list={[{ 'text-center': isCentered }]}>
+	{subTitle && <div class:list={[{ 'mx-auto': isCentered }, 'sub-title']}>{subTitle}</div>}
+
+	<HeadingTag class="title">{title}</HeadingTag>
+
+	{
+		isHTMLContent ? (
 			<slot />
-		</p>
-	)
-}
+		) : (
+			<p class:list={[{ 'mx-auto': isCentered }, 'mt-6 max-w-3xl pr-16 text-xl']}>
+				<slot />
+			</p>
+		)
+	}
+</header>
 
 <style>
 	.sub-title {
@@ -48,6 +53,6 @@ const isHTMLContent = isHTML(slotContent);
 	}
 
 	.title {
-		@apply mt-8 text-7xl uppercase;
+		@apply mt-4 text-7xl;
 	}
 </style>

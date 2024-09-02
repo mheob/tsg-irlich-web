@@ -1,10 +1,10 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-type Props = {
+interface Props {
 	class?: string;
 	height?: number;
-};
+}
 
 const { class: className, height = 120 } = Astro.props;
 

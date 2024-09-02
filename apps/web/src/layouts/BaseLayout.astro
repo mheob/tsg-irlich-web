@@ -64,9 +64,13 @@ const { title } = Astro.props;
 			@apply not-italic;
 		}
 
+		p {
+			@apply text-gray;
+		}
+
 		@media screen and (prefers-reduced-motion: no-preference) {
 			html {
-				scroll-behavior: smooth;
+				/* scroll-behavior: smooth; */
 			}
 		}
 	}

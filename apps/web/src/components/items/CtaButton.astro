@@ -1,10 +1,10 @@
 ---
-type Props = {
+interface Props {
 	class?: HTMLAnchorElement['className'];
 	href: HTMLAnchorElement['href'];
 	props?: Omit<HTMLAnchorElement, 'href'>;
 	type?: 'primary' | 'secondary';
-};
+}
 
 const { class: className, href, type = 'primary', ...props } = Astro.props;
 ---
