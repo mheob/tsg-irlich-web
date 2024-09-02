@@ -21,6 +21,7 @@ export default {
 			gray: {
 				DEFAULT: '#3b3b4f',
 				light: '#dfdfe6',
+				lightest: '#f1f2f5',
 			},
 			transparent: 'transparent',
 			white: '#ffffff',

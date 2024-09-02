@@ -1,8 +1,10 @@
 ---
 import Hero from '@/components/page-sections/home/hero.astro';
-import Layout from '@/layouts/Layout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
-<Layout title="TSG --> Welcome to Astro.">
+<BaseLayout title="TSG --> Welcome to Astro.">
 	<Hero />
-</Layout>
+
+	<div class="bg-gray-light z-10 grid h-80 place-content-center text-4xl">CONTENT HERE</div>
+</BaseLayout>
