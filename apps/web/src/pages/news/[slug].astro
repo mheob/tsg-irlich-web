@@ -2,7 +2,7 @@
 import type { InferGetStaticParamsType } from 'astro';
 
 import PortableText from '@/components/content/PortableText.astro';
-import Layout from '@/layouts/Layout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getNewsArticle, getNewsArticles } from '@/lib/sanity/queries/news';
 
 export async function getStaticPaths() {
@@ -18,10 +18,10 @@ const { slug } = Astro.params as Params;
 const article = await getNewsArticle(slug);
 ---
 
-<Layout title={`${article.title} | TSG Irlich seit 1882`}>
+<BaseLayout title={`${article.title} | TSG Irlich seit 1882`}>
 	<h1>{article.title}</h1>
 
 	<p>Excerpt: {article.excerpt}</p>
 
 	<PortableText portableText={article.body} />
-</Layout>
+</BaseLayout>

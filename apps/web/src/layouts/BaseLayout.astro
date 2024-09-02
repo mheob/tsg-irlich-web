@@ -2,10 +2,14 @@
 // https://docs.astro.build/en/guides/view-transitions/
 import { ViewTransitions } from 'astro:transitions';
 
-import MainNavi from '@/components/navigation/MainNavi.astro';
+import Footer from '@/components/layout/Footer.astro';
+import MainNavi from '@/components/layout/MainNavi.astro';
 
 import '@fontsource/anton';
-import '@fontsource/inter';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/400-italic.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/inter/700-italic.css';
 
 interface Props {
 	title: string;
@@ -34,9 +38,7 @@ const { title } = Astro.props;
 				<slot />
 			</main>
 
-			<header class="bg-gray-light grid h-40 place-content-center">
-				FOOTER: TSG Irlich seit 1882
-			</header>
+			<Footer />
 		</div>
 	</body>
 </html>
@@ -56,6 +58,16 @@ const { title } = Astro.props;
 		.title,
 		.sub-title {
 			@apply font-sans-serif;
+		}
+
+		address {
+			@apply not-italic;
+		}
+
+		@media screen and (prefers-reduced-motion: no-preference) {
+			html {
+				scroll-behavior: smooth;
+			}
 		}
 	}
 </style>

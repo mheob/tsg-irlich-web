@@ -1,7 +1,7 @@
 ---
-import { Icon } from 'astro-icon/components';
-
 import CtaButton from '@/components/items/CtaButton.astro';
+
+import TSGLogo from '../icons/tsg-logo.astro';
 
 const navItems = [
 	{ href: '#!', label: 'Home' },
@@ -13,10 +13,11 @@ const navItems = [
 ];
 ---
 
-<nav class="mx-auto flex max-w-screen-2xl flex-grow items-center justify-between gap-12 p-5">
-	<a href="#!"
-		><Icon class="drop-shadow-xl" height={120} name="logos/tsg-irlich-logo" width={160} /></a
-	>
+<nav
+	class="mx-auto flex max-w-screen-2xl flex-grow items-center justify-between gap-12 p-5"
+	id="top"
+>
+	<a href="/"><TSGLogo /></a>
 
 	<ul class="flex flex-wrap items-center justify-center gap-12 font-black">
 		{

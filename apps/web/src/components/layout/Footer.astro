@@ -1,0 +1,111 @@
+---
+import { ArrowUp, Facebook, Instagram, Mail, MapPin, Phone, Youtube } from 'lucide-astro';
+
+import TSGLogo from '../icons/tsg-logo.astro';
+
+const currentYear = new Date().getFullYear();
+const navItems = [
+	{ href: '#!', label: 'Home' },
+	{ href: '#!', label: 'Verein' },
+	{ href: '#!', label: 'Gruppen' },
+	{ href: '#!', label: 'Aktuelles' },
+	{ href: '#!', label: 'Kontakt' },
+	{ href: '#!', label: 'Mitgliedschaft' },
+];
+const socialMedia: { href: string; icon: any; label: string }[] = [
+	{
+		href: '#!',
+		icon: Instagram,
+		label: 'Instagram',
+	},
+	{
+		href: '#!',
+		icon: Facebook,
+		label: 'Facebook',
+	},
+	{
+		href: '#!',
+		icon: Youtube,
+		label: 'Youtube',
+	},
+];
+---
+
+<footer class="bg-brand text-white">
+	<div class="mx-auto max-w-screen-2xl pb-4 pt-40">
+		<div class="flex justify-between">
+			<section class="flex flex-col items-center gap-5">
+				<TSGLogo />
+
+				<h2 class="text-4xl">Folge uns</h2>
+
+				<div class="flex gap-4">
+					{
+						socialMedia.map(({ href, icon: Icon, label }) => (
+							<a
+								class="hover:text-brand-secondary"
+								href={href}
+								rel="noopener noreferrer"
+								target="_blank"
+							>
+								<Icon aria-label={label} size="32" stroke-width="1" />
+							</a>
+						))
+					}
+				</div>
+			</section>
+
+			<div class="text-xl/relaxed">
+				<section class="flex gap-48">
+					<a class="hover:text-brand-secondary flex flex-col items-center gap-4" href="#!">
+						<span class="rounded-full border p-3">
+							<MapPin size="48" stroke-width="1" />
+						</span>
+						<address>Gotenstraße 20<br />56567 Neuwied</address>
+					</a>
+
+					<a class="hover:text-brand-secondary flex flex-col items-center gap-4" href="#!">
+						<span class="rounded-full border p-3">
+							<Phone size="48" stroke-width="1" />
+						</span>
+						<address>+49 123 4567890</address>
+					</a>
+
+					<a class="hover:text-brand-secondary flex flex-col items-center gap-4" href="#!">
+						<span class="rounded-full border p-3">
+							<Mail size="48" stroke-width="1" />
+						</span>
+						<address>info@tsg-irlich.de</address>
+					</a>
+				</section>
+
+				<nav class="mt-12 flex items-center justify-end gap-20">
+					<div class="font-bold">LINKS:</div>
+					<div class="flex gap-8">
+						{
+							navItems.map(({ href, label }) => (
+								<a class="hover:text-brand-secondary" href={href}>
+									{label}
+								</a>
+							))
+						}
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<section class="mt-12 flex justify-between">
+			<div>©{currentYear} TSG Irlich. Alle Rechte vorbehalten.</div>
+			<nav class="flex items-center gap-4">
+				<a class="hover:text-brand-secondary" href="#!">Impressum</a> |
+				<a class="hover:text-brand-secondary" href="#!">Datenschutz</a>
+				<a
+					class="bg-brand-secondary hover:bg-brand-secondary/80 ml-4 rounded-full p-1.5"
+					href="#top"
+				>
+					<ArrowUp class="text-brand bg-transparent" size="32" stroke-width="2" />
+				</a>
+			</nav>
+		</section>
+	</div>
+</footer>
