@@ -8,9 +8,11 @@
 	],
 	"scripts": {
 		"build": "turbo build",
+		"build:affected": "turbo build --affected",
 		"cspell": "cspell .",
 		"dev": "turbo dev",
-		"lint": "turbo lint",
+		"lint": "eslint . --fix && turbo lint",
+		"lint:affected": "turbo lint --affected",
 		"lint:cspell": "cspell --unique --no-progress --no-must-find-files",
 		"prepare": "husky"
 	},

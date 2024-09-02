@@ -1,10 +1,10 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-type Props = {
+interface Props {
 	class?: string;
 	height?: number;
-};
+}
 
 const { class: className, height = 120 } = Astro.props;
 
@@ -12,7 +12,6 @@ const width = height * 1.333_333_333_333_333_3;
 ---
 
 <Icon
-	aria-label="Logo der TSG Irlich 1882 e. V."
 	class:list={['drop-shadow-xl', className]}
 	height={height}
 	name="logos/tsg-irlich-logo"

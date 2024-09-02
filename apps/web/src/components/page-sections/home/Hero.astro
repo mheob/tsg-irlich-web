@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components';
 import { Facebook, Instagram, Youtube } from 'lucide-astro';
 
 import CtaButton from '@/components/items/CtaButton.astro';
-import SectionTitle from '@/components/items/SectionTitle.astro';
+import SectionHeader from '@/components/items/SectionHeader.astro';
 import yoga from '@/images/yoga-tsg-irlich.de.webp';
 
 const socialMedia: { href: string; icon: any; label: string }[] = [
@@ -26,18 +26,20 @@ const socialMedia: { href: string; icon: any; label: string }[] = [
 ];
 ---
 
-<div class="mx-auto mt-[-160px] flex min-h-dvh max-w-screen-2xl items-center p-5 pt-[160px]">
+<section class="container mx-auto mt-[-160px] flex min-h-dvh items-center p-5 pt-[160px]">
 	<div class="bg"></div>
 	<div class="w-1/2">
-		<SectionTitle subTitle="Mit Tradition und Leidenschaft seit 1882">
-			TSG Irlich — Deine Turn- und Sportgemeinde in Neuwied / Irlich
-		</SectionTitle>
-
-		<p class="text-gray mt-8 pr-16 text-xl">
-			Für Jedermann, der sich gerne bewegt und mit Menschen zusammen ist. Egal ob im Breitensport,
-			beim gemütlichem Beisammensein oder dem Leistungsorientieren Sport. In über XX verschiedenen
-			Sportarten bieten wir dir alles was du brauchst.
-		</p>
+		<SectionHeader
+			level="h1"
+			subTitle="Mit Tradition und Leidenschaft seit 1882"
+			title="TSG IRLICH — DEINE TURN- UND SPORTGEMEINDE IN NEUWIED / IRLICH"
+		>
+			<p class="mt-8 pr-16 text-xl">
+				Für Jedermann, der sich gerne bewegt und mit Menschen zusammen ist. Egal ob im Breitensport,
+				beim gemütlichem Beisammensein oder dem Leistungsorientieren Sport. In über XX verschiedenen
+				Sportarten bieten wir dir alles was du brauchst.
+			</p>
+		</SectionHeader>
 
 		<div class="relative my-12">
 			<CtaButton href="#!">Kontakt aufnehmen</CtaButton>
@@ -58,22 +60,23 @@ const socialMedia: { href: string; icon: any; label: string }[] = [
 			{
 				socialMedia.map(({ href, icon: Icon, label }) => (
 					<a
+						aria-label={label}
 						class="hover:text-brand-secondary z-[1] text-white"
 						href={href}
 						rel="noopener noreferrer"
 						target="_blank"
 					>
-						<Icon aria-label={label} size="32" stroke-width="1" />
+						<Icon size="32" stroke-width="1" />
 					</a>
 				))
 			}
 		</div>
 	</div>
-</div>
+</section>
 
 <style>
 	.bg {
-		@apply bg-gray-lightest absolute inset-0 -z-[9999];
+		@apply absolute inset-0 -z-[9999] bg-white;
 	}
 
 	.bg-circle {

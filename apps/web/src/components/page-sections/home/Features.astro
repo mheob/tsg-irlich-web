@@ -1,0 +1,45 @@
+---
+import type { ComponentProps } from 'astro/types';
+
+import FeatureCards from '@/components/cards/FeatureCards.astro';
+import SectionHeader from '@/components/items/SectionHeader.astro';
+
+const features: ComponentProps<typeof FeatureCards>[] = [
+	{
+		description: 'Die TSG bietet mit vielfältigem Sportangebot jedem Sportler eine Heimat.',
+		icon: 'Dumbbell',
+		title: 'Sportliche Vielfalt',
+	},
+	{
+		description: 'Bei uns trainieren alle Altersgruppen. Vom Kleinkind- bis zum Senioren-Sport.',
+		icon: 'Calendar',
+		title: 'Jung und alt',
+	},
+	{
+		description:
+			'Wir fördern und investieren in die Ausbildung unsere ehrenamtlichen Übungsleiterinnen und Übungsleiter.',
+		icon: 'GraduationCap',
+		title: 'Engagiert und Kompetent',
+	},
+	{
+		description:
+			'Wir engagieren uns im vielfältigen Dorfleben von unserer Heimat - Irlich am Rhein.',
+		icon: 'House',
+		title: 'Irlich - Unsere Heimat',
+	},
+];
+---
+
+<section class="bg-gray-lightest">
+	<div class="container mx-auto py-28">
+		<SectionHeader subTitle="Features" title="Wir bieten Dir" isCentered>
+			Wir bieten Dir eine Vielzahl von Sportangeboten, die Deine Fitness, Gesundheit und Gesundheit
+			steigern. Zudem sehen wir uns nicht als Dienstleister, sondern als Partner, der Dir bei Deinem
+			Ziel hilft. Die Gemeinschaft ist unser Hauptanliegen.
+		</SectionHeader>
+
+		<div class="mt-16 grid grid-cols-2 place-content-center gap-12">
+			{features.map(props => <FeatureCards {...props} />)}
+		</div>
+	</div>
+</section>
