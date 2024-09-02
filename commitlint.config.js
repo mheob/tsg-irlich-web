@@ -1,18 +1,18 @@
 import { existsSync, readdirSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import defaultConfig from '@mheob/commitlint-config';
 
-const currentPath = dirname(fileURLToPath(import.meta.url));
+const currentPath = path.dirname(fileURLToPath(import.meta.url));
 
 function getScopes() {
 	const defaultScopes = ['deps', 'release', 'repo'];
 
-	const appsPath = resolve(currentPath, 'apps');
+	const appsPath = path.resolve(currentPath, 'apps');
 	const apps = existsSync(appsPath) ? readdirSync(appsPath) : [];
 
-	const packagesPath = resolve(currentPath, 'packages');
+	const packagesPath = path.resolve(currentPath, 'packages');
 	const packages = existsSync(packagesPath) ? readdirSync(packagesPath) : [];
 
 	return [...defaultScopes, ...apps, ...packages];

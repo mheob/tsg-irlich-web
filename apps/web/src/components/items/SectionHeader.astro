@@ -1,0 +1,53 @@
+---
+import { isHTML } from '@/utils/content';
+
+type Props = {
+	level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | undefined;
+	subTitle?: string | undefined;
+	title: string;
+};
+
+const { level, subTitle, title } = Astro.props;
+
+const HeadingTag = level as keyof HTMLHeadingElement;
+
+const slotContent = await Astro.slots.render('default');
+const isHTMLContent = isHTML(slotContent);
+---
+
+{subTitle && <div class="sub-title">{subTitle}</div>}
+<HeadingTag class="title">{title}</HeadingTag>
+{
+	isHTMLContent ? (
+		<slot />
+	) : (
+		<p>
+			<slot />
+		</p>
+	)
+}
+
+<style>
+	.sub-title {
+		@apply relative w-fit px-16 text-xl uppercase;
+	}
+
+	.sub-title::before,
+	.sub-title::after {
+		content: '';
+		top: calc(50% - 2px);
+		@apply absolute w-12 border;
+	}
+
+	.sub-title::before {
+		left: 0;
+	}
+
+	.sub-title::after {
+		right: 0;
+	}
+
+	.title {
+		@apply mt-8 text-7xl uppercase;
+	}
+</style>
