@@ -1,0 +1,56 @@
+---
+import CtaButton from '@/components/items/CtaButton.astro';
+import SectionHeader from '@/components/items/SectionHeader.astro';
+---
+
+<section class="relative items-center">
+	<div class="bg"></div>
+
+	<div class="container mx-auto grid grid-cols-[55%,45%]">
+		<div>
+			<div class="bg-rounded-edge"></div>
+			<div
+				class="bg-brand-secondary absolute left-[calc(28%-12rem)] top-20 grid h-96 w-96 place-content-center rounded-full"
+			>
+				IMAGE 1
+			</div>
+			<div
+				class="bg-brand-secondary absolute left-[calc(13%-8rem)] top-[calc(50%-3rem)] grid h-64 w-64 place-content-center rounded-full"
+			>
+				IMAGE 2
+			</div>
+			<div
+				class="bg-brand-secondary absolute bottom-24 left-[calc(29%-8rem)] grid h-64 w-64 place-content-center rounded-full"
+			>
+				IMAGE 3
+			</div>
+		</div>
+
+		<div class="py-60">
+			<SectionHeader
+				level="h1"
+				subTitle="Unsere Vision"
+				title="Was sind unsere Ziele? Wofür stehen wir?"
+			>
+				Lorem ipsum dolor sit amet consectetur. Nullam massa pharetra purus lacus fringilla auctor
+				purus. Netus tellus duis viverra pellentesque et erat egestas. Aliquam aenean sit sapien et
+				nunc. Convallis senectus et elit venenatis hendrerit. Quis vel etiam vitae feugiat cras sem.
+				Feugiat ipsum sagittis tellus laoreet quis habitant libero porta amet. Ante urna.
+			</SectionHeader>
+
+			<CtaButton class="relative mt-12" href="#!">Erfahren Sie mehr über uns</CtaButton>
+		</div>
+	</div>
+</section>
+
+<style>
+	.bg {
+		@apply absolute inset-0 -z-[9999] bg-white;
+	}
+
+	.bg-rounded-edge {
+		@apply bg-brand absolute inset-y-0 left-0 -z-[9998] w-[30%];
+		aspect-ratio: 2/3;
+		clip-path: ellipse(100% 85% at 0% 50%);
+	}
+</style>

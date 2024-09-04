@@ -7,7 +7,7 @@ export default mheob(
 	},
 	// From the second arguments they are ESLint Flat Configs you can have multiple configs
 	{
-		ignores: [],
+		ignores: ['.sonarlint'],
 	},
 	{
 		rules: {

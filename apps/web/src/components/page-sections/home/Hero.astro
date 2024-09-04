@@ -26,50 +26,50 @@ const socialMedia: { href: string; icon: any; label: string }[] = [
 ];
 ---
 
-<section class="container mx-auto mt-[-160px] flex min-h-dvh items-center p-5 pt-[160px]">
-	<div class="bg"></div>
-	<div class="w-1/2">
-		<SectionHeader
-			level="h1"
-			subTitle="Mit Tradition und Leidenschaft seit 1882"
-			title="TSG IRLICH — DEINE TURN- UND SPORTGEMEINDE IN NEUWIED / IRLICH"
-		>
-			<p class="mt-8 pr-16 text-xl">
+<section class="relative">
+	<div class="container mx-auto mt-[-160px] flex min-h-dvh items-center p-5 pt-[160px]">
+		<div class="bg"></div>
+		<div class="w-1/2">
+			<SectionHeader
+				level="h1"
+				subTitle="Mit Tradition und Leidenschaft seit 1882"
+				title="TSG IRLICH — DEINE TURN- UND SPORTGEMEINDE IN NEUWIED / IRLICH"
+			>
 				Für Jedermann, der sich gerne bewegt und mit Menschen zusammen ist. Egal ob im Breitensport,
 				beim gemütlichem Beisammensein oder dem Leistungsorientieren Sport. In über XX verschiedenen
 				Sportarten bieten wir dir alles was du brauchst.
-			</p>
-		</SectionHeader>
+			</SectionHeader>
 
-		<div class="relative my-12">
-			<CtaButton href="#!">Kontakt aufnehmen</CtaButton>
-			<Icon
-				aria-hidden="true"
-				class="text-brand absolute -top-10 left-[35%] text-8xl"
-				name="design/arrow-cta"
-			/>
+			<div class="relative mt-12">
+				<CtaButton href="#!">Kontakt aufnehmen</CtaButton>
+				<Icon
+					aria-hidden="true"
+					class="text-brand absolute -top-10 left-[35%] text-8xl"
+					name="design/arrow-cta"
+				/>
+			</div>
 		</div>
-	</div>
 
-	<div class="ml-auto">
-		<div class="bg-circle"></div>
-		<div class="bg-balls"></div>
-		<Image alt="Ein Frau, die am meditieren ist." class="design" src={yoga} />
+		<div class="ml-auto">
+			<div class="bg-rounded-edge"></div>
+			<div class="bg-balls"></div>
+			<Image alt="Ein Frau, die am meditieren ist." class="design" src={yoga} />
 
-		<div class="flex flex-col gap-10 text-white">
-			{
-				socialMedia.map(({ href, icon: Icon, label }) => (
-					<a
-						aria-label={label}
-						class="hover:text-brand-secondary z-[1] text-white"
-						href={href}
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						<Icon size="32" stroke-width="1" />
-					</a>
-				))
-			}
+			<div class="flex flex-col gap-10 text-white">
+				{
+					socialMedia.map(({ href, icon: Icon, label }) => (
+						<a
+							aria-label={label}
+							class="hover:text-brand-secondary z-[1] text-white"
+							href={href}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							<Icon size="32" stroke-width="1" />
+						</a>
+					))
+				}
+			</div>
 		</div>
 	</div>
 </section>
@@ -79,11 +79,10 @@ const socialMedia: { href: string; icon: any; label: string }[] = [
 		@apply absolute inset-0 -z-[9999] bg-white;
 	}
 
-	.bg-circle {
-		@apply bg-brand absolute -bottom-[160px] -top-[160px] right-0 -z-[9998] w-[40%];
-		/* cspell:disable-next-line */
-		mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' viewBox='0 0 1000 1500'%3E%3Cpath fill='currentColor' fill-rule='nonzero' d='M0 750.002c0 414.215 223.857 750.002 500 750.002h500V-.001H500C223.857 0 0 335.787 0 750.002Z'/%3E%3C/svg%3E%0A");
-		mask-size: cover;
+	.bg-rounded-edge {
+		@apply bg-brand absolute inset-y-0 right-0 -z-[9998] w-[40%];
+		aspect-ratio: 2/3;
+		clip-path: ellipse(100% 85% at 100% 50%);
 	}
 
 	.bg-balls {
