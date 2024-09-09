@@ -1,10 +1,10 @@
 ---
 import type { ComponentProps } from 'astro/types';
 
-import FeatureCards from '@/components/cards/FeatureCards.astro';
+import FeatureCard from '@/components/cards/FeatureCard.astro';
 import SectionHeader from '@/components/items/SectionHeader.astro';
 
-const features: ComponentProps<typeof FeatureCards>[] = [
+const features: ComponentProps<typeof FeatureCard>[] = [
 	{
 		description: 'Die TSG bietet mit vielfältigem Sportangebot jedem Sportler eine Heimat.',
 		icon: 'Dumbbell',
@@ -31,7 +31,7 @@ const features: ComponentProps<typeof FeatureCards>[] = [
 ---
 
 <section class="bg-gray-lightest">
-	<div class="container mx-auto py-28">
+	<div class="container mx-auto px-5 py-28">
 		<SectionHeader subTitle="Features" title="Wir bieten Dir" isCentered>
 			Wir bieten Dir eine Vielzahl von Sportangeboten, die Deine Fitness, Gesundheit und Gesundheit
 			steigern. Zudem sehen wir uns nicht als Dienstleister, sondern als Partner, der Dir bei Deinem
@@ -39,7 +39,7 @@ const features: ComponentProps<typeof FeatureCards>[] = [
 		</SectionHeader>
 
 		<div class="mt-16 grid grid-cols-2 place-content-center gap-12">
-			{features.map(props => <FeatureCards {...props} />)}
+			{features.map(props => <FeatureCard {...props} />)}
 		</div>
 	</div>
 </section>
