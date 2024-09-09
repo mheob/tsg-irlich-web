@@ -1,9 +1,14 @@
 ---
-import Features from '@/components/page-sections/home/Features.astro';
-import Groups from '@/components/page-sections/home/Groups.astro';
-import Hero from '@/components/page-sections/home/Hero.astro';
-import Vision from '@/components/page-sections/home/Vision.astro';
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import { CounterGroup } from '@/components/items';
+import { Features, Groups, Hero, Vision } from '@/components/page-sections/home';
+import { BaseLayout } from '@/layouts';
+
+const values = [
+	{ label: 'Motivierte Trainer', value: 34 },
+	{ label: 'Mitglieder', suffix: '+', value: 700 },
+	{ label: 'Jahre Erfahrung und Tradition', suffix: '+', value: 140 },
+	{ label: 'Trainingsstunden pro Woche', suffix: '+', value: 800 },
+];
 ---
 
 <BaseLayout title="TSG --> Welcome to Astro.">
@@ -11,4 +16,5 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 	<Features />
 	<Vision />
 	<Groups />
+	<CounterGroup values={values} />
 </BaseLayout>
