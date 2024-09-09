@@ -1,9 +1,8 @@
 ---
 import type { ComponentProps } from 'astro/types';
 
-import OfferCard from '@/components/cards/OfferCard.astro';
-import ArrowButtonGroup from '@/components/items/ArrowButtonGroup.astro';
-import SectionHeader from '@/components/items/SectionHeader.astro';
+import { OfferCard } from '@/components/cards';
+import { ArrowButtonGroup, SectionHeader } from '@/components/items';
 
 const offers: Omit<ComponentProps<typeof OfferCard>, 'digit'>[] = [
 	{ icon: '', title: 'Aerobic' },
