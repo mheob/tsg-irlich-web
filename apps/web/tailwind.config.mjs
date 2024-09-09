@@ -30,6 +30,7 @@ export default {
 			fontFamily: {
 				sans: ['Inter', ...defaultTheme.fontFamily.sans],
 				'sans-serif': ['Anton', ...defaultTheme.fontFamily.sans],
+				serif: ['Bebas Neue', ...defaultTheme.fontFamily.serif],
 			},
 		},
 	},

@@ -1,0 +1,43 @@
+---
+import ArrowButton from '../items/ArrowButton.astro';
+
+export interface Props {
+	digit: number;
+	icon: string;
+	title: string;
+}
+
+const { digit, icon, title } = Astro.props;
+
+const doubleDigit = digit.toString().padStart(2, '0');
+---
+
+<div
+	class="group relative flex h-40 w-1/4 flex-col rounded-xl bg-white p-6 shadow-lg hover:flex-col-reverse hover:bg-black/80"
+>
+	<div
+		class="bg-brand -mt-16 grid h-24 w-24 place-content-center rounded-xl text-5xl text-white group-hover:hidden"
+	>
+		{icon}
+	</div>
+	<div class="text-stroke absolute right-4 top-4 text-7xl text-white group-hover:hidden">
+		{doubleDigit}
+	</div>
+	<div class="flex items-center justify-between">
+		<h3 class="mt-6 font-serif text-3xl uppercase group-hover:mt-0 group-hover:text-white">
+			{title}
+		</h3>
+		<ArrowButton class="hidden text-sm group-hover:block" direction="up-right" size="32" />
+	</div>
+</div>
+
+<style>
+	.text-stroke {
+		color: white;
+		text-shadow:
+			-1px -1px 0 #000,
+			1px -1px 0 #000,
+			-1px 1px 0 #000,
+			1px 1px 0 #000;
+	}
+</style>
