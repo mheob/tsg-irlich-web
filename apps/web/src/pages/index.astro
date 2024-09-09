@@ -1,6 +1,14 @@
 ---
+import { CounterGroup } from '@/components/items';
 import { Features, Groups, Hero, Vision } from '@/components/page-sections/home';
 import { BaseLayout } from '@/layouts';
+
+const values = [
+	{ label: 'Motivierte Trainer', value: 34 },
+	{ label: 'Mitglieder', suffix: '+', value: 700 },
+	{ label: 'Jahre Erfahrung und Tradition', suffix: '+', value: 140 },
+	{ label: 'Trainingsstunden pro Woche', suffix: '+', value: 800 },
+];
 ---
 
 <BaseLayout title="TSG --> Welcome to Astro.">
@@ -8,4 +16,5 @@ import { BaseLayout } from '@/layouts';
 	<Features />
 	<Vision />
 	<Groups />
+	<CounterGroup values={values} />
 </BaseLayout>
