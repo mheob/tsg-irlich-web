@@ -38,7 +38,7 @@ const pricesCategories: Omit<ComponentProps<typeof PriceTableCard>, 'isHighlight
 ];
 ---
 
-<section class="bg">
+<section class="bg-brand relative z-0 text-white">
 	<div class="container mx-auto px-5 py-28">
 		<SectionHeader
 			descriptionClass="text-white"
@@ -70,14 +70,12 @@ const pricesCategories: Omit<ComponentProps<typeof PriceTableCard>, 'isHighlight
 
 <style>
 	section {
-		@apply bg-brand relative z-[0] text-white;
-
 		&::before {
 			content: '';
 			position: absolute;
 			inset: 0;
-			background-image: url('../../../icons/design/bg-silhouette-walking.svg'),
-				url('../../../icons/design/bg-silhouette-yoga-sitting.svg');
+			background-image: url('../../../icons/design/bg-silhouette-wandern.svg'),
+				url('../../../icons/design/bg-silhouette-yoga-sitzen.svg');
 			background-position:
 				0% 20%,
 				105% 95%;

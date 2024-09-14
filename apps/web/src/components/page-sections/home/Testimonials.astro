@@ -1,0 +1,55 @@
+---
+import type { ComponentProps } from 'astro/types';
+
+import { SectionHeader } from '@/components/items';
+import image100x100 from '@/images/100x100.svg';
+
+import { TestimonialsGroup } from './testimonials';
+
+const testimonials: ComponentProps<typeof TestimonialsGroup>['data'] = [
+	{
+		cite: 'Ebenso werde der Schmerz als solcher von Niemand geliebt, gesucht und verlangt, sondern weil mitunter solche Zeiten eintreten, dass man mittelst Arbeiten und Schmerzen eine grosse Lust sich zu verschaffen suchen müsse.',
+		firstName: 'John',
+		imageSrc: image100x100,
+		lastName: 'Doe',
+		role: 'CEO - Shisha of your dreams',
+	},
+	{
+		cite: 'Wer dürfte aber wohl Den tadeln, der nach einer Lust verlangt, welcher keine Unannehmlichkeit folgt, oder der einem Schmerze ausweicht, aus dem keine Lust hervorgeht?',
+		firstName: 'Max',
+		imageSrc: image100x100,
+		lastName: 'Mustermann',
+		role: 'Brandobermeister - FFW Irlich',
+	},
+	{
+		cite: 'Man kann hier leicht und schnell den richtigen Unterschied treffen; zu einer ruhigen Zeit, wo die Wahl der Entscheidung völlig frei ist und nichts hindert, das zu tun, was den Meisten gefällt, hat man jede Lust zu erfassen und jeden Schmerz abzuhalten.',
+		firstName: 'Olivia',
+		imageSrc: image100x100,
+		lastName: 'Anderson',
+		role: 'Referentin für Sport und Gesundheit - Stadt Neuwied',
+	},
+];
+---
+
+<section class="bg-gray-lightest relative z-0">
+	<div class="container mx-auto grid grid-cols-[40%,60%] px-5 py-32">
+		<SectionHeader subTitle="Meinungen und Referenzen" title="Was wird über uns gesagt?" />
+		<TestimonialsGroup data={testimonials} />
+	</div>
+</section>
+
+<style>
+	section {
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: url('../../../icons/design/bg-design-bottom-left.svg');
+			background-position: -5% 105%;
+			background-repeat: no-repeat;
+			background-size: 30%;
+			opacity: 0.03;
+			z-index: -1;
+		}
+	}
+</style>
