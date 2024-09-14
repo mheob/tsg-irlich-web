@@ -2,13 +2,14 @@
 import { isHTML } from '@/utils/content';
 
 interface Props {
+	descriptionClass?: string;
 	isCentered?: boolean;
 	level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | undefined;
 	subTitle?: string | undefined;
 	title: string;
 }
 
-const { isCentered = false, level = 'h2', subTitle, title } = Astro.props;
+const { descriptionClass, isCentered = false, level = 'h2', subTitle, title } = Astro.props;
 
 const HeadingTag = level as keyof HTMLHeadingElement;
 
@@ -25,7 +26,14 @@ const isHTMLContent = isHTML(slotContent);
 		isHTMLContent ? (
 			<slot />
 		) : (
-			<p class:list={[{ 'mx-auto': isCentered }, 'mt-6 max-w-3xl pr-16 text-xl']}>
+			<p
+				class:list={[
+					{ 'mx-auto': isCentered },
+					{ 'pr-16': !isCentered },
+					'mt-6 max-w-3xl text-xl',
+					descriptionClass,
+				]}
+			>
 				<slot />
 			</p>
 		)

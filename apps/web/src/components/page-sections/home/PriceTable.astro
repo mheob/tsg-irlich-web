@@ -1,0 +1,90 @@
+---
+import type { ComponentProps } from 'astro/types';
+import { Crown, Gem, Rocket } from 'lucide-astro';
+
+import { PriceTableCard } from '@/components/cards';
+import { SectionHeader } from '@/components/items/';
+
+const pricesCategories: Omit<ComponentProps<typeof PriceTableCard>, 'isHighlighted'>[] = [
+	{
+		benefits: ['Office ipsum you', 'Potter ipsum wand elf', 'Hipster ipsum', 'Figma ipsum'],
+		buttonText: 'Loslegen',
+		description: 'Er hörte leise Schritte hinter sich. Das bedeutete nichts Gutes.',
+		price: 7,
+		subtitle: 'Für Einzelpersonen',
+		title: 'Basic',
+		titleBenefit: 'Inbegriffen ist',
+	},
+	{
+		benefits: ['Office ipsum you', 'Potter ipsum wand elf', 'Hipster ipsum', 'Figma ipsum'],
+		buttonText: 'Loslegen',
+		description:
+			'Beinahe wäre er dabei über den umgestürzten Mülleimer gefallen, der mitten im Weg lag.',
+		price: 12,
+		subtitle: 'Für Startups',
+		title: 'Profi',
+		titleBenefit: 'Inbegriffen ist',
+	},
+	{
+		benefits: ['Office ipsum you', 'Potter ipsum wand elf', 'Hipster ipsum', 'Figma ipsum'],
+		buttonText: 'Loslegen',
+		description:
+			'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt.',
+		price: 5,
+		subtitle: 'Für große Unternehmen',
+		title: 'Unternehmen',
+		titleBenefit: 'Inbegriffen ist',
+	},
+];
+---
+
+<section class="bg">
+	<div class="container mx-auto px-5 py-28">
+		<SectionHeader
+			descriptionClass="text-white"
+			subTitle="Mitgliedsbeiträge"
+			title="Der richtige Preis für Dich und Euch"
+			isCentered
+		>
+			Lorem ipsum dolor sit amet consectetur. Adipiscing in eu tempus feugiat enim placerat. Cursus
+			commodo lorem sit fringilla augue.
+		</SectionHeader>
+
+		<div class="mt-32 flex justify-center gap-12">
+			{
+				pricesCategories.map((props, index) => (
+					<PriceTableCard {...props} isHighlighted={index === 1}>
+						{index === 0 ? (
+							<Rocket size="40" slot="icon" stroke="currentColor" stroke-width="1" />
+						) : index === 1 ? (
+							<Gem size="40" slot="icon" stroke="currentColor" stroke-width="1" />
+						) : (
+							<Crown size="40" slot="icon" stroke="currentColor" stroke-width="1" />
+						)}
+					</PriceTableCard>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	section {
+		@apply bg-brand relative z-[0] text-white;
+
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: url('../../../icons/design/bg-silhouette-walking.svg'),
+				url('../../../icons/design/bg-silhouette-yoga-sitting.svg');
+			background-position:
+				0% 20%,
+				105% 95%;
+			background-repeat: no-repeat;
+			background-size: 400px, 500px;
+			opacity: 0.15;
+			z-index: -1;
+		}
+	}
+</style>
