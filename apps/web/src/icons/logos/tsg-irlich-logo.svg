@@ -1,5 +1,5 @@
 
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 1024 768">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"  viewBox="0 0 1024 768">
   <path fill="#fff" fill-rule="nonzero" d="M983 233c-26-46-64-87-111-122A607 607 0 0 0 512 0C376 0 248 39 152 111c-47 35-85 76-111 122a302 302 0 0 0 0 302c26 46 64 87 111 122 96 72 224 111 360 111s264-39 360-111c47-35 85-76 111-122a302 302 0 0 0 0-302"/>
   <path fill="#2e2b70" fill-rule="nonzero" d="M1008 384c0 203-222 368-496 368S16 587 16 384 238 16 512 16s496 165 496 368"/>
   <g fill="#fff" fill-rule="nonzero">

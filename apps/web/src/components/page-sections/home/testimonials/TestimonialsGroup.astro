@@ -1,0 +1,23 @@
+---
+import type { ComponentProps } from 'astro/types';
+
+import { ArrowButtonGroup } from '@/components/items';
+
+import TestimonialsItem from './TestimonialsItem.astro';
+
+interface Props {
+	data: ComponentProps<typeof TestimonialsItem>[];
+}
+
+const { data } = Astro.props;
+---
+
+<div>
+	<div class="w-full rounded-xl bg-white py-16 pl-12 pr-28 shadow-xl">
+		{data.map((props, index) => <TestimonialsItem {...props} isHighlighted={index === 1} />)}
+	</div>
+
+	<div class="mt-24 text-center">
+		<ArrowButtonGroup />
+	</div>
+</div>
