@@ -1,0 +1,40 @@
+---
+import { ContactButton } from '../buttons';
+
+interface Props {
+	email: string;
+	firstName: string;
+	imageSrc?: string;
+	lastName: string;
+	phone: string;
+	role: string;
+	vision: string;
+}
+
+const { email, firstName, imageSrc, lastName, phone, role, vision } = Astro.props;
+
+const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
+---
+
+<article>
+	<div
+		class="bg-brand-secondary-light text-brand border-brand relative z-[1] grid h-44 w-44 place-items-center rounded-full border-8 text-6xl font-bold"
+	>
+		{imageSrc ? <img alt={`${firstName} ${lastName}`} src={imageSrc} /> : initials}
+	</div>
+
+	<div
+		class="-mt-36 ml-8 flex h-full flex-col justify-between gap-4 rounded-xl bg-white text-black"
+	>
+		<header class="pl-40 pr-12 pt-6">
+			<h3 class="font-serif text-3xl">{firstName} {lastName}</h3>
+			<p class="mb-2 text-lg">{role}</p>
+			<div class="flex gap-6">
+				<ContactButton email={email} />
+				<ContactButton phone={phone} />
+			</div>
+		</header>
+
+		<p class="px-12 pb-12 text-xl">{vision}</p>
+	</div>
+</article>

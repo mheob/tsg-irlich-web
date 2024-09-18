@@ -1,3 +1,4 @@
+export { default as ContactPersons } from './ContactPersons.astro';
 export { default as Counter } from './Counter.astro';
 export { default as Features } from './Features.astro';
 export { default as Groups } from './Groups.astro';
