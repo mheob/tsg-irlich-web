@@ -12,13 +12,11 @@ const { class: className, href, type = 'primary', ...props } = Astro.props;
 <a
 	{...props}
 	class:list={[
+		'btn',
 		{
-			'bg-brand outline-brand hover:outline-brand/90 hover:bg-brand/90 border-white text-white':
-				type === 'primary',
-			'bg-brand-secondary outline-brand-secondary hover:bg-brand-secondary/80 hover:outline-brand-secondary/80 border-black text-black':
-				type === 'secondary',
+			'btn--primary': type === 'primary',
+			'btn--secondary': type === 'secondary',
 		},
-		'inline-block rounded-full border px-10 py-4 text-center font-bold outline outline-8',
 		className,
 	]}
 	href={href}><slot /></a
