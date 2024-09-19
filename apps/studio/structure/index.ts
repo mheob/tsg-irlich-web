@@ -9,6 +9,7 @@ export function isExcludedDefaultListItem(id?: string) {
 	return ![
 		'assist.instruction.context',
 		'author',
+		'honoraryMember',
 		'media.tag',
 		'news.article',
 		'news.category',
@@ -66,7 +67,11 @@ function getGroupPersons(S: StructureBuilder): ListItemBuilder[] {
 			.child(
 				S.list()
 					.title('Personen')
-					.items([S.documentTypeListItem('author'), S.documentTypeListItem('person')]),
+					.items([
+						S.documentTypeListItem('author'),
+						S.documentTypeListItem('honoraryMember'),
+						S.documentTypeListItem('person'),
+					]),
 			),
 	];
 }

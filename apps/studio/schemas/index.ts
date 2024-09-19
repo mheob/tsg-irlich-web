@@ -1,5 +1,6 @@
 import author from './documents/author';
 import group from './documents/group';
+import honoraryMember from './documents/honorary-member';
 import newsArticle from './documents/news.article';
 import newsCategory from './documents/news.category';
 import person from './documents/person';
@@ -41,6 +42,7 @@ export const schemaTypes = [
 
 	author,
 	person,
+	honoraryMember,
 	role,
 
 	group,
