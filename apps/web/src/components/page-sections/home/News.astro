@@ -1,0 +1,79 @@
+---
+import type { ComponentProps } from 'astro/types';
+
+import { NewsArticleWide } from '@/components/cards';
+import { CtaButton, SectionHeader } from '@/components/items';
+
+const articles: ComponentProps<typeof NewsArticleWide>[] = [
+	{
+		author: { imageSrc: 'https://placehold.co/50x50', name: 'Anabel Autor' },
+		categories: [{ source: '#!', title: 'Fußball' }],
+		description:
+			'Lorem ipsum dolor sit amet consectetur. Adipiscing in eu tempus feugiat enim placerat. Cursus commodo lorem sit fringilla augue.',
+		imageSrc: 'https://placehold.co/800x450',
+		slug: '#!',
+		title: 'Lorem ipsum dolor sit amet consectetur - Adipiscing in eu tempus feugiat enim placerat',
+	},
+	{
+		author: { imageSrc: 'https://placehold.co/50x50', name: 'Anabel Autor' },
+		categories: [{ source: '#!', title: 'Badminton' }],
+		description: 'Reprehenderit rerum maiores magnam aut voluptate eos cum dolorum minus.',
+		imageSrc: 'https://placehold.co/800x450',
+		slug: '#!',
+		title: 'Figma ipsum component variant main layer - Comment background',
+	},
+	{
+		author: { imageSrc: 'https://placehold.co/50x50', name: 'Anabel Autor' },
+		categories: [
+			{ source: '#!', title: 'Pilates' },
+			{ source: '#!', title: 'Yoga' },
+		],
+		description:
+			'Neque aut quasi quidem et et praesentium molestias veniam atque. Et incidunt delectus. Reiciendis vel eaque voluptas eaque. Velit voluptate error vitae possimus iste inventore. Et eveniet aliquid iste sunt recusandae. Ratione neque illo veniam inventore aut ex.',
+		imageSrc: 'https://placehold.co/800x450',
+		slug: '#!',
+		title: 'Office ipsum you must be muted see event charts done hit',
+	},
+];
+---
+
+<section class="bg-brand relative z-0 text-white">
+	<div class="container mx-auto px-5 pb-40 pt-28">
+		<SectionHeader
+			descriptionClass="text-white"
+			subTitle="Aktuelles"
+			title="Neuigkeiten rund um die TSG"
+			isCentered
+		>
+			Lorem ipsum dolor sit amet consectetur. Adipiscing in eu tempus feugiat enim placerat. Cursus
+			commodo lorem sit fringilla augue.
+		</SectionHeader>
+
+		<div class="mt-32 flex flex-col justify-center gap-12">
+			{articles.map(article => <NewsArticleWide {...article} />)}
+		</div>
+
+		<footer class="mt-20 text-center">
+			<CtaButton href="#!" type="secondary">Alle Neuigkeiten ansehen</CtaButton>
+		</footer>
+	</div>
+</section>
+
+<style>
+	section {
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: url('../../../icons/design/bg-silhouette-wandern.svg'),
+				url('../../../icons/design/bg-silhouette-fussball-seitfallzieher.svg');
+			background-position:
+				0% 10%,
+				100% 110%;
+			background-repeat: no-repeat;
+			background-size: 250px, 300px;
+			opacity: 0.15;
+			z-index: -1;
+		}
+	}
+</style>

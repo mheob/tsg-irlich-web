@@ -1,0 +1,31 @@
+---
+interface Props {
+	author: { imageSrc: string; name: string };
+	categories: { source: string; title: string }[];
+	description: string;
+	imageSrc: string;
+	slug: string;
+	title: string;
+}
+
+const { author, categories, description, imageSrc, slug, title } = Astro.props;
+---
+
+<article class="group grid grid-cols-[50%,50%] rounded-xl bg-white text-black">
+	<a class="overflow-hidden rounded-l-xl" href={slug}>
+		<img alt={title} class="transform-cpu duration-500 group-hover:scale-110" src={imageSrc} />
+	</a>
+
+	<div class="flex flex-col justify-between gap-2 px-14 py-8">
+		<p class="flex gap-6 text-lg">
+			{categories.map(category => <a href={category.source}>{category.title}</a>)}
+		</p>
+		<h3 class="line-clamp-2 text-3xl font-bold"><a href={slug}>{title}</a></h3>
+		<p class="line-clamp-3 text-xl">{description}</p>
+
+		<div class="flex items-center gap-3">
+			<img alt="Author" class="rounded-full" src={author.imageSrc} />
+			<p class="text-xl">{author.name}</p>
+		</div>
+	</div>
+</article>
