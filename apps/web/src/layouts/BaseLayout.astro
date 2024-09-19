@@ -80,4 +80,18 @@ const { title } = Astro.props;
 			}
 		}
 	}
+
+	@layer components {
+		.btn {
+			@apply inline-block rounded-full border px-10 py-4 text-center font-bold outline outline-8;
+		}
+
+		.btn--primary {
+			@apply bg-brand outline-brand hover:outline-brand/90 hover:bg-brand/90 border-white text-white;
+		}
+
+		.btn--secondary {
+			@apply bg-brand-secondary outline-brand-secondary hover:bg-brand-secondary/80 hover:outline-brand-secondary/80 border-black text-black;
+		}
+	}
 </style>
