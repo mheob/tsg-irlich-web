@@ -11,7 +11,8 @@ export function getHiddenSlugField(slug: string) {
 		group: 'general',
 		readOnly: true,
 		initialValue: { current: slug },
-		hidden: true,
+		// FIXME: hide the slug field after the initial development phase is over
+		hidden: false,
 	});
 }
 

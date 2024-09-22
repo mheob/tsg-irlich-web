@@ -3,7 +3,12 @@ import { defineField, defineType } from 'sanity';
 
 import { meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/fields/meta';
-import { maxLengthRule } from '@/shared/validation-rules';
+import {
+	maxLengthRule,
+	minLengthRule,
+	phoneFieldRegexRule,
+	requiredRule,
+} from '@/shared/validation-rules';
 
 const siteSettings = defineType({
 	title: 'Generelle Einstellungen',
@@ -12,6 +17,7 @@ const siteSettings = defineType({
 	icon: RiSettings5Line,
 	groups: [
 		meta,
+		{ name: 'contact', title: 'Kontakt' },
 		{ name: 'misc', title: 'Misc' },
 		{ name: 'navigation', title: 'Navigation' },
 		{ name: 'social', title: 'Social' },
@@ -36,6 +42,39 @@ const siteSettings = defineType({
 			),
 		}),
 
+		// contact
+		defineField({
+			title: 'Kontakt',
+			name: 'contact',
+			type: 'object',
+			group: 'contact',
+			fields: [
+				defineField({
+					title: 'Adresse',
+					name: 'address',
+					type: 'string',
+					description: 'Adresse (Straße Hausnummer, Postleitzahl Ort)',
+					validation: rule => [requiredRule(rule, 'Die Adresse')],
+				}),
+
+				defineField({
+					title: 'Telefonnummer',
+					name: 'phone',
+					type: 'string',
+					description: 'Telefonnummer',
+					validation: rule => [requiredRule(rule, 'Die Telefonnummer'), phoneFieldRegexRule(rule)],
+				}),
+
+				defineField({
+					title: 'E-Mail',
+					name: 'email',
+					type: 'string',
+					description: 'E-Mail',
+					validation: rule => [requiredRule(rule, 'Die E-Mail')],
+				}),
+			],
+		}),
+
 		// misc
 		defineField({
 			title: 'Newsletter',
@@ -49,7 +88,7 @@ const siteSettings = defineType({
 					name: 'title',
 					type: 'string',
 					description: 'Titel des Newsletters',
-					// validation: rule => [requiredRule(rule, 'Der "Newsletter Titel"')],
+					validation: rule => [requiredRule(rule, 'Der "Newsletter Titel"')],
 				}),
 
 				defineField({
@@ -58,7 +97,7 @@ const siteSettings = defineType({
 					type: 'string',
 					description: 'Text für den Newsletter Absende-Button',
 					validation: rule => [
-						// minLengthRule(rule, 3, 'Der "Newsletter Button Text"'),
+						minLengthRule(rule, 3, 'Der "Newsletter Button Text"'),
 						maxLengthRule(rule, 18, 'Der "Newsletter Button Text"'),
 					],
 				}),
