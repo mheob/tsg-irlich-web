@@ -1,27 +1,35 @@
 ---
+import type { Image as SanityImage } from '@sanity/types';
+import { Image } from 'astro:assets';
+
+import { urlFor } from '@/lib/sanity/image-url';
+
 import { ContactButton } from '../buttons';
 
 interface Props {
 	email: string;
 	firstName: string;
-	imageSrc?: string;
+	image: SanityImage;
 	lastName: string;
 	phone: string;
 	role: string;
 	vision: string;
 }
 
-const { email, firstName, imageSrc, lastName, phone, role, vision } = Astro.props;
+const { email, firstName, image, lastName, phone, role, vision } = Astro.props;
 
+const imageSource = urlFor(image, 176).url();
 const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
 ---
 
 <article>
-	<div
-		class="bg-brand-secondary-light text-brand border-brand relative z-[1] grid h-44 w-44 place-items-center rounded-full border-8 text-6xl font-bold"
-	>
-		{imageSrc ? <img alt={`${firstName} ${lastName}`} src={imageSrc} /> : initials}
-	</div>
+	{
+		imageSource ? (
+			<Image alt={image.alt as string} class="image" height={176} src={imageSource} width={176} />
+		) : (
+			<div class="image text-6xl font-bold">{initials}</div>
+		)
+	}
 
 	<div
 		class="-mt-36 ml-8 flex h-full flex-col justify-between gap-4 rounded-xl bg-white text-black"
@@ -38,3 +46,11 @@ const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
 		<p class="px-12 pb-12 text-xl">{vision}</p>
 	</div>
 </article>
+
+<style>
+	.image {
+		@apply bg-brand-secondary-light text-brand border-brand;
+		@apply relative z-[1] grid place-items-center;
+		@apply rounded-full border-8;
+	}
+</style>

@@ -1,41 +1,11 @@
 ---
-import type { ComponentProps } from 'astro/types';
 import { Crown, Gem, Rocket } from 'lucide-astro';
 
 import { PriceTableCard } from '@/components/cards';
 import { SectionHeader } from '@/components/items/';
+import { getPriceTableSection } from '@/lib/sanity/queries/pages/home';
 
-const pricesCategories: Omit<ComponentProps<typeof PriceTableCard>, 'isHighlighted'>[] = [
-	{
-		benefits: ['Office ipsum you', 'Potter ipsum wand elf', 'Hipster ipsum', 'Figma ipsum'],
-		buttonText: 'Loslegen',
-		description: 'Er hörte leise Schritte hinter sich. Das bedeutete nichts Gutes.',
-		price: 7,
-		subtitle: 'Für Einzelpersonen',
-		title: 'Basic',
-		titleBenefit: 'Inbegriffen ist',
-	},
-	{
-		benefits: ['Office ipsum you', 'Potter ipsum wand elf', 'Hipster ipsum', 'Figma ipsum'],
-		buttonText: 'Loslegen',
-		description:
-			'Beinahe wäre er dabei über den umgestürzten Mülleimer gefallen, der mitten im Weg lag.',
-		price: 12,
-		subtitle: 'Für Startups',
-		title: 'Profi',
-		titleBenefit: 'Inbegriffen ist',
-	},
-	{
-		benefits: ['Office ipsum you', 'Potter ipsum wand elf', 'Hipster ipsum', 'Figma ipsum'],
-		buttonText: 'Loslegen',
-		description:
-			'Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt.',
-		price: 5,
-		subtitle: 'Für große Unternehmen',
-		title: 'Unternehmen',
-		titleBenefit: 'Inbegriffen ist',
-	},
-];
+const { pricingAdult, pricingFamily, pricingYouth } = await getPriceTableSection();
 ---
 
 <section class="bg-brand relative z-0 text-white">
@@ -51,19 +21,17 @@ const pricesCategories: Omit<ComponentProps<typeof PriceTableCard>, 'isHighlight
 		</SectionHeader>
 
 		<div class="mt-32 flex justify-center gap-12">
-			{
-				pricesCategories.map((props, index) => (
-					<PriceTableCard {...props} isHighlighted={index === 1}>
-						{index === 0 ? (
-							<Rocket size="40" slot="icon" stroke="currentColor" stroke-width="1" />
-						) : index === 1 ? (
-							<Gem size="40" slot="icon" stroke="currentColor" stroke-width="1" />
-						) : (
-							<Crown size="40" slot="icon" stroke="currentColor" stroke-width="1" />
-						)}
-					</PriceTableCard>
-				))
-			}
+			<PriceTableCard {...pricingYouth}>
+				<Rocket size="40" slot="icon" stroke="currentColor" stroke-width="1" />
+			</PriceTableCard>
+
+			<PriceTableCard {...pricingAdult} isHighlighted>
+				<Gem size="40" slot="icon" stroke="currentColor" stroke-width="1" />
+			</PriceTableCard>
+
+			<PriceTableCard {...pricingFamily}>
+				<Crown size="40" slot="icon" stroke="currentColor" stroke-width="1" />
+			</PriceTableCard>
 		</div>
 	</div>
 </section>

@@ -18,7 +18,7 @@ const { slug } = Astro.params as Params;
 const article = await getNewsArticle(slug);
 ---
 
-<BaseLayout title={`${article.title} | TSG Irlich seit 1882`}>
+<BaseLayout description="TODO" title={`${article.title} | TSG Irlich seit 1882`}>
 	<h1>{article.title}</h1>
 
 	<p>Excerpt: {article.excerpt}</p>

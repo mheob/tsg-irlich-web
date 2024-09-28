@@ -12,22 +12,24 @@ import '@fontsource/inter/700.css';
 import '@fontsource/inter/700-italic.css';
 
 interface Props {
+	description: string;
 	title: string;
 }
 
-const { title } = Astro.props;
+const { description, title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<meta charset="utf8" />
 		<meta content="width=device-width" name="viewport" />
 		<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-		<meta content={Astro.generator} name="generator" />
+		<meta content={description} name="description" />
 		<title>{title}</title>
 		<ViewTransitions />
 	</head>
+
 	<body>
 		<div class="h-dvh">
 			<header>

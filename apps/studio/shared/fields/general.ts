@@ -43,7 +43,7 @@ export const subTitleField = defineField({
 	group: 'general',
 	validation: rule => [
 		// minLengthRule(rule, 2, 'Der Untertitel'),
-		maxLengthRule(rule, 30, 'Der Untertitel'),
+		maxLengthRule(rule, 50, 'Der Untertitel'),
 	],
 });
 

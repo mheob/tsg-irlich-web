@@ -1,15 +1,9 @@
 ---
-import type { ComponentProps } from 'astro/types';
-
 import { OfferCard } from '@/components/cards';
 import { ArrowButtonGroup, SectionHeader } from '@/components/items';
+import { getGroupsSection } from '@/lib/sanity/queries/pages/home';
 
-const offers: Omit<ComponentProps<typeof OfferCard>, 'digit'>[] = [
-	{ icon: '', title: 'Aerobic' },
-	{ icon: '', title: 'Badminton' },
-	{ icon: '', title: 'Fußball' },
-	{ icon: '', title: 'Showtanz' },
-];
+const { groups, groupsSection } = await getGroupsSection();
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 ---
@@ -20,16 +14,16 @@ const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
 	<div class="container mx-auto px-5 py-32">
 		<div class="flex items-end justify-between">
-			<SectionHeader subTitle="Gruppen die wir haben" title="Unsere Angebote" />
+			<SectionHeader subTitle={groupsSection.subtitle} title={groupsSection.title} />
 
 			<div class="pb-8">
 				<ArrowButtonGroup />
 			</div>
 		</div>
 
-		<div class="mt-24 flex space-x-7 overflow-x-visible">
+		<div class="mt-24 flex gap-7 overflow-x-hidden">
 			{
-				offers.map(({ icon, title }, index) => (
+				groups?.map(({ icon, title }, index) => (
 					<OfferCard digit={index + 1} icon={icon || getFirstLetter(title)} title={title} />
 				))
 			}

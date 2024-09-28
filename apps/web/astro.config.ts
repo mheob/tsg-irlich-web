@@ -13,10 +13,13 @@ export default defineConfig({
 		imagesConfig: {
 			domains: ['cdn.sanity.io'],
 			formats: ['image/avif', 'image/webp'],
-			sizes: [320, 640, 1280],
+			sizes: [160, 320, 640, 1280],
 		},
 		imageService: true,
 	}),
+	image: {
+		domains: ['cdn.sanity.io'],
+	},
 	integrations: [
 		icon(),
 		react(),

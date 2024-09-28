@@ -13,9 +13,12 @@ import {
 	Vision,
 } from '@/components/page-sections/home';
 import { BaseLayout } from '@/layouts';
+import { getMetaInformation } from '@/lib/sanity/queries/common';
+
+const { intro, metaDescription, metaTitle, title } = await getMetaInformation('home');
 ---
 
-<BaseLayout title="TSG --> Welcome to Astro.">
+<BaseLayout description={metaDescription || intro} title={metaTitle || title}>
 	<Hero />
 	<Features />
 	<Vision />

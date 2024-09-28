@@ -1,18 +1,21 @@
 ---
-import type { ImageMetadata } from 'astro';
+import type { Image as SanityImage } from '@sanity/types';
 import { Image } from 'astro:assets';
 import { Quote } from 'lucide-astro';
 
+import { urlFor } from '@/lib/sanity/image-url';
+
 interface Props {
-	cite: string;
 	firstName: string;
-	imageSrc: ImageMetadata;
+	image: SanityImage;
 	isHighlighted?: boolean;
 	lastName: string;
+	quote: string;
 	role: string;
+	showAlways: boolean;
 }
 
-const { cite, firstName, imageSrc, isHighlighted = false, lastName, role } = Astro.props;
+const { firstName, image, isHighlighted = false, lastName, quote, role } = Astro.props;
 ---
 
 <div
@@ -28,9 +31,9 @@ const { cite, firstName, imageSrc, isHighlighted = false, lastName, role } = Ast
 				{ 'border-brand': !isHighlighted },
 				{ 'border-white': isHighlighted },
 			]}
-			alt={`${firstName} ${lastName}`}
+			alt={image.alt as string}
 			height={96}
-			src={imageSrc}
+			src={urlFor(image, 96).url()}
 			width={96}
 		/>
 
@@ -43,7 +46,7 @@ const { cite, firstName, imageSrc, isHighlighted = false, lastName, role } = Ast
 	<p
 		class:list={['text-xl', { 'text-gray/80': !isHighlighted }, { 'text-white/80': isHighlighted }]}
 	>
-		{cite}
+		{quote}
 	</p>
 
 	{

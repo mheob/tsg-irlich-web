@@ -9,7 +9,7 @@ const stats = defineField({
 	type: 'object',
 	icon: RiLinksLine,
 	fields: [
-		{
+		defineField({
 			title: 'Beschriftung',
 			name: 'title',
 			type: 'string',
@@ -17,13 +17,18 @@ const stats = defineField({
 				// minLengthRule(rule, 2, 'Die Beschriftung'),
 				maxLengthRule(rule, 25, 'Die Beschriftung'),
 			],
-		},
-		{
+		}),
+		defineField({
 			title: 'Wert',
 			name: 'value',
 			type: 'string',
 			// validation: rule => [requiredRule(rule, 'Der Wert')],
-		},
+		}),
+		defineField({
+			title: 'Suffix (optional, z.B. "+")',
+			name: 'suffix',
+			type: 'string',
+		}),
 	],
 });
 
