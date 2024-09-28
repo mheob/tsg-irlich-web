@@ -18,6 +18,14 @@ const newsArticle = defineType({
 		titleField,
 		slugField,
 
+		defineField({
+			title: 'News-Kategorien',
+			name: 'categories',
+			type: 'array',
+			of: [{ type: 'reference', to: [{ type: 'news.category' }] }],
+			group: 'general',
+		}),
+
 		// meta
 		authorField,
 		metaField,
@@ -38,7 +46,6 @@ const newsArticle = defineType({
 			],
 		}),
 	],
-	initialValue: () => ({ publishedAt: new Date().toISOString() }),
 	preview: {
 		prepare: ({ title }) => ({ title }),
 		select: {

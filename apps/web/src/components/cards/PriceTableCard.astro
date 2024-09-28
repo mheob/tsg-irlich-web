@@ -5,17 +5,25 @@ import { CtaButton } from '../items';
 
 interface Props {
 	benefits: string[];
-	buttonText: string;
-	description: string;
-	isHighlighted: boolean;
+	benefitsTitle: string;
+	cta: string;
+	intro: string;
+	isHighlighted?: boolean;
 	price: number;
 	subtitle: string;
 	title: string;
-	titleBenefit: string;
 }
 
-const { benefits, buttonText, description, isHighlighted, price, subtitle, title, titleBenefit } =
-	Astro.props;
+const {
+	benefits,
+	benefitsTitle,
+	cta,
+	intro,
+	isHighlighted = false,
+	price,
+	subtitle,
+	title,
+} = Astro.props;
 ---
 
 <article
@@ -53,16 +61,16 @@ const { benefits, buttonText, description, isHighlighted, price, subtitle, title
 		</header>
 
 		<div class="mt-6">
-			<p class="text-lg">{description}</p>
+			<p class="text-lg">{intro}</p>
 			<div class="my-6 text-center text-5xl font-bold">
 				{price} € <span class="text-sm">/monatlich</span>
 			</div>
-			<h3 class="font-sans text-lg font-bold">{titleBenefit}</h3>
+			<h3 class="font-sans text-lg font-bold">{benefitsTitle}</h3>
 			<ul class="mt-4 text-lg">
 				{
 					benefits.map(benefit => (
-						<li class="flex items-center gap-2">
-							<CheckCircle /> {benefit}
+						<li class="flex items-start gap-2">
+							<CheckCircle class="text-brand-light mt-1 h-5 w-5 min-w-6" /> {benefit}
 						</li>
 					))
 				}
@@ -71,8 +79,8 @@ const { benefits, buttonText, description, isHighlighted, price, subtitle, title
 	</div>
 
 	<footer class="mt-8">
-		<CtaButton class="w-full" href="#!" type={isHighlighted ? 'secondary' : 'primary'}>
-			{buttonText}
+		<CtaButton class="w-full" href="/kontakt" type={isHighlighted ? 'secondary' : 'primary'}>
+			{cta}
 		</CtaButton>
 	</footer>
 </article>

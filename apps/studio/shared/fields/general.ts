@@ -11,7 +11,8 @@ export function getHiddenSlugField(slug: string) {
 		group: 'general',
 		readOnly: true,
 		initialValue: { current: slug },
-		hidden: true,
+		// FIXME: hide the slug field after the initial development phase is over
+		hidden: false,
 	});
 }
 
@@ -42,7 +43,7 @@ export const subTitleField = defineField({
 	group: 'general',
 	validation: rule => [
 		// minLengthRule(rule, 2, 'Der Untertitel'),
-		maxLengthRule(rule, 30, 'Der Untertitel'),
+		maxLengthRule(rule, 50, 'Der Untertitel'),
 	],
 });
 

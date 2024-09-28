@@ -1,29 +1,26 @@
 ---
 import { TSGLogo } from '@/components/icons';
 import { CtaButton } from '@/components/items';
+import { getMainNavigation } from '@/lib/sanity/queries/navigation';
 
-const navItems = [
-	{ href: '#!', label: 'Home' },
-	{ href: '#!', label: 'Verein' },
-	{ href: '#!', label: 'Gruppen' },
-	{ href: '#!', label: 'Aktuelles' },
-	{ href: '#!', label: 'Kontakt' },
-	{ href: '#!', label: 'Mitgliedschaft' },
-];
+const navItems = await getMainNavigation();
 ---
 
-<nav class="container mx-auto flex flex-grow items-center justify-between gap-12 p-5" id="top">
+<nav
+	class="container relative z-10 mx-auto flex flex-grow items-center justify-between gap-12 p-5"
+	id="top"
+>
 	<a aria-label="Logo der TSG Irlich 1882 e. V." href="/"><TSGLogo /></a>
 
 	<ul class="flex flex-wrap items-center justify-center gap-12 font-black">
 		{
 			navItems.map(({ href, label }) => (
 				<li class="uppercase first:border-b-4">
-					<a href={href}>{label}</a>
+					<a href={`/${href}`}>{label}</a>
 				</li>
 			))
 		}
 	</ul>
 
-	<CtaButton href="#!" type="secondary">KONTAKT AUFNEHMEN</CtaButton>
+	<CtaButton href="/kontakt" type="secondary">KONTAKT AUFNEHMEN</CtaButton>
 </nav>

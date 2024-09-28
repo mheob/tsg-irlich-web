@@ -2,29 +2,32 @@
 import { ArrowUp, Facebook, Instagram, Mail, MapPin, Phone, Youtube } from 'lucide-astro';
 
 import { TSGLogo } from '@/components/icons';
+import { getContact } from '@/lib/sanity/queries/common';
+import {
+	getLegalNavigation,
+	getMainNavigation,
+	getSocialMedia,
+} from '@/lib/sanity/queries/navigation';
+
+const { contact } = await getContact();
+const navItems = await getMainNavigation();
+const [imprint, privacy] = await getLegalNavigation();
+const { socialFields: socialMedia } = await getSocialMedia();
 
 const currentYear = new Date().getFullYear();
-const navItems = [
-	{ href: '#!', label: 'Home' },
-	{ href: '#!', label: 'Verein' },
-	{ href: '#!', label: 'Gruppen' },
-	{ href: '#!', label: 'Aktuelles' },
-	{ href: '#!', label: 'Kontakt' },
-	{ href: '#!', label: 'Mitgliedschaft' },
-];
-const socialMedia: { href: string; icon: any; label: string }[] = [
+const socialMediaItems: { href: string; icon: any; label: string }[] = [
 	{
-		href: '#!',
+		href: socialMedia.instagram,
 		icon: Instagram,
 		label: 'Instagram',
 	},
 	{
-		href: '#!',
+		href: socialMedia.facebook,
 		icon: Facebook,
 		label: 'Facebook',
 	},
 	{
-		href: '#!',
+		href: socialMedia.youtube,
 		icon: Youtube,
 		label: 'Youtube',
 	},
@@ -41,7 +44,7 @@ const socialMedia: { href: string; icon: any; label: string }[] = [
 
 				<div class="flex gap-4">
 					{
-						socialMedia.map(({ href, icon: Icon, label }) => (
+						socialMediaItems.map(({ href, icon: Icon, label }) => (
 							<a
 								aria-label={label}
 								class="hover:text-brand-secondary"
@@ -62,21 +65,27 @@ const socialMedia: { href: string; icon: any; label: string }[] = [
 						<span class="rounded-full border p-3">
 							<MapPin size="48" stroke-width="1" />
 						</span>
-						<address>Gotenstraße 20<br />56567 Neuwied</address>
+						<address>{contact.address}</address>
 					</a>
 
-					<a class="hover:text-brand-secondary flex flex-col items-center gap-4" href="#!">
+					<a
+						class="hover:text-brand-secondary flex flex-col items-center gap-4"
+						href={`tel:${contact.phone}`}
+					>
 						<span class="rounded-full border p-3">
 							<Phone size="48" stroke-width="1" />
 						</span>
-						<address>+49 123 4567890</address>
+						<address>{contact.phone}</address>
 					</a>
 
-					<a class="hover:text-brand-secondary flex flex-col items-center gap-4" href="#!">
+					<a
+						class="hover:text-brand-secondary flex flex-col items-center gap-4"
+						href={`mailto:${contact.email}`}
+					>
 						<span class="rounded-full border p-3">
 							<Mail size="48" stroke-width="1" />
 						</span>
-						<address>info@tsg-irlich.de</address>
+						<address>{contact.email}</address>
 					</a>
 				</section>
 
@@ -98,8 +107,8 @@ const socialMedia: { href: string; icon: any; label: string }[] = [
 		<section class="mt-12 flex justify-between">
 			<div>©{currentYear} TSG Irlich. Alle Rechte vorbehalten.</div>
 			<nav class="flex items-center gap-4">
-				<a class="hover:text-brand-secondary" href="#!">Impressum</a> |
-				<a class="hover:text-brand-secondary" href="#!">Datenschutz</a>
+				<a class="hover:text-brand-secondary" href={imprint?.href}>{imprint?.label}</a> |
+				<a class="hover:text-brand-secondary" href={privacy?.href}>{privacy?.label}</a>
 				<a
 					aria-label="zum Seitenanfang springen"
 					class="bg-brand-secondary hover:bg-brand-secondary/80 ml-4 rounded-full p-1.5"

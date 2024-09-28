@@ -3,8 +3,8 @@ import { defineField } from 'sanity';
 export const contactPersonsField = defineField({
 	title: 'Ansprechpartner',
 	name: 'contactPersons',
-	type: 'reference',
-	to: [{ type: 'person' }],
+	type: 'array',
+	of: [{ type: 'reference', to: [{ type: 'person' }] }],
 	group: 'content',
 	// validation: rule => [requiredRule(rule, 'Der Ansprechpartner')],
 });

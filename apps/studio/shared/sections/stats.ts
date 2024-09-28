@@ -12,7 +12,7 @@ export const statsField = defineField({
 	fields: [
 		defineField({
 			title: 'Statistiken',
-			name: 'groups',
+			name: 'stats',
 			type: 'array',
 			of: [{ type: 'stats' }],
 			description: '',

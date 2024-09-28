@@ -6,7 +6,6 @@ const externalLink = defineField({
 	name: 'externalLink',
 	type: 'object',
 	icon: RiExternalLinkLine,
-	hidden: true,
 	fields: [
 		{
 			title: 'Title',

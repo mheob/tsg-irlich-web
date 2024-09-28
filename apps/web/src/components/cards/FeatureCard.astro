@@ -2,16 +2,16 @@
 import { ArrowRight, Calendar, CircleHelp, Dumbbell, GraduationCap, House } from 'lucide-astro';
 
 interface Props {
-	description: string;
 	icon: string;
+	intro: string;
 	title: string;
 }
 
-const { description, icon, title } = Astro.props;
+const { icon, intro, title } = Astro.props;
 ---
 
 <a
-	class="hover:bg-brand group flex items-center justify-between rounded-xl bg-white p-8 shadow-lg hover:text-white"
+	class="hover:bg-brand group flex justify-between rounded-xl bg-white p-8 shadow-lg hover:text-white"
 	href="#!"
 >
 	<div class="w-3/4">
@@ -29,10 +29,10 @@ const { description, icon, title } = Astro.props;
 			)
 		}
 		<h3 class="mt-4 text-3xl uppercase">{title}</h3>
-		<p class="mt-2 text-xl group-hover:text-white">{description}</p>
+		<p class="mt-2 text-xl group-hover:text-white">{intro}</p>
 	</div>
 
-	<div class="group-hover:bg-brand-light ml-4 rounded-full p-1.5">
+	<div class="group-hover:bg-brand-light ml-4 self-center rounded-full p-1.5">
 		<ArrowRight aria-hidden="true" class="text-white" size="32" stroke-width="2" />
 	</div>
 </a>

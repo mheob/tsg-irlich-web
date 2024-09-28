@@ -1,5 +1,8 @@
 ---
 import { CtaButton, SectionHeader } from '@/components/items';
+import { getVisionSection } from '@/lib/sanity/queries/pages/home';
+
+const { cta, intro, subtitle, title } = await getVisionSection();
 ---
 
 <section class="relative items-center">
@@ -26,14 +29,8 @@ import { CtaButton, SectionHeader } from '@/components/items';
 		</div>
 
 		<div class="py-60">
-			<SectionHeader subTitle="Unsere Vision" title="Was sind unsere Ziele? Wofür stehen wir?">
-				Lorem ipsum dolor sit amet consectetur. Nullam massa pharetra purus lacus fringilla auctor
-				purus. Netus tellus duis viverra pellentesque et erat egestas. Aliquam aenean sit sapien et
-				nunc. Convallis senectus et elit venenatis hendrerit. Quis vel etiam vitae feugiat cras sem.
-				Feugiat ipsum sagittis tellus laoreet quis habitant libero porta amet. Ante urna.
-			</SectionHeader>
-
-			<CtaButton class="relative mt-12" href="#!">Erfahren Sie mehr über uns</CtaButton>
+			<SectionHeader subTitle={subtitle} title={title}>{intro}</SectionHeader>
+			<CtaButton class="relative mt-12" href="#!">{cta}</CtaButton>
 		</div>
 	</div>
 </section>

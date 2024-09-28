@@ -3,6 +3,35 @@ import { defineField } from 'sanity';
 
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
 
+const pricingCardFields = [
+	...getDefaultPageFieldsWithGroup(),
+
+	defineField({
+		title: 'Preis',
+		name: 'price',
+		type: 'number',
+	}),
+
+	defineField({
+		title: 'Titel Vorteile',
+		name: 'benefitsTitle',
+		type: 'string',
+	}),
+
+	defineField({
+		title: 'Vorteile',
+		name: 'benefits',
+		type: 'array',
+		of: [{ type: 'string' }],
+	}),
+
+	defineField({
+		title: 'Button Text',
+		name: 'cta',
+		type: 'string',
+	}),
+];
+
 export const pricingField = defineField({
 	title: 'Preistabelle',
 	name: 'pricingSection',
@@ -13,100 +42,24 @@ export const pricingField = defineField({
 		...getDefaultPageFieldsWithGroup(),
 
 		defineField({
-			title: 'Preistabelle Passiv',
-			name: 'pricingPassive',
+			title: 'Preistabelle Jugendliche',
+			name: 'pricingYouth',
 			type: 'object',
-			fields: [
-				...getDefaultPageFieldsWithGroup(),
-
-				defineField({
-					title: 'Preis',
-					name: 'pricingPassivePrice',
-					type: 'number',
-				}),
-
-				defineField({
-					title: 'Titel Vorteile',
-					name: 'pricingPassiveBenefitsTitle',
-					type: 'string',
-				}),
-
-				defineField({
-					title: 'Vorteile',
-					name: 'pricingPassiveBenefits',
-					type: 'text',
-				}),
-
-				defineField({
-					title: 'Button Text',
-					name: 'pricingPassiveCta',
-					type: 'string',
-				}),
-			],
+			fields: pricingCardFields,
 		}),
+
 		defineField({
 			title: 'Preistabelle Familie',
 			name: 'pricingFamily',
 			type: 'object',
-			fields: [
-				...getDefaultPageFieldsWithGroup(),
-
-				defineField({
-					title: 'Preis',
-					name: 'pricingFamilyPrice',
-					type: 'number',
-				}),
-
-				defineField({
-					title: 'Titel Vorteile',
-					name: 'pricingFamilyBenefitsTitle',
-					type: 'string',
-				}),
-
-				defineField({
-					title: 'Vorteile',
-					name: 'pricingFamilyBenefits',
-					type: 'text',
-				}),
-
-				defineField({
-					title: 'Button Text',
-					name: 'pricingFamilyCta',
-					type: 'string',
-				}),
-			],
+			fields: pricingCardFields,
 		}),
+
 		defineField({
-			title: 'Preistabelle Aktiv',
-			name: 'pricingActive',
+			title: 'Preistabelle Erwachsene',
+			name: 'pricingAdult',
 			type: 'object',
-			fields: [
-				...getDefaultPageFieldsWithGroup(),
-
-				defineField({
-					title: 'Preis',
-					name: 'pricingActivePrice',
-					type: 'number',
-				}),
-
-				defineField({
-					title: 'Titel Vorteile',
-					name: 'pricingActiveBenefitsTitle',
-					type: 'string',
-				}),
-
-				defineField({
-					title: 'Vorteile',
-					name: 'pricingActiveBenefits',
-					type: 'text',
-				}),
-
-				defineField({
-					title: 'Button Text',
-					name: 'pricingActiveCta',
-					type: 'string',
-				}),
-			],
+			fields: pricingCardFields,
 		}),
 	],
 });

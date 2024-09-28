@@ -6,7 +6,6 @@ const internalLink = defineField({
 	name: 'internalLink',
 	type: 'object',
 	icon: RiLinksLine,
-	hidden: true,
 	fields: [
 		{
 			title: 'Title',
@@ -18,7 +17,19 @@ const internalLink = defineField({
 			title: 'Link',
 			name: 'link',
 			type: 'reference',
-			to: [{ type: 'news.article' }],
+			to: [
+				{ type: 'news.article' },
+				// Single Pages
+				{ type: 'home' },
+				{ type: 'aboutUs' },
+				{ type: 'contact' },
+				{ type: 'groupsPage' },
+				{ type: 'imprint' },
+				{ type: 'membership' },
+				{ type: 'news.overview' },
+				{ type: 'privacy' },
+				{ type: 'singleGroupPage' },
+			],
 		},
 	],
 });

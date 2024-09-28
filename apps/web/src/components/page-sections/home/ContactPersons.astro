@@ -1,76 +1,14 @@
 ---
-import type { ComponentProps } from 'astro/types';
-
 import { ContactPersonGroup, SectionHeader } from '@/components/items/';
+import { getContactPersonsSection } from '@/lib/sanity/queries/pages/home';
 
-const contactPersons: ComponentProps<typeof ContactPersonGroup>['contactPersons'] = [
-	{
-		email: 'vorsitz@tsg-irlich.de',
-		firstName: 'Alexander',
-		lastName: 'Hof',
-		phone: '+49 1234 56789',
-		role: 'Vorstand Vorsitz',
-		vision:
-			'Lorem ipsum dolor sit amet consectetur. Nullam massa pharetra purus lacus fringilla auctor purus. Netus tellus duis viverra pellentesque et erat egestas. Aliquam aenean sit sapien et nunc.',
-	},
-	{
-		email: 'finanzen@tsg-irlich.de',
-		firstName: 'René',
-		lastName: 'Linn',
-		phone: '+49 1234 56789',
-		role: 'Vorstand Finanzen',
-		vision:
-			'Lorem ipsum dolor sit amet consectetur sed repellendus quis. Amet totam velit. Dolorem sit facilis dolor consectetur magnam rerum voluptatum. Dolore non provident quia animi. Dolore magnam velit non.',
-	},
-	{
-		email: 'verwaltung@tsg-irlich.de',
-		firstName: 'Melina',
-		lastName: 'Dinter',
-		phone: '+49 1234 56789',
-		role: 'Vorstand Verwaltung',
-		vision:
-			'Lorem ipsum dolor sit amet consectetur. Qui numquam sapiente eius cum adipisci omnis deserunt nobis architecto. Tenetur quia eveniet molestias. Quo non rerum distinctio possimus.',
-	},
-	{
-		email: 'presse@tsg-irlich.de',
-		firstName: 'Philipp',
-		lastName: 'Pfeiffer',
-		phone: '+49 1234 56789',
-		role: 'Vorstand Öffentlichkeitsarbeit',
-		vision:
-			'Lorem ipsum dolor sit amet consectetur. Sed quisquam rem error fuga alias voluptas qui perferendis unde. Et perferendis consectetur quae praesentium. Blanditiis et dolor officiis adipisci optio accusantium.',
-	},
-	{
-		email: 'breitensport@tsg-irlich.de',
-		firstName: 'Melanie',
-		lastName: 'Klein',
-		phone: '+49 1234 56789',
-		role: 'Abteilungsleitung Breitensport',
-		vision:
-			'Lorem ipsum dolor sit amet consectetur. Assumenda aut sit et. At in rerum in ratione repellendus. Perferendis quas aut tempora incidunt. Ducimus minima provident nobis dolorem placeat consequatur.',
-	},
-	{
-		email: 'fussball@tsg-irlich.de',
-		firstName: 'Dennis',
-		lastName: 'Marschke',
-		phone: '+49 1234 56789',
-		role: 'Abteilungsleitung Fussball',
-		vision:
-			'Lorem ipsum dolor sit amet consectetur. Reprehenderit culpa et. Modi nulla aut. Qui eligendi quos voluptatibus. Non minima itaque quis soluta.',
-	},
-];
+const { contactPersons, intro, subtitle, title } = await getContactPersonsSection();
 ---
 
 <section class="bg-brand relative z-0 text-white">
 	<div class="container mx-auto px-5 pb-40 pt-28">
-		<SectionHeader
-			descriptionClass="text-white"
-			subTitle="Ansprechpartner"
-			title="Wir sind für dich da"
-			isCentered
-		>
-			Lorem ipsum dolor sit amet consectetur. Adipiscing in eu tempus feugiat enim placerat. Cursus
-			commodo lorem sit fringilla augue.
+		<SectionHeader descriptionClass="text-white" subTitle={subtitle} title={title} isCentered>
+			{intro}
 		</SectionHeader>
 
 		<div class="mt-32 flex justify-center gap-12">

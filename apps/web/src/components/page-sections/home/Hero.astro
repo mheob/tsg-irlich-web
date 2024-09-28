@@ -1,26 +1,36 @@
 ---
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
-import { Facebook, Instagram, Youtube } from 'lucide-astro';
+import { Facebook, Instagram, MessageSquareText, Youtube } from 'lucide-astro';
 
 import { CtaButton, SectionHeader } from '@/components/items';
 import yoga from '@/images/yoga-tsg-irlich.de.webp';
+import { getSocialMedia } from '@/lib/sanity/queries/navigation';
+import { getHero } from '@/lib/sanity/queries/pages/home';
+
+const { intro, subtitle, title } = await getHero();
+const { socialFields } = await getSocialMedia();
 
 const socialMedia: { href: string; icon: any; label: string }[] = [
 	{
-		href: '#!',
+		href: socialFields.instagram,
 		icon: Instagram,
 		label: 'Instagram',
 	},
 	{
-		href: '#!',
+		href: socialFields.facebook,
 		icon: Facebook,
 		label: 'Facebook',
 	},
 	{
-		href: '#!',
+		href: socialFields.youtube,
 		icon: Youtube,
 		label: 'Youtube',
+	},
+	{
+		href: socialFields.whatsapp,
+		icon: MessageSquareText,
+		label: 'WhatsApp',
 	},
 ];
 ---
@@ -29,18 +39,10 @@ const socialMedia: { href: string; icon: any; label: string }[] = [
 	<div class="container mx-auto mt-[-160px] flex min-h-dvh items-center p-5 pt-[160px]">
 		<div class="bg"></div>
 		<div class="w-1/2">
-			<SectionHeader
-				level="h1"
-				subTitle="Mit Tradition und Leidenschaft seit 1882"
-				title="TSG IRLICH — DEINE TURN- UND SPORTGEMEINDE IN NEUWIED / IRLICH"
-			>
-				Für Jedermann, der sich gerne bewegt und mit Menschen zusammen ist. Egal ob im Breitensport,
-				beim gemütlichem Beisammensein oder dem Leistungsorientieren Sport. In über XX verschiedenen
-				Sportarten bieten wir dir alles was du brauchst.
-			</SectionHeader>
+			<SectionHeader level="h1" subTitle={subtitle} title={title}>{intro}</SectionHeader>
 
 			<div class="relative mt-12">
-				<CtaButton href="#!">Kontakt aufnehmen</CtaButton>
+				<CtaButton href="/kontakt">Kontakt aufnehmen</CtaButton>
 				<Icon
 					aria-hidden="true"
 					class="text-brand absolute -top-10 left-[35%] text-8xl"

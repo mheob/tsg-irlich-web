@@ -1,14 +1,14 @@
 ---
 interface Props {
-	label: string;
 	suffix?: string;
+	title: string;
 	value: number;
 }
 
-const { label, suffix = '', value } = Astro.props;
+const { suffix = '', title, value } = Astro.props;
 ---
 
 <div class="flex flex-col items-center justify-center gap-2 py-8">
 	<div class="font-sans-serif text-7xl font-bold">{value}{suffix}</div>
-	<h2 class="text-xl text-gray-500">{label}</h2>
+	<h2 class="text-xl text-gray-500">{title}</h2>
 </div>
