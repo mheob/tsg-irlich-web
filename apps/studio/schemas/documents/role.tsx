@@ -20,6 +20,13 @@ const role = defineType({
 				maxLengthRule(rule, 64, 'Der Name'),
 			],
 		}),
+
+		defineField({
+			title: 'E-Mail',
+			name: 'email',
+			type: 'email',
+			description: 'Die E-Mail-Adresse der Rolle. Sie muss NUR bei Vorstandsämtern gesetzt werden!',
+		}),
 	],
 	orderings: [
 		{
@@ -27,6 +34,7 @@ const role = defineType({
 			name: 'titleAsc',
 			by: [{ field: 'title', direction: 'asc' }],
 		},
+
 		{
 			title: 'nach Name - absteigend',
 			name: 'titleDesc',

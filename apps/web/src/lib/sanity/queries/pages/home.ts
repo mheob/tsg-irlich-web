@@ -204,9 +204,9 @@ export async function getContactPersonsSection() {
 					contactPersons[]-> {
 						firstName,
 						lastName,
-						email,
 						phone,
 						image,
+						"email": affiliations[department->title == 'Vorstand'][0].role->email,
 						"role": affiliations[department->title == 'Vorstand'][0].role->title,
 						"vision": affiliations[department->title == 'Vorstand'][0].description,
 					}
