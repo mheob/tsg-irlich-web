@@ -51,10 +51,22 @@ const person = defineType({
 						}),
 
 						defineField({
+							title: 'Aufgabenbeschreibung',
+							name: 'taskDescription',
+							type: 'text',
+							description:
+								'Kurze Aufgabenbeschreibung zum Posten der Person (ca. 270 bis 330 Zeichen).',
+							validation: _rule => [
+								// minLengthRule(rule, 270, 'Die Beschreibung (Vision)'),
+								// maxLengthRule(rule, 330, 'Die Beschreibung (Vision)'),
+							],
+						}),
+
+						defineField({
 							title: 'Beschreibung (Vision)',
 							name: 'description',
 							type: 'text',
-							description: 'Eine kurze Beschreibung der Person.',
+							description: 'Kurze Beschreibung als Vision der Person.',
 							validation: _rule => [
 								// minLengthRule(rule, 32, 'Die Beschreibung (Vision)'),
 								// maxLengthRule(rule, 200, 'Die Beschreibung (Vision)'),
