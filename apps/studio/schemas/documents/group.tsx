@@ -20,6 +20,14 @@ const group = defineType({
 		}),
 
 		defineField({
+			title: 'E-Mail',
+			name: 'email',
+			type: 'email',
+			description: 'Die E-Mail-Adresse der Gruppe bzw. Mannschaft.',
+			// validation: rule => [requiredRule(rule, 'Die E-Mail')],
+		}),
+
+		defineField({
 			title: 'Beschreibung',
 			name: 'description',
 			type: 'simpleBlockContent',
