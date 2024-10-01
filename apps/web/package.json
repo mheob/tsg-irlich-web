@@ -18,6 +18,7 @@
 		"@fontsource/anton": "^5.1.0",
 		"@fontsource/bebas-neue": "^5.1.0",
 		"@fontsource/inter": "^5.1.0",
+		"@mheob/tsconfig": "^2.2.1",
 		"@portabletext/types": "^2.0.13",
 		"@sanity/astro": "^3.1.6",
 		"@sanity/client": "^6.22.0",
