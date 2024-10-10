@@ -28,18 +28,18 @@
 		"@mheob/prettier-config": "^3.3.1",
 		"commitizen": "^4.3.1",
 		"cspell": "^8.14.4",
-		"cz-git": "^1.10.0",
-		"eslint": "^9.11.1",
+		"cz-git": "^1.10.1",
+		"eslint": "^9.12.0",
 		"husky": "^9.1.6",
 		"lint-staged": "^15.2.10",
 		"prettier": "^3.3.3",
 		"prettier-plugin-astro": "^0.14.1",
 		"prettier-plugin-tailwindcss": "^0.6.8",
-		"turbo": "^2.1.2",
+		"turbo": "^2.1.3",
 		"typescript": "^5.6.2"
 	},
-	"packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b",
+	"packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca",
 	"engines": {
-		"node": "^20"
+		"node": "^20.18.0"
 	}
 }
