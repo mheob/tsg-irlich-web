@@ -16,7 +16,7 @@ export const venuesField = defineField({
 			title: 'Sportstätten',
 			name: 'venues',
 			type: 'array',
-			of: [{ type: 'reference', to: { type: 'testimonial' } }],
+			of: [{ type: 'reference', to: { type: 'venue' } }],
 			description: 'Diese gewählten Sportstätten werden in der gewünschten Reihenfolge angezeigt.',
 		}),
 	],

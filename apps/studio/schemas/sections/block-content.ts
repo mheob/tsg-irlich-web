@@ -1,5 +1,10 @@
 import { RiFileTextLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
+import {
+	defineField,
+	type PortableTextObject,
+	type PortableTextSpan,
+	type PortableTextTextBlock,
+} from 'sanity';
 
 const blockContent = defineField({
 	title: 'Block Content',
@@ -7,9 +12,8 @@ const blockContent = defineField({
 	type: 'object',
 	description: 'Text Block',
 	icon: RiFileTextLine,
-	hidden: false,
 	fields: [
-		{
+		defineField({
 			title: 'Text',
 			name: 'text',
 			type: 'array',
@@ -22,7 +26,7 @@ const blockContent = defineField({
 						decorators: [
 							{ title: 'Strong', value: 'strong' },
 							{ title: 'Italic', value: 'em' },
-							{ title: 'Code', value: 'code' },
+							// { title: 'Code', value: 'code' },
 						],
 					},
 					styles: [
@@ -37,10 +41,23 @@ const blockContent = defineField({
 					type: 'mainImage',
 				},
 			],
-		},
+		}),
 	],
 	preview: {
-		prepare: () => ({ title: 'Text Section' }),
+		select: {
+			blocks: 'text',
+		},
+		prepare(value: { blocks: Array<PortableTextTextBlock<PortableTextSpan>> }) {
+			const block = value.blocks.find(block => block._type === 'block');
+			return {
+				title: block
+					? `Text: ${block.children
+							.filter(child => child._type === 'span')
+							.map(span => span.text)
+							.join('')}`
+					: 'No title',
+			};
+		},
 	},
 });
 

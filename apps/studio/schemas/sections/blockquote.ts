@@ -7,7 +7,6 @@ const blockquote = defineField({
 	type: 'object',
 	description: 'A blockquote component with the quote and author',
 	icon: RiChatQuoteLine,
-	hidden: true,
 	fields: [
 		defineField({
 			title: 'Zitat',
