@@ -1,6 +1,8 @@
 import { RiImageLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
+import { requiredRule } from '@/shared/validation-rules';
+
 const extendedImage = defineField({
 	title: 'Erweitertes Bild',
 	name: 'extendedImage',
@@ -13,7 +15,7 @@ const extendedImage = defineField({
 			name: 'alt',
 			type: 'string',
 			description: 'Beschreibe, was auf dem Bild zu sehen ist (für SEO und Barrierefreiheit).',
-			// validation: rule => rule.required().error('Du musst den Alt-Text ausfüllen.'),
+			validation: rule => [requiredRule(rule, 'Der "Alt-Text"')],
 		},
 	],
 	options: {

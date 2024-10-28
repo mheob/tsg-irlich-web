@@ -7,7 +7,6 @@ const grid = defineField({
 	type: 'object',
 	description: 'This is a simple grid component, all items are going to be equally wide',
 	icon: RiLayoutGridLine,
-	hidden: true,
 	groups: [
 		{
 			title: 'Columns',

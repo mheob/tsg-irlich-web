@@ -7,24 +7,24 @@ const spacer = defineField({
 	type: 'object',
 	description: 'An empty block to create space between sections',
 	icon: RiCheckboxIndeterminateLine,
-	hidden: true,
+	// hidden: true,
 	fields: [
-		{
+		defineField({
 			title: 'Size',
 			name: 'size',
 			type: 'string',
 			options: {
 				layout: 'radio',
 				list: [
-					{ title: 'Small', value: 'small' },
-					{ title: 'Medium', value: 'medium' },
-					{ title: 'Large', value: 'large' },
+					{ title: 'Schmal', value: 'small' },
+					{ title: 'Mittel', value: 'medium' },
+					{ title: 'Breit', value: 'large' },
 				],
 			},
-		},
+		}),
 	],
 	preview: {
-		prepare: ({ title }) => ({ title: `Spacer ${title.charAt(0).toUpperCase() + title.slice(1)}` }),
+		prepare: ({ title }) => ({ title: `Spacer (${title})` }),
 		select: {
 			title: 'size',
 		},
