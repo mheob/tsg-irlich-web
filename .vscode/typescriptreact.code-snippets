@@ -1,0 +1,18 @@
+{
+	"React functional component": {
+		"prefix": "rfc-intern",
+		"body": [
+			"import type { HTMLAttributes } from 'react';",
+			"",
+			"interface ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props extends HTMLAttributes<HTMLDivElement> {",
+			"\t${1:propertyTypeKey}: ${2:propertyTypeValue};",
+			"}",
+			"",
+			"export default function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ ${1:propertyTypeKey} }: ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props) {",
+			"\treturn <section>$0</section>;",
+			"}",
+			""
+		],
+		"description": "React functional component"
+	}
+}

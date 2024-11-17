@@ -1,0 +1,22 @@
+.subTitle {
+	@apply relative w-fit px-16 text-xl uppercase;
+}
+
+.subTitle::before,
+.subTitle::after {
+	content: '';
+	top: calc(50% - 2px);
+	@apply absolute w-12 border;
+}
+
+.subTitle::before {
+	left: 0;
+}
+
+.subTitle::after {
+	right: 0;
+}
+
+.title {
+	@apply mt-4 text-7xl;
+}
