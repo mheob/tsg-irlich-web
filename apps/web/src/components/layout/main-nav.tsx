@@ -156,7 +156,7 @@ export default function MainNav() {
 				</NavigationMenuList>
 			</NavigationMenu>
 
-			<Button className="uppercase" variant="secondary">
+			<Button className="uppercase" variant="secondary" asChild>
 				<Link href="/kontakt">Kontakt aufnehmen</Link>
 			</Button>
 		</div>

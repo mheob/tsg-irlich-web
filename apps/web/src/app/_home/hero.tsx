@@ -28,7 +28,7 @@ export default function Hero() {
 					</SectionHeader>
 
 					<div className="text-primary relative mt-12 flex gap-8">
-						<Button>
+						<Button asChild>
 							<Link href="/kontakt">Kontakt aufnehmen</Link>
 						</Button>
 						<ArrowCta aria-hidden="true" />

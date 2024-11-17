@@ -1,7 +1,3 @@
-.bg {
-	@apply absolute inset-0 -z-[9999] bg-white;
-}
-
 .bgRoundedEdge {
 	@apply bg-primary absolute inset-y-0 right-0 -z-[9998] w-[40%];
 	aspect-ratio: 2/3;

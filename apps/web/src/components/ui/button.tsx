@@ -4,11 +4,11 @@ import * as React from 'react';
 
 const ButtonVariants = cva('btn', {
 	defaultVariants: {
-		variant: 'default',
+		variant: 'primary',
 	},
 	variants: {
 		variant: {
-			default: 'btn--primary',
+			primary: 'btn--primary',
 			secondary: 'btn--secondary',
 		},
 	},
@@ -25,7 +25,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 		const Comp = asChild ? Slot : 'button';
 		return (
 			<Comp className={ButtonVariants({ className, variant })} ref={reference} {...props}>
-				<b>{children}</b>
+				<span>{children}</span>
 			</Comp>
 		);
 	},

@@ -67,7 +67,6 @@
 	.title,
 	.subTitle {
 		@apply font-sans-serif;
-
 		text-wrap: balance;
 	}
 
@@ -92,16 +91,30 @@
 
 @layer components {
 	.btn {
-		@apply focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full p-2 text-center font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_b]:rounded-full [&_b]:border [&_b]:px-10 [&_b]:py-4;
+		@apply focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full p-2 text-center font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_:first-child]:rounded-full [&_:first-child]:border [&_:first-child]:px-10 [&_:first-child]:py-4;
 	}
 
 	.btn--primary {
-		@apply bg-primary hover:bg-primary/90 [&_b]:border-primary-foreground text-primary-foreground;
+		@apply bg-primary hover:bg-primary/90 [&_:first-child]:border-primary-foreground text-primary-foreground;
 	}
 
 	.btn--secondary {
-		@apply bg-secondary hover:bg-secondary/70 [&_b]:border-secondary-foreground text-secondary-foreground;
+		@apply bg-secondary hover:bg-secondary/70 [&_:first-child]:border-secondary-foreground text-secondary-foreground;
+	}
+
+	.i-btn {
+		@apply rounded-full p-1.5;
+	}
+
+	.i-btn--ghost {
+		@apply hover:bg-background-lowContrast/95 border bg-background;
+	}
+
+	.i-btn--primary {
+		@apply bg-primary hover:bg-primary/90 border-primary text-primary-foreground;
+	}
+
+	.i-btn--secondary {
+		@apply bg-secondary hover:bg-secondary/70 border-secondary;
 	}
 }
-
-
