@@ -11,9 +11,15 @@ import {
 	type LucideProps,
 } from 'lucide-react';
 import Link from 'next/link';
-import * as React from 'react';
+import {
+	type AnchorHTMLAttributes,
+	type ButtonHTMLAttributes,
+	type ComponentProps,
+	forwardRef,
+	type HTMLAttributes,
+} from 'react';
 
-const IconButtonVariants = cva('i-btn', {
+const ArrowButtonVariants = cva('i-btn', {
 	defaultVariants: {
 		variant: 'primary',
 	},
@@ -26,7 +32,7 @@ const IconButtonVariants = cva('i-btn', {
 	},
 });
 
-interface IconProps {
+interface ArrowProps {
 	direction?:
 		| 'down'
 		| 'down-left'
@@ -39,32 +45,32 @@ interface IconProps {
 	size?: LucideProps['size'];
 }
 
-export interface IconElementProps
-	extends React.HTMLAttributes<HTMLDivElement>,
-		VariantProps<typeof IconButtonVariants>,
-		IconProps {}
+export interface ArrowElementProps
+	extends HTMLAttributes<HTMLDivElement>,
+		VariantProps<typeof ArrowButtonVariants>,
+		ArrowProps {}
 
-export interface IconAnchorProps
-	extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
-		VariantProps<typeof IconButtonVariants>,
-		IconProps {
-	href: React.ComponentProps<typeof Link>['href'];
+export interface ArrowAnchorProps
+	extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
+		VariantProps<typeof ArrowButtonVariants>,
+		ArrowProps {
+	href: ComponentProps<typeof Link>['href'];
 }
 
-export interface IconButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-		VariantProps<typeof IconButtonVariants>,
-		IconProps {
+export interface ArrowButtonProps
+	extends ButtonHTMLAttributes<HTMLButtonElement>,
+		VariantProps<typeof ArrowButtonVariants>,
+		ArrowProps {
 	buttonType?: 'button' | 'reset' | 'submit';
 }
 
-function Icon({
+function Arrow({
 	direction = 'right',
 	size = '48',
-}: {
-	direction: IconProps['direction'];
-	size: IconProps['size'];
-}) {
+}: Readonly<{
+	direction: ArrowProps['direction'];
+	size: ArrowProps['size'];
+}>) {
 	switch (direction) {
 		/* eslint-disable unicorn/switch-case-braces, prettier/prettier */
 		case 'down': return <ArrowDown size={size} strokeWidth={2} />;
@@ -79,47 +85,47 @@ function Icon({
 	}
 }
 
-const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
+const ArrowButton = forwardRef<HTMLButtonElement, ArrowButtonProps>(
 	({ buttonType = 'button', className, direction, size, variant, ...props }, reference) => {
 		return (
 			<button
-				className={IconButtonVariants({ className, variant })}
+				className={ArrowButtonVariants({ className, variant })}
 				ref={reference}
 				type={buttonType}
 				{...props}
 			>
-				<Icon direction={direction} size={size} />
+				<Arrow direction={direction} size={size} />
 			</button>
 		);
 	},
 );
-IconButton.displayName = 'IconButton';
+ArrowButton.displayName = 'ArrowButton';
 
-const IconElement = React.forwardRef<HTMLDivElement, IconElementProps>(
+const ArrowElement = forwardRef<HTMLDivElement, ArrowElementProps>(
 	({ className, direction, size, variant, ...props }, reference) => {
 		return (
-			<div className={IconButtonVariants({ className, variant })} ref={reference} {...props}>
-				<Icon direction={direction} size={size} />
+			<div className={ArrowButtonVariants({ className, variant })} ref={reference} {...props}>
+				<Arrow direction={direction} size={size} />
 			</div>
 		);
 	},
 );
-IconElement.displayName = 'IconElement';
+ArrowElement.displayName = 'ArrowElement';
 
-const IconLink = React.forwardRef<HTMLAnchorElement, IconAnchorProps>(
+const ArrowLink = forwardRef<HTMLAnchorElement, ArrowAnchorProps>(
 	({ className, direction, href, size, variant, ...props }, reference) => {
 		return (
 			<Link
-				className={IconButtonVariants({ className, variant })}
+				className={ArrowButtonVariants({ className, variant })}
 				href={href}
 				ref={reference}
 				{...props}
 			>
-				<Icon direction={direction} size={size} />
+				<Arrow direction={direction} size={size} />
 			</Link>
 		);
 	},
 );
-IconLink.displayName = 'IconLink';
+ArrowLink.displayName = 'ArrowLink';
 
-export { IconButton, IconElement, IconLink };
+export { ArrowButton, ArrowElement, ArrowLink };

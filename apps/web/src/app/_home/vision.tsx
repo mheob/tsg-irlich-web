@@ -11,12 +11,15 @@ export default function Vision() {
 			<div className="container mx-auto grid grid-cols-[55%,45%] px-5">
 				<div>
 					<div className={styles.bgRoundedEdge}></div>
+
 					<div className="bg-secondary absolute left-[calc(28%-12rem)] top-20 grid h-96 w-96 place-content-center rounded-full">
 						IMAGE 1
 					</div>
+
 					<div className="bg-secondary absolute left-[calc(13%-8rem)] top-[calc(50%-3rem)] grid h-64 w-64 place-content-center rounded-full">
 						IMAGE 2
 					</div>
+
 					<div className="bg-secondary absolute bottom-24 left-[calc(29%-8rem)] grid h-64 w-64 place-content-center rounded-full">
 						IMAGE 3
 					</div>

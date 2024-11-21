@@ -4,24 +4,6 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 const config: Config = {
 	content: ['./src/{app,components,icons}/**/*.{js,ts,jsx,tsx,mdx}'],
 	theme: {
-		// colors: {
-		// 	brand: {
-		// 		dark: '#312b5d',
-		// 		DEFAULT: '#2E2B70',
-		// 		light: '#5650be',
-		// 	},
-		// 	'brand-secondary': {
-		// 		dark: '#d09d00',
-		// 		DEFAULT: '#fed501',
-		// 		light: '#ffe40e',
-		// 	},
-		// 	current: 'currentColor',
-		// 	gray: {
-		// 		DEFAULT: '#3b3b4f',
-		// 		light: '#dfdfe6',
-		// 		lightest: '#f1f2f5',
-		// 	},
-		// },
 		extend: {
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -65,13 +47,17 @@ const config: Config = {
 					foreground: 'hsl(var(--popover-foreground))',
 				},
 				primary: {
+					dark: 'hsl(var(--primary-dark))',
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
+					light: 'hsl(var(--primary-light))',
 				},
 				ring: 'hsl(var(--ring))',
 				secondary: {
+					dark: 'hsl(var(--secondary-dark))',
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))',
+					light: 'hsl(var(--secondary-light))',
 				},
 			},
 			container: {

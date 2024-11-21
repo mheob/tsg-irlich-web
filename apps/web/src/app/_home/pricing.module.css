@@ -1,0 +1,14 @@
+.bg::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url('../../icons/design/bg-silhouette-wandern.svg'),
+		url('../../icons/design/bg-silhouette-yoga-sitzen.svg');
+	background-position:
+		0% 20%,
+		105% 95%;
+	background-repeat: no-repeat;
+	background-size: 400px, 500px;
+	opacity: 0.15;
+	z-index: -1;
+}

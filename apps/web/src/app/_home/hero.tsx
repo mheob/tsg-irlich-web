@@ -11,11 +11,8 @@ import styles from './hero.module.css';
 
 export default function Hero() {
 	return (
-		<section className="mt-36">
-			<div className={styles.bg} />
-
-			<div className="container mx-auto -mt-40 flex min-h-dvh items-center py-5">
-				{/* <div className="bg"></div> */}
+		<section>
+			<div className="container mx-auto -mt-40 flex min-h-dvh items-center py-5 pt-40">
 				<div className="w-1/2">
 					<SectionHeader
 						level="h1"
@@ -31,6 +28,7 @@ export default function Hero() {
 						<Button asChild>
 							<Link href="/kontakt">Kontakt aufnehmen</Link>
 						</Button>
+
 						<ArrowCta aria-hidden="true" />
 					</div>
 				</div>
@@ -41,7 +39,7 @@ export default function Hero() {
 
 					<Image
 						alt="Ein Frau, die am meditieren ist."
-						className="absolute bottom-0 right-64 w-1/3"
+						className="absolute bottom-0 left-1/2 w-1/3"
 						src={YogaImage}
 					/>
 

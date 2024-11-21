@@ -77,7 +77,7 @@ const components: { description: string; href: string; title: string }[] = [
 
 export default function MainNav() {
 	return (
-		<div className="container z-10 mx-auto flex items-center justify-between gap-12 py-5">
+		<div className="container z-10 mx-auto flex min-h-40 items-center justify-between gap-12">
 			<Link aria-label="Logo der TSG Irlich 1882 e. V." href="/">
 				<TSGLogo className="h-28 drop-shadow-xl" />
 			</Link>

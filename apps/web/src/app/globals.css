@@ -18,9 +18,13 @@
 
     --primary: 243 45% 30%;
     --primary-foreground: 0 0% 98%;
+		--primary-light: 243 46% 53%;
+		--primary-dark: 247 37% 27%;
 
-    --secondary: 50 99% 50%;
+		--secondary: 50 99% 50%;
     --secondary-foreground: 0 0% 9%;
+		--secondary-light: 53 100% 53%;
+		--secondary-dark: 45 100% 41%;
 
     --muted: 240 14% 73%;
     --muted-foreground: 240 14% 27%;
@@ -102,6 +106,10 @@
 		@apply bg-secondary hover:bg-secondary/70 [&_:first-child]:border-secondary-foreground text-secondary-foreground;
 	}
 
+	.btn--width-full {
+		@apply w-full [&_:first-child]:w-full;
+	}
+
 	.i-btn {
 		@apply rounded-full p-1.5;
 	}
@@ -116,5 +124,16 @@
 
 	.i-btn--secondary {
 		@apply bg-secondary hover:bg-secondary/70 border-secondary;
+	}
+}
+
+@layer utilities {
+	.text-stroke {
+		color: white;
+		text-shadow:
+			-1px -1px 0 #000,
+			1px -1px 0 #000,
+			-1px 1px 0 #000,
+			1px 1px 0 #000;
 	}
 }
