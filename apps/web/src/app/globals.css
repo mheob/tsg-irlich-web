@@ -55,11 +55,12 @@
 
 @layer base {
   *, ::before, ::after {
-		@apply border-border;
+		border-color: hsl(var(--border));
 	}
 
   body {
-    @apply bg-background text-foreground;
+		background-color: hsl(var(--background));
+		color: hsl(var(--foreground));
   }
 }
 
@@ -72,18 +73,20 @@
 	h6,
 	.title,
 	.subTitle {
-		@apply font-sans-serif;
+		font-family: Anton, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 		text-wrap: balance;
 	}
 
 	address {
-		@apply not-italic;
+		font-style: normal;
 	}
 
 	p,
 	li,
 	figcaption {
-		@apply text-muted-foreground max-w-prose hyphens-auto;
+		color: hsl(var(--muted-foreground));
+		max-width: 65ch;
+		hyphens: auto;
 		text-wrap: pretty;
 	}
 
@@ -104,35 +107,107 @@
 
 @layer components {
 	.btn {
-		@apply focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full p-2 text-center font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_:first-child]:rounded-full [&_:first-child]:border [&_:first-child]:px-10 [&_:first-child]:py-4;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		white-space: nowrap;
+		border-radius: 9999px;
+		padding: 0.5rem;
+		text-align: center;
+		font-weight: 700;
+		transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 150ms;
+	}
+
+	.btn:focus-visible {
+		--tw-ring-color: hsl(var(--ring));
+		--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+		--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+		outline: 2px solid transparent;
+		outline-offset: 2px;
+		box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+	}
+
+	.btn:disabled {
+		pointer-events: none;
+		opacity: 0.5;
+	}
+
+	.btn :first-child {
+		border-radius: 9999px;
+		border-width: 1px;
+		padding-inline: 2.5rem;
+		padding-block: 1rem;
 	}
 
 	.btn--primary {
-		@apply bg-primary hover:bg-primary/90 [&_:first-child]:border-primary-foreground text-primary-foreground;
+		background-color: hsl(var(--primary));
+		color: hsl(var(--primary-foreground));
+	}
+
+	.btn--primary:hover {
+		background-color: hsl(var(--primary) / 0.9);
+	}
+
+	.btn--primary :first-child {
+		border-color: hsl(var(--primary-foreground));
 	}
 
 	.btn--secondary {
-		@apply bg-secondary hover:bg-secondary/70 [&_:first-child]:border-secondary-foreground text-secondary-foreground;
+		background-color: hsl(var(--secondary));
+		color: hsl(var(--secondary-foreground));
 	}
 
-	.btn--width-full {
-		@apply w-full [&_:first-child]:w-full;
+	.btn--secondary:hover {
+		background-color: hsl(var(--secondary) / 0.7);
+	}
+
+	.btn--secondary :first-child {
+		border-color: hsl(var(--secondary-foreground));
+	}
+
+	.btn--width-full,
+	.btn--width-full :first-child {
+		width: 100%;
 	}
 
 	.i-btn {
-		@apply rounded-full p-1.5;
+		border-radius: 9999px;
+		padding: 0.375rem;
 	}
 
 	.i-btn--ghost {
-		@apply hover:bg-background-lowContrast/95 border bg-background;
+		background-color: hsl(var(--background));
+		border-width: 1px;
+	}
+
+	.i-btn--ghost {
+		background-color: hsl(var(--background-low-contrast) / 0.95);
+	}
+
+	.i-btn--ghost:hover {
+		background-color: hsl(var(--background-high-contrast) / 0.5);
 	}
 
 	.i-btn--primary {
-		@apply bg-primary hover:bg-primary/90 border-primary text-primary-foreground;
+		background-color: hsl(var(--primary));
+		border-color: hsl(var(--primary));
+		color: hsl(var(--primary-foreground));
+	}
+
+	.i-btn--primary:hover {
+		background-color: hsl(var(--primary) / 0.9);
 	}
 
 	.i-btn--secondary {
-		@apply bg-secondary hover:bg-secondary/70 border-secondary;
+		background-color: hsl(var(--secondary));
+		border-color: hsl(var(--secondary));
+	}
+
+	.i-btn--secondary:hover {
+		background-color: hsl(var(--secondary) / 0.7);
 	}
 }
 

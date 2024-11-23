@@ -1,7 +1,7 @@
-import { type IconType, SiFacebook, SiInstagram, SiYoutube } from '@icons-pack/react-simple-icons';
 import { ArrowUp, Mail, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
 
+import { socialMedia } from '@/data/social-media';
 import TSGLogo from '@/icons/logos/tsg-logo';
 
 const contact: {
@@ -25,27 +25,6 @@ const privacy: { href: string; label: string } = { href: '/datenschutz', label: 
 
 const currentYear = new Date().getFullYear();
 
-const socialMediaItems: { href: string; icon: IconType; label: string }[] = [
-	{
-		// href: socialMedia.instagram,
-		href: '/instagram',
-		icon: SiInstagram,
-		label: 'Instagram',
-	},
-	{
-		// href: socialMedia.facebook,
-		href: '/facebook',
-		icon: SiFacebook,
-		label: 'Facebook',
-	},
-	{
-		// href: socialMedia.youtube,
-		href: '/youtube',
-		icon: SiYoutube,
-		label: 'Youtube',
-	},
-];
-
 export default function Footer() {
 	return (
 		<footer className="bg-primary text-white">
@@ -57,7 +36,7 @@ export default function Footer() {
 						<h2 className="text-4xl">Folge uns</h2>
 
 						<div className="flex gap-4">
-							{socialMediaItems.map(({ href, icon: Icon, label }) => (
+							{socialMedia.map(({ href, icon: Icon, label }) => (
 								<Link
 									aria-label={label}
 									className="hover:text-secondary"

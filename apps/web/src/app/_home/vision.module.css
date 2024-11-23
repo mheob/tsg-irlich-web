@@ -5,6 +5,5 @@
 	left: 0;
   z-index: -9998;
   width: 30%;
-	aspect-ratio: 2/3;
 	clip-path: ellipse(100% 85% at 0% 50%);
 }
