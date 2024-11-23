@@ -1,0 +1,16 @@
+.bg {
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: url('../../icons/design/bg-silhouette-wandern.svg'),
+			url('../../icons/design/bg-silhouette-fussball-seitfallzieher.svg');
+		background-position:
+			0% 5%,
+			97% 102%;
+		background-repeat: no-repeat;
+		background-size: 350px, 400px;
+		opacity: 0.15;
+		z-index: -1;
+	}
+}
