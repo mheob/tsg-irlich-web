@@ -7,14 +7,15 @@
 		"build:affected": "turbo build --affected",
 		"cspell": "cspell .",
 		"dev": "turbo dev",
-		"lint": "eslint . --fix && turbo lint",
+		"lint": "turbo lint",
 		"lint:affected": "turbo lint --affected",
 		"lint:cspell": "cspell --unique --no-progress --no-must-find-files",
+		"lint:root": "eslint . --fix",
 		"prepare": "husky"
 	},
 	"lint-staged": {
 		"*": "eslint --fix",
-		"!*.{svg}": "pnpm run lint:cspell"
+		"!*.svg": "pnpm run lint:cspell"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^19.6.0",

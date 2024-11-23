@@ -1,10 +1,5 @@
 import { RiFileTextLine } from 'react-icons/ri';
-import {
-	defineField,
-	type PortableTextObject,
-	type PortableTextSpan,
-	type PortableTextTextBlock,
-} from 'sanity';
+import { defineField, type PortableTextSpan, type PortableTextTextBlock } from 'sanity';
 
 const blockContent = defineField({
 	title: 'Block Content',
