@@ -4,9 +4,11 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --background-high-contrast: 240 12% 89%;
-    --background-low-contrast: 225 17% 95%;
+		--black: 0 0% 0%;
+		--white: 0 0% 100%;
+		--background: 0 0% 100%;
+		--background-high-contrast: 240 12% 89%;
+		--background-low-contrast: 225 17% 95%;
 
 		--foreground: 0 0% 3.9%;
 

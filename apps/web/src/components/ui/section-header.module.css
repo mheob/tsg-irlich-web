@@ -1,12 +1,19 @@
 .subTitle {
-	@apply relative w-fit px-16 text-xl uppercase;
+	position: relative;
+	width: fit-content;
+	padding-inline: 4rem;
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+	text-transform: uppercase;
 }
 
 .subTitle::before,
 .subTitle::after {
 	content: '';
+	position: absolute;
 	top: calc(50% - 2px);
-	@apply absolute w-12 border;
+	width: 3rem;
+	border-width: 1px;
 }
 
 .subTitle::before {
@@ -18,5 +25,7 @@
 }
 
 .title {
-	@apply mt-4 text-7xl;
+	margin-top: 1rem;
+	font-size: 4.5rem;
+  line-height: 1;
 }

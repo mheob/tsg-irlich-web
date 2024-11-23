@@ -2,14 +2,18 @@
 	"React functional component": {
 		"prefix": "rfc-intern",
 		"body": [
-			"import type { HTMLAttributes } from 'react';",
+			"import type { ComponentPropsWithRef } from 'react';",
 			"",
-			"interface ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props extends HTMLAttributes<HTMLDivElement> {",
+			"interface ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props extends ComponentPropsWithRef<'section'> {",
 			"\t${1:propertyTypeKey}: ${2:propertyTypeValue};",
 			"}",
 			"",
-			"export default function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ ${1:propertyTypeKey} }: ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props) {",
-			"\treturn <section>$0</section>;",
+			"export default function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ ${1:propertyTypeKey}, ref, ...props }: ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props) {",
+			"\treturn (",
+			"\t\t<section ref={ref} {...props}>",
+			"\t\t\t$0",
+			"\t\t</section>",
+			"\t);",
 			"}",
 			""
 		],

@@ -1,5 +1,10 @@
 .bgRoundedEdge {
-	@apply bg-primary absolute inset-y-0 left-0 -z-[9998] w-[30%];
+	background-color: hsl(var(--primary));
+  position: absolute;
+	inset-block: 0;
+	left: 0;
+  z-index: -9998;
+  width: 30%;
 	aspect-ratio: 2/3;
 	clip-path: ellipse(100% 85% at 0% 50%);
 }

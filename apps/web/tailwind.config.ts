@@ -20,6 +20,7 @@ const config: Config = {
 					highContrast: 'hsl(var(--background-high-contrast))',
 					lowContrast: 'hsl(var(--background-low-contrast))',
 				},
+				black: 'hsl(var(--black))',
 				border: 'hsl(var(--border))',
 				card: {
 					DEFAULT: 'hsl(var(--card))',
@@ -59,6 +60,7 @@ const config: Config = {
 					foreground: 'hsl(var(--secondary-foreground))',
 					light: 'hsl(var(--secondary-light))',
 				},
+				white: 'hsl(var(--white))',
 			},
 			container: {
 				center: true,

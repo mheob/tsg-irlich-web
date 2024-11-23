@@ -11,6 +11,11 @@ export default mheob(
 		ignores: ['.github', '.sonarlint'],
 	},
 	{
+		rules: {
+			'react-refresh/only-export-components': 'off',
+		},
+	},
+	{
 		name: 'Next Plugin',
 		plugins: {
 			'@next/next': nextPlugin,
