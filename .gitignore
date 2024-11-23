@@ -42,3 +42,5 @@ next-env.d.ts
 # Vercel
 .turbo
 .vercel
+
+/__web
