@@ -1,0 +1,14 @@
+.bg::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url('../../icons/design/bg-silhouette-dehnen.svg'),
+		url('../../icons/design/bg-silhouette-fussball-dribbeln.svg');
+	background-position:
+		0% 10%,
+		115% 105%;
+	background-repeat: no-repeat;
+	background-size: 400px, 500px;
+	opacity: 0.15;
+	z-index: -1;
+}

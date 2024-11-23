@@ -1,3 +1,7 @@
 packages:
   - "apps/*"
   - "packages/*"
+
+catalog:
+  eslint: 9.14.0
+  typescript: ^5.7.2

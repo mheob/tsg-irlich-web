@@ -1,13 +1,21 @@
 {
-	"extends": "@mheob/tsconfig/astro",
 	"compilerOptions": {
-		"jsx": "react-jsx",
-		"jsxImportSource": "react",
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["src/*"]
-		}
+		"incremental": true,
+		"target": "ES2017",
+		"jsx": "preserve",
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"paths": { "@/*": ["./src/*"] },
+		"resolveJsonModule": true,
+		"allowJs": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"skipLibCheck": true,
+		"plugins": [{ "name": "next" }]
 	},
-	"include": ["**/*", ".astro/types.d.ts"],
-	"exclude": ["dist"]
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"exclude": ["node_modules"]
 }

@@ -1,0 +1,11 @@
+.bg::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url('../../icons/design/bg-design-bottom-left.svg');
+	background-position: -5% 105%;
+	background-repeat: no-repeat;
+	background-size: 30%;
+	opacity: 0.03;
+	z-index: -1;
+}

@@ -11,6 +11,12 @@
 		"source.organizeImports": "never"
 	},
 
+	"eslint.options": {
+		"flags": ["unstable_ts_config"]
+	},
+
+	"eslint.runtime": "node",
+
 	// Silent the stylistic rules in you IDE, but still auto fix them
 	"eslint.rules.customizations": [
 		{ "rule": "style/*", "severity": "off" },
@@ -26,7 +32,6 @@
 
 	// Enable eslint for all supported languages
 	"eslint.validate": [
-		"astro",
 		"javascript",
 		"javascriptreact",
 		"typescript",
@@ -38,6 +43,11 @@
 		"yaml",
 		"toml"
 	],
+
+	// MarkdownLint
+	"markdownlint.config": {
+		"MD041": false
+	},
 
 	// SonarLint
 	"sonarlint.connectedMode.project": {

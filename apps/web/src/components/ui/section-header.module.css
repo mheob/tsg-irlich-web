@@ -1,0 +1,31 @@
+.subTitle {
+	position: relative;
+	width: fit-content;
+	padding-inline: 4rem;
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+	text-transform: uppercase;
+}
+
+.subTitle::before,
+.subTitle::after {
+	content: '';
+	position: absolute;
+	top: calc(50% - 2px);
+	width: 3rem;
+	border-width: 1px;
+}
+
+.subTitle::before {
+	left: 0;
+}
+
+.subTitle::after {
+	right: 0;
+}
+
+.title {
+	margin-top: 1rem;
+	font-size: 4.5rem;
+  line-height: 1;
+}

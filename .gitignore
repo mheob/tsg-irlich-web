@@ -1,40 +1,46 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Jetbrains setting folder
-.idea/
-
-# Dependencies
-node_modules
-.pnp
-.pnp.js
-
-# Local env files
-.env
-.env.local
-.env.development
-.env.development.local
-.env.production
-.env.production.local
-.env.test
-.env.test.local
-
-# Testing
-coverage
-
-# Vercel
-.turbo
-.vercel
-
 # Build Outputs
+.next/
+.sanity/
+build/
+dist/
 out/
-build
-dist
 
 # Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Jetbrains setting folder
+.idea/
+
+# Local env files
+.env*
+!.env*.example
+
+# Logs
+/logs
+*.log
+
 # Misc
 .DS_Store
 *.pem
+
+# Testing
+coverage/
+
+# Typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.turbo
+.vercel
+
+/__web

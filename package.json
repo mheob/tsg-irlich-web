@@ -7,35 +7,37 @@
 		"build:affected": "turbo build --affected",
 		"cspell": "cspell .",
 		"dev": "turbo dev",
-		"lint": "eslint . --fix && turbo lint",
+		"lint": "turbo lint",
 		"lint:affected": "turbo lint --affected",
 		"lint:cspell": "cspell --unique --no-progress --no-must-find-files",
+		"lint:root": "eslint . --fix",
 		"prepare": "husky"
 	},
 	"lint-staged": {
 		"*": "eslint --fix",
-		"!*.{svg}": "pnpm run lint:cspell"
+		"!*.svg": "pnpm run lint:cspell"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^19.5.0",
+		"@antfu/ni": "^0.23.1",
+		"@commitlint/cli": "^19.6.0",
 		"@cspell/dict-de-de": "^4.0.3",
+		"@eslint-react/eslint-plugin": "^1.17.1",
 		"@mheob/commitlint-config": "^1.2.0",
 		"@mheob/eslint-config": "^6.2.0",
 		"@mheob/prettier-config": "^3.3.2",
 		"commitizen": "^4.3.1",
-		"cspell": "^8.15.4",
-		"cz-git": "^1.10.1",
-		"eslint": "^9.13.0",
-		"husky": "^9.1.6",
+		"cspell": "^8.16.0",
+		"cz-git": "^1.11.0",
+		"eslint": "catalog:",
+		"husky": "^9.1.7",
 		"lint-staged": "^15.2.10",
 		"prettier": "^3.3.3",
-		"prettier-plugin-astro": "^0.14.1",
-		"prettier-plugin-tailwindcss": "^0.6.8",
-		"turbo": "^2.2.3",
-		"typescript": "^5.6.3"
+		"prettier-plugin-tailwindcss": "^0.6.9",
+		"turbo": "^2.3.1",
+		"typescript": "catalog:"
 	},
-	"packageManager": "pnpm@9.12.3",
+	"packageManager": "pnpm@9.14.2",
 	"engines": {
-		"node": "^20"
+		"node": "22"
 	}
 }
