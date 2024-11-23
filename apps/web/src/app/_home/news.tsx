@@ -63,7 +63,7 @@ const articles: ComponentProps<typeof NewsArticlePreviewWide>[] = [
 			'Bei bestem Wetter startete am 9. Mai 2024 das traditionelle Vaddertachsturnier im Irlicher Pappelstadion!',
 		featuredImageSrc:
 			'https://next.tsg-irlich.de/_vercel/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fj4rxwl5m%2Fproduction%2F973790f369efeaae3d9b3bde76b704aacdc8b6c3-6000x4000.jpg%3Frect%3D308%2C474%2C4978%2C2800%26w%3D800%26h%3D450&w=640&q=100',
-		slug: '/news/tsg-irlich-startet-whatsapp-channel',
+		slug: '/news/tsg-irlich-startet-whatsapp-channel-2',
 		title: 'TSG-Vaddertach bei bestem Wetter!',
 	},
 ];

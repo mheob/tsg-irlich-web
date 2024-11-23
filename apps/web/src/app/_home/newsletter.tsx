@@ -15,7 +15,7 @@ export default function Newsletter() {
 				<SectionHeader title="Bleib auf dem Laufenden und lass dich informieren" isCentered />
 
 				<form
-					className="mx-auto mt-16 flex max-w-screen-sm items-center justify-between gap-6 rounded-md bg-white px-6 pb-2 shadow-xl"
+					className="relative z-[1] mx-auto mt-16 flex max-w-screen-sm items-center justify-between gap-6 rounded-md bg-white px-6 pb-2 shadow-xl"
 					method="post"
 				>
 					<label aria-label="E-Mail" className="text-primary" htmlFor="email">
@@ -23,7 +23,7 @@ export default function Newsletter() {
 					</label>
 
 					<Input
-						className="flex-1 p-4 text-lg"
+						className="flex-1 bg-transparent p-4 text-lg"
 						id="email"
 						name="email"
 						placeholder="max@mustermann.de"

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Anton, Bebas_Neue, Inter } from 'next/font/google';
 
+import Footer from '@/components/layout/footer';
 import MainNav from '@/components/layout/main-nav';
 import { cn } from '@/utils';
 
@@ -50,7 +51,7 @@ export default function RootLayout({
 
 				<main className="grid flex-1">{children}</main>
 
-				<footer>FOOTER 2</footer>
+				<Footer />
 			</body>
 		</html>
 	);
