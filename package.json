@@ -12,6 +12,7 @@
 		"lint:affected": "turbo lint --affected",
 		"lint:cspell": "cspell --unique --no-progress --no-must-find-files",
 		"lint:root": "eslint . --fix",
+		"prebuild": "turbo typegen",
 		"prepare": "husky",
 		"typegen": "turbo typegen"
 	},

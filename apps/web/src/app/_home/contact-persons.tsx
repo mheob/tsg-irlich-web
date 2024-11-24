@@ -1,5 +1,3 @@
-import type { ComponentProps } from 'react';
-
 import ContactPersonGroup from '@/components/ui/contact-persons';
 import SectionHeader from '@/components/ui/section-header';
 import type { GetHomePageContactPersonsResult, Home } from '@/types/sanity.types';

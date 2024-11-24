@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import type { ComponentProps } from 'react';
 
 import { Button } from '@/components/ui/button';
 import NewsArticlePreviewWide from '@/components/ui/news-article-preview-wide';
