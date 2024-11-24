@@ -3,7 +3,7 @@
 	"globalDependencies": ["**/.env.*local"],
 	"tasks": {
 		"build": {
-			"dependsOn": ["web#typegen", "studio#extract-types", "^build"],
+			"dependsOn": ["^build"],
 			"outputs": ["dist/**"]
 		},
 		"dev": {

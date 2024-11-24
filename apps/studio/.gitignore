@@ -7,7 +7,7 @@ dist/
 !.env*.example
 
 # Sanity
-/schema.json
+# /schema.json
 
 # Vercel
 .turbo/

@@ -21,7 +21,7 @@
 		"!*.svg": "pnpm run lint:cspell"
 	},
 	"devDependencies": {
-		"@antfu/ni": "catalog:",
+		"@antfu/ni": "^0.23.1",
 		"@commitlint/cli": "^19.6.0",
 		"@cspell/dict-de-de": "^4.0.3",
 		"@eslint-react/eslint-plugin": "^1.17.1",

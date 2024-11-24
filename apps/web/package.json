@@ -6,7 +6,6 @@
 		"build": "next build",
 		"dev": "next dev --turbopack",
 		"lint": "eslint . --fix",
-		"prebuild": "nr typegen",
 		"start": "next start",
 		"typegen": "sanity typegen generate"
 	},
@@ -29,7 +28,6 @@
 		"tailwindcss-animate": "^1.0.7"
 	},
 	"devDependencies": {
-		"@antfu/ni": "catalog:",
 		"@next/eslint-plugin-next": "^15.0.3",
 		"@types/node": "^22.9.3",
 		"@types/react": "^18.3.12",

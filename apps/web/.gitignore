@@ -9,7 +9,7 @@
 next-env.d.ts
 
 # Sanity
-sanity.types.ts
+# sanity.types.ts
 
 # Vercel
 .turbo/

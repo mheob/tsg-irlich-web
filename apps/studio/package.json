@@ -9,7 +9,6 @@
 		"dev": "sanity dev",
 		"extract-types": "sanity schema extract --enforce-required-fields",
 		"lint": "eslint . --fix",
-		"prebuild": "nr extract-types",
 		"start": "sanity start"
 	},
 	"dependencies": {
@@ -28,7 +27,6 @@
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
-		"@antfu/ni": "catalog:",
 		"@sanity/eslint-config-studio": "^4.0.0",
 		"@types/react": "^18.3.12",
 		"eslint": "catalog:",

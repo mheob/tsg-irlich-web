@@ -6,9 +6,6 @@ settings:
 
 catalogs:
   default:
-    '@antfu/ni':
-      specifier: ^0.23.1
-      version: 0.23.1
     eslint:
       specifier: 9.14.0
       version: 9.14.0
@@ -24,7 +21,7 @@ importers:
   .:
     devDependencies:
       '@antfu/ni':
-        specifier: 'catalog:'
+        specifier: ^0.23.1
         version: 0.23.1
       '@commitlint/cli':
         specifier: ^19.6.0
@@ -117,9 +114,6 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
-      '@antfu/ni':
-        specifier: 'catalog:'
-        version: 0.23.1
       '@sanity/eslint-config-studio':
         specifier: ^4.0.0
         version: 4.0.0(eslint@9.14.0(jiti@1.21.6))(typescript@5.7.2)
@@ -184,9 +178,6 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.15)
     devDependencies:
-      '@antfu/ni':
-        specifier: 'catalog:'
-        version: 0.23.1
       '@next/eslint-plugin-next':
         specifier: ^15.0.3
         version: 15.0.3
