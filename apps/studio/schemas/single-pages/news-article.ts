@@ -2,7 +2,7 @@ import { RiBookletLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
 import { content, general } from '@/shared/field-groups';
-import { contactPersonsField } from '@/shared/fields/content';
+import { contactPersonsField } from '@/shared/fields/contact';
 import { defaultPageFields } from '@/shared/fields/general';
 
 const newsArticlePage = defineType({

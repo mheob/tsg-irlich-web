@@ -6,23 +6,29 @@
 		"build": "next build",
 		"dev": "next dev --turbopack",
 		"lint": "eslint . --fix",
-		"start": "next start"
+		"prebuild": "nr typegen",
+		"start": "next start",
+		"typegen": "sanity typegen generate"
 	},
 	"dependencies": {
 		"@icons-pack/react-simple-icons": "^10.1.0",
 		"@radix-ui/react-icons": "^1.3.2",
 		"@radix-ui/react-navigation-menu": "^1.2.1",
 		"@radix-ui/react-slot": "^1.1.0",
+		"@sanity/image-url": "^1.1.0",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"lucide-react": "^0.460.0",
 		"next": "^15.0.3",
+		"next-sanity": "^9.8.16",
 		"react": "19.0.0-rc-66855b96-20241106",
 		"react-dom": "19.0.0-rc-66855b96-20241106",
+		"sanity": "catalog:",
 		"tailwind-merge": "^2.5.4",
 		"tailwindcss-animate": "^1.0.7"
 	},
 	"devDependencies": {
+		"@antfu/ni": "catalog:",
 		"@next/eslint-plugin-next": "^15.0.3",
 		"@types/node": "^22.9.3",
 		"@types/react": "^18.3.12",

@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { emailField, phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
+import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
 
 const person = defineType({
 	title: 'Ansprechpartner',
@@ -38,7 +39,7 @@ const person = defineType({
 							type: 'reference',
 							to: [{ type: 'group' }],
 							description: 'Die Gruppe oder Abteilung der Person.',
-							// validation: rule => [requiredRule(rule, 'Die Rolle oder Funktion')],
+							validation: rule => [requiredRule(rule, 'Die Rolle oder Funktion')],
 						}),
 
 						defineField({
@@ -47,7 +48,7 @@ const person = defineType({
 							type: 'reference',
 							to: [{ type: 'role' }],
 							description: 'Die Rolle oder Funktion der Person (z.B. Vorstand Finanzen).',
-							// validation: rule => [requiredRule(rule, 'Die Rolle oder Funktion')],
+							validation: rule => [requiredRule(rule, 'Die Rolle oder Funktion')],
 						}),
 
 						defineField({
@@ -56,9 +57,9 @@ const person = defineType({
 							type: 'text',
 							description:
 								'Kurze Aufgabenbeschreibung zum Posten der Person (ca. 270 bis 330 Zeichen).',
-							validation: _rule => [
-								// minLengthRule(rule, 270, 'Die Beschreibung (Vision)'),
-								// maxLengthRule(rule, 330, 'Die Beschreibung (Vision)'),
+							validation: rule => [
+								minLengthRule(rule, 270, 'Die Beschreibung (Vision)'),
+								maxLengthRule(rule, 330, 'Die Beschreibung (Vision)'),
 							],
 						}),
 
@@ -67,9 +68,9 @@ const person = defineType({
 							name: 'description',
 							type: 'text',
 							description: 'Kurze Beschreibung als Vision der Person.',
-							validation: _rule => [
-								// minLengthRule(rule, 32, 'Die Beschreibung (Vision)'),
-								// maxLengthRule(rule, 200, 'Die Beschreibung (Vision)'),
+							validation: rule => [
+								minLengthRule(rule, 32, 'Die Beschreibung (Vision)'),
+								maxLengthRule(rule, 200, 'Die Beschreibung (Vision)'),
 							],
 						}),
 					],

@@ -6,22 +6,19 @@ import SectionHeader from '@/components/ui/section-header';
 import { socialMedia } from '@/data/social-media';
 import ArrowCta from '@/icons/design/arrow-cta';
 import YogaImage from '@/images/yoga-tsg-irlich.de.webp';
+import type { Home } from '@/types/sanity.types';
 
 import styles from './hero.module.css';
 
-export default function Hero() {
+type HeroProps = Pick<Home, 'intro' | 'subtitle' | 'title'>;
+
+export default function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 	return (
 		<section>
 			<div className="container mx-auto -mt-40 flex min-h-dvh items-center py-5 pt-40">
 				<div className="w-1/2">
-					<SectionHeader
-						level="h1"
-						subTitle={'Mit Tradition und Leidenschaft seit 1882'}
-						title={'TSG Irlich - deine Turn- und Sportgemeinde in Neuwied/Irlich'}
-					>
-						Für Jedermann, der sich gerne bewegt und mit Menschen zusammen ist. Egal ob im
-						Breitensport, beim gemütlichem Beisammensein oder dem Leistungsorientieren Sport. In
-						über XX verschiedenen Sportarten bieten wir dir alles was du brauchst.
+					<SectionHeader level="h1" subTitle={subtitle} title={title}>
+						{intro}
 					</SectionHeader>
 
 					<div className="text-primary relative mt-12 flex gap-8">

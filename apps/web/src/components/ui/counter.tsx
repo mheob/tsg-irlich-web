@@ -1,14 +1,9 @@
-import type { ComponentProps, HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
 
+import type { Stats } from '@/types/sanity.types';
 import { cn } from '@/utils';
 
-interface CounterItemProps {
-	suffix?: string;
-	title: string;
-	value: number;
-}
-
-function CounterItem({ suffix = '', title, value }: CounterItemProps) {
+function CounterItem({ suffix = '', title, value }: Readonly<Stats>) {
 	return (
 		<div className="flex flex-col items-center justify-center gap-2 py-8">
 			<div className="font-sans-serif text-7xl font-bold">{`${value}${suffix}`}</div>
@@ -19,10 +14,10 @@ function CounterItem({ suffix = '', title, value }: CounterItemProps) {
 
 interface CounterProps {
 	className?: HTMLAttributes<HTMLDivElement>['className'];
-	values: ComponentProps<typeof CounterItem>[];
+	values: Stats[];
 }
 
-export default function Counter({ className, values }: CounterProps) {
+export default function Counter({ className, values }: Readonly<CounterProps>) {
 	return (
 		<div
 			className={cn(

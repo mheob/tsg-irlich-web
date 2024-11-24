@@ -53,28 +53,28 @@ export default function Footer() {
 
 					<div className="text-xl/relaxed">
 						<section className="flex gap-48">
-							<a className="hover:text-secondary flex flex-col items-center gap-4" href="#!">
-								<span className="rounded-full border p-3">
+							<a className="hover:text-secondary group flex flex-col items-center gap-4" href="#!">
+								<span className="group-hover:border-secondary rounded-full border-2 border-white p-3">
 									<MapPin size="48" strokeWidth="1" />
 								</span>
 								<address>{contact.address}</address>
 							</a>
 
 							<a
-								className="hover:text-secondary flex flex-col items-center gap-4"
+								className="hover:text-secondary group flex flex-col items-center gap-4"
 								href={`tel:${contact.phone}`}
 							>
-								<span className="rounded-full border p-3">
+								<span className="group-hover:border-secondary rounded-full border-2 border-white p-3">
 									<Phone size="48" strokeWidth="1" />
 								</span>
 								<address>{contact.phone}</address>
 							</a>
 
 							<a
-								className="hover:text-secondary flex flex-col items-center gap-4"
+								className="hover:text-secondary group flex flex-col items-center gap-4"
 								href={`mailto:${contact.email}`}
 							>
-								<span className="rounded-full border p-3">
+								<span className="group-hover:border-secondary rounded-full border-2 border-white p-3">
 									<Mail size="48" strokeWidth="1" />
 								</span>
 								<address>{contact.email}</address>

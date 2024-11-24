@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity';
 
 import { personal } from '@/shared/field-groups';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
+import { maxLengthRule, minLengthRule } from '@/shared/validation-rules';
 
 const testimonial = defineType({
 	title: 'Zeugnis / Referenz',
@@ -22,8 +23,8 @@ const testimonial = defineType({
 			description: 'Die Rolle oder Funktion des Zitierenden.',
 			group: 'personal',
 			validation: rule => [
-				// rule.required().min(5).error('Die Rolle muss mindestens 5 Zeichen lang sein.'),
-				rule.max(64).warning('Die Rolle sollte maximal 64 Zeichen lang sein.'),
+				minLengthRule(rule, 5, 'Die Rolle'),
+				maxLengthRule(rule, 64, 'Die Rolle'),
 			],
 		},
 
@@ -35,8 +36,8 @@ const testimonial = defineType({
 			description: 'Das Zitat über die TSG.',
 			group: 'quote',
 			validation: rule => [
-				// rule.required().min(64).error('Das muss mindestens 64 Zeichen lang sein.'),
-				rule.max(256).warning('Das sollte maximal 256 Zeichen lang sein.'),
+				minLengthRule(rule, 64, 'Das Zitat'),
+				maxLengthRule(rule, 256, 'Das Zitat'),
 			],
 		}),
 		defineField({

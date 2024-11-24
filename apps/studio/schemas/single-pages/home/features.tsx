@@ -2,7 +2,7 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
-import { maxLengthRule } from '@/shared/validation-rules';
+import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
 
 export const featuresField = defineField({
 	title: 'Merkmale',
@@ -30,7 +30,7 @@ export const featuresField = defineField({
 							type: 'string',
 							description: 'Der Titel des Merkmals.',
 							validation: rule => [
-								// minLengthRule(rule, 10, 'Der Titel'),
+								minLengthRule(rule, 10, 'Der Titel'),
 								maxLengthRule(rule, 65, 'Der Titel'),
 							],
 						}),
@@ -41,7 +41,7 @@ export const featuresField = defineField({
 							type: 'string',
 							description: 'Die Beschreibung des Merkmals.',
 							validation: rule => [
-								// minLengthRule(rule, 10, 'Das Intro'),
+								minLengthRule(rule, 10, 'Das Intro'),
 								maxLengthRule(rule, 120, 'Das Intro'),
 							],
 						}),
@@ -57,16 +57,25 @@ export const featuresField = defineField({
 										lucide.dev/icons
 									</a>
 									.<br />
-									In <kbd>CamelCase</kbd> geschrieben (z.B. <kbd>one-icon</kbd> --&gt;
+									In <kbd>CamelCase</kbd> geschrieben (z.B. <kbd>one-icon</kbd> --&gt;{' '}
 									<kbd>OneIcon</kbd>).
 								</>
 							),
-							// validation: rule => [requiredRule(rule, 'Das Icon')],
+							validation: rule => [requiredRule(rule, 'Das Icon')],
 						}),
 					],
 				}),
 			],
 			description: "Merkmale (USP's), die auf der Homepage angezeigt werden.",
+			validation: rule => [
+				minLengthRule(rule, 4, 'Merkmale', {
+					message: 'Es müssen zwischen 4 und 6 Merkmale gewählt werden',
+				}),
+				maxLengthRule(rule, 6, 'Merkmale', {
+					message: 'Es müssen zwischen 4 und 6 Merkmale gewählt werden',
+				}),
+			],
 		}),
 	],
+	validation: rule => [requiredRule(rule, 'Merkmale')],
 });

@@ -2,20 +2,17 @@ import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import type { HTMLAttributes } from 'react';
 
+import type { Home } from '@/types/sanity.types';
 import { cn } from '@/utils/cn';
 
 import { Button } from './button';
 
-interface PricingCardProps {
-	benefits: string[];
-	benefitsTitle: string;
+type PricingProps = Home['content']['pricingSection']['pricingAdult'];
+
+interface PricingCardProps extends PricingProps {
 	children: HTMLAttributes<HTMLDivElement>['children'];
 	cta: string;
-	intro: string;
 	isHighlighted?: boolean;
-	price: number;
-	subtitle: string;
-	title: string;
 }
 
 export default function PricingCard({

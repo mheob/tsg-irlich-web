@@ -2,10 +2,13 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/ui/section-header';
+import type { Home } from '@/types/sanity.types';
 
 import styles from './vision.module.css';
 
-export default function Vision() {
+type VisionProps = Home['content']['visionSection'];
+
+export default function Vision({ cta, intro, subtitle, title }: Readonly<VisionProps>) {
 	return (
 		<section className="relative items-center">
 			<div className="container mx-auto grid grid-cols-[55%,45%] px-5">
@@ -26,16 +29,12 @@ export default function Vision() {
 				</div>
 
 				<div className="py-60">
-					<SectionHeader subTitle="Unsere Vision" title="Was sind unsere Ziele? Wofür stehen wir?">
-						Die TSG Irlich 1882 e.V. ist ein traditionsreicher Verein mit rund 700 Mitgliedern und
-						18 verschiedenen Sportarten. Als einer der größten Vereine im Stadtgebiet bietet die TSG
-						sportliche Aktivitäten für jedes Alter und fördert körperliche Fitness sowie soziale
-						Interaktion. Der Verein legt großen Wert auf soziale Verantwortung, Fairness und eine
-						tolle Gemeinschaft.
+					<SectionHeader subTitle={subtitle} title={title}>
+						{intro}
 					</SectionHeader>
 
 					<Button className="relative mt-12" asChild>
-						<Link href="#!">Erfahre mehr über uns</Link>
+						<Link href="#!">{cta}</Link>
 					</Button>
 				</div>
 			</div>

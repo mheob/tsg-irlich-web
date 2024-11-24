@@ -1,0 +1,16 @@
+# Build Outputs
+.next/
+
+# Local env files
+.env*
+!.env*.example
+
+# Next.js
+next-env.d.ts
+
+# Sanity
+sanity.types.ts
+
+# Vercel
+.turbo/
+.vercel/

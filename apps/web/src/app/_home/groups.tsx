@@ -1,40 +1,18 @@
 import ArrowButtonGroup from '@/components/ui/arrow-button-group';
 import SectionHeader from '@/components/ui/section-header';
+import type { GetHomePageGroupsResult, Home } from '@/types/sanity.types';
 
 import GroupCard from './group-card';
 
 import styles from './groups.module.css';
 
-const groups: {
-	icon: string;
-	// image: Image;
-	title: string;
-}[] = [
-	{
-		icon: '',
-		title: '1. Mannschaft',
-	},
-	{
-		icon: '',
-		title: '2. Mannschaft',
-	},
-	{
-		icon: '',
-		title: 'Eltern-Kind Turnen',
-	},
-	{
-		icon: '',
-		title: 'D-Jugend ',
-	},
-	{
-		icon: '',
-		title: 'Kinderturnen 3-6 Jahre',
-	},
-];
-
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
-export default function Groups() {
+type GroupsSection = Home['content']['groupsSection'];
+type GroupsFields = GetHomePageGroupsResult;
+type GroupsProps = { groups: GroupsFields } & GroupsSection;
+
+export default function Groups({ groups, subtitle, title }: GroupsProps) {
 	return (
 		<section className="relative">
 			<div className={styles.bg}></div>
@@ -42,7 +20,7 @@ export default function Groups() {
 
 			<div className="container mx-auto px-5 py-32">
 				<div className="flex items-end justify-between">
-					<SectionHeader subTitle="Gruppen die wir haben" title="Unsere Angebote" />
+					<SectionHeader subTitle={subtitle} title={title} />
 					<ArrowButtonGroup />
 				</div>
 

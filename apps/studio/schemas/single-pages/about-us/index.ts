@@ -8,6 +8,7 @@ import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
 import { visionField } from '@/shared/sections/vision';
+import { requiredRule } from '@/shared/validation-rules';
 
 import { chronicle, contactPersons, gallery, stats, vision } from './_groups';
 import { chronicleField } from './chronicle';
@@ -38,6 +39,7 @@ const aboutUsPage = defineType({
 			group: 'content',
 			groups: [gallery, chronicle, vision, stats, contactPersons],
 			fields: [galleryField, chronicleField, visionField, statsField, contactPersonsSectionField],
+			validation: rule => [requiredRule(rule, 'Inhalte')],
 		}),
 	],
 	preview: {

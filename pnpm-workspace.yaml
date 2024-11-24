@@ -3,5 +3,7 @@ packages:
   - "packages/*"
 
 catalog:
+  "@antfu/ni": ^0.23.1
   eslint: 9.14.0
+  sanity: ^3.64.3
   typescript: ^5.7.2

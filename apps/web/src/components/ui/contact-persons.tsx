@@ -1,46 +1,40 @@
 import Image from 'next/image';
 import type { ComponentProps } from 'react';
 
+import { urlForImage } from '@/lib/sanity/utils';
+import type { GetHomePageContactPersonsResult } from '@/types/sanity.types';
 import { cn } from '@/utils';
 import { getInitials } from '@/utils/image';
 
 import ContactButton from './contact-button';
 
-interface ContactPersonItemProps {
-	email: string;
-	firstName: string;
-	// image: SanityImage;
-	imageSrc: string;
-	lastName: string;
-	phone: string;
-	role: string;
-	vision: string;
-}
+type ContactPersonItemProps = NonNullable<
+	NonNullable<GetHomePageContactPersonsResult>['values']
+>[0];
 
 function ContactPersonItem({
 	email,
 	firstName,
-	imageSrc,
+	image,
 	lastName,
 	phone,
 	role,
 	vision,
-}: ContactPersonItemProps) {
-	// const imageSrc = urlFor(image, 176).url();
+}: Readonly<ContactPersonItemProps>) {
+	const imageSource = urlForImage(image, 176);
 
 	return (
 		<article>
-			{imageSrc ? (
+			{imageSource ? (
 				<Image
 					className={cn(
 						'bg-secondary-light text-primary border-primary',
 						'relative z-[1] grid place-items-center',
 						'rounded-full border-8',
 					)}
-					// alt={image.alt as string}
-					alt={lastName}
+					alt={image.alt}
 					height={176}
-					src={imageSrc}
+					src={imageSource}
 					width={176}
 				/>
 			) : (
@@ -63,8 +57,8 @@ function ContactPersonItem({
 					</h3>
 					<p className="mb-2 text-lg">{role}</p>
 					<div className="flex gap-6">
-						<ContactButton email={email} />
-						<ContactButton phone={phone} />
+						{email && <ContactButton email={email} />}
+						{phone && <ContactButton phone={phone} />}
 					</div>
 				</header>
 

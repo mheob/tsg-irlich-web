@@ -1,5 +1,21 @@
 import type { Metadata } from 'next';
 
+import { sanityFetch } from '@/lib/sanity/live';
+import {
+	getHomePage,
+	getHomePageContactPersons,
+	getHomePageGroups,
+	getHomePageNews,
+	getHomePageTestimonials,
+} from '@/lib/sanity/queries/pages/home';
+import type {
+	GetHomePageContactPersonsResult,
+	GetHomePageGroupsResult,
+	GetHomePageNewsResult,
+	GetHomePageResult,
+	GetHomePageTestimonialsResult,
+} from '@/types/sanity.types';
+
 import ContactForm from './_home/contact-form';
 import ContactPersons from './_home/contact-persons';
 import Features from './_home/features';
@@ -18,19 +34,43 @@ export const metadata: Metadata = {
 	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
 };
 
-export default function Home() {
+export default async function Home() {
+	const [
+		{ data: page },
+		{ data: groups },
+		{ data: testimonials },
+		{ data: contactPersons },
+		{ data: newsArticles },
+	] = await Promise.all([
+		sanityFetch({ query: getHomePage }) as Promise<{ data: GetHomePageResult }>,
+		sanityFetch({ query: getHomePageGroups }) as Promise<{ data: GetHomePageGroupsResult }>,
+		sanityFetch({ query: getHomePageTestimonials }) as Promise<{
+			data: GetHomePageTestimonialsResult;
+		}>,
+		sanityFetch({ query: getHomePageContactPersons }) as Promise<{
+			data: GetHomePageContactPersonsResult;
+		}>,
+		sanityFetch({ query: getHomePageNews }) as Promise<{ data: GetHomePageNewsResult }>,
+	]);
+
+	if (!page?.content?.featureSection || !testimonials || !contactPersons || !newsArticles)
+		return null;
+
 	return (
 		<>
-			<Hero />
-			<Features />
-			<Vision />
-			<Groups />
-			<Stats />
-			<Pricing />
-			<Testimonials />
-			<ContactPersons />
+			<Hero intro={page.intro} subtitle={page.subtitle} title={page.title} />
+			<Features {...page.content.featureSection} />
+			<Vision {...page.content.visionSection} />
+			<Groups {...page.content.groupsSection} groups={groups} />
+			<Stats {...page.content.statsSection} />
+			<Pricing {...page.content.pricingSection} />
+			<Testimonials {...page.content.testimonialSection} testimonials={testimonials.values} />
+			<ContactPersons
+				{...page.content.contactPersonsSection}
+				contactPersons={contactPersons.values}
+			/>
 			<ContactForm />
-			<News />
+			<News {...page.content.newsSection} articles={newsArticles} />
 			<Newsletter />
 		</>
 	);

@@ -1,30 +1,30 @@
 import { Quote } from 'lucide-react';
 import Image from 'next/image';
-import type { ComponentProps, HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
 
 import ArrowButtonGroup from '@/components/ui/arrow-button-group';
+import { urlForImage } from '@/lib/sanity/utils';
+import type { GetHomePageTestimonialsResult } from '@/types/sanity.types';
 import { cn } from '@/utils';
 import { getInitials } from '@/utils/image';
 
-interface TestimonialItemProps {
-	firstName: string;
-	// image: SanityImage;
-	imageSrc: string;
+type Testimonial = NonNullable<GetHomePageTestimonialsResult>['values'][number];
+interface TestimonialItemProps extends Testimonial {
 	isHighlighted?: boolean;
-	lastName: string;
 	quote: string;
 	role: string;
-	showAlways: boolean;
 }
 
 function TestimonialItem({
 	firstName,
-	imageSrc,
+	image,
 	isHighlighted,
 	lastName,
 	quote,
 	role,
-}: TestimonialItemProps) {
+}: Readonly<TestimonialItemProps>) {
+	const imageSource = urlForImage(image, 96);
+
 	return (
 		<article
 			className={cn('relative flex flex-col gap-4', {
@@ -33,18 +33,16 @@ function TestimonialItem({
 			})}
 		>
 			<div className="flex items-center gap-5">
-				{imageSrc ? (
+				{imageSource ? (
 					<Image
 						className={cn(
 							'rounded-full border-4',
 							{ 'border-primary': !isHighlighted },
 							{ 'border-primary-foreground': isHighlighted },
 						)}
-						// alt={image.alt as string}
-						alt={lastName}
+						alt={image.alt}
 						height={96}
-						// src={urlFor(image, 96).url()}
-						src={imageSrc}
+						src={imageSource}
 						width={96}
 					/>
 				) : (
@@ -96,10 +94,10 @@ function TestimonialItem({
 }
 
 interface TestimonialGroupProps extends HTMLAttributes<HTMLDivElement> {
-	testimonials: ComponentProps<typeof TestimonialItem>[];
+	testimonials: NonNullable<GetHomePageTestimonialsResult>['values'];
 }
 
-export default function TestimonialGroup({ testimonials }: TestimonialGroupProps) {
+export default function TestimonialGroup({ testimonials }: Readonly<TestimonialGroupProps>) {
 	return (
 		<div>
 			<div className="bg-primary-border-primary-foreground w-full rounded-xl py-16 pl-12 pr-28 shadow-xl">

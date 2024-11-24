@@ -3,6 +3,7 @@ import { Anton, Bebas_Neue, Inter } from 'next/font/google';
 
 import Footer from '@/components/layout/footer';
 import MainNav from '@/components/layout/main-nav';
+import { SanityLive } from '@/lib/sanity/live';
 import { cn } from '@/utils';
 
 import './globals.css';
@@ -41,12 +42,19 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="de">
+			<head>
+				<link href="/favicon.svg" rel="icon" sizes="any" />
+			</head>
 			<body
 				className={cn(
 					`${anton.variable} ${bebasNeue.variable} ${inter.variable} antialiased`,
 					'flex h-screen flex-col',
 				)}
 			>
+				{/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
+				<SanityLive />
+				{/* <SanityLive onError={handleError} /> */}
+
 				<MainNav />
 
 				<main className="grid flex-1">{children}</main>

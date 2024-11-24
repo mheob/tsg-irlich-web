@@ -1,6 +1,8 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
+import { requiredRule } from '@/shared/validation-rules';
+
 const contactTo = defineField({
 	title: 'Kontakt zu',
 	name: 'contactNameMail',
@@ -11,13 +13,13 @@ const contactTo = defineField({
 			title: 'Name',
 			name: 'name',
 			type: 'string',
-			// validation: rule => [requiredRule(rule, 'Der Name')],
+			validation: rule => [requiredRule(rule, 'Der Name')],
 		},
 		{
 			title: 'E-Mail',
 			name: 'email',
 			type: 'email',
-			// validation: rule => [requiredRule(rule, 'Die E-Mail')],
+			validation: rule => [requiredRule(rule, 'Die E-Mail')],
 		},
 	],
 });

@@ -2,6 +2,7 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
+import { requiredRule } from '@/shared/validation-rules';
 
 const pricingCardFields = [
 	...getDefaultPageFieldsWithGroup(),
@@ -10,12 +11,14 @@ const pricingCardFields = [
 		title: 'Preis',
 		name: 'price',
 		type: 'number',
+		validation: rule => [requiredRule(rule, 'Preis')],
 	}),
 
 	defineField({
 		title: 'Titel Vorteile',
 		name: 'benefitsTitle',
 		type: 'string',
+		validation: rule => [requiredRule(rule, 'Titel Vorteile')],
 	}),
 
 	defineField({
@@ -23,12 +26,14 @@ const pricingCardFields = [
 		name: 'benefits',
 		type: 'array',
 		of: [{ type: 'string' }],
+		validation: rule => [requiredRule(rule, 'Vorteile')],
 	}),
 
 	defineField({
 		title: 'Button Text',
 		name: 'cta',
 		type: 'string',
+		validation: rule => [requiredRule(rule, 'Button Text')],
 	}),
 ];
 
@@ -46,6 +51,7 @@ export const pricingField = defineField({
 			name: 'pricingYouth',
 			type: 'object',
 			fields: pricingCardFields,
+			validation: rule => [requiredRule(rule, 'Preistabelle Jugendliche')],
 		}),
 
 		defineField({
@@ -53,6 +59,7 @@ export const pricingField = defineField({
 			name: 'pricingFamily',
 			type: 'object',
 			fields: pricingCardFields,
+			validation: rule => [requiredRule(rule, 'Preistabelle Familie')],
 		}),
 
 		defineField({
@@ -60,6 +67,8 @@ export const pricingField = defineField({
 			name: 'pricingAdult',
 			type: 'object',
 			fields: pricingCardFields,
+			validation: rule => [requiredRule(rule, 'Preistabelle Erwachsene')],
 		}),
 	],
+	validation: rule => [requiredRule(rule, 'Preistabelle')],
 });

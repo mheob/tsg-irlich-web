@@ -1,5 +1,18 @@
 /* eslint-disable node/prefer-global/process */
 
+/**
+ * Asserts that a value is defined and returns it, throwing an error if undefined.
+ * Used to validate required environment variables.
+ *
+ * @param value - The value to check
+ * @param errorMessage - The error message to throw if value is undefined
+ * @returns The value if defined
+ * @throws Error if value is undefined
+ * @example
+ * ```ts
+ * const requiredValue = assertValue(process.env.REQUIRED_VAR, 'Missing REQUIRED_VAR');
+ * ```
+ */
 function assertValue<T>(value: T | undefined, errorMessage: string): T {
 	if (!value) throw new Error(errorMessage);
 	return value;
@@ -27,9 +40,9 @@ export const projectId = assertValue(
 
 /**
  * The Sanity Studio API version to use.
- * This is loaded from the `SANITY_STUDIO_VERSION` environment variable, or defaults to '2022-03-07'
+ * This is loaded from the `SANITY_STUDIO_VERSION` environment variable, or defaults to '2024-08-22'
  * if the environment variable is missing.
  *
  * @see https://www.sanity.io/docs/api-versioning for how versioning works
  */
-export const apiVersion = process.env.SANITY_STUDIO_VERSION ?? '2022-03-07';
+export const apiVersion = process.env.SANITY_STUDIO_VERSION ?? '2024-08-22';

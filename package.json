@@ -7,18 +7,20 @@
 		"build:affected": "turbo build --affected",
 		"cspell": "cspell .",
 		"dev": "turbo dev",
+		"extract-types": "turbo extract-types",
 		"lint": "turbo lint",
 		"lint:affected": "turbo lint --affected",
 		"lint:cspell": "cspell --unique --no-progress --no-must-find-files",
 		"lint:root": "eslint . --fix",
-		"prepare": "husky"
+		"prepare": "husky",
+		"typegen": "turbo typegen"
 	},
 	"lint-staged": {
 		"*": "eslint --fix",
 		"!*.svg": "pnpm run lint:cspell"
 	},
 	"devDependencies": {
-		"@antfu/ni": "^0.23.1",
+		"@antfu/ni": "catalog:",
 		"@commitlint/cli": "^19.6.0",
 		"@cspell/dict-de-de": "^4.0.3",
 		"@eslint-react/eslint-plugin": "^1.17.1",
