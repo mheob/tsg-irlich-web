@@ -8,7 +8,7 @@ export default mheob(
 	},
 	// From the second arguments they are ESLint Flat Configs you can have multiple configs
 	{
-		ignores: ['.github', '.sonarlint', '**/sanity.types.ts'],
+		ignores: ['.github', '.sonarlint', '**/*.generated.*'],
 	},
 	{
 		rules: {
