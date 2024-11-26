@@ -2,15 +2,11 @@ import Image from 'next/image';
 import type { ComponentProps } from 'react';
 
 import { urlForImage } from '@/lib/sanity/utils';
-import type { GetHomePageContactPersonsResult } from '@/types/sanity.types';
+import type { ContactPerson } from '@/types/sanity.types';
 import { cn } from '@/utils';
 import { getInitials } from '@/utils/image';
 
 import ContactButton from './contact-button';
-
-type ContactPersonItemProps = NonNullable<
-	NonNullable<GetHomePageContactPersonsResult>['values']
->[0];
 
 function ContactPersonItem({
 	email,
@@ -20,7 +16,7 @@ function ContactPersonItem({
 	phone,
 	role,
 	vision,
-}: Readonly<ContactPersonItemProps>) {
+}: Readonly<ContactPerson>) {
 	const imageSource = urlForImage(image, 176);
 
 	return (

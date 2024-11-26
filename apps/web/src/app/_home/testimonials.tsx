@@ -1,5 +1,5 @@
 import SectionHeader from '@/components/ui/section-header';
-import type { GetHomePageTestimonialsResult, Home } from '@/types/sanity.types';
+import type { Home, HomePageTestimonialsQueryResult } from '@/types/sanity.types';
 
 import TestimonialGroup from './testimonial-group';
 
@@ -7,7 +7,7 @@ import styles from './testimonials.module.css';
 
 type TestimonialsSectionProps = Omit<Home['content']['testimonialSection'], 'testimonials'>;
 interface TestimonialsProps extends TestimonialsSectionProps {
-	testimonials: NonNullable<GetHomePageTestimonialsResult>['values'];
+	testimonials: HomePageTestimonialsQueryResult;
 }
 
 export default function Testimonials({

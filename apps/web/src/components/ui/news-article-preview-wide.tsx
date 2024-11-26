@@ -2,9 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { urlForImage } from '@/lib/sanity/utils';
-import type { GetHomePageNewsResult } from '@/types/sanity.types';
+import type { HomePageNewsQueryResult } from '@/types/sanity.types.generated';
 
-type NewsArticlePreviewWideProps = GetHomePageNewsResult[0];
+type NewsArticlePreviewWideProps = HomePageNewsQueryResult[0];
 
 export default function NewsArticlePreviewWide({
 	author,

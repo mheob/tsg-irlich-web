@@ -4,11 +4,11 @@ import type { HTMLAttributes } from 'react';
 
 import ArrowButtonGroup from '@/components/ui/arrow-button-group';
 import { urlForImage } from '@/lib/sanity/utils';
-import type { GetHomePageTestimonialsResult } from '@/types/sanity.types';
+import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types.generated';
 import { cn } from '@/utils';
 import { getInitials } from '@/utils/image';
 
-type Testimonial = NonNullable<GetHomePageTestimonialsResult>['values'][number];
+type Testimonial = NonNullable<HomePageTestimonialsQueryResult>[number];
 interface TestimonialItemProps extends Testimonial {
 	isHighlighted?: boolean;
 	quote: string;
@@ -94,7 +94,7 @@ function TestimonialItem({
 }
 
 interface TestimonialGroupProps extends HTMLAttributes<HTMLDivElement> {
-	testimonials: NonNullable<GetHomePageTestimonialsResult>['values'];
+	testimonials: NonNullable<HomePageTestimonialsQueryResult>;
 }
 
 export default function TestimonialGroup({ testimonials }: Readonly<TestimonialGroupProps>) {

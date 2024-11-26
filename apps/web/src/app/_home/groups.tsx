@@ -1,6 +1,6 @@
 import ArrowButtonGroup from '@/components/ui/arrow-button-group';
 import SectionHeader from '@/components/ui/section-header';
-import type { GetHomePageGroupsResult, Home } from '@/types/sanity.types';
+import type { Home, HomePageGroupsQueryResult } from '@/types/sanity.types';
 
 import GroupCard from './group-card';
 
@@ -9,7 +9,7 @@ import styles from './groups.module.css';
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
 type GroupsSection = Home['content']['groupsSection'];
-type GroupsFields = GetHomePageGroupsResult;
+type GroupsFields = HomePageGroupsQueryResult;
 type GroupsProps = { groups: GroupsFields } & GroupsSection;
 
 export default function Groups({ groups, subtitle, title }: GroupsProps) {

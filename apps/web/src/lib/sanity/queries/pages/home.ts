@@ -1,42 +1,35 @@
 import { defineQuery } from 'next-sanity';
 
-export const getHomePage = defineQuery(`*[_type == 'home'][0]`);
+import { contactPersons } from '@/lib/sanity/queries';
 
-export const getHomePageGroups = defineQuery(`
+export const homePageQuery = defineQuery(`*[_type == 'home'][0]`);
+
+export const homePageGroupsQuery = defineQuery(`
 	*[_type == 'group'][] {
 		title,
-		icon
+		icon,
 	}
 `);
 
-export const getHomePageTestimonials = defineQuery(`
-	*[_type == 'home'][0] {
-		'values': content.testimonialSection.testimonials[0..2]-> {
-			firstName,
-			lastName,
-			image,
-			quote,
-			role,
-			showAlways,
-		},
+export const homePageTestimonialsQuery = defineQuery(`
+	*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {
+		firstName,
+		lastName,
+		image,
+		quote,
+		role,
+		showAlways,
 	}
 `);
 
-export const getHomePageContactPersons = defineQuery(`
-	*[_type == 'home'][0] {
-		'values': content.contactPersonsSection.contactPersons[]-> {
-			firstName,
-			lastName,
-			phone,
-			image,
-			"email": affiliations[department->title == 'Vorstand'][0].role->email,
-			"role": affiliations[department->title == 'Vorstand'][0].role->title,
-			"vision": affiliations[department->title == 'Vorstand'][0].description,
-		}
+/** IMPORTANT: The param `department` is required for the contactPersons fragment. */
+export const homePageContactPersonsQuery = defineQuery(`
+	*[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {
+		${contactPersons}
 	}
 `);
 
-export const getHomePageNews = defineQuery(`
+export const homePageNewsQuery = defineQuery(`
 	*[_type == 'news.article'][0..2] {
 			title,
 			"slug": slug.current,
