@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { sanityFetch } from '@/lib/sanity/live';
+import { client } from '@/lib/sanity/client';
 import {
 	getHomePage,
 	getHomePageContactPersons,
@@ -8,13 +8,6 @@ import {
 	getHomePageNews,
 	getHomePageTestimonials,
 } from '@/lib/sanity/queries/pages/home';
-import type {
-	GetHomePageContactPersonsResult,
-	GetHomePageGroupsResult,
-	GetHomePageNewsResult,
-	GetHomePageResult,
-	GetHomePageTestimonialsResult,
-} from '@/types/sanity.types';
 
 import ContactForm from './_home/contact-form';
 import ContactPersons from './_home/contact-persons';
@@ -35,22 +28,12 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-	const [
-		{ data: page },
-		{ data: groups },
-		{ data: testimonials },
-		{ data: contactPersons },
-		{ data: newsArticles },
-	] = await Promise.all([
-		sanityFetch({ query: getHomePage }) as Promise<{ data: GetHomePageResult }>,
-		sanityFetch({ query: getHomePageGroups }) as Promise<{ data: GetHomePageGroupsResult }>,
-		sanityFetch({ query: getHomePageTestimonials }) as Promise<{
-			data: GetHomePageTestimonialsResult;
-		}>,
-		sanityFetch({ query: getHomePageContactPersons }) as Promise<{
-			data: GetHomePageContactPersonsResult;
-		}>,
-		sanityFetch({ query: getHomePageNews }) as Promise<{ data: GetHomePageNewsResult }>,
+	const [page, groups, testimonials, contactPersons, newsArticles] = await Promise.all([
+		client.fetch(getHomePage),
+		client.fetch(getHomePageGroups),
+		client.fetch(getHomePageTestimonials),
+		client.fetch(getHomePageContactPersons),
+		client.fetch(getHomePageNews),
 	]);
 
 	if (!page?.content?.featureSection || !testimonials || !contactPersons || !newsArticles)
