@@ -41,6 +41,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="de">
+			<head>
+				<link href="/favicon.svg" rel="icon" sizes="any" />
+			</head>
 			<body
 				className={cn(
 					`${anton.variable} ${bebasNeue.variable} ${inter.variable} antialiased`,

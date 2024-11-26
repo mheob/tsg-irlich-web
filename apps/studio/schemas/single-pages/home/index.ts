@@ -7,6 +7,7 @@ import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
 import { visionField } from '@/shared/sections/vision';
+import { requiredRule } from '@/shared/validation-rules';
 
 import {
 	contactPersons,
@@ -58,6 +59,7 @@ const homePage = defineType({
 				contactPersonsSectionField,
 				newsField,
 			],
+			validation: rule => [requiredRule(rule, 'Inhalte')],
 		}),
 	],
 	preview: {

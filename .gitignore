@@ -1,12 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# Build Outputs
-.next/
-.sanity/
-build/
-dist/
-out/
-
 # Debug
 npm-debug.log*
 yarn-debug.log*
@@ -20,10 +11,6 @@ node_modules/
 # Jetbrains setting folder
 .idea/
 
-# Local env files
-.env*
-!.env*.example
-
 # Logs
 /logs
 *.log
@@ -35,12 +22,8 @@ node_modules/
 # Testing
 coverage/
 
-# Typescript
-*.tsbuildinfo
-next-env.d.ts
-
 # Vercel
 .turbo
-.vercel
 
+# Temporary
 /__web

@@ -3,9 +3,10 @@ import { RiBookletLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
-import { contactPersonsField } from '@/shared/fields/content';
+import { contactPersonsField } from '@/shared/fields/contact';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { requiredRule } from '@/shared/validation-rules';
 
 const contactPage = defineType({
 	title: 'Kontakt',
@@ -31,7 +32,7 @@ const contactPage = defineType({
 			of: [{ type: 'contactNameMail' }],
 			description: 'Personen oder Bereiche, die im Kontaktformular kontaktiert werden können.',
 			group: 'content',
-			// validation: rule => [requiredRule(rule, 'Das Feld "Kontakt zu")],
+			validation: rule => [requiredRule(rule, 'Das Feld "Kontakt zu"')],
 		}),
 
 		contactPersonsField,

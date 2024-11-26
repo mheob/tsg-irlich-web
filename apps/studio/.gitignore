@@ -1,0 +1,14 @@
+# Build Outputs
+.sanity/
+dist/
+
+# Local env files
+.env*
+!.env*.example
+
+# Sanity
+# /schema.json
+
+# Vercel
+.turbo/
+.vercel/

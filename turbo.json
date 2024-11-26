@@ -6,6 +6,12 @@
 			"dependsOn": ["^build"],
 			"outputs": ["dist/**"]
 		},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"extract-types": {},
+		"lint": {},
 		"studio#build": {
 			"dependsOn": ["^build"],
 			"env": [
@@ -17,13 +23,11 @@
 			],
 			"outputs": ["dist/**"]
 		},
+		"typegen": {
+			"dependsOn": ["studio#extract-types"]
+		},
 		"web#build": {
 			"dependsOn": ["^build"]
-		},
-		"dev": {
-			"cache": false,
-			"persistent": true
-		},
-		"lint": {}
+		}
 	}
 }

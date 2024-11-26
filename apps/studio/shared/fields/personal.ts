@@ -1,6 +1,6 @@
 import { defineField } from 'sanity';
 
-import { maxLengthRule } from '../validation-rules';
+import { maxLengthRule, minLengthRule, requiredRule } from '../validation-rules';
 
 export const firstNameField = defineField({
 	title: 'Vorname',
@@ -8,7 +8,7 @@ export const firstNameField = defineField({
 	type: 'string',
 	group: 'personal',
 	validation: rule => [
-		// minLengthRule(rule, 2, 'Der Vorname'),
+		minLengthRule(rule, 2, 'Der Vorname'),
 		maxLengthRule(rule, 64, 'Der Vorname'),
 	],
 });
@@ -19,7 +19,7 @@ export const lastNameField = defineField({
 	type: 'string',
 	group: 'personal',
 	validation: rule => [
-		// minLengthRule(rule, 2, 'Der Nachname'),
+		minLengthRule(rule, 2, 'Der Nachname'),
 		maxLengthRule(rule, 64, 'Der Nachname'),
 	],
 });
@@ -30,5 +30,5 @@ export const portraitPictureField = defineField({
 	type: 'extendedImage',
 	description: 'Erweitertes Porträtbild des Autors mit einem Alt-Text.',
 	group: 'personal',
-	// validation: rule => [requiredRule(rule, 'Das Porträtbild')],
+	validation: rule => [requiredRule(rule, 'Das Porträtbild')],
 });

@@ -9,7 +9,7 @@ interface SectionHeaderProps extends HTMLAttributes<HTMLDivElement> {
 	isCentered?: boolean;
 	level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 	subTitle?: string;
-	title: string;
+	title?: string;
 }
 
 export default function SectionHeader({
@@ -18,7 +18,7 @@ export default function SectionHeader({
 	isCentered,
 	level = 'h2',
 	subTitle,
-	title,
+	title = 'DER TITEL FEHLT',
 }: Readonly<SectionHeaderProps>) {
 	const HeadingTag = level;
 

@@ -1,14 +1,8 @@
-import type { ComponentProps } from 'react';
-
 import Counter from '@/components/ui/counter';
+import type { Home } from '@/types/sanity.types';
 
-const stats: ComponentProps<typeof Counter>['values'] = [
-	{ title: 'Motivierte Trainer', value: 34 },
-	{ suffix: '+', title: 'Mitglieder', value: 700 },
-	{ suffix: '+', title: 'Jahre Tradition', value: 140 },
-	{ suffix: '+', title: 'Trainingsstunden / Woche', value: 800 },
-];
+type StatsProps = Home['content']['statsSection'];
 
-export default function Stats() {
+export default function Stats({ stats }: Readonly<StatsProps>) {
 	return <Counter values={stats} />;
 }

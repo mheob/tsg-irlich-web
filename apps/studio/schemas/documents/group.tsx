@@ -1,7 +1,7 @@
 import { RiTeamLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { maxLengthRule } from '@/shared/validation-rules';
+import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
 
 const group = defineType({
 	title: 'Gruppe / Mannschaft',
@@ -13,10 +13,7 @@ const group = defineType({
 			title: 'Name',
 			name: 'title',
 			type: 'string',
-			validation: rule => [
-				// minLengthRule(rule, 2, 'Der Name'),
-				maxLengthRule(rule, 64, 'Der Name'),
-			],
+			validation: rule => [minLengthRule(rule, 2, 'Der Name'), maxLengthRule(rule, 64, 'Der Name')],
 		}),
 
 		defineField({
@@ -24,7 +21,7 @@ const group = defineType({
 			name: 'email',
 			type: 'email',
 			description: 'Die E-Mail-Adresse der Gruppe bzw. Mannschaft.',
-			// validation: rule => [requiredRule(rule, 'Die E-Mail')],
+			validation: rule => [requiredRule(rule, 'Die E-Mail')],
 		}),
 
 		defineField({
@@ -32,7 +29,7 @@ const group = defineType({
 			name: 'description',
 			type: 'simpleBlockContent',
 			description: 'Eine Beschreibung der Gruppe / Mannschaft.',
-			// validation: rule => [requiredRule(rule, 'Die Beschreibung')],
+			validation: rule => [requiredRule(rule, 'Die Beschreibung')],
 		}),
 
 		defineField({
@@ -67,15 +64,17 @@ const group = defineType({
 					{ title: 'Layout Spalte Zeile', value: 'RiLayoutColumnLine' },
 				],
 			},
-			// validation: rule => [requiredRule(rule, 'Das Icon')],
+			validation: rule => [requiredRule(rule, 'Das Icon')],
 		}),
 
 		defineField({
 			title: 'Bild',
 			name: 'image',
 			type: 'extendedImage',
+			validation: rule => [requiredRule(rule, 'Das Bild')],
 		}),
 	],
+	validation: rule => [requiredRule(rule, 'Die Gruppe')],
 	orderings: [
 		{
 			title: 'nach Name - aufsteigend',

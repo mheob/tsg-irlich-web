@@ -3,7 +3,7 @@ import { RiBookletLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
-import { contactPersonsField } from '@/shared/fields/content';
+import { contactPersonsField } from '@/shared/fields/contact';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
