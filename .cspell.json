@@ -15,6 +15,7 @@
 		"**/node_modules",
 		"**/package.json",
 		"**/pnpm-*.yaml",
+		"**/schema.json",
 		"**/turbo.json"
 	],
 	"words": [

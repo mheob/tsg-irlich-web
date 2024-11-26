@@ -8,7 +8,7 @@
 			"\t${1:propertyTypeKey}: ${2:propertyTypeValue};",
 			"}",
 			"",
-			"export default function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ ${1:propertyTypeKey}, ref, ...props }: ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props) {",
+			"export default function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ ${1:propertyTypeKey}, ref, ...props }: Readonly<${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props>) {",
 			"\treturn (",
 			"\t\t<section ref={ref} {...props}>",
 			"\t\t\t$0",
