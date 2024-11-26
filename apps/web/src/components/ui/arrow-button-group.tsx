@@ -21,8 +21,8 @@ export default function ArrowButtonGroup({
 
 	return (
 		<Comp className={cn('flex items-center justify-center gap-4', className)} {...props}>
-			<ArrowButton direction="left" size={size} variant="ghost" />
-			<ArrowButton direction="right" size={size} variant="secondary" />
+			<ArrowButton aria-label="Zurück" direction="left" size={size} variant="ghost" />
+			<ArrowButton aria-label="Weiter" direction="right" size={size} variant="secondary" />
 		</Comp>
 	);
 }
