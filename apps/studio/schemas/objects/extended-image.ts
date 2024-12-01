@@ -17,6 +17,12 @@ const extendedImage = defineField({
 			description: 'Beschreibe, was auf dem Bild zu sehen ist (für SEO und Barrierefreiheit).',
 			validation: rule => [requiredRule(rule, 'Der "Alt-Text"')],
 		},
+		{
+			title: 'Bildbeschreibung',
+			name: 'description',
+			type: 'string',
+			description: 'Die Bildunterschrift wird unter dem Bild angezeigt.',
+		},
 	],
 	options: {
 		hotspot: true,
