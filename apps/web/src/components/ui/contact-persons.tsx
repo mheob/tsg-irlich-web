@@ -3,7 +3,7 @@ import type { ComponentProps } from 'react';
 
 import { urlForImage } from '@/lib/sanity/utils';
 import type { ContactPerson } from '@/types/sanity.types';
-import { cn } from '@/utils';
+import { cn } from '@/utils/cn';
 import { getInitials } from '@/utils/image';
 
 import ContactButton from './contact-button';

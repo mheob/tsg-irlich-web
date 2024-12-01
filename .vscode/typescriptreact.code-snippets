@@ -1,6 +1,26 @@
 {
-	"React functional component": {
-		"prefix": "rfc-intern",
+	"React Component without ref": {
+		"prefix": "rc",
+		"body": [
+			"import type { ComponentPropsWithoutRef } from 'react';",
+			"",
+			"interface ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props extends ComponentPropsWithoutRef<'section'> {",
+			"\t${1:propertyTypeKey}: ${2:propertyTypeValue};",
+			"}",
+			"",
+			"export default function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ ${1:propertyTypeKey}, ...props }: Readonly<${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Props>) {",
+			"\treturn (",
+			"\t\t<section {...props}>",
+			"\t\t\t$0",
+			"\t\t</section>",
+			"\t);",
+			"}",
+			""
+		],
+		"description": "React functional component"
+	},
+	"React Component with ref": {
+		"prefix": "rcr",
 		"body": [
 			"import type { ComponentPropsWithRef } from 'react';",
 			"",
@@ -13,6 +33,24 @@
 			"\t\t<section ref={ref} {...props}>",
 			"\t\t\t$0",
 			"\t\t</section>",
+			"\t);",
+			"}",
+			""
+		],
+		"description": "React functional component"
+	},
+	"React Page component": {
+		"prefix": "rcp",
+		"body": [
+			"import type { PageProps } from '@/types/common';",
+			"",
+			"export default function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ params }: PageProps) {",
+			"\tconst { slug } = await params;",
+			"",
+			"\treturn (",
+			"\t\t<>",
+			"\t\t\t$0",
+			"\t\t</>",
 			"\t);",
 			"}",
 			""

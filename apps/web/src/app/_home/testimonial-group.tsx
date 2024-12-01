@@ -5,7 +5,7 @@ import type { HTMLAttributes } from 'react';
 import ArrowButtonGroup from '@/components/ui/arrow-button-group';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types.generated';
-import { cn } from '@/utils';
+import { cn } from '@/utils/cn';
 import { getInitials } from '@/utils/image';
 
 type Testimonial = NonNullable<HomePageTestimonialsQueryResult>[number];

@@ -1,8 +1,10 @@
+import typography from '@tailwindcss/typography';
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 const config: Config = {
 	content: ['./src/{app,components,icons}/**/*.{js,ts,jsx,tsx,mdx}'],
+	plugins: [typography],
 	theme: {
 		extend: {
 			borderRadius: {

@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'react';
 
 import type { Stats } from '@/types/sanity.types';
-import { cn } from '@/utils';
+import { cn } from '@/utils/cn';
 
 function CounterItem({ suffix = '', title, value }: Readonly<Stats>) {
 	return (

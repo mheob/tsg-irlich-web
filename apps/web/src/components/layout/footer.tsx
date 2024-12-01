@@ -1,8 +1,12 @@
 import { ArrowUp, Mail, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
 
-import { socialMedia } from '@/data/social-media';
 import TSGLogo from '@/icons/logos/tsg-logo';
+import { client } from '@/lib/sanity/client';
+import { socialMediaQuery } from '@/lib/sanity/queries';
+import { getSocialMediaIcon } from '@/utils/icon';
+
+import SocialMediaIcon from '../ui/social-media-icon';
 
 const contact: {
 	address: string;
@@ -25,7 +29,9 @@ const privacy: { href: string; label: string } = { href: '/datenschutz', label: 
 
 const currentYear = new Date().getFullYear();
 
-export default function Footer() {
+export default async function Footer() {
+	const socialMedia = await client.fetch(socialMediaQuery);
+
 	return (
 		<footer className="bg-primary text-white">
 			<div className="container mx-auto px-5 pb-4 pt-40">
@@ -36,18 +42,15 @@ export default function Footer() {
 						<h2 className="text-4xl">Folge uns</h2>
 
 						<div className="flex gap-4">
-							{socialMedia.map(({ href, icon: Icon, label }) => (
-								<Link
-									aria-label={label}
-									className="hover:text-secondary"
-									href={href}
-									key={href}
-									rel="noopener noreferrer"
-									target="_blank"
-								>
-									<Icon size="32" />
-								</Link>
-							))}
+							{socialMedia &&
+								Object.entries(socialMedia).map(([name, url]) => (
+									<SocialMediaIcon
+										href={url}
+										icon={getSocialMediaIcon(name)}
+										key={url}
+										label={name}
+									/>
+								))}
 						</div>
 					</section>
 

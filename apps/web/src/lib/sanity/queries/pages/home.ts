@@ -30,7 +30,7 @@ export const homePageContactPersonsQuery = defineQuery(`
 `);
 
 export const homePageNewsQuery = defineQuery(`
-	*[_type == 'news.article'][0..2] {
+	*[_type == 'news.article'][0..2] | order(_updatedAt desc) {
 			title,
 			"slug": slug.current,
 			excerpt,
@@ -38,5 +38,5 @@ export const homePageNewsQuery = defineQuery(`
 			featuredImage,
 			author->{ firstName, lastName, image },
 			_updatedAt,
-		} | order(_updatedAt desc)
+		}
 `);

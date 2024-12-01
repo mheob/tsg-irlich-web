@@ -81,7 +81,7 @@ export type NewsArticlePage = {
 
 export type Spacer = {
 	_type: 'spacer';
-	size?: 'small' | 'medium' | 'large';
+	variant?: 'default';
 };
 
 export type Grid = {
@@ -894,6 +894,12 @@ export type NewsArticle = {
 	body?: Array<
 		| ({
 				_key: string;
+		  } & BlockContent)
+		| ({
+				_key: string;
+		  } & Blockquote)
+		| ({
+				_key: string;
 		  } & Grid)
 		| {
 				asset?: {
@@ -908,15 +914,6 @@ export type NewsArticle = {
 				_type: 'mainImage';
 				_key: string;
 		  }
-		| ({
-				_key: string;
-		  } & SimpleBlockContent)
-		| ({
-				_key: string;
-		  } & BlockContent)
-		| ({
-				_key: string;
-		  } & Blockquote)
 		| ({
 				_key: string;
 		  } & Spacer)
@@ -1260,6 +1257,11 @@ export type AllSanitySchemaTypes =
 	| MediaTag
 	| Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/lib/sanity/queries/index.ts
+// Variable: socialMediaQuery
+// Query: *[_type == 'site-settings'][0].socialFields
+export type SocialMediaQueryResult = SocialFields | null;
+
 // Source: ./src/lib/sanity/queries/pages/home.ts
 // Variable: homePageQuery
 // Query: *[_type == 'home'][0]
@@ -1416,7 +1418,7 @@ export type HomePageContactPersonsQueryResult = Array<{
 	vision: string | null;
 }> | null;
 // Variable: homePageNewsQuery
-// Query: *[_type == 'news.article'][0..2] {			title,			"slug": slug.current,			excerpt,			categories[]->{ title, "slug": slug.current },			featuredImage,			author->{ firstName, lastName, image },			_updatedAt,		} | order(_updatedAt desc)
+// Query: *[_type == 'news.article'][0..2] | order(_updatedAt desc) {			title,			"slug": slug.current,			excerpt,			categories[]->{ title, "slug": slug.current },			featuredImage,			author->{ firstName, lastName, image },			_updatedAt,		}
 export type HomePageNewsQueryResult = Array<{
 	title: string;
 	slug: string;
@@ -1463,20 +1465,86 @@ export type NewsArticleHeroQueryResult = {
 	title: string;
 	subtitle: string;
 } | null;
-// Variable: newsArticleContactPersonsQuery
-// Query: *[_type == 'news-article-page'][0].contactPersons[]-> {				firstName,		lastName,		phone,		image,		"email": affiliations[department->title == $department][0].role->email,		"role": affiliations[department->title == $department][0].role->title,		"vision": affiliations[department->title == $department][0].description,	}
-export type NewsArticleContactPersonsQueryResult = null;
+// Variable: newsArticleContentQuery
+// Query: *[_type == 'news.article' && slug.current == $slug][0] {	_updatedAt,	author -> {		email,		firstName,		image,		lastName,		jobTitle,	},	body[],	categories[] -> {		"slug": slug.current,		title	},	featuredImage,	"slug": slug.current,	title,}
+export type NewsArticleContentQueryResult = {
+	_updatedAt: string;
+	author: {
+		email: string;
+		firstName: string;
+		image: {
+			asset?: {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+			};
+			hotspot?: SanityImageHotspot;
+			crop?: SanityImageCrop;
+			alt: string;
+			_type: 'extendedImage';
+		};
+		lastName: string;
+		jobTitle: string | null;
+	};
+	body: Array<
+		| ({
+				_key: string;
+		  } & BlockContent)
+		| ({
+				_key: string;
+		  } & Blockquote)
+		| ({
+				_key: string;
+		  } & Grid)
+		| ({
+				_key: string;
+		  } & Spacer)
+		| {
+				asset?: {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+				};
+				hotspot?: SanityImageHotspot;
+				crop?: SanityImageCrop;
+				alt: string;
+				_type: 'mainImage';
+				_key: string;
+		  }
+	> | null;
+	categories: Array<{
+		slug: string;
+		title: string;
+	}> | null;
+	featuredImage: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		_type: 'mainImage';
+	};
+	slug: string;
+	title: string;
+} | null;
 
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
+		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
 		"*[_type == 'home'][0]": HomePageQueryResult;
 		"\n\t*[_type == 'group'][] {\n\t\ttitle,\n\t\ticon,\n\t}\n": HomePageGroupsQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshowAlways,\n\t}\n": HomePageTestimonialsQueryResult;
 		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\t"email": affiliations[department->title == $department][0].role->email,\n\t\t"role": affiliations[department->title == $department][0].role->title,\n\t\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': HomePageContactPersonsQueryResult;
-		'\n\t*[_type == \'news.article\'][0..2] {\n\t\t\ttitle,\n\t\t\t"slug": slug.current,\n\t\t\texcerpt,\n\t\t\tcategories[]->{ title, "slug": slug.current },\n\t\t\tfeaturedImage,\n\t\t\tauthor->{ firstName, lastName, image },\n\t\t\t_updatedAt,\n\t\t} | order(_updatedAt desc)\n': HomePageNewsQueryResult;
+		'\n\t*[_type == \'news.article\'][0..2] | order(_updatedAt desc) {\n\t\t\ttitle,\n\t\t\t"slug": slug.current,\n\t\t\texcerpt,\n\t\t\tcategories[]->{ title, "slug": slug.current },\n\t\t\tfeaturedImage,\n\t\t\tauthor->{ firstName, lastName, image },\n\t\t\t_updatedAt,\n\t\t}\n': HomePageNewsQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
-		'\n\t*[_type == \'news-article-page\'][0].contactPersons[]-> {\n\t\t\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\t"email": affiliations[department->title == $department][0].role->email,\n\t\t"role": affiliations[department->title == $department][0].role->title,\n\t\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': NewsArticleContactPersonsQueryResult;
+		'\n*[_type == \'news.article\' && slug.current == $slug][0] {\n\t_updatedAt,\n\tauthor -> {\n\t\temail,\n\t\tfirstName,\n\t\timage,\n\t\tlastName,\n\t\tjobTitle,\n\t},\n\tbody[],\n\tcategories[] -> {\n\t\t"slug": slug.current,\n\t\ttitle\n\t},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n}\n': NewsArticleContentQueryResult;
 	}
 }

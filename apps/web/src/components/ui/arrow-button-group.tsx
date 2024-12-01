@@ -2,7 +2,7 @@ import { Slot } from '@radix-ui/react-slot';
 import type { LucideProps } from 'lucide-react';
 import type { HTMLAttributes } from 'react';
 
-import { cn } from '@/utils';
+import { cn } from '@/utils/cn';
 
 import { ArrowButton } from './arrow-button';
 

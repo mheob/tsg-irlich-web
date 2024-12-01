@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { urlForImage } from '@/lib/sanity/utils';
-import type { HomePageNewsQueryResult } from '@/types/sanity.types.generated';
+import type { HomePageNewsQueryResult } from '@/types/sanity.types';
 
 type NewsArticlePreviewWideProps = HomePageNewsQueryResult[0];
 

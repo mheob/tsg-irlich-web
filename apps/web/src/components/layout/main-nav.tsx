@@ -2,7 +2,7 @@ import Link from 'next/link';
 import * as React from 'react';
 
 import TSGLogo from '@/icons/logos/tsg-logo';
-import { cn } from '@/utils';
+import { cn } from '@/utils/cn';
 
 import { Button } from '../ui/button';
 import {
