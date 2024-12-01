@@ -2,7 +2,7 @@ import { Slot } from '@radix-ui/react-slot';
 import type { LucideProps } from 'lucide-react';
 import type { HTMLAttributes } from 'react';
 
-import { cn } from '@/utils';
+import { cn } from '@/utils/cn';
 
 import { ArrowButton } from './arrow-button';
 
@@ -21,8 +21,8 @@ export default function ArrowButtonGroup({
 
 	return (
 		<Comp className={cn('flex items-center justify-center gap-4', className)} {...props}>
-			<ArrowButton direction="left" size={size} variant="ghost" />
-			<ArrowButton direction="right" size={size} variant="secondary" />
+			<ArrowButton aria-label="Zurück" direction="left" size={size} variant="ghost" />
+			<ArrowButton aria-label="Weiter" direction="right" size={size} variant="secondary" />
 		</Comp>
 	);
 }

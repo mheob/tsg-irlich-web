@@ -38,11 +38,10 @@ const newsArticle = defineType({
 		defineField({
 			...contentField,
 			of: [
-				{ type: 'grid' },
-				{ type: 'mainImage' },
-				{ type: 'simpleBlockContent' },
 				{ type: 'blockContent' },
 				{ type: 'blockquote' },
+				{ type: 'grid' },
+				{ type: 'mainImage' },
 				{ type: 'spacer' },
 			],
 		}),

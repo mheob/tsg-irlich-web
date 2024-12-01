@@ -2,9 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { urlForImage } from '@/lib/sanity/utils';
-import type { GetHomePageNewsResult } from '@/types/sanity.types';
+import type { HomePageNewsQueryResult } from '@/types/sanity.types';
 
-type NewsArticlePreviewWideProps = GetHomePageNewsResult[0];
+type NewsArticlePreviewWideProps = HomePageNewsQueryResult[0];
 
 export default function NewsArticlePreviewWide({
 	author,
@@ -20,7 +20,7 @@ export default function NewsArticlePreviewWide({
 	return (
 		<article className="group grid grid-cols-[50%,50%] rounded-xl bg-white text-black">
 			{featuredImageSource && (
-				<a className="overflow-hidden rounded-l-xl" href={slug}>
+				<Link className="overflow-hidden rounded-l-xl" href={`/news/${slug}`}>
 					<Image
 						alt={featuredImage.alt}
 						className="transform-cpu duration-500 group-hover:scale-110"
@@ -28,7 +28,7 @@ export default function NewsArticlePreviewWide({
 						src={featuredImageSource}
 						width={800}
 					/>
-				</a>
+				</Link>
 			)}
 
 			<div className="flex flex-col justify-between gap-2 px-14 py-8">
@@ -40,7 +40,7 @@ export default function NewsArticlePreviewWide({
 					))}
 				</p>
 				<h3 className="line-clamp-2 text-3xl font-bold">
-					<a href={slug}>{title}</a>
+					<Link href={`/news/${slug}`}>{title}</Link>
 				</h3>
 				<p className="line-clamp-3 text-xl">{excerpt}</p>
 

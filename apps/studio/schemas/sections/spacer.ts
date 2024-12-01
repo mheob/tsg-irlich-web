@@ -10,23 +10,20 @@ const spacer = defineField({
 	// hidden: true,
 	fields: [
 		defineField({
-			title: 'Size',
-			name: 'size',
+			title: 'Variant',
+			name: 'variant',
 			type: 'string',
 			options: {
 				layout: 'radio',
-				list: [
-					{ title: 'Schmal', value: 'small' },
-					{ title: 'Mittel', value: 'medium' },
-					{ title: 'Breit', value: 'large' },
-				],
+				list: [{ title: 'Default', value: 'default' }],
 			},
+			initialValue: 'default',
 		}),
 	],
 	preview: {
 		prepare: ({ title }) => ({ title: `Spacer (${title})` }),
 		select: {
-			title: 'size',
+			title: 'variant',
 		},
 	},
 });

@@ -3,7 +3,7 @@ import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
 import { cva } from 'class-variance-authority';
 import { type ComponentPropsWithoutRef, type ElementRef, forwardRef } from 'react';
 
-import { cn } from '@/utils';
+import { cn } from '@/utils/cn';
 
 const NavigationMenuViewport = forwardRef<
 	ElementRef<typeof NavigationMenuPrimitive.Viewport>,

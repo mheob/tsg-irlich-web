@@ -3,7 +3,7 @@ import { Anton, Bebas_Neue, Inter } from 'next/font/google';
 
 import Footer from '@/components/layout/footer';
 import MainNav from '@/components/layout/main-nav';
-import { cn } from '@/utils';
+import { cn } from '@/utils/cn';
 
 import './globals.css';
 
@@ -41,9 +41,6 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="de">
-			<head>
-				<link href="/favicon.svg" rel="icon" sizes="any" />
-			</head>
 			<body
 				className={cn(
 					`${anton.variable} ${bebasNeue.variable} ${inter.variable} antialiased`,

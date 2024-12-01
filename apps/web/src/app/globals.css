@@ -82,12 +82,17 @@
 	}
 
 	p,
-	li,
 	figcaption {
 		color: hsl(var(--muted-foreground));
 		max-width: 65ch;
 		hyphens: auto;
 		text-wrap: pretty;
+	}
+
+	a {
+		transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 150ms;
 	}
 
 	/* @media screen and (prefers-reduced-motion: no-preference) { */

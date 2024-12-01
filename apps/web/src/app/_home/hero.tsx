@@ -3,16 +3,21 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/ui/section-header';
-import { socialMedia } from '@/data/social-media';
+import SocialMediaIcon from '@/components/ui/social-media-icon';
 import ArrowCta from '@/icons/design/arrow-cta';
 import YogaImage from '@/images/yoga-tsg-irlich.de.webp';
+import { client } from '@/lib/sanity/client';
+import { socialMediaQuery } from '@/lib/sanity/queries';
 import type { Home } from '@/types/sanity.types';
+import { getSocialMediaIcon } from '@/utils/icon';
 
 import styles from './hero.module.css';
 
 type HeroProps = Pick<Home, 'intro' | 'subtitle' | 'title'>;
 
-export default function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
+export default async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
+	const socialMedia = await client.fetch(socialMediaQuery);
+
 	return (
 		<section>
 			<div className="container mx-auto -mt-40 flex min-h-dvh items-center py-5 pt-40">
@@ -41,18 +46,15 @@ export default function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 					/>
 
 					<div className="flex flex-col gap-10 text-white">
-						{socialMedia.map(({ href, icon: Icon, label }) => (
-							<Link
-								aria-label={label}
-								className="hover:text-secondary text-white"
-								href={href}
-								key={href}
-								rel="noopener noreferrer"
-								target="_blank"
-							>
-								<Icon size="32" />
-							</Link>
-						))}
+						{socialMedia &&
+							Object.entries(socialMedia).map(([name, url]) => (
+								<SocialMediaIcon
+									href={url}
+									icon={getSocialMediaIcon(name)}
+									key={url}
+									label={name}
+								/>
+							))}
 					</div>
 				</div>
 			</div>

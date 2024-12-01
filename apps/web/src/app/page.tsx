@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 
 import { client } from '@/lib/sanity/client';
 import {
-	getHomePage,
-	getHomePageContactPersons,
-	getHomePageGroups,
-	getHomePageNews,
-	getHomePageTestimonials,
+	homePageContactPersonsQuery,
+	homePageGroupsQuery,
+	homePageNewsQuery,
+	homePageQuery,
+	homePageTestimonialsQuery,
 } from '@/lib/sanity/queries/pages/home';
 
 import ContactForm from './_home/contact-form';
@@ -29,15 +29,14 @@ export const metadata: Metadata = {
 
 export default async function Home() {
 	const [page, groups, testimonials, contactPersons, newsArticles] = await Promise.all([
-		client.fetch(getHomePage),
-		client.fetch(getHomePageGroups),
-		client.fetch(getHomePageTestimonials),
-		client.fetch(getHomePageContactPersons),
-		client.fetch(getHomePageNews),
+		client.fetch(homePageQuery),
+		client.fetch(homePageGroupsQuery),
+		client.fetch(homePageTestimonialsQuery),
+		client.fetch(homePageContactPersonsQuery, { department: 'Vorstand' }),
+		client.fetch(homePageNewsQuery),
 	]);
 
-	if (!page?.content?.featureSection || !testimonials || !contactPersons || !newsArticles)
-		return null;
+	if (!page) return null;
 
 	return (
 		<>
@@ -47,10 +46,10 @@ export default async function Home() {
 			<Groups {...page.content.groupsSection} groups={groups} />
 			<Stats {...page.content.statsSection} />
 			<Pricing {...page.content.pricingSection} />
-			<Testimonials {...page.content.testimonialSection} testimonials={testimonials.values} />
+			<Testimonials {...page.content.testimonialSection} testimonials={testimonials} />
 			<ContactPersons
 				{...page.content.contactPersonsSection}
-				contactPersons={contactPersons.values}
+				contactPersons={contactPersons ?? []}
 			/>
 			<ContactForm />
 			<News {...page.content.newsSection} articles={newsArticles} />

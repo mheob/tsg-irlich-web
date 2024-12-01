@@ -3,13 +3,13 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import NewsArticlePreviewWide from '@/components/ui/news-article-preview-wide';
 import SectionHeader from '@/components/ui/section-header';
-import type { GetHomePageNewsResult, Home } from '@/types/sanity.types';
+import type { Home, HomePageNewsQueryResult } from '@/types/sanity.types';
 
 import styles from './news.module.css';
 
 type NewsFields = Home['content']['newsSection'];
 interface NewsProps extends NewsFields {
-	articles: GetHomePageNewsResult;
+	articles: HomePageNewsQueryResult;
 }
 
 export default function News({ articles, intro, subtitle, title }: Readonly<NewsProps>) {

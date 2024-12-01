@@ -51,9 +51,13 @@ export default function FeatureCard({ href, icon, intro, title }: Readonly<Featu
 				<CardContent className="mt-2 text-xl group-hover:text-white">{intro}</CardContent>
 			</div>
 
-			<Link className="flex w-1/4 justify-end self-stretch" href={href}>
+			<Link
+				aria-label={`Mehr über "${title}" erfahren`}
+				className="flex w-1/4 justify-end self-stretch"
+				href={href}
+			>
 				<CardFooter>
-					<ArrowElement size={32} />
+					<ArrowElement aria-hidden="true" size={32} />
 				</CardFooter>
 			</Link>
 		</Card>
