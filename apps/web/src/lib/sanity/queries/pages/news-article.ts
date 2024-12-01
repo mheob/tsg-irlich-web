@@ -11,22 +11,22 @@ export const newsArticleHeroQuery = defineQuery(`
 
 /** IMPORTANT: The param `slug` is required */
 export const newsArticleContentQuery = defineQuery(`
-*[_type == 'news.article' && slug.current == $slug][0] {
-	_updatedAt,
-	author -> {
-		email,
-		firstName,
-		image,
-		lastName,
-		jobTitle,
-	},
-	body[],
-	categories[] -> {
+	*[_type == 'news.article' && slug.current == $slug][0] {
+		_updatedAt,
+		author -> {
+			email,
+			firstName,
+			image,
+			lastName,
+			jobTitle,
+		},
+		body[],
+		categories[] -> {
+			"slug": slug.current,
+			title
+		},
+		${featuredImage},
 		"slug": slug.current,
-		title
-	},
-	${featuredImage},
-	"slug": slug.current,
-	title,
-}
+		title,
+	}
 `);
