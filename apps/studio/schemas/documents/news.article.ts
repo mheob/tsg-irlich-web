@@ -15,6 +15,14 @@ const newsArticle = defineType({
 	groups: [general, meta, excerpt, content],
 	fields: [
 		// general
+		defineField({
+			title: 'Veröffentlicht am',
+			name: 'publishedAt',
+			type: 'date',
+			initialValue: () => new Date().toISOString().split('T')[0],
+			group: 'general',
+		}),
+
 		titleField,
 		slugField,
 

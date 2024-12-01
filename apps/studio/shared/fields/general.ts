@@ -42,7 +42,7 @@ export const subTitleField = defineField({
 	type: 'string',
 	group: 'general',
 	validation: rule => [
-		minLengthRule(rule, 2, 'Der Untertitel'),
+		minLengthRule(rule, 3, 'Der Untertitel'),
 		maxLengthRule(rule, 50, 'Der Untertitel'),
 	],
 });
@@ -52,7 +52,7 @@ export const titleField = defineField({
 	name: 'title',
 	type: 'string',
 	group: 'general',
-	validation: rule => [minLengthRule(rule, 10, 'Der Titel'), maxLengthRule(rule, 65, 'Der Titel')],
+	validation: rule => [minLengthRule(rule, 3, 'Der Titel'), maxLengthRule(rule, 65, 'Der Titel')],
 });
 
 export const defaultPageFields = [titleField, subTitleField, introField];

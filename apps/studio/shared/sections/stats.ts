@@ -17,8 +17,14 @@ export const statsField = defineField({
 			of: [{ type: 'stats' }],
 			description: '',
 			validation: rule => [
-				minLengthRule(rule, 3, 'Die Statistiken'),
-				maxLengthRule(rule, 4, 'Die Statistiken'),
+				minLengthRule(rule, 3, '', {
+					message: 'Mindestens 3 Statistiken müssen vorhanden sein',
+					type: 'error',
+				}),
+				maxLengthRule(rule, 4, '', {
+					message: 'Maximal 4 Statistiken dürfen gesetzt werden',
+					type: 'error',
+				}),
 			],
 		}),
 	],

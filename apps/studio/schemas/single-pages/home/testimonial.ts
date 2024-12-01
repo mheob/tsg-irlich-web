@@ -20,8 +20,14 @@ export const testimonialField = defineField({
 			type: 'array',
 			of: [{ type: 'reference', to: { type: 'testimonial' } }],
 			validation: rule => [
-				minLengthRule(rule, 4, 'Das Zeugnis bzw. die Referenz'),
-				maxLengthRule(rule, 8, 'Das Zeugnis bzw. die Referenz'),
+				minLengthRule(rule, 4, '', {
+					message: 'Mindestens 4 "Zeugnis / Referenz" müssen vorhanden sein',
+					type: 'error',
+				}),
+				maxLengthRule(rule, 8, '', {
+					message: 'Maximal 8 "Zeugnis / Referenz" dürfen gesetzt werden',
+					type: 'error',
+				}),
 			],
 		}),
 	],

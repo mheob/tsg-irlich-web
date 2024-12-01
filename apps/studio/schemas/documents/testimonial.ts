@@ -23,7 +23,7 @@ const testimonial = defineType({
 			description: 'Die Rolle oder Funktion des Zitierenden.',
 			group: 'personal',
 			validation: rule => [
-				minLengthRule(rule, 5, 'Die Rolle'),
+				minLengthRule(rule, 3, 'Die Rolle'),
 				maxLengthRule(rule, 64, 'Die Rolle'),
 			],
 		},
@@ -37,7 +37,7 @@ const testimonial = defineType({
 			group: 'quote',
 			validation: rule => [
 				minLengthRule(rule, 64, 'Das Zitat'),
-				maxLengthRule(rule, 256, 'Das Zitat'),
+				maxLengthRule(rule, 350, 'Das Zitat'),
 			],
 		}),
 		defineField({

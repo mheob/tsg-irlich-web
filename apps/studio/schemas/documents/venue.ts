@@ -1,7 +1,9 @@
 import { RiMap2Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { maxLengthRule } from '@/shared/validation-rules';
+import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
+
+import extendedImage from '../objects/extended-image';
 
 const venue = defineType({
 	title: 'Sportstätte',
@@ -13,10 +15,7 @@ const venue = defineType({
 			title: 'Name',
 			name: 'title',
 			type: 'string',
-			validation: rule => [
-				// minLengthRule(rule, 3, 'Der Name'),
-				maxLengthRule(rule, 64, 'Der Name'),
-			],
+			validation: rule => [minLengthRule(rule, 3, 'Der Name'), maxLengthRule(rule, 64, 'Der Name')],
 		}),
 
 		defineField({
@@ -24,7 +23,7 @@ const venue = defineType({
 			name: 'description',
 			type: 'simpleBlockContent',
 			description: 'Eine kurze Beschreibung der Sportstätte.',
-			// validation: rule => [requiredRule(rule, 'Die Beschreibung')],
+			validation: rule => [requiredRule(rule, 'Die Beschreibung')],
 		}),
 
 		defineField({
@@ -43,7 +42,13 @@ const venue = defineType({
 					{ title: 'Rasenplatz', value: 'grass' },
 				],
 			},
-			// validation: rule => [requiredRule(rule, 'Die Art')],
+			validation: rule => [requiredRule(rule, 'Die "Art der Sportstätte"')],
+		}),
+
+		defineField({
+			...extendedImage,
+			title: 'Image',
+			name: 'mainImage',
 		}),
 
 		defineField({

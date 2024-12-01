@@ -40,7 +40,6 @@ export function exactLengthRule<Rule extends ExactLengthRule<Rule>>(
 	title: string,
 	options = defaultRuleOptions,
 ) {
-	options = { ...defaultRuleOptions, type: 'warning', ...options };
 	const validationRule = rule.length(length);
 	const itemText = getTextByInputType(options.inputType, length);
 	const message = options.message ?? `${title} muss genau ${length} ${itemText} lang sein`;
@@ -51,7 +50,7 @@ export function maxLengthRule<Rule extends MaxLengthRule<Rule>>(
 	rule: Rule,
 	length: number,
 	title: string,
-	options = defaultRuleOptions,
+	options?: RuleOptions,
 ) {
 	options = { ...defaultRuleOptions, type: 'warning', ...options };
 	const validationRule = rule.max(length);
