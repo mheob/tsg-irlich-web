@@ -23,22 +23,22 @@
 		"@antfu/ni": "^0.23.1",
 		"@commitlint/cli": "^19.6.0",
 		"@cspell/dict-de-de": "^4.0.3",
-		"@eslint-react/eslint-plugin": "^1.17.1",
+		"@eslint-react/eslint-plugin": "^1.17.2",
 		"@mheob/commitlint-config": "^1.2.0",
 		"@mheob/eslint-config": "^6.2.0",
 		"@mheob/prettier-config": "^3.3.2",
 		"commitizen": "^4.3.1",
-		"cspell": "^8.16.0",
+		"cspell": "^8.16.1",
 		"cz-git": "^1.11.0",
 		"eslint": "catalog:",
 		"husky": "^9.1.7",
 		"lint-staged": "^15.2.10",
 		"prettier": "^3.4.1",
 		"prettier-plugin-tailwindcss": "^0.6.9",
-		"turbo": "^2.3.2",
+		"turbo": "^2.3.3",
 		"typescript": "catalog:"
 	},
-	"packageManager": "pnpm@9.14.2",
+	"packageManager": "pnpm@9.14.4",
 	"engines": {
 		"node": "22"
 	}

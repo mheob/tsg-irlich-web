@@ -13,8 +13,8 @@
 	},
 	"dependencies": {
 		"@sanity/assist": "^3.0.8",
-		"@sanity/locale-de-de": "^1.1.12",
-		"@sanity/vision": "^3.65.0",
+		"@sanity/locale-de-de": "^1.1.13",
+		"@sanity/vision": "^3.65.1",
 		"@tsg-irlich-web/shared": "workspace:*",
 		"dotenv": "^16.4.5",
 		"react": "^18.3.1",
