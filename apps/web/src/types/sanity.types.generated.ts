@@ -99,6 +99,7 @@ export type Grid = {
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
+				description?: string;
 				_type: 'mainImage';
 				_key: string;
 		  }
@@ -217,6 +218,7 @@ export type SingleGroupPage = {
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
+				description?: string;
 				_type: 'extendedImage';
 				_key: string;
 			}>;
@@ -285,6 +287,7 @@ export type BlockContent = {
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
+				description?: string;
 				_type: 'customImage';
 				_key: string;
 		  }
@@ -457,6 +460,7 @@ export type AboutUs = {
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
+				description?: string;
 				_type: 'extendedImage';
 				_key: string;
 			}>;
@@ -617,6 +621,7 @@ export type ImageCard = {
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'extendedImage';
 	};
 };
@@ -687,9 +692,22 @@ export type Venue = {
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
-	title?: string;
-	description?: SimpleBlockContent;
-	type?: 'hall-1' | 'hall-2' | 'hall-3' | 'cinder' | 'hybrid' | 'artificial-turf' | 'grass';
+	title: string;
+	description: SimpleBlockContent;
+	type: 'hall-1' | 'hall-2' | 'hall-3' | 'cinder' | 'hybrid' | 'artificial-turf' | 'grass';
+	mainImage?: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'image';
+	};
 	location?: {
 		name?: string;
 		street?: string;
@@ -717,6 +735,7 @@ export type Testimonial = {
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'extendedImage';
 	};
 	role: string;
@@ -742,6 +761,7 @@ export type HonoraryMember = {
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'extendedImage';
 	};
 	memberSince?: string;
@@ -765,6 +785,7 @@ export type Person = {
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'extendedImage';
 	};
 	email: string;
@@ -820,6 +841,7 @@ export type Group = {
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'extendedImage';
 	};
 };
@@ -862,6 +884,7 @@ export type NewsArticle = {
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
+	publishedAt?: string;
 	title: string;
 	slug: Slug;
 	categories?: Array<{
@@ -888,6 +911,7 @@ export type NewsArticle = {
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'mainImage';
 	};
 	excerpt: string;
@@ -911,6 +935,7 @@ export type NewsArticle = {
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
+				description?: string;
 				_type: 'mainImage';
 				_key: string;
 		  }
@@ -931,6 +956,7 @@ export type MainImage = {
 	hotspot?: SanityImageHotspot;
 	crop?: SanityImageCrop;
 	alt: string;
+	description?: string;
 };
 
 export type SanityImageCrop = {
@@ -1026,6 +1052,7 @@ export type Author = {
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'extendedImage';
 	};
 	email: string;
@@ -1043,6 +1070,7 @@ export type ExtendedImage = {
 	hotspot?: SanityImageHotspot;
 	crop?: SanityImageCrop;
 	alt: string;
+	description?: string;
 };
 
 export type SanityAssistInstructionTask = {
@@ -1389,6 +1417,7 @@ export type HomePageTestimonialsQueryResult = Array<{
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'extendedImage';
 	};
 	quote: string;
@@ -1411,6 +1440,7 @@ export type HomePageContactPersonsQueryResult = Array<{
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'extendedImage';
 	};
 	email: string | null;
@@ -1437,6 +1467,7 @@ export type HomePageNewsQueryResult = Array<{
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'mainImage';
 	};
 	author: {
@@ -1452,6 +1483,7 @@ export type HomePageNewsQueryResult = Array<{
 			hotspot?: SanityImageHotspot;
 			crop?: SanityImageCrop;
 			alt: string;
+			description?: string;
 			_type: 'extendedImage';
 		};
 	};
@@ -1466,7 +1498,7 @@ export type NewsArticleHeroQueryResult = {
 	subtitle: string;
 } | null;
 // Variable: newsArticleContentQuery
-// Query: *[_type == 'news.article' && slug.current == $slug][0] {	_updatedAt,	author -> {		email,		firstName,		image,		lastName,		jobTitle,	},	body[],	categories[] -> {		"slug": slug.current,		title	},	featuredImage,	"slug": slug.current,	title,}
+// Query: *[_type == 'news.article' && slug.current == $slug][0] {		_updatedAt,		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[],		categories[] -> {			"slug": slug.current,			title		},		featuredImage,		"slug": slug.current,		title,	}
 export type NewsArticleContentQueryResult = {
 	_updatedAt: string;
 	author: {
@@ -1482,6 +1514,7 @@ export type NewsArticleContentQueryResult = {
 			hotspot?: SanityImageHotspot;
 			crop?: SanityImageCrop;
 			alt: string;
+			description?: string;
 			_type: 'extendedImage';
 		};
 		lastName: string;
@@ -1510,6 +1543,7 @@ export type NewsArticleContentQueryResult = {
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
+				description?: string;
 				_type: 'mainImage';
 				_key: string;
 		  }
@@ -1528,6 +1562,7 @@ export type NewsArticleContentQueryResult = {
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
+		description?: string;
 		_type: 'mainImage';
 	};
 	slug: string;
@@ -1545,6 +1580,6 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\t"email": affiliations[department->title == $department][0].role->email,\n\t\t"role": affiliations[department->title == $department][0].role->title,\n\t\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': HomePageContactPersonsQueryResult;
 		'\n\t*[_type == \'news.article\'][0..2] | order(_updatedAt desc) {\n\t\t\ttitle,\n\t\t\t"slug": slug.current,\n\t\t\texcerpt,\n\t\t\tcategories[]->{ title, "slug": slug.current },\n\t\t\tfeaturedImage,\n\t\t\tauthor->{ firstName, lastName, image },\n\t\t\t_updatedAt,\n\t\t}\n': HomePageNewsQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
-		'\n*[_type == \'news.article\' && slug.current == $slug][0] {\n\t_updatedAt,\n\tauthor -> {\n\t\temail,\n\t\tfirstName,\n\t\timage,\n\t\tlastName,\n\t\tjobTitle,\n\t},\n\tbody[],\n\tcategories[] -> {\n\t\t"slug": slug.current,\n\t\ttitle\n\t},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n}\n': NewsArticleContentQueryResult;
+		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\t_updatedAt,\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\tfeaturedImage,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
 	}
 }

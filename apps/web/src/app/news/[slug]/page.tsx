@@ -80,7 +80,11 @@ export default async function NewsArticle({ params }: PageProps) {
 															src={urlForImage(item, 450, 800) ?? ''}
 															width={800}
 														/>
-														<figcaption className="text-center italic">{item.alt}</figcaption>
+														{item.description && (
+															<figcaption className="text-center italic">
+																{item.description}
+															</figcaption>
+														)}
 													</figure>
 												);
 											}
@@ -98,7 +102,9 @@ export default async function NewsArticle({ params }: PageProps) {
 											src={urlForImage(block, 450, 800) ?? ''}
 											width={800}
 										/>
-										<figcaption className="text-center italic">{block.alt}</figcaption>
+										{block.description && (
+											<figcaption className="text-center italic">{block.description}</figcaption>
+										)}
 									</figure>
 								);
 							}
