@@ -34,7 +34,7 @@ export default function SectionHeader({
 
 			{typeof children === 'string' && !children.startsWith('<') ? (
 				<p
-					className={`${isCentered ? 'mx-auto' : 'pr-16'} mt-6 max-w-3xl text-xl ${descriptionClassName}`}
+					className={`${isCentered ? 'mx-auto' : 'md:pr-16'} mt-6 max-w-3xl md:text-xl ${descriptionClassName}`}
 				>
 					{children}
 				</p>

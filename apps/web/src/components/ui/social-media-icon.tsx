@@ -1,7 +1,7 @@
 import type { IconType } from '@icons-pack/react-simple-icons';
 import { SiFacebook, SiInstagram, SiWhatsapp, SiYoutube } from '@icons-pack/react-simple-icons';
 import Link from 'next/link';
-import type { ComponentPropsWithRef } from 'react';
+import type { ComponentPropsWithoutRef, ComponentPropsWithRef } from 'react';
 
 interface SocialMediaIcons {
 	facebook: IconType;
@@ -18,11 +18,13 @@ export const socialMediaMap: SocialMediaIcons = {
 };
 
 interface SocialMediaIconProps extends ComponentPropsWithRef<typeof Link> {
+	className?: ComponentPropsWithoutRef<IconType>['className'];
 	icon: IconType;
 	label: string;
 }
 
 export default function SocialMediaIcon({
+	className = 'h-6 w-6 md:h-8 md:w-8',
 	icon: Icon,
 	label,
 	...props
@@ -37,7 +39,7 @@ export default function SocialMediaIcon({
 			target="_blank"
 			{...props}
 		>
-			<Icon size="32" />
+			<Icon className={className} />
 		</Link>
 	);
 }

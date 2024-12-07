@@ -58,23 +58,25 @@
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-serif: Bebas Neue, ui-serif, Georgia, Cambria, 'Times New Roman',
     Times, serif;
+
+	--padding-container: 1rem;
 }
 
 @utility container {
   margin-inline: auto;
-  padding-inline: 0.5rem;
+  padding-inline: var(--padding-container);
 
   @media (width >= theme(--breakpoint-sm)) {
-    padding-inline: 1rem;
+		--padding-container: 1.5rem;
   }
   @media (width >= theme(--breakpoint-lg)) {
-    padding-inline: 1.5rem;
+		--padding-container: 2rem;
   }
   @media (width >= theme(--breakpoint-xl)) {
-    padding-inline: 2rem;
+		--padding-container: 2.5rem;
   }
   @media (width >= theme(--breakpoint-2xl)) {
-    padding-inline: 2.5rem;
+		--padding-container: 3rem;
   }
 }
 
@@ -103,13 +105,19 @@
   gap: 0.5rem;
   white-space: nowrap;
   border-radius: 9999px;
-  padding: 0.5rem;
+  padding: 0.25rem;
   text-align: center;
+	font-size: 0.75rem;
   font-weight: 700;
   transition-property: color, background-color, border-color,
     text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+
+	@media (width >= theme(--breakpoint-sm)) {
+		padding: 0.5rem;
+		font-size: 1rem;
+  }
 
   &:focus-visible {
     --tw-ring-color: hsl(var(--ring));
@@ -131,8 +139,13 @@
   & :first-child {
     border-radius: 9999px;
     border-width: 1px;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+
+		@media (width >= theme(--breakpoint-sm)) {
     padding-inline: 2.5rem;
     padding-block: 1rem;
+		}
   }
 }
 
