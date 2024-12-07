@@ -1,5 +1,5 @@
 import { Mail, Phone } from 'lucide-react';
-import type { HTMLAttributes } from 'react';
+import type { ComponentPropsWithRef } from 'react';
 
 type ContactButtonProps = (
 	| {
@@ -11,7 +11,7 @@ type ContactButtonProps = (
 			phone?: never;
 	  }
 ) &
-	HTMLAttributes<HTMLAnchorElement>;
+	ComponentPropsWithRef<'a'>;
 
 export default function ContactButton({ email, phone, ...props }: ContactButtonProps) {
 	if (email)

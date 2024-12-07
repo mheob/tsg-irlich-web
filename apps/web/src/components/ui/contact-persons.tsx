@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { ComponentProps } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
 import { urlForImage } from '@/lib/sanity/utils';
 import type { ContactPerson } from '@/types/sanity.types';
@@ -7,6 +7,10 @@ import { cn } from '@/utils/cn';
 import { getInitials } from '@/utils/image';
 
 import ContactButton from './contact-button';
+
+interface ContactPersonItemProps
+	extends ContactPerson,
+		Omit<ComponentPropsWithoutRef<'article'>, 'role'> {}
 
 function ContactPersonItem({
 	email,
@@ -16,7 +20,7 @@ function ContactPersonItem({
 	phone,
 	role,
 	vision,
-}: Readonly<ContactPerson>) {
+}: Readonly<ContactPersonItemProps>) {
 	const imageSource = urlForImage(image, 176);
 
 	return (
@@ -65,7 +69,7 @@ function ContactPersonItem({
 }
 
 interface ContactPersonsProps {
-	contactPersons: ComponentProps<typeof ContactPersonItem>[];
+	contactPersons: ComponentPropsWithoutRef<typeof ContactPersonItem>[];
 }
 
 export default function ContactPersons({ contactPersons }: Readonly<ContactPersonsProps>) {

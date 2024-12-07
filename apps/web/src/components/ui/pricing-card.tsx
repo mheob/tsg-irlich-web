@@ -25,7 +25,7 @@ export default function PricingCard({
 	price,
 	subtitle,
 	title,
-}: PricingCardProps) {
+}: Readonly<PricingCardProps>) {
 	return (
 		<article
 			className={cn(

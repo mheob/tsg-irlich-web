@@ -11,13 +11,7 @@ import {
 	type LucideProps,
 } from 'lucide-react';
 import Link from 'next/link';
-import {
-	type AnchorHTMLAttributes,
-	type ButtonHTMLAttributes,
-	type ComponentProps,
-	forwardRef,
-	type HTMLAttributes,
-} from 'react';
+import type { ComponentPropsWithRef } from 'react';
 
 const ArrowButtonVariants = cva('i-btn', {
 	defaultVariants: {
@@ -46,19 +40,17 @@ interface ArrowProps {
 }
 
 export interface ArrowElementProps
-	extends HTMLAttributes<HTMLDivElement>,
+	extends ComponentPropsWithRef<'div'>,
 		VariantProps<typeof ArrowButtonVariants>,
 		ArrowProps {}
 
 export interface ArrowAnchorProps
-	extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
+	extends ComponentPropsWithRef<typeof Link>,
 		VariantProps<typeof ArrowButtonVariants>,
-		ArrowProps {
-	href: ComponentProps<typeof Link>['href'];
-}
+		ArrowProps {}
 
 export interface ArrowButtonProps
-	extends ButtonHTMLAttributes<HTMLButtonElement>,
+	extends ComponentPropsWithRef<'button'>,
 		VariantProps<typeof ArrowButtonVariants>,
 		ArrowProps {
 	buttonType?: 'button' | 'reset' | 'submit';
@@ -85,46 +77,31 @@ function Arrow({
 	}
 }
 
-const ArrowButton = forwardRef<HTMLButtonElement, ArrowButtonProps>(
-	({ buttonType = 'button', className, direction, size, variant, ...props }, reference) => {
-		return (
-			<button
-				className={ArrowButtonVariants({ className, variant })}
-				ref={reference}
-				type={buttonType}
-				{...props}
-			>
-				<Arrow direction={direction} size={size} />
-			</button>
-		);
-	},
+const ArrowButton = ({
+	buttonType = 'button',
+	className,
+	direction,
+	size,
+	variant,
+	...props
+}: ArrowButtonProps) => (
+	<button className={ArrowButtonVariants({ className, variant })} type={buttonType} {...props}>
+		<Arrow direction={direction} size={size} />
+	</button>
 );
 ArrowButton.displayName = 'ArrowButton';
 
-const ArrowElement = forwardRef<HTMLDivElement, ArrowElementProps>(
-	({ className, direction, size, variant, ...props }, reference) => {
-		return (
-			<div className={ArrowButtonVariants({ className, variant })} ref={reference} {...props}>
-				<Arrow direction={direction} size={size} />
-			</div>
-		);
-	},
+const ArrowElement = ({ className, direction, size, variant, ...props }: ArrowElementProps) => (
+	<div className={ArrowButtonVariants({ className, variant })} {...props}>
+		<Arrow direction={direction} size={size} />
+	</div>
 );
 ArrowElement.displayName = 'ArrowElement';
 
-const ArrowLink = forwardRef<HTMLAnchorElement, ArrowAnchorProps>(
-	({ className, direction, href, size, variant, ...props }, reference) => {
-		return (
-			<Link
-				className={ArrowButtonVariants({ className, variant })}
-				href={href}
-				ref={reference}
-				{...props}
-			>
-				<Arrow direction={direction} size={size} />
-			</Link>
-		);
-	},
+const ArrowLink = ({ className, direction, size, variant, ...props }: ArrowAnchorProps) => (
+	<Link className={ArrowButtonVariants({ className, variant })} {...props}>
+		<Arrow direction={direction} size={size} />
+	</Link>
 );
 ArrowLink.displayName = 'ArrowLink';
 

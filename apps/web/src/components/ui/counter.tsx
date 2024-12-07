@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react';
+import type { ComponentPropsWithRef } from 'react';
 
 import type { Stats } from '@/types/sanity.types';
 import { cn } from '@/utils/cn';
@@ -12,12 +12,11 @@ function CounterItem({ suffix = '', title, value }: Readonly<Stats>) {
 	);
 }
 
-interface CounterProps {
-	className?: HTMLAttributes<HTMLDivElement>['className'];
+interface CounterProps extends ComponentPropsWithRef<'div'> {
 	values: Stats[];
 }
 
-export default function Counter({ className, values }: Readonly<CounterProps>) {
+export default function Counter({ className, values, ...props }: Readonly<CounterProps>) {
 	return (
 		<div
 			className={cn(
@@ -26,6 +25,7 @@ export default function Counter({ className, values }: Readonly<CounterProps>) {
 				'container mx-auto grid grid-rows-1 divide-x-2 px-5 py-32',
 				className,
 			)}
+			{...props}
 		>
 			{values?.length
 				? values.map(value => <CounterItem key={value.title} {...value} />)

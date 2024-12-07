@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import * as React from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
 import TSGLogo from '@/icons/logos/tsg-logo';
 import { cn } from '@/utils/cn';
@@ -15,9 +15,9 @@ import {
 	navigationMenuTriggerStyle,
 } from '../ui/navigation-menu';
 
-type ListItemProps = React.ComponentProps<typeof Link>;
+type ListItemProps = ComponentPropsWithoutRef<typeof Link>;
 
-function ListItem({ children, className, title, ...props }: ListItemProps) {
+function ListItem({ children, className, title, ...props }: Readonly<ListItemProps>) {
 	return (
 		<li>
 			<NavigationMenuLink asChild>
