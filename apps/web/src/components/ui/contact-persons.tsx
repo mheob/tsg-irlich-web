@@ -25,7 +25,7 @@ function ContactPersonItem({
 				<Image
 					className={cn(
 						'bg-secondary-light text-primary border-primary',
-						'relative z-[1] grid place-items-center',
+						'z-1 relative grid place-items-center',
 						'rounded-full border-8',
 					)}
 					alt={image.alt}
@@ -37,7 +37,7 @@ function ContactPersonItem({
 				<div
 					className={cn(
 						'bg-secondary text-primary border-primary',
-						'relative z-[1] grid place-items-center',
+						'z-1 relative grid place-items-center',
 						'rounded-full border-8',
 						'h-44 w-44 text-6xl font-bold',
 					)}
@@ -68,7 +68,7 @@ interface ContactPersonsProps {
 	contactPersons: ComponentProps<typeof ContactPersonItem>[];
 }
 
-export default function ContactPersons({ contactPersons }: ContactPersonsProps) {
+export default function ContactPersons({ contactPersons }: Readonly<ContactPersonsProps>) {
 	const cpLength = contactPersons.length;
 
 	return (

@@ -7,7 +7,7 @@ type FeaturesProps = Home['content']['featureSection'];
 
 export default function Features({ features, intro, subtitle, title }: Readonly<FeaturesProps>) {
 	return (
-		<section className="bg-background-lowContrast">
+		<section className="bg-background-low-contrast">
 			<div className="container mx-auto py-28">
 				<SectionHeader subTitle={subtitle} title={title} isCentered>
 					{intro}

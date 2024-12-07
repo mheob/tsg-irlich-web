@@ -21,7 +21,7 @@ export default function Hero({ children, image, subTitle, title, ...props }: Rea
 		<section
 			className={cn(
 				'relative -mt-40 h-[600px]',
-				'from-primary/70 to-primary/30 bg-gradient-to-r text-white',
+				'from-primary/70 to-primary/30 bg-linear-to-r text-white',
 			)}
 			{...props}
 		>

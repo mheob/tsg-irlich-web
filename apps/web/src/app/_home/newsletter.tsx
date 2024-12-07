@@ -8,14 +8,14 @@ import styles from './newsletter.module.css';
 
 export default function Newsletter() {
 	return (
-		<section className="bg-background-lowContrast pt-32">
+		<section className="bg-background-low-contrast pt-32">
 			<div
-				className={`${styles.bg} relative z-[1] mx-auto -mb-16 max-w-screen-lg rounded-lg bg-white px-14 pb-12 pt-24`}
+				className={`${styles.bg} z-1 max-w-(--breakpoint-lg) relative mx-auto -mb-16 rounded-lg bg-white px-14 pb-12 pt-24`}
 			>
 				<SectionHeader title="Bleib auf dem Laufenden und lass dich informieren" isCentered />
 
 				<form
-					className="relative z-[1] mx-auto mt-16 flex max-w-screen-sm items-center justify-between gap-6 rounded-md bg-white px-6 pb-2 shadow-xl"
+					className="z-1 max-w-(--breakpoint-sm) relative mx-auto mt-16 flex items-center justify-between gap-6 rounded-md bg-white px-6 pb-2 shadow-xl"
 					method="post"
 				>
 					<label aria-label="E-Mail" className="text-primary" htmlFor="email">

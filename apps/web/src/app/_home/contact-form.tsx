@@ -7,9 +7,9 @@ import { TextareaWithLabel } from '@/components/ui/textarea';
 
 export default function ContactForm() {
 	return (
-		<section className="bg-background-lowContrast py-32">
+		<section className="bg-background-low-contrast py-32">
 			<div className="container mx-auto px-5">
-				<div className="grid grid-cols-[55%,45%] rounded-lg bg-white px-14 py-24">
+				<div className="grid grid-cols-[55%_45%] rounded-lg bg-white px-14 py-24">
 					<form>
 						<SectionHeader title="Kontaktiere uns" />
 

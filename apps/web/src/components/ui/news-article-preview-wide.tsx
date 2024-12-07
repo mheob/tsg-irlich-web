@@ -18,7 +18,7 @@ export default function NewsArticlePreviewWide({
 	const authorImageSource = urlForImage(author.image, 56);
 
 	return (
-		<article className="group grid grid-cols-[50%,50%] rounded-xl bg-white text-black">
+		<article className="group grid grid-cols-[50%_50%] rounded-xl bg-white text-black">
 			{featuredImageSource && (
 				<Link className="overflow-hidden rounded-l-xl" href={`/news/${slug}`}>
 					<Image
