@@ -11,7 +11,7 @@ type VisionProps = Home['content']['visionSection'];
 export default function Vision({ cta, intro, subtitle, title }: Readonly<VisionProps>) {
 	return (
 		<section className="relative items-center">
-			<div className="container mx-auto grid grid-cols-[55%,45%] px-5">
+			<div className="container mx-auto grid grid-cols-[55%_45%] px-5">
 				<div>
 					<div className={styles.bgRoundedEdge}></div>
 

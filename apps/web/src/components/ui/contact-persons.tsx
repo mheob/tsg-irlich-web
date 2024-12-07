@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { ComponentProps } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
 import { urlForImage } from '@/lib/sanity/utils';
 import type { ContactPerson } from '@/types/sanity.types';
@@ -7,6 +7,10 @@ import { cn } from '@/utils/cn';
 import { getInitials } from '@/utils/image';
 
 import ContactButton from './contact-button';
+
+interface ContactPersonItemProps
+	extends ContactPerson,
+		Omit<ComponentPropsWithoutRef<'article'>, 'role'> {}
 
 function ContactPersonItem({
 	email,
@@ -16,7 +20,7 @@ function ContactPersonItem({
 	phone,
 	role,
 	vision,
-}: Readonly<ContactPerson>) {
+}: Readonly<ContactPersonItemProps>) {
 	const imageSource = urlForImage(image, 176);
 
 	return (
@@ -25,7 +29,7 @@ function ContactPersonItem({
 				<Image
 					className={cn(
 						'bg-secondary-light text-primary border-primary',
-						'relative z-[1] grid place-items-center',
+						'z-1 relative grid place-items-center',
 						'rounded-full border-8',
 					)}
 					alt={image.alt}
@@ -37,7 +41,7 @@ function ContactPersonItem({
 				<div
 					className={cn(
 						'bg-secondary text-primary border-primary',
-						'relative z-[1] grid place-items-center',
+						'z-1 relative grid place-items-center',
 						'rounded-full border-8',
 						'h-44 w-44 text-6xl font-bold',
 					)}
@@ -65,10 +69,10 @@ function ContactPersonItem({
 }
 
 interface ContactPersonsProps {
-	contactPersons: ComponentProps<typeof ContactPersonItem>[];
+	contactPersons: ComponentPropsWithoutRef<typeof ContactPersonItem>[];
 }
 
-export default function ContactPersons({ contactPersons }: ContactPersonsProps) {
+export default function ContactPersons({ contactPersons }: Readonly<ContactPersonsProps>) {
 	const cpLength = contactPersons.length;
 
 	return (

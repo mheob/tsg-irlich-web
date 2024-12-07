@@ -23,10 +23,8 @@ interface SocialMediaIconProps extends ComponentPropsWithRef<typeof Link> {
 }
 
 export default function SocialMediaIcon({
-	href,
 	icon: Icon,
 	label,
-	ref,
 	...props
 }: Readonly<SocialMediaIconProps>) {
 	if (label === '_type') return null;
@@ -35,8 +33,6 @@ export default function SocialMediaIcon({
 		<Link
 			aria-label={label}
 			className="hover:text-secondary"
-			href={href}
-			ref={ref}
 			rel="noopener noreferrer"
 			target="_blank"
 			{...props}

@@ -41,7 +41,8 @@ const meta = defineField({
 					validation: rule => {
 						return rule.custom((alt, context) => {
 							// eslint-disable-next-line ts/no-explicit-any
-							if ((context.document?.ogImage as any)?.asset?._ref && !alt) return 'Required';
+							const ogImage = context.document?.ogImage as any;
+							if (ogImage?.asset?._ref && !alt) return 'Required';
 							return true;
 						});
 					},

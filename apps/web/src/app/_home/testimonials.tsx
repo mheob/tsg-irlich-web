@@ -16,8 +16,8 @@ export default function Testimonials({
 	title,
 }: Readonly<TestimonialsProps>) {
 	return (
-		<section className={`${styles.bg} bg-background-lowContrast relative z-0`}>
-			<div className="container mx-auto grid grid-cols-[40%,60%] px-5 py-32">
+		<section className={`${styles.bg} bg-background-low-contrast relative z-0`}>
+			<div className="container mx-auto grid grid-cols-[40%_60%] px-5 py-32">
 				<SectionHeader subTitle={subtitle} title={title} />
 				{testimonials && <TestimonialGroup testimonials={testimonials} />}
 			</div>
