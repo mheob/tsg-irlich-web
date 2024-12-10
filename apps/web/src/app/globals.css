@@ -303,6 +303,7 @@
 
 	address {
 		font-style: normal;
+		text-wrap: balance;
 	}
 
 	p,

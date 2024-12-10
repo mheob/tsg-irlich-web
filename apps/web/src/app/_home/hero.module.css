@@ -8,7 +8,7 @@
 	clip-path: ellipse(150% 100% at 100% 100%);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
 	.bgRoundedEdge {
 		inset-block: 0;
 		inset-inline: initial;
@@ -31,7 +31,7 @@
 	mask-size: cover;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
 	.bgBalls {
 		top: -6rem;
 		right: 0;
