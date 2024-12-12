@@ -10,7 +10,7 @@ const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
 type GroupsSection = Home['content']['groupsSection'];
 type GroupsFields = HomePageGroupsQueryResult;
-type GroupsProps = { groups: GroupsFields } & GroupsSection;
+type GroupsProps = GroupsSection & { groups: GroupsFields };
 
 export default function Groups({ groups, subtitle, title }: GroupsProps) {
 	return (

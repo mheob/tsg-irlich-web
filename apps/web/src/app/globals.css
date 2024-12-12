@@ -114,7 +114,7 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 
-	@media (width >= theme(--breakpoint-sm)) {
+	@media (width >= theme(--breakpoint-md)) {
 		padding: 0.5rem;
 		font-size: 1rem;
   }
@@ -142,7 +142,7 @@
     padding-inline: 1rem;
     padding-block: 0.5rem;
 
-		@media (width >= theme(--breakpoint-sm)) {
+		@media (width >= theme(--breakpoint-md)) {
     padding-inline: 2.5rem;
     padding-block: 1rem;
 		}

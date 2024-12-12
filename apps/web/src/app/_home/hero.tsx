@@ -20,8 +20,8 @@ export default async function Hero({ intro, subtitle, title }: Readonly<HeroProp
 	const socialMedia = await client.fetch(socialMediaQuery);
 
 	return (
-		<section className="md:relative">
-			<div className="container mx-auto -mt-40 min-h-dvh items-center py-5 pt-40 md:flex">
+		<section className="relative min-h-dvh md:-mt-40 md:pt-48">
+			<div className="container mx-auto items-center py-5 md:flex">
 				<div className="md:w-1/2">
 					<SectionHeader level="h1" subTitle={subtitle} title={title}>
 						{intro}

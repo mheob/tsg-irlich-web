@@ -10,6 +10,7 @@ const ButtonVariants = cva('btn', {
 	},
 	variants: {
 		variant: {
+			ghost: 'btn--ghost',
 			primary: 'btn--primary',
 			secondary: 'btn--secondary',
 		},

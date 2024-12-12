@@ -15,7 +15,7 @@ export default function Newsletter() {
 				<SectionHeader title="Bleib auf dem Laufenden und lass dich informieren" isCentered />
 
 				<form
-					className="z-1 max-w-(--breakpoint-sm) relative mx-auto mt-16 flex items-center justify-between gap-6 rounded-md bg-white px-6 pb-2 shadow-xl"
+					className="z-1 max-w-(--breakpoint-md) relative mx-auto mt-16 flex items-center justify-between gap-6 rounded-md bg-white px-6 pb-2 shadow-xl"
 					method="post"
 				>
 					<label aria-label="E-Mail" className="text-primary" htmlFor="email">

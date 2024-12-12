@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import type { PortableTextBlock } from 'next-sanity';
+import Image from 'next/image';
 
 import Hero from '@/components/section/hero';
 import PortableText from '@/components/ui/portable-text';

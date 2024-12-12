@@ -5,7 +5,7 @@ import type { ComponentPropsWithoutRef, ComponentPropsWithRef, ReactNode } from 
 
 import { cn } from '@/utils/cn';
 
-const Breadcrumb = ({ ...props }: { separator?: ReactNode } & ComponentPropsWithRef<'nav'>) => (
+const Breadcrumb = ({ ...props }: ComponentPropsWithRef<'nav'> & { separator?: ReactNode }) => (
 	<nav aria-label="breadcrumb" {...props} />
 );
 Breadcrumb.displayName = 'Breadcrumb';
@@ -27,9 +27,9 @@ function BreadcrumbLink({
 	asChild,
 	className,
 	...props
-}: {
+}: ComponentPropsWithRef<'a'> & {
 	asChild?: boolean;
-} & ComponentPropsWithRef<'a'>) {
+}) {
 	const Comp = asChild ? Slot : 'a';
 
 	return (

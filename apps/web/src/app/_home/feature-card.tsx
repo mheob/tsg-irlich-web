@@ -12,7 +12,7 @@ import type { HTMLAttributes } from 'react';
 import { ArrowElement } from '@/components/ui/arrow-button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
-function FeatureIcon({ icon, ...props }: { icon: string } & LucideProps) {
+function FeatureIcon({ icon, ...props }: LucideProps & { icon: string }) {
 	switch (icon) {
 		case 'Dumbbell': {
 			return <Dumbbell {...props} />;
