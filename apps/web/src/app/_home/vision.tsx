@@ -33,7 +33,7 @@ export default function Vision({ cta, intro, subtitle, title }: Readonly<VisionP
 						{intro}
 					</SectionHeader>
 
-					<Button className="relative mt-12 text-center" asChild>
+					<Button className="relative mt-12" asChild>
 						<Link href="#!">{cta}</Link>
 					</Button>
 				</div>

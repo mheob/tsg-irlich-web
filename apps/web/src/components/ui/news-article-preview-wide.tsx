@@ -36,9 +36,9 @@ export default function NewsArticlePreviewWide({
 					<Image
 						alt={featuredImage.alt}
 						className="transform-cpu rounded-t-xl duration-500 group-hover:scale-110 md:rounded-l-xl md:rounded-r-none"
-						height={isDesktop ? 480 : 267}
+						sizes="(min-width: 48rem) 800px, 350px"
 						src={featuredImageSource}
-						width={isDesktop ? 800 : 350}
+						fill
 					/>
 				</Link>
 			)}

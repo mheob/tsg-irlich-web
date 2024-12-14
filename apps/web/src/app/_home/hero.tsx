@@ -50,7 +50,7 @@ export default async function Hero({ intro, subtitle, title }: Readonly<HeroProp
 						src={YogaImage}
 					/>
 
-					<div
+					<nav
 						className={cn(
 							'flex text-white',
 							'w-full items-end justify-around justify-self-end py-10',
@@ -66,7 +66,7 @@ export default async function Hero({ intro, subtitle, title }: Readonly<HeroProp
 									label={name}
 								/>
 							))}
-					</div>
+					</nav>
 				</div>
 			</div>
 		</section>
