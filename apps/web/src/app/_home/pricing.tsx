@@ -18,7 +18,7 @@ export default function Pricing({
 }: Readonly<PricingProps>) {
 	return (
 		<section className={`${styles.bg} bg-primary relative z-0 text-white`}>
-			<div className="container mx-auto px-5 py-28">
+			<div className="container mx-auto px-5 py-10 md:py-28">
 				<SectionHeader
 					descriptionClassName="text-primary-foreground"
 					subTitle={subtitle}
@@ -28,7 +28,7 @@ export default function Pricing({
 					{intro}
 				</SectionHeader>
 
-				<div className="mt-32 flex justify-center gap-12">
+				<div className="mt-10 flex flex-col gap-6 md:mt-32 md:flex-row md:justify-center md:gap-12">
 					<PricingCard {...pricingYouth}>
 						<Rocket size="40" stroke="currentColor" strokeWidth="1" />
 					</PricingCard>

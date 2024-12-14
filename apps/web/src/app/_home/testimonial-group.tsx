@@ -1,8 +1,11 @@
+'use client';
+
 import { Quote } from 'lucide-react';
 import Image from 'next/image';
 import type { HTMLAttributes } from 'react';
 
 import ArrowButtonGroup from '@/components/ui/arrow-button-group';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types.generated';
 import { cn } from '@/utils/cn';
@@ -23,35 +26,42 @@ function TestimonialItem({
 	quote,
 	role,
 }: Readonly<TestimonialItemProps>) {
+	const isDesktop = useMediaQuery('(min-width: 48rem)');
+
 	const imageSource = urlForImage(image, 96);
 
 	return (
 		<article
-			className={cn('relative flex flex-col gap-4', {
-				'bg-primary text-primary-foreground border-primary-foreground my-6 -ml-36 -mr-14 rounded-xl py-6 pl-14 pr-36':
-					isHighlighted,
-			})}
+			className={cn(
+				'relative flex flex-col gap-4',
+				{
+					'bg-primary text-primary-foreground border-primary-foreground rounded-xl': isHighlighted,
+				},
+				{ 'py-6 pl-5 pr-10': !isHighlighted && !isDesktop },
+				{ '-ml-6 mr-2 py-6 pl-5 pr-10': isHighlighted && !isDesktop },
+				{ 'my-6 -ml-36 -mr-14 py-6 pl-14 pr-36': isHighlighted && isDesktop },
+			)}
 		>
 			<div className="flex items-center gap-5">
 				{imageSource ? (
 					<Image
 						className={cn(
-							'rounded-full border-4',
+							'rounded-full border-2 md:border-4',
 							{ 'border-primary': !isHighlighted },
 							{ 'border-primary-foreground': isHighlighted },
 						)}
 						alt={image.alt}
-						height={96}
+						height={isDesktop ? 96 : 40}
 						src={imageSource}
-						width={96}
+						width={isDesktop ? 96 : 40}
 					/>
 				) : (
 					<div
 						className={cn(
-							'rounded-full border-4',
+							'rounded-full border-2 md:border-4',
 							{ 'text-primary border-primary': !isHighlighted },
 							{ 'text-primary-foreground border-primary-foreground': isHighlighted },
-							'grid h-24 w-24 place-items-center text-4xl font-bold',
+							'grid size-10 place-items-center text-4xl font-bold md:size-24',
 						)}
 					>
 						{getInitials(firstName, lastName)}
@@ -59,12 +69,12 @@ function TestimonialItem({
 				)}
 
 				<div className="flex flex-col gap-1">
-					<span className="font-serif text-3xl font-bold">
+					<span className="font-serif font-bold md:text-3xl">
 						{firstName} {lastName}
 					</span>
 					<span
 						className={cn(
-							'text-xl',
+							'text-sm md:text-xl',
 							{ 'text-foreground/80': !isHighlighted },
 							{ 'text-primary-foreground/80': isHighlighted },
 						)}
@@ -76,7 +86,7 @@ function TestimonialItem({
 
 			<p
 				className={cn(
-					'text-xl',
+					'text-sm md:text-xl',
 					{ 'text-foreground/80': !isHighlighted },
 					{ 'text-primary-foreground/80': isHighlighted },
 				)}
@@ -85,8 +95,8 @@ function TestimonialItem({
 			</p>
 
 			{isHighlighted && (
-				<div className="absolute bottom-6 end-12">
-					<Quote size="56" strokeWidth="1" />
+				<div className="absolute bottom-2 end-4 md:bottom-6 md:end-12">
+					<Quote className="size-6 md:size-14" strokeWidth="1" />
 				</div>
 			)}
 		</article>
@@ -100,13 +110,13 @@ interface TestimonialGroupProps extends HTMLAttributes<HTMLDivElement> {
 export default function TestimonialGroup({ testimonials }: Readonly<TestimonialGroupProps>) {
 	return (
 		<div>
-			<div className="bg-primary-border-primary-foreground w-full rounded-xl py-16 pl-12 pr-28 shadow-xl">
+			<div className="bg-primary-border-primary-foreground ml-6 mt-10 rounded-xl shadow-xl md:ml-0 md:mt-0 md:py-16 md:pl-12 md:pr-28">
 				{testimonials.map((props, index) => (
 					<TestimonialItem {...props} isHighlighted={index === 1} key={props.lastName} />
 				))}
 			</div>
 
-			<ArrowButtonGroup className="mt-24" />
+			<ArrowButtonGroup className="mt-10 md:mt-24" />
 		</div>
 	);
 }

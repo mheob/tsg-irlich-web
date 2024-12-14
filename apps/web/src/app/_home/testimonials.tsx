@@ -17,9 +17,9 @@ export default function Testimonials({
 }: Readonly<TestimonialsProps>) {
 	return (
 		<section className={`${styles.bg} bg-background-low-contrast relative z-0`}>
-			<div className="container mx-auto grid grid-cols-[40%_60%] px-5 py-32">
-				<SectionHeader subTitle={subtitle} title={title} />
-				{testimonials && <TestimonialGroup testimonials={testimonials} />}
+			<div className="container mx-auto px-5 py-10 md:grid md:grid-cols-[40%_60%] md:py-32">
+				<SectionHeader isCenteredOnDesktop={false} subTitle={subtitle} title={title} isCentered />
+				<TestimonialGroup testimonials={testimonials ?? []} />
 			</div>
 		</section>
 	);

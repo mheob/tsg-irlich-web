@@ -29,11 +29,11 @@ export default function PricingCard({
 	return (
 		<article
 			className={cn(
-				'flex w-1/4 flex-col justify-between overflow-hidden rounded-xl shadow-lg',
+				'flex flex-col justify-between overflow-hidden rounded-xl shadow-lg md:w-1/4',
 				'hover:bg-gray-light bg-white p-8 text-black',
 				'transition-all duration-300',
-				{ '-translate-y-16 hover:-translate-y-8': isHighlighted },
-				{ 'hover:-translate-y-8': !isHighlighted },
+				{ 'md:-translate-y-16 md:hover:-translate-y-8': isHighlighted },
+				{ 'md:hover:-translate-y-8': !isHighlighted },
 			)}
 		>
 			{isHighlighted && (
@@ -47,7 +47,7 @@ export default function PricingCard({
 				</div>
 			)}
 
-			<div className={cn({ '-mt-10': isHighlighted })}>
+			<div className={cn({ 'md:-mt-10': isHighlighted })}>
 				<header className="flex items-center gap-4">
 					<div className="bg-primary-light/15 text-primary rounded-2xl p-4">{children}</div>
 
@@ -58,12 +58,12 @@ export default function PricingCard({
 				</header>
 
 				<div className="mt-6">
-					<p className="text-lg">{intro}</p>
+					<p className="md:text-lg">{intro}</p>
 					<div className="my-6 text-center text-5xl font-bold">
 						{price} € <span className="text-sm">/monatlich</span>
 					</div>
 					<h3 className="font-sans text-lg font-bold">{benefitsTitle}</h3>
-					<ul className="mt-4 text-lg">
+					<ul className="mt-4 md:text-lg">
 						{benefits.map(benefit => (
 							<li className="flex items-start gap-2" key={benefit}>
 								<CheckCircle className="text-primary-light mt-1 h-5 w-5 min-w-6" /> {benefit}
