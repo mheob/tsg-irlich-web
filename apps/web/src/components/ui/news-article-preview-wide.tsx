@@ -1,6 +1,9 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { HomePageNewsQueryResult } from '@/types/sanity.types';
 
@@ -14,47 +17,56 @@ export default function NewsArticlePreviewWide({
 	slug,
 	title,
 }: Readonly<NewsArticlePreviewWideProps>) {
-	const featuredImageSource = urlForImage(featuredImage, 480, 800);
-	const authorImageSource = urlForImage(author.image, 56);
+	const isDesktop = useMediaQuery('(min-width: 48rem)');
+
+	const featuredImageSource = isDesktop
+		? urlForImage(featuredImage, 480, 800)
+		: urlForImage(featuredImage, 267, 350);
+	const authorImageSource = isDesktop
+		? urlForImage(author.image, 56)
+		: urlForImage(author.image, 28);
 
 	return (
-		<article className="group grid grid-cols-[50%_50%] rounded-xl bg-white text-black">
+		<article className="group rounded-xl bg-white text-black md:grid md:grid-cols-[50%_50%]">
 			{featuredImageSource && (
-				<Link className="overflow-hidden rounded-l-xl" href={`/news/${slug}`}>
+				<Link
+					className="overflow-hidden rounded-t-xl md:rounded-l-xl md:rounded-r-none"
+					href={`/news/${slug}`}
+				>
 					<Image
 						alt={featuredImage.alt}
-						className="transform-cpu duration-500 group-hover:scale-110"
-						height={450}
+						className="transform-cpu rounded-t-xl duration-500 group-hover:scale-110 md:rounded-l-xl md:rounded-r-none"
+						height={isDesktop ? 480 : 267}
 						src={featuredImageSource}
-						width={800}
+						width={isDesktop ? 800 : 350}
 					/>
 				</Link>
 			)}
 
-			<div className="flex flex-col justify-between gap-2 px-14 py-8">
-				<p className="flex gap-6 text-lg">
+			<div className="flex flex-col justify-between gap-3 p-5 md:px-14 md:py-8">
+				<p className="flex gap-6 text-sm md:text-lg">
 					{categories?.map(category => (
 						<Link href={category.slug} key={category.slug}>
 							{category.title}
 						</Link>
 					))}
 				</p>
-				<h3 className="line-clamp-2 text-3xl font-bold">
+				<h3 className="line-clamp-2 text-2xl font-bold md:text-3xl">
 					<Link href={`/news/${slug}`}>{title}</Link>
 				</h3>
-				<p className="line-clamp-3 text-xl">{excerpt}</p>
+				<p className="line-clamp-3 text-sm md:text-xl">{excerpt}</p>
 
 				<div className="flex items-center gap-3">
 					{authorImageSource && (
 						<Image
 							alt={author.image.alt}
 							className="rounded-full"
-							height={56}
+							height={isDesktop ? 56 : 28}
 							src={authorImageSource}
-							width={56}
+							width={isDesktop ? 56 : 28}
 						/>
 					)}
-					<p className="text-xl">
+					<p className="text-sm md:text-xl">
 						{author.firstName} {author.lastName}
 					</p>
 				</div>

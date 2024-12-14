@@ -7,11 +7,23 @@ import { TextareaWithLabel } from '@/components/ui/textarea';
 
 export default function ContactForm() {
 	return (
-		<section className="bg-background-low-contrast py-32">
-			<div className="container mx-auto px-5">
-				<div className="grid grid-cols-[55%_45%] rounded-lg bg-white px-14 py-24">
+		<section className="bg-background-low-contrast md:py-32">
+			<div className="md:container md:mx-auto md:px-5">
+				<div className="bg-white px-5 py-10 md:flex md:flex-row-reverse md:rounded-lg md:px-14 md:py-24">
+					<div className="hidden md:relative md:block md:w-1/2">
+						<div className="bg-secondary absolute end-0 top-0 grid h-80 w-80 place-content-center rounded-full">
+							IMAGE 1
+						</div>
+						<div className="bg-secondary absolute end-[calc(70%-8rem)] top-1/2 grid h-52 w-52 place-content-center rounded-full">
+							IMAGE 2
+						</div>
+						<div className="bg-secondary absolute bottom-0 end-[calc(25%-8rem)] grid h-52 w-52 place-content-center rounded-full">
+							IMAGE 3
+						</div>
+					</div>
+
 					<form>
-						<SectionHeader title="Kontaktiere uns" />
+						<SectionHeader isCenteredOnDesktop={false} title="Kontaktiere uns" isCentered />
 
 						<div className="mt-20 flex flex-col gap-10">
 							<InputWithLabel id="name" name="name" placeholder="Max Mustermann">
@@ -35,18 +47,6 @@ export default function ContactForm() {
 							</Button>
 						</div>
 					</form>
-
-					<div className="relative">
-						<div className="bg-secondary absolute end-0 top-0 grid h-80 w-80 place-content-center rounded-full">
-							IMAGE 1
-						</div>
-						<div className="bg-secondary absolute end-[calc(70%-8rem)] top-1/2 grid h-52 w-52 place-content-center rounded-full">
-							IMAGE 2
-						</div>
-						<div className="bg-secondary absolute bottom-0 end-[calc(25%-8rem)] grid h-52 w-52 place-content-center rounded-full">
-							IMAGE 3
-						</div>
-					</div>
 				</div>
 			</div>
 		</section>

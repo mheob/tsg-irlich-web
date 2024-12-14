@@ -1,9 +1,11 @@
-.bg::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background-image: url('../../icons/design/arrow-newsletter.svg');
-	background-position: 95% 75%;
-	background-repeat: no-repeat;
-	background-size: 120px;
+@media (min-width: 48rem) {
+	.bg::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: url('../../icons/design/arrow-newsletter.svg');
+		background-position: 95% 75%;
+		background-repeat: no-repeat;
+		background-size: 120px;
+	}
 }
