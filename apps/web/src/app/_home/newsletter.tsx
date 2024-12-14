@@ -18,7 +18,7 @@ export default function Newsletter() {
 					className="z-1 max-w-(--breakpoint-md) relative mt-16 flex items-center justify-between gap-2 rounded-md bg-white px-2 pb-2 shadow-xl md:mx-auto md:gap-6 md:px-6"
 					method="post"
 				>
-					<label aria-label="E-Mail" className="text-primary hidden md:block" htmlFor="email">
+					<label aria-label="E-Mail" className="text-primary sr-only md:block" htmlFor="email">
 						<AtSign />
 					</label>
 
