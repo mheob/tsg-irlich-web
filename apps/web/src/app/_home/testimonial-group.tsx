@@ -85,7 +85,7 @@ function TestimonialItem({
 			</p>
 
 			{isHighlighted && (
-				<div className="absolute bottom-6 right-12">
+				<div className="absolute bottom-6 end-12">
 					<Quote size="56" strokeWidth="1" />
 				</div>
 			)}

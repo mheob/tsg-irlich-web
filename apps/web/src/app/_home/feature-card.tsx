@@ -45,10 +45,10 @@ export default function FeatureCard({ href, icon, intro, title }: Readonly<Featu
 			<div>
 				<FeatureIcon aria-hidden="true" icon={icon} size={60} strokeWidth={1} />
 				<CardHeader>
-					<CardTitle className="mt-4 text-3xl uppercase">{title}</CardTitle>
+					<CardTitle className="mt-4 text-xl uppercase md:text-3xl">{title}</CardTitle>
 				</CardHeader>
 
-				<CardContent className="mt-2 text-xl group-hover:text-white">{intro}</CardContent>
+				<CardContent className="mt-2 group-hover:text-white md:text-xl">{intro}</CardContent>
 			</div>
 
 			<Link
@@ -57,7 +57,7 @@ export default function FeatureCard({ href, icon, intro, title }: Readonly<Featu
 				href={href}
 			>
 				<CardFooter>
-					<ArrowElement aria-hidden="true" size={32} />
+					<ArrowElement aria-hidden="true" size="size-6 md:size-8" />
 				</CardFooter>
 			</Link>
 		</Card>

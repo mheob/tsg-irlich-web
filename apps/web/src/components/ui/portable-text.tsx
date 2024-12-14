@@ -19,7 +19,7 @@ const headingAnchor: PortableTextComponent<PortableTextBlock> = ({ children, val
 	<h2 className="group relative" id={value?._key}>
 		{children}
 		<a
-			className="absolute bottom-0 left-0 top-0 -ml-6 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
+			className="absolute bottom-0 start-0 top-0 -ml-6 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
 			href={`#${value?._key}`}
 		>
 			<svg

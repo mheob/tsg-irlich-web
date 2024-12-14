@@ -20,14 +20,14 @@ export default async function Hero({ intro, subtitle, title }: Readonly<HeroProp
 	const socialMedia = await client.fetch(socialMediaQuery);
 
 	return (
-		<section className="relative min-h-dvh md:-mt-40 md:pt-48">
-			<div className="container mx-auto items-center py-5 md:flex">
+		<section className="relative md:-mt-40 md:grid md:h-dvh md:place-content-center md:pt-48">
+			<div className="container mx-auto items-center pt-5 md:flex">
 				<div className="md:w-1/2">
 					<SectionHeader level="h1" subTitle={subtitle} title={title}>
 						{intro}
 					</SectionHeader>
 
-					<div className="text-primary mt-12 flex gap-8">
+					<div className="text-primary my-12 flex gap-8">
 						<Button asChild>
 							<Link href="/kontakt">Kontakt aufnehmen</Link>
 						</Button>
@@ -43,8 +43,8 @@ export default async function Hero({ intro, subtitle, title }: Readonly<HeroProp
 					<Image
 						className={cn(
 							'absolute',
-							'bottom-5 left-[10%] right-[10%] w-[80%]',
-							'md:bottom-0 md:left-1/2 md:right-auto md:w-1/3',
+							'bottom-8 end-[10%] start-[10%] w-[80%]',
+							'md:bottom-0 md:end-auto md:start-1/2 md:w-1/3',
 						)}
 						alt="Ein Frau, die am meditieren ist."
 						src={YogaImage}
@@ -53,7 +53,7 @@ export default async function Hero({ intro, subtitle, title }: Readonly<HeroProp
 					<div
 						className={cn(
 							'flex text-white',
-							'w-full items-end justify-around justify-self-end pb-6',
+							'w-full items-end justify-around justify-self-end py-10',
 							'md:flex-col md:justify-center md:gap-10',
 						)}
 					>

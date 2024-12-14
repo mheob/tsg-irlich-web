@@ -37,13 +37,13 @@ export default function ContactForm() {
 					</form>
 
 					<div className="relative">
-						<div className="bg-secondary absolute right-0 top-0 grid h-80 w-80 place-content-center rounded-full">
+						<div className="bg-secondary absolute end-0 top-0 grid h-80 w-80 place-content-center rounded-full">
 							IMAGE 1
 						</div>
-						<div className="bg-secondary absolute right-[calc(70%-8rem)] top-1/2 grid h-52 w-52 place-content-center rounded-full">
+						<div className="bg-secondary absolute end-[calc(70%-8rem)] top-1/2 grid h-52 w-52 place-content-center rounded-full">
 							IMAGE 2
 						</div>
-						<div className="bg-secondary absolute bottom-0 right-[calc(25%-8rem)] grid h-52 w-52 place-content-center rounded-full">
+						<div className="bg-secondary absolute bottom-0 end-[calc(25%-8rem)] grid h-52 w-52 place-content-center rounded-full">
 							IMAGE 3
 						</div>
 					</div>
