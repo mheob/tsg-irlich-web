@@ -41,7 +41,7 @@ function Button({
 			ref={ref}
 			{...props}
 		>
-			<div>{children}</div>
+			<span>{children}</span>
 		</Comp>
 	);
 }
