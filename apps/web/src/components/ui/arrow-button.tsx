@@ -36,7 +36,7 @@ interface ArrowProps {
 		| 'up'
 		| 'up-left'
 		| 'up-right';
-	size?: LucideProps['size'];
+	size?: LucideProps['className'];
 }
 
 export interface ArrowElementProps
@@ -57,22 +57,22 @@ export interface ArrowButtonProps
 }
 
 function Arrow({
+	className = 'size-8 md:size-12',
 	direction = 'right',
-	size = '48',
 }: Readonly<{
+	className: ArrowProps['size'];
 	direction: ArrowProps['direction'];
-	size: ArrowProps['size'];
 }>) {
 	switch (direction) {
 		/* eslint-disable unicorn/switch-case-braces, prettier/prettier */
-		case 'down': return <ArrowDown size={size} strokeWidth={2} />;
-		case 'down-left': return <ArrowDownLeft size={size} strokeWidth={2} />;
-		case 'down-right': return <ArrowDownRight size={size} strokeWidth={2} />;
-		case 'left': return <ArrowLeft size={size} strokeWidth={2} />;
-		case 'right': return <ArrowRight size={size} strokeWidth={2} />;
-		case 'up': return <ArrowUp size={size} strokeWidth={2} />;
-		case 'up-left': return <ArrowUpLeft size={size} strokeWidth={2} />;
-		case 'up-right': return <ArrowUpRight size={size} strokeWidth={2} />;
+		case 'down': return <ArrowDown className={className} strokeWidth={2} />;
+		case 'down-left': return <ArrowDownLeft className={className} strokeWidth={2} />;
+		case 'down-right': return <ArrowDownRight className={className} strokeWidth={2} />;
+		case 'left': return <ArrowLeft className={className} strokeWidth={2} />;
+		case 'right': return <ArrowRight className={className} strokeWidth={2} />;
+		case 'up': return <ArrowUp className={className} strokeWidth={2} />;
+		case 'up-left': return <ArrowUpLeft className={className} strokeWidth={2} />;
+		case 'up-right': return <ArrowUpRight className={className} strokeWidth={2} />;
 		/* eslint-enable unicorn/switch-case-braces, prettier/prettier */
 	}
 }
@@ -86,21 +86,21 @@ const ArrowButton = ({
 	...props
 }: ArrowButtonProps) => (
 	<button className={ArrowButtonVariants({ className, variant })} type={buttonType} {...props}>
-		<Arrow direction={direction} size={size} />
+		<Arrow className={size} direction={direction} />
 	</button>
 );
 ArrowButton.displayName = 'ArrowButton';
 
 const ArrowElement = ({ className, direction, size, variant, ...props }: ArrowElementProps) => (
 	<div className={ArrowButtonVariants({ className, variant })} {...props}>
-		<Arrow direction={direction} size={size} />
+		<Arrow className={size} direction={direction} />
 	</div>
 );
 ArrowElement.displayName = 'ArrowElement';
 
 const ArrowLink = ({ className, direction, size, variant, ...props }: ArrowAnchorProps) => (
 	<Link className={ArrowButtonVariants({ className, variant })} {...props}>
-		<Arrow direction={direction} size={size} />
+		<Arrow className={size} direction={direction} />
 	</Link>
 );
 ArrowLink.displayName = 'ArrowLink';

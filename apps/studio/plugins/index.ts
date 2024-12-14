@@ -3,8 +3,8 @@
 import { deDELocale } from '@sanity/locale-de-de';
 import { visionTool } from '@sanity/vision';
 import type { PluginOptions } from 'sanity';
-import { structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
+import { structureTool } from 'sanity/structure';
 
 import aboutUsPage from '@/schemas/single-pages/about-us';
 import contactPage from '@/schemas/single-pages/contact';

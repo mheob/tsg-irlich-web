@@ -1,10 +1,8 @@
 import Link from 'next/link';
 import type { ComponentPropsWithoutRef } from 'react';
 
-import TSGLogo from '@/icons/logos/tsg-logo';
 import { cn } from '@/utils/cn';
 
-import { Button } from '../ui/button';
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -13,7 +11,7 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 	navigationMenuTriggerStyle,
-} from '../ui/navigation-menu';
+} from '../../ui/navigation-menu';
 
 type ListItemProps = ComponentPropsWithoutRef<typeof Link>;
 
@@ -28,15 +26,15 @@ function ListItem({ children, className, title, ...props }: Readonly<ListItemPro
 					)}
 					{...props}
 				>
-					<div className="text-sm font-medium leading-none">{title}</div>
-					<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
+					<>
+						<div className="text-sm font-medium leading-none">{title}</div>
+						<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
+					</>
 				</Link>
 			</NavigationMenuLink>
 		</li>
 	);
 }
-
-ListItem.displayName = 'ListItem';
 
 const components: { description: string; href: string; title: string }[] = [
 	{
@@ -75,14 +73,16 @@ const components: { description: string; href: string; title: string }[] = [
 	},
 ];
 
-export default function MainNav() {
-	return (
-		<div className="container z-10 mx-auto flex min-h-40 items-center justify-between gap-12">
-			<Link aria-label="Logo der TSG Irlich 1882 e. V." href="/">
-				<TSGLogo className="h-28 drop-shadow-xl" />
-			</Link>
+interface DesktopNavProps {
+	navigationItems: { _id: string; href: string; title: string }[];
+}
 
-			<NavigationMenu>
+export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps>) {
+	console.log(navigationItems);
+
+	return (
+		<div className="hidden md:block">
+			<NavigationMenu className="z-10">
 				<NavigationMenuList>
 					<NavigationMenuItem>
 						<Link href="/" legacyBehavior passHref>
@@ -101,10 +101,12 @@ export default function MainNav() {
 											className="from-muted/50 to-muted bg-linear-to-b outline-hidden flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline focus:shadow-md"
 											href="/"
 										>
-											<div className="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>
-											<p className="text-muted-foreground text-sm leading-tight">
-												Beautifully designed components built with Radix UI and Tailwind CSS.
-											</p>
+											<>
+												<div className="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>
+												<p className="text-muted-foreground text-sm leading-tight">
+													Beautifully designed components built with Radix UI and Tailwind CSS.
+												</p>
+											</>
 										</Link>
 									</NavigationMenuLink>
 								</li>
@@ -130,7 +132,7 @@ export default function MainNav() {
 						<NavigationMenuContent>
 							<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
 								{components.map(component => (
-									<ListItem href={component.href} key={component.title} title={component.title}>
+									<ListItem href={component.href} key={component.href} title={component.title}>
 										{component.description}
 									</ListItem>
 								))}
@@ -155,10 +157,6 @@ export default function MainNav() {
 					</NavigationMenuItem>
 				</NavigationMenuList>
 			</NavigationMenu>
-
-			<Button className="uppercase" variant="secondary" asChild>
-				<Link href="/kontakt">Kontakt aufnehmen</Link>
-			</Button>
 		</div>
 	);
 }

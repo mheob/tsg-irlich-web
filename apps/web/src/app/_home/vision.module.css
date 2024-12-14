@@ -2,8 +2,17 @@
 	background-color: hsl(var(--primary));
   position: absolute;
 	inset-block: 0;
-	left: 0;
+	inset-inline: 0;
   z-index: -9998;
-  width: 30%;
-	clip-path: ellipse(100% 85% at 0% 50%);
+	clip-path: ellipse(120% 100% at 15% 0%);
+}
+
+@media (min-width: 48rem) {
+	.bgRoundedEdge {
+		inset-block: 0;
+		left: 0;
+		z-index: -9998;
+		width: 30%;
+		clip-path: ellipse(100% 85% at 0% 50%);
+	}
 }

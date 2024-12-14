@@ -15,7 +15,7 @@ interface NewsProps extends NewsFields {
 export default function News({ articles, intro, subtitle, title }: Readonly<NewsProps>) {
 	return (
 		<section className={`${styles.bg} bg-primary relative z-0 text-white`}>
-			<div className="container mx-auto px-5 pb-40 pt-28">
+			<div className="container mx-auto px-5 py-10 md:py-28">
 				<SectionHeader
 					descriptionClassName="text-white"
 					subTitle={subtitle}
@@ -25,13 +25,13 @@ export default function News({ articles, intro, subtitle, title }: Readonly<News
 					{intro}
 				</SectionHeader>
 
-				<div className="mt-32 flex flex-col justify-center gap-12">
+				<div className="mt-10 flex flex-col justify-center gap-12 md:mt-32">
 					{articles.map(article => (
 						<NewsArticlePreviewWide key={article.slug} {...article} />
 					))}
 				</div>
 
-				<footer className="mt-20 text-center">
+				<footer className="mt-10 text-center md:mt-20">
 					<Button variant="secondary" asChild>
 						<Link href="#!">Alle Neuigkeiten ansehen</Link>
 					</Button>

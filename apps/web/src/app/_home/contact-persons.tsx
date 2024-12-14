@@ -1,6 +1,7 @@
 import ContactPersonGroup from '@/components/ui/contact-persons';
 import SectionHeader from '@/components/ui/section-header';
 import type { ContactPerson, Home } from '@/types/sanity.types';
+import { cn } from '@/utils/cn';
 
 import styles from './contact-persons.module.css';
 
@@ -16,8 +17,8 @@ export default function ContactPersons({
 	title,
 }: Readonly<ContactPersonsProps>) {
 	return (
-		<section className={`${styles.bg} bg-primary text-primary-foreground relative z-0`}>
-			<div className="container mx-auto px-5 pb-40 pt-28">
+		<section className={cn(styles.bg, 'bg-primary text-primary-foreground relative z-0')}>
+			<div className="container mx-auto px-5 pb-24 pt-10 md:pb-40 md:pt-28">
 				<SectionHeader
 					descriptionClassName="text-primary-foreground"
 					subTitle={subtitle}
@@ -27,7 +28,7 @@ export default function ContactPersons({
 					{intro}
 				</SectionHeader>
 
-				<div className="mt-32 flex justify-center gap-12">
+				<div className="mt-10 flex justify-center md:mt-32 md:gap-12">
 					<ContactPersonGroup contactPersons={contactPersons} />
 				</div>
 			</div>

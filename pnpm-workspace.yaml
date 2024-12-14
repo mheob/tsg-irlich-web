@@ -3,9 +3,9 @@ packages:
   - packages/*
 catalog:
   "@types/react": ^19.0.1
-  "@types/react-dom": ^19.0.1
+  "@types/react-dom": ^19.0.2
   eslint: 9.14.0
   react: ^19.0.0
   react-dom: ^19.0.0
-  sanity: ^3.66.1
+  sanity: ^3.67.1
   typescript: ^5.7.2

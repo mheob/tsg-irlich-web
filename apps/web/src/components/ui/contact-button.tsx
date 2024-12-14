@@ -1,17 +1,17 @@
 import { Mail, Phone } from 'lucide-react';
 import type { ComponentPropsWithRef } from 'react';
 
-type ContactButtonProps = (
-	| {
-			email?: never;
-			phone?: string;
-	  }
-	| {
-			email?: string;
-			phone?: never;
-	  }
-) &
-	ComponentPropsWithRef<'a'>;
+type ContactButtonProps = ComponentPropsWithRef<'a'> &
+	(
+		| {
+				email?: never;
+				phone?: string;
+		  }
+		| {
+				email?: string;
+				phone?: never;
+		  }
+	);
 
 export default function ContactButton({ email, phone, ...props }: ContactButtonProps) {
 	if (email)

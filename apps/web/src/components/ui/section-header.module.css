@@ -2,9 +2,15 @@
 	position: relative;
 	width: fit-content;
 	padding-inline: 4rem;
-	font-size: 1.25rem;
-	line-height: 1.75rem;
+	font-size: 0.625rem;
 	text-transform: uppercase;
+}
+
+@media (min-width: 48rem) {
+	.subTitle {
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+	}
 }
 
 .subTitle::before,
@@ -26,6 +32,12 @@
 
 .title {
 	margin-top: 1rem;
-	font-size: 4.5rem;
+	font-size: 2rem;
   line-height: 1;
+}
+
+@media (min-width: 48rem) {
+	.title {
+		font-size: 4.5rem;
+	}
 }

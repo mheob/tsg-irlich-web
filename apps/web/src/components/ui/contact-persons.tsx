@@ -1,6 +1,9 @@
+'use client';
+
 import Image from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
+import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { ContactPerson } from '@/types/sanity.types';
 import { cn } from '@/utils/cn';
@@ -21,7 +24,9 @@ function ContactPersonItem({
 	role,
 	vision,
 }: Readonly<ContactPersonItemProps>) {
-	const imageSource = urlForImage(image, 176);
+	const isDesktop = useMediaQuery('(min-width: 48rem)');
+
+	const imageSource = isDesktop ? urlForImage(image, 176) : urlForImage(image, 120);
 
 	return (
 		<article>
@@ -30,39 +35,39 @@ function ContactPersonItem({
 					className={cn(
 						'bg-secondary-light text-primary border-primary',
 						'z-1 relative grid place-items-center',
-						'rounded-full border-8',
+						'border-5 rounded-full md:border-8',
 					)}
 					alt={image.alt}
-					height={176}
+					height={isDesktop ? 176 : 120}
 					src={imageSource}
-					width={176}
+					width={isDesktop ? 176 : 120}
 				/>
 			) : (
 				<div
 					className={cn(
 						'bg-secondary text-primary border-primary',
 						'z-1 relative grid place-items-center',
-						'rounded-full border-8',
-						'h-44 w-44 text-6xl font-bold',
+						'border-5 rounded-full md:border-8',
+						'size-32 text-6xl font-bold md:size-44',
 					)}
 				>
 					{getInitials(firstName, lastName)}
 				</div>
 			)}
 
-			<div className="-mt-36 ml-8 flex h-full flex-col justify-between gap-4 rounded-xl bg-white text-black">
-				<header className="pl-40 pr-12 pt-6">
-					<h3 className="font-serif text-3xl">
+			<div className="-mt-24 ml-8 flex h-full flex-col justify-between gap-4 rounded-xl bg-white text-black md:-mt-36">
+				<header className="pl-28 pr-12 pt-6 md:pl-40">
+					<h3 className="font-serif text-2xl md:text-3xl">
 						{firstName} {lastName}
 					</h3>
-					<p className="mb-2 text-lg">{role}</p>
+					<p className="mb-2 text-sm md:text-lg">{role}</p>
 					<div className="flex gap-6">
 						{email && <ContactButton email={email} />}
 						{phone && <ContactButton phone={phone} />}
 					</div>
 				</header>
 
-				<p className="px-12 pb-12 text-xl">{vision}</p>
+				<p className="px-5 pb-5 text-sm md:px-12 md:pb-12 md:text-xl">{vision}</p>
 			</div>
 		</article>
 	);
@@ -79,8 +84,8 @@ export default function ContactPersons({ contactPersons }: Readonly<ContactPerso
 		<div
 			className={cn(
 				'grid items-stretch gap-x-8 gap-y-20',
-				{ 'grid-cols-3': cpLength % 3 === 0 },
-				{ 'grid-cols-2': cpLength % 3 !== 0 && cpLength % 2 === 0 },
+				{ 'grid-cols-1 md:grid-cols-3': cpLength % 3 === 0 },
+				{ 'grid-cols-1 md:grid-cols-2': cpLength % 3 !== 0 && cpLength % 2 === 0 },
 				{ 'grid-cols-1': cpLength % 3 !== 0 && cpLength % 2 !== 0 && cpLength % 1 === 0 },
 			)}
 		>

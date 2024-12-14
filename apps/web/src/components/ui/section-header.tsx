@@ -7,6 +7,7 @@ import styles from './section-header.module.css';
 interface SectionHeaderProps extends HTMLAttributes<HTMLDivElement> {
 	descriptionClassName?: string;
 	isCentered?: boolean;
+	isCenteredOnDesktop?: boolean;
 	level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 	subTitle?: string;
 	title?: string;
@@ -16,6 +17,7 @@ export default function SectionHeader({
 	children,
 	descriptionClassName,
 	isCentered,
+	isCenteredOnDesktop,
 	level = 'h2',
 	subTitle,
 	title = 'DER TITEL FEHLT',
@@ -23,9 +25,21 @@ export default function SectionHeader({
 	const HeadingTag = level;
 
 	return (
-		<header className={cn(isCentered ? 'text-center' : '')}>
+		<header
+			className={cn(
+				isCentered ? 'text-center' : '',
+				isCenteredOnDesktop ? 'md:text-center' : 'md:text-start',
+			)}
+		>
 			{subTitle && (
-				<div className={cn(isCentered ? 'mx-auto' : '', styles.subTitle, 'subTitle')}>
+				<div
+					className={cn(
+						isCentered ? 'mx-auto' : '',
+						isCenteredOnDesktop ? 'md:mx-auto' : 'md:mx-0',
+						styles.subTitle,
+						'subTitle',
+					)}
+				>
 					{subTitle}
 				</div>
 			)}
@@ -34,7 +48,12 @@ export default function SectionHeader({
 
 			{typeof children === 'string' && !children.startsWith('<') ? (
 				<p
-					className={`${isCentered ? 'mx-auto' : 'pr-16'} mt-6 max-w-3xl text-xl ${descriptionClassName}`}
+					className={cn(
+						isCentered ? 'mx-auto' : 'md:pr-16',
+						isCenteredOnDesktop ? 'md:mx-auto' : 'md:mx-0',
+						'mt-6 max-w-3xl md:text-xl',
+						descriptionClassName,
+					)}
 				>
 					{children}
 				</p>

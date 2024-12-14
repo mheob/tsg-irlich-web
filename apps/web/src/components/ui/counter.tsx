@@ -5,9 +5,9 @@ import { cn } from '@/utils/cn';
 
 function CounterItem({ suffix = '', title, value }: Readonly<Stats>) {
 	return (
-		<div className="flex flex-col items-center justify-center gap-2 py-8">
-			<div className="font-sans-serif text-7xl font-bold">{`${value}${suffix}`}</div>
-			<h2 className="text-xl">{title}</h2>
+		<div className="flex flex-col items-center gap-2 py-8 md:justify-center">
+			<div className="font-sans-serif text-3xl font-bold md:text-7xl">{`${value}${suffix}`}</div>
+			<h2 className="text-center text-lg md:text-xl">{title}</h2>
 		</div>
 	);
 }
@@ -20,9 +20,11 @@ export default function Counter({ className, values, ...props }: Readonly<Counte
 	return (
 		<div
 			className={cn(
-				{ 'grid-cols-3': values?.length === 3 },
-				{ 'grid-cols-4': values?.length === 4 },
-				'container mx-auto grid grid-rows-1 divide-x-2 px-5 py-32',
+				{ 'grid-cols-1': values?.length === 3 },
+				{ 'grid-cols-2': values?.length === 4 },
+				{ 'md:grid-cols-3': values?.length === 3 },
+				{ 'md:grid-cols-4': values?.length === 4 },
+				'container mx-auto grid grid-rows-1 gap-4 px-5 py-10 md:divide-x-2 md:py-32',
 				className,
 			)}
 			{...props}

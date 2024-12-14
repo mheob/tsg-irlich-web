@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
 
 export default function ArrowCta({
-	className = 'h-12 w-auto text-current',
+	className = 'h-8 w-auto text-current md:h-12',
 	...props
 }: Readonly<SVGProps<SVGSVGElement>>) {
 	return (

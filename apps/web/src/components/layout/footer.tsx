@@ -33,15 +33,15 @@ export default async function Footer() {
 	const socialMedia = await client.fetch(socialMediaQuery);
 
 	return (
-		<footer className="bg-primary text-white">
-			<div className="container mx-auto px-5 pb-4 pt-40">
-				<div className="flex justify-between">
+		<footer className="bg-primary w-full text-white">
+			<div className="container mx-auto px-5 pb-4 pt-16 md:pt-40">
+				<div className="md:flex md:justify-between">
 					<section className="flex flex-col items-center gap-5">
 						<TSGLogo className="h-32 w-auto" />
 
-						<h2 className="text-4xl">Folge uns</h2>
+						<h2 className="text-xl md:text-4xl">Folge uns</h2>
 
-						<div className="flex gap-4">
+						<div className="flex gap-8 md:gap-4">
 							{socialMedia &&
 								Object.entries(socialMedia).map(([name, url]) => (
 									<SocialMediaIcon
@@ -54,39 +54,51 @@ export default async function Footer() {
 						</div>
 					</section>
 
-					<div className="text-xl/relaxed">
-						<section className="flex gap-48">
-							<a className="hover:text-secondary group flex flex-col items-center gap-4" href="#!">
-								<span className="group-hover:border-secondary rounded-full border-2 border-white p-3">
-									<MapPin size="48" strokeWidth="1" />
+					<div className="mt-16 flex gap-8 md:mt-0 md:block md:text-xl/relaxed">
+						<section className="flex flex-col gap-12 md:w-auto md:flex-row md:gap-48">
+							<a
+								className="hover:text-secondary group flex flex-col items-start gap-4 md:items-center"
+								href="#!"
+							>
+								<span
+									aria-label={`Besuche uns im Pappelstadion: ${contact.address}`}
+									className="group-hover:border-secondary rounded-full border border-white p-3 md:border-2"
+								>
+									<MapPin className="size-6 md:size-12" strokeWidth="1" />
 								</span>
 								<address>{contact.address}</address>
 							</a>
 
 							<a
-								className="hover:text-secondary group flex flex-col items-center gap-4"
+								className="hover:text-secondary group flex flex-col items-start gap-4 md:items-center"
 								href={`tel:${contact.phone}`}
 							>
-								<span className="group-hover:border-secondary rounded-full border-2 border-white p-3">
-									<Phone size="48" strokeWidth="1" />
+								<span
+									aria-label={`Rufe uns an: ${contact.phone}`}
+									className="group-hover:border-secondary rounded-full border border-white p-3 md:border-2"
+								>
+									<Phone className="size-6 md:size-12" strokeWidth="1" />
 								</span>
 								<address>{contact.phone}</address>
 							</a>
 
 							<a
-								className="hover:text-secondary group flex flex-col items-center gap-4"
+								className="hover:text-secondary group flex flex-col items-start gap-4 md:items-center"
 								href={`mailto:${contact.email}`}
 							>
-								<span className="group-hover:border-secondary rounded-full border-2 border-white p-3">
-									<Mail size="48" strokeWidth="1" />
+								<span
+									aria-label={`Schreibe uns eine E-Mail: ${contact.email}`}
+									className="group-hover:border-secondary rounded-full border border-white p-3 md:border-2"
+								>
+									<Mail className="size-6 md:size-12" strokeWidth="1" />
 								</span>
 								<address>{contact.email}</address>
 							</a>
 						</section>
 
-						<nav className="mt-12 flex items-center justify-end gap-20">
+						<nav className="flex flex-col gap-8 md:mt-12 md:flex-row md:justify-end md:gap-20">
 							<div className="font-bold">LINKS:</div>
-							<div className="flex gap-8">
+							<div className="flex flex-col gap-8 md:flex-row">
 								{mainNavigation.map(({ href, label }) => (
 									<Link className="hover:text-secondary" href={href} key={href}>
 										{label}
@@ -97,8 +109,8 @@ export default async function Footer() {
 					</div>
 				</div>
 
-				<section className="mt-12 flex justify-between">
-					<div>©{currentYear} TSG Irlich. Alle Rechte vorbehalten.</div>
+				<section className="mt-12 flex flex-col-reverse items-center gap-4 md:flex-row md:justify-between">
+					<div className="mt-4 md:mt-0">©{currentYear} TSG Irlich. Alle Rechte vorbehalten.</div>
 					<nav className="flex items-center gap-4">
 						<a className="hover:text-secondary" href={imprint?.href}>
 							{imprint?.label}

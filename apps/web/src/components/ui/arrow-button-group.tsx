@@ -8,13 +8,13 @@ import { ArrowButton } from './arrow-button';
 
 interface ArrowButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
 	asChild?: boolean;
-	size?: LucideProps['size'];
+	size?: LucideProps['className'];
 }
 
 export default function ArrowButtonGroup({
 	asChild = false,
 	className,
-	size = '48',
+	size = 'size-8 md:size-12',
 	...props
 }: Readonly<ArrowButtonGroupProps>) {
 	const Comp = asChild ? Slot : 'div';
