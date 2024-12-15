@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type ComponentPropsWithoutRef, useState } from 'react';
 
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { cn } from '@/utils/cn';
 
 interface MobileLinkProps extends Omit<ComponentPropsWithoutRef<typeof Link>, 'href'> {
@@ -52,6 +52,7 @@ export function MobileNav({ navigationItems }: Readonly<MobileNavProps>) {
 				</button>
 			</DrawerTrigger>
 			<DrawerContent className="max-h-[67svh] p-0">
+				<DrawerTitle className="sr-only">Hauptnavigation</DrawerTitle>
 				<div className="overflow-auto p-6">
 					<div className="flex flex-col space-y-3">
 						{navigationItems?.map(

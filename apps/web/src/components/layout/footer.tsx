@@ -37,7 +37,9 @@ export default async function Footer() {
 			<div className="container mx-auto px-5 pb-4 pt-16 md:pt-40">
 				<div className="md:flex md:justify-between">
 					<section className="flex flex-col items-center gap-5">
-						<TSGLogo className="h-32 w-auto" />
+						<Link href="/">
+							<TSGLogo className="h-32 w-auto" />
+						</Link>
 
 						<h2 className="text-xl md:text-4xl">Folge uns</h2>
 

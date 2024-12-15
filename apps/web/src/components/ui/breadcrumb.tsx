@@ -12,7 +12,10 @@ Breadcrumb.displayName = 'Breadcrumb';
 
 const BreadcrumbList = ({ className, ...props }: ComponentPropsWithRef<'ol'>) => (
 	<ol
-		className={cn('flex flex-wrap items-center gap-2 break-words text-lg font-bold', className)}
+		className={cn(
+			'flex flex-wrap items-center gap-2 break-words text-sm font-bold md:text-lg',
+			className,
+		)}
 		{...props}
 	/>
 );

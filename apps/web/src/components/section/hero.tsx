@@ -20,7 +20,7 @@ export default function Hero({ children, image, subTitle, title, ...props }: Rea
 	return (
 		<section
 			className={cn(
-				'relative -mt-40 h-[600px]',
+				'relative -mt-40 h-[360px] md:h-[600px]',
 				'from-primary/70 to-primary/30 bg-linear-to-r text-white',
 			)}
 			{...props}

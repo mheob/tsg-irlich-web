@@ -31,9 +31,11 @@ export default async function NewsArticle({ params }: PageProps) {
 		<>
 			<Hero image={article.featuredImage} subTitle={hero.subtitle} title={hero.title} />
 
-			<div className="container my-32 flex divide-x">
-				<article className="prose lg:prose-xl pr-10">
-					<h1 className="text-6xl font-bold leading-tight">{article.title}</h1>
+			<div className="container my-10 divide-y md:my-32 md:flex md:divide-x">
+				<article className="prose lg:prose-xl pb-10 md:pr-10">
+					<h1 className="hyphens-auto text-4xl font-bold leading-tight md:text-6xl">
+						{article.title}
+					</h1>
 
 					{article.body?.map(block => {
 						switch (block._type) {
@@ -42,7 +44,7 @@ export default async function NewsArticle({ params }: PageProps) {
 							}
 							case 'blockquote': {
 								return (
-									<blockquote className="border-l-primary text-2xl" key={block._key}>
+									<blockquote className="border-l-primary md:text-2xl" key={block._key}>
 										"{block.quote}"
 										<cite className="text-muted-foreground block text-right not-italic">
 											{block.author}
@@ -118,7 +120,7 @@ export default async function NewsArticle({ params }: PageProps) {
 					})}
 				</article>
 
-				<aside className="pl-10">
+				<aside className="pt-10 md:pl-10 md:pt-0">
 					<Author article={article} />
 					<Categories article={article} />
 					<SocialMedia />
