@@ -1,9 +1,6 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { HomePageNewsQueryResult } from '@/types/sanity.types';
 
@@ -17,26 +14,20 @@ export default function NewsArticlePreviewWide({
 	slug,
 	title,
 }: Readonly<NewsArticlePreviewWideProps>) {
-	const isDesktop = useMediaQuery('(min-width: 48rem)');
-
-	const featuredImageSource = isDesktop
-		? urlForImage(featuredImage, 480, 800)
-		: urlForImage(featuredImage, 267, 350);
-	const authorImageSource = isDesktop
-		? urlForImage(author.image, 56)
-		: urlForImage(author.image, 28);
+	const featuredImageSource = urlForImage(featuredImage, 422, 750);
+	const authorImageSource = urlForImage(author.image, 56);
 
 	return (
 		<article className="group rounded-xl bg-white text-black md:grid md:grid-cols-[50%_50%]">
 			{featuredImageSource && (
 				<Link
-					className="overflow-hidden rounded-t-xl md:rounded-l-xl md:rounded-r-none"
+					className="relative block aspect-[2.5/1] w-full overflow-hidden rounded-t-xl md:aspect-auto md:rounded-l-xl md:rounded-r-none"
 					href={`/news/${slug}`}
 				>
 					<Image
 						alt={featuredImage.alt}
-						className="transform-cpu rounded-t-xl duration-500 group-hover:scale-110 md:rounded-l-xl md:rounded-r-none"
-						sizes="(min-width: 48rem) 800px, 350px"
+						className="transform-cpu rounded-t-xl object-cover duration-500 group-hover:scale-110 md:rounded-l-xl md:rounded-r-none"
+						sizes="(max-width: 48rem) 100vw, 800px"
 						src={featuredImageSource}
 						fill
 					/>
@@ -58,13 +49,15 @@ export default function NewsArticlePreviewWide({
 
 				<div className="flex items-center gap-3">
 					{authorImageSource && (
-						<Image
-							alt={author.image.alt}
-							className="rounded-full"
-							height={isDesktop ? 56 : 28}
-							src={authorImageSource}
-							width={isDesktop ? 56 : 28}
-						/>
+						<div className="relative size-7 md:size-14">
+							<Image
+								alt={author.image.alt}
+								className="rounded-full"
+								sizes="(max-width: 48rem) 28px, 56px"
+								src={authorImageSource}
+								fill
+							/>
+						</div>
 					)}
 					<p className="text-sm md:text-xl">
 						{author.firstName} {author.lastName}
