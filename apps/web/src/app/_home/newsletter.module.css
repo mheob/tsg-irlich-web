@@ -4,8 +4,9 @@
 		position: absolute;
 		inset: 0;
 		background-image: url('../../icons/design/arrow-newsletter.svg');
-		background-position: 95% 75%;
+		background-position: 93% 75%;
 		background-repeat: no-repeat;
 		background-size: 120px;
+		z-index: -1;
 	}
 }

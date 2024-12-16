@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import TSGLogo from '@/icons/logos/tsg-logo';
 import { client } from '@/lib/sanity/client';
-import { socialMediaQuery } from '@/lib/sanity/queries';
+import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { getSocialMediaIcon } from '@/utils/icon';
 
 import SocialMediaIcon from '../ui/social-media-icon';
@@ -37,7 +37,9 @@ export default async function Footer() {
 			<div className="container mx-auto px-5 pb-4 pt-16 md:pt-40">
 				<div className="md:flex md:justify-between">
 					<section className="flex flex-col items-center gap-5">
-						<TSGLogo className="h-32 w-auto" />
+						<Link href="/">
+							<TSGLogo className="h-32 w-auto" />
+						</Link>
 
 						<h2 className="text-xl md:text-4xl">Folge uns</h2>
 

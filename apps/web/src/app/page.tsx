@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 
+import ContactPersons from '@/components/section/contact-persons';
 import { client } from '@/lib/sanity/client';
 import {
 	homePageContactPersonsQuery,
 	homePageGroupsQuery,
-	homePageNewsQuery,
 	homePageQuery,
 	homePageTestimonialsQuery,
 } from '@/lib/sanity/queries/pages/home';
+import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
 
 import ContactForm from './_home/contact-form';
-import ContactPersons from './_home/contact-persons';
 import Features from './_home/features';
 import Groups from './_home/groups';
 import Hero from './_home/hero';
@@ -33,7 +33,7 @@ export default async function Home() {
 		client.fetch(homePageGroupsQuery),
 		client.fetch(homePageTestimonialsQuery),
 		client.fetch(homePageContactPersonsQuery, { department: 'Vorstand' }),
-		client.fetch(homePageNewsQuery),
+		client.fetch(newsArticlesQuery),
 	]);
 
 	if (!page) return null;

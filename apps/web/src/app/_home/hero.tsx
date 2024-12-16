@@ -7,7 +7,7 @@ import SocialMediaIcon from '@/components/ui/social-media-icon';
 import ArrowCta from '@/icons/design/arrow-cta';
 import YogaImage from '@/images/yoga-tsg-irlich.de.webp';
 import { client } from '@/lib/sanity/client';
-import { socialMediaQuery } from '@/lib/sanity/queries';
+import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import type { Home } from '@/types/sanity.types';
 import { cn } from '@/utils/cn';
 import { getSocialMediaIcon } from '@/utils/icon';

@@ -26,7 +26,7 @@ const internalLink = defineField({
 				{ type: 'groupsPage' },
 				{ type: 'imprint' },
 				{ type: 'membership' },
-				{ type: 'news.overview' },
+				{ type: 'newsOverview' },
 				{ type: 'privacy' },
 				{ type: 'singleGroupPage' },
 			],

@@ -20,21 +20,27 @@ export default function MainNav() {
 	const isMobile = useMediaQuery('(max-width: 48rem)');
 
 	return (
-		<header>
-			<div className="container z-10 mx-auto flex min-h-24 items-center justify-between gap-4 md:min-h-40">
+		<header className="bg-background/50 z-10 md:bg-transparent">
+			<div className="container mx-auto flex min-h-24 items-center justify-between gap-4 md:min-h-40">
 				<Link aria-label="Logo der TSG Irlich 1882 e. V." href="/">
 					<TSGLogo className="h-16 drop-shadow-xl md:h-28" />
 				</Link>
-				<div className="flex items-center gap-4 md:flex-row-reverse">
-					<Button className="uppercase" variant="secondary" asChild>
-						<Link href="/kontakt">Kontakt aufnehmen</Link>
-					</Button>
-					{isMobile ? (
+
+				{isMobile ? (
+					<div className="flex items-center gap-4">
+						<Button className="uppercase" variant="secondary" asChild>
+							<Link href="/kontakt">Kontakt</Link>
+						</Button>
 						<MobileNav navigationItems={navigationItems} />
-					) : (
+					</div>
+				) : (
+					<>
 						<DesktopNav navigationItems={navigationItems} />
-					)}
-				</div>
+						<Button className="uppercase" variant="secondary" asChild>
+							<Link href="/kontakt">Kontakt aufnehmen</Link>
+						</Button>
+					</>
+				)}
 			</div>
 		</header>
 	);

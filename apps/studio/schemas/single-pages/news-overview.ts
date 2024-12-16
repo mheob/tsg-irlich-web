@@ -1,14 +1,15 @@
-import { RiBookletLine } from 'react-icons/ri';
-import { defineType } from 'sanity';
+import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
+import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
-import { contactPersonsField } from '@/shared/fields/contact';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
+import { requiredRule } from '@/shared/validation-rules';
 
 const newsOverviewPage = defineType({
 	title: 'News Übersicht',
-	name: 'news.overview',
+	name: 'newsOverview',
 	type: 'document',
 	icon: RiBookletLine,
 	groups: [general, meta, content],
@@ -23,7 +24,16 @@ const newsOverviewPage = defineType({
 		metaField,
 
 		// content
-		contactPersonsField,
+		defineField({
+			title: 'Inhalte',
+			name: 'content',
+			type: 'object',
+			icon: RiLinksLine,
+			group: 'content',
+			groups: [{ title: 'Ansprechpartner', name: 'contactPersons' }],
+			fields: [contactPersonsSectionField],
+			validation: rule => [requiredRule(rule, 'Inhalte')],
+		}),
 	],
 	preview: {
 		prepare: () => ({ title: 'News Übersicht' }),

@@ -177,7 +177,7 @@ export type InternalLink = {
 				_ref: string;
 				_type: 'reference';
 				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'news.overview';
+				[internalGroqTypeReferenceTo]?: 'newsOverview';
 		  }
 		| {
 				_ref: string;
@@ -296,7 +296,7 @@ export type BlockContent = {
 
 export type NewsOverview = {
 	_id: string;
-	_type: 'news.overview';
+	_type: 'newsOverview';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
@@ -305,13 +305,20 @@ export type NewsOverview = {
 	subtitle: string;
 	intro?: string;
 	meta?: MetaFields;
-	contactPersons: Array<{
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
-		_key: string;
-		[internalGroqTypeReferenceTo]?: 'person';
-	}>;
+	content: {
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				_key: string;
+				[internalGroqTypeReferenceTo]?: 'person';
+			}>;
+		};
+	};
 };
 
 export type Membership = {
@@ -1285,11 +1292,6 @@ export type AllSanitySchemaTypes =
 	| MediaTag
 	| Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/lib/sanity/queries/index.ts
-// Variable: socialMediaQuery
-// Query: *[_type == 'site-settings'][0].socialFields
-export type SocialMediaQueryResult = SocialFields | null;
-
 // Source: ./src/lib/sanity/queries/pages/home.ts
 // Variable: homePageQuery
 // Query: *[_type == 'home'][0]
@@ -1425,7 +1427,7 @@ export type HomePageTestimonialsQueryResult = Array<{
 	showAlways: boolean | null;
 }> | null;
 // Variable: homePageContactPersonsQuery
-// Query: *[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {				firstName,		lastName,		phone,		image,		"email": affiliations[department->title == $department][0].role->email,		"role": affiliations[department->title == $department][0].role->title,		"vision": affiliations[department->title == $department][0].description,	}
+// Query: *[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].description,	}
 export type HomePageContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -1447,48 +1449,6 @@ export type HomePageContactPersonsQueryResult = Array<{
 	role: string | null;
 	vision: string | null;
 }> | null;
-// Variable: homePageNewsQuery
-// Query: *[_type == 'news.article'][0..2] | order(_updatedAt desc) {			title,			"slug": slug.current,			excerpt,			categories[]->{ title, "slug": slug.current },			featuredImage,			author->{ firstName, lastName, image },			_updatedAt,		}
-export type HomePageNewsQueryResult = Array<{
-	title: string;
-	slug: string;
-	excerpt: string;
-	categories: Array<{
-		title: string;
-		slug: string;
-	}> | null;
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'mainImage';
-	};
-	author: {
-		firstName: string;
-		lastName: string;
-		image: {
-			asset?: {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-			};
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt: string;
-			description?: string;
-			_type: 'extendedImage';
-		};
-	};
-	_updatedAt: string;
-}>;
 
 // Source: ./src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleHeroQuery
@@ -1569,17 +1529,166 @@ export type NewsArticleContentQueryResult = {
 	title: string;
 } | null;
 
+// Source: ./src/lib/sanity/queries/pages/news-overview.ts
+// Variable: newsOverviewHeroQuery
+// Query: *[_type == 'newsOverview'][0]
+export type NewsOverviewHeroQueryResult = {
+	_id: string;
+	_type: 'newsOverview';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	intro?: string;
+	meta?: MetaFields;
+	content: {
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				_key: string;
+				[internalGroqTypeReferenceTo]?: 'person';
+			}>;
+		};
+	};
+} | null;
+// Variable: newsOverviewContactPersonsQuery
+// Query: *[_type == 'newsOverview'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].description,	}
+export type NewsOverviewContactPersonsQueryResult = Array<{
+	firstName: string;
+	lastName: string;
+	phone: string | null;
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	email: string | null;
+	role: string | null;
+	vision: string | null;
+}> | null;
+
+// Source: ./src/lib/sanity/queries/shared/news.ts
+// Variable: newsArticlesQuery
+// Query: *[_type == 'news.article'] | order(_updatedAt desc) [0..2] {			_id,	_updatedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
+export type NewsArticlesQueryResult = Array<{
+	_id: string;
+	_updatedAt: string;
+	author: {
+		firstName: string;
+		lastName: string;
+		image: {
+			asset?: {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+			};
+			hotspot?: SanityImageHotspot;
+			crop?: SanityImageCrop;
+			alt: string;
+			description?: string;
+			_type: 'extendedImage';
+		};
+	};
+	categories: Array<{
+		title: string;
+		slug: string;
+	}> | null;
+	excerpt: string;
+	featuredImage: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'mainImage';
+	};
+	slug: string;
+	title: string;
+}>;
+// Variable: newsArticlesPaginatedQuery
+// Query: *[_type == 'news.article' && (			_updatedAt > $lastUpdatedAt			|| (_updatedAt == $lastUpdatedAt && _id > $lastId)		)] | order(_updatedAt desc) [3..8] {			_id,	_updatedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
+export type NewsArticlesPaginatedQueryResult = Array<{
+	_id: string;
+	_updatedAt: string;
+	author: {
+		firstName: string;
+		lastName: string;
+		image: {
+			asset?: {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+			};
+			hotspot?: SanityImageHotspot;
+			crop?: SanityImageCrop;
+			alt: string;
+			description?: string;
+			_type: 'extendedImage';
+		};
+	};
+	categories: Array<{
+		title: string;
+		slug: string;
+	}> | null;
+	excerpt: string;
+	featuredImage: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'mainImage';
+	};
+	slug: string;
+	title: string;
+}>;
+
+// Source: ./src/lib/sanity/queries/shared/social-media.ts
+// Variable: socialMediaQuery
+// Query: *[_type == 'site-settings'][0].socialFields
+export type SocialMediaQueryResult = SocialFields | null;
+
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
-		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
 		"*[_type == 'home'][0]": HomePageQueryResult;
 		"\n\t*[_type == 'group'][] {\n\t\ttitle,\n\t\ticon,\n\t}\n": HomePageGroupsQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshowAlways,\n\t}\n": HomePageTestimonialsQueryResult;
-		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\t"email": affiliations[department->title == $department][0].role->email,\n\t\t"role": affiliations[department->title == $department][0].role->title,\n\t\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': HomePageContactPersonsQueryResult;
-		'\n\t*[_type == \'news.article\'][0..2] | order(_updatedAt desc) {\n\t\t\ttitle,\n\t\t\t"slug": slug.current,\n\t\t\texcerpt,\n\t\t\tcategories[]->{ title, "slug": slug.current },\n\t\t\tfeaturedImage,\n\t\t\tauthor->{ firstName, lastName, image },\n\t\t\t_updatedAt,\n\t\t}\n': HomePageNewsQueryResult;
+		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': HomePageContactPersonsQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
 		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\t_updatedAt,\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\tfeaturedImage,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
+		"*[_type == 'newsOverview'][0]": NewsOverviewHeroQueryResult;
+		'\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': NewsOverviewContactPersonsQueryResult;
+		'\n\t*[_type == \'news.article\'] | order(_updatedAt desc) [0..2] {\n\t\t\n\t_id,\n\t_updatedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
+		'\n\t*[_type == \'news.article\' && (\n\t\t\t_updatedAt > $lastUpdatedAt\n\t\t\t|| (_updatedAt == $lastUpdatedAt && _id > $lastId)\n\t\t)] | order(_updatedAt desc) [3..8] {\n\t\t\n\t_id,\n\t_updatedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
+		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
 	}
 }
