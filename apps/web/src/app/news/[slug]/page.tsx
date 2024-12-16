@@ -27,9 +27,15 @@ export default async function NewsArticle({ params }: PageProps) {
 
 	if (!article || !hero) return null;
 
+	const imageSource = urlForImage(article.featuredImage, 600, 1920);
+
 	return (
 		<>
-			<Hero image={article.featuredImage} subTitle={hero.subtitle} title={hero.title} />
+			<Hero
+				image={{ alt: article.featuredImage.alt, src: imageSource ?? '' }}
+				subTitle={hero.subtitle}
+				title={hero.title}
+			/>
 
 			<div className="container my-10 divide-y md:my-32 md:flex md:divide-x">
 				<article className="prose lg:prose-xl pb-10 md:pr-10">

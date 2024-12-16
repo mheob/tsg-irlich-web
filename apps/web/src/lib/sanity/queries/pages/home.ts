@@ -28,15 +28,3 @@ export const homePageContactPersonsQuery = defineQuery(`
 		${contactPersons}
 	}
 `);
-
-export const homePageNewsQuery = defineQuery(`
-	*[_type == 'news.article'][0..2] | order(_updatedAt desc) {
-			title,
-			"slug": slug.current,
-			excerpt,
-			categories[]->{ title, "slug": slug.current },
-			featuredImage,
-			author->{ firstName, lastName, image },
-			_updatedAt,
-		}
-`);

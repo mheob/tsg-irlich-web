@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { ComponentPropsWithoutRef } from 'react';
+import { type ComponentPropsWithoutRef, Fragment } from 'react';
 
 import { capitalizeString } from '@/utils/typography';
 
@@ -33,14 +33,15 @@ export default function Breadcrumb({ currentPage, ...props }: Readonly<Breadcrum
 					</BreadcrumbLink>
 				</BreadcrumbItem>
 
-				<BreadcrumbSeparator />
-
 				{breadcrumbItems.slice(0, -1).map(item => (
-					<BreadcrumbItem key={item}>
-						<BreadcrumbLink asChild>
-							<Link href={`/${item}`}>{capitalizeString(item)}</Link>
-						</BreadcrumbLink>
-					</BreadcrumbItem>
+					<Fragment key={item}>
+						<BreadcrumbSeparator />
+						<BreadcrumbItem>
+							<BreadcrumbLink asChild>
+								<Link href={`/${item}`}>{capitalizeString(item)}</Link>
+							</BreadcrumbLink>
+						</BreadcrumbItem>
+					</Fragment>
 				))}
 
 				<BreadcrumbSeparator />

@@ -24,6 +24,7 @@ export default function ContactPersons({
 					subTitle={subtitle}
 					title={title}
 					isCentered
+					isCenteredOnDesktop
 				>
 					{intro}
 				</SectionHeader>

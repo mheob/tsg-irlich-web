@@ -1,6 +1,6 @@
 import SocialMediaIcon from '@/components/ui/social-media-icon';
 import { client } from '@/lib/sanity/client';
-import { socialMediaQuery } from '@/lib/sanity/queries';
+import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { getSocialMediaIcon } from '@/utils/icon';
 
 export default async function SocialMedia() {

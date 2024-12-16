@@ -4,7 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { emailField, phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
-import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
+import { requiredRule } from '@/shared/validation-rules';
 
 const person = defineType({
 	title: 'Ansprechpartner',
@@ -56,10 +56,15 @@ const person = defineType({
 							name: 'taskDescription',
 							type: 'text',
 							description:
-								'Kurze Aufgabenbeschreibung zum Posten der Person (ca. 270 bis 330 Zeichen).',
+								'Kurze Aufgabenbeschreibung zum Posten der Person (ca. 32 bis 200 Zeichen).',
 							validation: rule => [
-								minLengthRule(rule, 270, 'Die Beschreibung (Vision)'),
-								maxLengthRule(rule, 330, 'Die Beschreibung (Vision)'),
+								rule
+									.required()
+									.min(32)
+									.error('Die Aufgabenbeschreibung muss mindestens 32 Zeichen lang sein.'),
+								rule
+									.max(200)
+									.warning('Die Aufgabenbeschreibung sollte maximal 200 Zeichen lang sein.'),
 							],
 						}),
 
@@ -67,10 +72,15 @@ const person = defineType({
 							title: 'Beschreibung (Vision)',
 							name: 'description',
 							type: 'text',
-							description: 'Kurze Beschreibung als Vision der Person.',
+							description: 'Kurze Beschreibung als Vision der Person (ca. 32 bis 200 Zeichen).',
 							validation: rule => [
-								minLengthRule(rule, 32, 'Die Beschreibung (Vision)'),
-								maxLengthRule(rule, 200, 'Die Beschreibung (Vision)'),
+								rule
+									.required()
+									.min(32)
+									.error('Die Beschreibung (Vision) muss mindestens 32 Zeichen lang sein.'),
+								rule
+									.max(200)
+									.warning('Die Beschreibung (Vision) sollte maximal 200 Zeichen lang sein.'),
 							],
 						}),
 					],
