@@ -28,8 +28,8 @@ export interface BadgeProps
 	extends ComponentPropsWithRef<'div'>,
 		VariantProps<typeof badgeVariants> {}
 
-function Badge({ className, variant, size, ...props }: BadgeProps) {
-	return <div className={cn(badgeVariants({ variant, size }), className)} {...props} />;
+function Badge({ className, size, variant, ...props }: BadgeProps) {
+	return <div className={cn(badgeVariants({ size, variant }), className)} {...props} />;
 }
 
 export { Badge, badgeVariants };

@@ -55,9 +55,11 @@ export default function NewsArticlePreview({
 					</time>
 				</div>
 
-				<h2 className="line-clamp-2 h-[2lh] hyphens-auto text-2xl font-bold md:text-3xl">
-					{title}
-				</h2>
+				<Link href={`/news/${slug}`}>
+					<h2 className="line-clamp-2 h-[2lh] hyphens-auto text-2xl font-bold md:text-3xl">
+						{title}
+					</h2>
+				</Link>
 
 				<p className="text-muted-foreground line-clamp-3 h-[3lh] text-sm md:text-xl">{excerpt}</p>
 
