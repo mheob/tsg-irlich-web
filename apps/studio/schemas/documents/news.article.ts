@@ -6,6 +6,7 @@ import { contentField } from '@/shared/fields/content';
 import { excerptField, featuredImageField } from '@/shared/fields/excerpt';
 import { slugField, titleField } from '@/shared/fields/general';
 import { authorField, metaField } from '@/shared/fields/meta';
+import { formatDate } from '@/utils/time';
 
 const newsArticle = defineType({
 	title: 'News-Artikel',
@@ -18,9 +19,10 @@ const newsArticle = defineType({
 		defineField({
 			title: 'Veröffentlicht am',
 			name: 'publishedAt',
-			type: 'date',
-			initialValue: () => new Date().toISOString().split('T')[0],
+			type: 'datetime',
+			initialValue: () => new Date().toISOString(),
 			group: 'general',
+			validation: rule => rule.required().error('Es muss ein Datum ausgewählt werden.'),
 		}),
 
 		titleField,
@@ -32,6 +34,8 @@ const newsArticle = defineType({
 			type: 'array',
 			of: [{ type: 'reference', to: [{ type: 'news.category' }] }],
 			group: 'general',
+			validation: rule =>
+				rule.required().error('Es muss mindestens eine Kategorie ausgewählt werden.'),
 		}),
 
 		// meta
@@ -54,9 +58,25 @@ const newsArticle = defineType({
 			],
 		}),
 	],
+	orderings: [
+		{
+			title: 'Veröffentlicht, neuste zuerst',
+			name: 'publishedAtDesc',
+			by: [{ field: 'publishedAt', direction: 'desc' }],
+		},
+		{
+			title: 'Veröffentlicht, älteste zuerst',
+			name: 'publishedAtAsc',
+			by: [{ field: 'publishedAt', direction: 'asc' }],
+		},
+	],
 	preview: {
-		prepare: ({ title }) => ({ title }),
+		prepare: ({ media, title, publishedAt }) => ({
+			media,
+			title: `${formatDate(publishedAt)} - ${title}`,
+		}),
 		select: {
+			media: 'featuredImage.asset',
 			publishedAt: 'publishedAt',
 			title: 'title',
 		},

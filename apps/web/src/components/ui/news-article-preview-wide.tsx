@@ -22,7 +22,7 @@ export default function NewsArticlePreviewWide({
 			{featuredImageSource && (
 				<Link
 					className="relative block aspect-[2.5/1] w-full overflow-hidden rounded-t-xl md:aspect-auto md:rounded-s-xl md:rounded-se-none"
-					href={`/news/${slug}`}
+					href={`/news/${categories[0].slug}/${slug}`}
 				>
 					<Image
 						alt={featuredImage.alt}
@@ -37,13 +37,13 @@ export default function NewsArticlePreviewWide({
 			<div className="flex flex-col justify-between gap-3 p-5 md:px-14 md:py-8">
 				<div className="flex gap-6 text-sm md:text-lg">
 					{categories?.map(category => (
-						<Link href={category.slug} key={category.slug}>
+						<Link href={`/news/${category.slug}`} key={category.slug}>
 							{category.title}
 						</Link>
 					))}
 				</div>
 				<h2 className="line-clamp-2 text-2xl font-bold md:text-3xl">
-					<Link href={`/news/${slug}`}>{title}</Link>
+					<Link href={`/news/${categories[0].slug}/${slug}`}>{title}</Link>
 				</h2>
 				<p className="line-clamp-3 text-sm md:text-xl">{excerpt}</p>
 

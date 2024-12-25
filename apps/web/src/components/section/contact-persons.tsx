@@ -1,11 +1,11 @@
 import ContactPersonGroup from '@/components/ui/contact-persons';
 import SectionHeader from '@/components/ui/section-header';
-import type { ContactPerson, Home } from '@/types/sanity.types';
+import type { ContactPerson, HomePageQueryResult } from '@/types/sanity.types';
 import { cn } from '@/utils/cn';
 
 import styles from './contact-persons.module.css';
 
-type ContactPersonsFields = NonNullable<Home['content']['contactPersonsSection']>;
+type ContactPersonsFields = NonNullable<HomePageQueryResult>['content']['contactPersonsSection'];
 interface ContactPersonsProps extends Omit<ContactPersonsFields, 'contactPersons'> {
 	contactPersons: ContactPerson[];
 }

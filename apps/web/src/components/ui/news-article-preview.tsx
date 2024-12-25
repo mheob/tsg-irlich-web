@@ -14,7 +14,7 @@ interface NewsArticlePreviewProps {
 }
 
 export default function NewsArticlePreview({
-	article: { _updatedAt, author, categories, excerpt, featuredImage, slug, title },
+	article: { author, categories, excerpt, featuredImage, publishedAt, slug, title },
 	columns = 1,
 }: Readonly<NewsArticlePreviewProps>) {
 	const featuredImageSource = urlForImage(featuredImage, 450, 800);
@@ -30,7 +30,7 @@ export default function NewsArticlePreview({
 					className={cn('relative block min-h-48 flex-1 overflow-hidden rounded-t-xl', {
 						'md:rounded-s-xl md:rounded-se-none': columns === 2,
 					})}
-					href={`/news/${slug}`}
+					href={`/news/${categories[0].slug}/${slug}`}
 				>
 					<Image
 						alt={featuredImage.alt}
@@ -48,14 +48,14 @@ export default function NewsArticlePreview({
 						{author.firstName} {author.lastName}
 					</span>
 					<span className="px-3">&bull;</span>
-					<time dateTime={_updatedAt}>
+					<time dateTime={publishedAt}>
 						{columns === 2
-							? getLocaleDate(new Date(_updatedAt), 'short')
-							: getLocaleDate(new Date(_updatedAt))}
+							? getLocaleDate(new Date(publishedAt), 'short')
+							: getLocaleDate(new Date(publishedAt))}
 					</time>
 				</div>
 
-				<Link href={`/news/${slug}`}>
+				<Link href={`/news/${categories[0].slug}/${slug}`}>
 					<h2 className="line-clamp-2 h-[2lh] hyphens-auto text-2xl font-bold md:text-3xl">
 						{title}
 					</h2>
@@ -67,7 +67,7 @@ export default function NewsArticlePreview({
 					{categories?.map(category => (
 						<Link
 							className={badgeVariants({ size: 'sm' })}
-							href={category.slug}
+							href={`/news/${category.slug}`}
 							key={category.slug}
 						>
 							{category.title}

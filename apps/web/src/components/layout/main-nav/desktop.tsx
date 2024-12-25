@@ -141,7 +141,7 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 					</NavigationMenuItem>
 
 					<NavigationMenuItem>
-						<Link href="#!" legacyBehavior passHref>
+						<Link href="/news" legacyBehavior passHref>
 							<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 								Aktuelles
 							</NavigationMenuLink>

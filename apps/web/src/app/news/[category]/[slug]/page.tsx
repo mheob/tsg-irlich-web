@@ -37,7 +37,7 @@ export default async function NewsArticle({ params }: PageProps) {
 				title={hero.title}
 			/>
 
-			<div className="container my-10 divide-y md:my-32 md:flex md:divide-x">
+			<div className="container my-10 divide-y md:my-32 md:flex md:divide-x md:divide-y-0">
 				<article className="prose lg:prose-xl pb-10 md:pr-10">
 					<h1 className="hyphens-auto text-4xl font-bold leading-tight md:text-6xl">
 						{article.title}

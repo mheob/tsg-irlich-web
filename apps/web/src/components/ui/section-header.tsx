@@ -1,20 +1,21 @@
-import type { HTMLAttributes } from 'react';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 import { cn } from '@/utils/cn';
 
 import styles from './section-header.module.css';
 
-interface SectionHeaderProps extends HTMLAttributes<HTMLDivElement> {
+interface SectionHeaderProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title'> {
 	descriptionClassName?: string;
 	isCentered?: boolean;
 	isCenteredOnDesktop?: boolean;
 	level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 	subTitle?: string;
-	title?: string;
+	title?: ReactNode | string;
 }
 
 export default function SectionHeader({
 	children,
+	className,
 	descriptionClassName,
 	isCentered,
 	isCenteredOnDesktop,
@@ -29,6 +30,7 @@ export default function SectionHeader({
 			className={cn(
 				isCentered ? 'text-center' : '',
 				isCenteredOnDesktop ? 'md:text-center' : 'md:text-start',
+				className,
 			)}
 		>
 			{subTitle && (
