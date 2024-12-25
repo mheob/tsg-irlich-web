@@ -14,7 +14,7 @@
  * }
  * ```
  */
-export type PageProps<T = object> = T & {
-	params: Promise<{ slug: string }>;
-	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+export type PageProps<P = { slug: string }, T = object> = T & {
+	params: Promise<P>;
+	searchParams: Promise<Record<string, string | string[] | undefined>>;
 };

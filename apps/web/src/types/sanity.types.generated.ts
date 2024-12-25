@@ -68,6 +68,31 @@ export type Geopoint = {
 	alt?: number;
 };
 
+export type NewsOverviewCategory = {
+	_id: string;
+	_type: 'newsOverviewCategory';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	subtitle: string;
+	intro?: string;
+	meta?: MetaFields;
+	content: {
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				_key: string;
+				[internalGroqTypeReferenceTo]?: 'person';
+			}>;
+		};
+	};
+};
+
 export type NewsArticlePage = {
 	_id: string;
 	_type: 'news-article-page';
@@ -891,10 +916,10 @@ export type NewsArticle = {
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
-	publishedAt?: string;
+	publishedAt: string;
 	title: string;
 	slug: Slug;
-	categories?: Array<{
+	categories: Array<{
 		_ref: string;
 		_type: 'reference';
 		_weak?: boolean;
@@ -1236,6 +1261,7 @@ export type AllSanitySchemaTypes =
 	| SanityImageDimensions
 	| SanityFileAsset
 	| Geopoint
+	| NewsOverviewCategory
 	| NewsArticlePage
 	| Spacer
 	| Grid
@@ -1294,7 +1320,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/lib/sanity/queries/pages/home.ts
 // Variable: homePageQuery
-// Query: *[_type == 'home'][0]
+// Query: *[_type == 'home'][0] {		...,		content {			...,			contactPersonsSection {				intro,				subtitle,				title,			}		}	}
 export type HomePageQueryResult = {
 	_id: string;
 	_type: 'home';
@@ -1380,16 +1406,9 @@ export type HomePageQueryResult = {
 			}>;
 		};
 		contactPersonsSection: {
-			title: string;
+			intro: string | null;
 			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
+			title: string;
 		};
 		newsSection: {
 			title: string;
@@ -1458,9 +1477,8 @@ export type NewsArticleHeroQueryResult = {
 	subtitle: string;
 } | null;
 // Variable: newsArticleContentQuery
-// Query: *[_type == 'news.article' && slug.current == $slug][0] {		_updatedAt,		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[],		categories[] -> {			"slug": slug.current,			title		},		featuredImage,		"slug": slug.current,		title,	}
+// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[],		categories[] -> {			"slug": slug.current,			title		},		featuredImage,		publishedAt,		"slug": slug.current,		title,	}
 export type NewsArticleContentQueryResult = {
-	_updatedAt: string;
 	author: {
 		email: string;
 		firstName: string;
@@ -1511,7 +1529,95 @@ export type NewsArticleContentQueryResult = {
 	categories: Array<{
 		slug: string;
 		title: string;
-	}> | null;
+	}>;
+	featuredImage: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'mainImage';
+	};
+	publishedAt: string;
+	slug: string;
+	title: string;
+} | null;
+
+// Source: ./src/lib/sanity/queries/pages/news-overview-category.ts
+// Variable: newsOverviewCategoryPageQuery
+// Query: *[_type == 'newsOverviewCategory'][0] {		...,		content {			contactPersonsSection {				intro,				subtitle,				title,			}		}	}
+export type NewsOverviewCategoryPageQueryResult = {
+	_id: string;
+	_type: 'newsOverviewCategory';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	subtitle: string;
+	intro?: string;
+	meta?: MetaFields;
+	content: {
+		contactPersonsSection: {
+			intro: string | null;
+			subtitle: string;
+			title: string;
+		};
+	};
+} | null;
+// Variable: newsOverviewContactPersonsCategoryQuery
+// Query: *[_type == 'newsOverviewCategory'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].description,	}
+export type NewsOverviewContactPersonsCategoryQueryResult = Array<{
+	firstName: string;
+	lastName: string;
+	phone: string | null;
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	email: string | null;
+	role: string | null;
+	vision: string | null;
+}> | null;
+// Variable: newsArticlesPaginatedForCategoryQuery
+// Query: *[_type == 'news.article' && $category in categories[]->slug.current]	| order(publishedAt desc) [$start..$end] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
+export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
+	_id: string;
+	publishedAt: string;
+	author: {
+		firstName: string;
+		lastName: string;
+		image: {
+			asset?: {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+			};
+			hotspot?: SanityImageHotspot;
+			crop?: SanityImageCrop;
+			alt: string;
+			description?: string;
+			_type: 'extendedImage';
+		};
+	};
+	categories: Array<{
+		title: string;
+		slug: string;
+	}>;
+	excerpt: string;
 	featuredImage: {
 		asset?: {
 			_ref: string;
@@ -1527,12 +1633,15 @@ export type NewsArticleContentQueryResult = {
 	};
 	slug: string;
 	title: string;
-} | null;
+}>;
+// Variable: newsArticlesTotalForCategoryQuery
+// Query: count(*[_type == "news.article" && $category in categories[]->slug.current])
+export type NewsArticlesTotalForCategoryQueryResult = number;
 
 // Source: ./src/lib/sanity/queries/pages/news-overview.ts
-// Variable: newsOverviewHeroQuery
-// Query: *[_type == 'newsOverview'][0]
-export type NewsOverviewHeroQueryResult = {
+// Variable: newsOverviewPageQuery
+// Query: *[_type == 'newsOverview'][0] {		...,		content {			contactPersonsSection {				intro,				subtitle,				title,			}		}	}
+export type NewsOverviewPageQueryResult = {
 	_id: string;
 	_type: 'newsOverview';
 	_createdAt: string;
@@ -1545,16 +1654,9 @@ export type NewsOverviewHeroQueryResult = {
 	meta?: MetaFields;
 	content: {
 		contactPersonsSection: {
-			title: string;
+			intro: string | null;
 			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
+			title: string;
 		};
 	};
 } | null;
@@ -1584,10 +1686,10 @@ export type NewsOverviewContactPersonsQueryResult = Array<{
 
 // Source: ./src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesQuery
-// Query: *[_type == 'news.article'] | order(_updatedAt desc) [0..2] {			_id,	_updatedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
+// Query: *[_type == 'news.article'] | order(publishedAt desc) [0..2] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
 export type NewsArticlesQueryResult = Array<{
 	_id: string;
-	_updatedAt: string;
+	publishedAt: string;
 	author: {
 		firstName: string;
 		lastName: string;
@@ -1608,7 +1710,7 @@ export type NewsArticlesQueryResult = Array<{
 	categories: Array<{
 		title: string;
 		slug: string;
-	}> | null;
+	}>;
 	excerpt: string;
 	featuredImage: {
 		asset?: {
@@ -1627,10 +1729,10 @@ export type NewsArticlesQueryResult = Array<{
 	title: string;
 }>;
 // Variable: newsArticlesPaginatedQuery
-// Query: *[_type == 'news.article' && (			_updatedAt > $lastUpdatedAt			|| (_updatedAt == $lastUpdatedAt && _id > $lastId)		)] | order(_updatedAt desc) [3..8] {			_id,	_updatedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
+// Query: *[_type == 'news.article'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
 export type NewsArticlesPaginatedQueryResult = Array<{
 	_id: string;
-	_updatedAt: string;
+	publishedAt: string;
 	author: {
 		firstName: string;
 		lastName: string;
@@ -1651,7 +1753,7 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 	categories: Array<{
 		title: string;
 		slug: string;
-	}> | null;
+	}>;
 	excerpt: string;
 	featuredImage: {
 		asset?: {
@@ -1669,6 +1771,15 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 	slug: string;
 	title: string;
 }>;
+// Variable: newsArticlesTotalQuery
+// Query: count(*[_type == "news.article"])
+export type NewsArticlesTotalQueryResult = number;
+// Variable: newsCategoryQuery
+// Query: *[_type == 'news.category' && slug.current == $slug][0] {		"slug": slug.current,		title	}
+export type NewsCategoryQueryResult = {
+	slug: string;
+	title: string;
+} | null;
 
 // Source: ./src/lib/sanity/queries/shared/social-media.ts
 // Variable: socialMediaQuery
@@ -1679,16 +1790,22 @@ export type SocialMediaQueryResult = SocialFields | null;
 import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
-		"*[_type == 'home'][0]": HomePageQueryResult;
+		"\n\t*[_type == 'home'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": HomePageQueryResult;
 		"\n\t*[_type == 'group'][] {\n\t\ttitle,\n\t\ticon,\n\t}\n": HomePageGroupsQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshowAlways,\n\t}\n": HomePageTestimonialsQueryResult;
 		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': HomePageContactPersonsQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
-		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\t_updatedAt,\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\tfeaturedImage,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
-		"*[_type == 'newsOverview'][0]": NewsOverviewHeroQueryResult;
+		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
+		"\n\t*[_type == 'newsOverviewCategory'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": NewsOverviewCategoryPageQueryResult;
+		'\n\t*[_type == \'newsOverviewCategory\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': NewsOverviewContactPersonsCategoryQueryResult;
+		'\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
+		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
+		"\n\t*[_type == 'newsOverview'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": NewsOverviewPageQueryResult;
 		'\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': NewsOverviewContactPersonsQueryResult;
-		'\n\t*[_type == \'news.article\'] | order(_updatedAt desc) [0..2] {\n\t\t\n\t_id,\n\t_updatedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
-		'\n\t*[_type == \'news.article\' && (\n\t\t\t_updatedAt > $lastUpdatedAt\n\t\t\t|| (_updatedAt == $lastUpdatedAt && _id > $lastId)\n\t\t)] | order(_updatedAt desc) [3..8] {\n\t\t\n\t_id,\n\t_updatedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
+		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
+		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
+		'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
+		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle\n\t}\n': NewsCategoryQueryResult;
 		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
 	}
 }

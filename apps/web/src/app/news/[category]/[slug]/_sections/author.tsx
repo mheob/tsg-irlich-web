@@ -35,7 +35,7 @@ export default function Author({ article, ...props }: Readonly<AuthorProps>) {
 						{article.author.firstName} {article.author.lastName}
 					</div>
 
-					<time dateTime={article._updatedAt}>{getLocaleDate(new Date(article._updatedAt))}</time>
+					<time dateTime={article.publishedAt}>{getLocaleDate(new Date(article.publishedAt))}</time>
 				</div>
 			</div>
 

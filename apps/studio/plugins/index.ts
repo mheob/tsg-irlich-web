@@ -13,7 +13,8 @@ import homePage from '@/schemas/single-pages/home';
 import imprintPage from '@/schemas/single-pages/imprint';
 import membershipPage from '@/schemas/single-pages/membership';
 import newsArticlePage from '@/schemas/single-pages/news-article';
-import newOverviewPage from '@/schemas/single-pages/news-overview';
+import newsOverviewPage from '@/schemas/single-pages/news-overview';
+import newsOverviewCategoryPage from '@/schemas/single-pages/news-overview-category';
 import privacyPage from '@/schemas/single-pages/privacy';
 import singleGroupPage from '@/schemas/single-pages/single-group';
 import siteSettings from '@/schemas/singletons/site-settings';
@@ -31,7 +32,8 @@ export function getPlugins() {
 				contactPage,
 				membershipPage,
 				newsArticlePage,
-				newOverviewPage,
+				newsOverviewPage,
+				newsOverviewCategoryPage,
 				groupsPage,
 				singleGroupPage,
 				privacyPage,
@@ -47,7 +49,8 @@ export function getPlugins() {
 			contactPage.name,
 			membershipPage.name,
 			newsArticlePage.name,
-			newOverviewPage.name,
+			newsOverviewPage.name,
+			newsOverviewCategoryPage.name,
 			groupsPage.name,
 			singleGroupPage.name,
 			privacyPage.name,

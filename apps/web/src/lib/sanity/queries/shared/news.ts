@@ -2,9 +2,9 @@ import { defineQuery } from 'next-sanity';
 
 import { featuredImage } from '@/lib/sanity/queries';
 
-const newsArticle = /* groq */ `
+export const newsArticle = /* groq */ `
 	_id,
-	_updatedAt,
+	publishedAt,
 	author->{ firstName, lastName, image },
 	categories[]->{ title, "slug": slug.current },
 	excerpt,
@@ -14,17 +14,24 @@ const newsArticle = /* groq */ `
 `;
 
 export const newsArticlesQuery = defineQuery(`
-	*[_type == 'news.article'] | order(_updatedAt desc) [0..2] {
+	*[_type == 'news.article'] | order(publishedAt desc) [0..2] {
 		${newsArticle}
 	}
 `);
 
-/** IMPORTANT: The params `lastId` and `lastUpdatedAt` are required */
+/** IMPORTANT: The params `start` and `end` are required */
 export const newsArticlesPaginatedQuery = defineQuery(`
-	*[_type == 'news.article' && (
-			_updatedAt > $lastUpdatedAt
-			|| (_updatedAt == $lastUpdatedAt && _id > $lastId)
-		)] | order(_updatedAt desc) [3..8] {
+	*[_type == 'news.article'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8
 		${newsArticle}
+	}
+`);
+
+export const newsArticlesTotalQuery = defineQuery(`count(*[_type == "news.article"])`);
+
+/** IMPORTANT: The params `slug` is required */
+export const newsCategoryQuery = defineQuery(`
+	*[_type == 'news.category' && slug.current == $slug][0] {
+		"slug": slug.current,
+		title
 	}
 `);

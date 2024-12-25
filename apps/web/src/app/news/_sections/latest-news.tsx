@@ -9,7 +9,7 @@ interface LatestNewsProps extends ComponentPropsWithoutRef<'section'> {
 
 export default function LatestNews({ articles, ...props }: Readonly<LatestNewsProps>) {
 	return (
-		<section className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-10" {...props}>
+		<section className="mt-8 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-2 md:gap-10" {...props}>
 			<NewsArticlePreview article={articles[0]} />
 
 			<div className="flex flex-col gap-5 md:gap-10">

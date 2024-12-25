@@ -4,19 +4,35 @@ import SectionHeader from '@/components/ui/section-header';
 import { client } from '@/lib/sanity/client';
 import {
 	newsOverviewContactPersonsQuery,
-	newsOverviewHeroQuery,
+	newsOverviewPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview';
-import { newsArticlesPaginatedQuery, newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
+import {
+	newsArticlesPaginatedQuery,
+	newsArticlesQuery,
+	newsArticlesTotalQuery,
+} from '@/lib/sanity/queries/shared/news';
+import type { PageProps } from '@/types/common';
 
 import newsOverviewImage from './_assets/news-overview.webp';
 import LatestNews from './_sections/latest-news';
 import LatestNewsPagination from './_sections/latest-news-pagination';
 
-export default async function NewsOverview() {
-	const [page, articles, paginatedArticles, contactPersons] = await Promise.all([
-		client.fetch(newsOverviewHeroQuery),
+const START_INDEX = 3;
+const ITEMS_PER_PAGE = 6;
+
+export default async function NewsOverview({ searchParams }: PageProps) {
+	const { seite } = await searchParams;
+	const pageString = Array.isArray(seite) ? seite[0] : seite;
+	const currentPage = Number.parseInt(pageString ?? '1', 10);
+
+	const [page, totalArticles, articles, paginatedArticles, contactPersons] = await Promise.all([
+		client.fetch(newsOverviewPageQuery),
+		client.fetch(newsArticlesTotalQuery),
 		client.fetch(newsArticlesQuery),
-		client.fetch(newsArticlesPaginatedQuery, { lastId: '', lastUpdatedAt: '' }),
+		client.fetch(newsArticlesPaginatedQuery, {
+			end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
+			start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
+		}),
 		client.fetch(newsOverviewContactPersonsQuery, { department: 'PR-Team' }),
 	]);
 
@@ -36,7 +52,15 @@ export default async function NewsOverview() {
 			<section className="container mx-auto py-10 md:py-28">
 				<SectionHeader subTitle="News" title="Das Aktuellste von der TSG" isCentered />
 				<LatestNews articles={articles} />
-				<LatestNewsPagination articles={paginatedArticles} />
+
+				<section className="mt-10 md:mt-28">
+					<h2 className="pb-8 text-xl md:pb-14 md:text-4xl">Alles Wissenswertes</h2>
+					<LatestNewsPagination
+						articles={paginatedArticles ?? []}
+						currentPage={currentPage}
+						hasNextPage={totalArticles > currentPage * ITEMS_PER_PAGE}
+					/>
+				</section>
 			</section>
 
 			<ContactPersons
