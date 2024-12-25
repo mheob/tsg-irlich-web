@@ -1,5 +1,5 @@
+import { defineField } from '@sanity-typed/types';
 import { RiExternalLinkLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
 
 const imageCard = defineField({
 	title: 'Kachel mit Bild',

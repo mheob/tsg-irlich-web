@@ -1,5 +1,5 @@
+import type { DocumentDefinition } from '@sanity-typed/types';
 import { RiArticleLine, RiOpenaiLine, RiParentLine, RiSettings5Line } from 'react-icons/ri';
-import type { DocumentDefinition } from 'sanity';
 import type { ListItemBuilder, StructureBuilder } from 'sanity/structure';
 
 type DocumentGroup = 'default' | 'persons' | 'settings' | 'singletons';
@@ -25,7 +25,7 @@ export function isExcludedSingletonListItem(id?: string) {
 export function getGroup(
 	S: StructureBuilder,
 	name: DocumentGroup,
-	typeDefinitionArray?: DocumentDefinition[],
+	typeDefinitionArray?: DocumentDefinition<any, any>[],
 ): ListItemBuilder[] {
 	switch (name) {
 		case 'default': {
@@ -89,7 +89,7 @@ function getGroupSettings(S: StructureBuilder): ListItemBuilder[] {
 
 function getGroupSingletons(
 	S: StructureBuilder,
-	typeDefinitionArray?: DocumentDefinition[],
+	typeDefinitionArray?: DocumentDefinition<any, any>[],
 ): ListItemBuilder[] {
 	if (!typeDefinitionArray) return [];
 	return [

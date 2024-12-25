@@ -1,4 +1,4 @@
-import { defineField } from 'sanity';
+import { defineField } from '@sanity-typed/types';
 
 import extendedImage from '@/schemas/objects/extended-image';
 

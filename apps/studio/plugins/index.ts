@@ -1,8 +1,8 @@
 /* eslint-disable node/prefer-global/process */
 
+import type { PluginOptions } from '@sanity-typed/types';
 import { deDELocale } from '@sanity/locale-de-de';
 import { visionTool } from '@sanity/vision';
-import type { PluginOptions } from 'sanity';
 import { media } from 'sanity-plugin-media';
 import { structureTool } from 'sanity/structure';
 
@@ -23,7 +23,7 @@ import { assistWithPresets } from './assist';
 import { pageStructure, singletonPlugin } from './singleton';
 
 export function getPlugins() {
-	const plugins: PluginOptions[] = [
+	const plugins: PluginOptions<any, any>[] = [
 		deDELocale(),
 		structureTool({
 			structure: pageStructure([

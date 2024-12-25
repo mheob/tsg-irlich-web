@@ -1,5 +1,5 @@
+import { defineField } from '@sanity-typed/types';
 import { RiChatQuoteLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
 
 const blockquote = defineField({
 	title: 'Zitat-Block',

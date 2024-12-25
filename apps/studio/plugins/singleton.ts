@@ -1,4 +1,4 @@
-import { definePlugin, type DocumentDefinition } from 'sanity';
+import { definePlugin, type DocumentDefinition } from '@sanity-typed/types';
 import type { StructureResolver } from 'sanity/structure';
 
 import { getGroup, isExcludedDefaultListItem } from '@/structure';
@@ -36,7 +36,9 @@ export const singletonPlugin = definePlugin((types: string[]) => {
  * @param typeDefinitionArray The array of document definitions that are singletons
  * @returns The StructureResolver
  */
-export function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureResolver {
+export function pageStructure(
+	typeDefinitionArray: DocumentDefinition<any, any>[],
+): StructureResolver {
 	return S => {
 		// The default root list items (except custom ones)
 		const defaultListItems = S.documentTypeListItems().filter(

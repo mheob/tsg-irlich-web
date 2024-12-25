@@ -1,13 +1,13 @@
-import { defineField } from 'sanity';
+import { defineArrayMember, defineField } from '@sanity-typed/types';
 
-import { phoneFieldRegexRule, requiredRule } from '../validation-rules';
+import { phoneFieldRegex } from '@/constants/regex';
 
 export const addressField = defineField({
 	title: 'Anschrift',
 	name: 'address',
 	type: 'text',
 	group: 'contact',
-	validation: rule => [requiredRule(rule, 'Die Anschrift')],
+	validation: Rule => Rule.required().error('Die Anschrift ist ein Pflichtfeld.'),
 });
 
 export const emailField = defineField({
@@ -15,7 +15,7 @@ export const emailField = defineField({
 	name: 'email',
 	type: 'email',
 	group: 'contact',
-	validation: rule => [requiredRule(rule, 'Die E-Mail')],
+	validation: Rule => Rule.required().error('Die E-Mail ist ein Pflichtfeld.'),
 });
 
 export const phoneField = defineField({
@@ -23,14 +23,17 @@ export const phoneField = defineField({
 	name: 'phone',
 	type: 'string',
 	group: 'contact',
-	validation: rule => [phoneFieldRegexRule(rule)],
+	validation: Rule =>
+		Rule.regex(phoneFieldRegex).warning(
+			'Die Telefonnummer sollte in der Form +49 123 456789 geschrieben werden.',
+		),
 });
 
 export const contactPersonsField = defineField({
 	title: 'Ansprechpartner',
 	name: 'contactPersons',
 	type: 'array',
-	of: [{ type: 'reference', to: [{ type: 'person' }] }],
+	of: [defineArrayMember({ type: 'reference', to: [{ type: 'person' }] })],
 	group: 'content',
-	validation: rule => [requiredRule(rule, 'Der Ansprechpartner')],
+	validation: Rule => Rule.required().error('Der Ansprechpartner ist ein Pflichtfeld.'),
 });

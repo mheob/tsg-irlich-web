@@ -1,4 +1,4 @@
-import { defineConfig } from 'sanity';
+import { defineConfig, type DocumentValues, type InferSchemaValues } from '@sanity-typed/types';
 
 import { Logo } from './components/logo';
 import { dataset, projectId } from './env';
@@ -11,7 +11,7 @@ const singletonActions = new Set(['publish', 'discardChanges', 'restore']);
 // Define the singleton document types
 const singletonTypes = new Set(['privacy', 'site-settings']);
 
-export default defineConfig({
+const config = defineConfig({
 	dataset,
 	document: {
 		// For singleton types, filter out actions that are not explicitly included
@@ -32,3 +32,10 @@ export default defineConfig({
 	},
 	title: 'TSG Irlich 1882',
 });
+
+export default config;
+
+export type SanityValues = InferSchemaValues<typeof config>;
+export type SanityDocuments = DocumentValues<SanityValues>;
+
+// const test: SanityDocuments['_type'] = '';

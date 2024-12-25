@@ -1,5 +1,5 @@
+import { defineField, defineType } from '@sanity-typed/types';
 import { RiParentLine } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
 
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { emailField } from '@/shared/fields/contact';

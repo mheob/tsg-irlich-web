@@ -1,5 +1,5 @@
+import { defineField } from '@sanity-typed/types';
 import { RiCheckboxIndeterminateLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
 
 const spacer = defineField({
 	title: 'Spacer',

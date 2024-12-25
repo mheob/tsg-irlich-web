@@ -1,9 +1,8 @@
+import { defineField, defineType } from '@sanity-typed/types';
 import { RiUserSmileLine } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
 
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
-import { maxLengthRule } from '@/shared/validation-rules';
 
 const honoraryMember = defineType({
 	title: 'Ehrenmitglieder',
@@ -20,12 +19,9 @@ const honoraryMember = defineType({
 		defineField({
 			title: 'Mitglied seit',
 			name: 'memberSince',
-			type: 'string',
+			type: 'date',
 			group: 'personal',
-			validation: rule => [
-				// minLengthRule(rule, 2, 'Der Nachname'),
-				maxLengthRule(rule, 10, 'Mitglied seit'),
-			],
+			validation: Rule => Rule.required().error('Mitglied seit ist erforderlich.'),
 		}),
 	],
 

@@ -1,7 +1,5 @@
-import { defineField } from 'sanity';
+import { defineField } from '@sanity-typed/types';
 import slug from 'slugify';
-
-import { maxLengthRule, minLengthRule, requiredRule } from '../validation-rules';
 
 export function getHiddenSlugField(slug: string) {
 	return defineField({
@@ -33,7 +31,7 @@ export const slugField = defineField({
 		slugify: (input: string) => slug(input, { lower: true, trim: true }),
 		source: 'title',
 	},
-	validation: rule => [requiredRule(rule, 'Die Slug')],
+	validation: Rule => Rule.required().error('Die Slug ist erforderlich.'),
 });
 
 export const subTitleField = defineField({
@@ -41,9 +39,9 @@ export const subTitleField = defineField({
 	name: 'subtitle',
 	type: 'string',
 	group: 'general',
-	validation: rule => [
-		minLengthRule(rule, 3, 'Der Untertitel'),
-		maxLengthRule(rule, 50, 'Der Untertitel'),
+	validation: Rule => [
+		Rule.min(3).error('Der Untertitel muss mindestens 3 Zeichen lang sein.'),
+		Rule.max(50).warning('Der Untertitel sollte maximal 50 Zeichen lang sein.'),
 	],
 });
 
@@ -52,7 +50,10 @@ export const titleField = defineField({
 	name: 'title',
 	type: 'string',
 	group: 'general',
-	validation: rule => [minLengthRule(rule, 3, 'Der Titel'), maxLengthRule(rule, 65, 'Der Titel')],
+	validation: Rule => [
+		Rule.min(3).error('Der Titel muss mindestens 3 Zeichen lang sein.'),
+		Rule.max(65).warning('Der Titel sollte maximal 65 Zeichen lang sein.'),
+	],
 });
 
 export const defaultPageFields = [titleField, subTitleField, introField];

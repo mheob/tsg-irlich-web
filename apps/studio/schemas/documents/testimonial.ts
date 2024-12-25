@@ -1,9 +1,8 @@
+import { defineField, defineType } from '@sanity-typed/types';
 import { RiChatQuoteLine } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
 
 import { personal } from '@/shared/field-groups';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
-import { maxLengthRule, minLengthRule } from '@/shared/validation-rules';
 
 const testimonial = defineType({
 	title: 'Zeugnis / Referenz',
@@ -16,17 +15,18 @@ const testimonial = defineType({
 		firstNameField,
 		lastNameField,
 		portraitPictureField,
-		{
+
+		defineField({
 			title: 'Rolle',
 			name: 'role',
 			type: 'string',
 			description: 'Die Rolle oder Funktion des Zitierenden.',
 			group: 'personal',
-			validation: rule => [
-				minLengthRule(rule, 3, 'Die Rolle'),
-				maxLengthRule(rule, 64, 'Die Rolle'),
+			validation: Rule => [
+				Rule.required().min(3).error('Die Rolle muss mindestens 3 Zeichen lang sein.'),
+				Rule.max(64).warning('Die Rolle sollte maximal 64 Zeichen lang sein.'),
 			],
-		},
+		}),
 
 		// quote
 		defineField({
@@ -35,9 +35,9 @@ const testimonial = defineType({
 			type: 'text',
 			description: 'Das Zitat über die TSG.',
 			group: 'quote',
-			validation: rule => [
-				minLengthRule(rule, 64, 'Das Zitat'),
-				maxLengthRule(rule, 350, 'Das Zitat'),
+			validation: Rule => [
+				Rule.required().min(64).error('Das Zitat muss mindestens 64 Zeichen lang sein.'),
+				Rule.max(350).warning('Das Zitat sollte maximal 350 Zeichen lang sein.'),
 			],
 		}),
 		defineField({

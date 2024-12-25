@@ -1,5 +1,5 @@
+import { defineArrayMember, defineField } from '@sanity-typed/types';
 import { RiLayoutGridLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
 
 const grid = defineField({
 	title: 'Grid',
@@ -18,27 +18,27 @@ const grid = defineField({
 		},
 	],
 	fields: [
-		{
+		defineField({
 			title: 'Title',
 			name: 'title',
 			type: 'string',
-		},
-		{
+		}),
+		defineField({
 			title: 'Columns',
 			name: 'columns',
 			type: 'columns',
 			group: 'columns',
-		},
-		{
+		}),
+		defineField({
 			title: 'Items',
 			name: 'items',
 			type: 'array',
-			of: [{ type: 'mainImage' }, { type: 'blockContent' }],
+			of: [defineArrayMember({ type: 'mainImage' }), defineArrayMember({ type: 'blockContent' })],
 			group: 'items',
 			options: {
 				layout: 'grid',
 			},
-		},
+		}),
 	],
 	preview: {
 		prepare: ({ title }) => ({ title }),

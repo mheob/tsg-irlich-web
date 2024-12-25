@@ -1,6 +1,6 @@
 // cSpell:words mitgliedschaft
+import { defineType } from '@sanity-typed/types';
 import { RiBookletLine } from 'react-icons/ri';
-import { defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
 import { contactPersonsField } from '@/shared/fields/contact';

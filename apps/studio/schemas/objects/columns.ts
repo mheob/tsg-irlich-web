@@ -1,5 +1,5 @@
+import { defineField } from '@sanity-typed/types';
 import { RiLayoutColumnLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
 
 const columns = defineField({
 	title: 'Columns',

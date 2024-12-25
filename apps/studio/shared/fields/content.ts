@@ -1,10 +1,15 @@
-import { defineField } from 'sanity';
+import { defineArrayMember, defineField } from '@sanity-typed/types';
 
 export const contentField = defineField({
 	title: 'Abschnitte',
 	name: 'body',
 	type: 'array',
-	of: [{ type: 'grid' }, { type: 'mainImage' }, { type: 'blockContent' }, { type: 'spacer' }],
+	of: [
+		defineArrayMember({ type: 'grid' }),
+		defineArrayMember({ type: 'mainImage' }),
+		defineArrayMember({ type: 'blockContent' }),
+		defineArrayMember({ type: 'spacer' }),
+	],
 	description: 'Abschnitte mit Inhalt hinzufügen, bearbeiten und neu anordnen.',
 	group: 'content',
 });

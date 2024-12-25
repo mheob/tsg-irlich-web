@@ -1,7 +1,5 @@
+import { defineField } from '@sanity-typed/types';
 import { RiImageLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
-
-import { requiredRule } from '@/shared/validation-rules';
 
 const extendedImage = defineField({
 	title: 'Erweitertes Bild',
@@ -10,19 +8,20 @@ const extendedImage = defineField({
 	description: 'Erweitertes Bild mit erforderlichem Alt-Text.',
 	icon: RiImageLine,
 	fields: [
-		{
+		defineField({
 			title: 'Alt-Text',
 			name: 'alt',
 			type: 'string',
 			description: 'Beschreibe, was auf dem Bild zu sehen ist (für SEO und Barrierefreiheit).',
-			validation: rule => [requiredRule(rule, 'Der "Alt-Text"')],
-		},
-		{
+			validation: Rule => Rule.required().error('Der "Alt-Text" ist erforderlich.'),
+		}),
+
+		defineField({
 			title: 'Bildbeschreibung',
 			name: 'description',
 			type: 'string',
 			description: 'Die Bildunterschrift wird unter dem Bild angezeigt.',
-		},
+		}),
 	],
 	options: {
 		hotspot: true,

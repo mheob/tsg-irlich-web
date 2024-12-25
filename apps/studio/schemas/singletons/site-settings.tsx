@@ -1,14 +1,9 @@
+import { defineArrayMember, defineField, defineType } from '@sanity-typed/types';
 import { RiLinksLine, RiSettings5Line } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
 
+import { phoneFieldRegex } from '@/constants/regex';
 import { meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/fields/meta';
-import {
-	maxLengthRule,
-	minLengthRule,
-	phoneFieldRegexRule,
-	requiredRule,
-} from '@/shared/validation-rules';
 
 const siteSettings = defineType({
 	title: 'Generelle Einstellungen',
@@ -54,7 +49,7 @@ const siteSettings = defineType({
 					name: 'address',
 					type: 'string',
 					description: 'Adresse (Straße Hausnummer, Postleitzahl Ort)',
-					validation: rule => [requiredRule(rule, 'Die Adresse')],
+					validation: Rule => Rule.required().error('Die Adresse ist ein Pflichtfeld'),
 				}),
 
 				defineField({
@@ -62,7 +57,8 @@ const siteSettings = defineType({
 					name: 'phone',
 					type: 'string',
 					description: 'Telefonnummer',
-					validation: rule => [requiredRule(rule, 'Die Telefonnummer'), phoneFieldRegexRule(rule)],
+					validation: Rule =>
+						Rule.required().regex(phoneFieldRegex).error('Die Telefonnummer ist ein Pflichtfeld'),
 				}),
 
 				defineField({
@@ -70,7 +66,7 @@ const siteSettings = defineType({
 					name: 'email',
 					type: 'string',
 					description: 'E-Mail',
-					validation: rule => [requiredRule(rule, 'Die E-Mail')],
+					validation: Rule => Rule.required().email().error('Die E-Mail ist ein Pflichtfeld'),
 				}),
 			],
 		}),
@@ -88,7 +84,7 @@ const siteSettings = defineType({
 					name: 'title',
 					type: 'string',
 					description: 'Titel des Newsletters',
-					validation: rule => [requiredRule(rule, 'Der "Newsletter Titel"')],
+					validation: Rule => Rule.required().error('Der "Newsletter Titel" ist ein Pflichtfeld'),
 				}),
 
 				defineField({
@@ -96,9 +92,13 @@ const siteSettings = defineType({
 					name: 'cta',
 					type: 'string',
 					description: 'Text für den Newsletter Absende-Button',
-					validation: rule => [
-						minLengthRule(rule, 3, 'Der "Newsletter Button Text"'),
-						maxLengthRule(rule, 18, 'Der "Newsletter Button Text"'),
+					validation: Rule => [
+						Rule.required()
+							.min(3)
+							.error('Der "Newsletter Button Text" muss mindestens 3 Zeichen lang sein'),
+						Rule.max(18).warning(
+							'Der "Newsletter Button Text" sollte höchstens 18 Zeichen lang sein',
+						),
 					],
 				}),
 			],
@@ -110,8 +110,8 @@ const siteSettings = defineType({
 			name: 'mainNavigation',
 			type: 'array',
 			of: [
-				{ title: 'Internal Link', type: 'internalLink' },
-				{ title: 'External Link', type: 'externalLink' },
+				defineArrayMember({ title: 'Internal Link', type: 'internalLink' }),
+				defineArrayMember({ title: 'External Link', type: 'externalLink' }),
 			],
 			description: 'Seiten und/oder Links für die Hauptnavigation hinzufügen',
 			group: 'navigation',
@@ -121,7 +121,7 @@ const siteSettings = defineType({
 			title: 'Rechtliches Menü',
 			name: 'legalNavigation',
 			type: 'array',
-			of: [{ title: 'Internal Link', type: 'internalLink' }],
+			of: [defineArrayMember({ title: 'Internal Link', type: 'internalLink' })],
 			description: 'Seiten für das rechtliches Menü hinzufügen',
 			group: 'navigation',
 		}),

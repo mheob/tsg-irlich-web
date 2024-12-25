@@ -14,7 +14,7 @@ import externalLink from './objects/external-link';
 import imageCard from './objects/image-card';
 import internalLink from './objects/internal-link';
 import link from './objects/link';
-import metFields from './objects/meta';
+import meta from './objects/meta';
 import simpleBlockContent from './objects/simple-block-content';
 import socialFields from './objects/social-fields';
 import stats from './objects/stats';
@@ -52,36 +52,36 @@ export const schemaTypes = [
 
 	siteSettings,
 
-	// Objects
-	columns,
-	contactTo,
-	extendedImage,
-	externalLink,
-	imageCard,
-	internalLink,
-	link,
-	metFields,
-	simpleBlockContent,
-	socialFields,
-	stats,
+	// // Objects
+	// columns,
+	// contactTo,
+	// extendedImage,
+	// externalLink,
+	// imageCard,
+	// internalLink,
+	// link,
+	// meta,
+	// simpleBlockContent,
+	// socialFields,
+	// stats,
 
-	// Sections
-	blockContent,
-	blockquote,
-	grid,
-	mainImage,
-	spacer,
+	// // Sections
+	// blockContent,
+	// blockquote,
+	// grid,
+	// mainImage,
+	// spacer,
 
-	// Single Pages
-	aboutUsPage,
+	// // Single Pages
+	// aboutUsPage,
 	contactPage,
-	groupsPage,
-	homePage,
+	// groupsPage,
+	// homePage,
 	imprintPage,
 	membershipPage,
 	newsArticlePage,
-	newsOverviewCategoryPage,
-	newsOverviewPage,
+	// newsOverviewCategoryPage,
+	// newsOverviewPage,
 	privacyPage,
-	singleGroupPage,
+	// singleGroupPage,
 ];

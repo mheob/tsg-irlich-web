@@ -1,5 +1,5 @@
+import { defineArrayMember, defineField } from '@sanity-typed/types';
 import { RiFileTextLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
 
 const simpleBlockContent = defineField({
 	title: 'Simple Block Content',
@@ -13,7 +13,7 @@ const simpleBlockContent = defineField({
 			name: 'text',
 			type: 'array',
 			of: [
-				{
+				defineArrayMember({
 					title: 'Block',
 					type: 'block',
 					marks: {
@@ -24,7 +24,7 @@ const simpleBlockContent = defineField({
 						],
 					},
 					styles: [{ title: 'Normal', value: 'normal' }],
-				},
+				}),
 			],
 		},
 	],

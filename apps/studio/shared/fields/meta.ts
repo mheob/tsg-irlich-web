@@ -1,6 +1,4 @@
-import { defineField } from 'sanity';
-
-import { requiredRule } from '../validation-rules';
+import { defineField } from '@sanity-typed/types';
 
 export const authorField = defineField({
 	title: 'Autor',
@@ -9,7 +7,7 @@ export const authorField = defineField({
 	to: [{ type: 'author' }],
 	description: 'Autor für Beitrag auswählen',
 	group: 'meta',
-	validation: rule => [requiredRule(rule, 'Der Autor')],
+	validation: Rule => Rule.required().error('Der Autor ist erforderlich.'),
 });
 
 export const metaField = defineField({

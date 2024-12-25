@@ -1,7 +1,5 @@
+import { defineField } from '@sanity-typed/types';
 import { RiLinksLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
-
-import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
 
 const stats = defineField({
 	title: 'Statistiken',
@@ -13,16 +11,16 @@ const stats = defineField({
 			title: 'Beschriftung',
 			name: 'title',
 			type: 'string',
-			validation: rule => [
-				minLengthRule(rule, 2, 'Die Beschriftung'),
-				maxLengthRule(rule, 25, 'Die Beschriftung'),
+			validation: Rule => [
+				Rule.required().error('Die Beschriftung ist erforderlich.'),
+				Rule.min(2).warning('Die Beschriftung sollte mindestens 2 Zeichen lang sein.'),
 			],
 		}),
 		defineField({
 			title: 'Wert',
 			name: 'value',
 			type: 'string',
-			validation: rule => [requiredRule(rule, 'Der Wert')],
+			validation: Rule => [Rule.required().error('Der Wert ist erforderlich.')],
 		}),
 		defineField({
 			title: 'Suffix (optional, z.B. "+")',
@@ -30,7 +28,7 @@ const stats = defineField({
 			type: 'string',
 		}),
 	],
-	validation: rule => [requiredRule(rule, 'Die Statistik')],
+	validation: Rule => [Rule.required().error('Der Suffix ist erforderlich.')],
 });
 
 export default stats;

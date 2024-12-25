@@ -1,5 +1,5 @@
+import { defineType } from '@sanity-typed/types';
 import { RiBookletLine } from 'react-icons/ri';
-import { defineType } from 'sanity';
 
 import { general } from '@/shared/field-groups';
 import { slugField, titleField } from '@/shared/fields/general';

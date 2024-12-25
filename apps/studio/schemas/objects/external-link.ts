@@ -1,5 +1,5 @@
+import { defineField } from '@sanity-typed/types';
 import { RiExternalLinkLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
 
 const externalLink = defineField({
 	title: 'External Link',

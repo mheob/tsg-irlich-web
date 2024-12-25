@@ -1,5 +1,5 @@
+import { defineField } from '@sanity-typed/types';
 import { RiShareLine } from 'react-icons/ri';
-import { defineField } from 'sanity';
 
 const meta = defineField({
 	title: 'Meta Information',

@@ -1,7 +1,5 @@
+import { defineField, defineType } from '@sanity-typed/types';
 import { RiTeamLine } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
-
-import { maxLengthRule } from '@/shared/validation-rules';
 
 const role = defineType({
 	title: 'Rolle / Funktion',
@@ -15,9 +13,9 @@ const role = defineType({
 			type: 'string',
 			description:
 				'Die Rolle oder Funktion der Person (z.B. Vorstand Finanzen oder Übungsleiterin).',
-			validation: rule => [
-				// minLengthRule(rule, 2, 'Der Name'),
-				maxLengthRule(rule, 64, 'Der Name'),
+			validation: Rule => [
+				Rule.required().min(2).error('Der Name muss mindestens 2 Zeichen lang sein.'),
+				Rule.max(64).warning('Der Name sollte maximal 64 Zeichen lang sein.'),
 			],
 		}),
 

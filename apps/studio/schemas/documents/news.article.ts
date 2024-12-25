@@ -1,5 +1,5 @@
+import { defineArrayMember, defineField, defineType } from '@sanity-typed/types';
 import { RiArticleLine } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
 
 import { content, excerpt, general, meta } from '@/shared/field-groups';
 import { contentField } from '@/shared/fields/content';
@@ -32,7 +32,7 @@ const newsArticle = defineType({
 			title: 'News-Kategorien',
 			name: 'categories',
 			type: 'array',
-			of: [{ type: 'reference', to: [{ type: 'news.category' }] }],
+			of: [defineArrayMember({ type: 'reference', to: [{ type: 'news.category' }] })],
 			group: 'general',
 			validation: rule =>
 				rule.required().error('Es muss mindestens eine Kategorie ausgewählt werden.'),
@@ -50,11 +50,11 @@ const newsArticle = defineType({
 		defineField({
 			...contentField,
 			of: [
-				{ type: 'blockContent' },
-				{ type: 'blockquote' },
-				{ type: 'grid' },
-				{ type: 'mainImage' },
-				{ type: 'spacer' },
+				defineArrayMember({ type: 'blockContent' }),
+				defineArrayMember({ type: 'blockquote' }),
+				defineArrayMember({ type: 'grid' }),
+				defineArrayMember({ type: 'mainImage' }),
+				defineArrayMember({ type: 'spacer' }),
 			],
 		}),
 	],

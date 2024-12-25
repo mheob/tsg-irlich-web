@@ -12,6 +12,7 @@
 		"start": "sanity start"
 	},
 	"dependencies": {
+		"@sanity-typed/types": "^7.0.1",
 		"@sanity/assist": "^3.0.9",
 		"@sanity/locale-de-de": "^1.1.15",
 		"@sanity/vision": "^3.68.3",
