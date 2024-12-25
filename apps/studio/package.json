@@ -12,9 +12,9 @@
 		"start": "sanity start"
 	},
 	"dependencies": {
-		"@sanity/assist": "^3.0.8",
+		"@sanity/assist": "^3.0.9",
 		"@sanity/locale-de-de": "^1.1.15",
-		"@sanity/vision": "^3.67.1",
+		"@sanity/vision": "^3.68.3",
 		"@tsg-irlich-web/shared": "workspace:*",
 		"dotenv": "^16.4.7",
 		"react": "catalog:",
@@ -27,7 +27,7 @@
 		"zod": "^3.24.1"
 	},
 	"devDependencies": {
-		"@sanity/eslint-config-studio": "^5.0.0",
+		"@sanity/eslint-config-studio": "^5.0.1",
 		"@types/react": "catalog:",
 		"@types/react-dom": "catalog:",
 		"eslint": "catalog:",
