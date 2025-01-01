@@ -4,6 +4,7 @@ packages:
 catalog:
   "@types/react": ^19.0.2
   "@types/react-dom": ^19.0.2
+  "@types/node": ^22.10.3
   eslint: 9.14.0
   react: ^19.0.0
   react-dom: ^19.0.0

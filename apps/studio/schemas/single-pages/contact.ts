@@ -1,11 +1,11 @@
 // cSpell:words kontakt
-import { RiBookletLine } from 'react-icons/ri';
+import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
-import { contactPersonsField } from '@/shared/fields/contact';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { requiredRule } from '@/shared/validation-rules';
 
 const contactPage = defineType({
@@ -26,16 +26,25 @@ const contactPage = defineType({
 
 		// content
 		defineField({
-			title: 'Kontakt zu',
-			name: 'contactTo',
-			type: 'array',
-			of: [{ type: 'contactNameMail' }],
-			description: 'Personen oder Bereiche, die im Kontaktformular kontaktiert werden können.',
+			title: 'Inhalte',
+			name: 'content',
+			type: 'object',
+			icon: RiLinksLine,
 			group: 'content',
-			validation: rule => [requiredRule(rule, 'Das Feld "Kontakt zu"')],
+			groups: [{ title: 'Ansprechpartner', name: 'contactPersons' }],
+			fields: [
+				defineField({
+					title: 'Kontakt zu',
+					name: 'receiver',
+					type: 'array',
+					of: [{ type: 'contactNameMail' }],
+					description: 'Personen oder Bereiche, die im Kontaktformular kontaktiert werden können.',
+					validation: rule => [requiredRule(rule, 'Das Feld "Kontakt zu"')],
+				}),
+				contactPersonsSectionField,
+			],
+			validation: rule => [requiredRule(rule, 'Inhalte')],
 		}),
-
-		contactPersonsField,
 	],
 	preview: {
 		prepare: () => ({ title: 'Kontakt' }),

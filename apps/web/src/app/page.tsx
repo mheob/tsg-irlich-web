@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 
+import ContactForm from '@/components/section/contact-form';
 import ContactPersons from '@/components/section/contact-persons';
+import Newsletter from '@/components/section/newsletter';
 import { client } from '@/lib/sanity/client';
 import {
 	homePageContactPersonsQuery,
@@ -10,12 +12,10 @@ import {
 } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
 
-import ContactForm from './_home/contact-form';
 import Features from './_home/features';
 import Groups from './_home/groups';
 import Hero from './_home/hero';
 import News from './_home/news';
-import Newsletter from './_home/newsletter';
 import Pricing from './_home/pricing';
 import Stats from './_home/stats';
 import Testimonials from './_home/testimonials';
