@@ -5,7 +5,7 @@ export const contactPersons = /* groq */ `
 	image,
 	"email": affiliations[department->title == $department][0].role->email,
 	"role": affiliations[department->title == $department][0].role->title,
-	"vision": affiliations[department->title == $department][0].description,
+	"vision": affiliations[department->title == $department][0].taskDescription,
 `;
 
 export const featuredImage = /* groq */ `featuredImage`;

@@ -1353,7 +1353,7 @@ export type ContactPageQueryResult = {
 	};
 } | null;
 // Variable: contactPageContactPersonsQuery
-// Query: *[_type == 'contact'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].description,	}
+// Query: *[_type == 'contact'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
 export type ContactPageContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -1504,7 +1504,7 @@ export type HomePageTestimonialsQueryResult = Array<{
 	showAlways: boolean | null;
 }> | null;
 // Variable: homePageContactPersonsQuery
-// Query: *[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].description,	}
+// Query: *[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
 export type HomePageContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -1627,7 +1627,7 @@ export type NewsOverviewCategoryPageQueryResult = {
 	};
 } | null;
 // Variable: newsOverviewContactPersonsCategoryQuery
-// Query: *[_type == 'newsOverviewCategory'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].description,	}
+// Query: *[_type == 'newsOverviewCategory'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
 export type NewsOverviewContactPersonsCategoryQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -1719,7 +1719,7 @@ export type NewsOverviewPageQueryResult = {
 	};
 } | null;
 // Variable: newsOverviewContactPersonsQuery
-// Query: *[_type == 'newsOverview'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].description,	}
+// Query: *[_type == 'newsOverview'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
 export type NewsOverviewContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -1849,19 +1849,19 @@ import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
 		"\n\t*[_type == 'contact'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": ContactPageQueryResult;
-		'\n\t*[_type == \'contact\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': ContactPageContactPersonsQueryResult;
+		'\n\t*[_type == \'contact\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': ContactPageContactPersonsQueryResult;
 		"\n\t*[_type == 'home'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": HomePageQueryResult;
 		"\n\t*[_type == 'group'][] {\n\t\ttitle,\n\t\ticon,\n\t}\n": HomePageGroupsQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshowAlways,\n\t}\n": HomePageTestimonialsQueryResult;
-		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': HomePageContactPersonsQueryResult;
+		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': HomePageContactPersonsQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
 		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
 		"\n\t*[_type == 'newsOverviewCategory'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": NewsOverviewCategoryPageQueryResult;
-		'\n\t*[_type == \'newsOverviewCategory\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': NewsOverviewContactPersonsCategoryQueryResult;
+		'\n\t*[_type == \'newsOverviewCategory\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': NewsOverviewContactPersonsCategoryQueryResult;
 		'\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
 		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
 		"\n\t*[_type == 'newsOverview'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": NewsOverviewPageQueryResult;
-		'\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].description,\n\n\t}\n': NewsOverviewContactPersonsQueryResult;
+		'\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': NewsOverviewContactPersonsQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
 		'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
