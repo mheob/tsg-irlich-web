@@ -24,7 +24,7 @@ function ContactPersonItem({
 	role,
 	vision,
 }: Readonly<ContactPersonItemProps>) {
-	const isMobile = useMediaQuery('(min-width: 48rem)');
+	const isMobile = useMediaQuery('(max-width: 48rem)');
 
 	const imageSource = isMobile ? urlForImage(image, 120) : urlForImage(image, 176);
 
@@ -55,7 +55,7 @@ function ContactPersonItem({
 				</div>
 			)}
 
-			<div className="-mt-24 ml-8 flex h-full flex-col justify-between gap-4 rounded-xl bg-white text-black md:-mt-36">
+			<div className="-mt-24 ml-8 flex h-full flex-col gap-4 rounded-xl bg-white text-black md:-mt-36 md:gap-12">
 				<header className="pl-28 pr-12 pt-6 md:pl-40">
 					<h3 className="font-serif text-2xl md:text-3xl">
 						{firstName} {lastName}
@@ -67,7 +67,7 @@ function ContactPersonItem({
 					</div>
 				</header>
 
-				<p className="px-5 pb-5 text-sm md:px-12 md:pb-12 md:text-xl">{vision}</p>
+				<p className="px-5 text-sm md:px-12 md:text-xl">{vision}</p>
 			</div>
 		</article>
 	);

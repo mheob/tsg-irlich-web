@@ -56,15 +56,15 @@ const person = defineType({
 							name: 'taskDescription',
 							type: 'text',
 							description:
-								'Kurze Aufgabenbeschreibung zum Posten der Person (ca. 32 bis 200 Zeichen).',
+								'Kurze Aufgabenbeschreibung zum Posten der Person (ca. 270 bis 330 Zeichen).',
 							validation: rule => [
 								rule
 									.required()
-									.min(32)
-									.error('Die Aufgabenbeschreibung muss mindestens 32 Zeichen lang sein.'),
+									.min(128)
+									.error('Die Aufgabenbeschreibung muss mindestens 128 Zeichen lang sein.'),
 								rule
-									.max(200)
-									.warning('Die Aufgabenbeschreibung sollte maximal 200 Zeichen lang sein.'),
+									.max(330)
+									.warning('Die Aufgabenbeschreibung sollte maximal 330 Zeichen lang sein.'),
 							],
 						}),
 
@@ -72,15 +72,15 @@ const person = defineType({
 							title: 'Beschreibung (Vision)',
 							name: 'description',
 							type: 'text',
-							description: 'Kurze Beschreibung als Vision der Person (ca. 32 bis 200 Zeichen).',
+							description: 'Kurze Beschreibung als Vision der Person (ca. 270 bis 330 Zeichen).',
 							validation: rule => [
 								rule
 									.required()
-									.min(32)
-									.error('Die Beschreibung (Vision) muss mindestens 32 Zeichen lang sein.'),
+									.min(128)
+									.error('Die Beschreibung (Vision) muss mindestens 128 Zeichen lang sein.'),
 								rule
-									.max(200)
-									.warning('Die Beschreibung (Vision) sollte maximal 200 Zeichen lang sein.'),
+									.max(330)
+									.warning('Die Beschreibung (Vision) sollte maximal 330 Zeichen lang sein.'),
 							],
 						}),
 					],
