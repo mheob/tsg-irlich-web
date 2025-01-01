@@ -33,8 +33,7 @@ export default mheob(
 		},
 	},
 	{
-		files: ['apps/studio/{schemas,shared}/**/*.{ts,tsx}'],
-		// "extends": "@sanity/eslint-config-studio"
+		files: ['apps/studio/{schemas,shared}/**/*.ts?(x)'],
 		rules: {
 			'perfectionist/sort-objects': 'off',
 		},

@@ -24,9 +24,9 @@ function ContactPersonItem({
 	role,
 	vision,
 }: Readonly<ContactPersonItemProps>) {
-	const isDesktop = useMediaQuery('(min-width: 48rem)');
+	const isMobile = useMediaQuery('(min-width: 48rem)');
 
-	const imageSource = isDesktop ? urlForImage(image, 176) : urlForImage(image, 120);
+	const imageSource = isMobile ? urlForImage(image, 120) : urlForImage(image, 176);
 
 	return (
 		<article>
@@ -38,9 +38,9 @@ function ContactPersonItem({
 						'border-5 rounded-full md:border-8',
 					)}
 					alt={image.alt}
-					height={isDesktop ? 176 : 120}
+					height={isMobile ? 120 : 176}
 					src={imageSource}
-					width={isDesktop ? 176 : 120}
+					width={isMobile ? 120 : 176}
 				/>
 			) : (
 				<div

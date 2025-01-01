@@ -27,7 +27,6 @@
 		"zod": "^3.24.1"
 	},
 	"devDependencies": {
-		"@sanity/eslint-config-studio": "^5.0.1",
 		"@types/react": "catalog:",
 		"@types/react-dom": "catalog:",
 		"eslint": "catalog:",

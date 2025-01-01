@@ -26,7 +26,7 @@ function TestimonialItem({
 	quote,
 	role,
 }: Readonly<TestimonialItemProps>) {
-	const isDesktop = useMediaQuery('(min-width: 48rem)');
+	const isMobile = useMediaQuery('(max-width: 48rem)');
 
 	const imageSource = urlForImage(image, 96);
 
@@ -37,9 +37,9 @@ function TestimonialItem({
 				{
 					'bg-primary text-primary-foreground border-primary-foreground rounded-xl': isHighlighted,
 				},
-				{ 'py-6 pl-5 pr-10': !isHighlighted && !isDesktop },
-				{ '-ml-6 mr-2 py-6 pl-5 pr-10': isHighlighted && !isDesktop },
-				{ 'my-6 -ml-36 -mr-14 py-6 pl-14 pr-36': isHighlighted && isDesktop },
+				{ 'py-6 pl-5 pr-10': !isHighlighted && isMobile },
+				{ '-ml-6 mr-2 py-6 pl-5 pr-10': isHighlighted && isMobile },
+				{ 'my-6 -ml-36 -mr-14 py-6 pl-14 pr-36': isHighlighted && !isMobile },
 			)}
 		>
 			<div className="flex items-center gap-5">
@@ -51,9 +51,9 @@ function TestimonialItem({
 							{ 'border-primary-foreground': isHighlighted },
 						)}
 						alt={image.alt}
-						height={isDesktop ? 96 : 40}
+						height={isMobile ? 40 : 96}
 						src={imageSource}
-						width={isDesktop ? 96 : 40}
+						width={isMobile ? 40 : 96}
 					/>
 				) : (
 					<div

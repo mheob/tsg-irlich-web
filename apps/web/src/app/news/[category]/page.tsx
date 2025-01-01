@@ -1,5 +1,6 @@
 import ContactPersons from '@/components/section/contact-persons';
 import Hero from '@/components/section/hero';
+import Newsletter from '@/components/section/newsletter';
 import SectionHeader from '@/components/ui/section-header';
 import { client } from '@/lib/sanity/client';
 import {
@@ -75,7 +76,7 @@ export default async function NewsOverview({
 				contactPersons={contactPersons ?? []}
 			/>
 
-			<div className="bg-background border-background-high-contrast border-b-6 border-t-6 h-5 w-full" />
+			<Newsletter />
 		</>
 	);
 }
