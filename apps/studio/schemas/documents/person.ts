@@ -2,7 +2,7 @@ import { RiUserSmileLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
-import { emailField, phoneField } from '@/shared/fields/contact';
+import { phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
 import { requiredRule } from '@/shared/validation-rules';
 
@@ -19,7 +19,6 @@ const person = defineType({
 		portraitPictureField,
 
 		// contact
-		emailField,
 		phoneField,
 
 		// additionalInformation
@@ -84,6 +83,15 @@ const person = defineType({
 							],
 						}),
 					],
+					preview: {
+						prepare: ({ department, role }) => ({
+							title: `Gruppe: ${department} - Rolle: ${role}`,
+						}),
+						select: {
+							department: 'department.title',
+							role: 'role.title',
+						},
+					},
 				}),
 			],
 			group: 'additionalInformation',
