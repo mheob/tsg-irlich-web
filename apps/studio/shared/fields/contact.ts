@@ -1,13 +1,13 @@
 import { defineField } from 'sanity';
 
-import { phoneFieldRegexRule, requiredRule } from '../validation-rules';
+import { phoneFieldRegex } from '@/constants/regex';
 
 export const addressField = defineField({
 	title: 'Anschrift',
 	name: 'address',
 	type: 'text',
 	group: 'contact',
-	validation: rule => [requiredRule(rule, 'Die Anschrift')],
+	validation: Rule => [Rule.required().error('Die Anschrift ist erforderlich')],
 });
 
 export const emailField = defineField({
@@ -15,7 +15,7 @@ export const emailField = defineField({
 	name: 'email',
 	type: 'email',
 	group: 'contact',
-	validation: rule => [requiredRule(rule, 'Die E-Mail')],
+	validation: Rule => [Rule.required().error('Die E-Mail ist erforderlich')],
 });
 
 export const phoneField = defineField({
@@ -23,7 +23,11 @@ export const phoneField = defineField({
 	name: 'phone',
 	type: 'string',
 	group: 'contact',
-	validation: rule => [phoneFieldRegexRule(rule)],
+	validation: Rule => [
+		Rule.regex(phoneFieldRegex).error(
+			'Telefonnummer ist ungültig, sie muss wie folgt aussehen: +49 123 456789',
+		),
+	],
 });
 
 export const contactPersonsField = defineField({
@@ -32,5 +36,5 @@ export const contactPersonsField = defineField({
 	type: 'array',
 	of: [{ type: 'reference', to: [{ type: 'person' }] }],
 	group: 'content',
-	validation: rule => [requiredRule(rule, 'Der Ansprechpartner')],
+	validation: Rule => [Rule.required().error('Ansprechpartner ist erforderlich')],
 });

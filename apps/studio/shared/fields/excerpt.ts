@@ -1,7 +1,5 @@
 import { defineField } from 'sanity';
 
-import { requiredRule } from '../validation-rules';
-
 export const excerptField = defineField({
 	title: 'Vorschautext',
 	name: 'excerpt',
@@ -9,7 +7,7 @@ export const excerptField = defineField({
 	description:
 		'Kurze Beschreibung, die auf den Übersichtsseiten angezeigt wird und wenn Leute deinen Beitrag auf sozialen Medien teilen.',
 	group: 'excerpt',
-	validation: rule => [requiredRule(rule, 'Der Vorschautext')],
+	validation: Rule => [Rule.required().error('Der Vorschautext ist erforderlich')],
 });
 
 export const featuredImageField = defineField({
@@ -18,5 +16,5 @@ export const featuredImageField = defineField({
 	type: 'mainImage',
 	description: 'Bild, das in Beitragslisten angezeigt wird.',
 	group: 'excerpt',
-	validation: rule => [requiredRule(rule, 'Das Vorschaubild')],
+	validation: Rule => [Rule.required().error('Das Vorschaubild ist erforderlich')],
 });

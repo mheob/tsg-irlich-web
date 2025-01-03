@@ -24,6 +24,7 @@ const membershipPage = defineType({
 		metaField,
 
 		// content
+		// TODO: add field for document downloads
 		contactPersonsField,
 	],
 	preview: {

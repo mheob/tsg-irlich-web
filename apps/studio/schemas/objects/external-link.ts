@@ -11,13 +11,14 @@ const externalLink = defineField({
 			title: 'Title',
 			name: 'title',
 			type: 'string',
-			// validation: rule => rule.required(),
+			validation: Rule => Rule.required().error('Der Titel ist erforderlich'),
 		},
 		{
 			title: 'URL',
 			name: 'url',
 			type: 'url',
 			description: 'Add external link',
+			validation: Rule => Rule.required().error('Die URL ist erforderlich'),
 		},
 	],
 });

@@ -2,7 +2,6 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
-import { maxLengthRule } from '@/shared/validation-rules';
 
 export const galleryField = defineField({
 	title: 'Galerie',
@@ -19,12 +18,9 @@ export const galleryField = defineField({
 			type: 'array',
 			of: [{ type: 'extendedImage' }],
 			description: 'Diese gewählten Bilder werden in der gewünschten Reihenfolge angezeigt.',
-			validation: rule => [
-				// minLengthRule(rule, 2, 'Es müssen mindestens 2 Bilder ausgewählt werden.'),
-				maxLengthRule(rule, 4, '', {
-					message: 'Es dürfen maximal vier Bilder ausgewählt werden.',
-					type: 'error',
-				}),
+			validation: Rule => [
+				Rule.min(2).error('Es müssen mindestens 2 Bilder ausgewählt werden.'),
+				Rule.max(4).error('Es dürfen maximal vier Bilder ausgewählt werden.'),
 			],
 		}),
 	],

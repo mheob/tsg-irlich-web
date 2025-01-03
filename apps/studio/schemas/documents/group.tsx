@@ -1,8 +1,6 @@
 import { RiTeamLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
-
 const group = defineType({
 	title: 'Gruppe / Mannschaft',
 	name: 'group',
@@ -13,7 +11,10 @@ const group = defineType({
 			title: 'Name',
 			name: 'title',
 			type: 'string',
-			validation: rule => [minLengthRule(rule, 2, 'Der Name'), maxLengthRule(rule, 64, 'Der Name')],
+			validation: Rule => [
+				Rule.required().min(2).error('Der Name muss mindestens 2 Zeichen lang sein'),
+				Rule.max(64).warning('Der Name sollte nicht länger als 64 Zeichen sein'),
+			],
 		}),
 
 		defineField({
@@ -21,7 +22,7 @@ const group = defineType({
 			name: 'email',
 			type: 'email',
 			description: 'Die E-Mail-Adresse der Gruppe bzw. Mannschaft.',
-			validation: rule => [requiredRule(rule, 'Die E-Mail')],
+			validation: Rule => [Rule.required().error('Die E-Mail ist erforderlich')],
 		}),
 
 		defineField({
@@ -29,7 +30,7 @@ const group = defineType({
 			name: 'description',
 			type: 'simpleBlockContent',
 			description: 'Eine Beschreibung der Gruppe / Mannschaft.',
-			validation: rule => [requiredRule(rule, 'Die Beschreibung')],
+			validation: Rule => [Rule.required().error('Die Beschreibung ist erforderlich')],
 		}),
 
 		defineField({
@@ -64,17 +65,17 @@ const group = defineType({
 					{ title: 'Layout Spalte Zeile', value: 'RiLayoutColumnLine' },
 				],
 			},
-			validation: rule => [requiredRule(rule, 'Das Icon')],
+			validation: Rule => [Rule.required().error('Das Icon ist erforderlich')],
 		}),
 
 		defineField({
 			title: 'Bild',
 			name: 'image',
 			type: 'extendedImage',
-			validation: rule => [requiredRule(rule, 'Das Bild')],
+			validation: Rule => [Rule.required().error('Das Bild ist erforderlich')],
 		}),
 	],
-	validation: rule => [requiredRule(rule, 'Die Gruppe')],
+	validation: Rule => [Rule.required().error('Die Gruppe ist erforderlich')],
 	orderings: [
 		{
 			title: 'nach Name - aufsteigend',

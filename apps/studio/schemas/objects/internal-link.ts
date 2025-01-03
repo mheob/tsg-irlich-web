@@ -11,7 +11,7 @@ const internalLink = defineField({
 			title: 'Title',
 			name: 'title',
 			type: 'string',
-			// validation: rule => rule.required(),
+			// validation: Rule => Rule.required(),
 		},
 		{
 			title: 'Link',

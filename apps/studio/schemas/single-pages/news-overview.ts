@@ -5,7 +5,6 @@ import { content, general, meta } from '@/shared/field-groups';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
-import { requiredRule } from '@/shared/validation-rules';
 
 const newsOverviewPage = defineType({
 	title: 'News Übersicht',
@@ -32,7 +31,7 @@ const newsOverviewPage = defineType({
 			group: 'content',
 			groups: [{ title: 'Ansprechpartner', name: 'contactPersons' }],
 			fields: [contactPersonsSectionField],
-			validation: rule => [requiredRule(rule, 'Inhalte')],
+			validation: Rule => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
 	preview: {

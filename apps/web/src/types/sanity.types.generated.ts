@@ -152,72 +152,6 @@ export type Link = {
 	href?: string;
 };
 
-export type InternalLink = {
-	_type: 'internalLink';
-	title?: string;
-	link?:
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'news.article';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'home';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'aboutUs';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'contact';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'groupsPage';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'imprint';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'membership';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'newsOverview';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'privacy';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'singleGroupPage';
-		  };
-};
-
 export type SingleGroupPage = {
 	_id: string;
 	_type: 'singleGroupPage';
@@ -274,11 +208,11 @@ export type Privacy = {
 	subtitle: string;
 	intro?: string;
 	meta?: MetaFields;
-	introText?: SimpleBlockContent;
+	introText: SimpleBlockContent;
 	address: string;
 	phone?: string;
 	email: string;
-	content?: BlockContent;
+	content: BlockContent;
 };
 
 export type BlockContent = {
@@ -378,16 +312,83 @@ export type Imprint = {
 	intro?: string;
 	meta?: MetaFields;
 	address: string;
-	registerNo?: string;
-	registerCourt?: string;
-	represented?: string;
-	phone?: string;
+	registerCourt: string;
+	registerNo: string;
+	represented: string;
 	email: string;
-	responsible?: string;
-	arbitrationBoard?: string;
-	technicalQuestionsName?: string;
-	technicalQuestionsEmail?: string;
-	support?: SimpleBlockContent;
+	contactForm: InternalLink;
+	responsible: string;
+	technicalQuestionsName: string;
+	technicalQuestionsEmail: string;
+	socialMedia: string;
+	support: SimpleBlockContent;
+	credits: string;
+};
+
+export type InternalLink = {
+	_type: 'internalLink';
+	title?: string;
+	link?:
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'news.article';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'home';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'aboutUs';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'contact';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'groupsPage';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'imprint';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'membership';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'newsOverview';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'privacy';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'singleGroupPage';
+		  };
 };
 
 export type GroupsPage = {
@@ -489,7 +490,7 @@ export type AboutUs = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			images?: Array<{
+			images: Array<{
 				asset?: {
 					_ref: string;
 					_type: 'reference';
@@ -558,7 +559,7 @@ export type Home = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			features: Array<{
+			features?: Array<{
 				title: string;
 				intro: string;
 				icon: string;
@@ -618,7 +619,7 @@ export type Home = {
 		testimonialSection: {
 			title: string;
 			subtitle: string;
-			testimonials: Array<{
+			testimonials?: Array<{
 				_ref: string;
 				_type: 'reference';
 				_weak?: boolean;
@@ -667,8 +668,8 @@ export type ImageCard = {
 
 export type ExternalLink = {
 	_type: 'externalLink';
-	title?: string;
-	url?: string;
+	title: string;
+	url: string;
 };
 
 export type ContactNameMail = {
@@ -748,11 +749,11 @@ export type Venue = {
 		_type: 'image';
 	};
 	location?: {
-		name?: string;
-		street?: string;
-		houseNumber?: string;
+		name: string;
+		street: string;
+		houseNumber: string;
 		zipCode?: string;
-		city?: string;
+		city: string;
 	};
 };
 
@@ -803,7 +804,7 @@ export type HonoraryMember = {
 		description?: string;
 		_type: 'extendedImage';
 	};
-	memberSince?: string;
+	memberSince: string;
 };
 
 export type Person = {
@@ -827,7 +828,6 @@ export type Person = {
 		description?: string;
 		_type: 'extendedImage';
 	};
-	email: string;
 	phone?: string;
 	affiliations?: Array<{
 		department: {
@@ -855,7 +855,7 @@ export type Role = {
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
-	title?: string;
+	title: string;
 	email?: string;
 };
 
@@ -1095,7 +1095,7 @@ export type Author = {
 		_type: 'extendedImage';
 	};
 	email: string;
-	jobTitle?: string;
+	jobTitle: string;
 };
 
 export type ExtendedImage = {
@@ -1275,13 +1275,13 @@ export type AllSanitySchemaTypes =
 	| Blockquote
 	| Stats
 	| Link
-	| InternalLink
 	| SingleGroupPage
 	| Privacy
 	| BlockContent
 	| NewsOverview
 	| Membership
 	| Imprint
+	| InternalLink
 	| GroupsPage
 	| Contact
 	| AboutUs
@@ -1395,7 +1395,7 @@ export type HomePageQueryResult = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			features: Array<{
+			features?: Array<{
 				title: string;
 				intro: string;
 				icon: string;
@@ -1455,7 +1455,7 @@ export type HomePageQueryResult = {
 		testimonialSection: {
 			title: string;
 			subtitle: string;
-			testimonials: Array<{
+			testimonials?: Array<{
 				_ref: string;
 				_type: 'reference';
 				_weak?: boolean;
@@ -1554,7 +1554,7 @@ export type NewsArticleContentQueryResult = {
 			_type: 'extendedImage';
 		};
 		lastName: string;
-		jobTitle: string | null;
+		jobTitle: string;
 	};
 	body: Array<
 		| ({

@@ -22,7 +22,7 @@ const newsArticle = defineType({
 			type: 'datetime',
 			initialValue: () => new Date().toISOString(),
 			group: 'general',
-			validation: rule => rule.required().error('Es muss ein Datum ausgewählt werden.'),
+			validation: Rule => Rule.required().error('Es muss ein Datum ausgewählt werden.'),
 		}),
 
 		titleField,
@@ -34,8 +34,8 @@ const newsArticle = defineType({
 			type: 'array',
 			of: [{ type: 'reference', to: [{ type: 'news.category' }] }],
 			group: 'general',
-			validation: rule =>
-				rule.required().error('Es muss mindestens eine Kategorie ausgewählt werden.'),
+			validation: Rule =>
+				Rule.required().error('Es muss mindestens eine Kategorie ausgewählt werden.'),
 		}),
 
 		// meta

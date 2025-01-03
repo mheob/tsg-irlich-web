@@ -2,7 +2,6 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
-import { requiredRule } from '@/shared/validation-rules';
 
 export const newsField = defineField({
 	title: 'News',
@@ -11,5 +10,5 @@ export const newsField = defineField({
 	icon: RiLinksLine,
 	group: 'news',
 	fields: [...getDefaultPageFieldsWithGroup()],
-	validation: rule => [requiredRule(rule, 'News')],
+	validation: Rule => [Rule.required().error('News sind erforderlich')],
 });

@@ -2,7 +2,6 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
-import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
 
 export const visionField = defineField({
 	title: 'Vision',
@@ -18,11 +17,11 @@ export const visionField = defineField({
 			name: 'cta',
 			type: 'string',
 			description: 'Text, der auf dem Call to Action Button angezeigt wird.',
-			validation: rule => [
-				minLengthRule(rule, 5, 'Der "Button Text"'),
-				maxLengthRule(rule, 25, 'Der "Button Text"'),
+			validation: Rule => [
+				Rule.required().min(5).error('Der "Button Text" muss mindestens 5 Zeichen lang sein'),
+				Rule.max(25).warning('Der "Button Text" sollte nicht länger als 25 Zeichen sein'),
 			],
 		}),
 	],
-	validation: rule => [requiredRule(rule, 'Vision')],
+	validation: Rule => [Rule.required().error('Vision ist erforderlich')],
 });

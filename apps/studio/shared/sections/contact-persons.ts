@@ -3,7 +3,6 @@ import { defineField } from 'sanity';
 
 import { contactPersonsField } from '@/shared/fields/contact';
 import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
-import { requiredRule } from '@/shared/validation-rules';
 
 export const contactPersonsSectionField = defineField({
 	title: 'Ansprechpartner',
@@ -12,5 +11,5 @@ export const contactPersonsSectionField = defineField({
 	icon: RiLinksLine,
 	group: 'contactPersons',
 	fields: [...getDefaultPageFieldsWithGroup(), { ...contactPersonsField, group: undefined }],
-	validation: rule => [requiredRule(rule, 'Ansprechpartner')],
+	validation: Rule => [Rule.required().error('Ansprechpartner ist erforderlich')],
 });
