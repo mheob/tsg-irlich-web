@@ -5,7 +5,6 @@ const simpleBlockContent = defineField({
 	title: 'Simple Block Content',
 	name: 'simpleBlockContent',
 	type: 'object',
-	description: 'Simple text block',
 	icon: RiFileTextLine,
 	fields: [
 		{

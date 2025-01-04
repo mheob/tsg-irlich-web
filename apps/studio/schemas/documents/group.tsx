@@ -12,8 +12,8 @@ const group = defineType({
 			name: 'title',
 			type: 'string',
 			validation: Rule => [
-				Rule.required().min(2).error('Der Name muss mindestens 2 Zeichen lang sein'),
-				Rule.max(64).warning('Der Name sollte nicht länger als 64 Zeichen sein'),
+				Rule.required().min(2).error('Name muss mindestens 2 Zeichen lang sein'),
+				Rule.max(64).warning('Name sollte nicht länger als 64 Zeichen sein'),
 			],
 		}),
 
@@ -22,7 +22,7 @@ const group = defineType({
 			name: 'email',
 			type: 'email',
 			description: 'Die E-Mail-Adresse der Gruppe bzw. Mannschaft.',
-			validation: Rule => [Rule.required().error('Die E-Mail ist erforderlich')],
+			validation: Rule => [Rule.required().error('E-Mail ist erforderlich')],
 		}),
 
 		defineField({
@@ -30,17 +30,27 @@ const group = defineType({
 			name: 'description',
 			type: 'simpleBlockContent',
 			description: 'Eine Beschreibung der Gruppe / Mannschaft.',
-			validation: Rule => [Rule.required().error('Die Beschreibung ist erforderlich')],
+			validation: Rule => [Rule.required().error('Beschreibung ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Ist eine Sportgruppe',
-			name: 'isSportGroup',
-			type: 'boolean',
-			description: 'Wenn "Ja", wird die Gruppe bei den Sportgruppen angezeigt.',
-			initialValue: true,
+			title: 'Abteilung',
+			name: 'department',
+			type: 'string',
+			description: 'Die Abteilung der Gruppe / Mannschaft.',
+			options: {
+				layout: 'dropdown',
+				list: [
+					{ title: 'Breitensport', value: 'massSports' },
+					{ title: 'Fußball', value: 'soccer' },
+					{ title: 'PR-Team', value: 'pr' },
+					{ title: 'Vorstand', value: 'board' },
+				],
+			},
+			validation: Rule => [Rule.required().error('Abteilung ist erforderlich')],
 		}),
 
+		// TODO: define a strategy for icons
 		defineField({
 			title: 'Icon',
 			name: 'icon',
@@ -65,17 +75,17 @@ const group = defineType({
 					{ title: 'Layout Spalte Zeile', value: 'RiLayoutColumnLine' },
 				],
 			},
-			validation: Rule => [Rule.required().error('Das Icon ist erforderlich')],
+			validation: Rule => [Rule.required().error('Icon ist erforderlich')],
 		}),
 
 		defineField({
 			title: 'Bild',
 			name: 'image',
 			type: 'extendedImage',
-			validation: Rule => [Rule.required().error('Das Bild ist erforderlich')],
+			validation: Rule => [Rule.required().error('Bild ist erforderlich')],
 		}),
 	],
-	validation: Rule => [Rule.required().error('Die Gruppe ist erforderlich')],
+	validation: Rule => [Rule.required().error('Gruppe ist erforderlich')],
 	orderings: [
 		{
 			title: 'nach Name - aufsteigend',
