@@ -14,6 +14,7 @@ export function isExcludedDefaultListItem(id?: string) {
 		'news.article',
 		'news.category',
 		'person',
+		'role',
 	].includes(id);
 }
 
@@ -71,6 +72,7 @@ function getGroupPersons(S: StructureBuilder): ListItemBuilder[] {
 						S.documentTypeListItem('author'),
 						S.documentTypeListItem('honoraryMember'),
 						S.documentTypeListItem('person'),
+						S.documentTypeListItem('role'),
 					]),
 			),
 	];

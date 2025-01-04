@@ -15,3 +15,21 @@
  * Invalid: "+49 123456789" (missing space)
  */
 export const phoneFieldRegex = /^\+\d{2}\s\d{2,5}\s\d+$/;
+
+/**
+ * Regular expression for validating time strings in 24-hour format "HH:MM"
+ *
+ * Pattern explanation:
+ * - Starts with either:
+ *   - [01] followed by any digit (00-19), or
+ *   - 2 followed by [0-3] (20-23)
+ * - Followed by a colon
+ * - Ends with [0-5] followed by any digit (00-59 minutes)
+ *
+ * @example
+ * Valid: "09:30"
+ * Valid: "23:59"
+ * Invalid: "24:00" (hours must be 00-23)
+ * Invalid: "12:60" (minutes must be 00-59)
+ */
+export const timeFieldRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;

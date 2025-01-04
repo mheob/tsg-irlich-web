@@ -1,6 +1,7 @@
 import { RiUserSmileLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
+import TextInput from '@/components/text-input';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
@@ -59,6 +60,7 @@ const person = defineType({
 							type: 'text',
 							description:
 								'Kurze Aufgabenbeschreibung zum Posten der Person (ca. 270 bis 330 Zeichen).',
+							components: { input: TextInput },
 							validation: Rule => [
 								Rule.required()
 									.min(128)
@@ -74,6 +76,7 @@ const person = defineType({
 							name: 'description',
 							type: 'text',
 							description: 'Kurze Beschreibung als Vision der Person (ca. 270 bis 330 Zeichen).',
+							components: { input: TextInput },
 							validation: Rule => [
 								Rule.required()
 									.min(128)

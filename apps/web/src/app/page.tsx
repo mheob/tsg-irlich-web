@@ -21,6 +21,9 @@ import Stats from './_home/stats';
 import Testimonials from './_home/testimonials';
 import Vision from './_home/vision';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 60; // 1 minute
+
 export const metadata: Metadata = {
 	description:
 		'Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.',

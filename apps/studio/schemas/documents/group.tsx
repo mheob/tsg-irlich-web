@@ -57,16 +57,16 @@ const group = defineType({
 			type: 'string',
 			description: (
 				<>
-					Name des Icons aus{' '}
+					Wir nutzen die{' '}
 					<a
-						href="https://react-icons.github.io/react-icons"
+						href="https://www.dosb.de/piktogramme/download"
 						rel="noreferrer noopener"
 						target="_blank"
 					>
-						react-icons.github.io/react-icons
+						Sportdeutschland-Piktogramme
 					</a>
 					.<br />
-					Wird bspw. auf der Startseite angezeigt.
+					Wird bspw. auf der Start- und Gruppen-Übersichts-Seite angezeigt.
 				</>
 			),
 			options: {
@@ -79,13 +79,33 @@ const group = defineType({
 		}),
 
 		defineField({
-			title: 'Bild',
+			title: 'Hintergrundbild',
 			name: 'image',
 			type: 'extendedImage',
+			description:
+				'Das Hintergrundbild wird z.B. auf der Gruppen-Übersicht angezeigt, wenn man über eine Gruppe hovered.',
 			validation: Rule => [Rule.required().error('Bild ist erforderlich')],
 		}),
+
+		defineField({
+			title: 'Bildergalerie',
+			name: 'images',
+			type: 'array',
+			of: [{ type: 'extendedImage' }],
+			description: 'Es können bis zu drei Bilder ausgewählt werden.',
+			validation: Rule => [
+				Rule.min(1).error('Es muss mindestens ein Bild ausgewählt werden.'),
+				Rule.max(3).error('Es dürfen maximal drei Bilder ausgewählt werden.'),
+			],
+		}),
+
+		defineField({
+			title: 'Trainingszeiten und -orte',
+			name: 'trainingTimes',
+			type: 'array',
+			of: [{ type: 'trainingTime' }],
+		}),
 	],
-	validation: Rule => [Rule.required().error('Gruppe ist erforderlich')],
 	orderings: [
 		{
 			title: 'nach Name - aufsteigend',

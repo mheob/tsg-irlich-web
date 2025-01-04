@@ -18,6 +18,7 @@ import metFields from './objects/meta';
 import simpleBlockContent from './objects/simple-block-content';
 import socialFields from './objects/social-fields';
 import stats from './objects/stats';
+import trainingTime from './objects/training-time';
 import blockContent from './sections/block-content';
 import blockquote from './sections/blockquote';
 import grid from './sections/grid';
@@ -64,7 +65,7 @@ export const schemaTypes = [
 	simpleBlockContent,
 	socialFields,
 	stats,
-
+	trainingTime,
 	// Sections
 	blockContent,
 	blockquote,
