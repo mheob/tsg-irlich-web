@@ -4,8 +4,6 @@ import type { TextInputProps } from 'sanity';
 export default function TextInput(props: Readonly<TextInputProps>) {
 	const { renderDefault, value } = props;
 
-	console.log({ value });
-
 	return (
 		<Stack space={3}>
 			{renderDefault(props)}

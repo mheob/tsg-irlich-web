@@ -9,6 +9,7 @@ import testimonial from './documents/testimonial';
 import venue from './documents/venue';
 import columns from './objects/columns';
 import contactTo from './objects/contact-to';
+import documentDownload from './objects/document-download';
 import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
 import imageCard from './objects/image-card';
@@ -56,6 +57,7 @@ export const schemaTypes = [
 	// Objects
 	columns,
 	contactTo,
+	documentDownload,
 	extendedImage,
 	externalLink,
 	imageCard,
@@ -66,6 +68,7 @@ export const schemaTypes = [
 	socialFields,
 	stats,
 	trainingTime,
+
 	// Sections
 	blockContent,
 	blockquote,
