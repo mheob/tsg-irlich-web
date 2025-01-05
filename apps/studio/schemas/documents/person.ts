@@ -1,10 +1,10 @@
 import { RiUserSmileLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
+import TextInput from '@/components/text-input';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
-import { requiredRule } from '@/shared/validation-rules';
 
 const person = defineType({
 	title: 'Ansprechpartner',
@@ -38,7 +38,9 @@ const person = defineType({
 							type: 'reference',
 							to: [{ type: 'group' }],
 							description: 'Die Gruppe oder Abteilung der Person.',
-							validation: rule => [requiredRule(rule, 'Die Rolle oder Funktion')],
+							validation: Rule => [
+								Rule.required().error('Die Gruppe oder Abteilung ist erforderlich'),
+							],
 						}),
 
 						defineField({
@@ -47,7 +49,9 @@ const person = defineType({
 							type: 'reference',
 							to: [{ type: 'role' }],
 							description: 'Die Rolle oder Funktion der Person (z.B. Vorstand Finanzen).',
-							validation: rule => [requiredRule(rule, 'Die Rolle oder Funktion')],
+							validation: Rule => [
+								Rule.required().error('Die Rolle oder Funktion ist erforderlich'),
+							],
 						}),
 
 						defineField({
@@ -56,14 +60,14 @@ const person = defineType({
 							type: 'text',
 							description:
 								'Kurze Aufgabenbeschreibung zum Posten der Person (ca. 270 bis 330 Zeichen).',
-							validation: rule => [
-								rule
-									.required()
+							components: { input: TextInput },
+							validation: Rule => [
+								Rule.required()
 									.min(128)
 									.error('Die Aufgabenbeschreibung muss mindestens 128 Zeichen lang sein.'),
-								rule
-									.max(330)
-									.warning('Die Aufgabenbeschreibung sollte maximal 330 Zeichen lang sein.'),
+								Rule.max(330).warning(
+									'Die Aufgabenbeschreibung sollte maximal 330 Zeichen lang sein.',
+								),
 							],
 						}),
 
@@ -72,14 +76,14 @@ const person = defineType({
 							name: 'description',
 							type: 'text',
 							description: 'Kurze Beschreibung als Vision der Person (ca. 270 bis 330 Zeichen).',
-							validation: rule => [
-								rule
-									.required()
+							components: { input: TextInput },
+							validation: Rule => [
+								Rule.required()
 									.min(128)
 									.error('Die Beschreibung (Vision) muss mindestens 128 Zeichen lang sein.'),
-								rule
-									.max(330)
-									.warning('Die Beschreibung (Vision) sollte maximal 330 Zeichen lang sein.'),
+								Rule.max(330).warning(
+									'Die Beschreibung (Vision) sollte maximal 330 Zeichen lang sein.',
+								),
 							],
 						}),
 					],

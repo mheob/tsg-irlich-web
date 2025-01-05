@@ -39,28 +39,6 @@ export type SanityImageDimensions = {
 	aspectRatio?: number;
 };
 
-export type SanityFileAsset = {
-	_id: string;
-	_type: 'sanity.fileAsset';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	originalFilename?: string;
-	label?: string;
-	title?: string;
-	description?: string;
-	altText?: string;
-	sha1hash?: string;
-	extension?: string;
-	mimeType?: string;
-	size?: number;
-	assetId?: string;
-	uploadId?: string;
-	path?: string;
-	url?: string;
-	source?: SanityAssetSourceData;
-};
-
 export type Geopoint = {
 	_type: 'geopoint';
 	lat?: number;
@@ -140,6 +118,19 @@ export type Blockquote = {
 	author?: string;
 };
 
+export type TrainingTime = {
+	_type: 'trainingTime';
+	weekday: 'Montag' | 'Dienstag' | 'Mittwoch' | 'Donnerstag' | 'Freitag' | 'Samstag' | 'Sonntag';
+	startTime: string;
+	endTime: string;
+	location: {
+		_ref: string;
+		_type: 'reference';
+		_weak?: boolean;
+		[internalGroqTypeReferenceTo]?: 'venue';
+	};
+};
+
 export type Stats = {
 	_type: 'stats';
 	title: string;
@@ -152,72 +143,6 @@ export type Link = {
 	href?: string;
 };
 
-export type InternalLink = {
-	_type: 'internalLink';
-	title?: string;
-	link?:
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'news.article';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'home';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'aboutUs';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'contact';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'groupsPage';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'imprint';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'membership';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'newsOverview';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'privacy';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'singleGroupPage';
-		  };
-};
-
 export type SingleGroupPage = {
 	_id: string;
 	_type: 'singleGroupPage';
@@ -228,39 +153,6 @@ export type SingleGroupPage = {
 	subtitle: string;
 	intro?: string;
 	meta?: MetaFields;
-	content?: {
-		gallerySection?: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			images?: Array<{
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'extendedImage';
-				_key: string;
-			}>;
-		};
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
-		};
-	};
 };
 
 export type Privacy = {
@@ -274,11 +166,11 @@ export type Privacy = {
 	subtitle: string;
 	intro?: string;
 	meta?: MetaFields;
-	introText?: SimpleBlockContent;
+	introText: SimpleBlockContent;
 	address: string;
 	phone?: string;
 	email: string;
-	content?: BlockContent;
+	content: BlockContent;
 };
 
 export type BlockContent = {
@@ -357,6 +249,11 @@ export type Membership = {
 	subtitle: string;
 	intro?: string;
 	meta?: MetaFields;
+	documents: Array<
+		{
+			_key: string;
+		} & DocumentDownload
+	>;
 	contactPersons: Array<{
 		_ref: string;
 		_type: 'reference';
@@ -378,16 +275,83 @@ export type Imprint = {
 	intro?: string;
 	meta?: MetaFields;
 	address: string;
-	registerNo?: string;
-	registerCourt?: string;
-	represented?: string;
-	phone?: string;
+	registerCourt: string;
+	registerNo: string;
+	represented: string;
 	email: string;
-	responsible?: string;
-	arbitrationBoard?: string;
-	technicalQuestionsName?: string;
-	technicalQuestionsEmail?: string;
-	support?: SimpleBlockContent;
+	contactForm: InternalLink;
+	responsible: string;
+	technicalQuestionsName: string;
+	technicalQuestionsEmail: string;
+	socialMedia: string;
+	support: SimpleBlockContent;
+	credits: string;
+};
+
+export type InternalLink = {
+	_type: 'internalLink';
+	title?: string;
+	link?:
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'news.article';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'home';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'aboutUs';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'contact';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'groupsPage';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'imprint';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'membership';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'newsOverview';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'privacy';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'singleGroupPage';
+		  };
 };
 
 export type GroupsPage = {
@@ -489,7 +453,7 @@ export type AboutUs = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			images?: Array<{
+			images: Array<{
 				asset?: {
 					_ref: string;
 					_type: 'reference';
@@ -558,7 +522,7 @@ export type Home = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			features: Array<{
+			features?: Array<{
 				title: string;
 				intro: string;
 				icon: string;
@@ -618,7 +582,7 @@ export type Home = {
 		testimonialSection: {
 			title: string;
 			subtitle: string;
-			testimonials: Array<{
+			testimonials?: Array<{
 				_ref: string;
 				_type: 'reference';
 				_weak?: boolean;
@@ -667,8 +631,44 @@ export type ImageCard = {
 
 export type ExternalLink = {
 	_type: 'externalLink';
+	title: string;
+	url: string;
+};
+
+export type DocumentDownload = {
+	_type: 'documentDownload';
+	title: string;
+	document: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.fileAsset';
+		};
+		_type: 'file';
+	};
+};
+
+export type SanityFileAsset = {
+	_id: string;
+	_type: 'sanity.fileAsset';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	originalFilename?: string;
+	label?: string;
 	title?: string;
+	description?: string;
+	altText?: string;
+	sha1hash?: string;
+	extension?: string;
+	mimeType?: string;
+	size?: number;
+	assetId?: string;
+	uploadId?: string;
+	path?: string;
 	url?: string;
+	source?: SanityAssetSourceData;
 };
 
 export type ContactNameMail = {
@@ -748,11 +748,11 @@ export type Venue = {
 		_type: 'image';
 	};
 	location?: {
-		name?: string;
-		street?: string;
-		houseNumber?: string;
+		name: string;
+		street: string;
+		houseNumber: string;
 		zipCode?: string;
-		city?: string;
+		city: string;
 	};
 };
 
@@ -803,7 +803,7 @@ export type HonoraryMember = {
 		description?: string;
 		_type: 'extendedImage';
 	};
-	memberSince?: string;
+	memberSince: string;
 };
 
 export type Person = {
@@ -827,7 +827,6 @@ export type Person = {
 		description?: string;
 		_type: 'extendedImage';
 	};
-	email: string;
 	phone?: string;
 	affiliations?: Array<{
 		department: {
@@ -855,7 +854,7 @@ export type Role = {
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
-	title?: string;
+	title: string;
 	email?: string;
 };
 
@@ -868,7 +867,7 @@ export type Group = {
 	title: string;
 	email: string;
 	description: SimpleBlockContent;
-	isSportGroup?: boolean;
+	department: 'massSports' | 'soccer' | 'pr' | 'board';
 	icon: 'RiTeamLine' | 'RiLayoutColumnLine';
 	image: {
 		asset?: {
@@ -883,6 +882,25 @@ export type Group = {
 		description?: string;
 		_type: 'extendedImage';
 	};
+	images?: Array<{
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+		_key: string;
+	}>;
+	trainingTimes?: Array<
+		{
+			_key: string;
+		} & TrainingTime
+	>;
 };
 
 export type SimpleBlockContent = {
@@ -1095,7 +1113,7 @@ export type Author = {
 		_type: 'extendedImage';
 	};
 	email: string;
-	jobTitle?: string;
+	jobTitle: string;
 };
 
 export type ExtendedImage = {
@@ -1266,28 +1284,30 @@ export type AllSanitySchemaTypes =
 	| SanityImagePaletteSwatch
 	| SanityImagePalette
 	| SanityImageDimensions
-	| SanityFileAsset
 	| Geopoint
 	| NewsOverviewCategory
 	| NewsArticlePage
 	| Spacer
 	| Grid
 	| Blockquote
+	| TrainingTime
 	| Stats
 	| Link
-	| InternalLink
 	| SingleGroupPage
 	| Privacy
 	| BlockContent
 	| NewsOverview
 	| Membership
 	| Imprint
+	| InternalLink
 	| GroupsPage
 	| Contact
 	| AboutUs
 	| Home
 	| ImageCard
 	| ExternalLink
+	| DocumentDownload
+	| SanityFileAsset
 	| ContactNameMail
 	| Columns
 	| SiteSettings
@@ -1395,7 +1415,7 @@ export type HomePageQueryResult = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			features: Array<{
+			features?: Array<{
 				title: string;
 				intro: string;
 				icon: string;
@@ -1455,7 +1475,7 @@ export type HomePageQueryResult = {
 		testimonialSection: {
 			title: string;
 			subtitle: string;
-			testimonials: Array<{
+			testimonials?: Array<{
 				_ref: string;
 				_type: 'reference';
 				_weak?: boolean;
@@ -1554,7 +1574,7 @@ export type NewsArticleContentQueryResult = {
 			_type: 'extendedImage';
 		};
 		lastName: string;
-		jobTitle: string | null;
+		jobTitle: string;
 	};
 	body: Array<
 		| ({

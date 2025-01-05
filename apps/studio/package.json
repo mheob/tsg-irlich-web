@@ -14,6 +14,7 @@
 	"dependencies": {
 		"@sanity/assist": "^3.0.9",
 		"@sanity/locale-de-de": "^1.1.15",
+		"@sanity/ui": "^2.10.18",
 		"@sanity/vision": "^3.68.3",
 		"@tsg-irlich-web/shared": "workspace:*",
 		"dotenv": "^16.4.7",

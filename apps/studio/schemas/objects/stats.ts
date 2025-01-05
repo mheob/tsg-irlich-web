@@ -1,8 +1,6 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
-
 const stats = defineField({
 	title: 'Statistiken',
 	name: 'stats',
@@ -13,16 +11,16 @@ const stats = defineField({
 			title: 'Beschriftung',
 			name: 'title',
 			type: 'string',
-			validation: rule => [
-				minLengthRule(rule, 2, 'Die Beschriftung'),
-				maxLengthRule(rule, 25, 'Die Beschriftung'),
+			validation: Rule => [
+				Rule.required().min(2).error('Die Beschriftung muss mindestens 2 Zeichen lang sein'),
+				Rule.max(25).warning('Die Beschriftung sollte nicht länger als 25 Zeichen sein'),
 			],
 		}),
 		defineField({
 			title: 'Wert',
 			name: 'value',
 			type: 'string',
-			validation: rule => [requiredRule(rule, 'Der Wert')],
+			validation: Rule => [Rule.required().error('Der Wert ist erforderlich')],
 		}),
 		defineField({
 			title: 'Suffix (optional, z.B. "+")',
@@ -30,7 +28,7 @@ const stats = defineField({
 			type: 'string',
 		}),
 	],
-	validation: rule => [requiredRule(rule, 'Die Statistik')],
+	validation: Rule => [Rule.required().error('Die Statistik ist erforderlich')],
 });
 
 export default stats;

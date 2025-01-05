@@ -11,16 +11,15 @@ const meta = defineField({
 			title: 'Meta-Title (überschreibt den Standardtitel)',
 			name: 'metaTitle',
 			type: 'string',
-			validation: rule =>
-				rule.max(65).warning('Der Titel sollte idealerweise maximal 65 Zeichen lang sein.'),
+			validation: Rule =>
+				Rule.max(65).warning('Der Titel sollte idealerweise maximal 65 Zeichen lang sein.'),
 		}),
 		defineField({
 			title: 'Meta-Beschreibung',
 			name: 'metaDescription',
 			type: 'text',
-			validation: rule =>
-				rule
-					.min(130)
+			validation: Rule =>
+				Rule.min(130)
 					.max(160)
 					.warning('Die Beschreibung sollte idealerweise von 130 bis 160 Zeichen lang sein.'),
 		}),
@@ -36,8 +35,8 @@ const meta = defineField({
 					name: 'alt',
 					title: 'Alternativer Text',
 					type: 'string',
-					validation: rule =>
-						rule.custom((alt, context) => {
+					validation: Rule =>
+						Rule.custom((alt, context) => {
 							// eslint-disable-next-line ts/no-explicit-any
 							const ogImage = context.document?.ogImage as any;
 							if (ogImage?.asset?._ref && !alt) return 'Required';

@@ -18,9 +18,9 @@ export const galleryField = defineField({
 			type: 'array',
 			of: [{ type: 'extendedImage' }],
 			description: 'Diese gewählten Bilder werden in der gewünschten Reihenfolge angezeigt.',
-			// validation: rule => [
-			// 	exactLengthRule(rule, 3, 'Es sollten genau 3 Bilder ausgewählt werden.'),
-			// ],
+			validation: Rule => [
+				Rule.required().length(3).error('Es sollten genau 3 Bilder ausgewählt werden.'),
+			],
 		}),
 	],
 });

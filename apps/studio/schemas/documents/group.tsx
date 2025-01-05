@@ -1,8 +1,6 @@
 import { RiTeamLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { maxLengthRule, minLengthRule, requiredRule } from '@/shared/validation-rules';
-
 const group = defineType({
 	title: 'Gruppe / Mannschaft',
 	name: 'group',
@@ -13,7 +11,10 @@ const group = defineType({
 			title: 'Name',
 			name: 'title',
 			type: 'string',
-			validation: rule => [minLengthRule(rule, 2, 'Der Name'), maxLengthRule(rule, 64, 'Der Name')],
+			validation: Rule => [
+				Rule.required().min(2).error('Name muss mindestens 2 Zeichen lang sein'),
+				Rule.max(64).warning('Name sollte nicht länger als 64 Zeichen sein'),
+			],
 		}),
 
 		defineField({
@@ -21,7 +22,7 @@ const group = defineType({
 			name: 'email',
 			type: 'email',
 			description: 'Die E-Mail-Adresse der Gruppe bzw. Mannschaft.',
-			validation: rule => [requiredRule(rule, 'Die E-Mail')],
+			validation: Rule => [Rule.required().error('E-Mail ist erforderlich')],
 		}),
 
 		defineField({
@@ -29,33 +30,43 @@ const group = defineType({
 			name: 'description',
 			type: 'simpleBlockContent',
 			description: 'Eine Beschreibung der Gruppe / Mannschaft.',
-			validation: rule => [requiredRule(rule, 'Die Beschreibung')],
+			validation: Rule => [Rule.required().error('Beschreibung ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Ist eine Sportgruppe',
-			name: 'isSportGroup',
-			type: 'boolean',
-			description: 'Wenn "Ja", wird die Gruppe bei den Sportgruppen angezeigt.',
-			initialValue: true,
+			title: 'Abteilung',
+			name: 'department',
+			type: 'string',
+			description: 'Die Abteilung der Gruppe / Mannschaft.',
+			options: {
+				layout: 'dropdown',
+				list: [
+					{ title: 'Breitensport', value: 'massSports' },
+					{ title: 'Fußball', value: 'soccer' },
+					{ title: 'PR-Team', value: 'pr' },
+					{ title: 'Vorstand', value: 'board' },
+				],
+			},
+			validation: Rule => [Rule.required().error('Abteilung ist erforderlich')],
 		}),
 
+		// TODO: define a strategy for icons
 		defineField({
 			title: 'Icon',
 			name: 'icon',
 			type: 'string',
 			description: (
 				<>
-					Name des Icons aus{' '}
+					Wir nutzen die{' '}
 					<a
-						href="https://react-icons.github.io/react-icons"
+						href="https://www.dosb.de/piktogramme/download"
 						rel="noreferrer noopener"
 						target="_blank"
 					>
-						react-icons.github.io/react-icons
+						Sportdeutschland-Piktogramme
 					</a>
 					.<br />
-					Wird bspw. auf der Startseite angezeigt.
+					Wird bspw. auf der Start- und Gruppen-Übersichts-Seite angezeigt.
 				</>
 			),
 			options: {
@@ -64,17 +75,37 @@ const group = defineType({
 					{ title: 'Layout Spalte Zeile', value: 'RiLayoutColumnLine' },
 				],
 			},
-			validation: rule => [requiredRule(rule, 'Das Icon')],
+			validation: Rule => [Rule.required().error('Icon ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Bild',
+			title: 'Hintergrundbild',
 			name: 'image',
 			type: 'extendedImage',
-			validation: rule => [requiredRule(rule, 'Das Bild')],
+			description:
+				'Das Hintergrundbild wird z.B. auf der Gruppen-Übersicht angezeigt, wenn man über eine Gruppe hovered.',
+			validation: Rule => [Rule.required().error('Bild ist erforderlich')],
+		}),
+
+		defineField({
+			title: 'Bildergalerie',
+			name: 'images',
+			type: 'array',
+			of: [{ type: 'extendedImage' }],
+			description: 'Es können bis zu drei Bilder ausgewählt werden.',
+			validation: Rule => [
+				Rule.min(1).error('Es muss mindestens ein Bild ausgewählt werden.'),
+				Rule.max(3).error('Es dürfen maximal drei Bilder ausgewählt werden.'),
+			],
+		}),
+
+		defineField({
+			title: 'Trainingszeiten und -orte',
+			name: 'trainingTimes',
+			type: 'array',
+			of: [{ type: 'trainingTime' }],
 		}),
 	],
-	validation: rule => [requiredRule(rule, 'Die Gruppe')],
 	orderings: [
 		{
 			title: 'nach Name - aufsteigend',

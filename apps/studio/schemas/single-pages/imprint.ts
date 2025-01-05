@@ -3,10 +3,9 @@ import { RiSettings5Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
-import { addressField, emailField, phoneField } from '@/shared/fields/contact';
+import { addressField, emailField } from '@/shared/fields/contact';
 import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
-import { phoneFieldRegexRule } from '@/shared/validation-rules';
 
 const imprintPage = defineType({
 	title: 'Impressum',
@@ -30,74 +29,84 @@ const imprintPage = defineType({
 			group: 'content',
 		}),
 		defineField({
-			title: 'Registernummer',
-			name: 'registerNo',
-			type: 'string',
-			group: 'content',
-			// validation: rule => [requiredRule(rule, 'Die Registernummer')],
-		}),
-		defineField({
 			title: 'Registergericht',
 			name: 'registerCourt',
 			type: 'string',
 			group: 'content',
-			// validation: rule => [requiredRule(rule, 'Das Registergericht')],
+			validation: Rule => [Rule.required().error('Registergericht ist erforderlich')],
+		}),
+		defineField({
+			title: 'Registernummer',
+			name: 'registerNo',
+			type: 'string',
+			group: 'content',
+			validation: Rule => [Rule.required().error('Registernummer ist erforderlich')],
 		}),
 		defineField({
 			title: 'Vertreten durch',
 			name: 'represented',
-			type: 'string',
+			type: 'text',
 			group: 'content',
-			// validation: rule => [requiredRule(rule, 'Das Feld "Vertreten durch"')],
-		}),
-		defineField({
-			...phoneField,
-			group: 'content',
-			validation: rule => [
-				// requiredRule(rule, 'Telefon'),
-				phoneFieldRegexRule(rule),
-			],
+			validation: Rule => [Rule.required().error('Feld "Vertreten durch" ist erforderlich')],
 		}),
 		defineField({
 			...emailField,
 			group: 'content',
 		}),
 		defineField({
-			title: 'Redaktionell verantwortlich',
-			name: 'responsible',
-			type: 'text',
+			title: 'Kontaktformular',
+			name: 'contactForm',
+			type: 'internalLink',
 			group: 'content',
-			// validation: rule => [requiredRule(rule, 'Das Feld "Redaktionell verantwortlich')],
+			validation: Rule => [Rule.required().error('Link zum Kontaktformular ist erforderlich')],
 		}),
 		defineField({
-			title: 'Verbraucherstreitbeilegung / Universalschlichtungsstelle',
-			name: 'arbitrationBoard',
+			title: 'Redaktionell verantwortlich',
+			name: 'responsible',
 			type: 'string',
 			group: 'content',
-			// validation: rule => [
-			// 	requiredRule(rule, '"Verbraucherstreitbeilegung / Universalschlichtungsstelle"'),
-			// ],
+			validation: Rule => [Rule.required().error('Redaktionell verantwortlich ist erforderlich')],
 		}),
 		defineField({
 			title: 'Name Technischer Ansprechpartner',
 			name: 'technicalQuestionsName',
-			type: 'text',
+			type: 'string',
 			group: 'content',
-			// validation: rule => [requiredRule(rule, 'Das Feld "Name Technischer Ansprechpartner"')],
+			validation: Rule => [
+				Rule.required().error('Name Technischer Ansprechpartner ist erforderlich'),
+			],
 		}),
 		defineField({
 			title: 'E-Mail Technischer Ansprechpartner',
 			name: 'technicalQuestionsEmail',
 			type: 'email',
 			group: 'content',
-			// validation: rule => [requiredRule(rule, 'Das Feld "E-Mail Technischer Ansprechpartner"')],
+			validation: Rule => [
+				Rule.required().error('E-Mail Technischer Ansprechpartner ist erforderlich'),
+			],
+		}),
+		defineField({
+			title: 'Social Media',
+			name: 'socialMedia',
+			type: 'text',
+			group: 'content',
+			validation: Rule => [Rule.required().error('Social Media ist erforderlich')],
 		}),
 		defineField({
 			title: 'Freundliche Unterstützung durch',
 			name: 'support',
 			type: 'simpleBlockContent',
 			group: 'content',
-			// validation: rule => [requiredRule(rule, 'Das Feld "Freundliche Unterstützung durch"')],
+			validation: Rule => [
+				Rule.required().error('Freundliche Unterstützung durch ist erforderlich'),
+			],
+		}),
+		defineField({
+			title: 'Bildnachweise',
+			name: 'credits',
+			type: 'text',
+			group: 'content',
+			validation: Rule => [Rule.required().error('Bildnachweis ist erforderlich')],
 		}),
 	],
 	preview: {

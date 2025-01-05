@@ -11,5 +11,5 @@
  */
 export function formatDate(date: Date | string): string {
 	const dateObject = typeof date === 'string' ? new Date(date) : date;
-	return dateObject.toISOString().split('T')[0];
+	return dateObject.toISOString().slice(2).split('T')[0];
 }

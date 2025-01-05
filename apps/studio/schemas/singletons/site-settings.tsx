@@ -1,14 +1,9 @@
 import { RiLinksLine, RiSettings5Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
+import { phoneFieldRegex } from '@/constants/regex';
 import { meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/fields/meta';
-import {
-	maxLengthRule,
-	minLengthRule,
-	phoneFieldRegexRule,
-	requiredRule,
-} from '@/shared/validation-rules';
 
 const siteSettings = defineType({
 	title: 'Generelle Einstellungen',
@@ -54,7 +49,7 @@ const siteSettings = defineType({
 					name: 'address',
 					type: 'string',
 					description: 'Adresse (Straße Hausnummer, Postleitzahl Ort)',
-					validation: rule => [requiredRule(rule, 'Die Adresse')],
+					validation: Rule => [Rule.required().error('Die Adresse ist erforderlich')],
 				}),
 
 				defineField({
@@ -62,7 +57,12 @@ const siteSettings = defineType({
 					name: 'phone',
 					type: 'string',
 					description: 'Telefonnummer',
-					validation: rule => [requiredRule(rule, 'Die Telefonnummer'), phoneFieldRegexRule(rule)],
+					validation: Rule => [
+						Rule.required().error('Die Telefonnummer ist erforderlich'),
+						Rule.regex(phoneFieldRegex).error(
+							'Telefonnummer ist ungültig, sie muss wie folgt aussehen: +49 123 456789',
+						),
+					],
 				}),
 
 				defineField({
@@ -70,7 +70,7 @@ const siteSettings = defineType({
 					name: 'email',
 					type: 'string',
 					description: 'E-Mail',
-					validation: rule => [requiredRule(rule, 'Die E-Mail')],
+					validation: Rule => [Rule.required().error('Die E-Mail ist erforderlich')],
 				}),
 			],
 		}),
@@ -88,7 +88,7 @@ const siteSettings = defineType({
 					name: 'title',
 					type: 'string',
 					description: 'Titel des Newsletters',
-					validation: rule => [requiredRule(rule, 'Der "Newsletter Titel"')],
+					validation: Rule => [Rule.required().error('Der "Newsletter Titel" ist erforderlich')],
 				}),
 
 				defineField({
@@ -96,9 +96,13 @@ const siteSettings = defineType({
 					name: 'cta',
 					type: 'string',
 					description: 'Text für den Newsletter Absende-Button',
-					validation: rule => [
-						minLengthRule(rule, 3, 'Der "Newsletter Button Text"'),
-						maxLengthRule(rule, 18, 'Der "Newsletter Button Text"'),
+					validation: Rule => [
+						Rule.required()
+							.min(3)
+							.error('Der "Newsletter Button Text" muss mindestens 3 Zeichen lang sein'),
+						Rule.max(18).warning(
+							'Der "Newsletter Button Text" sollte nicht länger als 18 Zeichen sein',
+						),
 					],
 				}),
 			],
