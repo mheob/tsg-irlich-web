@@ -1,5 +1,6 @@
 import { defineField } from 'sanity';
-import slug from 'slugify';
+
+import { slugify } from '@/utils/strings';
 
 export function getHiddenSlugField(slug: string) {
 	return defineField({
@@ -9,7 +10,6 @@ export function getHiddenSlugField(slug: string) {
 		group: 'general',
 		readOnly: true,
 		initialValue: { current: slug },
-		// FIXME: hide the slug field after the initial development phase is over
 		hidden: false,
 	});
 }
@@ -28,7 +28,7 @@ export const slugField = defineField({
 	description: 'Ein Slug muss gesetzt werden, um die Seite anzeigen zu können.',
 	group: 'general',
 	options: {
-		slugify: (input: string) => slug(input, { lower: true, trim: true }),
+		slugify,
 		source: 'title',
 	},
 	validation: Rule => [Rule.required().error('Die Slug ist erforderlich')],
