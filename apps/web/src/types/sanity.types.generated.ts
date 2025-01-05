@@ -39,28 +39,6 @@ export type SanityImageDimensions = {
 	aspectRatio?: number;
 };
 
-export type SanityFileAsset = {
-	_id: string;
-	_type: 'sanity.fileAsset';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	originalFilename?: string;
-	label?: string;
-	title?: string;
-	description?: string;
-	altText?: string;
-	sha1hash?: string;
-	extension?: string;
-	mimeType?: string;
-	size?: number;
-	assetId?: string;
-	uploadId?: string;
-	path?: string;
-	url?: string;
-	source?: SanityAssetSourceData;
-};
-
 export type Geopoint = {
 	_type: 'geopoint';
 	lat?: number;
@@ -140,6 +118,19 @@ export type Blockquote = {
 	author?: string;
 };
 
+export type TrainingTime = {
+	_type: 'trainingTime';
+	weekday: 'Montag' | 'Dienstag' | 'Mittwoch' | 'Donnerstag' | 'Freitag' | 'Samstag' | 'Sonntag';
+	startTime: string;
+	endTime: string;
+	location: {
+		_ref: string;
+		_type: 'reference';
+		_weak?: boolean;
+		[internalGroqTypeReferenceTo]?: 'venue';
+	};
+};
+
 export type Stats = {
 	_type: 'stats';
 	title: string;
@@ -162,39 +153,6 @@ export type SingleGroupPage = {
 	subtitle: string;
 	intro?: string;
 	meta?: MetaFields;
-	content?: {
-		gallerySection?: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			images?: Array<{
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'extendedImage';
-				_key: string;
-			}>;
-		};
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
-		};
-	};
 };
 
 export type Privacy = {
@@ -291,6 +249,11 @@ export type Membership = {
 	subtitle: string;
 	intro?: string;
 	meta?: MetaFields;
+	documents: Array<
+		{
+			_key: string;
+		} & DocumentDownload
+	>;
 	contactPersons: Array<{
 		_ref: string;
 		_type: 'reference';
@@ -672,6 +635,42 @@ export type ExternalLink = {
 	url: string;
 };
 
+export type DocumentDownload = {
+	_type: 'documentDownload';
+	title: string;
+	document: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.fileAsset';
+		};
+		_type: 'file';
+	};
+};
+
+export type SanityFileAsset = {
+	_id: string;
+	_type: 'sanity.fileAsset';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	originalFilename?: string;
+	label?: string;
+	title?: string;
+	description?: string;
+	altText?: string;
+	sha1hash?: string;
+	extension?: string;
+	mimeType?: string;
+	size?: number;
+	assetId?: string;
+	uploadId?: string;
+	path?: string;
+	url?: string;
+	source?: SanityAssetSourceData;
+};
+
 export type ContactNameMail = {
 	_type: 'contactNameMail';
 	name: string;
@@ -868,7 +867,7 @@ export type Group = {
 	title: string;
 	email: string;
 	description: SimpleBlockContent;
-	isSportGroup?: boolean;
+	department: 'massSports' | 'soccer' | 'pr' | 'board';
 	icon: 'RiTeamLine' | 'RiLayoutColumnLine';
 	image: {
 		asset?: {
@@ -883,6 +882,25 @@ export type Group = {
 		description?: string;
 		_type: 'extendedImage';
 	};
+	images?: Array<{
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+		_key: string;
+	}>;
+	trainingTimes?: Array<
+		{
+			_key: string;
+		} & TrainingTime
+	>;
 };
 
 export type SimpleBlockContent = {
@@ -1266,13 +1284,13 @@ export type AllSanitySchemaTypes =
 	| SanityImagePaletteSwatch
 	| SanityImagePalette
 	| SanityImageDimensions
-	| SanityFileAsset
 	| Geopoint
 	| NewsOverviewCategory
 	| NewsArticlePage
 	| Spacer
 	| Grid
 	| Blockquote
+	| TrainingTime
 	| Stats
 	| Link
 	| SingleGroupPage
@@ -1288,6 +1306,8 @@ export type AllSanitySchemaTypes =
 	| Home
 	| ImageCard
 	| ExternalLink
+	| DocumentDownload
+	| SanityFileAsset
 	| ContactNameMail
 	| Columns
 	| SiteSettings
