@@ -22,7 +22,12 @@ export default function Hero({ children, image, subTitle, title, ...props }: Rea
 			{...props}
 		>
 			{image?.alt && image.src && (
-				<Image alt={image.alt} className="absolute inset-0 -z-10" src={image.src} fill />
+				<Image
+					alt={image.alt}
+					className="absolute inset-0 -z-10 object-cover"
+					src={image.src}
+					fill
+				/>
 			)}
 
 			<div className="flex h-full flex-col items-center justify-center pt-40">
