@@ -1,3 +1,5 @@
+/* cSpell:words monday tuesday wednesday thursday friday saturday sunday */
+
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
@@ -11,11 +13,33 @@ const trainingTimeField = defineField({
 	icon: RiLinksLine,
 	fields: [
 		defineField({
+			title: 'Jahreszeit',
+			name: 'season',
+			type: 'string',
+			options: {
+				list: [
+					{ title: 'Ganzjährig', value: 'yearly' },
+					{ title: 'Sommer', value: 'summer' },
+					{ title: 'Winter', value: 'winter' },
+				],
+			},
+			validation: Rule => [Rule.required().error('Jahreszeit ist erforderlich')],
+		}),
+
+		defineField({
 			title: 'Wochentag',
 			name: 'weekday',
 			type: 'string',
 			options: {
-				list: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
+				list: [
+					{ title: 'Montag', value: 'monday' },
+					{ title: 'Dienstag', value: 'tuesday' },
+					{ title: 'Mittwoch', value: 'wednesday' },
+					{ title: 'Donnerstag', value: 'thursday' },
+					{ title: 'Freitag', value: 'friday' },
+					{ title: 'Samstag', value: 'saturday' },
+					{ title: 'Sonntag', value: 'sunday' },
+				],
 			},
 			validation: Rule => [Rule.required().error('Wochentag ist erforderlich')],
 		}),
@@ -51,12 +75,13 @@ const trainingTimeField = defineField({
 		}),
 	],
 	preview: {
-		prepare: ({ weekday, endTime, location, startTime }) => ({
-			title: `${weekday}, ${startTime} - ${endTime} | ${location}`,
+		prepare: ({ weekday, endTime, location, startTime, season }) => ({
+			title: `${season} | ${weekday}, ${startTime} - ${endTime} | ${location}`,
 		}),
 		select: {
 			endTime: 'endTime',
 			location: 'location.title',
+			season: 'season',
 			startTime: 'startTime',
 			weekday: 'weekday',
 		},
