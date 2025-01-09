@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail, MessagesSquare, UserRound, UsersRound } from 'lucide-react';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -11,6 +12,9 @@ import { InputWithLabel } from '@/components/ui/input';
 import SectionHeader from '@/components/ui/section-header';
 import { SelectWithLabel } from '@/components/ui/select';
 import { TextareaWithLabel } from '@/components/ui/textarea';
+import integrationImage from '@/images/home/vision/integration.webp';
+import sportImage from '@/images/home/vision/sport.webp';
+import villageImage from '@/images/home/vision/village.webp';
 import type { ContactNameMail } from '@/types/sanity.types';
 
 const formSchema = z.object({
@@ -68,13 +72,13 @@ export default function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 				<div className="bg-white px-5 py-10 md:flex md:flex-row-reverse md:rounded-lg md:px-14 md:py-24">
 					<div className="hidden md:relative md:block md:w-1/2">
 						<div className="bg-secondary absolute end-0 top-0 grid h-80 w-80 place-content-center rounded-full">
-							IMAGE 1
+							<Image alt="Vision" className="rounded-full" src={integrationImage} fill />
 						</div>
 						<div className="bg-secondary absolute end-[calc(70%-8rem)] top-1/2 grid h-52 w-52 place-content-center rounded-full">
-							IMAGE 2
+							<Image alt="Vision" className="rounded-full" src={sportImage} fill />
 						</div>
 						<div className="bg-secondary absolute bottom-0 end-[calc(25%-8rem)] grid h-52 w-52 place-content-center rounded-full">
-							IMAGE 3
+							<Image alt="Vision" className="rounded-full" src={villageImage} fill />
 						</div>
 					</div>
 
