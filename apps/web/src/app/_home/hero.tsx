@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/ui/section-header';
 import SocialMediaIcon from '@/components/ui/social-media-icon';
 import ArrowCta from '@/icons/design/arrow-cta';
-import YogaImage from '@/images/yoga-tsg-irlich.de.webp';
+import HeroImage from '@/images/home/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import type { Home } from '@/types/sanity.types';
@@ -43,11 +43,12 @@ export default async function Hero({ intro, subtitle, title }: Readonly<HeroProp
 					<Image
 						className={cn(
 							'absolute',
-							'bottom-8 end-[10%] start-[10%] w-[80%]',
-							'md:bottom-0 md:end-auto md:start-1/2 md:w-1/3',
+							'bottom-20 end-[10%] start-[10%] w-[80%]',
+							'md:bottom-10 md:end-auto md:start-1/2 md:w-[40%]',
+							'3xl:bottom-10 3xl:end-auto 3xl:start-1/2 3xl:w-[33%]',
 						)}
 						alt="Ein Frau, die am meditieren ist."
-						src={YogaImage}
+						src={HeroImage}
 					/>
 
 					<nav

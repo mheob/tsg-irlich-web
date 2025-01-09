@@ -59,6 +59,8 @@
   --font-serif: Bebas Neue, ui-serif, Georgia, Cambria, 'Times New Roman',
     Times, serif;
 
+	--breakpoint-3xl: 120rem;
+
 	--padding-container: 1rem;
 }
 

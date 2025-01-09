@@ -1,4 +1,4 @@
-/* cSpell:words monday tuesday wednesday thursday friday saturday sunday */
+// cSpell:words monday tuesday wednesday thursday friday saturday sunday
 
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';

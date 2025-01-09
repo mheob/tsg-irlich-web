@@ -1,7 +1,13 @@
+// cSpell:words taekwondo
+
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/ui/section-header';
+import taekwondoImage from '@/images/home/vision/taekwondo.webp';
+import teamworkImage from '@/images/home/vision/teamwork.webp';
+import zusammenhaltImage from '@/images/home/vision/zusammenhalt.webp';
 import type { Home } from '@/types/sanity.types';
 
 import styles from './vision.module.css';
@@ -15,16 +21,16 @@ export default function Vision({ cta, intro, subtitle, title }: Readonly<VisionP
 				<div className="container relative mx-auto h-80 px-5 md:static">
 					<div className={styles.bgRoundedEdge}></div>
 
-					<div className="bg-secondary absolute bottom-24 start-32 grid size-40 place-content-center rounded-full md:start-[calc(28%-12rem)] md:top-20 md:size-96">
-						IMAGE 1
+					<div className="absolute bottom-24 start-32 size-40 md:start-[calc(28%-12rem)] md:top-20 md:size-96">
+						<Image alt="Vision" className="rounded-full" src={taekwondoImage} fill />
 					</div>
 
-					<div className="bg-secondary absolute -bottom-8 start-48 grid size-32 place-content-center rounded-full md:start-[calc(13%-8rem)] md:top-[calc(50%-3rem)] md:size-64">
-						IMAGE 2
+					<div className="absolute -bottom-8 start-48 size-32 md:start-[calc(13%-8rem)] md:top-[calc(50%-3rem)] md:size-64">
+						<Image alt="Vision" className="rounded-full" src={teamworkImage} fill />
 					</div>
 
-					<div className="bg-secondary absolute -bottom-1 start-10 grid size-32 place-content-center rounded-full md:bottom-24 md:start-[calc(29%-8rem)] md:size-64">
-						IMAGE 3
+					<div className="absolute -bottom-1 start-10 size-32 md:bottom-24 md:start-[calc(29%-8rem)] md:size-64">
+						<Image alt="Vision" className="rounded-full" src={zusammenhaltImage} fill />
 					</div>
 				</div>
 
