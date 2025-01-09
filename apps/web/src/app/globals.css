@@ -71,15 +71,22 @@
   @media (width >= theme(--breakpoint-sm)) {
 		--padding-container: 1.5rem;
   }
-  @media (width >= theme(--breakpoint-lg)) {
+
+	@media (width >= theme(--breakpoint-lg)) {
 		--padding-container: 2rem;
   }
-  @media (width >= theme(--breakpoint-xl)) {
+
+	@media (width >= theme(--breakpoint-xl)) {
 		--padding-container: 2.5rem;
   }
+
   @media (width >= theme(--breakpoint-2xl)) {
 		--padding-container: 3rem;
   }
+
+	@media (width >= theme(--breakpoint-3xl)) {
+		--padding-container: 3.5rem;
+	}
 }
 
 /*
