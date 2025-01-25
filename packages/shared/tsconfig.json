@@ -1,3 +1,6 @@
 {
-	"extends": "@mheob/tsconfig/base"
+	"extends": "@mheob/tsconfig/react",
+	"compilerOptions": {
+		"paths": { "@/*": ["./src/*"] }
+	}
 }

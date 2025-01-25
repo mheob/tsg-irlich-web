@@ -1,9 +1,9 @@
+import { cn } from '@tsgi-web/shared';
 import type { Metadata } from 'next';
 import { Anton, Bebas_Neue, Inter } from 'next/font/google';
 
 import Footer from '@/components/layout/footer';
 import MainNav from '@/components/layout/main-nav';
-import { cn } from '@/utils/cn';
 
 import './globals.css';
 

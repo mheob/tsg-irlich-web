@@ -1,3 +1,4 @@
+import { DOSB_ICONS } from '@tsgi-web/shared';
 import { RiTeamLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
@@ -50,7 +51,6 @@ const group = defineType({
 			validation: Rule => [Rule.required().error('Abteilung ist erforderlich')],
 		}),
 
-		// TODO: define a strategy for icons
 		defineField({
 			title: 'Icon',
 			name: 'icon',
@@ -59,21 +59,19 @@ const group = defineType({
 				<>
 					Wir nutzen die{' '}
 					<a
-						href="https://www.dosb.de/piktogramme/download"
+						href="https://www.dosb.de/service/piktogramme/piktogramme-downloads"
 						rel="noreferrer noopener"
 						target="_blank"
 					>
 						Sportdeutschland-Piktogramme
 					</a>
 					.<br />
-					Wird bspw. auf der Start- und Gruppen-Übersichts-Seite angezeigt.
+					Sollte ein Icon in der Liste fehlen, kontaktiere bitte den Webmaster, damit er es
+					hinzufügen kann.
 				</>
 			),
 			options: {
-				list: [
-					{ title: 'Team Linie', value: 'RiTeamLine' },
-					{ title: 'Layout Spalte Zeile', value: 'RiLayoutColumnLine' },
-				],
+				list: DOSB_ICONS.map(icon => ({ title: icon, value: icon })),
 			},
 			validation: Rule => [Rule.required().error('Icon ist erforderlich')],
 		}),

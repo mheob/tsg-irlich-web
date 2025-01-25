@@ -1,7 +1,6 @@
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
+import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithRef } from 'react';
-
-import { cn } from '@/utils/cn';
 
 const Separator = ({
 	className,

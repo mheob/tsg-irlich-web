@@ -1,7 +1,6 @@
+import { cn } from '@tsgi-web/shared';
 import Image, { type StaticImageData } from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
-
-import { cn } from '@/utils/cn';
 
 import SectionHeader from '../ui/section-header';
 import Breadcrumb from '../with-logic/breadcrumb';

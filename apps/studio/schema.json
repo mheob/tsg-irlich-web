@@ -602,6 +602,27 @@
             "value": "trainingTime"
           }
         },
+        "season": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "yearly"
+              },
+              {
+                "type": "string",
+                "value": "summer"
+              },
+              {
+                "type": "string",
+                "value": "winter"
+              }
+            ]
+          },
+          "optional": false
+        },
         "weekday": {
           "type": "objectAttribute",
           "value": {
@@ -609,31 +630,31 @@
             "of": [
               {
                 "type": "string",
-                "value": "Montag"
+                "value": "monday"
               },
               {
                 "type": "string",
-                "value": "Dienstag"
+                "value": "tuesday"
               },
               {
                 "type": "string",
-                "value": "Mittwoch"
+                "value": "wednesday"
               },
               {
                 "type": "string",
-                "value": "Donnerstag"
+                "value": "thursday"
               },
               {
                 "type": "string",
-                "value": "Freitag"
+                "value": "friday"
               },
               {
                 "type": "string",
-                "value": "Samstag"
+                "value": "saturday"
               },
               {
                 "type": "string",
-                "value": "Sonntag"
+                "value": "sunday"
               }
             ]
           },
@@ -4983,11 +5004,71 @@
           "of": [
             {
               "type": "string",
-              "value": "RiTeamLine"
+              "value": "Badminton"
             },
             {
               "type": "string",
-              "value": "RiLayoutColumnLine"
+              "value": "Bodenturnen"
+            },
+            {
+              "type": "string",
+              "value": "Cheerleading"
+            },
+            {
+              "type": "string",
+              "value": "Fitness"
+            },
+            {
+              "type": "string",
+              "value": "Fussball"
+            },
+            {
+              "type": "string",
+              "value": "Gymnastik"
+            },
+            {
+              "type": "string",
+              "value": "Jujutsu"
+            },
+            {
+              "type": "string",
+              "value": "Pilates"
+            },
+            {
+              "type": "string",
+              "value": "RopeSkipping"
+            },
+            {
+              "type": "string",
+              "value": "SportInGebaeuden"
+            },
+            {
+              "type": "string",
+              "value": "Sportakrobatik"
+            },
+            {
+              "type": "string",
+              "value": "StepAerobic"
+            },
+            {
+              "type": "string",
+              "value": "Taekwondo"
+            },
+            {
+              "type": "string",
+              "value": "Tanzen"
+            },
+            {
+              "type": "string",
+              "value": "Turnen"
+            },
+            {
+              "type": "string",
+              "value": "Wandern"
+            },
+            {
+              "type": "string",
+              "value": "Yoga"
             }
           ]
         },

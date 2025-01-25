@@ -120,7 +120,8 @@ export type Blockquote = {
 
 export type TrainingTime = {
 	_type: 'trainingTime';
-	weekday: 'Montag' | 'Dienstag' | 'Mittwoch' | 'Donnerstag' | 'Freitag' | 'Samstag' | 'Sonntag';
+	season: 'yearly' | 'summer' | 'winter';
+	weekday: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 	startTime: string;
 	endTime: string;
 	location: {
@@ -868,7 +869,24 @@ export type Group = {
 	email: string;
 	description: SimpleBlockContent;
 	department: 'massSports' | 'soccer' | 'pr' | 'board';
-	icon: 'RiTeamLine' | 'RiLayoutColumnLine';
+	icon:
+		| 'Badminton'
+		| 'Bodenturnen'
+		| 'Cheerleading'
+		| 'Fitness'
+		| 'Fussball'
+		| 'Gymnastik'
+		| 'Jujutsu'
+		| 'Pilates'
+		| 'RopeSkipping'
+		| 'SportInGebaeuden'
+		| 'Sportakrobatik'
+		| 'StepAerobic'
+		| 'Taekwondo'
+		| 'Tanzen'
+		| 'Turnen'
+		| 'Wandern'
+		| 'Yoga';
 	image: {
 		asset?: {
 			_ref: string;
@@ -1499,7 +1517,24 @@ export type HomePageQueryResult = {
 // Query: *[_type == 'group'][] {		title,		icon,	}
 export type HomePageGroupsQueryResult = Array<{
 	title: string;
-	icon: 'RiLayoutColumnLine' | 'RiTeamLine';
+	icon:
+		| 'Badminton'
+		| 'Bodenturnen'
+		| 'Cheerleading'
+		| 'Fitness'
+		| 'Fussball'
+		| 'Gymnastik'
+		| 'Jujutsu'
+		| 'Pilates'
+		| 'RopeSkipping'
+		| 'Sportakrobatik'
+		| 'SportInGebaeuden'
+		| 'StepAerobic'
+		| 'Taekwondo'
+		| 'Tanzen'
+		| 'Turnen'
+		| 'Wandern'
+		| 'Yoga';
 }>;
 // Variable: homePageTestimonialsQuery
 // Query: *[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {		firstName,		lastName,		image,		quote,		role,		showAlways,	}

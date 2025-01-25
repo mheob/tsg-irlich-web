@@ -1,10 +1,9 @@
 'use client';
 
 import * as LabelPrimitive from '@radix-ui/react-label';
+import { cn } from '@tsgi-web/shared';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type { ComponentPropsWithRef } from 'react';
-
-import { cn } from '@/utils/cn';
 
 const labelVariants = cva(
 	'flex items-center gap-2 text-lg peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-2xl',

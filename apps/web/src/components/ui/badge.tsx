@@ -1,7 +1,6 @@
+import { cn } from '@tsgi-web/shared';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type { ComponentPropsWithRef } from 'react';
-
-import { cn } from '@/utils/cn';
 
 const badgeVariants = cva(
 	'inline-flex items-center transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',

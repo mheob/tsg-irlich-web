@@ -16,7 +16,7 @@
 		"@sanity/locale-de-de": "^1.1.16",
 		"@sanity/ui": "^2.11.4",
 		"@sanity/vision": "^3.71.2",
-		"@tsg-irlich-web/shared": "workspace:*",
+		"@tsgi-web/shared": "workspace:*",
 		"dotenv": "^16.4.7",
 		"react": "catalog:",
 		"react-dom": "catalog:",

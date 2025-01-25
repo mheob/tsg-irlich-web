@@ -1,7 +1,8 @@
+import { cn } from '@tsgi-web/shared';
+
 import ContactPersonGroup from '@/components/ui/contact-persons';
 import SectionHeader from '@/components/ui/section-header';
 import type { ContactPerson, HomePageQueryResult } from '@/types/sanity.types';
-import { cn } from '@/utils/cn';
 
 import styles from './contact-persons.module.css';
 

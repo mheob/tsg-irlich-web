@@ -42,8 +42,11 @@ const blockContent = defineField({
 		select: {
 			blocks: 'text',
 		},
-		prepare(value: { blocks: Array<PortableTextTextBlock<PortableTextSpan>> }) {
-			const block = value.blocks.find(block => block._type === 'block');
+		// eslint-disable-next-line ts/no-explicit-any
+		prepare(value: Record<string, any>) {
+			const block: PortableTextTextBlock<PortableTextSpan> | undefined = value.blocks.find(
+				(block: PortableTextTextBlock<PortableTextSpan>) => block._type === 'block',
+			);
 			return {
 				title: block
 					? `Text: ${block.children

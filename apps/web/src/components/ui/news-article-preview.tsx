@@ -1,9 +1,9 @@
+import { cn } from '@tsgi-web/shared';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { urlForImage } from '@/lib/sanity/utils';
 import type { NewsArticlesQueryResult } from '@/types/sanity.types';
-import { cn } from '@/utils/cn';
 import { getLocaleDate } from '@/utils/time';
 
 import { badgeVariants } from './badge';
