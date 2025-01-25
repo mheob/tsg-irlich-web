@@ -20,26 +20,26 @@
 		"!*.svg": "pnpm run lint:cspell"
 	},
 	"devDependencies": {
-		"@antfu/ni": "^0.23.2",
+		"@antfu/ni": "^23.3.0",
 		"@commitlint/cli": "^19.6.1",
 		"@cspell/dict-de-de": "^4.0.3",
-		"@eslint-react/eslint-plugin": "^1.23.0",
+		"@eslint-react/eslint-plugin": "^1.24.1",
 		"@mheob/commitlint-config": "^1.2.1",
-		"@mheob/eslint-config": "^7.0.0",
+		"@mheob/eslint-config": "^8.0.0",
 		"@mheob/prettier-config": "^3.3.3",
 		"commitizen": "^4.3.1",
-		"cspell": "^8.17.1",
+		"cspell": "^8.17.2",
 		"cz-git": "^1.11.0",
 		"eslint": "catalog:",
 		"husky": "^9.1.7",
-		"lint-staged": "^15.3.0",
+		"lint-staged": "^15.4.2",
 		"prettier": "^3.4.2",
-		"prettier-plugin-tailwindcss": "^0.6.9",
-		"turbo": "^2.3.3",
+		"prettier-plugin-tailwindcss": "^0.6.11",
+		"turbo": "^2.3.4",
 		"typescript": "catalog:"
 	},
-	"packageManager": "pnpm@9.15.2",
+	"packageManager": "pnpm@9.15.4",
 	"engines": {
-		"node": "22.12.0"
+		"node": "22.13.0"
 	}
 }
