@@ -9,7 +9,7 @@ export const newsArticleHeroQuery = defineQuery(`
 	}
 `);
 
-/** IMPORTANT: The param `slug` is required */
+/** **IMPORTANT:** The param `slug` is required */
 export const newsArticleContentQuery = defineQuery(`
 	*[_type == 'news.article' && slug.current == $slug][0] {
 		author -> {
