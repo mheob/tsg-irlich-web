@@ -30,7 +30,7 @@ export const homePageTestimonialsQuery = defineQuery(`
 		image,
 		quote,
 		role,
-		showAlways,
+		show,
 	}
 `);
 

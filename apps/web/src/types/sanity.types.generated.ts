@@ -780,7 +780,7 @@ export type Testimonial = {
 	};
 	role: string;
 	quote: string;
-	showAlways?: boolean;
+	show?: boolean;
 };
 
 export type HonoraryMember = {
@@ -1537,7 +1537,7 @@ export type HomePageGroupsQueryResult = Array<{
 		| 'Yoga';
 }>;
 // Variable: homePageTestimonialsQuery
-// Query: *[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {		firstName,		lastName,		image,		quote,		role,		showAlways,	}
+// Query: *[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {		firstName,		lastName,		image,		quote,		role,		show,	}
 export type HomePageTestimonialsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -1556,7 +1556,7 @@ export type HomePageTestimonialsQueryResult = Array<{
 	};
 	quote: string;
 	role: string;
-	showAlways: boolean | null;
+	show: boolean | null;
 }> | null;
 // Variable: homePageContactPersonsQuery
 // Query: *[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
@@ -1907,7 +1907,7 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'contact\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': ContactPageContactPersonsQueryResult;
 		"\n\t*[_type == 'home'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": HomePageQueryResult;
 		"\n\t*[_type == 'group'][] {\n\t\ttitle,\n\t\ticon,\n\t}\n": HomePageGroupsQueryResult;
-		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshowAlways,\n\t}\n": HomePageTestimonialsQueryResult;
+		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshow,\n\t}\n": HomePageTestimonialsQueryResult;
 		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': HomePageContactPersonsQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
 		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
