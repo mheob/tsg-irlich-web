@@ -40,10 +40,10 @@ const testimonial = defineType({
 			],
 		}),
 		defineField({
-			title: 'Zitat immer anzeigen',
-			name: 'showAlways',
+			title: 'Zitat anzeigen',
+			name: 'show',
 			type: 'boolean',
-			description: 'Das Zitat soll immer angezeigt werden.',
+			description: 'Das Zitat soll aktuell angezeigt werden.',
 			group: 'quote',
 			initialValue: false,
 		}),

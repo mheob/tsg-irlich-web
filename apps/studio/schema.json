@@ -4483,7 +4483,7 @@
         },
         "optional": false
       },
-      "showAlways": {
+      "show": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"

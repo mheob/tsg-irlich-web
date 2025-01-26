@@ -21,11 +21,14 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      - name: Install NI
+        run: pnpm install -g @antfu/ni
+
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: nci
 
       - name: Build and Lint files
-        run: pnpm run build lint
+        run: nlx turbo build lint
         env:
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
