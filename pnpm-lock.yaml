@@ -101,7 +101,7 @@ importers:
       '@sanity/vision':
         specifier: ^3.71.2
         version: 3.71.2(@babel/runtime@7.25.6)(@codemirror/lint@6.8.1)(@codemirror/theme-one-dark@6.1.2)(@emotion/is-prop-valid@1.2.2)(@lezer/common@1.2.1)(codemirror@6.0.1(@lezer/common@1.2.1))(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
-      '@tsg-irlich-web/shared':
+      '@tsgi-web/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       dotenv:
@@ -186,12 +186,12 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.16
         version: 0.5.16(tailwindcss@4.0.0)
+      '@tsgi-web/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
       lucide-react:
         specifier: ^0.474.0
         version: 0.474.0(react@19.0.0)
@@ -216,9 +216,6 @@ importers:
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
-      tailwind-merge:
-        specifier: ^2.6.0
-        version: 2.6.0
       tailwindcss:
         specifier: ^4.0.0
         version: 4.0.0
@@ -262,9 +259,18 @@ importers:
 
   packages/shared:
     dependencies:
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      react:
+        specifier: 'catalog:'
+        version: 19.0.0
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.0.0(react@19.0.0)
+      tailwind-merge:
+        specifier: ^2.6.0
+        version: 2.6.0
     devDependencies:
       '@mheob/tsconfig':
         specifier: ^2.2.1
@@ -272,6 +278,12 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.10.10
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.0.8
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.0.3(@types/react@19.0.8)
       typescript:
         specifier: 'catalog:'
         version: 5.7.3

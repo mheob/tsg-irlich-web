@@ -1,11 +1,11 @@
 'use client';
 
+import { cn } from '@tsgi-web/shared';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type ComponentPropsWithoutRef, useState } from 'react';
 
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
-import { cn } from '@/utils/cn';
 
 interface MobileLinkProps extends Omit<ComponentPropsWithoutRef<typeof Link>, 'href'> {
 	href: string;

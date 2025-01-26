@@ -1,7 +1,7 @@
+import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithRef } from 'react';
 
 import type { Stats } from '@/types/sanity.types';
-import { cn } from '@/utils/cn';
 
 function CounterItem({ suffix = '', title, value }: Readonly<Stats>) {
 	return (

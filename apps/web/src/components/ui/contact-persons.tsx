@@ -1,12 +1,12 @@
 'use client';
 
+import { cn } from '@tsgi-web/shared';
 import Image from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { ContactPerson } from '@/types/sanity.types';
-import { cn } from '@/utils/cn';
 import { getInitials } from '@/utils/image';
 
 import ContactButton from './contact-button';

@@ -1,6 +1,5 @@
+import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
-
-import { cn } from '@/utils/cn';
 
 import styles from './section-header.module.css';
 

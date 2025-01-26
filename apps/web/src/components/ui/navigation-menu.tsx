@@ -1,9 +1,8 @@
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
+import { cn } from '@tsgi-web/shared';
 import { cva } from 'class-variance-authority';
 import type { ComponentPropsWithRef } from 'react';
-
-import { cn } from '@/utils/cn';
 
 const NavigationMenuViewport = ({
 	className,

@@ -2,10 +2,9 @@
 
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
+import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithoutRef, ComponentPropsWithRef, HTMLAttributes } from 'react';
 import type { FieldValues } from 'react-hook-form';
-
-import { cn } from '@/utils/cn';
 
 import { FormControl, FormItem, FormLabel, FormMessage } from './form';
 

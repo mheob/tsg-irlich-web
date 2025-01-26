@@ -1,9 +1,8 @@
 'use client';
 
+import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithoutRef, ComponentPropsWithRef, HTMLAttributes } from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
-
-import { cn } from '@/utils/cn';
 
 const Drawer = ({
 	shouldScaleBackground = true,

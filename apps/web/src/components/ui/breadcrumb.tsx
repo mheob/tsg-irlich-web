@@ -1,9 +1,8 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Slot } from '@radix-ui/react-slot';
+import { cn } from '@tsgi-web/shared';
 import { ChevronsRight } from 'lucide-react';
 import type { ComponentPropsWithoutRef, ComponentPropsWithRef, ReactNode } from 'react';
-
-import { cn } from '@/utils/cn';
 
 const Breadcrumb = ({ ...props }: ComponentPropsWithRef<'nav'> & { separator?: ReactNode }) => (
 	<nav aria-label="breadcrumb" {...props} />

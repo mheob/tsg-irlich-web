@@ -1,6 +1,5 @@
+import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithRef } from 'react';
-
-import { cn } from '@/utils/cn';
 
 const Card = ({ children, className, ...props }: ComponentPropsWithRef<'article'>) => (
 	<article

@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@tsgi-web/shared';
 import { Quote } from 'lucide-react';
 import Image from 'next/image';
 import type { HTMLAttributes } from 'react';
@@ -8,7 +9,6 @@ import ArrowButtonGroup from '@/components/ui/arrow-button-group';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types.generated';
-import { cn } from '@/utils/cn';
 import { getInitials } from '@/utils/image';
 
 type Testimonial = NonNullable<HomePageTestimonialsQueryResult>[number];

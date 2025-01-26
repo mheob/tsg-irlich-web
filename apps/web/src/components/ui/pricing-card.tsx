@@ -1,9 +1,9 @@
+import { cn } from '@tsgi-web/shared';
 import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import type { HTMLAttributes } from 'react';
 
 import type { Home } from '@/types/sanity.types';
-import { cn } from '@/utils/cn';
 
 import { Button } from './button';
 

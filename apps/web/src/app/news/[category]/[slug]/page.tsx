@@ -1,3 +1,4 @@
+import { cn } from '@tsgi-web/shared';
 import type { PortableTextBlock } from 'next-sanity';
 import Image from 'next/image';
 
@@ -11,7 +12,6 @@ import {
 } from '@/lib/sanity/queries/pages/news-article';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { PageProps } from '@/types/common';
-import { cn } from '@/utils/cn';
 
 import Author from './_sections/author';
 import Categories from './_sections/categories';

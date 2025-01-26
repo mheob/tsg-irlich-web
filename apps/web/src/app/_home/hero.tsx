@@ -1,3 +1,4 @@
+import { cn } from '@tsgi-web/shared';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -9,7 +10,6 @@ import HeroImage from '@/images/home/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import type { Home } from '@/types/sanity.types';
-import { cn } from '@/utils/cn';
 import { getSocialMediaIcon } from '@/utils/icon';
 
 import styles from './hero.module.css';
