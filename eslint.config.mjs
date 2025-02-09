@@ -16,6 +16,13 @@ export default mheob(
 		},
 	},
 	{
+		files: ['apps/studio/{schemas,shared}/**/*.ts?(x)'],
+		rules: {
+			'perfectionist/sort-objects': 'off',
+		},
+	},
+	{
+		files: ['apps/web/**/*.ts?(x)'],
 		name: 'Next Plugin',
 		plugins: {
 			'@next/next': nextPlugin,
@@ -23,19 +30,6 @@ export default mheob(
 				...nextPlugin.configs.recommended.rules,
 				...nextPlugin.configs['core-web-vitals'].rules,
 			},
-		},
-	},
-	{
-		rules: {
-			// TODO: remove rule after https://github.com/mheob/config/issues/185 is resolved
-			'import/order': 'off',
-			'sort-imports': 'off',
-		},
-	},
-	{
-		files: ['apps/studio/{schemas,shared}/**/*.ts?(x)'],
-		rules: {
-			'perfectionist/sort-objects': 'off',
 		},
 	},
 );

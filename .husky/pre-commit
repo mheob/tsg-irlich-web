@@ -1,1 +1,3 @@
+[ -n "$CI" ] && exit 0
+
 nlx lint-staged
