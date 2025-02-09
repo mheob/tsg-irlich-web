@@ -1,8 +1,6 @@
-import { cn } from '@tsgi-web/shared';
-import { cva, type VariantProps } from 'class-variance-authority';
-import type { ComponentPropsWithRef } from 'react';
+import { cva } from 'class-variance-authority';
 
-const badgeVariants = cva(
+export const badgeVariants = cva(
 	'inline-flex items-center transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
 	{
 		defaultVariants: {
@@ -22,13 +20,3 @@ const badgeVariants = cva(
 		},
 	},
 );
-
-export interface BadgeProps
-	extends ComponentPropsWithRef<'div'>,
-		VariantProps<typeof badgeVariants> {}
-
-function Badge({ className, size, variant, ...props }: BadgeProps) {
-	return <div className={cn(badgeVariants({ size, variant }), className)} {...props} />;
-}
-
-export { Badge, badgeVariants };

@@ -1,27 +1,7 @@
 import type { SVGProps } from 'react';
 
 import { cn } from '../utils';
-
-export const DOSB_ICONS = [
-	'Badminton',
-	'Bodenturnen',
-	'Cheerleading',
-	'Fitness',
-	'Fussball',
-	'Gymnastik',
-	'Jujutsu',
-	'Pilates',
-	'RopeSkipping',
-	'SportInGebaeuden',
-	'Sportakrobatik',
-	'StepAerobic',
-	'Taekwondo',
-	'Tanzen',
-	'Turnen',
-	'Wandern',
-	'Yoga',
-] as const;
-export type DosbIconName = (typeof DOSB_ICONS)[number];
+import type { DosbIconName } from './dosb.types';
 
 interface DOSBProps extends SVGProps<SVGSVGElement> {
 	icon: DosbIconName;
