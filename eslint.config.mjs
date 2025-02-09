@@ -11,8 +11,12 @@ export default mheob(
 		ignores: ['.github', '.sonarlint', '**/*.generated.*', 'apps/studio/schema.json'],
 	},
 	{
+		files: ['**/*.ts?(x)'],
 		rules: {
-			'react-refresh/only-export-components': 'off',
+			'react-refresh/only-export-components': [
+				'warn',
+				{ allowExportNames: ['dynamic', 'metadata', 'revalidate'] },
+			],
 		},
 	},
 	{
