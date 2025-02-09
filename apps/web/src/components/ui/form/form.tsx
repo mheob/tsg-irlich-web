@@ -3,28 +3,16 @@
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@tsgi-web/shared';
-import { type ComponentPropsWithRef, createContext, use, useId, useMemo } from 'react';
+import { type ComponentPropsWithRef, useId, useMemo } from 'react';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
-import { Controller, FormProvider, useFormContext } from 'react-hook-form';
+import { Controller, FormProvider } from 'react-hook-form';
 
 import { Label } from '@/components/ui/label';
 
+import { FormFieldContext, FormItemContext } from './form-context';
+import { useFormField } from './use-form-field';
+
 const Form = FormProvider;
-
-interface FormItemContextValue {
-	id: string;
-}
-
-const FormItemContext = createContext<FormItemContextValue>({} as FormItemContextValue);
-
-interface FormFieldContextValue<
-	TFieldValues extends FieldValues = FieldValues,
-	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> {
-	name: TName;
-}
-
-const FormFieldContext = createContext<FormFieldContextValue>({} as FormFieldContextValue);
 
 const FormField = <
 	TFieldValues extends FieldValues = FieldValues,
@@ -39,29 +27,6 @@ const FormField = <
 			<Controller {...props} />
 		</FormFieldContext>
 	);
-};
-
-const useFormField = () => {
-	const fieldContext = use(FormFieldContext);
-	const itemContext = use(FormItemContext);
-	const { formState, getFieldState } = useFormContext();
-
-	const fieldState = getFieldState(fieldContext.name, formState);
-
-	if (!fieldContext) {
-		throw new Error('useFormField should be used within <FormField>');
-	}
-
-	const { id } = itemContext;
-
-	return {
-		formDescriptionId: `${id}-form-item-description`,
-		formItemId: `${id}-form-item`,
-		formMessageId: `${id}-form-item-message`,
-		id,
-		name: fieldContext.name,
-		...fieldState,
-	};
 };
 
 const FormItem = ({ className, ...props }: ComponentPropsWithRef<'div'>) => {
@@ -132,13 +97,4 @@ const FormMessage = ({ children, className, ...props }: ComponentPropsWithRef<'p
 };
 FormMessage.displayName = 'FormMessage';
 
-export {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-	useFormField,
-};
+export { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage };
