@@ -1,1 +1,3 @@
+[ -n "$CI" ] && exit 0
+
 nlx commitlint --edit "$1"
