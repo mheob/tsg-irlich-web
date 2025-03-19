@@ -1,4 +1,14 @@
 {
-	"recommendations": [],
+	"recommendations": [
+		"editorconfig.editorconfig",
+		"dbaeumer.vscode-eslint",
+		"davidanson.vscode-markdownlint",
+		"esbenp.prettier-vscode",
+		"sanity-io.vscode-sanity",
+		"mheob.vscode-snippets",
+		"sonarsource.sonarlint-vscode",
+		"quentiumyt.vscode-tailwindcss-directives",
+		"bradlc.vscode-tailwindcss"
+	],
 	"unwantedRecommendations": []
 }

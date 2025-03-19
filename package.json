@@ -16,40 +16,41 @@
 		"typegen": "turbo typegen"
 	},
 	"lint-staged": {
-		"*": "eslint --fix",
-		"!*.svg": "pnpm run lint:cspell"
+		"*": [
+			"eslint --fix",
+			"pnpm run lint:cspell"
+		]
 	},
 	"devDependencies": {
-		"@antfu/ni": "^23.3.1",
-		"@commitlint/cli": "^19.7.1",
+		"@antfu/ni": "^24.2.0",
+		"@commitlint/cli": "^19.8.0",
 		"@cspell/dict-de-de": "^4.0.3",
-		"@eslint-react/eslint-plugin": "^1.26.2",
+		"@eslint-react/eslint-plugin": "^1.36.1",
 		"@mheob/commitlint-config": "^1.2.1",
-		"@mheob/eslint-config": "^8.1.0",
+		"@mheob/eslint-config": "^8.3.0",
 		"@mheob/prettier-config": "^3.3.3",
-		"@next/eslint-plugin-next": "^15.1.7",
+		"@next/eslint-plugin-next": "^15.2.3",
 		"commitizen": "^4.3.1",
-		"cspell": "^8.17.3",
-		"cz-git": "^1.11.0",
+		"cspell": "^8.17.5",
+		"cz-git": "^1.11.1",
 		"eslint": "catalog:",
-		"eslint-plugin-react-hooks": "^5.1.0",
+		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-react-refresh": "^0.4.19",
 		"husky": "^9.1.7",
-		"lint-staged": "^15.4.3",
-		"prettier": "^3.5.1",
+		"lint-staged": "^15.5.0",
+		"prettier": "^3.5.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
-		"turbo": "^2.4.2",
+		"turbo": "^2.4.4",
 		"typescript": "catalog:"
 	},
-	"packageManager": "pnpm@10.4.0",
+	"packageManager": "pnpm@10.6.4",
 	"engines": {
 		"node": "22.14.0"
 	},
 	"pnpm": {
 		"overrides": {
-			"cross-spawn": "^7.0.5",
-			"undici": "^5.28.5 || ^6.21.1 || ^7.2.3",
-			"vite": "^5.4.12 || ^6.0.0"
+			"prismjs": ">=1.30.0",
+			"undici": ">=7.2.3"
 		}
 	}
 }
