@@ -99,6 +99,7 @@ export type Grid = {
 					_weak?: boolean;
 					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 				};
+				media?: unknown;
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
@@ -202,6 +203,7 @@ export type BlockContent = {
 					_weak?: boolean;
 					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 				};
+				media?: unknown;
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
@@ -461,6 +463,7 @@ export type AboutUs = {
 					_weak?: boolean;
 					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 				};
+				media?: unknown;
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
@@ -622,6 +625,7 @@ export type ImageCard = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -646,6 +650,7 @@ export type DocumentDownload = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.fileAsset';
 		};
+		media?: unknown;
 		_type: 'file';
 	};
 };
@@ -742,6 +747,7 @@ export type Venue = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -772,6 +778,7 @@ export type Testimonial = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -798,6 +805,7 @@ export type HonoraryMember = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -822,6 +830,7 @@ export type Person = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -894,6 +903,7 @@ export type Group = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -907,6 +917,7 @@ export type Group = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -983,6 +994,7 @@ export type NewsArticle = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1007,6 +1019,7 @@ export type NewsArticle = {
 					_weak?: boolean;
 					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 				};
+				media?: unknown;
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
@@ -1028,6 +1041,7 @@ export type MainImage = {
 		_weak?: boolean;
 		[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 	};
+	media?: unknown;
 	hotspot?: SanityImageHotspot;
 	crop?: SanityImageCrop;
 	alt: string;
@@ -1102,6 +1116,7 @@ export type MetaFields = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt?: string;
@@ -1124,6 +1139,7 @@ export type Author = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1142,6 +1158,7 @@ export type ExtendedImage = {
 		_weak?: boolean;
 		[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 	};
+	media?: unknown;
 	hotspot?: SanityImageHotspot;
 	crop?: SanityImageCrop;
 	alt: string;
@@ -1403,6 +1420,7 @@ export type ContactPageContactPersonsQueryResult = Array<{
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1548,6 +1566,7 @@ export type HomePageTestimonialsQueryResult = Array<{
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1571,6 +1590,7 @@ export type HomePageContactPersonsQueryResult = Array<{
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1602,6 +1622,7 @@ export type NewsArticleContentQueryResult = {
 				_weak?: boolean;
 				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 			};
+			media?: unknown;
 			hotspot?: SanityImageHotspot;
 			crop?: SanityImageCrop;
 			alt: string;
@@ -1631,6 +1652,7 @@ export type NewsArticleContentQueryResult = {
 					_weak?: boolean;
 					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 				};
+				media?: unknown;
 				hotspot?: SanityImageHotspot;
 				crop?: SanityImageCrop;
 				alt: string;
@@ -1650,6 +1672,7 @@ export type NewsArticleContentQueryResult = {
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1694,6 +1717,7 @@ export type NewsOverviewContactPersonsCategoryQueryResult = Array<{
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1719,6 +1743,7 @@ export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
 				_weak?: boolean;
 				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 			};
+			media?: unknown;
 			hotspot?: SanityImageHotspot;
 			crop?: SanityImageCrop;
 			alt: string;
@@ -1738,6 +1763,7 @@ export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1786,6 +1812,7 @@ export type NewsOverviewContactPersonsQueryResult = Array<{
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1813,6 +1840,7 @@ export type NewsArticlesQueryResult = Array<{
 				_weak?: boolean;
 				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 			};
+			media?: unknown;
 			hotspot?: SanityImageHotspot;
 			crop?: SanityImageCrop;
 			alt: string;
@@ -1832,6 +1860,7 @@ export type NewsArticlesQueryResult = Array<{
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;
@@ -1856,6 +1885,7 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 				_weak?: boolean;
 				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 			};
+			media?: unknown;
 			hotspot?: SanityImageHotspot;
 			crop?: SanityImageCrop;
 			alt: string;
@@ -1875,6 +1905,7 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 			_weak?: boolean;
 			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 		};
+		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		alt: string;

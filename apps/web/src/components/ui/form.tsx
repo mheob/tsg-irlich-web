@@ -3,7 +3,7 @@
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@tsgi-web/shared';
-import { type ComponentPropsWithRef, createContext, useContext, useId, useMemo } from 'react';
+import { type ComponentPropsWithRef, createContext, use, useId, useMemo } from 'react';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 import { Controller, FormProvider, useFormContext } from 'react-hook-form';
 
@@ -35,15 +35,15 @@ const FormField = <
 	const value = useMemo(() => ({ name: props.name }), [props.name]);
 
 	return (
-		<FormFieldContext.Provider value={value}>
+		<FormFieldContext value={value}>
 			<Controller {...props} />
-		</FormFieldContext.Provider>
+		</FormFieldContext>
 	);
 };
 
 const useFormField = () => {
-	const fieldContext = useContext(FormFieldContext);
-	const itemContext = useContext(FormItemContext);
+	const fieldContext = use(FormFieldContext);
+	const itemContext = use(FormItemContext);
 	const { formState, getFieldState } = useFormContext();
 
 	const fieldState = getFieldState(fieldContext.name, formState);
@@ -69,9 +69,9 @@ const FormItem = ({ className, ...props }: ComponentPropsWithRef<'div'>) => {
 	const value = useMemo(() => ({ id }), [id]);
 
 	return (
-		<FormItemContext.Provider value={value}>
+		<FormItemContext value={value}>
 			<div className={cn('flex flex-col gap-3', className)} {...props} />
-		</FormItemContext.Provider>
+		</FormItemContext>
 	);
 };
 FormItem.displayName = 'FormItem';
