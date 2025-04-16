@@ -14,10 +14,10 @@
 	"dependencies": {
 		"@sanity/assist": "^3.2.2",
 		"@sanity/locale-de-de": "^1.1.17",
-		"@sanity/ui": "^2.15.12",
-		"@sanity/vision": "^3.82.0",
+		"@sanity/ui": "^2.15.13",
+		"@sanity/vision": "^3.84.0",
 		"@tsgi-web/shared": "workspace:*",
-		"dotenv": "^16.4.7",
+		"dotenv": "^16.5.0",
 		"react": "catalog:",
 		"react-dom": "catalog:",
 		"react-icons": "^5.5.0",
