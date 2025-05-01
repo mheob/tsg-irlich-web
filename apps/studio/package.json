@@ -14,10 +14,10 @@
 	"dependencies": {
 		"@sanity/assist": "^3.2.2",
 		"@sanity/locale-de-de": "^1.1.17",
-		"@sanity/ui": "^2.15.12",
-		"@sanity/vision": "^3.82.0",
+		"@sanity/ui": "^2.15.13",
+		"@sanity/vision": "^3.86.1",
 		"@tsgi-web/shared": "workspace:*",
-		"dotenv": "^16.4.7",
+		"dotenv": "^16.5.0",
 		"react": "catalog:",
 		"react-dom": "catalog:",
 		"react-icons": "^5.5.0",
@@ -25,7 +25,7 @@
 		"sanity-plugin-media": "^3.0.2",
 		"slugify": "^1.6.6",
 		"styled-components": "^6.1.17",
-		"zod": "^3.24.2"
+		"zod": "^3.24.3"
 	},
 	"devDependencies": {
 		"@types/react": "catalog:",
