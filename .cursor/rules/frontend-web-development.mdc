@@ -1,6 +1,6 @@
 ---
 description: Frontend Web Development
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Frontend Web Development

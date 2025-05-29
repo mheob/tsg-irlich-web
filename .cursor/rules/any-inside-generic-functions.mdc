@@ -1,6 +1,6 @@
 ---
 description: Any inside generic functions
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Any inside generic functions

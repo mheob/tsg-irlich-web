@@ -1,6 +1,6 @@
 ---
 description: Return Types
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Return Types

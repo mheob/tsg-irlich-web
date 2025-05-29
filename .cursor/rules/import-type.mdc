@@ -1,6 +1,6 @@
 ---
 description: Import type
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Import type

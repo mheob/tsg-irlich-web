@@ -1,6 +1,6 @@
 ---
 description: Default Typescript
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Default Typescript

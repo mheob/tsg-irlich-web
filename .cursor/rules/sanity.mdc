@@ -1,6 +1,6 @@
 ---
 description: Sanity Best Practices
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Sanity Development Guidelines

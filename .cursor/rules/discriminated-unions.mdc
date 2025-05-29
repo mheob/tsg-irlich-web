@@ -1,6 +1,6 @@
 ---
 description: Discriminated unions
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Discriminated unions

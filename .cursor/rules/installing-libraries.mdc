@@ -1,6 +1,6 @@
 ---
 description: Installing libraries
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Installing libraries

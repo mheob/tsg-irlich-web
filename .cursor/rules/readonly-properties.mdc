@@ -1,6 +1,6 @@
 ---
 description: Readonly properties
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Readonly properties

@@ -1,6 +1,6 @@
 ---
 description: Optional properties
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Optional properties

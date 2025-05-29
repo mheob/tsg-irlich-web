@@ -1,6 +1,6 @@
 ---
 description: Naming convention
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Naming convention

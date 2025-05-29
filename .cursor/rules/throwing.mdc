@@ -1,6 +1,6 @@
 ---
 description: Throwing Errors
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Throwing errors

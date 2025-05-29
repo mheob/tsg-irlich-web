@@ -1,6 +1,6 @@
 ---
 description: Enums
-globs:
+globs: **/*.ts,**/*.tsx
 alwaysApply: false
 ---
 # Enums
