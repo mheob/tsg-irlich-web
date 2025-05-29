@@ -1,0 +1,97 @@
+---
+description: Frontend Web Development
+globs: **/*.ts,**/*.tsx
+alwaysApply: false
+---
+# Frontend Web Development
+
+For the `<root>/apps/web` app you are an expert developer in TypeScript, Next.js App Router, React, Groq, Tailwind CSS, Shadcn UI and Zod.
+
+## Key Principles
+
+- Write concise, technical responses with accurate TypeScript examples.
+- Use functional, declarative programming. Avoid classes.
+- Prefer iteration and modularization over duplication.
+- Favor named exports for components.
+- Follow performance optimization techniques, such as reducing load times and improving rendering efficiency.
+
+## Key Conventions
+
+1. Rely on Next.js App Router for state changes and routing.
+2. Prioritize Web Vitals (LCP, CLS, FID).
+3. Minimize 'use client' usage:
+	- Prefer server components and Next.js SSR features.
+	- Use 'use client' only for Web API access in small components.
+	- Avoid using 'use client' for data fetching or state management.
+4. Follow the monorepo structure:
+	- Place shared code in the 'packages' directory.
+	- Keep app-specific code in the 'apps' directory.
+5. Use Taskfile commands for development and deployment tasks.
+6. Adhere to the defined database schema and use enum tables for predefined values.
+
+## React / Next.js
+
+- Use functional components and TypeScript interfaces.
+- Use declarative JSX.
+- Use function, not const, for components.
+- Use Shadcn UI and Tailwind CSS for components and styling.
+- Implement responsive design with Tailwind CSS.
+- Use mobile-first approach for responsive design.
+- Place static content and interfaces at file end.
+- Use content variables for static content outside render functions.
+- Minimize 'use client', 'useEffect', and 'setState'. Favor React Server Components (RSC).
+- Use Zod for form validation.
+- Wrap client components in Suspense with fallback.
+- Use dynamic loading for non-critical components.
+- Implement dynamic imports for code splitting and optimization.
+- Optimize images: WebP format, size data, lazy loading. Use the next/image component.
+- Model expected errors as return values: Avoid using try/catch for expected errors in Server Actions.
+- Use error boundaries for unexpected errors: Implement error boundaries using error.tsx and global-error.tsx files.
+- Use useActionState with react-hook-form for form validation.
+- Code in services/ dir always throw user-friendly errors that can be caught and shown to the user.
+- Use next-safe-action for all server actions.
+- Implement type-safe server actions with proper validation.
+- Handle errors gracefully and return appropriate responses.
+
+## Component Structure
+
+- Break down components into smaller parts with minimal props.
+- Suggest micro folder structure for components.
+- Use composition to build complex components.
+- Follow the order: component declaration, TypeScript types.
+
+## GROQ Rules
+
+Whenever there is an image within a GROQ query, do not expand it unless explicitly instructed to do so.
+
+## GROQ Query Structure and Organization
+
+- Import `defineQuery` and `groq` from `next-sanity` at the top of query files
+- Export queries as constants using the `defineQuery` function
+- Organize queries by content type (blogs, pages, products, etc.)
+- Group related queries together
+
+## Data Fetching and State Management
+
+- Use React Server Components for data fetching when possible.
+- Implement the preload pattern to prevent waterfalls.
+
+## Styling
+
+- Use Tailwind CSS for styling, following the Utility First approach.
+- Utilize the Class Variance Authority (CVA) for managing component variants.
+
+## Accessibility
+
+- Ensure interfaces are keyboard navigable.
+- Implement proper ARIA labels and roles for components.
+- Ensure color contrast ratios meet WCAG standards for readability.
+
+## Documentation
+
+- Provide clear and concise comments for complex logic.
+- Use JSDoc comments for functions and components to improve IDE intellisense.
+- Keep the README files up-to-date with setup instructions and project overview.
+- Document Edge Functions when used.
+
+Refer to Next.js documentation for Data Fetching, Rendering, and Routing best practices.

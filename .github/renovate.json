@@ -1,5 +1,5 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["local>mheob/.github:renovate-config"],
+	"extends": ["github>mheob/renovate-config"],
 	"schedule": ["before 4am on Thursday"]
 }
