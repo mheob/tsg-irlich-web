@@ -22,7 +22,7 @@ import siteSettings from '@/schemas/singletons/site-settings';
 import { assistWithPresets } from './assist';
 import { pageStructure, singletonPlugin } from './singleton';
 
-export function getPlugins() {
+export function getPlugins(): PluginOptions[] {
 	const plugins: PluginOptions[] = [
 		deDELocale(),
 		structureTool({

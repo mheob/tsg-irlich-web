@@ -2,11 +2,16 @@ packages:
   - apps/*
   - packages/*
 catalog:
-  "@types/node": ^22.14.0
-  "@types/react": ^19.1.0
-  "@types/react-dom": ^19.1.1
-  eslint: ^9.24.0
+  "@types/node": ^22.15.24
+  "@types/react": ^19.1.6
+  "@types/react-dom": ^19.1.5
+  eslint: ^9.27.0
   react: ^19.1.0
   react-dom: ^19.1.0
-  sanity: ^3.82.0
+  sanity: ^3.90.0
   typescript: ^5.8.3
+onlyBuiltDependencies:
+  - "@tailwindcss/oxide"
+  - esbuild
+  - sharp
+  - unrs-resolver

@@ -12,20 +12,20 @@
 		"start": "sanity start"
 	},
 	"dependencies": {
-		"@sanity/assist": "^3.2.2",
-		"@sanity/locale-de-de": "^1.1.17",
-		"@sanity/ui": "^2.15.12",
-		"@sanity/vision": "^3.82.0",
+		"@sanity/assist": "^4.2.0",
+		"@sanity/locale-de-de": "^1.1.21",
+		"@sanity/ui": "^2.15.18",
+		"@sanity/vision": "^3.90.0",
 		"@tsgi-web/shared": "workspace:*",
-		"dotenv": "^16.4.7",
+		"dotenv": "^16.5.0",
 		"react": "catalog:",
 		"react-dom": "catalog:",
 		"react-icons": "^5.5.0",
 		"sanity": "catalog:",
 		"sanity-plugin-media": "^3.0.2",
 		"slugify": "^1.6.6",
-		"styled-components": "^6.1.17",
-		"zod": "^3.24.2"
+		"styled-components": "^6.1.18",
+		"zod": "^3.25.36"
 	},
 	"devDependencies": {
 		"@types/react": "catalog:",

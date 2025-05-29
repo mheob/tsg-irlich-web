@@ -2,17 +2,17 @@
 	"compilerOptions": {
 		"incremental": true,
 		"target": "ES2017",
-		"jsx": "preserve",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"jsx": "preserve",
 		"moduleDetection": "force",
 		"module": "Preserve",
 		"paths": {
 			"@/*": ["./*"]
 		},
 		"allowJs": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
 		"skipLibCheck": true
 	},
 	"include": ["**/*.ts", "**/*.tsx"],

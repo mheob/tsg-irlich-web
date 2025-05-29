@@ -4,7 +4,7 @@ import type { ListItemBuilder, StructureBuilder } from 'sanity/structure';
 
 type DocumentGroup = 'default' | 'persons' | 'settings' | 'singletons';
 
-export function isExcludedDefaultListItem(id?: string) {
+export function isExcludedDefaultListItem(id?: string): boolean {
 	if (!id) return false;
 	return ![
 		'assist.instruction.context',
@@ -18,7 +18,7 @@ export function isExcludedDefaultListItem(id?: string) {
 	].includes(id);
 }
 
-export function isExcludedSingletonListItem(id?: string) {
+export function isExcludedSingletonListItem(id?: string): boolean {
 	if (!id) return false;
 	return !['site-settings'].includes(id);
 }

@@ -1,8 +1,9 @@
 import { assist } from '@sanity/assist';
+import type { PluginOptions } from 'sanity';
 
 import newsArticle from '@/schemas/documents/news.article';
 
-export function assistWithPresets() {
+export function assistWithPresets(): PluginOptions {
 	return assist({
 		__presets: {
 			[newsArticle.name]: {
