@@ -32,10 +32,5 @@
 		"@types/react-dom": "catalog:",
 		"eslint": "catalog:",
 		"typescript": "catalog:"
-	},
-	"pnpm": {
-		"overrides": {
-			"prismjs": ">=1.30.0"
-		}
 	}
 }

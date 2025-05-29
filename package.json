@@ -49,6 +49,7 @@
 	},
 	"pnpm": {
 		"overrides": {
+			"prismjs": ">=1.30.0",
 			"undici": ">=7.10.0"
 		}
 	}

@@ -46,10 +46,5 @@
 		"postcss": "^8.5.4",
 		"postcss-load-config": "^6.0.1",
 		"typescript": "catalog:"
-	},
-	"pnpm": {
-		"overrides": {
-			"prismjs": ">=1.30.0"
-		}
 	}
 }
