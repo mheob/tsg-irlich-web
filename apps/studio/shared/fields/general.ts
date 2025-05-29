@@ -2,6 +2,7 @@ import { defineField } from 'sanity';
 
 import { slugify } from '@/utils/strings';
 
+// eslint-disable-next-line ts/explicit-function-return-type
 export function getHiddenSlugField(slug: string) {
 	return defineField({
 		title: 'Slug',
@@ -58,6 +59,7 @@ export const titleField = defineField({
 
 export const defaultPageFields = [titleField, subTitleField, introField];
 
+// eslint-disable-next-line ts/explicit-function-return-type
 export function getDefaultPageFieldsWithGroup(group?: string) {
 	return defaultPageFields.map(field => ({ ...field, group }));
 }

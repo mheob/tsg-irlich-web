@@ -11,6 +11,6 @@ import { twMerge } from 'tailwind-merge';
  * cn('p-4', 'bg-blue-500', { 'text-white': true }) // 'p-4 bg-blue-500 text-white'
  * cn('p-2 p-4') // 'p-4' (deduplicates conflicting classes)
  */
-export function cn(...inputs: ClassValue[]) {
+export function cn(...inputs: ClassValue[]): string {
 	return twMerge(clsx(inputs));
 }

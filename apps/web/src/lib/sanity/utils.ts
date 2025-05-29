@@ -29,7 +29,7 @@ const imageBuilder = createImageUrlBuilder({
  * ```
  */
 // eslint-disable-next-line ts/no-explicit-any
-export const urlForImage = (image: any, height?: number, width?: number) => {
+export const urlForImage = (image: any, height?: number, width?: number): string | undefined => {
 	if (!image?.asset?._ref || !imageBuilder) return;
 	return height
 		? imageBuilder
@@ -58,7 +58,11 @@ export const urlForImage = (image: any, height?: number, width?: number) => {
  * const customOgImage = resolveOpenGraphImage(sanityImage, 800, 600);
  * ```
  */
-export function resolveOpenGraphImage(image: Image, width = 1200, height = 627) {
+export function resolveOpenGraphImage(
+	image: Image,
+	width = 1200,
+	height = 627,
+): undefined | { alt: string; height: number; url: string; width: number } {
 	if (!image || !imageBuilder) return;
 	const url = imageBuilder.image(image)?.width(width).height(height).fit('crop').url();
 	if (!url) return;

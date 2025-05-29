@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
  * {isMobile ? <MobileNav /> : <DesktopNav />}
  * ```
  */
-export function useMediaQuery(query: string) {
+export function useMediaQuery(query: string): boolean {
 	const [matches, setMatches] = useState(false);
 
 	useEffect(() => {
@@ -31,7 +31,7 @@ export function useMediaQuery(query: string) {
 
 		setMatches(mediaQuery.matches);
 
-		const handleChange = (event: MediaQueryListEvent) => {
+		const handleChange = (event: MediaQueryListEvent): void => {
 			setMatches(event.matches);
 		};
 
