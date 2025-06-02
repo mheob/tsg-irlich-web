@@ -21,6 +21,7 @@
 		"**/turbo.json"
 	],
 	"words": [
+		"antfu",
 		"anton",
 		"Aufzählungspunkte",
 		"bebas",
@@ -69,6 +70,7 @@
 		"Porträtbild",
 		"pragent",
 		"Preact",
+		"Qube",
 		"Screenreader",
 		"seite",
 		"seitfallzieher",
@@ -78,9 +80,11 @@
 		"Showtanz",
 		"sonarcloud",
 		"sonarlint",
+		"sonarqube",
 		"srcset",
 		"stega",
 		"subcomponents",
+		"taekwondo",
 		"tailwindcss",
 		"Taskfile",
 		"tsgi",

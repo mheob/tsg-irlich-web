@@ -73,14 +73,25 @@ const trainingTimeField = defineField({
 			to: [{ type: 'venue' }],
 			validation: Rule => [Rule.required().error('Trainingsort ist erforderlich')],
 		}),
+
+		defineField({
+			title: 'Notizen',
+			name: 'note',
+			type: 'string',
+			validation: Rule => [
+				Rule.min(2).error('Notiz sollte mindestens 2 Zeichen lang sein'),
+				Rule.max(256).warning('Notiz sollte nicht länger als 256 Zeichen sein'),
+			],
+		}),
 	],
 	preview: {
-		prepare: ({ weekday, endTime, location, startTime, season }) => ({
-			title: `${season} | ${weekday}, ${startTime} - ${endTime} | ${location}`,
+		prepare: ({ weekday, endTime, location, note, startTime, season }) => ({
+			title: `${season ?? '_'} | ${weekday ?? '_'}, ${startTime ?? '_'} - ${endTime ?? '_'} | ${location ?? '_'} | ${note ?? '_'}`,
 		}),
 		select: {
 			endTime: 'endTime',
 			location: 'location.title',
+			note: 'note',
 			season: 'season',
 			startTime: 'startTime',
 			weekday: 'weekday',

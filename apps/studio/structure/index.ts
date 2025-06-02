@@ -1,51 +1,14 @@
-import { RiArticleLine, RiOpenaiLine, RiParentLine, RiSettings5Line } from 'react-icons/ri';
+import {
+	RiArticleLine,
+	RiOpenaiLine,
+	RiParentLine,
+	RiSettings5Line,
+	RiTeamLine,
+} from 'react-icons/ri';
 import type { DocumentDefinition } from 'sanity';
 import type { ListItemBuilder, StructureBuilder } from 'sanity/structure';
 
-type DocumentGroup = 'default' | 'persons' | 'settings' | 'singletons';
-
-export function isExcludedDefaultListItem(id?: string): boolean {
-	if (!id) return false;
-	return ![
-		'assist.instruction.context',
-		'author',
-		'honoraryMember',
-		'media.tag',
-		'news.article',
-		'news.category',
-		'person',
-		'role',
-	].includes(id);
-}
-
-export function isExcludedSingletonListItem(id?: string): boolean {
-	if (!id) return false;
-	return !['site-settings'].includes(id);
-}
-
-export function getGroup(
-	S: StructureBuilder,
-	name: DocumentGroup,
-	typeDefinitionArray?: DocumentDefinition[],
-): ListItemBuilder[] {
-	switch (name) {
-		case 'default': {
-			return getGroupNews(S);
-		}
-		case 'persons': {
-			return getGroupPersons(S);
-		}
-		case 'settings': {
-			return getGroupSettings(S);
-		}
-		case 'singletons': {
-			return getGroupSingletons(S, typeDefinitionArray);
-		}
-		default: {
-			return getGroupSettings(S);
-		}
-	}
-}
+type DocumentGroup = 'groups' | 'news' | 'persons' | 'settings' | 'single-pages';
 
 function getGroupNews(S: StructureBuilder): ListItemBuilder[] {
 	return [
@@ -64,6 +27,7 @@ function getGroupPersons(S: StructureBuilder): ListItemBuilder[] {
 	return [
 		S.listItem()
 			.title('Personen')
+			.id('persons')
 			.icon(RiParentLine)
 			.child(
 				S.list()
@@ -73,6 +37,28 @@ function getGroupPersons(S: StructureBuilder): ListItemBuilder[] {
 						S.documentTypeListItem('honoraryMember'),
 						S.documentTypeListItem('person'),
 						S.documentTypeListItem('role'),
+					]),
+			),
+	];
+}
+
+function getGroupGroups(S: StructureBuilder): ListItemBuilder[] {
+	return [
+		S.listItem()
+			.title('Gruppen')
+			.id('groups')
+			.icon(RiTeamLine)
+			.child(
+				S.list()
+					.title('Gruppen')
+					.items([
+						S.documentTypeListItem('group.admin'),
+						S.documentTypeListItem('group.soccer'),
+						S.documentTypeListItem('group.children-gymnastics'),
+						S.documentTypeListItem('group.courses'),
+						S.documentTypeListItem('group.taekwondo'),
+						S.documentTypeListItem('group.dance'),
+						S.documentTypeListItem('group.other-sports'),
 					]),
 			),
 	];
@@ -89,7 +75,12 @@ function getGroupSettings(S: StructureBuilder): ListItemBuilder[] {
 	];
 }
 
-function getGroupSingletons(
+function isExcludedSingletonListItem(id?: string): boolean {
+	if (!id) return false;
+	return !['site-settings'].includes(id);
+}
+
+function getGroupSinglePages(
 	S: StructureBuilder,
 	typeDefinitionArray?: DocumentDefinition[],
 ): ListItemBuilder[] {
@@ -117,4 +108,52 @@ function getGroupSingletons(
 					),
 			),
 	];
+}
+
+export function isExcludedDefaultListItem(id?: string): boolean {
+	if (!id) return false;
+	return ![
+		'assist.instruction.context',
+		'author',
+		'group.admin',
+		'group.children-gymnastics',
+		'group.courses',
+		'group.dance',
+		'group.other-sports',
+		'group.soccer',
+		'group.taekwondo',
+		'honoraryMember',
+		'media.tag',
+		'news.article',
+		'news.category',
+		'person',
+		'role',
+	].includes(id);
+}
+
+export function getGroup(
+	S: StructureBuilder,
+	name: DocumentGroup,
+	typeDefinitionArray?: DocumentDefinition[],
+): ListItemBuilder[] {
+	switch (name) {
+		case 'news': {
+			return getGroupNews(S);
+		}
+		case 'persons': {
+			return getGroupPersons(S);
+		}
+		case 'groups': {
+			return getGroupGroups(S);
+		}
+		case 'settings': {
+			return getGroupSettings(S);
+		}
+		case 'single-pages': {
+			return getGroupSinglePages(S, typeDefinitionArray);
+		}
+		default: {
+			return getGroupSettings(S);
+		}
+	}
 }

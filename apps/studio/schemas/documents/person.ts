@@ -2,6 +2,7 @@ import { RiUserSmileLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import TextInput from '@/components/text-input';
+import { type Department, DEPARTMENTS } from '@/constants/departments';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
@@ -33,15 +34,80 @@ const person = defineType({
 					type: 'object',
 					fields: [
 						defineField({
-							title: 'Abteilung, Gruppe etc.',
+							title: 'Abteilung / Bereich',
 							name: 'department',
-							type: 'reference',
-							to: [{ type: 'group' }],
-							description: 'Die Gruppe oder Abteilung der Person.',
+							type: 'string',
+							description: 'Die Abteilung bzw. der Bereich der Person.',
+
+							options: {
+								layout: 'dropdown',
+								list: DEPARTMENTS.map(department => ({
+									title: department.title,
+									value: department.slug,
+								})),
+							},
 							validation: Rule => [
 								Rule.required().error('Die Gruppe oder Abteilung ist erforderlich'),
 							],
 						}),
+
+						defineField({
+							title: 'Gruppe / Team',
+							name: 'team',
+							type: 'reference',
+							to: [
+								{ type: 'group.admin' },
+								{ type: 'group.children-gymnastics' },
+								{ type: 'group.courses' },
+								{ type: 'group.dance' },
+								{ type: 'group.other-sports' },
+								{ type: 'group.soccer' },
+								{ type: 'group.taekwondo' },
+							],
+							description: 'Die Gruppe oder das Team der Person.',
+
+							options: {
+								filter: ({ parent }) => {
+									// eslint-disable-next-line ts/no-explicit-any
+									const type = (parent as any)?.department as Department['slug'];
+
+									switch (type) {
+										case 'admin': {
+											return { filter: '_type == $type', params: { type: 'group.admin' } };
+										}
+										case 'children-gymnastics': {
+											return {
+												filter: '_type == $type',
+												params: { type: 'group.children-gymnastics' },
+											};
+										}
+										case 'courses': {
+											return { filter: '_type == $type', params: { type: 'group.courses' } };
+										}
+										case 'dance': {
+											return { filter: '_type == $type', params: { type: 'group.dance' } };
+										}
+										case 'other-sports': {
+											return { filter: '_type == $type', params: { type: 'group.other-sports' } };
+										}
+										case 'soccer': {
+											return { filter: '_type == $type', params: { type: 'group.soccer' } };
+										}
+										case 'taekwondo': {
+											return { filter: '_type == $type', params: { type: 'group.taekwondo' } };
+										}
+										default: {
+											return {};
+										}
+									}
+								},
+							},
+							validation: Rule => [
+								Rule.required().error('Die Gruppe oder das Team ist erforderlich'),
+							],
+						}),
+
+						// getTeamField(),
 
 						defineField({
 							title: 'Rolle',

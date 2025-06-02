@@ -1,5 +1,11 @@
 import author from './documents/author';
-import group from './documents/group';
+import groupAdmin from './documents/group.admin';
+import groupChildrenGymnastics from './documents/group.children-gymnastics';
+import groupCourses from './documents/group.courses';
+import groupDance from './documents/group.dance';
+import groupOtherSports from './documents/group.other-sports';
+import groupSoccer from './documents/group.soccer';
+import groupTaekwondo from './documents/group.taekwondo';
 import honoraryMember from './documents/honorary-member';
 import newsArticle from './documents/news.article';
 import newsCategory from './documents/news.category';
@@ -48,7 +54,13 @@ export const schemaTypes = [
 	honoraryMember,
 	role,
 
-	group,
+	groupAdmin,
+	groupChildrenGymnastics,
+	groupCourses,
+	groupDance,
+	groupOtherSports,
+	groupSoccer,
+	groupTaekwondo,
 	testimonial,
 	venue,
 
