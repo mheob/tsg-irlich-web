@@ -29,7 +29,7 @@
 		"@mheob/commitlint-config": "^1.2.2",
 		"@mheob/eslint-config": "^8.8.3",
 		"@mheob/prettier-config": "^3.3.3",
-		"@next/eslint-plugin-next": "^15.3.2",
+		"@next/eslint-plugin-next": "^15.3.3",
 		"commitizen": "^4.3.1",
 		"cspell": "^9.0.2",
 		"cz-git": "^1.11.1",
@@ -39,11 +39,11 @@
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.0",
 		"prettier": "^3.5.3",
-		"prettier-plugin-tailwindcss": "^0.6.11",
-		"turbo": "^2.5.3",
+		"prettier-plugin-tailwindcss": "^0.6.12",
+		"turbo": "^2.5.4",
 		"typescript": "catalog:"
 	},
-	"packageManager": "pnpm@10.11.0",
+	"packageManager": "pnpm@10.11.1",
 	"engines": {
 		"node": "22.16.0"
 	},

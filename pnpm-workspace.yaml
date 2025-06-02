@@ -2,10 +2,10 @@ packages:
   - apps/*
   - packages/*
 catalog:
-  "@types/node": ^22.15.24
+  "@types/node": ^22.15.29
   "@types/react": ^19.1.6
   "@types/react-dom": ^19.1.5
-  eslint: ^9.27.0
+  eslint: ^9.28.0
   react: ^19.1.0
   react-dom: ^19.1.0
   sanity: ^3.90.0

@@ -16,7 +16,7 @@ export default mheob(
 		},
 	},
 	{
-		files: ['apps/studio/{schemas,shared}/**/*.ts?(x)'],
+		files: ['apps/studio/{schemas,shared,utils/documents}/**/*.ts?(x)'],
 		rules: {
 			'perfectionist/sort-objects': 'off',
 		},

@@ -17,7 +17,6 @@ import Groups from './_home/groups';
 import Hero from './_home/hero';
 import News from './_home/news';
 import Pricing from './_home/pricing';
-import Stats from './_home/stats';
 import Testimonials from './_home/testimonials';
 import Vision from './_home/vision';
 
@@ -47,7 +46,6 @@ export default async function Home() {
 			<Features {...page.content.featureSection} />
 			<Vision {...page.content.visionSection} />
 			<Groups {...page.content.groupsSection} groups={groups} />
-			<Stats {...page.content.statsSection} />
 			<Pricing {...page.content.pricingSection} />
 			<Testimonials {...page.content.testimonialSection} testimonials={testimonials} />
 			<ContactPersons

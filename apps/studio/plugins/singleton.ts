@@ -48,10 +48,11 @@ export function pageStructure(typeDefinitionArray: DocumentDefinition[]): Struct
 		return S.list()
 			.title('Base')
 			.items([
-				...getGroup(S, 'default'),
-				...getGroup(S, 'singletons', typeDefinitionArray),
+				...getGroup(S, 'news'),
+				...getGroup(S, 'single-pages', typeDefinitionArray),
 				S.divider(),
 				...getGroup(S, 'persons'),
+				...getGroup(S, 'groups'),
 				...defaultListItems,
 				S.divider(),
 				...getGroup(S, 'settings'),
