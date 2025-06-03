@@ -13,39 +13,6 @@
  */
 
 // Source: schema.json
-export type SanityImagePaletteSwatch = {
-	_type: 'sanity.imagePaletteSwatch';
-	background?: string;
-	foreground?: string;
-	population?: number;
-	title?: string;
-};
-
-export type SanityImagePalette = {
-	_type: 'sanity.imagePalette';
-	darkMuted?: SanityImagePaletteSwatch;
-	lightVibrant?: SanityImagePaletteSwatch;
-	darkVibrant?: SanityImagePaletteSwatch;
-	vibrant?: SanityImagePaletteSwatch;
-	dominant?: SanityImagePaletteSwatch;
-	lightMuted?: SanityImagePaletteSwatch;
-	muted?: SanityImagePaletteSwatch;
-};
-
-export type SanityImageDimensions = {
-	_type: 'sanity.imageDimensions';
-	height?: number;
-	width?: number;
-	aspectRatio?: number;
-};
-
-export type Geopoint = {
-	_type: 'geopoint';
-	lat?: number;
-	lng?: number;
-	alt?: number;
-};
-
 export type NewsOverviewCategory = {
 	_id: string;
 	_type: 'newsOverviewCategory';
@@ -131,6 +98,7 @@ export type TrainingTime = {
 		_weak?: boolean;
 		[internalGroqTypeReferenceTo]?: 'venue';
 	};
+	note?: string;
 };
 
 export type Stats = {
@@ -655,28 +623,6 @@ export type DocumentDownload = {
 	};
 };
 
-export type SanityFileAsset = {
-	_id: string;
-	_type: 'sanity.fileAsset';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	originalFilename?: string;
-	label?: string;
-	title?: string;
-	description?: string;
-	altText?: string;
-	sha1hash?: string;
-	extension?: string;
-	mimeType?: string;
-	size?: number;
-	assetId?: string;
-	uploadId?: string;
-	path?: string;
-	url?: string;
-	source?: SanityAssetSourceData;
-};
-
 export type ContactNameMail = {
 	_type: 'contactNameMail';
 	name: string;
@@ -839,12 +785,57 @@ export type Person = {
 	};
 	phone?: string;
 	affiliations?: Array<{
-		department: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'group';
-		};
+		department:
+			| 'admin'
+			| 'children-gymnastics'
+			| 'courses'
+			| 'dance'
+			| 'other-sports'
+			| 'soccer'
+			| 'taekwondo';
+		team:
+			| {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'group.admin';
+			  }
+			| {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'group.children-gymnastics';
+			  }
+			| {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'group.courses';
+			  }
+			| {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'group.dance';
+			  }
+			| {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'group.other-sports';
+			  }
+			| {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'group.soccer';
+			  }
+			| {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'group.taekwondo';
+			  };
 		role: {
 			_ref: string;
 			_type: 'reference';
@@ -868,16 +859,15 @@ export type Role = {
 	email?: string;
 };
 
-export type Group = {
+export type GroupTaekwondo = {
 	_id: string;
-	_type: 'group';
+	_type: 'group.taekwondo';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
 	title: string;
-	email: string;
+	slug: Slug;
 	description: SimpleBlockContent;
-	department: 'massSports' | 'soccer' | 'pr' | 'board';
 	icon:
 		| 'Badminton'
 		| 'Bodenturnen'
@@ -930,6 +920,391 @@ export type Group = {
 			_key: string;
 		} & TrainingTime
 	>;
+	isSportGroup?: boolean;
+};
+
+export type GroupSoccer = {
+	_id: string;
+	_type: 'group.soccer';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	slug: Slug;
+	description: SimpleBlockContent;
+	icon:
+		| 'Badminton'
+		| 'Bodenturnen'
+		| 'Cheerleading'
+		| 'Fitness'
+		| 'Fussball'
+		| 'Gymnastik'
+		| 'Jujutsu'
+		| 'Pilates'
+		| 'RopeSkipping'
+		| 'SportInGebaeuden'
+		| 'Sportakrobatik'
+		| 'StepAerobic'
+		| 'Taekwondo'
+		| 'Tanzen'
+		| 'Turnen'
+		| 'Wandern'
+		| 'Yoga';
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	images?: Array<{
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+		_key: string;
+	}>;
+	trainingTimes?: Array<
+		{
+			_key: string;
+		} & TrainingTime
+	>;
+	isSportGroup?: boolean;
+};
+
+export type GroupOtherSports = {
+	_id: string;
+	_type: 'group.other-sports';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	slug: Slug;
+	description: SimpleBlockContent;
+	icon:
+		| 'Badminton'
+		| 'Bodenturnen'
+		| 'Cheerleading'
+		| 'Fitness'
+		| 'Fussball'
+		| 'Gymnastik'
+		| 'Jujutsu'
+		| 'Pilates'
+		| 'RopeSkipping'
+		| 'SportInGebaeuden'
+		| 'Sportakrobatik'
+		| 'StepAerobic'
+		| 'Taekwondo'
+		| 'Tanzen'
+		| 'Turnen'
+		| 'Wandern'
+		| 'Yoga';
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	images?: Array<{
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+		_key: string;
+	}>;
+	trainingTimes?: Array<
+		{
+			_key: string;
+		} & TrainingTime
+	>;
+	isSportGroup?: boolean;
+};
+
+export type GroupDance = {
+	_id: string;
+	_type: 'group.dance';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	slug: Slug;
+	description: SimpleBlockContent;
+	icon:
+		| 'Badminton'
+		| 'Bodenturnen'
+		| 'Cheerleading'
+		| 'Fitness'
+		| 'Fussball'
+		| 'Gymnastik'
+		| 'Jujutsu'
+		| 'Pilates'
+		| 'RopeSkipping'
+		| 'SportInGebaeuden'
+		| 'Sportakrobatik'
+		| 'StepAerobic'
+		| 'Taekwondo'
+		| 'Tanzen'
+		| 'Turnen'
+		| 'Wandern'
+		| 'Yoga';
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	images?: Array<{
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+		_key: string;
+	}>;
+	trainingTimes?: Array<
+		{
+			_key: string;
+		} & TrainingTime
+	>;
+	isSportGroup?: boolean;
+};
+
+export type GroupCourses = {
+	_id: string;
+	_type: 'group.courses';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	slug: Slug;
+	description: SimpleBlockContent;
+	icon:
+		| 'Badminton'
+		| 'Bodenturnen'
+		| 'Cheerleading'
+		| 'Fitness'
+		| 'Fussball'
+		| 'Gymnastik'
+		| 'Jujutsu'
+		| 'Pilates'
+		| 'RopeSkipping'
+		| 'SportInGebaeuden'
+		| 'Sportakrobatik'
+		| 'StepAerobic'
+		| 'Taekwondo'
+		| 'Tanzen'
+		| 'Turnen'
+		| 'Wandern'
+		| 'Yoga';
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	images?: Array<{
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+		_key: string;
+	}>;
+	trainingTimes?: Array<
+		{
+			_key: string;
+		} & TrainingTime
+	>;
+	isSportGroup?: boolean;
+};
+
+export type GroupChildrenGymnastics = {
+	_id: string;
+	_type: 'group.children-gymnastics';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	slug: Slug;
+	description: SimpleBlockContent;
+	icon:
+		| 'Badminton'
+		| 'Bodenturnen'
+		| 'Cheerleading'
+		| 'Fitness'
+		| 'Fussball'
+		| 'Gymnastik'
+		| 'Jujutsu'
+		| 'Pilates'
+		| 'RopeSkipping'
+		| 'SportInGebaeuden'
+		| 'Sportakrobatik'
+		| 'StepAerobic'
+		| 'Taekwondo'
+		| 'Tanzen'
+		| 'Turnen'
+		| 'Wandern'
+		| 'Yoga';
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	images?: Array<{
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+		_key: string;
+	}>;
+	trainingTimes?: Array<
+		{
+			_key: string;
+		} & TrainingTime
+	>;
+	isSportGroup?: boolean;
+};
+
+export type GroupAdmin = {
+	_id: string;
+	_type: 'group.admin';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	slug: Slug;
+	description: SimpleBlockContent;
+	icon:
+		| 'Badminton'
+		| 'Bodenturnen'
+		| 'Cheerleading'
+		| 'Fitness'
+		| 'Fussball'
+		| 'Gymnastik'
+		| 'Jujutsu'
+		| 'Pilates'
+		| 'RopeSkipping'
+		| 'SportInGebaeuden'
+		| 'Sportakrobatik'
+		| 'StepAerobic'
+		| 'Taekwondo'
+		| 'Tanzen'
+		| 'Turnen'
+		| 'Wandern'
+		| 'Yoga';
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	images?: Array<{
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+		_key: string;
+	}>;
+	trainingTimes?: Array<
+		{
+			_key: string;
+		} & TrainingTime
+	>;
+	isSportGroup?: boolean;
 };
 
 export type SimpleBlockContent = {
@@ -1046,63 +1421,6 @@ export type MainImage = {
 	crop?: SanityImageCrop;
 	alt: string;
 	description?: string;
-};
-
-export type SanityImageCrop = {
-	_type: 'sanity.imageCrop';
-	top?: number;
-	bottom?: number;
-	left?: number;
-	right?: number;
-};
-
-export type SanityImageHotspot = {
-	_type: 'sanity.imageHotspot';
-	x?: number;
-	y?: number;
-	height?: number;
-	width?: number;
-};
-
-export type SanityImageAsset = {
-	_id: string;
-	_type: 'sanity.imageAsset';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	originalFilename?: string;
-	label?: string;
-	title?: string;
-	description?: string;
-	altText?: string;
-	sha1hash?: string;
-	extension?: string;
-	mimeType?: string;
-	size?: number;
-	assetId?: string;
-	uploadId?: string;
-	path?: string;
-	url?: string;
-	metadata?: SanityImageMetadata;
-	source?: SanityAssetSourceData;
-};
-
-export type SanityAssetSourceData = {
-	_type: 'sanity.assetSourceData';
-	name?: string;
-	id?: string;
-	url?: string;
-};
-
-export type SanityImageMetadata = {
-	_type: 'sanity.imageMetadata';
-	location?: Geopoint;
-	dimensions?: SanityImageDimensions;
-	palette?: SanityImagePalette;
-	lqip?: string;
-	blurHash?: string;
-	hasAlpha?: boolean;
-	isOpaque?: boolean;
 };
 
 export type MetaFields = {
@@ -1309,17 +1627,125 @@ export type MediaTag = {
 	name?: Slug;
 };
 
+export type SanityImagePaletteSwatch = {
+	_type: 'sanity.imagePaletteSwatch';
+	background?: string;
+	foreground?: string;
+	population?: number;
+	title?: string;
+};
+
+export type SanityImagePalette = {
+	_type: 'sanity.imagePalette';
+	darkMuted?: SanityImagePaletteSwatch;
+	lightVibrant?: SanityImagePaletteSwatch;
+	darkVibrant?: SanityImagePaletteSwatch;
+	vibrant?: SanityImagePaletteSwatch;
+	dominant?: SanityImagePaletteSwatch;
+	lightMuted?: SanityImagePaletteSwatch;
+	muted?: SanityImagePaletteSwatch;
+};
+
+export type SanityImageDimensions = {
+	_type: 'sanity.imageDimensions';
+	height?: number;
+	width?: number;
+	aspectRatio?: number;
+};
+
+export type SanityImageHotspot = {
+	_type: 'sanity.imageHotspot';
+	x?: number;
+	y?: number;
+	height?: number;
+	width?: number;
+};
+
+export type SanityImageCrop = {
+	_type: 'sanity.imageCrop';
+	top?: number;
+	bottom?: number;
+	left?: number;
+	right?: number;
+};
+
+export type SanityFileAsset = {
+	_id: string;
+	_type: 'sanity.fileAsset';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	originalFilename?: string;
+	label?: string;
+	title?: string;
+	description?: string;
+	altText?: string;
+	sha1hash?: string;
+	extension?: string;
+	mimeType?: string;
+	size?: number;
+	assetId?: string;
+	uploadId?: string;
+	path?: string;
+	url?: string;
+	source?: SanityAssetSourceData;
+};
+
+export type SanityImageAsset = {
+	_id: string;
+	_type: 'sanity.imageAsset';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	originalFilename?: string;
+	label?: string;
+	title?: string;
+	description?: string;
+	altText?: string;
+	sha1hash?: string;
+	extension?: string;
+	mimeType?: string;
+	size?: number;
+	assetId?: string;
+	uploadId?: string;
+	path?: string;
+	url?: string;
+	metadata?: SanityImageMetadata;
+	source?: SanityAssetSourceData;
+};
+
+export type SanityImageMetadata = {
+	_type: 'sanity.imageMetadata';
+	location?: Geopoint;
+	dimensions?: SanityImageDimensions;
+	palette?: SanityImagePalette;
+	lqip?: string;
+	blurHash?: string;
+	hasAlpha?: boolean;
+	isOpaque?: boolean;
+};
+
+export type Geopoint = {
+	_type: 'geopoint';
+	lat?: number;
+	lng?: number;
+	alt?: number;
+};
+
 export type Slug = {
 	_type: 'slug';
 	current: string;
 	source?: string;
 };
 
+export type SanityAssetSourceData = {
+	_type: 'sanity.assetSourceData';
+	name?: string;
+	id?: string;
+	url?: string;
+};
+
 export type AllSanitySchemaTypes =
-	| SanityImagePaletteSwatch
-	| SanityImagePalette
-	| SanityImageDimensions
-	| Geopoint
 	| NewsOverviewCategory
 	| NewsArticlePage
 	| Spacer
@@ -1342,7 +1768,6 @@ export type AllSanitySchemaTypes =
 	| ImageCard
 	| ExternalLink
 	| DocumentDownload
-	| SanityFileAsset
 	| ContactNameMail
 	| Columns
 	| SiteSettings
@@ -1352,16 +1777,17 @@ export type AllSanitySchemaTypes =
 	| HonoraryMember
 	| Person
 	| Role
-	| Group
+	| GroupTaekwondo
+	| GroupSoccer
+	| GroupOtherSports
+	| GroupDance
+	| GroupCourses
+	| GroupChildrenGymnastics
+	| GroupAdmin
 	| SimpleBlockContent
 	| NewsCategory
 	| NewsArticle
 	| MainImage
-	| SanityImageCrop
-	| SanityImageHotspot
-	| SanityImageAsset
-	| SanityAssetSourceData
-	| SanityImageMetadata
 	| MetaFields
 	| Author
 	| ExtendedImage
@@ -1378,7 +1804,17 @@ export type AllSanitySchemaTypes =
 	| SanityAssistInstruction
 	| SanityAssistSchemaTypeField
 	| MediaTag
-	| Slug;
+	| SanityImagePaletteSwatch
+	| SanityImagePalette
+	| SanityImageDimensions
+	| SanityImageHotspot
+	| SanityImageCrop
+	| SanityFileAsset
+	| SanityImageAsset
+	| SanityImageMetadata
+	| Geopoint
+	| Slug
+	| SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/lib/sanity/queries/pages/contact.ts
 // Variable: contactPageQuery
@@ -1533,27 +1969,7 @@ export type HomePageQueryResult = {
 } | null;
 // Variable: homePageGroupsQuery
 // Query: *[_type == 'group'][] {		title,		icon,	}
-export type HomePageGroupsQueryResult = Array<{
-	title: string;
-	icon:
-		| 'Badminton'
-		| 'Bodenturnen'
-		| 'Cheerleading'
-		| 'Fitness'
-		| 'Fussball'
-		| 'Gymnastik'
-		| 'Jujutsu'
-		| 'Pilates'
-		| 'RopeSkipping'
-		| 'Sportakrobatik'
-		| 'SportInGebaeuden'
-		| 'StepAerobic'
-		| 'Taekwondo'
-		| 'Tanzen'
-		| 'Turnen'
-		| 'Wandern'
-		| 'Yoga';
-}>;
+export type HomePageGroupsQueryResult = Array<never>;
 // Variable: homePageTestimonialsQuery
 // Query: *[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {		firstName,		lastName,		image,		quote,		role,		show,	}
 export type HomePageTestimonialsQueryResult = Array<{

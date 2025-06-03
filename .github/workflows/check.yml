@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -19,6 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: pnpm
+          node-version-file: .nvmrc
 
       - name: Install NI
         run: pnpm install -g @antfu/ni
@@ -26,8 +30,13 @@ jobs:
       - name: Install Dependencies
         run: nci
 
-      - name: Build and Lint files
-        run: nlx turbo build lint
+      - name: Lint files
+        run: nr lint:affected
+
+      - name: Build files
+        run: nr build:affected
         env:
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_STUDIO_DATASET: ${{ secrets.SANITY_DATASET }}
+          SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}

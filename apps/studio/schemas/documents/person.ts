@@ -2,7 +2,7 @@ import { RiUserSmileLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import TextInput from '@/components/text-input';
-import { type Department, DEPARTMENTS } from '@/constants/departments';
+import { DEPARTMENTS } from '@/constants/departments';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
@@ -68,8 +68,7 @@ const person = defineType({
 
 							options: {
 								filter: ({ parent }) => {
-									// eslint-disable-next-line ts/no-explicit-any
-									const type = (parent as any)?.department as Department['slug'];
+									const type = (parent as { department?: string })?.department;
 
 									switch (type) {
 										case 'admin': {

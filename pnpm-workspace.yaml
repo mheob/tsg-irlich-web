@@ -8,8 +8,9 @@ catalog:
   eslint: ^9.28.0
   react: ^19.1.0
   react-dom: ^19.1.0
-  sanity: ^3.90.0
+  sanity: ^3.91.0
   typescript: ^5.8.3
+  zod: ^3.25.49
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
   - esbuild
