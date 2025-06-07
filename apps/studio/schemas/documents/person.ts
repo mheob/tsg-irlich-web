@@ -106,8 +106,6 @@ const person = defineType({
 							],
 						}),
 
-						// getTeamField(),
-
 						defineField({
 							title: 'Rolle',
 							name: 'role',
@@ -153,11 +151,11 @@ const person = defineType({
 						}),
 					],
 					preview: {
-						prepare: ({ department, role }) => ({
-							title: `Gruppe: ${department} - Rolle: ${role}`,
+						prepare: ({ team, role }) => ({
+							title: `Gruppe: ${team} - Rolle: ${role}`,
 						}),
 						select: {
-							department: 'department.title',
+							team: 'team.title',
 							role: 'role.title',
 						},
 					},

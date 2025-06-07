@@ -2,13 +2,11 @@ import { mheob } from '@mheob/eslint-config';
 import nextPlugin from '@next/eslint-plugin-next';
 
 export default mheob(
-	// Configures mheob's config
 	{
 		react: true,
 	},
-	// From the second arguments they are ESLint Flat Configs you can have multiple configs
 	{
-		ignores: ['.github', '.sonarlint', '**/*.generated.*', 'apps/studio/schema.json'],
+		ignores: ['.sonarlint', '**/*.generated.*', 'apps/studio/schema.json'],
 	},
 	{
 		rules: {
