@@ -1,30 +1,33 @@
 import { cn } from '@tsgi-web/shared';
-import type { ComponentPropsWithRef, HTMLAttributes } from 'react';
+import type { ComponentProps, HTMLAttributes } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
 import { FormControl, FormItem, FormLabel, FormMessage } from './form';
 
-const Input = ({ className, type, ...props }: ComponentPropsWithRef<'input'>) => (
-	<input
-		className={cn(
-			'file:text-foreground placeholder:text-muted-foreground focus-visible:ring-ring bg-background-high-contrast focus-visible:outline-hidden text-md flex w-full rounded-md px-4 py-2 transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 md:text-xl',
-			className,
-		)}
-		type={type}
-		{...props}
-	/>
-);
-Input.displayName = 'Input';
+export function Input({ className, type, ...props }: ComponentProps<'input'>) {
+	return (
+		<input
+			className={cn(
+				'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-secondary shadow-xs bg-background-high-contrast flex w-full min-w-0 rounded-md px-4 py-2 text-base outline-none transition-[color,box-shadow] file:inline-flex file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-xl',
+				'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+				'aria-invalid:ring-destructive/20 aria-invalid:border-destructive',
+				className,
+			)}
+			data-slot="input"
+			type={type}
+			{...props}
+		/>
+	);
+}
 
-interface InputWithLabelProps extends ComponentPropsWithRef<typeof Input> {
+interface InputWithLabelProps extends ComponentProps<typeof Input> {
 	children?: HTMLAttributes<HTMLLabelElement>['children'];
 	field?: FieldValues;
 	wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
-function InputWithLabel({
+export function InputWithLabel({
 	children,
-	field,
 	wrapperClassName,
 	...props
 }: Readonly<InputWithLabelProps>) {
@@ -32,11 +35,9 @@ function InputWithLabel({
 		<FormItem className={wrapperClassName}>
 			<FormLabel>{children}</FormLabel>
 			<FormControl>
-				<Input {...props} {...field} />
+				<Input {...props} />
 			</FormControl>
 			<FormMessage />
 		</FormItem>
 	);
 }
-
-export { Input, InputWithLabel };

@@ -9,10 +9,10 @@
  */
 
 import {
-	PortableText,
 	type PortableTextBlock,
 	type PortableTextComponent,
 	type PortableTextComponents,
+	PortableText as PortableTextPrimitive,
 } from 'next-sanity';
 
 const headingAnchor: PortableTextComponent<PortableTextBlock> = ({ children, value }) => (
@@ -45,7 +45,7 @@ interface PortableTextProps {
 	value: PortableTextBlock[];
 }
 
-export default function CustomPortableText({ value }: Readonly<PortableTextProps>) {
+export function PortableText({ value }: Readonly<PortableTextProps>) {
 	const components: PortableTextComponents = {
 		block: {
 			h2: headingAnchor,
@@ -53,5 +53,5 @@ export default function CustomPortableText({ value }: Readonly<PortableTextProps
 		},
 	};
 
-	return <PortableText components={components} value={value} />;
+	return <PortableTextPrimitive components={components} value={value} />;
 }

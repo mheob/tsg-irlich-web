@@ -1,7 +1,7 @@
-import ContactPersons from '@/components/section/contact-persons';
-import Hero from '@/components/section/hero';
-import Newsletter from '@/components/section/newsletter';
-import SectionHeader from '@/components/ui/section-header';
+import { ContactPersons } from '@/components/section/contact-persons';
+import { Hero } from '@/components/section/hero';
+import { Newsletter } from '@/components/section/newsletter';
+import { SectionHeader } from '@/components/ui/section-header';
 import { client } from '@/lib/sanity/client';
 import {
 	newsOverviewContactPersonsQuery,

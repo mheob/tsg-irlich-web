@@ -2,8 +2,8 @@ import { cn } from '@tsgi-web/shared';
 import type { PortableTextBlock } from 'next-sanity';
 import Image from 'next/image';
 
-import Hero from '@/components/section/hero';
-import PortableText from '@/components/ui/portable-text';
+import { Hero } from '@/components/section/hero';
+import { PortableText } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
 import { client } from '@/lib/sanity/client';
 import {
@@ -39,7 +39,7 @@ export default async function NewsArticle({ params }: PageProps) {
 
 			<div className="container my-10 divide-y md:my-32 md:flex md:divide-x md:divide-y-0">
 				<article className="prose lg:prose-xl pb-10 md:pr-10">
-					<h1 className="hyphens-auto text-4xl font-bold leading-tight md:text-6xl">
+					<h1 className="leading-tight! hyphens-auto text-4xl font-bold md:text-6xl">
 						{article.title}
 					</h1>
 

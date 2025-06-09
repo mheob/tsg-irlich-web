@@ -8,7 +8,7 @@ interface GroupCardProps {
 	title: string;
 }
 
-export default function GroupCard({ digit, icon, title }: Readonly<GroupCardProps>) {
+export function GroupCard({ digit, icon, title }: Readonly<GroupCardProps>) {
 	const doubleDigit = digit.toString().padStart(2, '0');
 
 	return (

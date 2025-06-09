@@ -6,7 +6,7 @@ import type { NewsArticlesQueryResult } from '@/types/sanity.types';
 
 type NewsArticlePreviewWideProps = NewsArticlesQueryResult[0];
 
-export default function NewsArticlePreviewWide({
+export function NewsArticlePreviewWide({
 	author,
 	categories,
 	excerpt,

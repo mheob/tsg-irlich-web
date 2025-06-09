@@ -1,7 +1,7 @@
 import { cn } from '@tsgi-web/shared';
 
-import ContactPersonGroup from '@/components/ui/contact-persons';
-import SectionHeader from '@/components/ui/section-header';
+import { ContactPersons as ContactPersonGroup } from '@/components/ui/contact-persons';
+import { SectionHeader } from '@/components/ui/section-header';
 import type { ContactPerson, HomePageQueryResult } from '@/types/sanity.types';
 
 import styles from './contact-persons.module.css';
@@ -11,7 +11,7 @@ interface ContactPersonsProps extends Omit<ContactPersonsFields, 'contactPersons
 	contactPersons: ContactPerson[];
 }
 
-export default function ContactPersons({
+export function ContactPersons({
 	contactPersons,
 	intro,
 	subtitle,

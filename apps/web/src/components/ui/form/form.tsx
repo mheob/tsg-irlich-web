@@ -3,18 +3,18 @@
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@tsgi-web/shared';
-import { type ComponentPropsWithRef, useId, useMemo } from 'react';
+import { type ComponentProps, useId, useMemo } from 'react';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
-import { Controller, FormProvider } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
 import { Label } from '@/components/ui/label';
 
 import { FormFieldContext, FormItemContext } from './form-context';
 import { useFormField } from './use-form-field';
 
-const Form = FormProvider;
+export { FormProvider as Form } from 'react-hook-form';
 
-const FormField = <
+export const FormField = <
 	TFieldValues extends FieldValues = FieldValues,
 	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
@@ -29,72 +29,72 @@ const FormField = <
 	);
 };
 
-const FormItem = ({ className, ...props }: ComponentPropsWithRef<'div'>) => {
+export function FormItem({ className, ...props }: ComponentProps<'div'>) {
 	const id = useId();
 	const value = useMemo(() => ({ id }), [id]);
 
 	return (
 		<FormItemContext value={value}>
-			<div className={cn('flex flex-col gap-3', className)} {...props} />
+			<div className={cn('grid gap-3', className)} data-slot="form-item" {...props} />
 		</FormItemContext>
 	);
-};
-FormItem.displayName = 'FormItem';
+}
 
-const FormLabel = ({ className, ...props }: ComponentPropsWithRef<typeof LabelPrimitive.Root>) => {
+export function FormLabel({ className, ...props }: ComponentProps<typeof LabelPrimitive.Root>) {
 	const { error, formItemId } = useFormField();
 
 	return (
 		<Label
-			className={cn({ 'text-destructive': error }, className)}
+			className={cn('data-[error=true]:text-destructive', className)}
+			data-error={Boolean(error)}
+			data-slot="form-label"
 			htmlFor={formItemId}
 			{...props}
 		/>
 	);
-};
-FormLabel.displayName = 'FormLabel';
+}
 
-const FormControl = ({ ...props }: ComponentPropsWithRef<typeof Slot>) => {
+export function FormControl({ ...props }: ComponentProps<typeof Slot>) {
 	const { error, formDescriptionId, formItemId, formMessageId } = useFormField();
 
 	return (
 		<Slot
 			aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
 			aria-invalid={Boolean(error)}
+			data-slot="form-control"
 			id={formItemId}
 			{...props}
 		/>
 	);
-};
-FormControl.displayName = 'FormControl';
+}
 
-const FormDescription = ({ className, ...props }: ComponentPropsWithRef<'p'>) => {
+export function FormDescription({ className, ...props }: ComponentProps<'p'>) {
 	const { formDescriptionId } = useFormField();
 
 	return (
-		<p className={cn('text-muted-foreground px-3', className)} id={formDescriptionId} {...props} />
+		<p
+			className={cn('text-muted-foreground text-sm', className)}
+			data-slot="form-description"
+			id={formDescriptionId}
+			{...props}
+		/>
 	);
-};
-FormDescription.displayName = 'FormDescription';
+}
 
-const FormMessage = ({ children, className, ...props }: ComponentPropsWithRef<'p'>) => {
+export function FormMessage({ className, ...props }: ComponentProps<'p'>) {
 	const { error, formMessageId } = useFormField();
-	const body = error ? String(error?.message) : children;
-
+	const body = error ? String(error?.message ?? '') : props.children;
 	if (!body) {
 		return null;
 	}
-
 	return (
 		<p
-			className={cn('text-destructive px-3 font-medium italic', className)}
+			className={cn('text-destructive px-3 text-sm', className)}
+			data-slot="form-message"
 			id={formMessageId}
 			{...props}
 		>
 			{body}
 		</p>
 	);
-};
-FormMessage.displayName = 'FormMessage';
-
-export { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage };
+}

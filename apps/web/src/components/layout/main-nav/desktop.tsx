@@ -35,42 +35,42 @@ function ListItem({ children, className, title, ...props }: Readonly<ListItemPro
 	);
 }
 
-const components: { description: string; href: string; title: string }[] = [
-	{
-		description:
-			'A modal dialog that interrupts the user with important content and expects a response.',
-		href: '/docs/primitives/alert-dialog',
-		title: 'Alert Dialog',
-	},
-	{
-		description: 'For sighted users to preview content available behind a link.',
-		href: '/docs/primitives/hover-card',
-		title: 'Hover Card',
-	},
-	{
-		description:
-			'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
-		href: '/docs/primitives/progress',
-		title: 'Progress',
-	},
-	{
-		description: 'Visually or semantically separates content.',
-		href: '/docs/primitives/scroll-area',
-		title: 'Scroll-area',
-	},
-	{
-		description:
-			'A set of layered sections of content—known as tab panels—that are displayed one at a time.',
-		href: '/docs/primitives/tabs',
-		title: 'Tabs',
-	},
-	{
-		description:
-			'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
-		href: '/docs/primitives/tooltip',
-		title: 'Tooltip',
-	},
-];
+// const components: { description: string; href: string; title: string }[] = [
+// 	{
+// 		description:
+// 			'A modal dialog that interrupts the user with important content and expects a response.',
+// 		href: '/docs/primitives/alert-dialog',
+// 		title: 'Alert Dialog',
+// 	},
+// 	{
+// 		description: 'For sighted users to preview content available behind a link.',
+// 		href: '/docs/primitives/hover-card',
+// 		title: 'Hover Card',
+// 	},
+// 	{
+// 		description:
+// 			'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
+// 		href: '/docs/primitives/progress',
+// 		title: 'Progress',
+// 	},
+// 	{
+// 		description: 'Visually or semantically separates content.',
+// 		href: '/docs/primitives/scroll-area',
+// 		title: 'Scroll-area',
+// 	},
+// 	{
+// 		description:
+// 			'A set of layered sections of content—known as tab panels—that are displayed one at a time.',
+// 		href: '/docs/primitives/tabs',
+// 		title: 'Tabs',
+// 	},
+// 	{
+// 		description:
+// 			'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
+// 		href: '/docs/primitives/tooltip',
+// 		title: 'Tooltip',
+// 	},
+// ];
 
 interface DesktopNavProps {
 	navigationItems: { _id: string; href: string; title: string }[];
@@ -84,9 +84,9 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 			<NavigationMenu className="z-10">
 				<NavigationMenuList>
 					<NavigationMenuItem>
-						<Link href="/" legacyBehavior passHref>
-							<NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
-						</Link>
+						<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
+							<Link href="/">Home</Link>
+						</NavigationMenuLink>
 					</NavigationMenuItem>
 
 					<NavigationMenuItem>
@@ -125,7 +125,7 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 						</NavigationMenuContent>
 					</NavigationMenuItem>
 
-					<NavigationMenuItem>
+					{/* <NavigationMenuItem>
 						<NavigationMenuTrigger>Gruppen</NavigationMenuTrigger>
 
 						<NavigationMenuContent>
@@ -137,22 +137,24 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 								))}
 							</ul>
 						</NavigationMenuContent>
+					</NavigationMenuItem> */}
+
+					<NavigationMenuItem>
+						<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
+							<Link href="/angebote">Angebote</Link>
+						</NavigationMenuLink>
 					</NavigationMenuItem>
 
 					<NavigationMenuItem>
-						<Link href="/news" legacyBehavior passHref>
-							<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-								Aktuelles
-							</NavigationMenuLink>
-						</Link>
+						<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
+							<Link href="/news">Aktuelles</Link>
+						</NavigationMenuLink>
 					</NavigationMenuItem>
 
 					<NavigationMenuItem>
-						<Link href="#!" legacyBehavior passHref>
-							<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-								Mitgliedschaft
-							</NavigationMenuLink>
-						</Link>
+						<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
+							<Link href="#!">Mitgliedschaft</Link>
+						</NavigationMenuLink>
 					</NavigationMenuItem>
 				</NavigationMenuList>
 			</NavigationMenu>

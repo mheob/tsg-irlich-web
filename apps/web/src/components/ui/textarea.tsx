@@ -4,26 +4,25 @@ import type { FieldValues } from 'react-hook-form';
 
 import { FormControl, FormItem, FormLabel, FormMessage } from './form';
 
-const Textarea = ({ className, ...props }: ComponentPropsWithRef<'textarea'>) => (
-	<textarea
-		className={cn(
-			'placeholder:text-muted-foreground focus-visible:ring-ring bg-background-high-contrast focus-visible:outline-hidden text-md flex min-h-[7lh] w-full rounded-md px-4 py-2 focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 md:text-xl',
-			className,
-		)}
-		{...props}
-	/>
-);
-Textarea.displayName = 'Textarea';
-
+export function Textarea({ className, ...props }: ComponentPropsWithRef<'textarea'>) {
+	return (
+		<textarea
+			className={cn(
+				'placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 bg-background-high-contrast aria-invalid:ring-destructive/20 aria-invalid:border-destructive field-sizing-content shadow-xs flex min-h-[7lh] w-full rounded-md px-4 py-2 text-base outline-none transition-[color,box-shadow] focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-lg',
+				className,
+			)}
+			{...props}
+		/>
+	);
+}
 interface TextareaWithLabelProps extends ComponentPropsWithRef<typeof Textarea> {
 	children?: HTMLAttributes<HTMLLabelElement>['children'];
 	field?: FieldValues;
 	wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
-function TextareaWithLabel({
+export function TextareaWithLabel({
 	children,
-	field,
 	wrapperClassName,
 	...props
 }: Readonly<TextareaWithLabelProps>) {
@@ -31,11 +30,9 @@ function TextareaWithLabel({
 		<FormItem className={wrapperClassName}>
 			<FormLabel>{children}</FormLabel>
 			<FormControl>
-				<Textarea {...props} {...field} />
+				<Textarea {...props} />
 			</FormControl>
 			<FormMessage />
 		</FormItem>
 	);
 }
-
-export { Textarea, TextareaWithLabel };

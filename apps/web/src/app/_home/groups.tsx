@@ -1,21 +1,21 @@
 'use client';
 
-import ArrowButtonGroup from '@/components/ui/arrow-button-group';
-import SectionHeader from '@/components/ui/section-header';
+import { ArrowButtonGroup } from '@/components/ui/arrow-button';
+import { SectionHeader } from '@/components/ui/section-header';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import type { Home, HomePageGroupsQueryResult } from '@/types/sanity.types';
+import type { GroupsQueryResult, Home } from '@/types/sanity.types';
 
-import GroupCard from './group-card';
+import { GroupCard } from './group-card';
 
 import styles from './groups.module.css';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
 type GroupsSection = Home['content']['groupsSection'];
-type GroupsFields = HomePageGroupsQueryResult;
+type GroupsFields = GroupsQueryResult;
 type GroupsProps = GroupsSection & { groups: GroupsFields };
 
-export default function Groups({ groups, subtitle, title }: GroupsProps) {
+export function Groups({ groups, subtitle, title }: GroupsProps) {
 	const isMobile = useMediaQuery('(max-width: 48rem)');
 
 	const randomlyGroups = groups.toSorted(() => Math.random() - 0.5);

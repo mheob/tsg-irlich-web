@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
-import ContactForm from '@/components/section/contact-form';
-import ContactPersons from '@/components/section/contact-persons';
-import Hero from '@/components/section/hero';
-import Newsletter from '@/components/section/newsletter';
+import { ContactForm } from '@/components/section/contact-form';
+import { ContactPersons } from '@/components/section/contact-persons';
+import { Hero } from '@/components/section/hero';
+import { Newsletter } from '@/components/section/newsletter';
 import { client } from '@/lib/sanity/client';
 import {
 	contactPageContactPersonsQuery,

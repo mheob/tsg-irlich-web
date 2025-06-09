@@ -1,5 +1,5 @@
-import ArrowButtonGroup from '@/components/ui/arrow-button-group';
-import NewsArticlePreview from '@/components/ui/news-article-preview';
+import { ArrowButtonGroup } from '@/components/ui/arrow-button';
+import { NewsArticlePreview } from '@/components/ui/news-article-preview';
 import type { NewsArticlesQueryResult } from '@/types/sanity.types';
 
 interface LatestNewsPaginationProps {

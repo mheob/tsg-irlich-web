@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormField } from '@/components/ui/form';
 import { InputWithLabel } from '@/components/ui/input';
-import SectionHeader from '@/components/ui/section-header';
+import { SectionHeader } from '@/components/ui/section-header';
 import { SelectWithLabel } from '@/components/ui/select';
 import { TextareaWithLabel } from '@/components/ui/textarea';
 import integrationImage from '@/images/home/vision/integration.webp';
@@ -47,7 +47,7 @@ interface ContactFormProps {
 	receiver?: ContactNameMail[];
 }
 
-export default function ContactForm({ receiver }: Readonly<ContactFormProps>) {
+export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 	const selectItems = mapSelectItems(receiver);
 
 	const form = useForm<FormSchema>({

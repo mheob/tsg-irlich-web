@@ -1,10 +1,10 @@
 import { use } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { type FieldError, useFormContext, useFormState } from 'react-hook-form';
 
 import { FormFieldContext, FormItemContext } from './form-context';
 
 export const useFormField = (): {
-	error?: unknown;
+	error?: FieldError;
 	formDescriptionId: string;
 	formItemId: string;
 	formMessageId: string;
@@ -12,12 +12,13 @@ export const useFormField = (): {
 	invalid: boolean;
 	isDirty: boolean;
 	isTouched: boolean;
+	isValidating: boolean;
 	name: string;
 } => {
 	const fieldContext = use(FormFieldContext);
 	const itemContext = use(FormItemContext);
-	const { formState, getFieldState } = useFormContext();
-
+	const { getFieldState } = useFormContext();
+	const formState = useFormState({ name: fieldContext.name });
 	const fieldState = getFieldState(fieldContext.name, formState);
 
 	if (!fieldContext) {

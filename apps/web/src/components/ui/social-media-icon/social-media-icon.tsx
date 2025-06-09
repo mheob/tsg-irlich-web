@@ -8,7 +8,7 @@ interface SocialMediaIconProps extends ComponentPropsWithRef<typeof Link> {
 	label: string;
 }
 
-export default function SocialMediaIcon({
+export function SocialMediaIcon({
 	className = 'size-6 md:size-8',
 	icon: Icon,
 	label,

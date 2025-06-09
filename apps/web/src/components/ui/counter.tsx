@@ -16,7 +16,7 @@ interface CounterProps extends ComponentPropsWithRef<'div'> {
 	values: Stats[];
 }
 
-export default function Counter({ className, values, ...props }: Readonly<CounterProps>) {
+export function Counter({ className, values, ...props }: Readonly<CounterProps>) {
 	return (
 		<div
 			className={cn(

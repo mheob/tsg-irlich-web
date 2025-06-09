@@ -33,7 +33,7 @@
 .title {
 	margin-top: 1rem;
 	font-size: 2rem;
-  line-height: 1;
+  line-height: var(--leading-tight);
 }
 
 @media (min-width: 48rem) {

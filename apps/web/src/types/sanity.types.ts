@@ -3,11 +3,16 @@ import type {
 	internalGroqTypeReferenceTo,
 	SanityImageCrop,
 	SanityImageHotspot,
+	Stats,
 } from './sanity.types.generated';
 
 export * from './sanity.types.generated';
 
 export type ContactPerson = NonNullable<HomePageContactPersonsQueryResult>[0];
+
+export interface StatsSection {
+	stats: Array<Stats & { _key: string }>;
+}
 
 interface SanityImage {
 	alt: string;

@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef } from 'react';
 
-import NewsArticlePreview from '@/components/ui/news-article-preview';
+import { NewsArticlePreview } from '@/components/ui/news-article-preview';
 import type { NewsArticlesQueryResult } from '@/types/sanity.types';
 
 interface LatestNewsProps extends ComponentPropsWithoutRef<'section'> {

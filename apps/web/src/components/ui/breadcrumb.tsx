@@ -2,34 +2,40 @@ import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@tsgi-web/shared';
 import { ChevronsRight } from 'lucide-react';
-import type { ComponentPropsWithoutRef, ComponentPropsWithRef, ReactNode } from 'react';
+import type { ComponentProps } from 'react';
 
-const Breadcrumb = ({ ...props }: ComponentPropsWithRef<'nav'> & { separator?: ReactNode }) => (
-	<nav aria-label="breadcrumb" {...props} />
-);
-Breadcrumb.displayName = 'Breadcrumb';
+export function Breadcrumb({ ...props }: ComponentProps<'nav'>) {
+	return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
+}
 
-const BreadcrumbList = ({ className, ...props }: ComponentPropsWithRef<'ol'>) => (
-	<ol
-		className={cn(
-			'flex flex-wrap items-center gap-2 break-words text-sm font-bold md:text-lg',
-			className,
-		)}
-		{...props}
-	/>
-);
-BreadcrumbList.displayName = 'BreadcrumbList';
+export function BreadcrumbList({ className, ...props }: ComponentProps<'ol'>) {
+	return (
+		<ol
+			className={cn(
+				'flex flex-wrap items-center gap-2 break-words text-sm font-bold md:text-lg',
+				className,
+			)}
+			data-slot="breadcrumb-list"
+			{...props}
+		/>
+	);
+}
 
-const BreadcrumbItem = ({ className, ...props }: ComponentPropsWithRef<'li'>) => (
-	<li className={cn('inline-flex items-center gap-1.5', className)} {...props} />
-);
-BreadcrumbItem.displayName = 'BreadcrumbItem';
+export function BreadcrumbItem({ className, ...props }: ComponentProps<'li'>) {
+	return (
+		<li
+			className={cn('inline-flex items-center gap-1.5', className)}
+			data-slot="breadcrumb-item"
+			{...props}
+		/>
+	);
+}
 
-function BreadcrumbLink({
+export function BreadcrumbLink({
 	asChild,
 	className,
 	...props
-}: ComponentPropsWithRef<'a'> & {
+}: ComponentProps<'a'> & {
 	asChild?: boolean;
 }) {
 	const Comp = asChild ? Slot : 'a';
@@ -37,54 +43,50 @@ function BreadcrumbLink({
 	return (
 		<Comp
 			className={cn('hover:text-secondary underline transition-colors', className)}
+			data-slot="breadcrumb-link"
 			{...props}
 		/>
 	);
 }
-BreadcrumbLink.displayName = 'BreadcrumbLink';
 
-const BreadcrumbPage = ({ className, ...props }: ComponentPropsWithRef<'span'>) => (
-	<span // NOSONAR
-		aria-current="page"
-		aria-disabled="true"
-		className={cn('font-normal', className)}
-		role="link"
-		{...props}
-	/>
-);
-BreadcrumbPage.displayName = 'BreadcrumbPage';
+export function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {
+	return (
+		<span // NOSONAR
+			aria-current="page"
+			aria-disabled="true"
+			className={cn('font-normal', className)}
+			data-slot="breadcrumb-page"
+			role="link"
+			{...props}
+		/>
+	);
+}
 
-const BreadcrumbSeparator = ({ children, className, ...props }: ComponentPropsWithoutRef<'li'>) => (
-	<li // NOSONAR
-		aria-hidden="true"
-		className={cn('[&>svg]:h-5 [&>svg]:w-5', className)}
-		role="presentation"
-		{...props}
-	>
-		{children ?? <ChevronsRight strokeWidth={2} />}
-	</li>
-);
-BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';
+export function BreadcrumbSeparator({ children, className, ...props }: ComponentProps<'li'>) {
+	return (
+		<li // NOSONAR
+			aria-hidden="true"
+			className={cn('[&>svg]:size-5', className)}
+			data-slot="breadcrumb-separator"
+			role="presentation"
+			{...props}
+		>
+			{children ?? <ChevronsRight strokeWidth={2} />}
+		</li>
+	);
+}
 
-const BreadcrumbEllipsis = ({ className, ...props }: ComponentPropsWithoutRef<'span'>) => (
-	<span // NOSONAR
-		aria-hidden="true"
-		className={cn('flex h-9 w-9 items-center justify-center', className)}
-		role="presentation"
-		{...props}
-	>
-		<DotsHorizontalIcon className="h-4 w-4" />
-		<span className="sr-only">More</span>
-	</span>
-);
-BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis';
-
-export {
-	Breadcrumb,
-	BreadcrumbEllipsis,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-};
+export function BreadcrumbEllipsis({ className, ...props }: ComponentProps<'span'>) {
+	return (
+		<span // NOSONAR
+			aria-hidden="true"
+			className={cn('flex size-9 items-center justify-center', className)}
+			data-slot="breadcrumb-ellipsis"
+			role="presentation"
+			{...props}
+		>
+			<DotsHorizontalIcon className="size-4" />
+			<span className="sr-only">More</span>
+		</span>
+	);
+}

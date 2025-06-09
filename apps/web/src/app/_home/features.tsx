@@ -1,11 +1,11 @@
-import SectionHeader from '@/components/ui/section-header';
+import { SectionHeader } from '@/components/ui/section-header';
 import type { Home } from '@/types/sanity.types';
 
-import FeatureCard from './feature-card';
+import { FeatureCard } from './feature-card';
 
 type FeaturesProps = Home['content']['featureSection'];
 
-export default function Features({ features, intro, subtitle, title }: Readonly<FeaturesProps>) {
+export function Features({ features, intro, subtitle, title }: Readonly<FeaturesProps>) {
 	return (
 		<section className="bg-background-low-contrast">
 			<div className="container mx-auto py-10 md:py-28">

@@ -12,7 +12,7 @@ interface SectionHeaderProps extends Omit<ComponentPropsWithoutRef<'div'>, 'titl
 	title?: ReactNode | string;
 }
 
-export default function SectionHeader({
+export function SectionHeader({
 	children,
 	className,
 	descriptionClassName,

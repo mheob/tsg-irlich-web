@@ -1,24 +1,24 @@
 import type { Metadata } from 'next';
 
-import ContactForm from '@/components/section/contact-form';
-import ContactPersons from '@/components/section/contact-persons';
-import Newsletter from '@/components/section/newsletter';
+import { ContactForm } from '@/components/section/contact-form';
+import { ContactPersons } from '@/components/section/contact-persons';
+import { Newsletter } from '@/components/section/newsletter';
 import { client } from '@/lib/sanity/client';
 import {
 	homePageContactPersonsQuery,
-	homePageGroupsQuery,
 	homePageQuery,
 	homePageTestimonialsQuery,
 } from '@/lib/sanity/queries/pages/home';
+import { groupsQuery } from '@/lib/sanity/queries/shared/groups';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
 
-import Features from './_home/features';
-import Groups from './_home/groups';
-import Hero from './_home/hero';
-import News from './_home/news';
-import Pricing from './_home/pricing';
-import Testimonials from './_home/testimonials';
-import Vision from './_home/vision';
+import { Features } from './_home/features';
+import { Groups } from './_home/groups';
+import { Hero } from './_home/hero';
+import { News } from './_home/news';
+import { Pricing } from './_home/pricing';
+import { Testimonials } from './_home/testimonials';
+import { Vision } from './_home/vision';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 60; // 1 minute
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 export default async function Home() {
 	const [page, groups, testimonials, contactPersons, newsArticles] = await Promise.all([
 		client.fetch(homePageQuery),
-		client.fetch(homePageGroupsQuery),
+		client.fetch(groupsQuery),
 		client.fetch(homePageTestimonialsQuery),
 		client.fetch(homePageContactPersonsQuery, { department: 'Vorstand' }),
 		client.fetch(newsArticlesQuery),

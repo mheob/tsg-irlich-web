@@ -5,7 +5,7 @@ import { Quote } from 'lucide-react';
 import Image from 'next/image';
 import type { HTMLAttributes } from 'react';
 
-import ArrowButtonGroup from '@/components/ui/arrow-button-group';
+import { ArrowButtonGroup } from '@/components/ui/arrow-button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types.generated';
@@ -107,7 +107,7 @@ interface TestimonialGroupProps extends HTMLAttributes<HTMLDivElement> {
 	testimonials: NonNullable<HomePageTestimonialsQueryResult>;
 }
 
-export default function TestimonialGroup({ testimonials }: Readonly<TestimonialGroupProps>) {
+export function TestimonialGroup({ testimonials }: Readonly<TestimonialGroupProps>) {
 	return (
 		<div>
 			<div className="bg-primary-border-primary-foreground ml-6 mt-10 rounded-xl shadow-xl md:ml-0 md:mt-0 md:py-16 md:pl-12 md:pr-28">

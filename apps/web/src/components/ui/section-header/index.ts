@@ -1,1 +1,1 @@
-export { default } from './section-header';
+export { SectionHeader } from './section-header';
