@@ -24,7 +24,7 @@ export default mheob(
 		},
 	},
 	{
-		files: ['apps/web/**/*.ts?(x)'],
+		files: ['apps/web/src/**/*.ts?(x)'],
 		name: 'Next Plugin',
 		plugins: {
 			'@next/next': nextPlugin,
