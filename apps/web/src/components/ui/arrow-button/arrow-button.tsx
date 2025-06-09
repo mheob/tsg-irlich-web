@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 import {
 	ArrowDown,
 	ArrowDownLeft,
@@ -13,18 +13,7 @@ import {
 import Link from 'next/link';
 import type { ComponentPropsWithRef } from 'react';
 
-const ArrowButtonVariants = cva('i-btn', {
-	defaultVariants: {
-		variant: 'primary',
-	},
-	variants: {
-		variant: {
-			ghost: 'i-btn--ghost',
-			primary: 'i-btn--primary',
-			secondary: 'i-btn--secondary',
-		},
-	},
-});
+import { ArrowButtonVariants } from './variants';
 
 interface ArrowProps {
 	direction?:
@@ -77,7 +66,7 @@ function Arrow({
 	}
 }
 
-const ArrowButton = ({
+export const ArrowButton = ({
 	buttonType = 'button',
 	className,
 	direction,
@@ -91,18 +80,22 @@ const ArrowButton = ({
 );
 ArrowButton.displayName = 'ArrowButton';
 
-const ArrowElement = ({ className, direction, size, variant, ...props }: ArrowElementProps) => (
+export const ArrowElement = ({
+	className,
+	direction,
+	size,
+	variant,
+	...props
+}: ArrowElementProps) => (
 	<div className={ArrowButtonVariants({ className, variant })} {...props}>
 		<Arrow className={size} direction={direction} />
 	</div>
 );
 ArrowElement.displayName = 'ArrowElement';
 
-const ArrowLink = ({ className, direction, size, variant, ...props }: ArrowAnchorProps) => (
+export const ArrowLink = ({ className, direction, size, variant, ...props }: ArrowAnchorProps) => (
 	<Link className={ArrowButtonVariants({ className, variant })} {...props}>
 		<Arrow className={size} direction={direction} />
 	</Link>
 );
 ArrowLink.displayName = 'ArrowLink';
-
-export { ArrowButton, ArrowElement, ArrowLink };

@@ -9,8 +9,12 @@ export default mheob(
 		ignores: ['.sonarlint', '**/*.generated.*', 'apps/studio/schema.json'],
 	},
 	{
+		files: ['**/*.ts?(x)'],
 		rules: {
-			'react-refresh/only-export-components': 'off',
+			'react-refresh/only-export-components': [
+				'warn',
+				{ allowExportNames: ['dynamic', 'metadata', 'revalidate'] },
+			],
 		},
 	},
 	{
@@ -20,7 +24,7 @@ export default mheob(
 		},
 	},
 	{
-		files: ['apps/web/**/*.ts?(x)'],
+		files: ['apps/web/src/**/*.ts?(x)'],
 		name: 'Next Plugin',
 		plugins: {
 			'@next/next': nextPlugin,

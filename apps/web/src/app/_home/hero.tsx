@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import SectionHeader from '@/components/ui/section-header';
-import SocialMediaIcon from '@/components/ui/social-media-icon';
+import { SectionHeader } from '@/components/ui/section-header';
+import { SocialMediaIcon } from '@/components/ui/social-media-icon';
 import ArrowCta from '@/icons/design/arrow-cta';
 import HeroImage from '@/images/home/hero.webp';
 import { client } from '@/lib/sanity/client';
@@ -16,7 +16,7 @@ import styles from './hero.module.css';
 
 type HeroProps = Pick<Home, 'intro' | 'subtitle' | 'title'>;
 
-export default async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
+export async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 	const socialMedia = await client.fetch(socialMediaQuery);
 
 	return (

@@ -105,6 +105,11 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+
+	*::selection {
+		background-color: var(--color-primary);
+		color: var(--color-secondary);
+	}
 }
 
 @utility btn {

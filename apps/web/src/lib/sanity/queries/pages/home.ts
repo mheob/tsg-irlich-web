@@ -16,13 +16,6 @@ export const homePageQuery = defineQuery(`
 	}
 `);
 
-export const homePageGroupsQuery = defineQuery(`
-	*[_type == 'group'][] {
-		title,
-		icon,
-	}
-`);
-
 export const homePageTestimonialsQuery = defineQuery(`
 	*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {
 		firstName,

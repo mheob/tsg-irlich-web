@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import SectionHeader from '@/components/ui/section-header';
+import { SectionHeader } from '@/components/ui/section-header';
 import taekwondoImage from '@/images/home/vision/taekwondo.webp';
 import teamworkImage from '@/images/home/vision/teamwork.webp';
 import zusammenhaltImage from '@/images/home/vision/zusammenhalt.webp';
@@ -14,7 +14,7 @@ import styles from './vision.module.css';
 
 type VisionProps = Home['content']['visionSection'];
 
-export default function Vision({ cta, intro, subtitle, title }: Readonly<VisionProps>) {
+export function Vision({ cta, intro, subtitle, title }: Readonly<VisionProps>) {
 	return (
 		<section className="relative items-center">
 			<div className="md:not-last-of-type:mx-auto md:container md:grid md:grid-cols-[55%_45%] md:px-5">

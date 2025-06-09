@@ -1,14 +1,14 @@
 import { Crown, Gem, Rocket } from 'lucide-react';
 
-import PricingCard from '@/components/ui/pricing-card';
-import SectionHeader from '@/components/ui/section-header';
+import { PricingCard } from '@/components/ui/pricing-card';
+import { SectionHeader } from '@/components/ui/section-header';
 import type { Home } from '@/types/sanity.types';
 
 import styles from './pricing.module.css';
 
 type PricingProps = Home['content']['pricingSection'];
 
-export default function Pricing({
+export function Pricing({
 	intro,
 	pricingAdult,
 	pricingFamily,

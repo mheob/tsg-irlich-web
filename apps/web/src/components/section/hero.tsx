@@ -2,7 +2,7 @@ import { cn } from '@tsgi-web/shared';
 import Image, { type StaticImageData } from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
-import SectionHeader from '../ui/section-header';
+import { SectionHeader } from '../ui/section-header';
 import Breadcrumb from '../with-logic/breadcrumb';
 
 interface HeroProps extends ComponentPropsWithoutRef<'section'> {
@@ -11,7 +11,7 @@ interface HeroProps extends ComponentPropsWithoutRef<'section'> {
 	title: string;
 }
 
-export default function Hero({ children, image, subTitle, title, ...props }: Readonly<HeroProps>) {
+export function Hero({ children, image, subTitle, title, ...props }: Readonly<HeroProps>) {
 	return (
 		<section
 			className={cn(

@@ -15,7 +15,7 @@ interface PricingCardProps extends PricingProps {
 	isHighlighted?: boolean;
 }
 
-export default function PricingCard({
+export function PricingCard({
 	benefits,
 	benefitsTitle,
 	children,

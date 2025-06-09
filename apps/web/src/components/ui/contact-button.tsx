@@ -13,7 +13,7 @@ type ContactButtonProps = ComponentPropsWithRef<'a'> &
 		  }
 	);
 
-export default function ContactButton({ email, phone, ...props }: ContactButtonProps) {
+export function ContactButton({ email, phone, ...props }: ContactButtonProps) {
 	if (email)
 		return (
 			<a

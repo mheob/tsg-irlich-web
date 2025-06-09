@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import NewsArticlePreviewWide from '@/components/ui/news-article-preview-wide';
-import SectionHeader from '@/components/ui/section-header';
+import { NewsArticlePreviewWide } from '@/components/ui/news-article-preview-wide';
+import { SectionHeader } from '@/components/ui/section-header';
 import type { Home, NewsArticlesQueryResult } from '@/types/sanity.types';
 
 import styles from './news.module.css';
@@ -12,7 +12,7 @@ interface NewsProps extends NewsFields {
 	articles: NewsArticlesQueryResult;
 }
 
-export default function News({ articles, intro, subtitle, title }: Readonly<NewsProps>) {
+export function News({ articles, intro, subtitle, title }: Readonly<NewsProps>) {
 	return (
 		<section className={`${styles.bg} bg-primary relative z-0 text-white`}>
 			<div className="container mx-auto px-5 py-10 md:py-28">

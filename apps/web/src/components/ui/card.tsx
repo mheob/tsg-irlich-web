@@ -1,41 +1,61 @@
 import { cn } from '@tsgi-web/shared';
-import type { ComponentPropsWithRef } from 'react';
+import type { ComponentProps } from 'react';
 
-const Card = ({ children, className, ...props }: ComponentPropsWithRef<'article'>) => (
-	<article
-		className={cn('bg-card text-card-foreground rounded-xl p-8 shadow-lg', className)}
-		{...props}
-	>
-		{children}
-	</article>
-);
-Card.displayName = 'Card';
+export function Card({ className, ...props }: ComponentProps<'article'>) {
+	return (
+		<article
+			className={cn('bg-card text-card-foreground rounded-xl p-8 shadow-lg', className)}
+			data-slot="card"
+			{...props}
+		/>
+	);
+}
 
-const CardHeader = ({ className, ...props }: ComponentPropsWithRef<'header'>) => (
-	<header className={cn('flex flex-col space-y-1.5', className)} {...props} />
-);
-CardHeader.displayName = 'CardHeader';
+export function CardHeader({ className, ...props }: ComponentProps<'header'>) {
+	return (
+		<header
+			className={cn(
+				'@container/card-header has-data-[slot=card-action]:grid-cols-[1fr_auto] grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5',
+				className,
+			)}
+			data-slot="card-header"
+			{...props}
+		/>
+	);
+}
 
-const CardTitle = ({ children, className, ...props }: ComponentPropsWithRef<'h3'>) => (
-	<h3 className={className} {...props}>
-		{children}
-	</h3>
-);
-CardTitle.displayName = 'CardTitle';
+export function CardTitle({ className, ...props }: ComponentProps<'h3'>) {
+	return (
+		<h3 className={className} data-slot="card-title" {...props}>
+			{props.children}
+		</h3>
+	);
+}
 
-const CardDescription = ({ className, ...props }: ComponentPropsWithRef<'p'>) => (
-	<p className={cn('text-muted-foreground text-sm', className)} {...props} />
-);
-CardDescription.displayName = 'CardDescription';
+export function CardDescription({ className, ...props }: ComponentProps<'p'>) {
+	return (
+		<p
+			className={cn('text-muted-foreground text-sm', className)}
+			data-slot="card-description"
+			{...props}
+		/>
+	);
+}
 
-const CardContent = ({ className, ...props }: ComponentPropsWithRef<'div'>) => (
-	<div className={className} {...props} />
-);
-CardContent.displayName = 'CardContent';
+export function CardAction({ className, ...props }: ComponentProps<'div'>) {
+	return (
+		<div
+			className={cn('col-start-2 row-span-2 row-start-1 self-start justify-self-end', className)}
+			data-slot="card-action"
+			{...props}
+		/>
+	);
+}
 
-const CardFooter = ({ className, ...props }: ComponentPropsWithRef<'footer'>) => (
-	<footer className={cn('flex items-center', className)} {...props} />
-);
-CardFooter.displayName = 'CardFooter';
+export function CardContent({ className, ...props }: ComponentProps<'div'>) {
+	return <div className={className} data-slot="card-content" {...props} />;
+}
 
-export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
+export function CardFooter({ className, ...props }: ComponentProps<'div'>) {
+	return <div className={cn('flex items-center', className)} data-slot="card-footer" {...props} />;
+}

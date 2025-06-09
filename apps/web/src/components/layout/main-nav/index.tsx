@@ -12,8 +12,8 @@ import { MobileNav } from './mobile';
 // TODO: get navigation items from sanity
 const navigationItems = [
 	{ _id: 'home', href: '/', title: 'Home' },
-	{ _id: 'about', href: '/about', title: 'About' },
-	{ _id: 'contact', href: '/contact', title: 'Contact' },
+	{ _id: 'angebote', href: '/angebote', title: 'Angebote' },
+	{ _id: 'news', href: '/news', title: 'Aktuelles' },
 ];
 
 export default function MainNav() {

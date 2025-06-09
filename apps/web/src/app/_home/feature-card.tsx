@@ -39,7 +39,7 @@ interface FeatureCardProps extends HTMLAttributes<HTMLDivElement> {
 	title: string;
 }
 
-export default function FeatureCard({ href, icon, intro, title }: Readonly<FeatureCardProps>) {
+export function FeatureCard({ href, icon, intro, title }: Readonly<FeatureCardProps>) {
 	return (
 		<Card className="hover:bg-primary hover:text-primary-foreground flex items-center justify-between gap-4">
 			<div>

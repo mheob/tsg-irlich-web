@@ -1967,9 +1967,6 @@ export type HomePageQueryResult = {
 		};
 	};
 } | null;
-// Variable: homePageGroupsQuery
-// Query: *[_type == 'group'][] {		title,		icon,	}
-export type HomePageGroupsQueryResult = Array<never>;
 // Variable: homePageTestimonialsQuery
 // Query: *[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {		firstName,		lastName,		image,		quote,		role,		show,	}
 export type HomePageTestimonialsQueryResult = Array<{
@@ -2240,6 +2237,82 @@ export type NewsOverviewContactPersonsQueryResult = Array<{
 	vision: string | null;
 }> | null;
 
+// Source: ./src/lib/sanity/queries/pages/offer.ts
+// Variable: offerPageQuery
+// Query: *[_type == 'groupsPage'][0] {		...,		content {			...,			contactPersonsSection {				intro,				subtitle,				title,			}		}	}
+export type OfferPageQueryResult = {
+	_id: string;
+	_type: 'groupsPage';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	intro?: string;
+	meta?: MetaFields;
+	content: {
+		groupsSection?: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+		statsSection: {
+			stats: Array<
+				{
+					_key: string;
+				} & Stats
+			>;
+		};
+		venuesSection?: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			venues?: Array<{
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				_key: string;
+				[internalGroqTypeReferenceTo]?: 'venue';
+			}>;
+		};
+		contactPersonsSection: {
+			intro: string | null;
+			subtitle: string;
+			title: string;
+		};
+	} | null;
+} | null;
+// Variable: offerPageContactPersonsQuery
+// Query: *[_type == 'contact'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
+export type OfferPageContactPersonsQueryResult = Array<{
+	firstName: string;
+	lastName: string;
+	phone: string | null;
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	email: string | null;
+	role: string | null;
+	vision: string | null;
+}> | null;
+
+// Source: ./src/lib/sanity/queries/shared/groups.ts
+// Variable: groupsQuery
+// Query: *[_type == 'group'][] {		_id,		title,		icon,	}
+export type GroupsQueryResult = Array<never>;
+
 // Source: ./src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesQuery
 // Query: *[_type == 'news.article'] | order(publishedAt desc) [0..2] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
@@ -2351,9 +2424,10 @@ import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
 		"\n\t*[_type == 'contact'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": ContactPageQueryResult;
-		'\n\t*[_type == \'contact\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': ContactPageContactPersonsQueryResult;
+		'\n\t*[_type == \'contact\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n':
+			| ContactPageContactPersonsQueryResult
+			| OfferPageContactPersonsQueryResult;
 		"\n\t*[_type == 'home'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": HomePageQueryResult;
-		"\n\t*[_type == 'group'][] {\n\t\ttitle,\n\t\ticon,\n\t}\n": HomePageGroupsQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshow,\n\t}\n": HomePageTestimonialsQueryResult;
 		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': HomePageContactPersonsQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
@@ -2364,6 +2438,8 @@ declare module '@sanity/client' {
 		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
 		"\n\t*[_type == 'newsOverview'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": NewsOverviewPageQueryResult;
 		'\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': NewsOverviewContactPersonsQueryResult;
+		"\n\t*[_type == 'groupsPage'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": OfferPageQueryResult;
+		"\n\t*[_type == 'group'][] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
 		'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;

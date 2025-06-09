@@ -29,7 +29,7 @@ interface LinkProps {
 
 type ArrowButtonGroupProps = BaseProps & (ButtonProps | LinkProps);
 
-export default function ArrowButtonGroup({
+export function ArrowButtonGroup({
 	asChild = false,
 	className,
 	hrefNext,

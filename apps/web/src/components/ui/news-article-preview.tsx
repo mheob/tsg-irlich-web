@@ -13,7 +13,7 @@ interface NewsArticlePreviewProps {
 	columns?: 1 | 2;
 }
 
-export default function NewsArticlePreview({
+export function NewsArticlePreview({
 	article: { author, categories, excerpt, featuredImage, publishedAt, slug, title },
 	columns = 1,
 }: Readonly<NewsArticlePreviewProps>) {

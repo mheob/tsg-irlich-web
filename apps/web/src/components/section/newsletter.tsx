@@ -3,11 +3,11 @@ import { AtSign } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import SectionHeader from '@/components/ui/section-header';
+import { SectionHeader } from '@/components/ui/section-header';
 
 import styles from './newsletter.module.css';
 
-export default function Newsletter() {
+export function Newsletter() {
 	return (
 		<section className="bg-background-low-contrast md:pt-32">
 			<div
