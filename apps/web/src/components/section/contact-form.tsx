@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail, MessagesSquare, UserRound, UsersRound } from 'lucide-react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormField } from '@/components/ui/form';
@@ -18,18 +18,10 @@ import villageImage from '@/images/home/vision/village.webp';
 import type { ContactNameMail } from '@/types/sanity.types';
 
 const formSchema = z.object({
-	email: z.string().email({
-		message: 'Die E-Mail Adresse ist ungültig.',
-	}),
-	message: z.string().min(32, {
-		message: 'Die Nachricht muss mindestens 32 Zeichen lang sein.',
-	}),
-	name: z.string().min(2, {
-		message: 'Der Name muss mindestens 2 Zeichen lang sein.',
-	}),
-	receiver: z.string().email({
-		message: 'Kein Empfänger ausgewählt.',
-	}),
+	email: z.email({ message: 'Die E-Mail Adresse ist ungültig.' }),
+	message: z.string().min(32, { message: 'Die Nachricht muss mindestens 32 Zeichen lang sein.' }),
+	name: z.string().min(2, { message: 'Der Name muss mindestens 2 Zeichen lang sein.' }),
+	receiver: z.email({ message: 'Kein Empfänger ausgewählt.' }),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
