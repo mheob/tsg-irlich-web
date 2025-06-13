@@ -13,19 +13,19 @@
 		"start": "sanity start"
 	},
 	"dependencies": {
-		"@sanity/assist": "^4.2.0",
-		"@sanity/locale-de-de": "^1.1.22",
-		"@sanity/ui": "^2.15.18",
-		"@sanity/vision": "^3.91.0",
+		"@sanity/assist": "catalog:",
+		"@sanity/locale-de-de": "catalog:",
+		"@sanity/ui": "catalog:",
+		"@sanity/vision": "catalog:",
 		"@tsgi-web/shared": "workspace:*",
-		"dotenv": "^16.5.0",
+		"dotenv": "catalog:",
 		"react": "catalog:",
 		"react-dom": "catalog:",
-		"react-icons": "^5.5.0",
+		"react-icons": "catalog:",
 		"sanity": "catalog:",
-		"sanity-plugin-media": "^3.0.3",
-		"slugify": "^1.6.6",
-		"styled-components": "^6.1.18",
+		"sanity-plugin-media": "catalog:",
+		"slugify": "catalog:",
+		"styled-components": "^6.1.19",
 		"zod": "catalog:"
 	},
 	"devDependencies": {
