@@ -2,8 +2,8 @@
 
 import { ArrowButtonGroup } from '@/components/ui/arrow-button';
 import { SectionHeader } from '@/components/ui/section-header';
-import { useMediaQuery } from '@/hooks/use-media-query';
-import type { GroupsQueryResult, Home } from '@/types/sanity.types';
+import { groupSections } from '@/constants/groups';
+import type { Home } from '@/types/sanity.types';
 
 import { GroupCard } from './group-card';
 
@@ -11,16 +11,9 @@ import styles from './groups.module.css';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
-type GroupsSection = Home['content']['groupsSection'];
-type GroupsFields = GroupsQueryResult;
-type GroupsProps = GroupsSection & { groups: GroupsFields };
+type GroupsProps = Home['content']['groupsSection'];
 
-export function Groups({ groups, subtitle, title }: GroupsProps) {
-	const isMobile = useMediaQuery('(max-width: 48rem)');
-
-	const randomlyGroups = groups.toSorted(() => Math.random() - 0.5);
-	const groupsToShow = isMobile ? randomlyGroups.slice(0, 3) : groups;
-
+export function Groups({ subtitle, title }: GroupsProps) {
 	return (
 		<section className="relative">
 			<div className={styles.bg}></div>
@@ -33,11 +26,12 @@ export function Groups({ groups, subtitle, title }: GroupsProps) {
 				</div>
 
 				<div className="my-6 flex flex-col gap-2 md:mt-24 md:flex-row md:gap-7 md:overflow-x-scroll">
-					{groupsToShow?.map(({ icon, title }, index) => (
+					{groupSections?.map(({ icon, slug, title }, index) => (
 						<GroupCard
 							digit={index + 1}
 							icon={icon || getFirstLetter(title)}
 							key={title}
+							slug={slug}
 							title={title}
 						/>
 					))}

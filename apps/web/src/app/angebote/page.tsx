@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default async function Offer() {
 	const [page, offerPersons] = await Promise.all([
 		client.fetch(offerPageQuery),
-		client.fetch(offerPageContactPersonsQuery, { department: 'Vorstand' }),
+		client.fetch(offerPageContactPersonsQuery),
 	]);
 
 	if (!page) return null;

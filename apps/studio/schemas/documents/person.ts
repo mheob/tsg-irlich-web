@@ -4,7 +4,7 @@ import { defineField, defineType } from 'sanity';
 import TextInput from '@/components/text-input';
 import { DEPARTMENTS } from '@/constants/departments';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
-import { phoneField } from '@/shared/fields/contact';
+import { contactAsField, phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
 
 const person = defineType({
@@ -21,6 +21,7 @@ const person = defineType({
 
 		// contact
 		phoneField,
+		contactAsField,
 
 		// additionalInformation
 		defineField({

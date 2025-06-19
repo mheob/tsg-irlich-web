@@ -1,14 +1,16 @@
 import { DOSBIcon, type DosbIconName } from '@tsgi-web/shared';
+import type { LinkProps } from 'next/link';
 
-import { ArrowButton } from '@/components/ui/arrow-button';
+import { ArrowLink } from '@/components/ui/arrow-button';
 
 interface GroupCardProps {
 	digit: number;
 	icon: DosbIconName;
+	slug: LinkProps['href'];
 	title: string;
 }
 
-export function GroupCard({ digit, icon, title }: Readonly<GroupCardProps>) {
+export function GroupCard({ digit, icon, slug, title }: Readonly<GroupCardProps>) {
 	const doubleDigit = digit.toString().padStart(2, '0');
 
 	return (
@@ -27,9 +29,10 @@ export function GroupCard({ digit, icon, title }: Readonly<GroupCardProps>) {
 						{title}
 					</h3>
 
-					<ArrowButton
+					<ArrowLink
 						className="hidden text-sm group-hover:block"
 						direction="up-right"
+						href={slug}
 						size="32"
 						variant="ghost"
 					/>

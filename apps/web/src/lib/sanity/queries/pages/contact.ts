@@ -16,7 +16,6 @@ export const contactPageQuery = defineQuery(`
 	}
 `);
 
-/** **IMPORTANT:** The param `department` is required for the contactPersons fragment. */
 export const contactPageContactPersonsQuery = defineQuery(`
 	*[_type == 'contact'][0].content.contactPersonsSection.contactPersons[]-> {
 		${contactPersons}
