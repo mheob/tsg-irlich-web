@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
+import { Newsletter } from '@/components/section/newsletter';
 import { Stats } from '@/components/section/stats';
 import { client } from '@/lib/sanity/client';
 import { offerPageContactPersonsQuery, offerPageQuery } from '@/lib/sanity/queries/pages/offer';
-import { groupsQuery } from '@/lib/sanity/queries/shared/groups';
 
 import gymnasticImage from './_assets/gymnastic.webp';
 import Groups from './_sections/groups';
@@ -17,9 +17,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Offer() {
-	const [page, groups, offerPersons] = await Promise.all([
+	const [page, offerPersons] = await Promise.all([
 		client.fetch(offerPageQuery),
-		client.fetch(groupsQuery),
 		client.fetch(offerPageContactPersonsQuery, { department: 'Vorstand' }),
 	]);
 
@@ -37,10 +36,11 @@ export default async function Offer() {
 				subTitle={page.subtitle}
 				title={page.title}
 			/>
-			<Groups {...page.content.groupsSection} groups={groups} />
+			<Groups {...page.content.groupsSection} />
 			<Stats {...page.content.statsSection} />
 			{/* Training Schedules */}
 			<ContactPersons {...page.content.contactPersonsSection} contactPersons={offerPersons ?? []} />
+			<Newsletter />
 		</>
 	);
 }

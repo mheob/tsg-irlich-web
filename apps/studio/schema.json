@@ -1881,7 +1881,7 @@
                   }
                 }
               },
-              "optional": true
+              "optional": false
             },
             "statsSection": {
               "type": "objectAttribute",
@@ -2064,7 +2064,7 @@
             }
           }
         },
-        "optional": true
+        "optional": false
       }
     }
   },

@@ -10,4 +10,5 @@ export const groupsField = defineField({
 	icon: RiLinksLine,
 	group: 'groups',
 	fields: [...getDefaultPageFieldsWithGroup()],
+	validation: Rule => Rule.required(),
 });
