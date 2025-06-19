@@ -52,7 +52,7 @@ export function ContactButton({ email, phone, whatsapp, ...props }: ContactButto
 			<a
 				aria-label="Whatsapp"
 				className="text-primary hover:text-secondary"
-				href={`https://wa.me/${whatsapp.slice(1).replaceAll(' ', '')}`}
+				href={`https://wa.me/${whatsapp.replace(/^\+/, '').replaceAll(' ', '')}`}
 				{...props}
 			>
 				<SiWhatsapp aria-hidden="true" />
