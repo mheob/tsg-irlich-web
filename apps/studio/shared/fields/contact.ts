@@ -30,6 +30,23 @@ export const phoneField = defineField({
 	],
 });
 
+export const contactAsField = defineField({
+	title: 'Kontakt per',
+	name: 'contactAs',
+	type: 'string',
+	group: 'contact',
+	options: {
+		list: [
+			{ title: 'nur per E-Mail', value: 'email' },
+			{ title: 'nur per Telefon', value: 'phone' },
+			{ title: 'nur per WhatsApp', value: 'whatsapp' },
+			{ title: 'per Telefon und WhatsApp', value: 'both' },
+		],
+	},
+	hidden: ({ parent }) => !parent?.phone,
+	validation: Rule => [Rule.required().error('Die "Kontakt per"-Auswahl ist erforderlich')],
+});
+
 export const contactPersonsField = defineField({
 	title: 'Ansprechpartner',
 	name: 'contactPersons',

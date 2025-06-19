@@ -4502,6 +4502,31 @@
         },
         "optional": true
       },
+      "contactAs": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "email"
+            },
+            {
+              "type": "string",
+              "value": "phone"
+            },
+            {
+              "type": "string",
+              "value": "whatsapp"
+            },
+            {
+              "type": "string",
+              "value": "both"
+            }
+          ]
+        },
+        "optional": false
+      },
       "affiliations": {
         "type": "objectAttribute",
         "value": {

@@ -9,7 +9,6 @@ import {
 	homePageQuery,
 	homePageTestimonialsQuery,
 } from '@/lib/sanity/queries/pages/home';
-import { groupsQuery } from '@/lib/sanity/queries/shared/groups';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
 
 import { Features } from './_home/features';
@@ -30,11 +29,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-	const [page, groups, testimonials, contactPersons, newsArticles] = await Promise.all([
+	const [page, testimonials, contactPersons, newsArticles] = await Promise.all([
 		client.fetch(homePageQuery),
-		client.fetch(groupsQuery),
 		client.fetch(homePageTestimonialsQuery),
-		client.fetch(homePageContactPersonsQuery, { department: 'Vorstand' }),
+		client.fetch(homePageContactPersonsQuery),
 		client.fetch(newsArticlesQuery),
 	]);
 
@@ -45,7 +43,7 @@ export default async function Home() {
 			<Hero intro={page.intro} subtitle={page.subtitle} title={page.title} />
 			<Features {...page.content.featureSection} />
 			<Vision {...page.content.visionSection} />
-			<Groups {...page.content.groupsSection} groups={groups} />
+			<Groups {...page.content.groupsSection} />
 			<Pricing {...page.content.pricingSection} />
 			<Testimonials {...page.content.testimonialSection} testimonials={testimonials} />
 			<ContactPersons

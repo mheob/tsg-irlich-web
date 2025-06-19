@@ -34,7 +34,7 @@ export default async function NewsOverview({ searchParams }: PageProps) {
 			end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
 			start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
 		}),
-		client.fetch(newsOverviewContactPersonsQuery, { department: 'PR-Team' }),
+		client.fetch(newsOverviewContactPersonsQuery),
 	]);
 
 	if (!page) return null;

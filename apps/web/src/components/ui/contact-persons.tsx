@@ -16,17 +16,21 @@ interface ContactPersonItemProps
 		Omit<ComponentPropsWithoutRef<'article'>, 'role'> {}
 
 function ContactPersonItem({
+	contactAs,
 	email,
 	firstName,
 	image,
 	lastName,
 	phone,
 	role,
-	vision,
+	taskDescription,
 }: Readonly<ContactPersonItemProps>) {
 	const isMobile = useMediaQuery('(max-width: 48rem)');
 
 	const imageSource = isMobile ? urlForImage(image, 120) : urlForImage(image, 176);
+
+	const showPhone = phone && (contactAs === 'phone' || contactAs === 'both');
+	const showWhatsapp = phone && (contactAs === 'whatsapp' || contactAs === 'both');
 
 	return (
 		<article>
@@ -60,14 +64,15 @@ function ContactPersonItem({
 					<h3 className="font-serif text-2xl md:text-3xl">
 						{firstName} {lastName}
 					</h3>
-					<p className="mb-2 text-sm md:text-lg">{role}</p>
+					<p className="mb-2 text-sm md:text-lg xl:h-[2lh]">{role}</p>
 					<div className="flex gap-6">
 						{email && <ContactButton email={email} />}
-						{phone && <ContactButton phone={phone} />}
+						{showPhone && <ContactButton phone={phone} />}
+						{showWhatsapp && <ContactButton whatsapp={phone} />}
 					</div>
 				</header>
 
-				<p className="px-5 text-sm md:px-12 md:text-xl">{vision}</p>
+				<p className="px-5 text-sm md:px-12 md:text-xl">{taskDescription}</p>
 			</div>
 		</article>
 	);
@@ -84,8 +89,8 @@ export function ContactPersons({ contactPersons }: Readonly<ContactPersonsProps>
 		<div
 			className={cn(
 				'grid items-stretch gap-x-8 gap-y-20',
-				{ 'grid-cols-1 md:grid-cols-3': cpLength % 3 === 0 },
-				{ 'grid-cols-1 md:grid-cols-2': cpLength % 3 !== 0 && cpLength % 2 === 0 },
+				{ 'grid-cols-1 xl:grid-cols-3': cpLength % 3 === 0 },
+				{ 'grid-cols-1 xl:grid-cols-2': cpLength % 3 !== 0 && cpLength % 2 === 0 },
 				{ 'grid-cols-1': cpLength % 3 !== 0 && cpLength % 2 !== 0 && cpLength % 1 === 0 },
 			)}
 		>

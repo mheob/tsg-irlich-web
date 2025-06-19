@@ -17,7 +17,6 @@ export const newsOverviewCategoryPageQuery = defineQuery(`
 	}
 `);
 
-/** **IMPORTANT:** The param `department` is required for the contactPersons fragment. */
 export const newsOverviewContactPersonsCategoryQuery = defineQuery(`
 	*[_type == 'newsOverviewCategory'][0].content.contactPersonsSection.contactPersons[]-> {
 		${contactPersons}

@@ -16,7 +16,6 @@ export const offerPageQuery = defineQuery(`
 	}
 `);
 
-/** **IMPORTANT:** The param `department` is required for the contactPersons fragment. */
 export const offerPageContactPersonsQuery = defineQuery(`
 	*[_type == 'groupsPage'][0].content.contactPersonsSection.contactPersons[]-> {
 		${contactPersons}

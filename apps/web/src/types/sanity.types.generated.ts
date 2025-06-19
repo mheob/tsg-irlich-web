@@ -784,6 +784,7 @@ export type Person = {
 		_type: 'extendedImage';
 	};
 	phone?: string;
+	contactAs: 'email' | 'phone' | 'whatsapp' | 'both';
 	affiliations?: Array<{
 		department:
 			| 'admin'
@@ -1844,7 +1845,7 @@ export type ContactPageQueryResult = {
 	};
 } | null;
 // Variable: contactPageContactPersonsQuery
-// Query: *[_type == 'contact'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
+// Query: *[_type == 'contact'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
 export type ContactPageContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -1863,9 +1864,10 @@ export type ContactPageContactPersonsQueryResult = Array<{
 		description?: string;
 		_type: 'extendedImage';
 	};
+	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 	email: string | null;
 	role: string | null;
-	vision: string | null;
+	taskDescription: string | null;
 }> | null;
 
 // Source: ./src/lib/sanity/queries/pages/home.ts
@@ -1991,7 +1993,7 @@ export type HomePageTestimonialsQueryResult = Array<{
 	show: boolean | null;
 }> | null;
 // Variable: homePageContactPersonsQuery
-// Query: *[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
+// Query: *[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
 export type HomePageContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -2010,9 +2012,10 @@ export type HomePageContactPersonsQueryResult = Array<{
 		description?: string;
 		_type: 'extendedImage';
 	};
+	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 	email: string | null;
 	role: string | null;
-	vision: string | null;
+	taskDescription: string | null;
 }> | null;
 
 // Source: ./src/lib/sanity/queries/pages/news-article.ts
@@ -2118,7 +2121,7 @@ export type NewsOverviewCategoryPageQueryResult = {
 	};
 } | null;
 // Variable: newsOverviewContactPersonsCategoryQuery
-// Query: *[_type == 'newsOverviewCategory'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
+// Query: *[_type == 'newsOverviewCategory'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
 export type NewsOverviewContactPersonsCategoryQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -2137,9 +2140,10 @@ export type NewsOverviewContactPersonsCategoryQueryResult = Array<{
 		description?: string;
 		_type: 'extendedImage';
 	};
+	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 	email: string | null;
 	role: string | null;
-	vision: string | null;
+	taskDescription: string | null;
 }> | null;
 // Variable: newsArticlesPaginatedForCategoryQuery
 // Query: *[_type == 'news.article' && $category in categories[]->slug.current]	| order(publishedAt desc) [$start..$end] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
@@ -2213,7 +2217,7 @@ export type NewsOverviewPageQueryResult = {
 	};
 } | null;
 // Variable: newsOverviewContactPersonsQuery
-// Query: *[_type == 'newsOverview'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
+// Query: *[_type == 'newsOverview'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
 export type NewsOverviewContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -2232,9 +2236,10 @@ export type NewsOverviewContactPersonsQueryResult = Array<{
 		description?: string;
 		_type: 'extendedImage';
 	};
+	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 	email: string | null;
 	role: string | null;
-	vision: string | null;
+	taskDescription: string | null;
 }> | null;
 
 // Source: ./src/lib/sanity/queries/pages/offer.ts
@@ -2284,7 +2289,7 @@ export type OfferPageQueryResult = {
 	};
 } | null;
 // Variable: offerPageContactPersonsQuery
-// Query: *[_type == 'contact'][0].content.contactPersonsSection.contactPersons[]-> {			firstName,	lastName,	phone,	image,	"email": affiliations[department->title == $department][0].role->email,	"role": affiliations[department->title == $department][0].role->title,	"vision": affiliations[department->title == $department][0].taskDescription,	}
+// Query: *[_type == 'groupsPage'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
 export type OfferPageContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
@@ -2303,9 +2308,10 @@ export type OfferPageContactPersonsQueryResult = Array<{
 		description?: string;
 		_type: 'extendedImage';
 	};
+	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 	email: string | null;
 	role: string | null;
-	vision: string | null;
+	taskDescription: string | null;
 }> | null;
 
 // Source: ./src/lib/sanity/queries/shared/groups.ts
@@ -2445,21 +2451,20 @@ import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
 		"\n\t*[_type == 'contact'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": ContactPageQueryResult;
-		'\n\t*[_type == \'contact\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n':
-			| ContactPageContactPersonsQueryResult
-			| OfferPageContactPersonsQueryResult;
+		'\n\t*[_type == \'contact\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': ContactPageContactPersonsQueryResult;
 		"\n\t*[_type == 'home'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": HomePageQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshow,\n\t}\n": HomePageTestimonialsQueryResult;
-		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': HomePageContactPersonsQueryResult;
+		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': HomePageContactPersonsQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
 		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
 		"\n\t*[_type == 'newsOverviewCategory'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": NewsOverviewCategoryPageQueryResult;
-		'\n\t*[_type == \'newsOverviewCategory\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': NewsOverviewContactPersonsCategoryQueryResult;
+		'\n\t*[_type == \'newsOverviewCategory\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': NewsOverviewContactPersonsCategoryQueryResult;
 		'\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
 		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
 		"\n\t*[_type == 'newsOverview'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": NewsOverviewPageQueryResult;
-		'\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n\tfirstName,\n\tlastName,\n\tphone,\n\timage,\n\t"email": affiliations[department->title == $department][0].role->email,\n\t"role": affiliations[department->title == $department][0].role->title,\n\t"vision": affiliations[department->title == $department][0].taskDescription,\n\n\t}\n': NewsOverviewContactPersonsQueryResult;
+		'\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': NewsOverviewContactPersonsQueryResult;
 		"\n\t*[_type == 'groupsPage'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": OfferPageQueryResult;
+		'\n\t*[_type == \'groupsPage\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferPageContactPersonsQueryResult;
 		"\n\t*[_type == 'group.soccer'\n\t\t|| _type == 'group.children-gymnastics'\n\t\t|| _type == 'group.courses'\n\t\t|| _type == 'group.taekwondo'\n\t\t|| _type == 'group.dance'\n\t\t|| _type == 'group.other-sports'\n\t] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;

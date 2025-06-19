@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default async function Home() {
 	const [page, contactPersons] = await Promise.all([
 		client.fetch(contactPageQuery),
-		client.fetch(contactPageContactPersonsQuery, { department: 'Vorstand' }),
+		client.fetch(contactPageContactPersonsQuery),
 	]);
 
 	if (!page) return null;
