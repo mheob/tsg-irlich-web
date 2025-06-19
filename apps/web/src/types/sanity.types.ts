@@ -15,13 +15,13 @@ export interface StatsSection {
 }
 
 interface SanityImage {
-	alt: string;
 	asset?: {
 		_ref: string;
 		_type: 'reference';
 		_weak?: boolean;
 		[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 	};
+	alt: string;
 	crop?: SanityImageCrop;
 	hotspot?: SanityImageHotspot;
 }

@@ -4,11 +4,11 @@ import { type FieldError, useFormContext, useFormState } from 'react-hook-form';
 import { FormFieldContext, FormItemContext } from './form-context';
 
 export const useFormField = (): {
+	id: string;
 	error?: FieldError;
 	formDescriptionId: string;
 	formItemId: string;
 	formMessageId: string;
-	id: string;
 	invalid: boolean;
 	isDirty: boolean;
 	isTouched: boolean;
@@ -32,10 +32,10 @@ export const useFormField = (): {
 	const { id } = itemContext;
 
 	return {
+		id,
 		formDescriptionId: `${id}-form-item-description`,
 		formItemId: `${id}-form-item`,
 		formMessageId: `${id}-form-item-message`,
-		id,
 		name: fieldContext.name,
 		...fieldState,
 	};

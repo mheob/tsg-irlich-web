@@ -8,8 +8,8 @@ import { type ComponentPropsWithoutRef, useState } from 'react';
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 
 interface MobileLinkProps extends Omit<ComponentPropsWithoutRef<typeof Link>, 'href'> {
-	href: string;
 	onOpenChange?: (open: boolean) => void;
+	href: string;
 }
 
 function MobileLink({ className, href, onOpenChange, ...props }: Readonly<MobileLinkProps>) {

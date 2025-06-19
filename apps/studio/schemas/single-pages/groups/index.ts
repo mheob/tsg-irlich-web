@@ -37,6 +37,7 @@ const groupsPage = defineType({
 			group: 'content',
 			groups: [groups, stats, venues, contactPersons],
 			fields: [groupsField, statsField, venuesField, contactPersonsSectionField],
+			validation: Rule => Rule.required(),
 		}),
 	],
 	preview: {
