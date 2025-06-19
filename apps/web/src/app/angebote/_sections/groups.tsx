@@ -10,7 +10,7 @@ const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
 type GroupsProps = GroupsPage['content']['groupsSection'];
 
-export default function Groups({ intro, subtitle, title }: GroupsProps) {
+export default function Groups({ intro, subtitle, title }: Readonly<GroupsProps>) {
 	return (
 		<section className={`${styles.bg} bg-background-low-contrast relative z-0`}>
 			<div className="container mx-auto px-5 py-10 md:py-32">
@@ -20,7 +20,7 @@ export default function Groups({ intro, subtitle, title }: GroupsProps) {
 
 				<div className="my-6 grid grid-cols-1 gap-4 md:mt-24 md:grid-cols-2 md:gap-7 xl:grid-cols-3">
 					{groupSections?.map(({ icon, slug, title }) => (
-						<GroupCard icon={icon || getFirstLetter(title)} key={slug} slug={slug} title={title} />
+						<GroupCard icon={icon ?? getFirstLetter(title)} key={slug} slug={slug} title={title} />
 					))}
 				</div>
 			</div>
