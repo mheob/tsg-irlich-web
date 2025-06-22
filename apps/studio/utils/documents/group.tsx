@@ -43,6 +43,25 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 			getFieldWithoutGroup(slugField),
 
 			defineField({
+				description: 'Optional, Fallback: Name. Wird für die Gruppen-Übersicht verwendet.',
+				name: 'overviewTitle',
+				title: 'Übersichts-Titel',
+				type: 'string',
+				validation: Rule => [
+					Rule.min(2).warning('Übersichts-Titel muss mindestens 2 Zeichen lang sein'),
+					Rule.max(64).warning('Übersichts-Titel sollte nicht länger als 64 Zeichen sein'),
+				],
+			}),
+
+			defineField({
+				description: 'Die Sortierreihenfolge wird für die Gruppen-Übersicht verwendet.',
+				name: 'sortOrder',
+				title: 'Sortierreihenfolge',
+				type: 'number',
+				validation: Rule => Rule.required().error('Sortierreihenfolge ist erforderlich'),
+			}),
+
+			defineField({
 				description: 'Eine Beschreibung der Gruppe / Mannschaft.',
 				name: 'description',
 				title: 'Beschreibung',
@@ -114,6 +133,16 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				hidden: true,
 			}),
 		],
+		preview: {
+			prepare: ({ sortOrder, title }) => ({
+				subtitle: `Sortierreihenfolge: ${sortOrder}`,
+				title,
+			}),
+			select: {
+				sortOrder: 'sortOrder',
+				title: 'title',
+			},
+		},
 		orderings: [
 			{
 				by: [{ direction: 'asc', field: 'title' }],
@@ -124,6 +153,16 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				by: [{ direction: 'desc', field: 'title' }],
 				name: 'titleDesc',
 				title: 'nach Name - absteigend',
+			},
+			{
+				by: [{ direction: 'asc', field: 'sortOrder' }],
+				name: 'sortOrderAsc',
+				title: 'nach Sortierreihenfolge - aufsteigend',
+			},
+			{
+				by: [{ direction: 'desc', field: 'sortOrder' }],
+				name: 'sortOrderDesc',
+				title: 'nach Sortierreihenfolge - absteigend',
 			},
 		],
 	});

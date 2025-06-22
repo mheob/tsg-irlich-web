@@ -869,6 +869,8 @@ export type GroupTaekwondo = {
 	_rev: string;
 	title: string;
 	slug: Slug;
+	overviewTitle?: string;
+	sortOrder: number;
 	description: SimpleBlockContent;
 	icon:
 		| 'Badminton'
@@ -933,6 +935,8 @@ export type GroupSoccer = {
 	_rev: string;
 	title: string;
 	slug: Slug;
+	overviewTitle?: string;
+	sortOrder: number;
 	description: SimpleBlockContent;
 	icon:
 		| 'Badminton'
@@ -997,6 +1001,8 @@ export type GroupOtherSports = {
 	_rev: string;
 	title: string;
 	slug: Slug;
+	overviewTitle?: string;
+	sortOrder: number;
 	description: SimpleBlockContent;
 	icon:
 		| 'Badminton'
@@ -1061,6 +1067,8 @@ export type GroupDance = {
 	_rev: string;
 	title: string;
 	slug: Slug;
+	overviewTitle?: string;
+	sortOrder: number;
 	description: SimpleBlockContent;
 	icon:
 		| 'Badminton'
@@ -1125,6 +1133,8 @@ export type GroupCourses = {
 	_rev: string;
 	title: string;
 	slug: Slug;
+	overviewTitle?: string;
+	sortOrder: number;
 	description: SimpleBlockContent;
 	icon:
 		| 'Badminton'
@@ -1189,6 +1199,8 @@ export type GroupChildrenGymnastics = {
 	_rev: string;
 	title: string;
 	slug: Slug;
+	overviewTitle?: string;
+	sortOrder: number;
 	description: SimpleBlockContent;
 	icon:
 		| 'Badminton'
@@ -1253,6 +1265,8 @@ export type GroupAdmin = {
 	_rev: string;
 	title: string;
 	slug: Slug;
+	overviewTitle?: string;
+	sortOrder: number;
 	description: SimpleBlockContent;
 	icon:
 		| 'Badminton'
@@ -2264,35 +2278,40 @@ export type OfferGroupsPageQueryResult = {
 	};
 } | null;
 // Variable: offerGroupsPageGroupsQuery
-// Query: *[_type == $groupType][] {		icon,		image,		'slug': slug.current,		title,	}
+// Query: *[_type == $groupType][] | order(sortOrder asc) {		icon,		image,		overviewTitle,		'slug': slug.current,		title,	}
 export type OfferGroupsPageGroupsQueryResult = Array<
 	| {
 			icon: null;
 			image: null;
+			overviewTitle: null;
 			slug: null;
 			title: null;
 	  }
 	| {
 			icon: null;
 			image: null;
+			overviewTitle: null;
 			slug: null;
 			title: string;
 	  }
 	| {
 			icon: null;
 			image: null;
+			overviewTitle: null;
 			slug: null;
 			title: string | null;
 	  }
 	| {
 			icon: null;
 			image: null;
+			overviewTitle: null;
 			slug: string;
 			title: string;
 	  }
 	| {
 			icon: null;
 			image: null;
+			overviewTitle: null;
 			slug: string | null;
 			title: string;
 	  }
@@ -2312,6 +2331,7 @@ export type OfferGroupsPageGroupsQueryResult = Array<
 				description?: string;
 				_type: 'extendedImage';
 			};
+			overviewTitle: null;
 			slug: null;
 			title: null;
 	  }
@@ -2348,6 +2368,7 @@ export type OfferGroupsPageGroupsQueryResult = Array<
 				description?: string;
 				_type: 'extendedImage';
 			};
+			overviewTitle: string | null;
 			slug: string;
 			title: string;
 	  }
@@ -2579,7 +2600,7 @@ declare module '@sanity/client' {
 		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
 		'\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
 		"*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
-		"\n\t*[_type == $groupType][] {\n\t\ticon,\n\t\timage,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
+		"\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\timage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
 		'\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
 		'\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
 		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;

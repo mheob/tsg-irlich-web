@@ -45,11 +45,11 @@ export async function generateMetadata({
 export default async function GroupsPage({ params }: PageProps<{ group: string }>) {
 	const { group } = await params;
 
-	const groupType = groupSections.find(g => g.slug === `/angebot/${group}`)?._type;
+	const currentDepartment = groupSections.find(g => g.slug === `/angebot/${group}`);
 
 	const [page, groups, offerPersons] = await Promise.all([
 		client.fetch(offerGroupsPageQuery),
-		client.fetch(offerGroupsPageGroupsQuery, { groupType }),
+		client.fetch(offerGroupsPageGroupsQuery, { groupType: currentDepartment?._type }),
 		client.fetch(offerGroupsPageContactPersonsQuery, {
 			email: group === 'fussball' ? EMAIL_SOCCER_DEPARTMENT : EMAIL_MASS_SPORT_DEPARTMENT,
 		}),
@@ -57,12 +57,18 @@ export default async function GroupsPage({ params }: PageProps<{ group: string }
 
 	if (!page) return null;
 
-	console.log({ page: page.content });
-
 	return (
 		<>
-			<Hero image={getGroupImage(group, '/angebot')} subTitle={page.subtitle} title={page.title} />
-			<Groups {...page.content.groupsSection} groups={groups as GroupsType['groups']} />
+			<Hero
+				image={getGroupImage(group, '/angebot')}
+				subTitle={page.subtitle}
+				title={`${page.title} ${currentDepartment?.title ?? ''}`.trim()}
+			/>
+			<Groups
+				{...page.content.groupsSection}
+				currentDepartment={currentDepartment}
+				groups={groups as GroupsType['groups']}
+			/>
 			<Stats stats={page.content.stats} />
 			<ContactPersons {...page.content.contactPersonsSection} contactPersons={offerPersons ?? []} />
 			<Newsletter />

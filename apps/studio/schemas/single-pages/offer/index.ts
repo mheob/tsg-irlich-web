@@ -11,7 +11,7 @@ import { statsField } from '@/shared/sections/stats';
 import { contactPersons, departments, stats } from './_groups';
 import { departmentsField } from './departments';
 
-const groupsPage = defineType({
+const offerPage = defineType({
 	title: 'Sportbereiche',
 	name: 'departmentsPage',
 	type: 'document',
@@ -44,4 +44,4 @@ const groupsPage = defineType({
 	},
 });
 
-export default groupsPage;
+export default offerPage;

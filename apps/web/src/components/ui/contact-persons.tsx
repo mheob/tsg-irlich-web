@@ -89,7 +89,7 @@ export function ContactPersons({ contactPersons }: Readonly<ContactPersonsProps>
 		<div
 			className={cn(
 				'grid items-stretch gap-x-8 gap-y-20',
-				{ 'grid-cols-1 xl:grid-cols-3': cpLength % 3 === 0 },
+				{ 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3': cpLength % 3 === 0 },
 				{ 'grid-cols-1 xl:grid-cols-2': cpLength % 3 !== 0 && cpLength % 2 === 0 },
 				{ 'grid-cols-1': cpLength % 3 !== 0 && cpLength % 2 !== 0 && cpLength % 1 === 0 },
 			)}

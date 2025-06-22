@@ -16,9 +16,10 @@ export const offerGroupsPageQuery = defineQuery(`*[_type == 'groupsPage'][0]`);
  * @returns An array of groups
  */
 export const offerGroupsPageGroupsQuery = defineQuery(`
-	*[_type == $groupType][] {
+	*[_type == $groupType][] | order(sortOrder asc) {
 		icon,
 		image,
+		overviewTitle,
 		'slug': slug.current,
 		title,
 	}

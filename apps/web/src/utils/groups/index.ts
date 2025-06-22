@@ -6,7 +6,10 @@ import type { ImageProps } from 'next/image';
 import fallbackImageFile from './_assets/_fallback.webp';
 import soccerImage from './_assets/fussball.webp';
 import gymnasticImage from './_assets/kinderturnen.webp';
+import coursesImage from './_assets/kurse.webp';
+import taekwondoImage from './_assets/taekwondo.webp';
 import danceImage from './_assets/tanzen.webp';
+import otherSportsImage from './_assets/weitere-sportarten.webp';
 
 interface OfferGroupImage {
 	alt: ImageProps['alt'];
@@ -52,7 +55,7 @@ export const groupSections: GroupSection[] = [
 		icon: 'StepAerobic',
 		image: {
 			alt: 'Kurse',
-			src: soccerImage,
+			src: coursesImage,
 		},
 		slug: '/angebot/kurse',
 		title: 'Kurse',
@@ -62,7 +65,7 @@ export const groupSections: GroupSection[] = [
 		icon: 'Taekwondo',
 		image: {
 			alt: 'Taekwondo',
-			src: soccerImage,
+			src: taekwondoImage,
 		},
 		slug: '/angebot/taekwondo',
 		title: 'Taekwondo',
@@ -71,7 +74,7 @@ export const groupSections: GroupSection[] = [
 		_type: 'group.dance',
 		icon: 'Tanzen',
 		image: {
-			alt: 'Vier Kinder in blauen Sportuniformen, die Handstände gegen eine Wand machen.',
+			alt: 'Tanzen',
 			src: danceImage,
 		},
 		slug: '/angebot/tanzen',
@@ -82,7 +85,7 @@ export const groupSections: GroupSection[] = [
 		icon: 'Fitness',
 		image: {
 			alt: 'Weitere Sportarten',
-			src: soccerImage,
+			src: otherSportsImage,
 		},
 		slug: '/angebot/weitere-sportarten',
 		title: 'Weitere Sportarten',
@@ -102,6 +105,8 @@ export function getOGImage(group: string): OpenGraph['images'] {
 }
 
 export function getGroupImage(group: string, path = ''): GroupSection['image'] {
-	const groupSection = groupSections.find(section => section.slug === `${path}/${group}`);
+	console.log({ '1': groupSections[0].slug, '2': `${path}${group}` });
+	const groupSection = groupSections.find(section => section.slug === `${path}${group}`);
+	console.log({ group, groupSection, path, slug: groupSections[0].slug });
 	return groupSection?.image ?? fallbackImage;
 }
