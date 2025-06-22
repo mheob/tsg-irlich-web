@@ -1,8 +1,6 @@
 import { Counter } from '@/components/ui/counter';
-import type { StatsSection } from '@/types/sanity.types';
+import type { Stats as StatsProps } from '@/types/sanity.types';
 
-type StatsProps = Readonly<StatsSection>;
-
-export function Stats({ stats }: StatsProps) {
+export function Stats({ stats }: Readonly<{ stats: StatsProps[] }>) {
 	return <Counter values={stats} />;
 }

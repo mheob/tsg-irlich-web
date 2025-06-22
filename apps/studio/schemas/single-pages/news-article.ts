@@ -2,7 +2,7 @@ import { RiBookletLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
 import { general } from '@/shared/field-groups';
-import { defaultPageFields } from '@/shared/fields/general';
+import { defaultHeroFields } from '@/shared/fields/general';
 
 const newsArticlePage = defineType({
 	title: 'Einzelner News-Artikel',
@@ -14,7 +14,7 @@ const newsArticlePage = defineType({
 		// ?: the "slug" and `meta` comes from the news article itself; this page is rather the layout
 
 		// general
-		...defaultPageFields,
+		...defaultHeroFields,
 	],
 	preview: {
 		prepare: () => ({ title: 'Einzelner News-Artikel' }),

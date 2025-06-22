@@ -19,7 +19,7 @@ const stats = defineField({
 		defineField({
 			title: 'Wert',
 			name: 'value',
-			type: 'string',
+			type: 'number',
 			validation: Rule => [Rule.required().error('Der Wert ist erforderlich')],
 		}),
 		defineField({

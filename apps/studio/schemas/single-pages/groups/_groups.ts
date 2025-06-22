@@ -8,11 +8,6 @@ export const groups = {
 	name: 'groups',
 };
 
-export const venues = {
-	title: 'Sportstätten',
-	name: 'venues',
-};
-
 export const stats = {
 	title: 'Stats',
 	name: 'stats',

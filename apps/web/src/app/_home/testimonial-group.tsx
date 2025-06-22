@@ -8,7 +8,7 @@ import type { HTMLAttributes } from 'react';
 import { ArrowButtonGroup } from '@/components/ui/arrow-button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
-import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types.generated';
+import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types';
 import { getInitials } from '@/utils/image';
 
 type Testimonial = NonNullable<HomePageTestimonialsQueryResult>[number];

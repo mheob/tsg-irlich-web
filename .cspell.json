@@ -21,7 +21,6 @@
 		"**/turbo.json"
 	],
 	"words": [
-		"angebote",
 		"antfu",
 		"anton",
 		"Aufzählungspunkte",
@@ -81,6 +80,8 @@
 		"shadcn's",
 		"Shitposting",
 		"Showtanz",
+		"slugification",
+		"slugified",
 		"sonarcloud",
 		"sonarlint",
 		"sonarqube",

@@ -4,6 +4,8 @@ import { defineField, defineType } from 'sanity';
 
 import { slugField } from '@/shared/fields/general';
 
+import { getFieldWithoutGroup } from '../fields';
+
 interface GroupDocumentProps {
 	icon: IconType;
 	isSportGroup?: boolean;
@@ -38,7 +40,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				],
 			}),
 
-			defineField({ ...slugField, group: undefined }),
+			getFieldWithoutGroup(slugField),
 
 			defineField({
 				description: 'Eine Beschreibung der Gruppe / Mannschaft.',

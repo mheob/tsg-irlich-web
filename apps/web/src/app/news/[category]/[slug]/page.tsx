@@ -1,4 +1,5 @@
 import { cn } from '@tsgi-web/shared';
+import type { Metadata } from 'next';
 import type { PortableTextBlock } from 'next-sanity';
 import Image from 'next/image';
 
@@ -17,7 +18,34 @@ import Author from './_sections/author';
 import Categories from './_sections/categories';
 import SocialMedia from './_sections/social-media';
 
-export default async function NewsArticle({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+	const { slug } = await params;
+
+	const article = await client.fetch(newsArticleContentQuery, { slug });
+
+	if (!article) return {};
+
+	return {
+		description: article.excerpt ?? '',
+		openGraph: {
+			description: article.excerpt ?? '',
+			images: article.featuredImage
+				? [
+						{
+							alt: article.featuredImage.alt ?? article.title,
+							height: 630,
+							url: urlForImage(article.featuredImage, 630, 1200) ?? '',
+							width: 1200,
+						},
+					]
+				: [],
+			title: article.title ?? '',
+		},
+		title: article.title ?? '',
+	};
+}
+
+export default async function NewsArticlePage({ params }: PageProps) {
 	const { slug } = await params;
 
 	const [hero, article] = await Promise.all([

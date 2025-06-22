@@ -2,22 +2,22 @@ import { defineQuery } from 'next-sanity';
 
 import { contactPersons } from '@/lib/sanity/queries';
 
+/**
+ * Query to get the offer page
+ *
+ * @returns The offer page
+ */
 export const offerPageQuery = defineQuery(`
-	*[_type == 'groupsPage'][0] {
+*[_type == 'departmentsPage'][0] {
+	...,
+	content {
 		...,
-		content {
+		contactPersonsSection {
 			...,
-			contactPersonsSection {
-				intro,
-				subtitle,
-				title,
+			contactPersons[]-> {
+				${contactPersons}
 			}
 		}
 	}
-`);
-
-export const offerPageContactPersonsQuery = defineQuery(`
-	*[_type == 'groupsPage'][0].content.contactPersonsSection.contactPersons[]-> {
-		${contactPersons}
-	}
+}
 `);

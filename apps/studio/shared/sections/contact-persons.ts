@@ -2,7 +2,8 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { contactPersonsField } from '@/shared/fields/contact';
-import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
+import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
+import { getFieldWithoutGroup } from '@/utils/fields';
 
 export const contactPersonsSectionField = defineField({
 	title: 'Ansprechpartner',
@@ -10,6 +11,6 @@ export const contactPersonsSectionField = defineField({
 	type: 'object',
 	icon: RiLinksLine,
 	group: 'contactPersons',
-	fields: [...getDefaultPageFieldsWithGroup(), { ...contactPersonsField, group: undefined }],
+	fields: [...getDefaultPageSectionFieldsWithGroup(), getFieldWithoutGroup(contactPersonsField)],
 	validation: Rule => [Rule.required().error('Ansprechpartner ist erforderlich')],
 });

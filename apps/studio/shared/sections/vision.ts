@@ -1,7 +1,7 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
+import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 export const visionField = defineField({
 	title: 'Vision',
@@ -10,7 +10,7 @@ export const visionField = defineField({
 	icon: RiLinksLine,
 	group: 'vision',
 	fields: [
-		...getDefaultPageFieldsWithGroup(),
+		...getDefaultPageSectionFieldsWithGroup(),
 
 		defineField({
 			title: 'Button Text',

@@ -1,19 +1,20 @@
 import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithRef } from 'react';
 
+import { DEFAULT_LOCALE } from '@/constants/time';
 import type { Stats } from '@/types/sanity.types';
 
 function CounterItem({ suffix = '', title, value }: Readonly<Stats>) {
 	return (
 		<div className="flex flex-col items-center gap-2 py-8 md:justify-center">
-			<div className="font-sans-serif text-3xl font-bold md:text-7xl">{`${value}${suffix}`}</div>
+			<div className="font-sans-serif text-3xl font-bold md:text-7xl">{`${value.toLocaleString(DEFAULT_LOCALE)}${suffix}`}</div>
 			<h2 className="text-center text-lg md:text-xl">{title}</h2>
 		</div>
 	);
 }
 
 interface CounterProps extends ComponentPropsWithRef<'div'> {
-	values: Stats[];
+	values: Readonly<Stats[]>;
 }
 
 export function Counter({ className, values, ...props }: Readonly<CounterProps>) {

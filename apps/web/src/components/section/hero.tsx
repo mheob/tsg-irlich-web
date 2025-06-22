@@ -1,12 +1,12 @@
 import { cn } from '@tsgi-web/shared';
-import Image, { type StaticImageData } from 'next/image';
+import Image, { type ImageProps } from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import { SectionHeader } from '../ui/section-header';
 import Breadcrumb from '../with-logic/breadcrumb';
 
 interface HeroProps extends ComponentPropsWithoutRef<'section'> {
-	image?: { alt: string; src: StaticImageData | string };
+	image?: { alt: ImageProps['alt']; src: ImageProps['src'] };
 	subTitle?: string;
 	title: string;
 }

@@ -1,0 +1,50 @@
+/* cspell:word angebot */
+.bgImage {
+	aspect-ratio: 16/9;
+	transition: transform 0.2s ease-in-out;
+}
+
+.bgImage:hover {
+	transform: scale(1.03);
+}
+
+.bgImage::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	border-radius: var(--radius-xl);
+	z-index: -1;
+}
+
+.bgImage.Fussball::before {
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+		url('../../../../images/angebot/groups/fussball.webp');
+}
+
+.bgImage.Turnen::before {
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+		url('../../../../images/angebot/groups/fussball.webp');
+}
+
+.bgImage.StepAerobic::before {
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+		url('../../../../images/angebot/groups/fussball.webp');
+}
+
+.bgImage.Taekwondo::before {
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+		url('../../../../images/angebot/groups/fussball.webp');
+}
+
+.bgImage.Tanzen::before {
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+		url('../../../../images/angebot/groups/tanzen.webp');
+}
+
+.bgImage.Fitness::before {
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+		url('../../../../images/angebot/groups/fussball.webp');
+}

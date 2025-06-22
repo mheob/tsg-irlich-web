@@ -5,10 +5,7 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { client } from '@/lib/sanity/client';
-import {
-	contactPageContactPersonsQuery,
-	contactPageQuery,
-} from '@/lib/sanity/queries/pages/contact';
+import { contactPageQuery } from '@/lib/sanity/queries/pages/contact';
 
 import contactImage from './_assets/contact.webp';
 
@@ -18,11 +15,8 @@ export const metadata: Metadata = {
 	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
 };
 
-export default async function Home() {
-	const [page, contactPersons] = await Promise.all([
-		client.fetch(contactPageQuery),
-		client.fetch(contactPageContactPersonsQuery),
-	]);
+export default async function ContactPage() {
+	const page = await client.fetch(contactPageQuery);
 
 	if (!page) return null;
 
@@ -37,10 +31,7 @@ export default async function Home() {
 				title={page.title}
 			/>
 			<ContactForm receiver={page.content.receiver} />
-			<ContactPersons
-				{...page.content.contactPersonsSection}
-				contactPersons={contactPersons ?? []}
-			/>
+			<ContactPersons {...page.content.contactPersonsSection} />
 			<Newsletter />
 		</>
 	);

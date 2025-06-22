@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import { cn } from '@tsgi-web/shared';
 import type { Metadata } from 'next';
 import { Anton, Bebas_Neue, Inter } from 'next/font/google';
@@ -28,10 +30,17 @@ const inter = Inter({
 	weight: ['400', '700'],
 });
 
+const baseUrl = process.env.VERCEL_URL
+	? `https://${process.env.VERCEL_URL}`
+	: 'http://localhost:3000';
+
 export const metadata: Metadata = {
+	/* eslint-disable perfectionist/sort-objects */
+	metadataBase: new URL(baseUrl),
+	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
 	description:
 		'Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.',
-	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
+	/* eslint-enable perfectionist/sort-objects */
 };
 
 export default function RootLayout({

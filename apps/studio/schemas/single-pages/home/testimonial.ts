@@ -2,6 +2,7 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { subTitleField, titleField } from '@/shared/fields/general';
+import { getFieldWithoutGroup } from '@/utils/fields';
 
 export const testimonialField = defineField({
 	title: 'Zeugnis / Referenz',
@@ -10,8 +11,8 @@ export const testimonialField = defineField({
 	icon: RiLinksLine,
 	group: 'testimonial',
 	fields: [
-		defineField({ ...titleField, group: undefined }),
-		defineField({ ...subTitleField, group: undefined }),
+		getFieldWithoutGroup(titleField),
+		getFieldWithoutGroup(subTitleField),
 
 		defineField({
 			title: 'Zeugnis / Referenz',

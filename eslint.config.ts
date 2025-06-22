@@ -13,7 +13,23 @@ export default mheob(
 		rules: {
 			'react-refresh/only-export-components': [
 				'warn',
-				{ allowExportNames: ['dynamic', 'metadata', 'revalidate'] },
+				{
+					allowExportNames: [
+						'dynamic',
+						'dynamicParams',
+						'revalidate',
+						'fetchCache',
+						'runtime',
+						'preferredRegion',
+						'maxDuration',
+						'config',
+						'generateStaticParams',
+						'metadata',
+						'generateMetadata',
+						'viewport',
+						'generateViewport',
+					],
+				},
 			],
 		},
 	},

@@ -1,7 +1,7 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
+import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 export const featuresField = defineField({
 	title: 'Merkmale',
@@ -10,7 +10,7 @@ export const featuresField = defineField({
 	icon: RiLinksLine,
 	group: 'features',
 	fields: [
-		...getDefaultPageFieldsWithGroup(),
+		...getDefaultPageSectionFieldsWithGroup(),
 
 		defineField({
 			title: 'Merkmale',

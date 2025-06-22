@@ -3,7 +3,7 @@ import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
-import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
+import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 
@@ -18,7 +18,7 @@ const contactPage = defineType({
 		getHiddenSlugField('kontakt'),
 
 		// general
-		...defaultPageFields,
+		...defaultHeroFields,
 
 		// meta
 		metaField,

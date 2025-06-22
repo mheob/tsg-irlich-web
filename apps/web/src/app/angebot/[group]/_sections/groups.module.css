@@ -1,0 +1,14 @@
+@media (min-width: 48rem) {
+	.bg::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: url('../../../../icons/design/bg-design-top-right.svg');
+		background-position: 105% -5%;
+		background-repeat: no-repeat;
+		background-size: 40%;
+		opacity: 0.03;
+		transform: scaleX(-1);
+		z-index: -1;
+	}
+}

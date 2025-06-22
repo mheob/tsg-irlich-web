@@ -19,8 +19,8 @@ export type NewsOverviewCategory = {
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
+	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	content: {
 		contactPersonsSection: {
@@ -46,7 +46,42 @@ export type NewsArticlePage = {
 	_rev: string;
 	title: string;
 	subtitle: string;
-	intro?: string;
+};
+
+export type DepartmentsPage = {
+	_id: string;
+	_type: 'departmentsPage';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: {
+		departmentsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				_key: string;
+				[internalGroqTypeReferenceTo]?: 'person';
+			}>;
+		};
+	};
 };
 
 export type Spacer = {
@@ -104,7 +139,7 @@ export type TrainingTime = {
 export type Stats = {
 	_type: 'stats';
 	title: string;
-	value: string;
+	value: number;
 	suffix?: string;
 };
 
@@ -121,7 +156,6 @@ export type SingleGroupPage = {
 	_rev: string;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 };
 
@@ -134,7 +168,6 @@ export type Privacy = {
 	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	introText: SimpleBlockContent;
 	address: string;
@@ -191,7 +224,6 @@ export type NewsOverview = {
 	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	content: {
 		contactPersonsSection: {
@@ -218,7 +250,6 @@ export type Membership = {
 	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	documents: Array<
 		{
@@ -243,7 +274,6 @@ export type Imprint = {
 	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	address: string;
 	registerCourt: string;
@@ -331,10 +361,8 @@ export type GroupsPage = {
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
-	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	content: {
 		groupsSection: {
@@ -342,36 +370,15 @@ export type GroupsPage = {
 			subtitle: string;
 			intro?: string;
 		};
-		statsSection: {
-			stats: Array<
-				{
-					_key: string;
-				} & Stats
-			>;
-		};
-		venuesSection?: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			venues?: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
+		stats: Array<
+			{
 				_key: string;
-				[internalGroqTypeReferenceTo]?: 'venue';
-			}>;
-		};
+			} & Stats
+		>;
 		contactPersonsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
 		};
 	};
 };
@@ -385,7 +392,6 @@ export type Contact = {
 	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	content: {
 		receiver: Array<
@@ -417,7 +423,6 @@ export type AboutUs = {
 	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	content: {
 		gallerySection?: {
@@ -456,13 +461,11 @@ export type AboutUs = {
 			intro?: string;
 			cta: string;
 		};
-		statsSection: {
-			stats: Array<
-				{
-					_key: string;
-				} & Stats
-			>;
-		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
 		contactPersonsSection: {
 			title: string;
 			subtitle: string;
@@ -512,13 +515,11 @@ export type Home = {
 			title: string;
 			subtitle: string;
 		};
-		statsSection: {
-			stats: Array<
-				{
-					_key: string;
-				} & Stats
-			>;
-		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
 		pricingSection: {
 			title: string;
 			subtitle: string;
@@ -1749,6 +1750,7 @@ export type SanityAssetSourceData = {
 export type AllSanitySchemaTypes =
 	| NewsOverviewCategory
 	| NewsArticlePage
+	| DepartmentsPage
 	| Spacer
 	| Grid
 	| Blockquote
@@ -1819,7 +1821,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/lib/sanity/queries/pages/contact.ts
 // Variable: contactPageQuery
-// Query: *[_type == 'contact'][0] {		...,		content {			...,			contactPersonsSection {				intro,				subtitle,				title,			}		}	}
+// Query: *[_type == 'contact'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type ContactPageQueryResult = {
 	_id: string;
 	_type: 'contact';
@@ -1829,7 +1831,6 @@ export type ContactPageQueryResult = {
 	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	content: {
 		receiver: Array<
@@ -1838,41 +1839,39 @@ export type ContactPageQueryResult = {
 			} & ContactNameMail
 		>;
 		contactPersonsSection: {
-			intro: string | null;
-			subtitle: string;
 			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				firstName: string;
+				lastName: string;
+				phone: string | null;
+				image: {
+					asset?: {
+						_ref: string;
+						_type: 'reference';
+						_weak?: boolean;
+						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+					};
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt: string;
+					description?: string;
+					_type: 'extendedImage';
+				};
+				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
+				email: string | null;
+				role: string | null;
+				taskDescription: string | null;
+			}>;
 		};
 	};
 } | null;
-// Variable: contactPageContactPersonsQuery
-// Query: *[_type == 'contact'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
-export type ContactPageContactPersonsQueryResult = Array<{
-	firstName: string;
-	lastName: string;
-	phone: string | null;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-	email: string | null;
-	role: string | null;
-	taskDescription: string | null;
-}> | null;
 
 // Source: ./src/lib/sanity/queries/pages/home.ts
 // Variable: homePageQuery
-// Query: *[_type == 'home'][0] {		...,		content {			...,			contactPersonsSection {				intro,				subtitle,				title,			}		}	}
+// Query: *[_type == 'home'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type HomePageQueryResult = {
 	_id: string;
 	_type: 'home';
@@ -1907,13 +1906,11 @@ export type HomePageQueryResult = {
 			title: string;
 			subtitle: string;
 		};
-		statsSection: {
-			stats: Array<
-				{
-					_key: string;
-				} & Stats
-			>;
-		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
 		pricingSection: {
 			title: string;
 			subtitle: string;
@@ -1958,9 +1955,32 @@ export type HomePageQueryResult = {
 			}>;
 		};
 		contactPersonsSection: {
-			intro: string | null;
-			subtitle: string;
 			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				firstName: string;
+				lastName: string;
+				phone: string | null;
+				image: {
+					asset?: {
+						_ref: string;
+						_type: 'reference';
+						_weak?: boolean;
+						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+					};
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt: string;
+					description?: string;
+					_type: 'extendedImage';
+				};
+				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
+				email: string | null;
+				role: string | null;
+				taskDescription: string | null;
+			}>;
 		};
 		newsSection: {
 			title: string;
@@ -1992,31 +2012,6 @@ export type HomePageTestimonialsQueryResult = Array<{
 	role: string;
 	show: boolean | null;
 }> | null;
-// Variable: homePageContactPersonsQuery
-// Query: *[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
-export type HomePageContactPersonsQueryResult = Array<{
-	firstName: string;
-	lastName: string;
-	phone: string | null;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-	email: string | null;
-	role: string | null;
-	taskDescription: string | null;
-}> | null;
 
 // Source: ./src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleHeroQuery
@@ -2026,7 +2021,7 @@ export type NewsArticleHeroQueryResult = {
 	subtitle: string;
 } | null;
 // Variable: newsArticleContentQuery
-// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[],		categories[] -> {			"slug": slug.current,			title		},		featuredImage,		publishedAt,		"slug": slug.current,		title,	}
+// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[],		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		publishedAt,		"slug": slug.current,		title,	}
 export type NewsArticleContentQueryResult = {
 	author: {
 		email: string;
@@ -2081,6 +2076,7 @@ export type NewsArticleContentQueryResult = {
 		slug: string;
 		title: string;
 	}>;
+	excerpt: string;
 	featuredImage: {
 		asset?: {
 			_ref: string;
@@ -2102,49 +2098,47 @@ export type NewsArticleContentQueryResult = {
 
 // Source: ./src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsOverviewCategoryPageQuery
-// Query: *[_type == 'newsOverviewCategory'][0] {		...,		content {			contactPersonsSection {				intro,				subtitle,				title,			}		}	}
+// Query: *[_type == 'newsOverviewCategory'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type NewsOverviewCategoryPageQueryResult = {
 	_id: string;
 	_type: 'newsOverviewCategory';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
+	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	content: {
 		contactPersonsSection: {
-			intro: string | null;
-			subtitle: string;
 			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				firstName: string;
+				lastName: string;
+				phone: string | null;
+				image: {
+					asset?: {
+						_ref: string;
+						_type: 'reference';
+						_weak?: boolean;
+						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+					};
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt: string;
+					description?: string;
+					_type: 'extendedImage';
+				};
+				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
+				email: string | null;
+				role: string | null;
+				taskDescription: string | null;
+			}>;
 		};
 	};
 } | null;
-// Variable: newsOverviewContactPersonsCategoryQuery
-// Query: *[_type == 'newsOverviewCategory'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
-export type NewsOverviewContactPersonsCategoryQueryResult = Array<{
-	firstName: string;
-	lastName: string;
-	phone: string | null;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-	email: string | null;
-	role: string | null;
-	taskDescription: string | null;
-}> | null;
 // Variable: newsArticlesPaginatedForCategoryQuery
 // Query: *[_type == 'news.article' && $category in categories[]->slug.current]	| order(publishedAt desc) [$start..$end] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
 export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
@@ -2196,7 +2190,7 @@ export type NewsArticlesTotalForCategoryQueryResult = number;
 
 // Source: ./src/lib/sanity/queries/pages/news-overview.ts
 // Variable: newsOverviewPageQuery
-// Query: *[_type == 'newsOverview'][0] {		...,		content {			contactPersonsSection {				intro,				subtitle,				title,			}		}	}
+// Query: *[_type == 'newsOverview'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type NewsOverviewPageQueryResult = {
 	_id: string;
 	_type: 'newsOverview';
@@ -2206,55 +2200,50 @@ export type NewsOverviewPageQueryResult = {
 	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	content: {
 		contactPersonsSection: {
-			intro: string | null;
-			subtitle: string;
 			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				firstName: string;
+				lastName: string;
+				phone: string | null;
+				image: {
+					asset?: {
+						_ref: string;
+						_type: 'reference';
+						_weak?: boolean;
+						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+					};
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt: string;
+					description?: string;
+					_type: 'extendedImage';
+				};
+				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
+				email: string | null;
+				role: string | null;
+				taskDescription: string | null;
+			}>;
 		};
 	};
 } | null;
-// Variable: newsOverviewContactPersonsQuery
-// Query: *[_type == 'newsOverview'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
-export type NewsOverviewContactPersonsQueryResult = Array<{
-	firstName: string;
-	lastName: string;
-	phone: string | null;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-	email: string | null;
-	role: string | null;
-	taskDescription: string | null;
-}> | null;
 
-// Source: ./src/lib/sanity/queries/pages/offer.ts
-// Variable: offerPageQuery
-// Query: *[_type == 'groupsPage'][0] {		...,		content {			...,			contactPersonsSection {				intro,				subtitle,				title,			}		}	}
-export type OfferPageQueryResult = {
+// Source: ./src/lib/sanity/queries/pages/offer-groups.ts
+// Variable: offerGroupsPageQuery
+// Query: *[_type == 'groupsPage'][0]
+export type OfferGroupsPageQueryResult = {
 	_id: string;
 	_type: 'groupsPage';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
-	slug?: Slug;
 	title: string;
 	subtitle: string;
-	intro?: string;
 	meta?: MetaFields;
 	content: {
 		groupsSection: {
@@ -2262,35 +2251,110 @@ export type OfferPageQueryResult = {
 			subtitle: string;
 			intro?: string;
 		};
-		statsSection: {
-			stats: Array<
-				{
-					_key: string;
-				} & Stats
-			>;
-		};
-		venuesSection?: {
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
+		contactPersonsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			venues?: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'venue';
-			}>;
-		};
-		contactPersonsSection: {
-			intro: string | null;
-			subtitle: string;
-			title: string;
 		};
 	};
 } | null;
-// Variable: offerPageContactPersonsQuery
-// Query: *[_type == 'groupsPage'][0].content.contactPersonsSection.contactPersons[]-> {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
-export type OfferPageContactPersonsQueryResult = Array<{
+// Variable: offerGroupsPageGroupsQuery
+// Query: *[_type == $groupType][] {		icon,		image,		'slug': slug.current,		title,	}
+export type OfferGroupsPageGroupsQueryResult = Array<
+	| {
+			icon: null;
+			image: null;
+			slug: null;
+			title: null;
+	  }
+	| {
+			icon: null;
+			image: null;
+			slug: null;
+			title: string;
+	  }
+	| {
+			icon: null;
+			image: null;
+			slug: null;
+			title: string | null;
+	  }
+	| {
+			icon: null;
+			image: null;
+			slug: string;
+			title: string;
+	  }
+	| {
+			icon: null;
+			image: null;
+			slug: string | null;
+			title: string;
+	  }
+	| {
+			icon: null;
+			image: {
+				asset?: {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+				};
+				media?: unknown;
+				hotspot?: SanityImageHotspot;
+				crop?: SanityImageCrop;
+				alt: string;
+				description?: string;
+				_type: 'extendedImage';
+			};
+			slug: null;
+			title: null;
+	  }
+	| {
+			icon:
+				| 'Badminton'
+				| 'Bodenturnen'
+				| 'Cheerleading'
+				| 'Fitness'
+				| 'Fussball'
+				| 'Gymnastik'
+				| 'Jujutsu'
+				| 'Pilates'
+				| 'RopeSkipping'
+				| 'Sportakrobatik'
+				| 'SportInGebaeuden'
+				| 'StepAerobic'
+				| 'Taekwondo'
+				| 'Tanzen'
+				| 'Turnen'
+				| 'Wandern'
+				| 'Yoga';
+			image: {
+				asset?: {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+				};
+				media?: unknown;
+				hotspot?: SanityImageHotspot;
+				crop?: SanityImageCrop;
+				alt: string;
+				description?: string;
+				_type: 'extendedImage';
+			};
+			slug: string;
+			title: string;
+	  }
+>;
+// Variable: offerGroupsPageContactPersonsQuery
+// Query: *[_type == 'person'][affiliations[0].role->email == $email] {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
+export type OfferGroupsPageContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
 	phone: string | null;
@@ -2312,11 +2376,66 @@ export type OfferPageContactPersonsQueryResult = Array<{
 	email: string | null;
 	role: string | null;
 	taskDescription: string | null;
-}> | null;
+}>;
+
+// Source: ./src/lib/sanity/queries/pages/offer.ts
+// Variable: offerPageQuery
+// Query: *[_type == 'departmentsPage'][0] {	...,	content {		...,		contactPersonsSection {			...,			contactPersons[]-> {				  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,			}		}	}}
+export type OfferPageQueryResult = {
+	_id: string;
+	_type: 'departmentsPage';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: {
+		departmentsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				firstName: string;
+				lastName: string;
+				phone: string | null;
+				image: {
+					asset?: {
+						_ref: string;
+						_type: 'reference';
+						_weak?: boolean;
+						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+					};
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt: string;
+					description?: string;
+					_type: 'extendedImage';
+				};
+				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
+				email: string | null;
+				role: string | null;
+				taskDescription: string | null;
+			}>;
+		};
+	};
+} | null;
 
 // Source: ./src/lib/sanity/queries/shared/groups.ts
 // Variable: groupsQuery
-// Query: *[_type == 'group.soccer'		|| _type == 'group.children-gymnastics'		|| _type == 'group.courses'		|| _type == 'group.taekwondo'		|| _type == 'group.dance'		|| _type == 'group.other-sports'	] {		_id,		title,		icon,	}
+// Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_id,		title,		icon,	}
 export type GroupsQueryResult = Array<{
 	_id: string;
 	title: string;
@@ -2450,22 +2569,20 @@ export type SocialMediaQueryResult = SocialFields | null;
 import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
-		"\n\t*[_type == 'contact'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": ContactPageQueryResult;
-		'\n\t*[_type == \'contact\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': ContactPageContactPersonsQueryResult;
-		"\n\t*[_type == 'home'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": HomePageQueryResult;
+		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
+		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshow,\n\t}\n": HomePageTestimonialsQueryResult;
-		'\n\t*[_type == \'home\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': HomePageContactPersonsQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
-		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
-		"\n\t*[_type == 'newsOverviewCategory'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": NewsOverviewCategoryPageQueryResult;
-		'\n\t*[_type == \'newsOverviewCategory\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': NewsOverviewContactPersonsCategoryQueryResult;
+		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
+		'\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
 		'\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
 		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
-		"\n\t*[_type == 'newsOverview'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": NewsOverviewPageQueryResult;
-		'\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': NewsOverviewContactPersonsQueryResult;
-		"\n\t*[_type == 'groupsPage'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\tintro,\n\t\t\t\tsubtitle,\n\t\t\t\ttitle,\n\t\t\t}\n\t\t}\n\t}\n": OfferPageQueryResult;
-		'\n\t*[_type == \'groupsPage\'][0].content.contactPersonsSection.contactPersons[]-> {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferPageContactPersonsQueryResult;
-		"\n\t*[_type == 'group.soccer'\n\t\t|| _type == 'group.children-gymnastics'\n\t\t|| _type == 'group.courses'\n\t\t|| _type == 'group.taekwondo'\n\t\t|| _type == 'group.dance'\n\t\t|| _type == 'group.other-sports'\n\t] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
+		'\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
+		"*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
+		"\n\t*[_type == $groupType][] {\n\t\ticon,\n\t\timage,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
+		'\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
+		'\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
+		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
 		'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;

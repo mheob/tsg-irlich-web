@@ -12,7 +12,8 @@ import { MobileNav } from './mobile';
 // TODO: get navigation items from sanity
 const navigationItems = [
 	{ _id: 'home', href: '/', title: 'Home' },
-	{ _id: 'angebote', href: '/angebote', title: 'Angebote' },
+	// cspell:word angebot
+	{ _id: 'angebot', href: '/angebot', title: 'Angebot' },
 	{ _id: 'news', href: '/news', title: 'Aktuelles' },
 ];
 

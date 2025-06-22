@@ -31,7 +31,7 @@ export function ContactPersons({
 				</SectionHeader>
 
 				<div className="mt-10 flex justify-center md:mt-32 md:gap-12">
-					<ContactPersonGroup contactPersons={contactPersons} />
+					<ContactPersonGroup contactPersons={contactPersons ?? []} />
 				</div>
 			</div>
 		</section>
