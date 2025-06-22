@@ -1,9 +1,9 @@
 import { DOSBIcon, type DosbIconName } from '@tsgi-web/shared';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { ArrowElement } from '@/components/ui/arrow-button';
-
-import styles from './group-card.module.css';
+import { getGroupImage } from '@/utils/groups';
 
 interface GroupCardProps {
 	icon: DosbIconName;
@@ -13,7 +13,15 @@ interface GroupCardProps {
 
 export default function GroupCard({ icon, slug, title }: Readonly<GroupCardProps>) {
 	return (
-		<article className={`${styles.bgImage} ${styles[icon]} relative shadow-lg`}>
+		<article className="relative aspect-video shadow-lg transition-transform duration-200 hover:scale-105">
+			<div className="absolute inset-0 z-[-1] rounded-xl bg-black/30" />
+			<Image
+				alt={title}
+				className="absolute inset-0 z-[-2] rounded-xl"
+				src={getGroupImage(slug).src}
+				fill
+			/>
+
 			<Link aria-label={`Mehr über "${title}" erfahren`} href={slug}>
 				<div className="flex h-full flex-row items-end justify-between p-6">
 					<div className="flex flex-col justify-end">
@@ -28,7 +36,7 @@ export default function GroupCard({ icon, slug, title }: Readonly<GroupCardProps
 
 					<ArrowElement
 						aria-hidden="true"
-						className="self-end"
+						className="hover:bg-secondary self-end"
 						direction="up-right"
 						size="size-6 md:size-8"
 						variant="secondary"
