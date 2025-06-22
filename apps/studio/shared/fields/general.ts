@@ -57,9 +57,12 @@ export const titleField = defineField({
 	],
 });
 
-export const defaultPageFields = [titleField, subTitleField, introField];
+export const defaultHeroFields = [titleField, subTitleField];
 
-// eslint-disable-next-line ts/explicit-function-return-type
-export function getDefaultPageFieldsWithGroup(group?: string) {
-	return defaultPageFields.map(field => ({ ...field, group }));
+export const defaultPageSectionFields = [titleField, subTitleField, introField];
+
+export function getDefaultPageSectionFieldsWithGroup(
+	group?: string,
+): ReturnType<typeof defineField>[] {
+	return defaultPageSectionFields.map(field => ({ ...field, group }));
 }

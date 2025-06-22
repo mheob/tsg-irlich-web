@@ -1,6 +1,6 @@
 import { SectionHeader } from '@/components/ui/section-header';
-import { groupSections } from '@/constants/groups';
-import type { GroupsPage } from '@/types/sanity.types';
+import type { DepartmentsPage } from '@/types/sanity.types';
+import { groupSections } from '@/utils/groups';
 
 import GroupCard from './group-card';
 
@@ -8,7 +8,7 @@ import styles from './groups.module.css';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
-type GroupsProps = GroupsPage['content']['groupsSection'];
+type GroupsProps = DepartmentsPage['content']['departmentsSection'];
 
 export default function Groups({ intro, subtitle, title }: Readonly<GroupsProps>) {
 	return (

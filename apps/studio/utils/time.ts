@@ -3,6 +3,7 @@
  *
  * @param date - The date to format, can be a Date object or ISO string
  * @returns The formatted date string
+ *
  * @example
  * ```ts
  * formatDate(new Date()) // "2024-01-01"

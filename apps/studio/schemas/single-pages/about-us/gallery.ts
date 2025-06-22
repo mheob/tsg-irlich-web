@@ -1,7 +1,7 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
+import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 export const galleryField = defineField({
 	title: 'Galerie',
@@ -10,7 +10,7 @@ export const galleryField = defineField({
 	icon: RiLinksLine,
 	group: 'gallery',
 	fields: [
-		...getDefaultPageFieldsWithGroup(),
+		...getDefaultPageSectionFieldsWithGroup(),
 
 		defineField({
 			title: 'Bilder',

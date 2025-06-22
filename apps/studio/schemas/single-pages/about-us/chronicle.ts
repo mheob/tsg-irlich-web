@@ -1,7 +1,7 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
+import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 export const chronicleField = defineField({
 	title: 'Chronik',
@@ -10,7 +10,7 @@ export const chronicleField = defineField({
 	icon: RiLinksLine,
 	group: 'chronicle',
 	fields: [
-		...getDefaultPageFieldsWithGroup(),
+		...getDefaultPageSectionFieldsWithGroup(),
 
 		defineField({
 			title: 'Chronik',

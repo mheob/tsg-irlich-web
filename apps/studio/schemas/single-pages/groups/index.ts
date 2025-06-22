@@ -1,16 +1,14 @@
-// cSpell:words angebot
 import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
-import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
+import { defaultHeroFields } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
-import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
 
-import { contactPersons, groups, stats, venues } from './_groups';
+import { contactPersons, groups, stats } from './_groups';
+import { contactPersonsField } from './contact-persons';
 import { groupsField } from './groups';
-import { venuesField } from './venues';
 
 const groupsPage = defineType({
 	title: 'Gruppen',
@@ -19,11 +17,8 @@ const groupsPage = defineType({
 	icon: RiBookletLine,
 	groups: [general, meta, content],
 	fields: [
-		// (hidden)
-		getHiddenSlugField('angebot'),
-
 		// general
-		...defaultPageFields,
+		...defaultHeroFields,
 
 		// meta
 		metaField,
@@ -35,8 +30,8 @@ const groupsPage = defineType({
 			type: 'object',
 			icon: RiLinksLine,
 			group: 'content',
-			groups: [groups, stats, venues, contactPersons],
-			fields: [groupsField, statsField, venuesField, contactPersonsSectionField],
+			groups: [groups, stats, contactPersons],
+			fields: [groupsField, statsField, contactPersonsField],
 			validation: Rule => Rule.required(),
 		}),
 	],

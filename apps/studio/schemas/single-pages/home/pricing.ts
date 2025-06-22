@@ -1,10 +1,10 @@
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { getDefaultPageFieldsWithGroup } from '@/shared/fields/general';
+import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 const pricingCardFields = [
-	...getDefaultPageFieldsWithGroup(),
+	...getDefaultPageSectionFieldsWithGroup(),
 
 	defineField({
 		title: 'Preis',
@@ -43,7 +43,7 @@ export const pricingField = defineField({
 	icon: RiLinksLine,
 	group: 'pricing',
 	fields: [
-		...getDefaultPageFieldsWithGroup(),
+		...getDefaultPageSectionFieldsWithGroup(),
 
 		defineField({
 			title: 'Preistabelle Jugendliche',

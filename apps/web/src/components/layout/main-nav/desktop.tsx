@@ -141,7 +141,8 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 
 					<NavigationMenuItem>
 						<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
-							<Link href="/angebote">Angebote</Link>
+							{/* cspell:word angebot */}
+							<Link href="/angebot">Angebot</Link>
 						</NavigationMenuLink>
 					</NavigationMenuItem>
 

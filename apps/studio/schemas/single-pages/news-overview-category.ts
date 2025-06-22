@@ -2,7 +2,7 @@ import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
-import { introField, subTitleField } from '@/shared/fields/general';
+import { defaultHeroFields } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 
@@ -16,8 +16,7 @@ const newsOverviewCategory = defineType({
 		// ?: the "slug" comes from the news category itself; this page is rather the layout
 
 		// general
-		subTitleField,
-		introField,
+		...defaultHeroFields,
 
 		// meta
 		metaField,

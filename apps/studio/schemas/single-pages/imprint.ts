@@ -4,7 +4,7 @@ import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
 import { addressField, emailField } from '@/shared/fields/contact';
-import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
+import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
 const imprintPage = defineType({
@@ -18,7 +18,7 @@ const imprintPage = defineType({
 		getHiddenSlugField('impressum'),
 
 		// general
-		...defaultPageFields,
+		...defaultHeroFields,
 
 		// meta
 		metaField,

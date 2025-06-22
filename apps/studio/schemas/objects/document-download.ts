@@ -1,16 +1,14 @@
 import { defineField } from 'sanity';
 
 import { titleField } from '@/shared/fields/general';
+import { getFieldWithoutGroup } from '@/utils/fields';
 
 const documentDownloadField = defineField({
 	title: 'Dokument zum herunterladen',
 	name: 'documentDownload',
 	type: 'object',
 	fields: [
-		defineField({
-			...titleField,
-			group: undefined,
-		}),
+		getFieldWithoutGroup(titleField),
 
 		defineField({
 			title: 'Dokument',

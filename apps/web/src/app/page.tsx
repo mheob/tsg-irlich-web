@@ -3,12 +3,9 @@ import type { Metadata } from 'next';
 import { ContactForm } from '@/components/section/contact-form';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Newsletter } from '@/components/section/newsletter';
+import { Stats } from '@/components/section/stats';
 import { client } from '@/lib/sanity/client';
-import {
-	homePageContactPersonsQuery,
-	homePageQuery,
-	homePageTestimonialsQuery,
-} from '@/lib/sanity/queries/pages/home';
+import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
 
 import { Features } from './_home/features';
@@ -28,11 +25,10 @@ export const metadata: Metadata = {
 	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
 };
 
-export default async function Home() {
-	const [page, testimonials, contactPersons, newsArticles] = await Promise.all([
+export default async function HomePage() {
+	const [page, testimonials, newsArticles] = await Promise.all([
 		client.fetch(homePageQuery),
 		client.fetch(homePageTestimonialsQuery),
-		client.fetch(homePageContactPersonsQuery),
 		client.fetch(newsArticlesQuery),
 	]);
 
@@ -44,12 +40,10 @@ export default async function Home() {
 			<Features {...page.content.featureSection} />
 			<Vision {...page.content.visionSection} />
 			<Groups {...page.content.groupsSection} />
+			<Stats stats={page.content.stats} />
 			<Pricing {...page.content.pricingSection} />
 			<Testimonials {...page.content.testimonialSection} testimonials={testimonials} />
-			<ContactPersons
-				{...page.content.contactPersonsSection}
-				contactPersons={contactPersons ?? []}
-			/>
+			<ContactPersons {...page.content.contactPersonsSection} />
 			<ContactForm />
 			<News {...page.content.newsSection} articles={newsArticles} />
 			<Newsletter />

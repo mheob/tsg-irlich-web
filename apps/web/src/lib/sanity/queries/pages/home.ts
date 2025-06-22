@@ -2,20 +2,31 @@ import { defineQuery } from 'next-sanity';
 
 import { contactPersons } from '@/lib/sanity/queries';
 
+/**
+ * Query to get the home page
+ *
+ * @returns The home page
+ */
 export const homePageQuery = defineQuery(`
 	*[_type == 'home'][0] {
 		...,
 		content {
 			...,
 			contactPersonsSection {
-				intro,
-				subtitle,
-				title,
+				...,
+				contactPersons[]-> {
+					${contactPersons}
+				}
 			}
 		}
 	}
 `);
 
+/**
+ * Query to get the testimonials for the home page
+ *
+ * @returns The testimonials for the home page
+ */
 export const homePageTestimonialsQuery = defineQuery(`
 	*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {
 		firstName,
@@ -24,11 +35,5 @@ export const homePageTestimonialsQuery = defineQuery(`
 		quote,
 		role,
 		show,
-	}
-`);
-
-export const homePageContactPersonsQuery = defineQuery(`
-	*[_type == 'home'][0].content.contactPersonsSection.contactPersons[]-> {
-		${contactPersons}
 	}
 `);

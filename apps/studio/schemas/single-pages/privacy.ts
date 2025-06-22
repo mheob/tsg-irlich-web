@@ -3,7 +3,7 @@ import { defineField, defineType } from 'sanity';
 
 import { contact, general, meta } from '@/shared/field-groups';
 import { addressField, emailField, phoneField } from '@/shared/fields/contact';
-import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
+import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
 const privacyPage = defineType({
@@ -17,7 +17,7 @@ const privacyPage = defineType({
 		getHiddenSlugField('datenschutz'),
 
 		// general
-		...defaultPageFields,
+		...defaultHeroFields,
 
 		// meta
 		metaField,

@@ -40,6 +40,7 @@ import membershipPage from './single-pages/membership';
 import newsArticlePage from './single-pages/news-article';
 import newsOverviewPage from './single-pages/news-overview';
 import newsOverviewCategoryPage from './single-pages/news-overview-category';
+import departmentsPage from './single-pages/offer';
 import privacyPage from './single-pages/privacy';
 import singleGroupPage from './single-pages/single-group';
 import siteSettings from './singletons/site-settings';
@@ -91,6 +92,7 @@ export const schemaTypes = [
 	// Single Pages
 	aboutUsPage,
 	contactPage,
+	departmentsPage,
 	groupsPage,
 	homePage,
 	imprintPage,

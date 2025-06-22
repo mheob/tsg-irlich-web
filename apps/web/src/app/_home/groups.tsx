@@ -2,8 +2,8 @@
 
 import { ArrowButtonGroup } from '@/components/ui/arrow-button';
 import { SectionHeader } from '@/components/ui/section-header';
-import { groupSections } from '@/constants/groups';
 import type { Home } from '@/types/sanity.types';
+import { groupSections } from '@/utils/groups';
 
 import { GroupCard } from './group-card';
 
@@ -13,7 +13,7 @@ const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
 type GroupsProps = Home['content']['groupsSection'];
 
-export function Groups({ subtitle, title }: GroupsProps) {
+export function Groups({ subtitle, title }: Readonly<GroupsProps>) {
 	return (
 		<section className="relative">
 			<div className={styles.bg}></div>

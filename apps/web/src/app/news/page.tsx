@@ -3,10 +3,7 @@ import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { SectionHeader } from '@/components/ui/section-header';
 import { client } from '@/lib/sanity/client';
-import {
-	newsOverviewContactPersonsQuery,
-	newsOverviewPageQuery,
-} from '@/lib/sanity/queries/pages/news-overview';
+import { newsOverviewPageQuery } from '@/lib/sanity/queries/pages/news-overview';
 import {
 	newsArticlesPaginatedQuery,
 	newsArticlesQuery,
@@ -21,12 +18,12 @@ import LatestNewsPagination from './_sections/latest-news-pagination';
 const START_INDEX = 3;
 const ITEMS_PER_PAGE = 6;
 
-export default async function NewsOverview({ searchParams }: PageProps) {
+export default async function NewsOverviewPage({ searchParams }: PageProps) {
 	const { seite } = await searchParams;
 	const pageString = Array.isArray(seite) ? seite[0] : seite;
 	const currentPage = Number.parseInt(pageString ?? '1', 10);
 
-	const [page, totalArticles, articles, paginatedArticles, contactPersons] = await Promise.all([
+	const [page, totalArticles, articles, paginatedArticles] = await Promise.all([
 		client.fetch(newsOverviewPageQuery),
 		client.fetch(newsArticlesTotalQuery),
 		client.fetch(newsArticlesQuery),
@@ -34,7 +31,6 @@ export default async function NewsOverview({ searchParams }: PageProps) {
 			end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
 			start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
 		}),
-		client.fetch(newsOverviewContactPersonsQuery),
 	]);
 
 	if (!page) return null;
@@ -64,10 +60,7 @@ export default async function NewsOverview({ searchParams }: PageProps) {
 				</section>
 			</section>
 
-			<ContactPersons
-				{...page.content.contactPersonsSection}
-				contactPersons={contactPersons ?? []}
-			/>
+			<ContactPersons {...page.content.contactPersonsSection} />
 
 			<Newsletter />
 		</>

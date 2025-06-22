@@ -15,6 +15,7 @@ import membershipPage from '@/schemas/single-pages/membership';
 import newsArticlePage from '@/schemas/single-pages/news-article';
 import newsOverviewPage from '@/schemas/single-pages/news-overview';
 import newsOverviewCategoryPage from '@/schemas/single-pages/news-overview-category';
+import departmentsPage from '@/schemas/single-pages/offer';
 import privacyPage from '@/schemas/single-pages/privacy';
 import singleGroupPage from '@/schemas/single-pages/single-group';
 import siteSettings from '@/schemas/singletons/site-settings';
@@ -30,6 +31,7 @@ export function getPlugins(): PluginOptions[] {
 				homePage,
 				aboutUsPage,
 				contactPage,
+				departmentsPage,
 				membershipPage,
 				newsArticlePage,
 				newsOverviewPage,

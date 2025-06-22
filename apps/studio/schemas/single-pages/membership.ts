@@ -4,7 +4,7 @@ import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
 import { contactPersonsField } from '@/shared/fields/contact';
-import { defaultPageFields, getHiddenSlugField } from '@/shared/fields/general';
+import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
 const membershipPage = defineType({
@@ -18,7 +18,7 @@ const membershipPage = defineType({
 		getHiddenSlugField('mitgliedschaft'),
 
 		// general
-		...defaultPageFields,
+		...defaultHeroFields,
 
 		// meta
 		metaField,
