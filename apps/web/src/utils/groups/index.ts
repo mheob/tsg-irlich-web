@@ -105,8 +105,6 @@ export function getOGImage(group: string): OpenGraph['images'] {
 }
 
 export function getGroupImage(group: string, path = ''): GroupSection['image'] {
-	console.log({ '1': groupSections[0].slug, '2': `${path}${group}` });
 	const groupSection = groupSections.find(section => section.slug === `${path}${group}`);
-	console.log({ group, groupSection, path, slug: groupSections[0].slug });
 	return groupSection?.image ?? fallbackImage;
 }

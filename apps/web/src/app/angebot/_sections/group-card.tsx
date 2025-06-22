@@ -19,6 +19,7 @@ export default function GroupCard({ icon, slug, title }: Readonly<GroupCardProps
 				alt={title}
 				className="absolute inset-0 z-[-2] rounded-xl"
 				src={getGroupImage(slug).src}
+				fill
 			/>
 
 			<Link aria-label={`Mehr über "${title}" erfahren`} href={slug}>
