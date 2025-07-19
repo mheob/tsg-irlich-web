@@ -32,7 +32,7 @@ catalog:
   "@sanity/image-url": ^1.1.0
   "@sanity/locale-de-de": ^1.1.23
   "@sanity/ui": ^2.16.7
-  "@sanity/vision": ^3.99.0
+  "@sanity/vision": ^4.0.0
   "@tailwindcss/postcss": ^4.1.11
   "@tailwindcss/typography": ^0.5.16
   "@types/node": ^22.16.5
@@ -60,7 +60,7 @@ catalog:
   react-dom: ^19.1.0
   react-hook-form: ^7.60.0
   react-icons: ^5.5.0
-  sanity: ^3.99.0
+  sanity: ^4.0.0
   sanity-plugin-media: ^3.0.4
   server-only: ^0.0.1
   slugify: ^1.6.6
