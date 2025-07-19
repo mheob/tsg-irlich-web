@@ -71,4 +71,4 @@ catalog:
   turbo: ^2.5.5
   typescript: ^5.8.3
   vaul: ^1.1.2
-  zod: ^3.25.76
+  zod: ^4.0.0
