@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail, MessagesSquare, UserRound, UsersRound } from 'lucide-react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod/v4';
+import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormField } from '@/components/ui/form';

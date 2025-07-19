@@ -29,7 +29,9 @@ export default function Groups({
 				</SectionHeader>
 
 				<div className="my-6 grid grid-cols-1 gap-4 md:mt-24 md:grid-cols-2 md:gap-7 xl:grid-cols-3">
-					{groups?.map(({ slug, ...rest }) => <GroupCard {...rest} key={slug} slug={slug} />)}
+					{groups?.map(({ slug, ...rest }) => (
+						<GroupCard {...rest} key={slug} slug={slug} />
+					))}
 				</div>
 			</div>
 		</section>
