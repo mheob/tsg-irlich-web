@@ -3,17 +3,27 @@ import Link from 'next/link';
 
 import { ArrowElement } from '@/components/ui/arrow-button';
 import type { Groups as GroupsType } from '@/types/sanity.types';
+import type { GroupSection } from '@/utils/groups';
 
 import styles from './group-card.module.css';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
-type GroupCardProps = GroupsType['groups'][number];
+type GroupCardProps = GroupsType['groups'][number] & { currentDepartment?: GroupSection };
 
-export default function GroupCard({ icon, overviewTitle, slug, title }: Readonly<GroupCardProps>) {
+export default function GroupCard({
+	currentDepartment,
+	icon,
+	overviewTitle,
+	slug,
+	title,
+}: Readonly<GroupCardProps>) {
 	return (
 		<article className={`${styles.bgImage} ${styles[icon]} relative shadow-lg`}>
-			<Link aria-label={`Mehr über "${title}" erfahren`} href={slug}>
+			<Link
+				aria-label={`Mehr über "${title}" erfahren`}
+				href={`${currentDepartment?.slug ?? ''}/${slug}`}
+			>
 				<div className="flex h-full flex-row items-end justify-between p-6">
 					<div className="flex flex-col justify-end">
 						<div className="bg-secondary text-primary grid size-12 place-content-center rounded-full text-5xl md:size-14">

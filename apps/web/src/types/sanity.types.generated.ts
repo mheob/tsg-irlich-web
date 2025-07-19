@@ -2247,6 +2247,141 @@ export type NewsOverviewPageQueryResult = {
 	};
 } | null;
 
+// Source: ./src/lib/sanity/queries/pages/offer-groups-group.ts
+// Variable: offerGroupsGroupPageQuery
+// Query: *[_type == 'singleGroupPage'][0]
+export type OfferGroupsGroupPageQueryResult = {
+	_id: string;
+	_type: 'singleGroupPage';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+} | null;
+// Variable: offerGroupsGroupPageGroupsQuery
+// Query: *[_type == $groupType][] | order(sortOrder asc) {		icon,		image,		overviewTitle,		'slug': slug.current,		title,	}
+export type OfferGroupsGroupPageGroupsQueryResult = Array<
+	| {
+			icon: null;
+			image: null;
+			overviewTitle: null;
+			slug: null;
+			title: null;
+	  }
+	| {
+			icon: null;
+			image: null;
+			overviewTitle: null;
+			slug: null;
+			title: string;
+	  }
+	| {
+			icon: null;
+			image: null;
+			overviewTitle: null;
+			slug: null;
+			title: string | null;
+	  }
+	| {
+			icon: null;
+			image: null;
+			overviewTitle: null;
+			slug: string;
+			title: string;
+	  }
+	| {
+			icon: null;
+			image: null;
+			overviewTitle: null;
+			slug: string | null;
+			title: string;
+	  }
+	| {
+			icon: null;
+			image: {
+				asset?: {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+				};
+				media?: unknown;
+				hotspot?: SanityImageHotspot;
+				crop?: SanityImageCrop;
+				alt: string;
+				description?: string;
+				_type: 'extendedImage';
+			};
+			overviewTitle: null;
+			slug: null;
+			title: null;
+	  }
+	| {
+			icon:
+				| 'Badminton'
+				| 'Bodenturnen'
+				| 'Cheerleading'
+				| 'Fitness'
+				| 'Fussball'
+				| 'Gymnastik'
+				| 'Jujutsu'
+				| 'Pilates'
+				| 'RopeSkipping'
+				| 'Sportakrobatik'
+				| 'SportInGebaeuden'
+				| 'StepAerobic'
+				| 'Taekwondo'
+				| 'Tanzen'
+				| 'Turnen'
+				| 'Wandern'
+				| 'Yoga';
+			image: {
+				asset?: {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+				};
+				media?: unknown;
+				hotspot?: SanityImageHotspot;
+				crop?: SanityImageCrop;
+				alt: string;
+				description?: string;
+				_type: 'extendedImage';
+			};
+			overviewTitle: string | null;
+			slug: string;
+			title: string;
+	  }
+>;
+// Variable: offerGroupsGroupPageContactPersonsQuery
+// Query: *[_type == 'person'][affiliations[0].role->email == $email] {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
+export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
+	firstName: string;
+	lastName: string;
+	phone: string | null;
+	image: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt: string;
+		description?: string;
+		_type: 'extendedImage';
+	};
+	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
+	email: string | null;
+	role: string | null;
+	taskDescription: string | null;
+}>;
+
 // Source: ./src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageQuery
 // Query: *[_type == 'groupsPage'][0]
@@ -2599,9 +2734,14 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
 		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
 		'\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
+		"*[_type == 'singleGroupPage'][0]": OfferGroupsGroupPageQueryResult;
+		"\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\timage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n":
+			| OfferGroupsGroupPageGroupsQueryResult
+			| OfferGroupsPageGroupsQueryResult;
+		'\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n':
+			| OfferGroupsGroupPageContactPersonsQueryResult
+			| OfferGroupsPageContactPersonsQueryResult;
 		"*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
-		"\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\timage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
-		'\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
 		'\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
 		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;

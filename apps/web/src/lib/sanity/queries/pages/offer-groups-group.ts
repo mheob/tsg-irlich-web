@@ -7,7 +7,7 @@ import { contactPersons } from '@/lib/sanity/queries';
  *
  * @returns The groups page
  */
-export const offerGroupsPageQuery = defineQuery(`*[_type == 'groupsPage'][0]`);
+export const offerGroupsGroupPageQuery = defineQuery(`*[_type == 'singleGroupPage'][0]`);
 
 /**
  * Query to get all groups for a given group
@@ -15,7 +15,7 @@ export const offerGroupsPageQuery = defineQuery(`*[_type == 'groupsPage'][0]`);
  * @param groupType - The type of group to get the groups for
  * @returns An array of groups
  */
-export const offerGroupsPageGroupsQuery = defineQuery(`
+export const offerGroupsGroupPageGroupsQuery = defineQuery(`
 	*[_type == $groupType][] | order(sortOrder asc) {
 		icon,
 		image,
@@ -31,7 +31,7 @@ export const offerGroupsPageGroupsQuery = defineQuery(`
  * @param email - The email of the group
  * @returns An array of contact persons
  */
-export const offerGroupsPageContactPersonsQuery = defineQuery(`.
+export const offerGroupsGroupPageContactPersonsQuery = defineQuery(`
 	*[_type == 'person'][affiliations[0].role->email == $email] {
 		${contactPersons}
 	}
