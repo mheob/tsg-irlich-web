@@ -1,19 +1,40 @@
 import { DOSBIcon } from '@tsgi-web/shared';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { ArrowElement } from '@/components/ui/arrow-button';
+import { urlForImage } from '@/lib/sanity/utils';
 import type { Groups as GroupsType } from '@/types/sanity.types';
-
-import styles from './group-card.module.css';
+import type { GroupSection } from '@/utils/groups';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
-type GroupCardProps = GroupsType['groups'][number];
+type GroupCardProps = GroupsType['groups'][number] & { currentDepartment?: GroupSection };
 
-export default function GroupCard({ icon, overviewTitle, slug, title }: Readonly<GroupCardProps>) {
+export default function GroupCard({
+	currentDepartment,
+	featuredImage,
+	icon,
+	overviewTitle,
+	slug,
+	title,
+}: Readonly<GroupCardProps>) {
 	return (
-		<article className={`${styles.bgImage} ${styles[icon]} relative shadow-lg`}>
-			<Link aria-label={`Mehr über "${title}" erfahren`} href={slug}>
+		<article className="relative aspect-video shadow-lg transition-transform duration-200 hover:scale-105">
+			<div className="absolute inset-0 z-[-1] rounded-xl bg-black/30" />
+			{featuredImage && (
+				<Image
+					alt={title}
+					className="absolute inset-0 z-[-2] rounded-xl"
+					src={urlForImage(featuredImage, 270, 480) ?? ''}
+					fill
+				/>
+			)}
+
+			<Link
+				aria-label={`Mehr über "${title}" erfahren`}
+				href={`/angebot/${currentDepartment ? currentDepartment.slug : ''}/${slug}`}
+			>
 				<div className="flex h-full flex-row items-end justify-between p-6">
 					<div className="flex flex-col justify-end">
 						<div className="bg-secondary text-primary grid size-12 place-content-center rounded-full text-5xl md:size-14">
@@ -30,7 +51,7 @@ export default function GroupCard({ icon, overviewTitle, slug, title }: Readonly
 
 					<ArrowElement
 						aria-hidden="true"
-						className="self-end"
+						className="hover:bg-secondary self-end"
 						direction="up-right"
 						size="size-6 md:size-8"
 						variant="secondary"

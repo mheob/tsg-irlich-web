@@ -6,8 +6,6 @@ import GroupCard from './group-card';
 
 import styles from './groups.module.css';
 
-const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
-
 type GroupsProps = DepartmentsPage['content']['departmentsSection'];
 
 export default function Groups({ intro, subtitle, title }: Readonly<GroupsProps>) {
@@ -20,7 +18,7 @@ export default function Groups({ intro, subtitle, title }: Readonly<GroupsProps>
 
 				<div className="my-6 grid grid-cols-1 gap-4 md:mt-24 md:grid-cols-2 md:gap-7 xl:grid-cols-3">
 					{groupSections?.map(({ icon, slug, title }) => (
-						<GroupCard icon={icon ?? getFirstLetter(title)} key={slug} slug={slug} title={title} />
+						<GroupCard icon={icon} key={slug} slug={slug} title={title} />
 					))}
 				</div>
 			</div>

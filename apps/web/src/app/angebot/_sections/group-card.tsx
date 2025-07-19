@@ -1,15 +1,12 @@
-import { DOSBIcon, type DosbIconName } from '@tsgi-web/shared';
+import { DOSBIcon } from '@tsgi-web/shared';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { ArrowElement } from '@/components/ui/arrow-button';
+import type { Groups as GroupsType } from '@/types/sanity.types';
 import { getGroupImage } from '@/utils/groups';
 
-interface GroupCardProps {
-	icon: DosbIconName;
-	slug: string;
-	title: string;
-}
+type GroupCardProps = Pick<GroupsType['groups'][number], 'icon' | 'slug' | 'title'>;
 
 export default function GroupCard({ icon, slug, title }: Readonly<GroupCardProps>) {
 	return (

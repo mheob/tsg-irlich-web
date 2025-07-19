@@ -53,7 +53,11 @@ export default async function NewsArticlePage({ params }: PageProps) {
 		client.fetch(newsArticleContentQuery, { slug }),
 	]);
 
-	if (!article || !hero) return null;
+	if (!article || !hero) {
+		const { notFound } = await import('next/navigation');
+		notFound();
+		return null;
+	}
 
 	const imageSource = urlForImage(article.featuredImage, 600, 1920);
 

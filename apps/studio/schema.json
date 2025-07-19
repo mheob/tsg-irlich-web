@@ -842,6 +842,45 @@
           "name": "metaFields"
         },
         "optional": true
+      },
+      "content": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "contactPersonsSection": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "title": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "subtitle": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "intro": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  }
+                }
+              },
+              "optional": false
+            }
+          }
+        },
+        "optional": false
       }
     }
   },
@@ -4785,13 +4824,6 @@
                 },
                 "optional": false
               },
-              "description": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false
-              },
               "_type": {
                 "type": "objectAttribute",
                 "value": {
@@ -4918,6 +4950,13 @@
         },
         "optional": false
       },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "overviewTitle": {
         "type": "objectAttribute",
         "value": {
@@ -5017,7 +5056,7 @@
         },
         "optional": false
       },
-      "image": {
+      "featuredImage": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -5278,6 +5317,13 @@
         },
         "optional": false
       },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "overviewTitle": {
         "type": "objectAttribute",
         "value": {
@@ -5377,7 +5423,7 @@
         },
         "optional": false
       },
-      "image": {
+      "featuredImage": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -5638,6 +5684,13 @@
         },
         "optional": false
       },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "overviewTitle": {
         "type": "objectAttribute",
         "value": {
@@ -5737,7 +5790,7 @@
         },
         "optional": false
       },
-      "image": {
+      "featuredImage": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -5998,6 +6051,13 @@
         },
         "optional": false
       },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "overviewTitle": {
         "type": "objectAttribute",
         "value": {
@@ -6097,7 +6157,7 @@
         },
         "optional": false
       },
-      "image": {
+      "featuredImage": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -6358,6 +6418,13 @@
         },
         "optional": false
       },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "overviewTitle": {
         "type": "objectAttribute",
         "value": {
@@ -6457,7 +6524,7 @@
         },
         "optional": false
       },
-      "image": {
+      "featuredImage": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -6718,6 +6785,13 @@
         },
         "optional": false
       },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "overviewTitle": {
         "type": "objectAttribute",
         "value": {
@@ -6817,7 +6891,7 @@
         },
         "optional": false
       },
-      "image": {
+      "featuredImage": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -7078,6 +7152,13 @@
         },
         "optional": false
       },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "overviewTitle": {
         "type": "objectAttribute",
         "value": {
@@ -7177,7 +7258,7 @@
         },
         "optional": false
       },
-      "image": {
+      "featuredImage": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
