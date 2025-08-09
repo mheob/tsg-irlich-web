@@ -33,7 +33,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function OfferPage() {
 	const page = await client.fetch(offerPageQuery);
 
-	if (!page) return null;
+	if (!page) {
+		const { notFound } = await import('next/navigation');
+		notFound();
+		return null;
+	}
 
 	return (
 		<>

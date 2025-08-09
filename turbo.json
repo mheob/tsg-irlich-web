@@ -38,6 +38,5 @@
 			],
 			"outputs": [".next/**", "!.next/cache/**"]
 		}
-	},
-	"ui": "tui"
+	}
 }

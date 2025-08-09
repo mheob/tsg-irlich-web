@@ -22,7 +22,7 @@ catalog:
   "@mheob/eslint-config": ^8.12.0
   "@mheob/prettier-config": ^3.3.4
   "@mheob/tsconfig": ^2.2.1
-  "@next/eslint-plugin-next": ^15.4.5
+  "@next/eslint-plugin-next": ^15.4.6
   "@radix-ui/react-dialog": ^1.1.14
   "@radix-ui/react-icons": ^1.3.2
   "@radix-ui/react-label": ^2.1.7
@@ -31,14 +31,14 @@ catalog:
   "@radix-ui/react-separator": ^1.1.7
   "@radix-ui/react-slot": ^1.2.3
   "@sanity/assist": ^4.4.7
-  "@sanity/client": ^7.8.1
+  "@sanity/client": ^7.8.2
   "@sanity/image-url": ^1.1.0
   "@sanity/locale-de-de": ^1.1.24
-  "@sanity/ui": ^3.0.5
-  "@sanity/vision": ^4.2.0
+  "@sanity/ui": ^3.0.6
+  "@sanity/vision": ^4.3.0
   "@tailwindcss/postcss": ^4.1.11
   "@tailwindcss/typography": ^0.5.16
-  "@types/node": ^22.17.0
+  "@types/node": ^22.17.1
   "@types/react": ^19.1.9
   "@types/react-dom": ^19.1.7
   class-variance-authority: ^0.7.1
@@ -47,14 +47,14 @@ catalog:
   cspell: ^9.2.0
   cz-git: ^1.12.0
   dotenv: ^17.2.1
-  eslint: ^9.32.0
+  eslint: ^9.33.0
   eslint-plugin-react-hooks: ^5.2.0
   eslint-plugin-react-refresh: ^0.4.20
   husky: ^9.1.7
-  lint-staged: ^16.1.2
-  lucide-react: ^0.536.0
-  next: ^15.4.5
-  next-sanity: ^10.0.6
+  lint-staged: ^16.1.5
+  lucide-react: ^0.539.0
+  next: ^15.4.6
+  next-sanity: ^10.0.10
   postcss: ^8.5.6
   postcss-load-config: ^6.0.1
   prettier: ^3.6.2
@@ -63,7 +63,7 @@ catalog:
   react-dom: ^19.1.1
   react-hook-form: ^7.62.0
   react-icons: ^5.5.0
-  sanity: ^4.2.0
+  sanity: ^4.3.0
   sanity-plugin-media: ^4.0.0
   server-only: ^0.0.1
   slugify: ^1.6.6
@@ -74,4 +74,4 @@ catalog:
   turbo: ^2.5.5
   typescript: ^5.9.2
   vaul: ^1.1.2
-  zod: ^4.0.14
+  zod: ^4.0.16

@@ -72,7 +72,11 @@ export default async function NewsCategoryPage({
 		}),
 	]);
 
-	if (!page || !category) return null;
+	if (!page || !category) {
+		const { notFound } = await import('next/navigation');
+		notFound();
+		return null;
+	}
 
 	return (
 		<>

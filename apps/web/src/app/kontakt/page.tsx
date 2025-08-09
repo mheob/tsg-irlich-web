@@ -18,7 +18,11 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
 	const page = await client.fetch(contactPageQuery);
 
-	if (!page) return null;
+	if (!page) {
+		const { notFound } = await import('next/navigation');
+		notFound();
+		return null;
+	}
 
 	return (
 		<>

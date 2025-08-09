@@ -2,6 +2,7 @@ import { DOSB_ICONS } from '@tsgi-web/shared';
 import type { IconType } from 'react-icons/lib';
 import { defineField, defineType } from 'sanity';
 
+import { emailField } from '@/shared/fields/contact';
 import { slugField } from '@/shared/fields/general';
 
 import { getFieldWithoutGroup } from '../fields';
@@ -41,6 +42,8 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 			}),
 
 			getFieldWithoutGroup(slugField),
+
+			getFieldWithoutGroup(emailField),
 
 			defineField({
 				description: 'Optional, Fallback: Name. Wird für die Gruppen-Übersicht verwendet.',
@@ -97,7 +100,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 			defineField({
 				description:
 					'Das Hintergrundbild wird z.B. auf der Gruppen-Übersicht angezeigt, wenn man über eine Gruppe hovered.',
-				name: 'image',
+				name: 'featuredImage',
 				title: 'Hintergrundbild',
 				type: 'extendedImage',
 				validation: Rule => [Rule.required().error('Bild ist erforderlich')],

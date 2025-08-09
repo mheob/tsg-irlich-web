@@ -1,10 +1,7 @@
 {
 	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-	"version": "0.2",
-	"import": ["@cspell/dict-de-de/cspell-ext.json"],
-	"enabled": true,
 	"enableFiletypes": ["astro"],
-	"language": "en,de,lorem",
+	"enabled": true,
 	"ignorePaths": [
 		".git",
 		".sonarlint",
@@ -20,7 +17,11 @@
 		"**/schema.json",
 		"**/turbo.json"
 	],
+	"import": ["@cspell/dict-de-de/cspell-ext.json"],
+	"language": "en,de,lorem",
+	"version": "0.2",
 	"words": [
+		"angebot",
 		"antfu",
 		"anton",
 		"Aufzählungspunkte",

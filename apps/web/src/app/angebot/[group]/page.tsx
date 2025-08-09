@@ -45,6 +45,8 @@ export async function generateMetadata({
 export default async function GroupsPage({ params }: PageProps<{ group: string }>) {
 	const { group } = await params;
 
+	console.log(group);
+
 	const currentDepartment = groupSections.find(g => g.slug === `/angebot/${group}`);
 
 	const [page, groups, offerPersons] = await Promise.all([
@@ -55,7 +57,11 @@ export default async function GroupsPage({ params }: PageProps<{ group: string }
 		}),
 	]);
 
-	if (!page) return null;
+	if (!page) {
+		const { notFound } = await import('next/navigation');
+		notFound();
+		return null;
+	}
 
 	return (
 		<>

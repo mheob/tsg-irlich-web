@@ -32,7 +32,11 @@ export default async function HomePage() {
 		client.fetch(newsArticlesQuery),
 	]);
 
-	if (!page) return null;
+	if (!page) {
+		const { notFound } = await import('next/navigation');
+		notFound();
+		return null;
+	}
 
 	return (
 		<>

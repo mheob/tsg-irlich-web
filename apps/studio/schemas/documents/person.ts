@@ -134,22 +134,6 @@ const person = defineType({
 								),
 							],
 						}),
-
-						defineField({
-							title: 'Beschreibung (Vision)',
-							name: 'description',
-							type: 'text',
-							description: 'Kurze Beschreibung als Vision der Person (ca. 270 bis 330 Zeichen).',
-							components: { input: TextInput },
-							validation: Rule => [
-								Rule.required()
-									.min(128)
-									.error('Die Beschreibung (Vision) muss mindestens 128 Zeichen lang sein.'),
-								Rule.max(330).warning(
-									'Die Beschreibung (Vision) sollte maximal 330 Zeichen lang sein.',
-								),
-							],
-						}),
 					],
 					preview: {
 						prepare: ({ team, role }) => ({
