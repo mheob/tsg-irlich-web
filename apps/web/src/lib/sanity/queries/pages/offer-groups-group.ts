@@ -1,5 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
+import { featuredImage } from '@/lib/sanity/queries';
+
 /**
  * Query to get the groups page
  *
@@ -11,14 +13,14 @@ export const offerGroupsGroupPageQuery = defineQuery(`*[_type == 'singleGroupPag
  * Query to get all groups for a given group
  *
  * @param groupType - The type of group to get the groups for
+ * @param slug - The slug of the group to get the groups for
  * @returns An array of groups
  */
 export const offerGroupsGroupPageGroupsQuery = defineQuery(`
-	*[_type == $groupType][] | order(sortOrder asc) {
-		icon,
-		image,
-		overviewTitle,
-		'slug': slug.current,
+	*[_type == $groupType && slug.current == $slug][0] {
+		description,
+		${featuredImage},
+		images,
 		title,
 	}
 `);

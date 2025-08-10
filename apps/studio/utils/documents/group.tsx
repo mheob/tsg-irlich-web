@@ -94,6 +94,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				},
 				title: 'Icon',
 				type: 'string',
+				hidden: !isSportGroup,
 				validation: Rule => [Rule.required().error('Icon ist erforderlich')],
 			}),
 
@@ -103,6 +104,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				name: 'featuredImage',
 				title: 'Hintergrundbild',
 				type: 'extendedImage',
+				hidden: !isSportGroup,
 				validation: Rule => [Rule.required().error('Bild ist erforderlich')],
 			}),
 
@@ -112,10 +114,8 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				of: [{ type: 'extendedImage' }],
 				title: 'Bildergalerie',
 				type: 'array',
-				validation: Rule => [
-					Rule.min(1).error('Es muss mindestens ein Bild ausgewählt werden.'),
-					Rule.max(3).error('Es dürfen maximal drei Bilder ausgewählt werden.'),
-				],
+				hidden: !isSportGroup,
+				validation: Rule => [Rule.max(3).error('Es dürfen maximal drei Bilder ausgewählt werden.')],
 			}),
 
 			defineField({
@@ -134,6 +134,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'Ist Sportgruppe',
 				type: 'boolean',
 				hidden: true,
+				validation: Rule => [Rule.required().error('"Ist Sportgruppe" ist erforderlich')],
 			}),
 		],
 		preview: {
@@ -168,5 +169,6 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'nach Sortierreihenfolge - absteigend',
 			},
 		],
+		validation: Rule => [Rule.required().error('Gruppe ist erforderlich')],
 	});
 }

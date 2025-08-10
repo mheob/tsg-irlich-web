@@ -6,10 +6,13 @@ import { Newsletter } from '@/components/section/newsletter';
 import { client } from '@/lib/sanity/client';
 import {
 	offerGroupsGroupPageContactPersonsQuery,
+	offerGroupsGroupPageGroupsQuery,
 	offerGroupsGroupPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups-group';
 import type { PageProps } from '@/types/common';
-import { getOGImage } from '@/utils/groups';
+import { getCurrentDepartment, getOGImage } from '@/utils/groups';
+
+import { Main } from './_sections/main';
 
 export async function generateMetadata({
 	params,
@@ -36,14 +39,20 @@ export async function generateMetadata({
 export default async function SingleGroupsPage({
 	params,
 }: PageProps<{ group: string; singleGroup: string }>) {
-	const { singleGroup } = await params;
+	const { group, singleGroup } = await params;
 
-	const [page, coaches] = await Promise.all([
+	const currentDepartment = getCurrentDepartment(group);
+
+	const [page, groupData, coaches] = await Promise.all([
 		client.fetch(offerGroupsGroupPageQuery),
+		client.fetch(offerGroupsGroupPageGroupsQuery, {
+			groupType: currentDepartment?._type,
+			slug: singleGroup,
+		}),
 		client.fetch(offerGroupsGroupPageContactPersonsQuery, { slug: singleGroup }),
 	]);
 
-	if (!page) {
+	if (!page || !groupData) {
 		const { notFound } = await import('next/navigation');
 		notFound();
 		return null;
@@ -51,7 +60,13 @@ export default async function SingleGroupsPage({
 
 	return (
 		<>
+			{/* TODO: add hero image */}
 			<Hero subTitle={page.subtitle} title={page.title} />
+			<Main
+				description={groupData.description ?? ''}
+				gallery={groupData.images ?? []}
+				title={groupData.title ?? ''}
+			/>
 			<ContactPersons {...page.content.contactPersonsSection} contactPersons={coaches} />
 			<Newsletter />
 		</>
