@@ -64,7 +64,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
 	return (
 		<>
 			<Hero
-				image={{ alt: article.featuredImage.alt, src: imageSource ?? '' }}
+				image={{ alt: article.featuredImage?.alt ?? '', src: imageSource ?? '' }}
 				subTitle={hero.subtitle}
 				title={hero.title}
 			/>
