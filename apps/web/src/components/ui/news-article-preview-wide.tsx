@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { NewsArticlesQueryResult } from '@/types/sanity.types';
 
-type NewsArticlePreviewWideProps = NewsArticlesQueryResult[0];
+type NewsArticlePreviewWideProps = NewsArticlesQueryResult[number];
 
 export function NewsArticlePreviewWide({
 	author,

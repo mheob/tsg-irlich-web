@@ -77,10 +77,11 @@ interface DesktopNavProps {
 }
 
 export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps>) {
-	console.log(navigationItems);
-
 	return (
 		<div className="hidden md:block">
+			{/* TODO: remove this after debugging */}
+			<div className="hidden">{JSON.stringify(navigationItems)}</div>
+
 			<NavigationMenu className="z-10">
 				<NavigationMenuList>
 					<NavigationMenuItem>
@@ -141,7 +142,6 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 
 					<NavigationMenuItem>
 						<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
-							{/* cspell:word angebot */}
 							<Link href="/angebot">Angebot</Link>
 						</NavigationMenuLink>
 					</NavigationMenuItem>

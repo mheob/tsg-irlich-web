@@ -7,7 +7,7 @@ interface LatestNewsProps extends ComponentPropsWithoutRef<'section'> {
 	articles: NewsArticlesQueryResult;
 }
 
-export default function LatestNews({ articles, ...props }: Readonly<LatestNewsProps>) {
+export function LatestNews({ articles, ...props }: Readonly<LatestNewsProps>) {
 	return (
 		<section className="mt-8 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-2 md:gap-10" {...props}>
 			<NewsArticlePreview article={articles[0]} />

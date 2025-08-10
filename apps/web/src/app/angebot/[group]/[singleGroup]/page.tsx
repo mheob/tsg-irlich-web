@@ -14,28 +14,26 @@ import { getOGImage } from '@/utils/groups';
 export async function generateMetadata({
 	params,
 }: PageProps<{ singleGroup: string }>): Promise<Metadata> {
-	const { singleGroup } = await params;
+	const { singleGroup: singleGroupParameter } = await params;
 
-	// const article = await client.fetch(newsArticleContentQuery, { groups });
+	const page = await client.fetch(offerGroupsGroupPageQuery);
 
-	// if (!article) return {};
+	if (!page) return {};
 
-	const image = getOGImage(singleGroup);
+	const image = getOGImage(singleGroupParameter);
 
 	return {
-		// description: article.excerpt ?? '',
+		description: page.subtitle ?? '',
 		openGraph: {
-			// description: article.excerpt ?? '',
+			description: page.subtitle ?? '',
 			images: image ?? [],
-			// title: article.title ?? '',
-			title: 'Fussball - TSG Irlich',
+			title: `${page.title ?? ''} — TSG Irlich`,
 		},
-		// title: article.title ?? '',
-		title: 'Fussball - TSG Irlich',
+		title: `${page.title ?? ''} — TSG Irlich`,
 	};
 }
 
-export default async function GroupsPage({
+export default async function SingleGroupsPage({
 	params,
 }: PageProps<{ group: string; singleGroup: string }>) {
 	const { singleGroup } = await params;

@@ -8,7 +8,7 @@ interface CategoriesProps extends ComponentPropsWithoutRef<'section'> {
 	article: NonNullable<NewsArticleContentQueryResult>;
 }
 
-export default function Categories({ article, ...props }: Readonly<CategoriesProps>) {
+export function Categories({ article, ...props }: Readonly<CategoriesProps>) {
 	return (
 		<section className="mt-10" {...props}>
 			<h2 className="text-2xl font-bold uppercase">Kategorien</h2>

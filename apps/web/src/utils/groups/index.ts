@@ -108,3 +108,7 @@ export function getGroupImage(group: string, path = ''): GroupSection['image'] {
 	const groupSection = groupSections.find(section => section.slug === `${path}${group}`);
 	return groupSection?.image ?? fallbackImage;
 }
+
+export function getCurrentDepartment(group: string): GroupSection | undefined {
+	return groupSections.find(g => g.slug === `/angebot/${group}`);
+}

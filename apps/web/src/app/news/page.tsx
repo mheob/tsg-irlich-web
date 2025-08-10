@@ -12,8 +12,8 @@ import {
 import type { PageProps } from '@/types/common';
 
 import newsOverviewImage from './_assets/news-overview.webp';
-import LatestNews from './_sections/latest-news';
-import LatestNewsPagination from './_sections/latest-news-pagination';
+import { LatestNews } from './_sections/latest-news';
+import { LatestNewsPagination } from './_sections/latest-news-pagination';
 
 const START_INDEX = 3;
 const ITEMS_PER_PAGE = 6;

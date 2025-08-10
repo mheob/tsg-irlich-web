@@ -11,7 +11,7 @@ interface AuthorProps extends ComponentPropsWithoutRef<'section'> {
 	article: NonNullable<NewsArticleContentQueryResult>;
 }
 
-export default function Author({ article, ...props }: Readonly<AuthorProps>) {
+export function Author({ article, ...props }: Readonly<AuthorProps>) {
 	const authorImageSource = urlForImage(article.author.image, 64);
 
 	return (

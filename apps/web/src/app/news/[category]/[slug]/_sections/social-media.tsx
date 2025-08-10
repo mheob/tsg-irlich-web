@@ -3,7 +3,7 @@ import { client } from '@/lib/sanity/client';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { getSocialMediaIcon } from '@/utils/icon';
 
-export default async function SocialMedia() {
+export async function SocialMedia() {
 	const socialMedia = await client.fetch(socialMediaQuery);
 
 	if (!socialMedia) return null;

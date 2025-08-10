@@ -14,9 +14,9 @@ import {
 import { urlForImage } from '@/lib/sanity/utils';
 import type { PageProps } from '@/types/common';
 
-import Author from './_sections/author';
-import Categories from './_sections/categories';
-import SocialMedia from './_sections/social-media';
+import { Author } from './_sections/author';
+import { Categories } from './_sections/categories';
+import { SocialMedia } from './_sections/social-media';
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
 	const { slug } = await params;
