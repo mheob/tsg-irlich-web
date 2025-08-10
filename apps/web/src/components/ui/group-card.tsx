@@ -5,13 +5,22 @@ import Link from 'next/link';
 import { ArrowElement } from '@/components/ui/arrow-button';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { Groups as GroupsType } from '@/types/sanity.types';
-import type { GroupSection } from '@/utils/groups';
+import { getGroupImage, type GroupSection } from '@/utils/groups';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
-type GroupCardProps = GroupsType['groups'][number] & { currentDepartment?: GroupSection };
+type Group = GroupsType['groups'][number];
 
-export default function GroupCard({
+interface GroupCardProps {
+	currentDepartment?: GroupSection;
+	featuredImage?: Group['featuredImage'];
+	icon: Group['icon'];
+	overviewTitle?: Group['overviewTitle'];
+	slug: Group['slug'];
+	title: Group['title'];
+}
+
+export function GroupCard({
 	currentDepartment,
 	featuredImage,
 	icon,
@@ -22,18 +31,16 @@ export default function GroupCard({
 	return (
 		<article className="relative aspect-video shadow-lg transition-transform duration-200 hover:scale-105">
 			<div className="absolute inset-0 z-[-1] rounded-xl bg-black/30" />
-			{featuredImage && (
-				<Image
-					alt={title}
-					className="absolute inset-0 z-[-2] rounded-xl"
-					src={urlForImage(featuredImage, 270, 480) ?? ''}
-					fill
-				/>
-			)}
+			<Image
+				alt={title}
+				className="absolute inset-0 z-[-2] rounded-xl"
+				src={urlForImage(featuredImage, 270, 480) ?? getGroupImage(slug).src}
+				fill
+			/>
 
 			<Link
 				aria-label={`Mehr über "${title}" erfahren`}
-				href={`/angebot/${currentDepartment ? currentDepartment.slug : ''}/${slug}`}
+				href={currentDepartment ? `${currentDepartment.slug}/${slug}` : slug}
 			>
 				<div className="flex h-full flex-row items-end justify-between p-6">
 					<div className="flex flex-col justify-end">

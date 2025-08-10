@@ -1,44 +1,48 @@
 import type { SVGProps } from 'react';
 
 import { cn } from '../utils';
-import type { DosbIconName } from './dosb.types';
+import { DOSB_ICONS, type DosbIconName } from './dosb.types';
 
 interface DOSBProps extends SVGProps<SVGSVGElement> {
 	icon: DosbIconName;
 }
 
 export function DOSBIcon({ className, icon, ...props }: Readonly<DOSBProps>) {
-	return (
-		<svg
-			className={cn('h-12 w-auto text-current md:h-16', className)}
-			clipRule="evenodd"
-			fillRule="evenodd"
-			strokeLinejoin="round"
-			strokeMiterlimit="2"
-			viewBox="0 0 592 592"
-			xmlns="http://www.w3.org/2000/svg"
-			xmlSpace="preserve"
-			{...props}
-		>
-			{icon === 'Badminton' && <Badminton />}
-			{icon === 'Bodenturnen' && <Bodenturnen />}
-			{icon === 'Cheerleading' && <Cheerleading />}
-			{icon === 'Fitness' && <Fitness />}
-			{icon === 'Fussball' && <Fussball />}
-			{icon === 'Gymnastik' && <Gymnastik />}
-			{icon === 'Jujutsu' && <Jujutsu />}
-			{icon === 'Pilates' && <Pilates />}
-			{icon === 'RopeSkipping' && <RopeSkipping />}
-			{icon === 'SportInGebaeuden' && <SportInGebaeuden />}
-			{icon === 'Sportakrobatik' && <Sportakrobatik />}
-			{icon === 'StepAerobic' && <StepAerobic />}
-			{icon === 'Taekwondo' && <Taekwondo />}
-			{icon === 'Tanzen' && <Tanzen />}
-			{icon === 'Turnen' && <Turnen />}
-			{icon === 'Wandern' && <Wandern />}
-			{icon === 'Yoga' && <Yoga />}
-		</svg>
-	);
+	if (new Set(DOSB_ICONS).has(icon)) {
+		return (
+			<svg
+				className={cn('h-12 w-auto text-current md:h-16', className)}
+				clipRule="evenodd"
+				fillRule="evenodd"
+				strokeLinejoin="round"
+				strokeMiterlimit="2"
+				viewBox="0 0 592 592"
+				xmlns="http://www.w3.org/2000/svg"
+				xmlSpace="preserve"
+				{...props}
+			>
+				{icon === 'Badminton' && <Badminton />}
+				{icon === 'Bodenturnen' && <Bodenturnen />}
+				{icon === 'Cheerleading' && <Cheerleading />}
+				{icon === 'Fitness' && <Fitness />}
+				{icon === 'Fussball' && <Fussball />}
+				{icon === 'Gymnastik' && <Gymnastik />}
+				{icon === 'Jujutsu' && <Jujutsu />}
+				{icon === 'Pilates' && <Pilates />}
+				{icon === 'RopeSkipping' && <RopeSkipping />}
+				{icon === 'SportInGebaeuden' && <SportInGebaeuden />}
+				{icon === 'Sportakrobatik' && <Sportakrobatik />}
+				{icon === 'StepAerobic' && <StepAerobic />}
+				{icon === 'Taekwondo' && <Taekwondo />}
+				{icon === 'Tanzen' && <Tanzen />}
+				{icon === 'Turnen' && <Turnen />}
+				{icon === 'Wandern' && <Wandern />}
+				{icon === 'Yoga' && <Yoga />}
+			</svg>
+		);
+	}
+
+	return <div className={cn('h-12 w-auto text-current md:h-16', className)}>{icon}</div>;
 }
 
 function Badminton() {

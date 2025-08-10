@@ -1,4 +1,3 @@
-// cspell:word angebot
 import type { Metadata } from 'next';
 
 import { ContactPersons } from '@/components/section/contact-persons';
@@ -14,40 +13,38 @@ import {
 } from '@/lib/sanity/queries/pages/offer-groups';
 import type { PageProps } from '@/types/common';
 import type { Groups as GroupsType } from '@/types/sanity.types';
-import { getGroupImage, getOGImage, groupSections } from '@/utils/groups';
+import { getCurrentDepartment, getGroupImage, getOGImage } from '@/utils/groups';
 
-import Groups from './_sections/groups';
+import { Groups } from './_sections/groups';
 
 export async function generateMetadata({
 	params,
 }: PageProps<{ group: string }>): Promise<Metadata> {
-	const { group } = await params;
+	const { group: groupParameter } = await params;
 
-	// const article = await client.fetch(newsArticleContentQuery, { groups });
+	const currentDepartment = getCurrentDepartment(groupParameter);
 
-	// if (!article) return {};
+	const page = await client.fetch(offerGroupsPageQuery);
 
-	const image = getOGImage(group);
+	if (!page) return {};
+
+	const image = getOGImage(groupParameter);
 
 	return {
-		// description: article.excerpt ?? '',
+		description: page.subtitle ?? '',
 		openGraph: {
-			// description: article.excerpt ?? '',
+			description: page.subtitle ?? '',
 			images: image ?? [],
-			// title: article.title ?? '',
-			title: 'Fussball - TSG Irlich',
+			title: `${currentDepartment?.title ?? ''} — TSG Irlich`,
 		},
-		// title: article.title ?? '',
-		title: 'Fussball - TSG Irlich',
+		title: `${currentDepartment?.title ?? ''} — TSG Irlich`,
 	};
 }
 
 export default async function GroupsPage({ params }: PageProps<{ group: string }>) {
 	const { group } = await params;
 
-	console.log(group);
-
-	const currentDepartment = groupSections.find(g => g.slug === `/angebot/${group}`);
+	const currentDepartment = getCurrentDepartment(group);
 
 	const [page, groups, offerPersons] = await Promise.all([
 		client.fetch(offerGroupsPageQuery),

@@ -8,7 +8,7 @@ interface LatestNewsPaginationProps {
 	hasNextPage?: boolean;
 }
 
-export default function LatestNewsPagination({
+export function LatestNewsPagination({
 	articles,
 	currentPage,
 	hasNextPage = false,
