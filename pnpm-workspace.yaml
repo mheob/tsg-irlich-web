@@ -30,7 +30,7 @@ catalog:
   "@radix-ui/react-select": ^2.2.5
   "@radix-ui/react-separator": ^1.1.7
   "@radix-ui/react-slot": ^1.2.3
-  "@sanity/assist": ^4.4.7
+  "@sanity/assist": ^5.0.0
   "@sanity/client": ^7.8.2
   "@sanity/image-url": ^1.1.0
   "@sanity/locale-de-de": ^1.1.24
