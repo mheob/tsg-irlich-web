@@ -23,7 +23,7 @@ function getImageSources(images: GroupDance['images']): [GroupDance['images'], s
 }
 
 interface MainProps {
-	description: SimpleBlockContent | string;
+	description: SimpleBlockContent;
 	gallery: GroupDance['images'];
 	title: string;
 }
@@ -33,19 +33,10 @@ export function Main({ description, gallery, title }: Readonly<MainProps>) {
 	const imagesCount = images?.length ?? 0;
 
 	return (
-		<section className={`${styles.bg} bg-background-low-contrast relative z-0`}>
+		<section className={`${styles.bg} relative z-0`}>
 			<div className="container mx-auto px-5 py-10 md:py-32">
-				<SectionHeader
-					className={`${styles.description} mb-10`}
-					title={title}
-					isCentered
-					isCenteredOnDesktop
-				>
-					{typeof description === 'string' ? (
-						description
-					) : (
-						<PortableText value={description.text as PortableTextBlock[]} />
-					)}
+				<SectionHeader className="mb-10" title={title} isCentered isCenteredOnDesktop>
+					<PortableText value={description.text as PortableTextBlock[]} />
 				</SectionHeader>
 
 				{images && imagesCount === 1 && (

@@ -12,8 +12,8 @@ export const offerGroupsGroupPageQuery = defineQuery(`*[_type == 'singleGroupPag
 /**
  * Query to get all groups for a given group
  *
- * @param groupType - The type of group to get the groups for
- * @param slug - The slug of the group to get the groups for
+ * @param groupType - The type of the group (e.g., 'group.taekwondo')
+ * @param slug - The slug of the group to fetch
  * @returns An array of groups
  */
 export const offerGroupsGroupPageGroupsQuery = defineQuery(`
@@ -22,6 +22,13 @@ export const offerGroupsGroupPageGroupsQuery = defineQuery(`
 		${featuredImage},
 		images,
 		title,
+		training {
+			trainingDescription,
+			trainingTimes[] {
+				...,
+				venue->
+			}
+		}
 	}
 `);
 
@@ -36,6 +43,7 @@ export const offerGroupsGroupPageContactPersonsQuery = defineQuery(`
 		_type == 'person' &&
 		defined(affiliations[team->slug.current == $slug][0])
 	]|order(lastName asc) {
+		_id,
 		firstName,
 		lastName,
 		phone,

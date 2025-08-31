@@ -119,12 +119,25 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 			}),
 
 			defineField({
-				description: 'Die Trainingszeiten und -orte der Gruppe / Mannschaft.',
-				name: 'trainingTimes',
-				of: [{ type: 'trainingTime' }],
+				description: 'Beschreibung zu den Trainingszeiten und -orten.',
+				name: 'training',
 				title: 'Trainingszeiten und -orte',
-				type: 'array',
+				type: 'object',
+				fields: [
+					defineField({
+						name: 'trainingDescription',
+						title: 'Beschreibung zu den Trainingszeiten und -orten',
+						type: 'simpleBlockContent',
+					}),
+					defineField({
+						name: 'trainingTimes',
+						of: [{ type: 'trainingTime' }],
+						title: 'Trainingszeiten und -orte',
+						type: 'array',
+					}),
+				],
 				hidden: !isSportGroup,
+				validation: Rule => [Rule.required().error('Trainingszeiten und -orte sind erforderlich')],
 			}),
 
 			defineField({

@@ -66,3 +66,9 @@ export function getDefaultPageSectionFieldsWithGroup(
 ): ReturnType<typeof defineField>[] {
 	return defaultPageSectionFields.map(field => ({ ...field, group }));
 }
+
+export function removeGroupFromField(
+	field: ReturnType<typeof defineField>,
+): ReturnType<typeof defineField> {
+	return { ...field, group: undefined };
+}

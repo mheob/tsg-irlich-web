@@ -11,9 +11,11 @@ import {
 } from '@/lib/sanity/queries/pages/offer-groups-group';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { PageProps } from '@/types/common';
+import type { SimpleBlockContent } from '@/types/sanity.types.generated';
 import { getCurrentDepartment, getOGImage } from '@/utils/groups';
 
 import { Main } from './_sections/main';
+import { Training } from './_sections/training';
 
 export async function generateMetadata({
 	params,
@@ -69,10 +71,11 @@ export default async function SingleGroupsPage({
 				title={page.title}
 			/>
 			<Main
-				description={groupData.description ?? ''}
+				description={(groupData.description as SimpleBlockContent) ?? ''}
 				gallery={groupData.images ?? []}
 				title={groupData.title ?? ''}
 			/>
+			<Training title={page.content.trainingSection.title ?? ''} training={groupData.training} />
 			<ContactPersons {...page.content.contactPersonsSection} contactPersons={coaches} />
 			<Newsletter />
 		</>

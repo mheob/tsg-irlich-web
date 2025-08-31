@@ -5,8 +5,9 @@ import { content, general, meta } from '@/shared/field-groups';
 import { defaultHeroFields } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
-import { contactPersons } from './_groups';
+import { contactPersons, trainings } from './_groups';
 import { contactPersonsField } from './contact-persons';
+import { trainingsField } from './training';
 
 const singleGroupPage = defineType({
 	title: 'Einzel-Gruppe',
@@ -30,8 +31,8 @@ const singleGroupPage = defineType({
 			type: 'object',
 			icon: RiLinksLine,
 			group: 'content',
-			groups: [contactPersons],
-			fields: [contactPersonsField],
+			groups: [contactPersons, trainings],
+			fields: [contactPersonsField, trainingsField],
 			validation: Rule => Rule.required(),
 		}),
 	],

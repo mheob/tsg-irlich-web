@@ -1,15 +1,4 @@
-.description > p {
-	margin-inline: auto;
-	margin-top: calc(var(--spacing) * 6);
-	max-width: var(--container-7xl);
-}
-
 @media (min-width: 48rem) {
-	.description > p {
-		font-size: var(--text-xl);
-    line-height: var(--tw-leading, var(--text-xl--line-height));
-	}
-
 	.bg::before {
 		content: '';
 		position: absolute;

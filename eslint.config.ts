@@ -1,4 +1,4 @@
-import { mheob } from '@mheob/eslint-config';
+import { GLOB_MARKDOWN, GLOB_SRC, mheob } from '@mheob/eslint-config';
 import nextPlugin from '@next/eslint-plugin-next';
 
 export default mheob(
@@ -9,7 +9,13 @@ export default mheob(
 		ignores: ['.sonarlint', '**/*.generated.*', 'apps/studio/schema.json'],
 	},
 	{
-		files: ['**/*.ts?(x)'],
+		files: [GLOB_MARKDOWN],
+		rules: {
+			'unicorn/filename-case': 'off',
+		},
+	},
+	{
+		files: [GLOB_SRC],
 		rules: {
 			'react-refresh/only-export-components': [
 				'warn',
