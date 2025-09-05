@@ -1,8 +1,20 @@
-type ExternalLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+import type { ComponentProps } from 'react';
 
-export function ExternalLink({ children, className = '', ...props }: Readonly<ExternalLinkProps>) {
+type ExternalLinkProps = ComponentProps<'a'>;
+
+export function ExternalLink({
+	children,
+	className = '',
+	rel,
+	...props
+}: Readonly<ExternalLinkProps>) {
 	return (
-		<a className={className} rel="noopener noreferrer" target="_blank" {...props}>
+		<a
+			className={className}
+			rel={rel ? `${rel} noopener noreferrer` : 'noopener noreferrer'}
+			target="_blank"
+			{...props}
+		>
 			{children}
 		</a>
 	);

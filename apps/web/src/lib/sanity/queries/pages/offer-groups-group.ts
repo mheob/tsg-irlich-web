@@ -10,11 +10,11 @@ import { featuredImage } from '@/lib/sanity/queries';
 export const offerGroupsGroupPageQuery = defineQuery(`*[_type == 'singleGroupPage'][0]`);
 
 /**
- * Query to get all groups for a given group
+ * Query to get a single group document by type and slug
  *
  * @param groupType - The type of the group (e.g., 'group.taekwondo')
  * @param slug - The slug of the group to fetch
- * @returns An array of groups
+ * @returns A single group document
  */
 export const offerGroupsGroupPageGroupsQuery = defineQuery(`
 	*[_type == $groupType && slug.current == $slug][0] {

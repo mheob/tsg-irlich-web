@@ -46,6 +46,12 @@ export default async function SingleGroupsPage({
 
 	const currentDepartment = getCurrentDepartment(group);
 
+	if (!currentDepartment) {
+		const { notFound } = await import('next/navigation');
+		notFound();
+		return null;
+	}
+
 	const [page, groupData, coaches] = await Promise.all([
 		client.fetch(offerGroupsGroupPageQuery),
 		client.fetch(offerGroupsGroupPageGroupsQuery, {
@@ -71,7 +77,10 @@ export default async function SingleGroupsPage({
 				title={page.title}
 			/>
 			<Main
-				description={(groupData.description as SimpleBlockContent) ?? ''}
+				description={
+					(groupData.description as SimpleBlockContent) ??
+					({ text: [] } as unknown as SimpleBlockContent)
+				}
 				gallery={groupData.images ?? []}
 				title={groupData.title ?? ''}
 			/>

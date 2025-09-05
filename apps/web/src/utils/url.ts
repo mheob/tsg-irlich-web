@@ -19,6 +19,8 @@ export function printGoogleMapsLink({
 	street,
 	zipCode,
 }: NonNullable<TrainingTimeSection['venue']['location']>): string {
-	const address = `${name}, ${street} ${houseNumber}, ${zipCode} ${city}`;
+	const lastLine = [zipCode, city].filter(Boolean).join(' ');
+	const parts = [`${name}`, `${street} ${houseNumber}`, lastLine].filter(Boolean);
+	const address = parts.join(', ');
 	return `${GOOGLE_MAPS_URL}${encodeURIComponent(address)}`;
 }

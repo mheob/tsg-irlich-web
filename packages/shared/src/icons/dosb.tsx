@@ -1,14 +1,14 @@
 import type { SVGProps } from 'react';
 
 import { cn } from '../utils';
-import { DOSB_ICONS, type DosbIconName } from './dosb.types';
+import { DOSB_ICONS_SET, type DosbIconName } from './dosb.types';
 
 interface DOSBProps extends SVGProps<SVGSVGElement> {
 	icon: DosbIconName;
 }
 
 export function DOSBIcon({ className, icon, ...props }: Readonly<DOSBProps>) {
-	if (new Set(DOSB_ICONS).has(icon)) {
+	if (DOSB_ICONS_SET.has(icon)) {
 		return (
 			<svg
 				className={cn('h-12 w-auto text-current md:h-16', className)}

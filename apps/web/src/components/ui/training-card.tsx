@@ -33,7 +33,7 @@ export function TrainingCard({ training }: Readonly<TrainingCardProps>) {
 	const weekdayLabel = WEEKDAY_LABELS[training.weekday];
 	const seasonLabel = SEASON_LABELS[training.season];
 
-	if (!training.venue.location) return null;
+	if (!training.venue?.location) return null;
 
 	return (
 		<Card className="relative w-full max-w-xl overflow-hidden">
@@ -82,7 +82,7 @@ export function TrainingCard({ training }: Readonly<TrainingCardProps>) {
 
 				<CardDescription className="mt-10 text-sm">
 					{training.note}
-					<Button title="Google Maps wird in einem neuem Tab geöffnet" variant="secondary" asChild>
+					<Button title="Google Maps wird in einem neuen Tab geöffnet" variant="secondary" asChild>
 						<ExternalLink href={printGoogleMapsLink(training.venue.location)}>
 							Route auf Google Maps berechnen
 						</ExternalLink>

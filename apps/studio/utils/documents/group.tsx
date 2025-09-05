@@ -137,7 +137,9 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 					}),
 				],
 				hidden: !isSportGroup,
-				validation: Rule => [Rule.required().error('Trainingszeiten und -orte sind erforderlich')],
+				validation: isSportGroup
+					? Rule => [Rule.required().error('Trainingszeiten und -orte sind erforderlich')]
+					: undefined,
 			}),
 
 			defineField({

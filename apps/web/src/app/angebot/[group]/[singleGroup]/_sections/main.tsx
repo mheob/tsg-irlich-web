@@ -8,18 +8,17 @@ import type { GroupDance, SimpleBlockContent } from '@/types/sanity.types';
 
 import styles from './main.module.css';
 
-function getImageSources(images: GroupDance['images']): [GroupDance['images'], string[]] {
-	if (!images || images.length === 0) return [images, []];
-
-	const imageSources: string[] = [];
-
+function getImageItems(
+	images: GroupDance['images'],
+): Array<{ image: NonNullable<GroupDance['images']>[number]; src: string }> {
+	if (!images || images.length === 0) return [];
+	const items: Array<{ image: NonNullable<GroupDance['images']>[number]; src: string }> = [];
 	for (const image of images) {
-		const img = urlForImage(image, 600, 1920);
-		if (!img) continue;
-		imageSources.push(img);
+		const source = urlForImage(image, 600, 1920);
+		if (!source) continue;
+		items.push({ image, src: source });
 	}
-
-	return [images, imageSources];
+	return items;
 }
 
 interface MainProps {
@@ -29,8 +28,8 @@ interface MainProps {
 }
 
 export function Main({ description, gallery, title }: Readonly<MainProps>) {
-	const [images, imageSources] = getImageSources(gallery);
-	const imagesCount = images?.length ?? 0;
+	const items = getImageItems(gallery);
+	const imagesCount = items.length;
 
 	return (
 		<section className={`${styles.bg} relative z-0`}>
@@ -39,25 +38,29 @@ export function Main({ description, gallery, title }: Readonly<MainProps>) {
 					<PortableText value={description.text as PortableTextBlock[]} />
 				</SectionHeader>
 
-				{images && imagesCount === 1 && (
+				{imagesCount === 1 && (
 					<div className="relative aspect-video rounded-xl">
 						<Image
-							alt={images[0].alt}
+							alt={items[0].image.alt}
 							className="aspect-video rounded-xl"
-							src={imageSources[0]}
+							sizes="100vw"
+							src={items[0].src}
 							fill
+							priority
 						/>
 					</div>
 				)}
 
-				{images && imagesCount === 2 && (
+				{imagesCount === 2 && (
 					<div className="my-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-10">
-						{images.map((image, index) => (
+						{items.map(({ image, src }) => (
 							<div className="relative aspect-video rounded-xl" key={image._key}>
 								<Image
 									alt={image.alt}
 									className="aspect-video rounded-xl"
-									src={imageSources[index]}
+									loading="lazy"
+									sizes="(min-width: 768px) 50vw, 100vw"
+									src={src}
 									fill
 								/>
 							</div>
@@ -65,23 +68,27 @@ export function Main({ description, gallery, title }: Readonly<MainProps>) {
 					</div>
 				)}
 
-				{images && imagesCount === 3 && (
+				{imagesCount === 3 && (
 					<div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:grid-rows-2 md:gap-10">
 						<div className="relative col-span-2 row-span-2 aspect-video rounded-xl">
 							<Image
-								alt={images[0].alt}
+								alt={items[0].image.alt}
 								className="col-span-2 row-span-2 aspect-video rounded-xl object-cover"
-								src={imageSources[0]}
+								loading="lazy"
+								sizes="(min-width: 1536px) 66vw, (min-width: 1024px) 66vw, 100vw"
+								src={items[0].src}
 								fill
 							/>
 						</div>
 
-						{images.slice(-2).map((image, index) => (
+						{items.slice(1).map(({ image, src }) => (
 							<div className="relative size-full rounded-xl" key={image._key}>
 								<Image
 									alt={image.alt}
 									className="size-full rounded-xl object-cover"
-									src={imageSources[index + 1]}
+									loading="lazy"
+									sizes="(min-width: 1536px) 33vw, (min-width: 1024px) 33vw, 100vw"
+									src={src}
 									fill
 								/>
 							</div>
