@@ -68,7 +68,7 @@ const trainingTimeField = defineField({
 
 		defineField({
 			title: 'Trainingsort',
-			name: 'location',
+			name: 'venue',
 			type: 'reference',
 			to: [{ type: 'venue' }],
 			validation: Rule => [Rule.required().error('Trainingsort ist erforderlich')],
@@ -85,12 +85,12 @@ const trainingTimeField = defineField({
 		}),
 	],
 	preview: {
-		prepare: ({ weekday, endTime, location, note, startTime, season }) => ({
-			title: `${season ?? '_'} | ${weekday ?? '_'}, ${startTime ?? '_'} - ${endTime ?? '_'} | ${location ?? '_'} | ${note ?? '_'}`,
+		prepare: ({ weekday, endTime, venue, note, startTime, season }) => ({
+			title: `${season ?? '_'} | ${weekday ?? '_'}, ${startTime ?? '_'} - ${endTime ?? '_'} | ${venue ?? '_'} | ${note ?? '_'}`,
 		}),
 		select: {
 			endTime: 'endTime',
-			location: 'location.title',
+			venue: 'venue.title',
 			note: 'note',
 			season: 'season',
 			startTime: 'startTime',

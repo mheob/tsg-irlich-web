@@ -6,54 +6,85 @@ import { Newsletter } from '@/components/section/newsletter';
 import { client } from '@/lib/sanity/client';
 import {
 	offerGroupsGroupPageContactPersonsQuery,
+	offerGroupsGroupPageGroupsQuery,
 	offerGroupsGroupPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups-group';
+import { urlForImage } from '@/lib/sanity/utils';
 import type { PageProps } from '@/types/common';
-import { getOGImage } from '@/utils/groups';
+import type { SimpleBlockContent } from '@/types/sanity.types.generated';
+import { getCurrentDepartment, getOGImage } from '@/utils/groups';
+
+import { Main } from './_sections/main';
+import { Training } from './_sections/training';
 
 export async function generateMetadata({
 	params,
 }: PageProps<{ singleGroup: string }>): Promise<Metadata> {
-	const { singleGroup } = await params;
+	const { singleGroup: singleGroupParameter } = await params;
 
-	// const article = await client.fetch(newsArticleContentQuery, { groups });
+	const page = await client.fetch(offerGroupsGroupPageQuery);
 
-	// if (!article) return {};
+	if (!page) return {};
 
-	const image = getOGImage(singleGroup);
+	const image = getOGImage(singleGroupParameter);
 
 	return {
-		// description: article.excerpt ?? '',
+		description: page.subtitle ?? '',
 		openGraph: {
-			// description: article.excerpt ?? '',
+			description: page.subtitle ?? '',
 			images: image ?? [],
-			// title: article.title ?? '',
-			title: 'Fussball - TSG Irlich',
+			title: `${page.title ?? ''} — TSG Irlich`,
 		},
-		// title: article.title ?? '',
-		title: 'Fussball - TSG Irlich',
+		title: `${page.title ?? ''} — TSG Irlich`,
 	};
 }
 
-export default async function GroupsPage({
+export default async function SingleGroupsPage({
 	params,
 }: PageProps<{ group: string; singleGroup: string }>) {
-	const { singleGroup } = await params;
+	const { group, singleGroup } = await params;
 
-	const [page, coaches] = await Promise.all([
-		client.fetch(offerGroupsGroupPageQuery),
-		client.fetch(offerGroupsGroupPageContactPersonsQuery, { slug: singleGroup }),
-	]);
+	const currentDepartment = getCurrentDepartment(group);
 
-	if (!page) {
+	if (!currentDepartment) {
 		const { notFound } = await import('next/navigation');
 		notFound();
 		return null;
 	}
 
+	const [page, groupData, coaches] = await Promise.all([
+		client.fetch(offerGroupsGroupPageQuery),
+		client.fetch(offerGroupsGroupPageGroupsQuery, {
+			groupType: currentDepartment?._type,
+			slug: singleGroup,
+		}),
+		client.fetch(offerGroupsGroupPageContactPersonsQuery, { slug: singleGroup }),
+	]);
+
+	if (!page || !groupData) {
+		const { notFound } = await import('next/navigation');
+		notFound();
+		return null;
+	}
+
+	const imageSource = urlForImage(groupData.featuredImage, 600, 1920);
+
 	return (
 		<>
-			<Hero subTitle={page.subtitle} title={page.title} />
+			<Hero
+				image={{ alt: groupData.featuredImage?.alt ?? '', src: imageSource ?? '' }}
+				subTitle={page.subtitle}
+				title={page.title}
+			/>
+			<Main
+				description={
+					(groupData.description as SimpleBlockContent) ??
+					({ text: [] } as unknown as SimpleBlockContent)
+				}
+				gallery={groupData.images ?? []}
+				title={groupData.title ?? ''}
+			/>
+			<Training title={page.content.trainingSection.title ?? ''} training={groupData.training} />
 			<ContactPersons {...page.content.contactPersonsSection} contactPersons={coaches} />
 			<Newsletter />
 		</>

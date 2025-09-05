@@ -94,6 +94,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				},
 				title: 'Icon',
 				type: 'string',
+				hidden: !isSportGroup,
 				validation: Rule => [Rule.required().error('Icon ist erforderlich')],
 			}),
 
@@ -103,6 +104,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				name: 'featuredImage',
 				title: 'Hintergrundbild',
 				type: 'extendedImage',
+				hidden: !isSportGroup,
 				validation: Rule => [Rule.required().error('Bild ist erforderlich')],
 			}),
 
@@ -112,19 +114,32 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				of: [{ type: 'extendedImage' }],
 				title: 'Bildergalerie',
 				type: 'array',
-				validation: Rule => [
-					Rule.min(1).error('Es muss mindestens ein Bild ausgewählt werden.'),
-					Rule.max(3).error('Es dürfen maximal drei Bilder ausgewählt werden.'),
-				],
+				hidden: !isSportGroup,
+				validation: Rule => [Rule.max(3).error('Es dürfen maximal drei Bilder ausgewählt werden.')],
 			}),
 
 			defineField({
-				description: 'Die Trainingszeiten und -orte der Gruppe / Mannschaft.',
-				name: 'trainingTimes',
-				of: [{ type: 'trainingTime' }],
+				description: 'Beschreibung zu den Trainingszeiten und -orten.',
+				name: 'training',
 				title: 'Trainingszeiten und -orte',
-				type: 'array',
+				type: 'object',
+				fields: [
+					defineField({
+						name: 'trainingDescription',
+						title: 'Beschreibung zu den Trainingszeiten und -orten',
+						type: 'simpleBlockContent',
+					}),
+					defineField({
+						name: 'trainingTimes',
+						of: [{ type: 'trainingTime' }],
+						title: 'Trainingszeiten und -orte',
+						type: 'array',
+					}),
+				],
 				hidden: !isSportGroup,
+				validation: isSportGroup
+					? Rule => [Rule.required().error('Trainingszeiten und -orte sind erforderlich')]
+					: undefined,
 			}),
 
 			defineField({
@@ -134,6 +149,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'Ist Sportgruppe',
 				type: 'boolean',
 				hidden: true,
+				validation: Rule => [Rule.required().error('"Ist Sportgruppe" ist erforderlich')],
 			}),
 		],
 		preview: {
@@ -168,5 +184,6 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'nach Sortierreihenfolge - absteigend',
 			},
 		],
+		validation: Rule => [Rule.required().error('Gruppe ist erforderlich')],
 	});
 }

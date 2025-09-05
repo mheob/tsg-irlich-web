@@ -40,9 +40,9 @@ export const projectId = assertValue(
 
 /**
  * The Sanity Studio API version to use.
- * This is loaded from the `SANITY_STUDIO_VERSION` environment variable, or defaults to '2024-08-22'
+ * This is loaded from the `SANITY_STUDIO_VERSION` environment variable, or defaults to '2025-09-05'
  * if the environment variable is missing.
  *
  * @see https://www.sanity.io/docs/api-versioning for how versioning works
  */
-export const apiVersion = process.env.SANITY_STUDIO_VERSION ?? '2024-08-22';
+export const apiVersion = process.env.SANITY_STUDIO_VERSION ?? '2025-09-05';

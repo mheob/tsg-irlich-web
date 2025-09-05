@@ -1,5 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
+import { featuredImage } from '@/lib/sanity/queries';
+
 /**
  * Query to get the groups page
  *
@@ -8,18 +10,25 @@ import { defineQuery } from 'next-sanity';
 export const offerGroupsGroupPageQuery = defineQuery(`*[_type == 'singleGroupPage'][0]`);
 
 /**
- * Query to get all groups for a given group
+ * Query to get a single group document by type and slug
  *
- * @param groupType - The type of group to get the groups for
- * @returns An array of groups
+ * @param groupType - The type of the group (e.g., 'group.taekwondo')
+ * @param slug - The slug of the group to fetch
+ * @returns A single group document
  */
 export const offerGroupsGroupPageGroupsQuery = defineQuery(`
-	*[_type == $groupType][] | order(sortOrder asc) {
-		icon,
-		image,
-		overviewTitle,
-		'slug': slug.current,
+	*[_type == $groupType && slug.current == $slug][0] {
+		description,
+		${featuredImage},
+		images,
 		title,
+		training {
+			trainingDescription,
+			trainingTimes[] {
+				...,
+				venue->
+			}
+		}
 	}
 `);
 
@@ -34,6 +43,7 @@ export const offerGroupsGroupPageContactPersonsQuery = defineQuery(`
 		_type == 'person' &&
 		defined(affiliations[team->slug.current == $slug][0])
 	]|order(lastName asc) {
+		_id,
 		firstName,
 		lastName,
 		phone,

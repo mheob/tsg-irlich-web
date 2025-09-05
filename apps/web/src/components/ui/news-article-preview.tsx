@@ -9,7 +9,7 @@ import { getLocaleDate } from '@/utils/time';
 import { badgeVariants } from './badge';
 
 interface NewsArticlePreviewProps {
-	article: NewsArticlesQueryResult[0];
+	article: NewsArticlesQueryResult[number];
 	columns?: 1 | 2;
 }
 

@@ -28,7 +28,10 @@ export function SectionHeader({
 		<header
 			className={cn(
 				isCentered ? 'text-center' : '',
-				isCenteredOnDesktop ? 'md:text-center' : 'md:text-start',
+				isCenteredOnDesktop
+					? 'md:text-center [&_p]:md:mx-auto'
+					: 'md:text-start [&_p]:md:text-start',
+				'[&_p]:max-w-7xl [&_p]:md:mt-6 md:[&_p]:text-xl',
 				className,
 			)}
 		>

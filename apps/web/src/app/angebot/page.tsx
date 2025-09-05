@@ -8,7 +8,7 @@ import { client } from '@/lib/sanity/client';
 import { offerPageQuery } from '@/lib/sanity/queries/pages/offer';
 import { fallbackImage, getOGImage } from '@/utils/groups';
 
-import Groups from './_sections/groups';
+import { Groups } from './_sections/groups';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch(offerPageQuery);

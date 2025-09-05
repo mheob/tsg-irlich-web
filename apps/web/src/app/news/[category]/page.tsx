@@ -15,7 +15,7 @@ import { urlForImage } from '@/lib/sanity/utils';
 import type { PageProps } from '@/types/common';
 
 import newsOverviewImage from '../_assets/news-overview.webp';
-import LatestNewsPagination from '../_sections/latest-news-pagination';
+import { LatestNewsPagination } from '../_sections/latest-news-pagination';
 
 const START_INDEX = 0;
 const ITEMS_PER_PAGE = 9;

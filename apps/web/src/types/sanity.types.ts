@@ -8,6 +8,7 @@ import type {
 } from './sanity.types.generated';
 
 export * from './sanity.types.generated';
+export * from './training-time';
 
 export type ContactPerson =
 	NonNullable<HomePageQueryResult>['content']['contactPersonsSection']['contactPersons'][0];

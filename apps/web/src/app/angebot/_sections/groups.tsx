@@ -1,14 +1,13 @@
+import { GroupCard } from '@/components/ui/group-card';
 import { SectionHeader } from '@/components/ui/section-header';
 import type { DepartmentsPage } from '@/types/sanity.types';
 import { groupSections } from '@/utils/groups';
-
-import GroupCard from './group-card';
 
 import styles from './groups.module.css';
 
 type GroupsProps = DepartmentsPage['content']['departmentsSection'];
 
-export default function Groups({ intro, subtitle, title }: Readonly<GroupsProps>) {
+export function Groups({ intro, subtitle, title }: Readonly<GroupsProps>) {
 	return (
 		<section className={`${styles.bg} bg-background-low-contrast relative z-0`}>
 			<div className="container mx-auto px-5 py-10 md:py-32">

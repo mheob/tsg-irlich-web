@@ -686,7 +686,7 @@
           },
           "optional": false
         },
-        "location": {
+        "venue": {
           "type": "objectAttribute",
           "value": {
             "type": "object",
@@ -873,6 +873,22 @@
                       "type": "string"
                     },
                     "optional": true
+                  }
+                }
+              },
+              "optional": false
+            },
+            "trainingSection": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "title": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false
                   }
                 }
               },
@@ -5236,34 +5252,51 @@
         },
         "optional": true
       },
-      "trainingTimes": {
+      "training": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
+          "type": "object",
+          "attributes": {
+            "trainingDescription": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "simpleBlockContent"
+              },
+              "optional": true
             },
-            "rest": {
-              "type": "inline",
-              "name": "trainingTime"
+            "trainingTimes": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "rest": {
+                    "type": "inline",
+                    "name": "trainingTime"
+                  }
+                }
+              },
+              "optional": true
             }
           }
         },
-        "optional": true
+        "optional": false
       },
       "isSportGroup": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
         },
-        "optional": true
+        "optional": false
       }
     }
   },
@@ -5603,34 +5636,51 @@
         },
         "optional": true
       },
-      "trainingTimes": {
+      "training": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
+          "type": "object",
+          "attributes": {
+            "trainingDescription": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "simpleBlockContent"
+              },
+              "optional": true
             },
-            "rest": {
-              "type": "inline",
-              "name": "trainingTime"
+            "trainingTimes": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "rest": {
+                    "type": "inline",
+                    "name": "trainingTime"
+                  }
+                }
+              },
+              "optional": true
             }
           }
         },
-        "optional": true
+        "optional": false
       },
       "isSportGroup": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
         },
-        "optional": true
+        "optional": false
       }
     }
   },
@@ -5970,34 +6020,51 @@
         },
         "optional": true
       },
-      "trainingTimes": {
+      "training": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
+          "type": "object",
+          "attributes": {
+            "trainingDescription": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "simpleBlockContent"
+              },
+              "optional": true
             },
-            "rest": {
-              "type": "inline",
-              "name": "trainingTime"
+            "trainingTimes": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "rest": {
+                    "type": "inline",
+                    "name": "trainingTime"
+                  }
+                }
+              },
+              "optional": true
             }
           }
         },
-        "optional": true
+        "optional": false
       },
       "isSportGroup": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
         },
-        "optional": true
+        "optional": false
       }
     }
   },
@@ -6337,34 +6404,51 @@
         },
         "optional": true
       },
-      "trainingTimes": {
+      "training": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
+          "type": "object",
+          "attributes": {
+            "trainingDescription": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "simpleBlockContent"
+              },
+              "optional": true
             },
-            "rest": {
-              "type": "inline",
-              "name": "trainingTime"
+            "trainingTimes": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "rest": {
+                    "type": "inline",
+                    "name": "trainingTime"
+                  }
+                }
+              },
+              "optional": true
             }
           }
         },
-        "optional": true
+        "optional": false
       },
       "isSportGroup": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
         },
-        "optional": true
+        "optional": false
       }
     }
   },
@@ -6704,34 +6788,51 @@
         },
         "optional": true
       },
-      "trainingTimes": {
+      "training": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
+          "type": "object",
+          "attributes": {
+            "trainingDescription": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "simpleBlockContent"
+              },
+              "optional": true
             },
-            "rest": {
-              "type": "inline",
-              "name": "trainingTime"
+            "trainingTimes": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "rest": {
+                    "type": "inline",
+                    "name": "trainingTime"
+                  }
+                }
+              },
+              "optional": true
             }
           }
         },
-        "optional": true
+        "optional": false
       },
       "isSportGroup": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
         },
-        "optional": true
+        "optional": false
       }
     }
   },
@@ -7071,34 +7172,51 @@
         },
         "optional": true
       },
-      "trainingTimes": {
+      "training": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
+          "type": "object",
+          "attributes": {
+            "trainingDescription": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "simpleBlockContent"
+              },
+              "optional": true
             },
-            "rest": {
-              "type": "inline",
-              "name": "trainingTime"
+            "trainingTimes": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "rest": {
+                    "type": "inline",
+                    "name": "trainingTime"
+                  }
+                }
+              },
+              "optional": true
             }
           }
         },
-        "optional": true
+        "optional": false
       },
       "isSportGroup": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
         },
-        "optional": true
+        "optional": false
       }
     }
   },
@@ -7438,34 +7556,51 @@
         },
         "optional": true
       },
-      "trainingTimes": {
+      "training": {
         "type": "objectAttribute",
         "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
+          "type": "object",
+          "attributes": {
+            "trainingDescription": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "simpleBlockContent"
+              },
+              "optional": true
             },
-            "rest": {
-              "type": "inline",
-              "name": "trainingTime"
+            "trainingTimes": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "rest": {
+                    "type": "inline",
+                    "name": "trainingTime"
+                  }
+                }
+              },
+              "optional": true
             }
           }
         },
-        "optional": true
+        "optional": false
       },
       "isSportGroup": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
         },
-        "optional": true
+        "optional": false
       }
     }
   },

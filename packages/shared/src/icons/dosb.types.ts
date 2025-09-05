@@ -18,3 +18,5 @@ export const DOSB_ICONS = [
 	'Yoga',
 ] as const;
 export type DosbIconName = (typeof DOSB_ICONS)[number];
+
+export const DOSB_ICONS_SET = new Set(DOSB_ICONS);

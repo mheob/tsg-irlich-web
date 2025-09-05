@@ -1,15 +1,14 @@
+import { GroupCard } from '@/components/ui/group-card';
 import { SectionHeader } from '@/components/ui/section-header';
 import type { GroupsPage, Groups as GroupsType } from '@/types/sanity.types';
 import type { GroupSection } from '@/utils/groups';
-
-import GroupCard from './group-card';
 
 import styles from './groups.module.css';
 
 type GroupsProps = GroupsPage['content']['groupsSection'] &
 	GroupsType & { currentDepartment?: GroupSection };
 
-export default function Groups({
+export function Groups({
 	currentDepartment,
 	groups,
 	intro,
