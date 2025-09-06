@@ -151,11 +151,25 @@ const person = defineType({
 	],
 
 	preview: {
-		prepare: ({ media, firstName, lastName }) => ({ media, title: `${lastName}, ${firstName}` }),
+		prepare: ({ firstName, lastName, media, team1, team2, team3, team4, team5 }) => {
+			const teamNames = [team1, team2, team3, team4, team5].filter(Boolean);
+			const subtitle = teamNames.length > 0 ? teamNames.join(', ') : '';
+
+			return {
+				media,
+				subtitle,
+				title: `${lastName}, ${firstName}`,
+			};
+		},
 		select: {
-			media: 'image.asset',
+			team1: 'affiliations.0.team.title',
+			team2: 'affiliations.1.team.title',
+			team3: 'affiliations.2.team.title',
+			team4: 'affiliations.3.team.title',
+			team5: 'affiliations.4.team.title',
 			firstName: 'firstName',
 			lastName: 'lastName',
+			media: 'image.asset',
 		},
 	},
 });
