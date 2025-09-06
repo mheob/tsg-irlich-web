@@ -12,7 +12,6 @@ import {
 } from '@/lib/sanity/queries/pages/news-overview-category';
 import { newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
 import { urlForImage } from '@/lib/sanity/utils';
-import type { PageProps } from '@/types/common';
 
 import newsOverviewImage from '../_assets/news-overview.webp';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
@@ -22,15 +21,15 @@ const ITEMS_PER_PAGE = 9;
 
 export async function generateMetadata({
 	params,
-}: PageProps<{ category: string }>): Promise<Metadata> {
+}: Readonly<PageProps<'/news/[category]'>>): Promise<Metadata> {
 	const { category: categoryParameter } = await params;
 
 	const articles = await client.fetch(newsArticlesPaginatedForCategoryQuery, {
 		category: categoryParameter,
 	});
-	const article = articles[0];
 
-	if (!articles) return {};
+	if (!articles?.length) return {};
+	const article = articles[0];
 
 	return {
 		description: article.excerpt ?? '',
@@ -55,7 +54,7 @@ export async function generateMetadata({
 export default async function NewsCategoryPage({
 	params,
 	searchParams,
-}: PageProps<{ category: string }>) {
+}: Readonly<PageProps<'/news/[category]'>>) {
 	const { category: categoryParameter } = await params;
 	const { seite } = await searchParams;
 	const pageString = Array.isArray(seite) ? seite[0] : seite;
