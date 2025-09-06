@@ -43,6 +43,7 @@ export const contactAsField = defineField({
 			{ title: 'per Telefon und WhatsApp', value: 'both' },
 		],
 	},
+	initialValue: ({ parent }) => (parent?.phone ? 'both' : 'email'),
 	hidden: ({ parent }) => !parent?.phone,
 	validation: Rule => [Rule.required().error('Die "Kontakt per"-Auswahl ist erforderlich')],
 });
