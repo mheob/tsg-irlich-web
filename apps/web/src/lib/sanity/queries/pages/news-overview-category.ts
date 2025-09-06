@@ -31,7 +31,6 @@ export const newsOverviewCategoryPageQuery = defineQuery(`
  * @param end - The end index
  * @returns An array of news articles
  */
-
 export const newsArticlesPaginatedForCategoryQuery = defineQuery(`
 	*[_type == 'news.article' && $category in categories[]->slug.current]
 	| order(publishedAt desc) [$start..$end] {

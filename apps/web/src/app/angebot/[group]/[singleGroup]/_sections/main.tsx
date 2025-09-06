@@ -14,7 +14,7 @@ function getImageItems(
 	if (!images || images.length === 0) return [];
 	const items: Array<{ image: NonNullable<GroupDance['images']>[number]; src: string }> = [];
 	for (const image of images) {
-		const source = urlForImage(image, 600, 1920);
+		const source = urlForImage(image, 700, 1244);
 		if (!source) continue;
 		items.push({ image, src: source });
 	}
@@ -34,7 +34,7 @@ export function Main({ description, gallery, title }: Readonly<MainProps>) {
 	return (
 		<section className={`${styles.bg} relative z-0`}>
 			<div className="container mx-auto px-5 py-10 md:py-32">
-				<SectionHeader className="mb-10" title={title} isCentered isCenteredOnDesktop>
+				<SectionHeader className="mb-10" level="h1" title={title} isCentered isCenteredOnDesktop>
 					<PortableText value={description.text as PortableTextBlock[]} />
 				</SectionHeader>
 
@@ -69,25 +69,26 @@ export function Main({ description, gallery, title }: Readonly<MainProps>) {
 				)}
 
 				{imagesCount === 3 && (
-					<div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:grid-rows-2 md:gap-10">
-						<div className="relative col-span-2 row-span-2 aspect-video rounded-xl">
+					<div className="grid grid-cols-1 grid-rows-3 gap-4 sm:grid-cols-2 sm:grid-rows-3 lg:grid-cols-3 lg:grid-rows-2 lg:gap-10">
+						<div className="relative aspect-video rounded-xl sm:col-span-2 sm:row-span-2">
 							<Image
 								alt={items[0].image.alt}
-								className="col-span-2 row-span-2 aspect-video rounded-xl object-cover"
+								className="rounded-xl object-cover"
 								loading="lazy"
-								sizes="(min-width: 1536px) 66vw, (min-width: 1024px) 66vw, 100vw"
 								src={items[0].src}
 								fill
 							/>
 						</div>
 
 						{items.slice(1).map(({ image, src }) => (
-							<div className="relative size-full rounded-xl" key={image._key}>
+							<div
+								className="relative aspect-video rounded-xl lg:aspect-auto lg:size-full"
+								key={image._key}
+							>
 								<Image
 									alt={image.alt}
-									className="size-full rounded-xl object-cover"
+									className="rounded-xl object-cover"
 									loading="lazy"
-									sizes="(min-width: 1536px) 33vw, (min-width: 1024px) 33vw, 100vw"
 									src={src}
 									fill
 								/>

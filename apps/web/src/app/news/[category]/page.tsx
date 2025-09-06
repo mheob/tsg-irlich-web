@@ -19,13 +19,32 @@ import { LatestNewsPagination } from '../_sections/latest-news-pagination';
 const START_INDEX = 0;
 const ITEMS_PER_PAGE = 9;
 
+function getCurrentPage(page?: string | string[]): {
+	currentPage: number;
+	end: number;
+	start: number;
+} {
+	const pageString = Array.isArray(page) ? page[0] : page;
+	const parsed = Number.parseInt(pageString ?? '1', 10);
+	const currentPage = Number.isFinite(parsed) && parsed >= 1 ? Math.floor(parsed) : 1;
+	const start = (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX;
+	const end = start + (ITEMS_PER_PAGE - 1);
+	return { currentPage, end, start };
+}
+
 export async function generateMetadata({
 	params,
+	searchParams,
 }: Readonly<PageProps<'/news/[category]'>>): Promise<Metadata> {
 	const { category: categoryParameter } = await params;
+	const { seite } = await searchParams;
+
+	const { end, start } = getCurrentPage(seite);
 
 	const articles = await client.fetch(newsArticlesPaginatedForCategoryQuery, {
 		category: categoryParameter,
+		end,
+		start,
 	});
 
 	if (!articles?.length) return {};
@@ -57,8 +76,8 @@ export default async function NewsCategoryPage({
 }: Readonly<PageProps<'/news/[category]'>>) {
 	const { category: categoryParameter } = await params;
 	const { seite } = await searchParams;
-	const pageString = Array.isArray(seite) ? seite[0] : seite;
-	const currentPage = Number.parseInt(pageString ?? '1', 10);
+
+	const { currentPage, end, start } = getCurrentPage(seite);
 
 	const [page, totalArticles, category, paginatedArticles] = await Promise.all([
 		client.fetch(newsOverviewCategoryPageQuery),
@@ -66,8 +85,8 @@ export default async function NewsCategoryPage({
 		client.fetch(newsCategoryQuery, { slug: categoryParameter }),
 		client.fetch(newsArticlesPaginatedForCategoryQuery, {
 			category: categoryParameter,
-			end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
-			start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
+			end,
+			start,
 		}),
 	]);
 
