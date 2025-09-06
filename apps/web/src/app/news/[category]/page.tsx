@@ -27,9 +27,9 @@ export async function generateMetadata({
 	const articles = await client.fetch(newsArticlesPaginatedForCategoryQuery, {
 		category: categoryParameter,
 	});
-	const article = articles[0];
 
-	if (!articles) return {};
+	if (!articles?.length) return {};
+	const article = articles[0];
 
 	return {
 		description: article.excerpt ?? '',
