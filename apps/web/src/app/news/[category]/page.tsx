@@ -25,9 +25,10 @@ function getCurrentPage(page?: string | string[]): {
 	start: number;
 } {
 	const pageString = Array.isArray(page) ? page[0] : page;
-	const currentPage = Number.parseInt(pageString ?? '1', 10);
+	const parsed = Number.parseInt(pageString ?? '1', 10);
+	const currentPage = Number.isFinite(parsed) && parsed >= 1 ? Math.floor(parsed) : 1;
 	const start = (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX;
-	const end = (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX;
+	const end = start + (ITEMS_PER_PAGE - 1);
 	return { currentPage, end, start };
 }
 
