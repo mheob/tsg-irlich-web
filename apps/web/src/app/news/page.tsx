@@ -9,7 +9,6 @@ import {
 	newsArticlesQuery,
 	newsArticlesTotalQuery,
 } from '@/lib/sanity/queries/shared/news';
-import type { PageProps } from '@/types/common';
 
 import newsOverviewImage from './_assets/news-overview.webp';
 import { LatestNews } from './_sections/latest-news';
@@ -18,7 +17,7 @@ import { LatestNewsPagination } from './_sections/latest-news-pagination';
 const START_INDEX = 3;
 const ITEMS_PER_PAGE = 6;
 
-export default async function NewsOverviewPage({ searchParams }: PageProps) {
+export default async function NewsOverviewPage({ searchParams }: Readonly<PageProps<'/news'>>) {
 	const { seite } = await searchParams;
 	const pageString = Array.isArray(seite) ? seite[0] : seite;
 	const currentPage = Number.parseInt(pageString ?? '1', 10);

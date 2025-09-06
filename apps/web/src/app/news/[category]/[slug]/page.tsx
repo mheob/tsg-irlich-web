@@ -12,13 +12,14 @@ import {
 	newsArticleHeroQuery,
 } from '@/lib/sanity/queries/pages/news-article';
 import { urlForImage } from '@/lib/sanity/utils';
-import type { PageProps } from '@/types/common';
 
 import { Author } from './_sections/author';
 import { Categories } from './_sections/categories';
 import { SocialMedia } from './_sections/social-media';
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+	params,
+}: Readonly<PageProps<'/news/[category]/[slug]'>>): Promise<Metadata> {
 	const { slug } = await params;
 
 	const article = await client.fetch(newsArticleContentQuery, { slug });
@@ -45,7 +46,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 	};
 }
 
-export default async function NewsArticlePage({ params }: PageProps) {
+export default async function NewsArticlePage({
+	params,
+}: Readonly<PageProps<'/news/[category]/[slug]'>>) {
 	const { slug } = await params;
 
 	const [hero, article] = await Promise.all([
@@ -69,7 +72,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
 				title={hero.title}
 			/>
 
-			<div className="container my-10 divide-y md:my-32 md:flex md:divide-x md:divide-y-0">
+			<div className="container my-10 justify-center divide-y md:my-32 md:flex md:divide-x md:divide-y-0">
 				<article className="prose lg:prose-xl pb-10 md:pr-10">
 					<h1 className="leading-tight! hyphens-auto text-4xl font-bold md:text-6xl">
 						{article.title}

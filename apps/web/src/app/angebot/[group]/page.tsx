@@ -11,7 +11,6 @@ import {
 	offerGroupsPageGroupsQuery,
 	offerGroupsPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups';
-import type { PageProps } from '@/types/common';
 import type { Groups as GroupsType } from '@/types/sanity.types';
 import { getCurrentDepartment, getGroupImage, getOGImage } from '@/utils/groups';
 
@@ -19,7 +18,7 @@ import { Groups } from './_sections/groups';
 
 export async function generateMetadata({
 	params,
-}: PageProps<{ group: string }>): Promise<Metadata> {
+}: PageProps<'/angebot/[group]'>): Promise<Metadata> {
 	const { group: groupParameter } = await params;
 
 	const currentDepartment = getCurrentDepartment(groupParameter);
@@ -41,7 +40,7 @@ export async function generateMetadata({
 	};
 }
 
-export default async function GroupsPage({ params }: PageProps<{ group: string }>) {
+export default async function GroupsPage({ params }: PageProps<'/angebot/[group]'>) {
 	const { group } = await params;
 
 	const currentDepartment = getCurrentDepartment(group);
