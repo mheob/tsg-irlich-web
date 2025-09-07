@@ -134,6 +134,14 @@ const person = defineType({
 								),
 							],
 						}),
+
+						defineField({
+							description:
+								'Die optionale Sortierreihenfolge kann für die Ansprechpartner-Sortierung notwendig sein. Im Zweifel einfach leer lassen.',
+							name: 'sortOrder',
+							title: 'Sortierreihenfolge',
+							type: 'number',
+						}),
 					],
 					preview: {
 						prepare: ({ team, role }) => ({
