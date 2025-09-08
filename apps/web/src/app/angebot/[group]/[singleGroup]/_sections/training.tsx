@@ -29,7 +29,7 @@ export function Training({ title, training }: Readonly<TrainingProps>) {
 				{training?.trainingTimes && training.trainingTimes.length > 0 && (
 					<div
 						className={cn(
-							'grid place-content-center place-items-center gap-6',
+							'grid place-content-center place-items-center gap-10',
 							{ 'grid-cols-1': training?.trainingTimes && training.trainingTimes.length === 1 },
 							{
 								'lg:grid-cols-[repeat(2,minmax(0,var(--container-xl)))]':

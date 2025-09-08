@@ -1,6 +1,6 @@
 // cSpell:words friday monday saturday sunday thursday tuesday wednesday
 import { cn } from '@tsgi-web/shared';
-import { Calendar, Clock, CloudSnow, MapPin, Sun } from 'lucide-react';
+import { Calendar, Clock, CloudSnow, LucideMessageCircleWarning, MapPin, Sun } from 'lucide-react';
 
 import type { TrainingTimeSection } from '@/types/sanity.types';
 import { printGoogleMapsLink } from '@/utils/url';
@@ -80,8 +80,14 @@ export function TrainingCard({ training }: Readonly<TrainingCardProps>) {
 					</div>
 				)}
 
-				<CardDescription className="mt-10 text-sm">
-					{training.note}
+				{training.note && (
+					<div className="flex items-start gap-2 text-xl">
+						<LucideMessageCircleWarning className="text-primary mr-1 size-6" />
+						<div className="text-muted-foreground">{training.note}</div>
+					</div>
+				)}
+
+				<CardDescription className="mt-6 text-sm">
 					<Button title="Google Maps wird in einem neuen Tab geöffnet" variant="secondary" asChild>
 						<ExternalLink href={printGoogleMapsLink(training.venue.location)}>
 							Route auf Google Maps berechnen
