@@ -1,9 +1,9 @@
 .bgRoundedEdge {
-	background-color: hsl(var(--primary));
-  position: absolute;
+	background-color: var(--color-primary);
+	position: absolute;
 	inset-block: 0;
 	inset-inline: 0;
-  z-index: -9998;
+	z-index: -9998;
 	clip-path: ellipse(120% 100% at 15% 0%);
 }
 
