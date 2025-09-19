@@ -22,10 +22,9 @@
 	"React Page component": {
 		"prefix": "rcp",
 		"body": [
-			"import type { PageProps } from '@/types/common';",
-			"",
-			"export default function ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ params }: PageProps) {",
+			"export default function ${2}${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ params, searchParams }: Readonly<PageProps<'/${3}'>>) {",
 			"\tconst { slug } = await params;",
+			"\tconst { q } = await searchParams;",
 			"",
 			"\treturn (",
 			"\t\t<>",
