@@ -4,7 +4,7 @@ import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
 import { addressField, emailField } from '@/shared/fields/contact';
-import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
+import { defaultHeroFields, getHiddenSlugField, introField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
 const imprintPage = defineType({
@@ -25,7 +25,13 @@ const imprintPage = defineType({
 
 		// content
 		defineField({
+			...introField,
+			type: 'simpleBlockContent',
+			group: 'content',
+		}),
+		defineField({
 			...addressField,
+			type: 'simpleBlockContent',
 			group: 'content',
 		}),
 		defineField({
@@ -45,7 +51,7 @@ const imprintPage = defineType({
 		defineField({
 			title: 'Vertreten durch',
 			name: 'represented',
-			type: 'text',
+			type: 'simpleBlockContent',
 			group: 'content',
 			validation: Rule => [Rule.required().error('Feld "Vertreten durch" ist erforderlich')],
 		}),
@@ -68,6 +74,17 @@ const imprintPage = defineType({
 			validation: Rule => [Rule.required().error('Redaktionell verantwortlich ist erforderlich')],
 		}),
 		defineField({
+			title: 'Verbraucherstreitbeilegung/Universalschlichtungsstelle',
+			name: 'consumerDisputeResolution',
+			type: 'string',
+			group: 'content',
+			validation: Rule => [
+				Rule.required().error(
+					'Verbraucherstreitbeilegung/Universalschlichtungsstelle ist erforderlich',
+				),
+			],
+		}),
+		defineField({
 			title: 'Name Technischer Ansprechpartner',
 			name: 'technicalQuestionsName',
 			type: 'string',
@@ -86,13 +103,6 @@ const imprintPage = defineType({
 			],
 		}),
 		defineField({
-			title: 'Social Media',
-			name: 'socialMedia',
-			type: 'text',
-			group: 'content',
-			validation: Rule => [Rule.required().error('Social Media ist erforderlich')],
-		}),
-		defineField({
 			title: 'Freundliche Unterstützung durch',
 			name: 'support',
 			type: 'simpleBlockContent',
@@ -104,7 +114,7 @@ const imprintPage = defineType({
 		defineField({
 			title: 'Bildnachweise',
 			name: 'credits',
-			type: 'text',
+			type: 'simpleBlockContent',
 			group: 'content',
 			validation: Rule => [Rule.required().error('Bildnachweis ist erforderlich')],
 		}),

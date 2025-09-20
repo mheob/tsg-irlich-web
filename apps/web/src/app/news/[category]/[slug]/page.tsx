@@ -1,10 +1,9 @@
 import { cn } from '@tsgi-web/shared';
 import type { Metadata } from 'next';
-import type { PortableTextBlock } from 'next-sanity';
 import Image from 'next/image';
 
 import { Hero } from '@/components/section/hero';
-import { PortableText } from '@/components/ui/portable-text';
+import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
 import { client } from '@/lib/sanity/client';
 import {
@@ -81,7 +80,7 @@ export default async function NewsArticlePage({
 					{article.body?.map(block => {
 						switch (block._type) {
 							case 'blockContent': {
-								return <PortableText key={block._key} value={block.text as PortableTextBlock[]} />;
+								return <PortableText key={block._key} value={block.text as PortableTextValue} />;
 							}
 							case 'blockquote': {
 								return (

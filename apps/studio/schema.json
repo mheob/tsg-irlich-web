@@ -969,7 +969,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "simpleBlockContent"
+          "name": "blockContent"
         },
         "optional": false
       },
@@ -1611,10 +1611,19 @@
         },
         "optional": true
       },
+      "intro": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "simpleBlockContent"
+        },
+        "optional": true
+      },
       "address": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "simpleBlockContent"
         },
         "optional": false
       },
@@ -1635,7 +1644,8 @@
       "represented": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "simpleBlockContent"
         },
         "optional": false
       },
@@ -1661,6 +1671,13 @@
         },
         "optional": false
       },
+      "consumerDisputeResolution": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "technicalQuestionsName": {
         "type": "objectAttribute",
         "value": {
@@ -1669,13 +1686,6 @@
         "optional": false
       },
       "technicalQuestionsEmail": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "socialMedia": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -1693,7 +1703,8 @@
       "credits": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "inline",
+          "name": "simpleBlockContent"
         },
         "optional": false
       }
@@ -4840,6 +4851,13 @@
                 },
                 "optional": false
               },
+              "sortOrder": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "number"
+                },
+                "optional": true
+              },
               "_type": {
                 "type": "objectAttribute",
                 "value": {
@@ -7593,7 +7611,7 @@
             }
           }
         },
-        "optional": false
+        "optional": true
       },
       "isSportGroup": {
         "type": "objectAttribute",

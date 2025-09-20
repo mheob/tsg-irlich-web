@@ -1,7 +1,6 @@
-import type { PortableTextBlock } from 'next-sanity';
 import Image from 'next/image';
 
-import { PortableText } from '@/components/ui/portable-text';
+import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { GroupDance, SimpleBlockContent } from '@/types/sanity.types';
@@ -35,7 +34,7 @@ export function Main({ description, gallery, title }: Readonly<MainProps>) {
 		<section className={`${styles.bg} relative z-0`}>
 			<div className="container mx-auto px-5 py-10 md:py-32">
 				<SectionHeader className="mb-10" level="h1" title={title} isCentered isCenteredOnDesktop>
-					<PortableText value={description.text as PortableTextBlock[]} />
+					<PortableText value={description.text as PortableTextValue} />
 				</SectionHeader>
 
 				{imagesCount === 1 && (
