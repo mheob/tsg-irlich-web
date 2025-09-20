@@ -21,6 +21,7 @@ function HeadingAnchorLink({ value }: Readonly<{ value: PortableTextBlock }>) {
 		<a
 			className="absolute bottom-0 start-0 top-0 -ml-6 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
 			href={`#${value?._key}`}
+			title="Zum Abschnitt springen"
 		>
 			<svg
 				className="h-4 w-4"
