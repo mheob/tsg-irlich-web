@@ -1,7 +1,6 @@
 import { cn } from '@tsgi-web/shared';
-import type { PortableTextBlock } from 'next-sanity';
 
-import { PortableText } from '@/components/ui/portable-text';
+import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import { TrainingCard } from '@/components/ui/training-card';
 import type { SimpleBlockContent, TrainingTimeSection } from '@/types/sanity.types';
@@ -22,7 +21,7 @@ export function Training({ title, training }: Readonly<TrainingProps>) {
 			<div className="container mx-auto px-5 py-10 md:py-32">
 				<SectionHeader className="mb-16" title={title} isCentered isCenteredOnDesktop>
 					{training?.trainingDescription && (
-						<PortableText value={training.trainingDescription.text as PortableTextBlock[]} />
+						<PortableText value={training.trainingDescription.text as PortableTextValue} />
 					)}
 				</SectionHeader>
 

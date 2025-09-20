@@ -13,11 +13,11 @@ import {
 	type PortableTextComponent,
 	type PortableTextComponents,
 	PortableText as PortableTextPrimitive,
+	type PortableTextProps as PortableTextPrimitiveProps,
 } from 'next-sanity';
 
-const headingAnchor: PortableTextComponent<PortableTextBlock> = ({ children, value }) => (
-	<h2 className="group relative" id={value?._key}>
-		{children}
+function HeadingAnchorLink({ value }: Readonly<{ value: PortableTextBlock }>) {
+	return (
 		<a
 			className="absolute bottom-0 start-0 top-0 -ml-6 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
 			href={`#${value?._key}`}
@@ -37,19 +37,35 @@ const headingAnchor: PortableTextComponent<PortableTextBlock> = ({ children, val
 				/>
 			</svg>
 		</a>
+	);
+}
+
+const headingAnchor2: PortableTextComponent<PortableTextBlock> = ({ children, value }) => (
+	<h2 className="group relative" id={value?._key}>
+		{children}
+		<HeadingAnchorLink value={value} />
 	</h2>
 );
 
+const headingAnchor3: PortableTextComponent<PortableTextBlock> = ({ children, value }) => (
+	<h3 className="group relative" id={value?._key}>
+		{children}
+		<HeadingAnchorLink value={value} />
+	</h3>
+);
+
+export type PortableTextValue = PortableTextPrimitiveProps['value'];
+
 interface PortableTextProps {
 	className?: string;
-	value: PortableTextBlock[];
+	value: PortableTextValue;
 }
 
 export function PortableText({ value }: Readonly<PortableTextProps>) {
 	const components: PortableTextComponents = {
 		block: {
-			h2: headingAnchor,
-			h3: headingAnchor,
+			h2: headingAnchor2,
+			h3: headingAnchor3,
 		},
 	};
 

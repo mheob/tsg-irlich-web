@@ -179,7 +179,7 @@ export type Privacy = {
 	title: string;
 	subtitle: string;
 	meta?: MetaFields;
-	introText: SimpleBlockContent;
+	introText: BlockContent;
 	address: string;
 	phone?: string;
 	email: string;
@@ -285,18 +285,19 @@ export type Imprint = {
 	title: string;
 	subtitle: string;
 	meta?: MetaFields;
-	address: string;
+	intro?: SimpleBlockContent;
+	address: SimpleBlockContent;
 	registerCourt: string;
 	registerNo: string;
-	represented: string;
+	represented: SimpleBlockContent;
 	email: string;
 	contactForm: InternalLink;
 	responsible: string;
+	consumerDisputeResolution: string;
 	technicalQuestionsName: string;
 	technicalQuestionsEmail: string;
-	socialMedia: string;
 	support: SimpleBlockContent;
-	credits: string;
+	credits: SimpleBlockContent;
 };
 
 export type InternalLink = {
@@ -855,6 +856,7 @@ export type Person = {
 			[internalGroqTypeReferenceTo]?: 'role';
 		};
 		taskDescription: string;
+		sortOrder?: number;
 		_type: 'affiliation';
 		_key: string;
 	}>;
@@ -1349,7 +1351,7 @@ export type GroupAdmin = {
 		_type: 'extendedImage';
 		_key: string;
 	}>;
-	training: {
+	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
 			{
@@ -2064,6 +2066,37 @@ export type HomePageTestimonialsQueryResult = Array<{
 	show: boolean | null;
 }> | null;
 
+// Source: ./src/lib/sanity/queries/pages/imprint.ts
+// Variable: imprintPageQuery
+// Query: *[_type == 'imprint'][0] {		...,		"contactForm": contactForm {			title,			"slug": link->slug.current		}	}
+export type ImprintPageQueryResult = {
+	_id: string;
+	_type: 'imprint';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	intro?: SimpleBlockContent;
+	address: SimpleBlockContent;
+	registerCourt: string;
+	registerNo: string;
+	represented: SimpleBlockContent;
+	email: string;
+	contactForm: {
+		title: string | null;
+		slug: string | null;
+	};
+	responsible: string;
+	consumerDisputeResolution: string;
+	technicalQuestionsName: string;
+	technicalQuestionsEmail: string;
+	support: SimpleBlockContent;
+	credits: SimpleBlockContent;
+} | null;
+
 // Source: ./src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleHeroQuery
 // Query: *[_type == 'news-article-page'][0] {		title,		subtitle,	}
@@ -2408,6 +2441,96 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			};
 	  }
 	| {
+			description: SimpleBlockContent;
+			featuredImage: {
+				asset?: {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+				};
+				media?: unknown;
+				hotspot?: SanityImageHotspot;
+				crop?: SanityImageCrop;
+				alt: string;
+				description?: string;
+				_type: 'extendedImage';
+			};
+			images: Array<{
+				asset?: {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+				};
+				media?: unknown;
+				hotspot?: SanityImageHotspot;
+				crop?: SanityImageCrop;
+				alt: string;
+				description?: string;
+				_type: 'extendedImage';
+				_key: string;
+			}> | null;
+			title: string;
+			training: {
+				trainingDescription: SimpleBlockContent | null;
+				trainingTimes: Array<{
+					_key: string;
+					_type: 'trainingTime';
+					season: 'summer' | 'winter' | 'yearly';
+					weekday:
+						| 'friday'
+						| 'monday'
+						| 'saturday'
+						| 'sunday'
+						| 'thursday'
+						| 'tuesday'
+						| 'wednesday';
+					startTime: string;
+					endTime: string;
+					venue: {
+						_id: string;
+						_type: 'venue';
+						_createdAt: string;
+						_updatedAt: string;
+						_rev: string;
+						title: string;
+						description: SimpleBlockContent;
+						type:
+							| 'artificial-turf'
+							| 'cinder'
+							| 'grass'
+							| 'hall-1'
+							| 'hall-2'
+							| 'hall-3'
+							| 'hybrid';
+						mainImage?: {
+							asset?: {
+								_ref: string;
+								_type: 'reference';
+								_weak?: boolean;
+								[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+							};
+							media?: unknown;
+							hotspot?: SanityImageHotspot;
+							crop?: SanityImageCrop;
+							alt: string;
+							description?: string;
+							_type: 'image';
+						};
+						location?: {
+							name: string;
+							street: string;
+							houseNumber: string;
+							zipCode?: string;
+							city: string;
+						};
+					};
+					note?: string;
+				}> | null;
+			} | null;
+	  }
+	| {
 			description: null;
 			featuredImage: null;
 			images: null;
@@ -2691,6 +2814,26 @@ export type OfferPageQueryResult = {
 	};
 } | null;
 
+// Source: ./src/lib/sanity/queries/pages/privacy.ts
+// Variable: privacyPageQuery
+// Query: *[_type == 'privacy'][0]
+export type PrivacyPageQueryResult = {
+	_id: string;
+	_type: 'privacy';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	introText: BlockContent;
+	address: string;
+	phone?: string;
+	email: string;
+	content: BlockContent;
+} | null;
+
 // Source: ./src/lib/sanity/queries/shared/groups.ts
 // Variable: groupsQuery
 // Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_id,		title,		icon,	}
@@ -2830,6 +2973,7 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
 		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshow,\n\t}\n": HomePageTestimonialsQueryResult;
+		'\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\ttitle,\n\t\t\t"slug": link->slug.current\n\t\t}\n\t}\n': ImprintPageQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
 		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
 		'\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
@@ -2843,6 +2987,7 @@ declare module '@sanity/client' {
 		"\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\tfeaturedImage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
 		'\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
 		'\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
+		"*[_type == 'privacy'][0]": PrivacyPageQueryResult;
 		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;

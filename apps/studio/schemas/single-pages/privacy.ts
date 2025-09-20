@@ -26,7 +26,7 @@ const privacyPage = defineType({
 		defineField({
 			title: 'Einleitungstext',
 			name: 'introText',
-			type: 'simpleBlockContent',
+			type: 'blockContent',
 			group: 'contact',
 			validation: Rule => [Rule.required().error('Einleitungstext ist erforderlich')],
 		}),
