@@ -55,7 +55,7 @@ export function ContactLink({
 	const [hasInteracted, setHasInteracted] = useState(false);
 	const hrefText = href.slice(Math.max(0, href.indexOf(':') + 1));
 
-	const handleCopyability = () => setHasInteracted(true);
+	const handleInteraction = () => setHasInteracted(true);
 
 	const directionStyle: CSSProperties = useMemo(
 		() => ({
@@ -68,10 +68,17 @@ export function ContactLink({
 
 	const renderProps: AnchorHTMLAttributes<HTMLAnchorElement> = {
 		...props,
-		href: hasInteracted === true ? createContactLink({ header, href }) : 'obfuscated',
-		onContextMenu: handleCopyability,
-		onFocus: handleCopyability,
-		onMouseOver: handleCopyability,
+		'aria-label': hasInteracted ? undefined : 'Contact link - touch to reveal',
+		href: hasInteracted ? createContactLink({ header, href }) : '#',
+		onContextMenu: handleInteraction,
+		onFocus: handleInteraction,
+		onKeyDown: event => {
+			if (event.key === 'Enter' || event.key === ' ') {
+				handleInteraction();
+			}
+		},
+		onMouseOver: handleInteraction,
+		role: hasInteracted ? 'link' : 'button',
 		style: directionStyle,
 	};
 
