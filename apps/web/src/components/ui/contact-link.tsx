@@ -1,21 +1,26 @@
 'use client';
 
 import type { AnchorHTMLAttributes, CSSProperties } from 'react';
-import { useCallback, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 function reverse(stringToReverse: string): string {
-	return [...stringToReverse].toReversed().join('').replace('(', ')').replace(')', '(');
+	return [...stringToReverse]
+		.toReversed()
+		.map(char => {
+			if (char === '(') return ')';
+			if (char === ')') return '(';
+			return char;
+		})
+		.join('');
 }
 
-function createContactLink({
-	header,
-	href,
-}: Pick<ContactLinkProps, 'header' | 'href'>): string | undefined {
+function createContactLink({ header, href }: Pick<ContactLinkProps, 'header' | 'href'>): string {
 	const combinedHeader =
-		header &&
-		Object.keys(header)
-			.map(key => `${key}=${encodeURIComponent(header[key] ?? '')}`)
-			.join('&');
+		(header &&
+			Object.keys(header)
+				.map(key => `${key}=${encodeURIComponent(header[key] ?? '')}`)
+				.join('&')) ||
+		'';
 
 	if (href.startsWith('https://wa.me/') || href.startsWith('mailto:')) {
 		return header ? `${href}?${combinedHeader}` : href;
@@ -24,6 +29,8 @@ function createContactLink({
 	if (href.startsWith('tel:')) {
 		return href.replaceAll(/\s/g, '');
 	}
+
+	return href;
 }
 
 interface ContactLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -45,29 +52,28 @@ export function ContactLink({
 	style,
 	...props
 }: Readonly<ContactLinkProps>) {
-	const [humanInteractedState, setHumanInteractedState] = useState(false);
+	const [hasInteracted, setHasInteracted] = useState(false);
 	const hrefText = href.slice(Math.max(0, href.indexOf(':') + 1));
 
-	const handleCopyability = useCallback(() => {
-		setHumanInteractedState(true);
-	}, []);
+	const handleCopyability = () => setHasInteracted(true);
 
-	const directionStyle: CSSProperties = {
-		...style,
-		direction: humanInteractedState ? 'ltr' : 'rtl',
-		unicodeBidi: 'bidi-override',
-	};
+	const directionStyle: CSSProperties = useMemo(
+		() => ({
+			...style,
+			direction: hasInteracted ? 'ltr' : 'rtl',
+			unicodeBidi: 'bidi-override',
+		}),
+		[hasInteracted, style],
+	);
 
 	const renderProps: AnchorHTMLAttributes<HTMLAnchorElement> = {
 		...props,
-		href: humanInteractedState === true ? createContactLink({ header, href }) : 'obfuscated',
+		href: hasInteracted === true ? createContactLink({ header, href }) : 'obfuscated',
 		onContextMenu: handleCopyability,
 		onFocus: handleCopyability,
 		onMouseOver: handleCopyability,
 		style: directionStyle,
 	};
 
-	return (
-		<a {...renderProps}>{children || (humanInteractedState ? hrefText : reverse(hrefText))}</a>
-	);
+	return <a {...renderProps}>{children || (hasInteracted ? hrefText : reverse(hrefText))}</a>;
 }
