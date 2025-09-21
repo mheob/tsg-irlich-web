@@ -2,6 +2,7 @@ import { cn } from '@tsgi-web/shared';
 import Link from 'next/link';
 
 import { Hero } from '@/components/section/hero';
+import { ContactLink } from '@/components/ui/contact-link';
 import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { client } from '@/lib/sanity/client';
 import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
@@ -50,8 +51,7 @@ export default async function ImprintPageTsx() {
 
 					<h3>Kontakt</h3>
 					<p>
-						{/* // FIXME: Use a "ContactLink" component for spam protection */}
-						E-Mail: <a href={`mailto:${page.email}`}>{page.email}</a>
+						E-Mail: <ContactLink href={`mailto:${page.email}`} />
 						<br />
 						Kontaktformular:{' '}
 						<Link href={page.contactForm.slug ?? '/kontakt'}>{page.contactForm.title}</Link>
@@ -65,15 +65,9 @@ export default async function ImprintPageTsx() {
 
 					<h3>Technischer Ansprechpartner</h3>
 					<p>
-						{/* // FIXME: Use a "ContactLink" component for spam protection */}
 						{page.technicalQuestionsName}
 						{' -> '}
-						<a
-							className="text-primary-light hover:text-primary"
-							href={`mailto:${page.technicalQuestionsEmail}`}
-						>
-							{page.technicalQuestionsEmail}
-						</a>
+						<ContactLink href={`mailto:${page.technicalQuestionsEmail}`} />
 					</p>
 
 					<h3>Freundliche Unterstützung durch</h3>

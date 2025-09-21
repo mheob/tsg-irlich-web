@@ -41,14 +41,14 @@ function HeadingAnchorLink({ value }: Readonly<{ value: PortableTextBlock }>) {
 	);
 }
 
-const headingAnchor2: PortableTextComponent<PortableTextBlock> = ({ children, value }) => (
+const H2WithAnchor: PortableTextComponent<PortableTextBlock> = ({ children, value }) => (
 	<h2 className="group relative" id={value?._key}>
 		{children}
 		<HeadingAnchorLink value={value} />
 	</h2>
 );
 
-const headingAnchor3: PortableTextComponent<PortableTextBlock> = ({ children, value }) => (
+const H3WithAnchor: PortableTextComponent<PortableTextBlock> = ({ children, value }) => (
 	<h3 className="group relative" id={value?._key}>
 		{children}
 		<HeadingAnchorLink value={value} />
@@ -58,15 +58,14 @@ const headingAnchor3: PortableTextComponent<PortableTextBlock> = ({ children, va
 export type PortableTextValue = PortableTextPrimitiveProps['value'];
 
 interface PortableTextProps {
-	className?: string;
 	value: PortableTextValue;
 }
 
 export function PortableText({ value }: Readonly<PortableTextProps>) {
 	const components: PortableTextComponents = {
 		block: {
-			h2: headingAnchor2,
-			h3: headingAnchor3,
+			h2: H2WithAnchor,
+			h3: H3WithAnchor,
 		},
 	};
 
