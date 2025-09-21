@@ -16,7 +16,6 @@ const simpleBlockContent = defineField({
 					title: 'Block',
 					type: 'block',
 					marks: {
-						// annotations: [{ type: 'link' }],
 						decorators: [
 							{ title: 'Strong', value: 'strong' },
 							{ title: 'Italic', value: 'em' },
