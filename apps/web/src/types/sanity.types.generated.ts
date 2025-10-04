@@ -188,41 +188,24 @@ export type Privacy = {
 
 export type BlockContent = {
 	_type: 'blockContent';
-	text?: Array<
-		| {
-				children?: Array<{
-					marks?: Array<string>;
-					text?: string;
-					_type: 'span';
-					_key: string;
-				}>;
-				style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-				listItem?: 'bullet' | 'number';
-				markDefs?: Array<
-					{
-						_key: string;
-					} & Link
-				>;
-				level?: number;
-				_type: 'block';
-				_key: string;
-		  }
-		| {
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'customImage';
-				_key: string;
-		  }
-	>;
+	text?: Array<{
+		children?: Array<{
+			marks?: Array<string>;
+			text?: string;
+			_type: 'span';
+			_key: string;
+		}>;
+		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+		listItem?: 'bullet' | 'number';
+		markDefs?: Array<{
+			href?: string;
+			_type: 'link';
+			_key: string;
+		}>;
+		level?: number;
+		_type: 'block';
+		_key: string;
+	}>;
 };
 
 export type NewsOverview = {
@@ -302,7 +285,7 @@ export type Imprint = {
 
 export type InternalLink = {
 	_type: 'internalLink';
-	title?: string;
+	title: string;
 	link?:
 		| {
 				_ref: string;
@@ -2086,7 +2069,7 @@ export type ImprintPageQueryResult = {
 	represented: SimpleBlockContent;
 	email: string;
 	contactForm: {
-		title: string | null;
+		title: string;
 		slug: string | null;
 	};
 	responsible: string;

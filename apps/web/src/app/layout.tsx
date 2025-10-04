@@ -1,6 +1,7 @@
 import process from 'node:process';
 
 import { cn } from '@tsgi-web/shared';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { Anton, Bebas_Neue, Inter } from 'next/font/google';
 
@@ -57,10 +58,9 @@ export default function RootLayout({
 				)}
 			>
 				<MainNav />
-
 				<main className="grid flex-1">{children}</main>
-
 				<Footer />
+				<SpeedInsights />
 			</body>
 		</html>
 	);
