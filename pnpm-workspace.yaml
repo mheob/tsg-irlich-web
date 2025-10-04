@@ -9,7 +9,6 @@ onlyBuiltDependencies:
   - scrollmirror
   - sharp
   - unrs-resolver
-
 catalogMode: prefer
 
 catalog:
@@ -18,7 +17,7 @@ catalog:
   "@cspell/dict-de-de": ^4.1.2
   "@eslint-react/eslint-plugin": ^1.53.1
   "@hookform/resolvers": ^5.2.2
-  "@icons-pack/react-simple-icons": ^13.7.0
+  "@icons-pack/react-simple-icons": ^13.8.0
   "@mheob/commitlint-config": ^1.2.4
   "@mheob/eslint-config": ^8.13.0
   "@mheob/prettier-config": ^3.3.4
@@ -32,24 +31,24 @@ catalog:
   "@radix-ui/react-separator": ^1.1.7
   "@radix-ui/react-slot": ^1.2.3
   "@sanity/assist": ^5.0.0
-  "@sanity/client": ^7.11.2
+  "@sanity/client": ^7.12.0
   "@sanity/icons": ^3.7.4
   "@sanity/image-url": ^1.2.0
   "@sanity/locale-de-de": ^1.1.26
   "@sanity/ui": ^3.1.8
-  "@sanity/vision": ^4.10.1
-  "@tailwindcss/postcss": ^4.1.13
+  "@sanity/vision": ^4.10.2
+  "@tailwindcss/postcss": ^4.1.14
   "@tailwindcss/typography": ^0.5.19
-  "@types/node": ^22.18.6
-  "@types/react": ^19.1.14
-  "@types/react-dom": ^19.1.9
+  "@types/node": ^22.18.8
+  "@types/react": ^19.2.0
+  "@types/react-dom": ^19.2.0
   "@vercel/speed-insights": ^1.2.0
   class-variance-authority: ^0.7.1
   clsx: ^2.1.1
   commitizen: ^4.3.1
   cspell: ^9.2.1
   cz-git: ^1.12.0
-  dotenv: ^17.2.2
+  dotenv: ^17.2.3
   eslint: ^9.37.0
   eslint-plugin-react-hooks: ^5.2.0
   eslint-plugin-react-refresh: ^0.4.23
@@ -62,16 +61,16 @@ catalog:
   postcss-load-config: ^6.0.1
   prettier: ^3.6.2
   prettier-plugin-tailwindcss: ^0.6.14
-  react: ^19.1.1
-  react-dom: ^19.1.1
-  react-hook-form: ^7.63.0
+  react: ^19.2.0
+  react-dom: ^19.2.0
+  react-hook-form: ^7.64.0
   react-icons: ^5.5.0
-  sanity: ^4.10.1
+  sanity: ^4.10.2
   sanity-plugin-media: ^4.0.0
   server-only: ^0.0.1
   slugify: ^1.6.6
   tailwind-merge: ^3.3.1
-  tailwindcss: ^4.1.13
+  tailwindcss: ^4.1.14
   tailwindcss-animate: ^1.0.7
   taze: ^19.7.0
   turbo: ^2.5.8
