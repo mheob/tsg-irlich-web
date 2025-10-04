@@ -58,19 +58,23 @@ const H3WithAnchor: PortableTextComponent<PortableTextBlock> = ({ children, valu
 );
 
 const Link: PortableTextMarkComponent = ({ children, value }) => {
-	if (!value) return children;
-
-	const href = value.href as string;
+	const href = value?.href;
+	if (!href || typeof href !== 'string') return children;
 
 	// Regex finds starting with `/` or `https://` or `http://`, an optional subdomain and then `tsg-irlich.de`
-	const internalLinkRegex = /^(?:\/|https?:\/\/(?:\w+\.)?tsg-irlich\.de)/;
+	const internalLinkRegex = /^(?:\/|https?:\/\/(?:[a-z0-9-]+\.)?tsg-irlich\.de(?:\/|$))/i;
 
 	if (internalLinkRegex.test(href)) {
-		return <NextLink href={value.href}>{children}</NextLink>;
+		return <NextLink href={href}>{children}</NextLink>;
 	}
 
 	return (
-		<a href={value.href} rel="noopener" target="_blank">
+		<a
+			aria-label={`${children?.toString() || 'Link'} (öffnet in neuem Tab)`} // NOSONAR
+			href={value.href}
+			rel="noopener noreferrer"
+			target="_blank"
+		>
 			{children}
 		</a>
 	);

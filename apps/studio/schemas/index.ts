@@ -20,7 +20,6 @@ import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
 import imageCard from './objects/image-card';
 import internalLink from './objects/internal-link';
-import link from './objects/link';
 import metFields from './objects/meta';
 import simpleBlockContent from './objects/simple-block-content';
 import socialFields from './objects/social-fields';
@@ -75,7 +74,6 @@ export const schemaTypes = [
 	externalLink,
 	imageCard,
 	internalLink,
-	link,
 	metFields,
 	simpleBlockContent,
 	socialFields,
