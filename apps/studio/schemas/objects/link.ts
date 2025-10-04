@@ -1,15 +1,16 @@
+import { LinkIcon } from '@sanity/icons';
 import { defineField } from 'sanity';
 
 const link = defineField({
-	title: 'URL',
+	title: 'External link',
 	name: 'link',
 	type: 'object',
-	hidden: true,
+	icon: LinkIcon,
 	fields: [
 		{
-			title: 'URL',
 			name: 'href',
 			type: 'url',
+			title: 'URL',
 			validation: Rule =>
 				Rule.uri({
 					allowRelative: true,

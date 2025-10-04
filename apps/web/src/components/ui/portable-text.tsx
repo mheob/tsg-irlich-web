@@ -12,9 +12,11 @@ import {
 	type PortableTextBlock,
 	type PortableTextComponent,
 	type PortableTextComponents,
+	type PortableTextMarkComponent,
 	PortableText as PortableTextPrimitive,
 	type PortableTextProps as PortableTextPrimitiveProps,
 } from 'next-sanity';
+import NextLink from 'next/link';
 
 function HeadingAnchorLink({ value }: Readonly<{ value: PortableTextBlock }>) {
 	return (
@@ -55,6 +57,25 @@ const H3WithAnchor: PortableTextComponent<PortableTextBlock> = ({ children, valu
 	</h3>
 );
 
+const Link: PortableTextMarkComponent = ({ children, value }) => {
+	if (!value) return children;
+
+	const href = value.href as string;
+
+	// Regex finds starting with `/` or `https://` or `http://`, an optional subdomain and then `tsg-irlich.de`
+	const internalLinkRegex = /^(?:\/|https?:\/\/(?:\w+\.)?tsg-irlich\.de)/;
+
+	if (internalLinkRegex.test(href)) {
+		return <NextLink href={value.href}>{children}</NextLink>;
+	}
+
+	return (
+		<a href={value.href} rel="noopener" target="_blank">
+			{children}
+		</a>
+	);
+};
+
 export type PortableTextValue = PortableTextPrimitiveProps['value'];
 
 interface PortableTextProps {
@@ -66,6 +87,9 @@ export function PortableText({ value }: Readonly<PortableTextProps>) {
 		block: {
 			h2: H2WithAnchor,
 			h3: H3WithAnchor,
+		},
+		marks: {
+			link: Link,
 		},
 	};
 

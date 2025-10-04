@@ -24,6 +24,7 @@
 		"@tailwindcss/postcss": "catalog:",
 		"@tailwindcss/typography": "catalog:",
 		"@tsgi-web/shared": "workspace:*",
+		"@vercel/speed-insights": "catalog:",
 		"class-variance-authority": "catalog:",
 		"lucide-react": "catalog:",
 		"next": "catalog:",

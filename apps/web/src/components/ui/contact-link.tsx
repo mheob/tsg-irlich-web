@@ -68,7 +68,7 @@ export function ContactLink({
 
 	const renderProps: AnchorHTMLAttributes<HTMLAnchorElement> = {
 		...props,
-		'aria-label': hasInteracted ? undefined : 'Contact link - touch to reveal',
+		'aria-label': hasInteracted ? undefined : 'Kontaktlink - tippen zum Anzeigen',
 		href: hasInteracted ? createContactLink({ header, href }) : '#',
 		onContextMenu: handleInteraction,
 		onFocus: handleInteraction,

@@ -17,11 +17,9 @@ const blockContent = defineField({
 					title: 'Block',
 					type: 'block',
 					marks: {
-						annotations: [{ type: 'link' }],
 						decorators: [
 							{ title: 'Strong', value: 'strong' },
 							{ title: 'Italic', value: 'em' },
-							// { title: 'Code', value: 'code' },
 						],
 					},
 					styles: [
@@ -30,10 +28,6 @@ const blockContent = defineField({
 						{ title: 'H3', value: 'h3' },
 						{ title: 'Quote', value: 'blockquote' },
 					],
-				},
-				{
-					name: 'customImage',
-					type: 'mainImage',
 				},
 			],
 		}),

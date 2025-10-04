@@ -15,6 +15,7 @@
 	},
 	"dependencies": {
 		"@sanity/assist": "catalog:",
+		"@sanity/icons": "catalog:",
 		"@sanity/locale-de-de": "catalog:",
 		"@sanity/ui": "catalog:",
 		"@sanity/vision": "catalog:",
