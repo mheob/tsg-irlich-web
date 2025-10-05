@@ -24,6 +24,7 @@ export function Pricing({
 					subTitle={subtitle}
 					title={title}
 					isCentered
+					isCenteredOnDesktop
 				>
 					{intro}
 				</SectionHeader>

@@ -1,3 +1,4 @@
+/* cspell:words mitgliedschaft */
 import { cn } from '@tsgi-web/shared';
 import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
@@ -75,7 +76,7 @@ export function PricingCard({
 
 			<footer className="mt-8">
 				<Button variant={isHighlighted ? 'secondary' : 'primary'} asChild fullWidth>
-					<Link href="/kontakt">{cta}</Link>
+					<Link href="/mitgliedschaft#downloads">{cta}</Link>
 				</Button>
 			</footer>
 		</article>
