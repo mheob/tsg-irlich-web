@@ -8,7 +8,7 @@ type DownloadsProps = MembershipDownload['downloadsSection'];
 
 export function Downloads({ downloads, intro, subtitle, title }: Readonly<DownloadsProps>) {
 	return (
-		<section className="bg-background-low-contrast relative z-0">
+		<section className="bg-background-low-contrast relative z-0" id="downloads">
 			<div className={styles.bg}></div>
 			<div className={styles.bgBalls}></div>
 

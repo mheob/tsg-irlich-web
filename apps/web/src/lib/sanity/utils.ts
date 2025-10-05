@@ -17,7 +17,8 @@ import type { SanityFileAsset } from '@/types/sanity.types';
  * ```
  */
 export function getDownloadFileUrl(downloadAsset?: null | SanityFileAsset): string {
-	return downloadAsset ? `${downloadAsset.url}?dl=${downloadAsset.originalFilename}` : '#!';
+	if (!downloadAsset?.url || !downloadAsset.originalFilename) return '#!';
+	return `${downloadAsset.url}?dl=${downloadAsset.originalFilename}`;
 }
 
 /**
