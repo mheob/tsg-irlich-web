@@ -1,3 +1,4 @@
+/* cspell:words mitgliedschaft */
 'use client';
 
 import Link from 'next/link';
@@ -9,12 +10,11 @@ import TSGLogo from '@/icons/logos/tsg-logo';
 import DesktopNav from './desktop';
 import { MobileNav } from './mobile';
 
-// TODO: get navigation items from sanity
 const navigationItems = [
 	{ _id: 'home', href: '/', title: 'Home' },
-
 	{ _id: 'angebot', href: '/angebot', title: 'Angebot' },
 	{ _id: 'news', href: '/news', title: 'Aktuelles' },
+	{ _id: 'mitgliedschaft', href: '/mitgliedschaft', title: 'Mitgliedschaft' },
 ];
 
 export default function MainNav() {

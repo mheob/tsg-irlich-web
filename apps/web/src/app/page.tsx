@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { ContactForm } from '@/components/section/contact-form';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Newsletter } from '@/components/section/newsletter';
+import { Pricing } from '@/components/section/pricing';
 import { Stats } from '@/components/section/stats';
 import { client } from '@/lib/sanity/client';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
@@ -12,7 +13,6 @@ import { Features } from './_home/features';
 import { Groups } from './_home/groups';
 import { Hero } from './_home/hero';
 import { News } from './_home/news';
-import { Pricing } from './_home/pricing';
 import { Testimonials } from './_home/testimonials';
 import { Vision } from './_home/vision';
 

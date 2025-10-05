@@ -2,6 +2,47 @@ import createImageUrlBuilder from '@sanity/image-url';
 import type { Image } from 'sanity';
 
 import { dataset, projectId } from '@/lib/sanity/api';
+import type { SanityFileAsset } from '@/types/sanity.types';
+
+/**
+ * Generates a download URL for a Sanity file asset, appending a .pdf extension and setting the download filename.
+ *
+ * @param downloadAsset - The Sanity file asset object containing the file URL and original filename.
+ * @returns The constructed download URL as a string.
+ *
+ * @example
+ * ```ts
+ * const url = getDownloadFileUrl(asset);
+ * // url: "https://cdn.sanity.io/files/yourProjectId/yourDataset/yourFileId.pdf?dl=custom-filename.pdf"
+ * ```
+ */
+export function getDownloadFileUrl(downloadAsset?: null | SanityFileAsset): string {
+	if (!downloadAsset?.url || !downloadAsset.originalFilename) return '#!';
+	return `${downloadAsset.url}?dl=${downloadAsset.originalFilename}`;
+}
+
+/**
+ * Converts a file size in bytes to a human-readable string.
+ *
+ * @param sanitySize - The file size in bytes.
+ * @returns The human-readable file size (e.g., "1.2 MB", "512 KB", "—" if size is undefined/null/0).
+ *
+ * @example
+ * getFileSize(1234567) // "1.18 MB"
+ * getFileSize(0) // "—"
+ * getFileSize(undefined) // "—"
+ */
+export function getFileSize(sanitySize?: number): string {
+	if (!sanitySize || sanitySize < 1) return '—';
+	const units = ['B', 'KB', 'MB', 'GB'];
+	let index = 0;
+	let size = sanitySize;
+	while (size >= 1024 && index < units.length - 1) {
+		size /= 1024;
+		index++;
+	}
+	return `${size.toFixed(index)} ${units[index]}`;
+}
 
 const imageBuilder = createImageUrlBuilder({
 	dataset: dataset || '',
@@ -68,33 +109,3 @@ export function resolveOpenGraphImage(
 	if (!url) return;
 	return { alt: image.alt as string, height, url, width };
 }
-
-// export function linkResolver(link: Link | undefined) {
-// 	if (!link) return null;
-
-// 	// If linkType is not set but href is, lets set linkType to "href".  This comes into play when pasting links into the portable text editor because a link type is not assumed.
-// 	if (!link.linkType && link.href) {
-// 		link.linkType = 'href';
-// 	}
-
-// 	switch (link.linkType) {
-// 		case 'href': {
-// 			return link.href || null;
-// 		}
-// 		case 'page': {
-// 			if (link?.page) {
-// 				return `/${link.page}`;
-// 			}
-// 			return null;
-// 		}
-// 		case 'post': {
-// 			if (link?.post) {
-// 				return `/posts/${link.post}`;
-// 			}
-// 			return null;
-// 		}
-// 		default: {
-// 			return null;
-// 		}
-// 	}
-// }

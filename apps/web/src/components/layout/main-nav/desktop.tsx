@@ -1,3 +1,4 @@
+/* cspell:words mitgliedschaft */
 import { cn } from '@tsgi-web/shared';
 import Link from 'next/link';
 import type { ComponentPropsWithoutRef } from 'react';
@@ -154,7 +155,7 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 
 					<NavigationMenuItem>
 						<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
-							<Link href="#!">Mitgliedschaft</Link>
+							<Link href="/mitgliedschaft">Mitgliedschaft</Link>
 						</NavigationMenuLink>
 					</NavigationMenuItem>
 				</NavigationMenuList>

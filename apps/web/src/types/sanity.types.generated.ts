@@ -143,11 +143,6 @@ export type Stats = {
 	suffix?: string;
 };
 
-export type Link = {
-	_type: 'link';
-	href?: string;
-};
-
 export type SingleGroupPage = {
 	_id: string;
 	_type: 'singleGroupPage';
@@ -186,28 +181,6 @@ export type Privacy = {
 	content: BlockContent;
 };
 
-export type BlockContent = {
-	_type: 'blockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}>;
-		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}>;
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}>;
-};
-
 export type NewsOverview = {
 	_id: string;
 	_type: 'newsOverview';
@@ -244,17 +217,50 @@ export type Membership = {
 	title: string;
 	subtitle: string;
 	meta?: MetaFields;
-	documents: Array<
-		{
+	intro: BlockContent;
+	downloadsSection: {
+		title: string;
+		subtitle: string;
+		intro?: string;
+		downloads: Array<
+			{
+				_key: string;
+			} & DocumentDownload
+		>;
+	};
+	contactPersonsSection: {
+		title: string;
+		subtitle: string;
+		intro?: string;
+		contactPersons: Array<{
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
 			_key: string;
-		} & DocumentDownload
-	>;
-	contactPersons: Array<{
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'person';
+		}>;
+	};
+};
+
+export type BlockContent = {
+	_type: 'blockContent';
+	text?: Array<{
+		children?: Array<{
+			marks?: Array<string>;
+			text?: string;
+			_type: 'span';
+			_key: string;
+		}>;
+		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+		listItem?: 'bullet' | 'number';
+		markDefs?: Array<{
+			href?: string;
+			_type: 'link';
+			_key: string;
+		}>;
+		level?: number;
+		_type: 'block';
 		_key: string;
-		[internalGroqTypeReferenceTo]?: 'person';
 	}>;
 };
 
@@ -1792,12 +1798,11 @@ export type AllSanitySchemaTypes =
 	| Blockquote
 	| TrainingTime
 	| Stats
-	| Link
 	| SingleGroupPage
 	| Privacy
-	| BlockContent
 	| NewsOverview
 	| Membership
+	| BlockContent
 	| Imprint
 	| InternalLink
 	| GroupsPage
@@ -2079,6 +2084,119 @@ export type ImprintPageQueryResult = {
 	support: SimpleBlockContent;
 	credits: SimpleBlockContent;
 } | null;
+
+// Source: ./src/lib/sanity/queries/pages/membership.ts
+// Variable: membershipPageQuery
+// Query: {		"membership": *[_type == 'membership'][0] {			...,			downloadsSection {				...,				downloads[] {					...,					document {						...,						asset->					}				}			},			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		},		"pricingSection": *[_type == 'home'][0].content.pricingSection	}
+export type MembershipPageQueryResult = {
+	membership: {
+		_id: string;
+		_type: 'membership';
+		_createdAt: string;
+		_updatedAt: string;
+		_rev: string;
+		slug?: Slug;
+		title: string;
+		subtitle: string;
+		meta?: MetaFields;
+		intro: BlockContent;
+		downloadsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			downloads: Array<{
+				_key: string;
+				_type: 'documentDownload';
+				title: string;
+				document: {
+					asset: {
+						_id: string;
+						_type: 'sanity.fileAsset';
+						_createdAt: string;
+						_updatedAt: string;
+						_rev: string;
+						originalFilename?: string;
+						label?: string;
+						title?: string;
+						description?: string;
+						altText?: string;
+						sha1hash?: string;
+						extension?: string;
+						mimeType?: string;
+						size?: number;
+						assetId?: string;
+						uploadId?: string;
+						path?: string;
+						url?: string;
+						source?: SanityAssetSourceData;
+					} | null;
+					media?: unknown;
+					_type: 'file';
+				};
+			}>;
+		};
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				firstName: string;
+				lastName: string;
+				phone: string | null;
+				image: {
+					asset?: {
+						_ref: string;
+						_type: 'reference';
+						_weak?: boolean;
+						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+					};
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt: string;
+					description?: string;
+					_type: 'extendedImage';
+				};
+				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
+				email: string | null;
+				role: string | null;
+				taskDescription: string | null;
+			}>;
+		};
+	} | null;
+	pricingSection: {
+		title: string;
+		subtitle: string;
+		intro?: string;
+		pricingYouth: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			price: number;
+			benefitsTitle: string;
+			benefits: Array<string>;
+			cta: string;
+		};
+		pricingFamily: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			price: number;
+			benefitsTitle: string;
+			benefits: Array<string>;
+			cta: string;
+		};
+		pricingAdult: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			price: number;
+			benefitsTitle: string;
+			benefits: Array<string>;
+			cta: string;
+		};
+	} | null;
+};
 
 // Source: ./src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleHeroQuery
@@ -2957,6 +3075,7 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshow,\n\t}\n": HomePageTestimonialsQueryResult;
 		'\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\ttitle,\n\t\t\t"slug": link->slug.current\n\t\t}\n\t}\n': ImprintPageQueryResult;
+		'\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
 		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
 		'\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
