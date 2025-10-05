@@ -8,10 +8,9 @@ import {
 	ArrowUp,
 	ArrowUpLeft,
 	ArrowUpRight,
-	type LucideProps,
 } from 'lucide-react';
 import Link from 'next/link';
-import type { ComponentPropsWithRef } from 'react';
+import type { ComponentProps, ComponentPropsWithRef } from 'react';
 
 import { ArrowButtonVariants } from './variants';
 
@@ -25,20 +24,20 @@ interface ArrowProps {
 		| 'up'
 		| 'up-left'
 		| 'up-right';
-	size?: LucideProps['className'];
+	size?: ComponentProps<'svg'>['className'];
 }
 
-export interface ArrowElementProps
+interface ArrowElementProps
 	extends ComponentPropsWithRef<'div'>,
 		VariantProps<typeof ArrowButtonVariants>,
 		ArrowProps {}
 
-export interface ArrowAnchorProps
+interface ArrowAnchorProps
 	extends ComponentPropsWithRef<typeof Link>,
 		VariantProps<typeof ArrowButtonVariants>,
 		ArrowProps {}
 
-export interface ArrowButtonProps
+interface ArrowButtonProps
 	extends ComponentPropsWithRef<'button'>,
 		VariantProps<typeof ArrowButtonVariants>,
 		ArrowProps {
@@ -66,36 +65,33 @@ function Arrow({
 	}
 }
 
-export const ArrowButton = ({
+export function ArrowButton({
 	buttonType = 'button',
 	className,
 	direction,
 	size,
 	variant,
 	...props
-}: ArrowButtonProps) => (
-	<button className={ArrowButtonVariants({ className, variant })} type={buttonType} {...props}>
-		<Arrow className={size} direction={direction} />
-	</button>
-);
-ArrowButton.displayName = 'ArrowButton';
+}: Readonly<ArrowButtonProps>) {
+	return (
+		<button className={ArrowButtonVariants({ className, variant })} type={buttonType} {...props}>
+			<Arrow className={size} direction={direction} />
+		</button>
+	);
+}
 
-export const ArrowElement = ({
-	className,
-	direction,
-	size,
-	variant,
-	...props
-}: ArrowElementProps) => (
-	<div className={ArrowButtonVariants({ className, variant })} {...props}>
-		<Arrow className={size} direction={direction} />
-	</div>
-);
-ArrowElement.displayName = 'ArrowElement';
+export function ArrowElement({ className, direction, size, variant, ...props }: ArrowElementProps) {
+	return (
+		<div className={ArrowButtonVariants({ className, variant })} {...props}>
+			<Arrow className={size} direction={direction} />
+		</div>
+	);
+}
 
-export const ArrowLink = ({ className, direction, size, variant, ...props }: ArrowAnchorProps) => (
-	<Link className={ArrowButtonVariants({ className, variant })} {...props}>
-		<Arrow className={size} direction={direction} />
-	</Link>
-);
-ArrowLink.displayName = 'ArrowLink';
+export function ArrowLink({ className, direction, size, variant, ...props }: ArrowAnchorProps) {
+	return (
+		<Link className={ArrowButtonVariants({ className, variant })} {...props}>
+			<Arrow className={size} direction={direction} />
+		</Link>
+	);
+}

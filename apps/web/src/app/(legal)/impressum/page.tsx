@@ -2,8 +2,8 @@ import { cn } from '@tsgi-web/shared';
 import Link from 'next/link';
 
 import { Hero } from '@/components/section/hero';
-import { ContactLink } from '@/components/ui/contact-link';
 import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
+import { ContactLink } from '@/components/with-logic/contact-link';
 import { client } from '@/lib/sanity/client';
 import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
 

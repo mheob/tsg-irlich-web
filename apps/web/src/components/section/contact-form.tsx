@@ -7,11 +7,11 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { Form, FormField } from '@/components/ui/form';
 import { InputWithLabel } from '@/components/ui/input';
 import { SectionHeader } from '@/components/ui/section-header';
-import { SelectWithLabel } from '@/components/ui/select';
 import { TextareaWithLabel } from '@/components/ui/textarea';
+import { Form, FormField } from '@/components/with-logic/form';
+import { SelectWithLabel } from '@/components/with-logic/select';
 import integrationImage from '@/images/home/vision/integration.webp';
 import sportImage from '@/images/home/vision/sport.webp';
 import villageImage from '@/images/home/vision/village.webp';

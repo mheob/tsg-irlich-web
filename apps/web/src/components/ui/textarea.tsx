@@ -2,7 +2,7 @@ import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithRef, HTMLAttributes } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
-import { FormControl, FormItem, FormLabel, FormMessage } from './form';
+import { FormControl, FormItem, FormLabel, FormMessage } from '../with-logic/form';
 
 export function Textarea({ className, ...props }: ComponentPropsWithRef<'textarea'>) {
 	return (
