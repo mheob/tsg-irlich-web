@@ -1,7 +1,7 @@
 import { cn } from '@tsgi-web/shared';
 
-import { ContactPersons as ContactPersonGroup } from '@/components/ui/contact-persons';
 import { SectionHeader } from '@/components/ui/section-header';
+import { ContactPersons as ContactPersonGroup } from '@/components/with-logic/contact-persons';
 import type { ContactPerson, HomePageQueryResult } from '@/types/sanity.types';
 
 import styles from './contact-persons.module.css';

@@ -9,7 +9,7 @@ import { urlForImage } from '@/lib/sanity/utils';
 import type { ContactPerson } from '@/types/sanity.types';
 import { getInitials } from '@/utils/image';
 
-import { ContactButton } from './contact-button';
+import { ContactButton } from '../ui/contact-button';
 
 interface ContactPersonItemProps
 	extends ContactPerson,

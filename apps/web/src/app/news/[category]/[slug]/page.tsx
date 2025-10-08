@@ -1,10 +1,10 @@
 import { cn } from '@tsgi-web/shared';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 
 import { Hero } from '@/components/section/hero';
 import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
+import { ZoomableImage } from '@/components/ui/zoomable-image';
 import { client } from '@/lib/sanity/client';
 import {
 	newsArticleContentQuery,
@@ -116,10 +116,11 @@ export default async function NewsArticlePage({
 											if (item._type === 'mainImage') {
 												return (
 													<figure key={item._key}>
-														<Image
+														<ZoomableImage
 															alt={item.alt}
 															height={450}
 															src={urlForImage(item, 450, 800) ?? ''}
+															srcFull={urlForImage(item, 1440, 2560) ?? ''}
 															width={800}
 														/>
 														{item.description && (
@@ -138,10 +139,11 @@ export default async function NewsArticlePage({
 							case 'mainImage': {
 								return (
 									<figure key={block._key}>
-										<Image
+										<ZoomableImage
 											alt={block.alt}
 											height={450}
 											src={urlForImage(block, 450, 800) ?? ''}
+											srcFull={urlForImage(block, 1440, 2560) ?? ''}
 											width={800}
 										/>
 										{block.description && (
