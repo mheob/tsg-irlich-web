@@ -1,8 +1,9 @@
 import type { IconType } from '@icons-pack/react-simple-icons';
-import Link from 'next/link';
 import type { ComponentPropsWithoutRef, ComponentPropsWithRef } from 'react';
 
-interface SocialMediaIconProps extends ComponentPropsWithRef<typeof Link> {
+import { ContactLink } from '@/components/with-logic/contact-link';
+
+interface SocialMediaIconProps extends ComponentPropsWithRef<typeof ContactLink> {
 	className?: ComponentPropsWithoutRef<IconType>['className'];
 	icon: IconType;
 	label: string;
@@ -17,7 +18,7 @@ export function SocialMediaIcon({
 	if (label === '_type') return null;
 
 	return (
-		<Link
+		<ContactLink
 			aria-label={label}
 			className="hover:text-secondary"
 			rel="noopener noreferrer"
@@ -25,6 +26,6 @@ export function SocialMediaIcon({
 			{...props}
 		>
 			<Icon className={className} />
-		</Link>
+		</ContactLink>
 	);
 }
