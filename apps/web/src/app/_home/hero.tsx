@@ -43,8 +43,8 @@ export async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 					<Image
 						className={cn(
 							'absolute',
-							'bottom-20 end-[10%] start-[10%] w-[80%]',
-							'md:bottom-10 md:end-auto md:start-1/2 md:w-[40%]',
+							'start-[10%] end-[10%] bottom-20 w-[80%]',
+							'md:start-1/2 md:end-auto md:bottom-10 md:w-[40%]',
 							'3xl:bottom-10 3xl:end-auto 3xl:start-1/2 3xl:w-[33%]',
 						)}
 						alt="Ein Frau, die am meditieren ist."

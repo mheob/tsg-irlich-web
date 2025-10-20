@@ -3,6 +3,7 @@
 		"editorconfig.editorconfig",
 		"dbaeumer.vscode-eslint",
 		"davidanson.vscode-markdownlint",
+		"edwinhuish.better-comments-next",
 		"esbenp.prettier-vscode",
 		"sanity-io.vscode-sanity",
 		"mheob.vscode-snippets",

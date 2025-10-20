@@ -12,11 +12,11 @@ export function Intro({ text }: Readonly<IntroProps>) {
 		<section
 			className={cn(
 				'container my-10 text-lg md:my-32 lg:max-w-6xl',
-				'[&>h2]:not-first:mt-12 [&>h2]:mb-8 [&>h2]:text-4xl',
-				'[&>h3]:mb-4 [&>h3]:mt-8 [&>h3]:text-2xl',
+				'[&>h2]:mb-8 [&>h2]:text-4xl [&>h2]:not-first:mt-12',
+				'[&>h3]:mt-8 [&>h3]:mb-4 [&>h3]:text-2xl',
 				'[&>p]:mb-4 [&>p]:max-w-max',
 				'[&>p>a]:text-primary-light [&>p>a]:hover:text-primary',
-				'[&_li]:text-muted-foreground [&>ul]:mb-4 [&>ul]:list-disc [&>ul]:pl-4 [&_li]:pl-2',
+				'[&_li]:text-muted-foreground [&_li]:pl-2 [&>ul]:mb-4 [&>ul]:list-disc [&>ul]:pl-4',
 			)}
 		>
 			<PortableText value={text.text as PortableTextValue} />

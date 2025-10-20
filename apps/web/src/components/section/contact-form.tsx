@@ -69,7 +69,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 						<div className="bg-secondary absolute end-[calc(70%-8rem)] top-1/2 grid h-52 w-52 place-content-center rounded-full">
 							<Image alt="Vision" className="rounded-full" src={sportImage} fill />
 						</div>
-						<div className="bg-secondary absolute bottom-0 end-[calc(25%-8rem)] grid h-52 w-52 place-content-center rounded-full">
+						<div className="bg-secondary absolute end-[calc(25%-8rem)] bottom-0 grid h-52 w-52 place-content-center rounded-full">
 							<Image alt="Vision" className="rounded-full" src={villageImage} fill />
 						</div>
 					</div>

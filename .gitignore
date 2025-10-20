@@ -19,6 +19,9 @@ node_modules/
 .DS_Store
 *.pem
 
+# AI
+.claude/settings.local.json
+
 # Testing
 coverage/
 

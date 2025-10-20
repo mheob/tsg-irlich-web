@@ -21,13 +21,13 @@ function ListItem({ children, className, title, ...props }: Readonly<ListItemPro
 			<NavigationMenuLink asChild>
 				<Link
 					className={cn(
-						'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground outline-hidden block select-none space-y-1 rounded-md p-3 leading-none no-underline transition-colors',
+						'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none',
 						className,
 					)}
 					{...props}
 				>
 					<>
-						<div className="text-sm font-medium leading-none">{title}</div>
+						<div className="text-sm leading-none font-medium">{title}</div>
 						<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
 					</>
 				</Link>
@@ -99,11 +99,11 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 								<li className="row-span-3">
 									<NavigationMenuLink asChild>
 										<Link
-											className="from-muted/50 to-muted bg-linear-to-b outline-hidden flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline focus:shadow-md"
+											className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
 											href="/"
 										>
 											<>
-												<div className="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>
+												<div className="mt-4 mb-2 text-lg font-medium">shadcn/ui</div>
 												<p className="text-muted-foreground text-sm leading-tight">
 													Beautifully designed components built with Radix UI and Tailwind CSS.
 												</p>

@@ -21,12 +21,12 @@ export function NewsArticlePreviewWide({
 		<article className="group rounded-xl bg-white text-black md:grid md:grid-cols-[50%_50%]">
 			{featuredImageSource && (
 				<Link
-					className="relative block aspect-[2.5/1] w-full overflow-hidden rounded-t-xl md:aspect-auto md:rounded-l-xl md:rounded-t-none"
+					className="relative block aspect-[2.5/1] w-full overflow-hidden rounded-t-xl md:aspect-auto md:rounded-t-none md:rounded-l-xl"
 					href={`/news/${categories[0].slug}/${slug}`}
 				>
 					<Image
 						alt={featuredImage.alt}
-						className="transform-cpu rounded-t-xl object-cover duration-500 group-hover:scale-110 md:rounded-l-xl md:rounded-t-none"
+						className="transform-cpu rounded-t-xl object-cover duration-500 group-hover:scale-110 md:rounded-t-none md:rounded-l-xl"
 						sizes="(max-width: 48rem) 100vw, 800px"
 						src={featuredImageSource}
 						fill

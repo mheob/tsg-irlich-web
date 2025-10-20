@@ -39,7 +39,7 @@ export function TrainingCard({ training }: Readonly<TrainingCardProps>) {
 		<Card className="relative w-full max-w-xl overflow-hidden">
 			<div
 				className={cn(
-					'absolute right-5 top-5 flex items-center gap-3 rounded-full px-2 py-1 font-medium',
+					'absolute top-5 right-5 flex items-center gap-3 rounded-full px-2 py-1 font-medium',
 					{ 'bg-amber-100 text-amber-800': training.season === 'summer' },
 					{ 'bg-blue-100 text-blue-800': training.season === 'winter' },
 					{ 'bg-primary-light text-primary-foreground': training.season === 'yearly' },

@@ -37,9 +37,9 @@ function TestimonialItem({
 				{
 					'bg-primary text-primary-foreground border-primary-foreground rounded-xl': isHighlighted,
 				},
-				{ 'py-6 pl-5 pr-10': !isHighlighted && isMobile },
-				{ '-ml-6 mr-2 py-6 pl-5 pr-10': isHighlighted && isMobile },
-				{ 'my-6 -ml-36 -mr-14 py-6 pl-14 pr-36': isHighlighted && !isMobile },
+				{ 'py-6 pr-10 pl-5': !isHighlighted && isMobile },
+				{ 'mr-2 -ml-6 py-6 pr-10 pl-5': isHighlighted && isMobile },
+				{ 'my-6 -mr-14 -ml-36 py-6 pr-36 pl-14': isHighlighted && !isMobile },
 			)}
 		>
 			<div className="flex items-center gap-5">
@@ -95,7 +95,7 @@ function TestimonialItem({
 			</p>
 
 			{isHighlighted && (
-				<div className="absolute bottom-2 end-4 md:bottom-6 md:end-12">
+				<div className="absolute end-4 bottom-2 md:end-12 md:bottom-6">
 					<Quote className="size-6 md:size-14" strokeWidth="1" />
 				</div>
 			)}
@@ -110,7 +110,7 @@ interface TestimonialGroupProps extends HTMLAttributes<HTMLDivElement> {
 export function TestimonialGroup({ testimonials }: Readonly<TestimonialGroupProps>) {
 	return (
 		<div>
-			<div className="bg-primary-border-primary-foreground ml-6 mt-10 rounded-xl shadow-xl md:ml-0 md:mt-0 md:py-16 md:pl-12 md:pr-28">
+			<div className="bg-primary-border-primary-foreground mt-10 ml-6 rounded-xl shadow-xl md:mt-0 md:ml-0 md:py-16 md:pr-28 md:pl-12">
 				{testimonials.map((props, index) => (
 					<TestimonialItem {...props} isHighlighted={index === 1} key={props.lastName} />
 				))}

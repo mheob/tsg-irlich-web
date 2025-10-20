@@ -38,8 +38,8 @@ function ContactPersonItem({
 				<Image
 					className={cn(
 						'bg-secondary-light text-primary border-primary',
-						'z-1 relative grid place-items-center',
-						'border-5 rounded-full md:border-8',
+						'relative z-1 grid place-items-center',
+						'rounded-full border-5 md:border-8',
 					)}
 					alt={image.alt}
 					height={isMobile ? 120 : 176}
@@ -50,8 +50,8 @@ function ContactPersonItem({
 				<div
 					className={cn(
 						'bg-secondary text-primary border-primary',
-						'z-1 relative grid place-items-center',
-						'border-5 rounded-full md:border-8',
+						'relative z-1 grid place-items-center',
+						'rounded-full border-5 md:border-8',
 						'size-32 text-6xl font-bold md:size-44',
 					)}
 				>
@@ -60,7 +60,7 @@ function ContactPersonItem({
 			)}
 
 			<div className="-mt-24 ml-8 flex h-full flex-col gap-4 rounded-xl bg-white text-black md:-mt-36 md:gap-12">
-				<header className="pl-28 pr-12 pt-6 md:pl-40">
+				<header className="pt-6 pr-12 pl-28 md:pl-40">
 					<h3 className="font-serif text-2xl md:text-3xl">
 						{firstName} {lastName}
 					</h3>
