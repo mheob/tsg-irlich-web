@@ -16,4 +16,4 @@ Create changeset if needed (at least an empty changeset) and create a single git
 
 Use conventional commits with a title length of max 50 characters. See @commitlint.config.js for more details.
 
-Please omit mention Claude as author and generator.
+Please do not mention Claude as author and generator.
