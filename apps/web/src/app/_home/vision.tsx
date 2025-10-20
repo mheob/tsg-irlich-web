@@ -5,9 +5,9 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
-import taekwondoImage from '@/images/home/vision/taekwondo.webp';
-import teamworkImage from '@/images/home/vision/teamwork.webp';
-import zusammenhaltImage from '@/images/home/vision/zusammenhalt.webp';
+import visionImage1 from '@/images/home/vision/vision-1.webp';
+import visionImage2 from '@/images/home/vision/vision-2.webp';
+import visionImage3 from '@/images/home/vision/vision-3.webp';
 import type { Home } from '@/types/sanity.types';
 
 import styles from './vision.module.css';
@@ -21,20 +21,35 @@ export function Vision({ cta, intro, subtitle, title }: Readonly<VisionProps>) {
 				<div className="relative container mx-auto h-80 px-5 md:static">
 					<div className={styles.bgRoundedEdge}></div>
 
-					<div className="absolute start-32 bottom-24 size-40 md:start-[calc(28%-12rem)] md:top-20 md:size-96">
-						<Image alt="Vision" className="rounded-full" src={taekwondoImage} fill />
+					<div className="absolute top-5 bottom-24 left-[calc(50%-6rem)] size-40 md:top-20 md:left-[calc(28%-12rem)] md:size-56 lg:size-96">
+						<Image
+							alt="Scheck-Übergabe: TSG Irlich überreicht 250 Euro Spende zum Wiederaufbau des Engerser Lockschuppens."
+							className="rounded-full"
+							src={visionImage1}
+							fill
+						/>
 					</div>
 
-					<div className="absolute start-48 -bottom-8 size-32 md:start-[calc(13%-8rem)] md:top-[calc(50%-3rem)] md:size-64">
-						<Image alt="Vision" className="rounded-full" src={teamworkImage} fill />
+					<div className="absolute end-8 bottom-8 size-32 md:top-[calc(50%-3rem)] md:left-[calc(13%-8rem)] md:size-48 lg:size-64">
+						<Image
+							alt="Tanzgruppe 'Funky Diamonds' der TSG Irlich präsentiert eine Choreografie in rot-weißen Kostümen auf der Bühne"
+							className="rounded-full"
+							src={visionImage2}
+							fill
+						/>
 					</div>
 
-					<div className="absolute start-10 -bottom-1 size-32 md:start-[calc(29%-8rem)] md:bottom-24 md:size-64">
-						<Image alt="Vision" className="rounded-full" src={zusammenhaltImage} fill />
+					<div className="absolute -bottom-4 left-10 size-32 md:bottom-24 md:left-[calc(29%-8rem)] md:size-48 lg:size-64">
+						<Image
+							alt="Jugend-Fußballmannschaft der TSG Irlich in gelb-blauen Trikots steht Arm in Arm auf dem Sportplatz"
+							className="rounded-full"
+							src={visionImage3}
+							fill
+						/>
 					</div>
 				</div>
 
-				<div className="container mx-auto px-5 pt-18 pb-10 text-center md:py-60 md:text-start">
+				<div className="container mx-auto px-5 pt-18 pb-10 text-center md:py-60 md:text-left">
 					<SectionHeader isCenteredOnDesktop={false} subTitle={subtitle} title={title} isCentered>
 						{intro}
 					</SectionHeader>
