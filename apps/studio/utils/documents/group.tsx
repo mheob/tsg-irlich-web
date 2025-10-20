@@ -136,10 +136,20 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 						type: 'array',
 					}),
 				],
-				hidden: !isSportGroup,
-				validation: isSportGroup
-					? Rule => [Rule.required().error('Trainingszeiten und -orte sind erforderlich')]
-					: undefined,
+				hidden: ({ document }) =>
+					(document?.title as string)?.toLowerCase() === 'schiedsrichter' || !isSportGroup,
+				validation: Rule => [
+					Rule.custom((value, context) => {
+						if (
+							isSportGroup &&
+							(context.document?.title as string)?.toLowerCase() !== 'schiedsrichter' &&
+							!value
+						) {
+							return 'Trainingszeiten und -orte sind erforderlich';
+						}
+						return true;
+					}),
+				],
 			}),
 
 			defineField({
@@ -152,6 +162,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				validation: Rule => [Rule.required().error('"Ist Sportgruppe" ist erforderlich')],
 			}),
 		],
+
 		preview: {
 			prepare: ({ sortOrder, title }) => ({
 				subtitle: `Sortierreihenfolge: ${sortOrder}`,
@@ -162,6 +173,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'title',
 			},
 		},
+
 		orderings: [
 			{
 				by: [{ direction: 'asc', field: 'title' }],

@@ -83,7 +83,9 @@ export default async function SingleGroupsPage({
 				gallery={groupData.images ?? []}
 				title={groupData.title ?? ''}
 			/>
-			<Training title={page.content.trainingSection.title ?? ''} training={groupData.training} />
+			{groupData.training && (
+				<Training title={page.content.trainingSection.title ?? ''} training={groupData.training} />
+			)}
 			<ContactPersons {...page.content.contactPersonsSection} contactPersons={coaches} />
 			<Newsletter />
 		</>

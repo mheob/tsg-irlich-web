@@ -920,7 +920,7 @@ export type GroupTaekwondo = {
 		_type: 'extendedImage';
 		_key: string;
 	}>;
-	training: {
+	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
 			{
@@ -990,7 +990,7 @@ export type GroupSoccer = {
 		_type: 'extendedImage';
 		_key: string;
 	}>;
-	training: {
+	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
 			{
@@ -1060,7 +1060,7 @@ export type GroupOtherSports = {
 		_type: 'extendedImage';
 		_key: string;
 	}>;
-	training: {
+	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
 			{
@@ -1130,7 +1130,7 @@ export type GroupDance = {
 		_type: 'extendedImage';
 		_key: string;
 	}>;
-	training: {
+	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
 			{
@@ -1200,7 +1200,7 @@ export type GroupCourses = {
 		_type: 'extendedImage';
 		_key: string;
 	}>;
-	training: {
+	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
 			{
@@ -1270,7 +1270,7 @@ export type GroupChildrenGymnastics = {
 		_type: 'extendedImage';
 		_key: string;
 	}>;
-	training: {
+	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
 			{
@@ -2450,96 +2450,6 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			images: null;
 			title: string;
 			training: null;
-	  }
-	| {
-			description: SimpleBlockContent;
-			featuredImage: {
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'extendedImage';
-			};
-			images: Array<{
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'extendedImage';
-				_key: string;
-			}> | null;
-			title: string;
-			training: {
-				trainingDescription: SimpleBlockContent | null;
-				trainingTimes: Array<{
-					_key: string;
-					_type: 'trainingTime';
-					season: 'summer' | 'winter' | 'yearly';
-					weekday:
-						| 'friday'
-						| 'monday'
-						| 'saturday'
-						| 'sunday'
-						| 'thursday'
-						| 'tuesday'
-						| 'wednesday';
-					startTime: string;
-					endTime: string;
-					venue: {
-						_id: string;
-						_type: 'venue';
-						_createdAt: string;
-						_updatedAt: string;
-						_rev: string;
-						title: string;
-						description: SimpleBlockContent;
-						type:
-							| 'artificial-turf'
-							| 'cinder'
-							| 'grass'
-							| 'hall-1'
-							| 'hall-2'
-							| 'hall-3'
-							| 'hybrid';
-						mainImage?: {
-							asset?: {
-								_ref: string;
-								_type: 'reference';
-								_weak?: boolean;
-								[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-							};
-							media?: unknown;
-							hotspot?: SanityImageHotspot;
-							crop?: SanityImageCrop;
-							alt: string;
-							description?: string;
-							_type: 'image';
-						};
-						location?: {
-							name: string;
-							street: string;
-							houseNumber: string;
-							zipCode?: string;
-							city: string;
-						};
-					};
-					note?: string;
-				}> | null;
-			};
 	  }
 	| {
 			description: SimpleBlockContent;
