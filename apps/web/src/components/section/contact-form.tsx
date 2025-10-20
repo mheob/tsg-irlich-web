@@ -12,9 +12,9 @@ import { SectionHeader } from '@/components/ui/section-header';
 import { TextareaWithLabel } from '@/components/ui/textarea';
 import { Form, FormField } from '@/components/with-logic/form';
 import { SelectWithLabel } from '@/components/with-logic/select';
-import integrationImage from '@/images/home/vision/integration.webp';
-import sportImage from '@/images/home/vision/sport.webp';
-import villageImage from '@/images/home/vision/village.webp';
+import contactImage1 from '@/images/contact/contact-1.webp';
+import contactImage2 from '@/images/contact/contact-2.webp';
+import contactImage3 from '@/images/contact/contact-3.webp';
 import type { ContactNameMail } from '@/types/sanity.types';
 
 const formSchema = z.object({
@@ -63,14 +63,29 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 			<div className="md:container md:mx-auto md:px-5">
 				<div className="bg-white px-5 py-10 md:flex md:flex-row-reverse md:rounded-lg md:px-14 md:py-24">
 					<div className="hidden md:relative md:block md:w-1/2">
-						<div className="bg-secondary absolute end-0 top-0 grid h-80 w-80 place-content-center rounded-full">
-							<Image alt="Vision" className="rounded-full" src={integrationImage} fill />
+						<div className="bg-secondary absolute top-0 right-0 grid size-60 place-content-center rounded-full lg:size-80">
+							<Image
+								alt="'FUNKY DIAMONDS'-Spielerin mit geflochtener Frisur und Pferdeschwanz in schwarzem Trikot und Rückennummer 6, telefoniert während eines Spiels."
+								className="rounded-full"
+								src={contactImage1}
+								fill
+							/>
 						</div>
-						<div className="bg-secondary absolute end-[calc(70%-8rem)] top-1/2 grid h-52 w-52 place-content-center rounded-full">
-							<Image alt="Vision" className="rounded-full" src={sportImage} fill />
+						<div className="bg-secondary absolute top-1/2 right-[calc(70%-8rem)] grid size-52 place-content-center rounded-full">
+							<Image
+								alt="Gruppe der TSG Irlich in blauen Trikots posiert für ein Mannschaftsfoto auf dem Spielfeld, während eine Fotografin in schwarzem Kleid mit Kamera auf Stativ das Foto macht."
+								className="rounded-full"
+								src={contactImage2}
+								fill
+							/>
 						</div>
-						<div className="bg-secondary absolute end-[calc(25%-8rem)] bottom-0 grid h-52 w-52 place-content-center rounded-full">
-							<Image alt="Vision" className="rounded-full" src={villageImage} fill />
+						<div className="bg-secondary absolute right-[calc(25%-8rem)] bottom-0 grid size-52 place-content-center rounded-full">
+							<Image
+								alt="PR-Team-Mitglied der TSG Irlich in blau-weißem Vereinstrikot mit Kamera auf Stativ bei der Arbeit im Freien."
+								className="rounded-full"
+								src={contactImage3}
+								fill
+							/>
 						</div>
 					</div>
 
