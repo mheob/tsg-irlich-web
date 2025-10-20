@@ -12,7 +12,7 @@ export function BreadcrumbList({ className, ...props }: ComponentProps<'ol'>) {
 	return (
 		<ol
 			className={cn(
-				'flex flex-wrap items-center gap-2 break-words text-sm font-bold md:text-lg',
+				'flex flex-wrap items-center gap-2 text-sm font-bold break-words md:text-lg',
 				className,
 			)}
 			data-slot="breadcrumb-list"

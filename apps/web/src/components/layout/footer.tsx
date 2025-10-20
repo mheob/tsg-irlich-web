@@ -34,7 +34,7 @@ export default async function Footer() {
 
 	return (
 		<footer className="bg-primary w-full text-white">
-			<div className="container mx-auto px-5 pb-4 pt-16 md:pt-40">
+			<div className="container mx-auto px-5 pt-16 pb-4 md:pt-40">
 				<div className="md:flex md:justify-between">
 					<section className="flex flex-col items-center gap-5">
 						<Link href="/">

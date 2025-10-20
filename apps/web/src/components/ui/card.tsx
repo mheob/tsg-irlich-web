@@ -15,7 +15,7 @@ export function CardHeader({ className, ...props }: ComponentProps<'header'>) {
 	return (
 		<header
 			className={cn(
-				'@container/card-header has-data-[slot=card-action]:grid-cols-[1fr_auto] grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5',
+				'@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 has-data-[slot=card-action]:grid-cols-[1fr_auto]',
 				className,
 			)}
 			data-slot="card-header"
