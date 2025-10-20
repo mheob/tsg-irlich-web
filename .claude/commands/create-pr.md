@@ -1,5 +1,5 @@
 ---
-description: Create a git commit
+description: Create a Pull Request
 ---
 
 Create a Pull Request:
