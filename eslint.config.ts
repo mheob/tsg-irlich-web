@@ -1,4 +1,4 @@
-import { GLOB_MARKDOWN, GLOB_SRC, mheob } from '@mheob/eslint-config';
+import { GLOB_SRC, mheob } from '@mheob/eslint-config';
 import nextPlugin from '@next/eslint-plugin-next';
 
 export default mheob(
@@ -7,12 +7,6 @@ export default mheob(
 	},
 	{
 		ignores: ['.sonarlint', '**/*.generated.*', 'apps/studio/schema.json'],
-	},
-	{
-		files: [GLOB_MARKDOWN],
-		rules: {
-			'unicorn/filename-case': 'off',
-		},
 	},
 	{
 		files: [GLOB_SRC],
