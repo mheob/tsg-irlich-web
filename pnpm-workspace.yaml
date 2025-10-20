@@ -49,7 +49,7 @@ catalog:
   cz-git: ^1.12.0
   dotenv: ^17.2.3
   eslint: ^9.38.0
-  eslint-plugin-react-hooks: ^5.2.0
+  eslint-plugin-react-hooks: ^7.0.0
   eslint-plugin-react-refresh: ^0.4.24
   husky: ^9.1.7
   lint-staged: ^16.2.4
