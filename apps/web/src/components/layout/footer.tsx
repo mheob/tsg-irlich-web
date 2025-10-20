@@ -7,6 +7,7 @@ import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { getSocialMediaIcon } from '@/utils/icon';
 
 import { SocialMediaIcon } from '../ui/social-media-icon';
+import { ContactLink } from '../with-logic/contact-link';
 
 const contact: {
 	address: string;
@@ -58,6 +59,7 @@ export default async function Footer() {
 
 					<div className="mt-16 flex gap-8 md:mt-0 md:block md:text-xl/relaxed">
 						<section className="flex flex-col gap-12 md:w-auto md:flex-row md:gap-48">
+							{/* TODO: open modal with multiple links to several map providers */}
 							<a
 								className="hover:text-secondary group flex flex-col items-start gap-4 md:items-center"
 								href="#!"
@@ -71,7 +73,7 @@ export default async function Footer() {
 								<address>{contact.address}</address>
 							</a>
 
-							<a
+							<ContactLink
 								className="hover:text-secondary group flex flex-col items-start gap-4 md:items-center"
 								href={`tel:${contact.phone}`}
 							>
@@ -82,9 +84,9 @@ export default async function Footer() {
 									<Phone className="size-6 md:size-12" strokeWidth="1" />
 								</span>
 								<address>{contact.phone}</address>
-							</a>
+							</ContactLink>
 
-							<a
+							<ContactLink
 								className="hover:text-secondary group flex flex-col items-start gap-4 md:items-center"
 								href={`mailto:${contact.email}`}
 							>
@@ -95,7 +97,7 @@ export default async function Footer() {
 									<Mail className="size-6 md:size-12" strokeWidth="1" />
 								</span>
 								<address>{contact.email}</address>
-							</a>
+							</ContactLink>
 						</section>
 
 						<nav className="flex flex-col gap-8 md:mt-12 md:flex-row md:justify-end md:gap-20">
