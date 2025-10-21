@@ -10,6 +10,12 @@ import type { ListItemBuilder, StructureBuilder } from 'sanity/structure';
 
 type DocumentGroup = 'groups' | 'news' | 'persons' | 'settings' | 'single-pages';
 
+/**
+ * Returns the group for the news.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the news.
+ */
 function getGroupNews(S: StructureBuilder): ListItemBuilder[] {
 	return [
 		S.listItem()
@@ -23,6 +29,12 @@ function getGroupNews(S: StructureBuilder): ListItemBuilder[] {
 	];
 }
 
+/**
+ * Returns the group for the persons.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the persons.
+ */
 function getGroupPersons(S: StructureBuilder): ListItemBuilder[] {
 	return [
 		S.listItem()
@@ -42,6 +54,12 @@ function getGroupPersons(S: StructureBuilder): ListItemBuilder[] {
 	];
 }
 
+/**
+ * Returns the group for the groups.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the groups.
+ */
 function getGroupGroups(S: StructureBuilder): ListItemBuilder[] {
 	return [
 		S.listItem()
@@ -64,6 +82,12 @@ function getGroupGroups(S: StructureBuilder): ListItemBuilder[] {
 	];
 }
 
+/**
+ * Returns the group for the settings.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the settings.
+ */
 function getGroupSettings(S: StructureBuilder): ListItemBuilder[] {
 	return [
 		S.documentTypeListItem('assist.instruction.context').title('KI-Anweisungen').icon(RiOpenaiLine),
@@ -75,11 +99,24 @@ function getGroupSettings(S: StructureBuilder): ListItemBuilder[] {
 	];
 }
 
+/**
+ * Checks if a singleton list item is excluded.
+ *
+ * @param id - The id of the singleton list item.
+ * @returns True if the singleton list item is excluded, false otherwise.
+ */
 function isExcludedSingletonListItem(id?: string): boolean {
 	if (!id) return false;
 	return !['site-settings'].includes(id);
 }
 
+/**
+ * Returns the group for the single pages.
+ *
+ * @param S - The structure builder.
+ * @param typeDefinitionArray - The array of document definitions.
+ * @returns The group for the single pages.
+ */
 function getGroupSinglePages(
 	S: StructureBuilder,
 	typeDefinitionArray?: DocumentDefinition[],
@@ -110,6 +147,12 @@ function getGroupSinglePages(
 	];
 }
 
+/**
+ * Checks if a default list item is excluded.
+ *
+ * @param id - The id of the default list item.
+ * @returns True if the default list item is excluded, false otherwise.
+ */
 export function isExcludedDefaultListItem(id?: string): boolean {
 	if (!id) return false;
 	return ![
@@ -131,6 +174,14 @@ export function isExcludedDefaultListItem(id?: string): boolean {
 	].includes(id);
 }
 
+/**
+ * Returns the group for the given name.
+ *
+ * @param S - The structure builder.
+ * @param name - The name of the group.
+ * @param typeDefinitionArray - The array of document definitions.
+ * @returns The group for the given name.
+ */
 export function getGroup(
 	S: StructureBuilder,
 	name: DocumentGroup,
