@@ -2,8 +2,13 @@ import { defineField } from 'sanity';
 
 import { slugify } from '@/utils/strings';
 
-// eslint-disable-next-line ts/explicit-function-return-type
-export function getHiddenSlugField(slug: string) {
+/**
+ * A hidden slug field for a document.
+ *
+ * @param slug - The slug to set as the initial value.
+ * @returns The hidden slug field.
+ */
+export function getHiddenSlugField(slug: string): ReturnType<typeof defineField> {
 	return defineField({
 		title: 'Slug',
 		name: 'slug',
@@ -61,12 +66,24 @@ export const defaultHeroFields = [titleField, subTitleField];
 
 export const defaultPageSectionFields = [titleField, subTitleField, introField];
 
+/**
+ * Returns the default page section fields with the specified group.
+ *
+ * @param group - The group to add the fields to.
+ * @returns The default page section fields with the specified group.
+ */
 export function getDefaultPageSectionFieldsWithGroup(
 	group?: string,
 ): ReturnType<typeof defineField>[] {
 	return defaultPageSectionFields.map(field => ({ ...field, group }));
 }
 
+/**
+ * Removes the group from a field.
+ *
+ * @param field - The field to remove the group from.
+ * @returns The field with the group removed.
+ */
 export function removeGroupFromField(
 	field: ReturnType<typeof defineField>,
 ): ReturnType<typeof defineField> {

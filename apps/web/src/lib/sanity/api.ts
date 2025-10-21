@@ -7,7 +7,7 @@
  * @param value - The value to check
  * @param errorMessage - The error message to throw if value is undefined
  * @returns The value if defined
- * @throws Error if value is undefined
+ * @throws {Error} Error if value is undefined
  * @example
  * ```ts
  * const requiredValue = assertValue(process.env.REQUIRED_VAR, 'Missing REQUIRED_VAR');

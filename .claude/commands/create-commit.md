@@ -1,5 +1,5 @@
 ---
-allowed-tools: ash(cat*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git status:*), Bash(pnpm changeset:*)
+allowed-tools: Bash(cat*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git status:*), Bash(pnpm changeset:*)
 description: Create a git commit
 ---
 
@@ -10,10 +10,10 @@ description: Create a git commit
 - Current branch: !`git branch --show-current`
 - Recent commits: !`git log --oneline -10`
 
-## Your task
+## Your tasks
 
-Create changeset if needed (at least an empty changeset) and create a single git commit based on the above changes.
+Create a single git commit based on the above changes.
 
 Use conventional commits with a title length of max 50 characters. See @commitlint.config.js for more details.
 
-Please do not mention Claude as author and generator.
+Please omit mention Claude as author and generator.

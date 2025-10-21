@@ -23,6 +23,11 @@ import siteSettings from '@/schemas/singletons/site-settings';
 import { assistWithPresets } from './assist';
 import { pageStructure, singletonPlugin } from './singleton';
 
+/**
+ * The plugins for the studio.
+ *
+ * @returns The plugins for the studio.
+ */
 export function getPlugins(): PluginOptions[] {
 	const plugins: PluginOptions[] = [
 		deDELocale(),

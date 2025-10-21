@@ -3,6 +3,11 @@ import type { PluginOptions } from 'sanity';
 
 import newsArticle from '@/schemas/documents/news.article';
 
+/**
+ * The assist plugin with presets for the news article schema.
+ *
+ * @returns The assist plugin with presets for the news article schema.
+ */
 export function assistWithPresets(): PluginOptions {
 	return assist({
 		__presets: {
