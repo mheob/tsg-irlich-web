@@ -3,7 +3,7 @@
 		"incremental": true,
 		"target": "ES2017",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
-		"jsx": "preserve",
+		"jsx": "react-jsx",
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
 		"paths": { "@/*": ["./src/*"] },
@@ -16,6 +16,12 @@
 		"skipLibCheck": true,
 		"plugins": [{ "name": "next" }]
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		".next/dev/types/**/*.ts"
+	],
 	"exclude": ["node_modules"]
 }
