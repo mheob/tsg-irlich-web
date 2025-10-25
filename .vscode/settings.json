@@ -45,7 +45,9 @@
 		"postcss"
 	],
 
-	// MarkdownLint
+	// Markdown
+	"markdown.extension.toc.levels": "2..2",
+	"markdown.extension.toc.omittedFromToc": { "README.md": ["## Table of Contents"] },
 	"markdownlint.config": {
 		"MD041": false
 	},
