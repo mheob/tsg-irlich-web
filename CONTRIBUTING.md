@@ -20,7 +20,7 @@ contributing to this project.
 
 ### Prerequisites
 
-- **Node.js** >= 22.15
+- **Node.js** >= 22.20
 - **pnpm** (package manager)
 - **Git** for version control
 

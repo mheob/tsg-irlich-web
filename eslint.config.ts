@@ -9,6 +9,12 @@ export default mheob(
 		ignores: ['.sonarlint', '**/*.generated.*', 'apps/studio/schema.json'],
 	},
 	{
+		files: ['.vscode/settings.json'],
+		rules: {
+			'jsonc/sort-keys': 'off',
+		},
+	},
+	{
 		files: [GLOB_SRC],
 		rules: {
 			'react-refresh/only-export-components': [
