@@ -18,6 +18,7 @@ function getScopes() {
 	return [...defaultScopes, ...apps, ...packages];
 }
 
+// eslint-disable-next-line jsdoc/check-tag-names
 /** @type {import('@mheob/commitlint-config').UserConfig} */
 const config = {
 	...defaultConfig,
