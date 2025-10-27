@@ -1,6 +1,15 @@
-import { Counter } from '@/components/ui/counter';
-import type { Stats as StatsProps } from '@/types/sanity.types';
+import type { ComponentProps } from 'react';
 
-export function Stats({ stats }: Readonly<{ stats: StatsProps[] }>) {
-	return <Counter values={stats} />;
+import { Counter } from '@/components/ui/counter';
+import type { Stats as StatsProperties } from '@/types/sanity.types';
+
+interface StatsProps extends ComponentProps<'section'> {
+	stats: StatsProperties[];
+}
+export function Stats({ stats, ...props }: Readonly<StatsProps>) {
+	return (
+		<section {...props}>
+			<Counter values={stats} />
+		</section>
+	);
 }
