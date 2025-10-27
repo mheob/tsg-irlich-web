@@ -1,4 +1,4 @@
-/* cspell:words mitgliedschaft */
+/* cspell:words mitgliedschaft, verein */
 'use client';
 
 import Link from 'next/link';
@@ -12,6 +12,7 @@ import { MobileNav } from './mobile';
 
 const navigationItems = [
 	{ _id: 'home', href: '/', title: 'Home' },
+	{ _id: 'verein', href: '/verein', title: 'Verein' },
 	{ _id: 'angebot', href: '/angebot', title: 'Angebot' },
 	{ _id: 'news', href: '/news', title: 'Aktuelles' },
 	{ _id: 'mitgliedschaft', href: '/mitgliedschaft', title: 'Mitgliedschaft' },

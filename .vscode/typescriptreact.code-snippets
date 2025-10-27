@@ -22,7 +22,14 @@
 	"React Page component": {
 		"prefix": "rcp",
 		"body": [
-			"export default function ${2}${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ params, searchParams }: Readonly<PageProps<'/${3}'>>) {",
+			"import type { Metadata } from 'next';",
+			"",
+			"export const metadata: Metadata = {",
+			"\tdescription: 'Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas.',",
+			"\ttitle: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',",
+			"};",
+			"",
+			"export default async function ${2}${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({ params, searchParams }: Readonly<PageProps<'/${3}'>>) {",
 			"\tconst { slug } = await params;",
 			"\tconst { q } = await searchParams;",
 			"",

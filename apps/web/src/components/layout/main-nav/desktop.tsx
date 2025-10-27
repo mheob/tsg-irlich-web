@@ -1,40 +1,36 @@
-/* cspell:words mitgliedschaft */
-import { cn } from '@tsgi-web/shared';
+/* cspell:words mitgliedschaft, verein */
 import Link from 'next/link';
-import type { ComponentPropsWithoutRef } from 'react';
 
 import {
 	NavigationMenu,
-	NavigationMenuContent,
 	NavigationMenuItem,
 	NavigationMenuLink,
 	NavigationMenuList,
-	NavigationMenuTrigger,
 	navigationMenuTriggerStyle,
 } from '../../ui/navigation-menu';
 
-type ListItemProps = ComponentPropsWithoutRef<typeof Link>;
+// type ListItemProps = ComponentPropsWithoutRef<typeof Link>;
 
-function ListItem({ children, className, title, ...props }: Readonly<ListItemProps>) {
-	return (
-		<li>
-			<NavigationMenuLink asChild>
-				<Link
-					className={cn(
-						'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none',
-						className,
-					)}
-					{...props}
-				>
-					<>
-						<div className="text-sm leading-none font-medium">{title}</div>
-						<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
-					</>
-				</Link>
-			</NavigationMenuLink>
-		</li>
-	);
-}
+// function ListItem({ children, className, title, ...props }: Readonly<ListItemProps>) {
+// 	return (
+// 		<li>
+// 			<NavigationMenuLink asChild>
+// 				<Link
+// 					className={cn(
+// 						'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none',
+// 						className,
+// 					)}
+// 					{...props}
+// 				>
+// 					<>
+// 						<div className="text-sm leading-none font-medium">{title}</div>
+// 						<p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
+// 					</>
+// 				</Link>
+// 			</NavigationMenuLink>
+// 		</li>
+// 	);
+// }
 
 // const components: { description: string; href: string; title: string }[] = [
 // 	{
@@ -92,7 +88,11 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 					</NavigationMenuItem>
 
 					<NavigationMenuItem>
-						<NavigationMenuTrigger>Verein</NavigationMenuTrigger>
+						<NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
+							<Link href="/verein">Verein</Link>
+						</NavigationMenuLink>
+
+						{/* <NavigationMenuTrigger>Verein</NavigationMenuTrigger>
 
 						<NavigationMenuContent>
 							<ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
@@ -124,7 +124,7 @@ export default function DesktopNav({ navigationItems }: Readonly<DesktopNavProps
 									Styles for headings, paragraphs, lists...etc
 								</ListItem>
 							</ul>
-						</NavigationMenuContent>
+						</NavigationMenuContent> */}
 					</NavigationMenuItem>
 
 					{/* <NavigationMenuItem>

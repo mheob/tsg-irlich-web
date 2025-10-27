@@ -24,7 +24,8 @@
 			],
 			"outputs": ["dist/**"]
 		},
-		"typegen": {
+		"typegen:routes": {},
+		"typegen:sanity": {
 			"dependsOn": ["studio#extract-types"]
 		},
 		"web#build": {

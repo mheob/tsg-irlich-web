@@ -13,7 +13,8 @@
 		"lint:cspell": "cspell --unique --no-progress --no-must-find-files",
 		"lint:root": "eslint . --fix",
 		"prepare": "husky",
-		"typegen": "turbo typegen"
+		"typegen:routes": "turbo typegen:routes",
+		"typegen:sanity": "turbo typegen:sanity"
 	},
 	"lint-staged": {
 		"*": [
