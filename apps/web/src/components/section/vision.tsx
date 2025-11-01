@@ -1,13 +1,12 @@
 // cSpell:words taekwondo
-
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
-import visionImage1 from '@/images/home/vision/vision-1.webp';
-import visionImage2 from '@/images/home/vision/vision-2.webp';
-import visionImage3 from '@/images/home/vision/vision-3.webp';
+import visionImage1 from '@/images/vision/vision-1.webp';
+import visionImage2 from '@/images/vision/vision-2.webp';
+import visionImage3 from '@/images/vision/vision-3.webp';
 import type { Home } from '@/types/sanity.types';
 
 import styles from './vision.module.css';

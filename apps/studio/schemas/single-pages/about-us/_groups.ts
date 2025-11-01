@@ -8,9 +8,9 @@ export const contactPersons = {
 	name: 'contactPersons',
 };
 
-export const gallery = {
-	title: 'Galerie',
-	name: 'gallery',
+export const intro = {
+	title: 'Intro',
+	name: 'intro',
 };
 
 export const stats = {

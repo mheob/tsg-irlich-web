@@ -5,6 +5,7 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Newsletter } from '@/components/section/newsletter';
 import { Pricing } from '@/components/section/pricing';
 import { Stats } from '@/components/section/stats';
+import { Vision } from '@/components/section/vision';
 import { client } from '@/lib/sanity/client';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
@@ -14,7 +15,6 @@ import { Groups } from './_home/groups';
 import { Hero } from './_home/hero';
 import { News } from './_home/news';
 import { Testimonials } from './_home/testimonials';
-import { Vision } from './_home/vision';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 60; // 1 minute

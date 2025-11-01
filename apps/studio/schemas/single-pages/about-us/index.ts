@@ -9,9 +9,9 @@ import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
 import { visionField } from '@/shared/sections/vision';
 
-import { chronicle, contactPersons, gallery, stats, vision } from './_groups';
+import { chronicle, contactPersons, intro, stats, vision } from './_groups';
 import { chronicleField } from './chronicle';
-import { galleryField } from './gallery';
+import { introField } from './intro';
 
 const aboutUsPage = defineType({
 	title: 'Über uns',
@@ -36,8 +36,8 @@ const aboutUsPage = defineType({
 			type: 'object',
 			icon: RiLinksLine,
 			group: 'content',
-			groups: [gallery, chronicle, vision, stats, contactPersons],
-			fields: [galleryField, chronicleField, visionField, statsField, contactPersonsSectionField],
+			groups: [intro, chronicle, vision, stats, contactPersons],
+			fields: [introField, chronicleField, visionField, statsField, contactPersonsSectionField],
 			validation: Rule => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
