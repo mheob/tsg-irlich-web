@@ -242,28 +242,6 @@ export type Membership = {
 	};
 };
 
-export type BlockContent = {
-	_type: 'blockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}>;
-		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}>;
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}>;
-};
-
 export type Imprint = {
 	_id: string;
 	_type: 'imprint';
@@ -425,10 +403,10 @@ export type AboutUs = {
 	subtitle: string;
 	meta?: MetaFields;
 	content: {
-		gallerySection?: {
+		introSection?: {
 			title: string;
 			subtitle: string;
-			intro?: string;
+			intro: BlockContent;
 			images: Array<{
 				asset?: {
 					_ref: string;
@@ -479,6 +457,28 @@ export type AboutUs = {
 			}>;
 		};
 	};
+};
+
+export type BlockContent = {
+	_type: 'blockContent';
+	text?: Array<{
+		children?: Array<{
+			marks?: Array<string>;
+			text?: string;
+			_type: 'span';
+			_key: string;
+		}>;
+		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+		listItem?: 'bullet' | 'number';
+		markDefs?: Array<{
+			href?: string;
+			_type: 'link';
+			_key: string;
+		}>;
+		level?: number;
+		_type: 'block';
+		_key: string;
+	}>;
 };
 
 export type Home = {
@@ -1802,12 +1802,12 @@ export type AllSanitySchemaTypes =
 	| Privacy
 	| NewsOverview
 	| Membership
-	| BlockContent
 	| Imprint
 	| InternalLink
 	| GroupsPage
 	| Contact
 	| AboutUs
+	| BlockContent
 	| Home
 	| ImageCard
 	| ExternalLink
@@ -1860,6 +1860,92 @@ export type AllSanitySchemaTypes =
 	| Slug
 	| SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/lib/sanity/queries/pages/about-us.ts
+// Variable: aboutUsPageQuery
+// Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
+export type AboutUsPageQueryResult = {
+	_id: string;
+	_type: 'aboutUs';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: {
+		introSection?: {
+			title: string;
+			subtitle: string;
+			intro: BlockContent;
+			images: Array<{
+				asset?: {
+					_ref: string;
+					_type: 'reference';
+					_weak?: boolean;
+					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+				};
+				media?: unknown;
+				hotspot?: SanityImageHotspot;
+				crop?: SanityImageCrop;
+				alt: string;
+				description?: string;
+				_type: 'extendedImage';
+				_key: string;
+			}>;
+		};
+		chronicleSection?: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			chronicle?: Array<
+				{
+					_key: string;
+				} & ImageCard
+			>;
+		};
+		visionSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			cta: string;
+		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			contactPersons: Array<{
+				firstName: string;
+				lastName: string;
+				phone: string | null;
+				image: {
+					asset?: {
+						_ref: string;
+						_type: 'reference';
+						_weak?: boolean;
+						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+					};
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt: string;
+					description?: string;
+					_type: 'extendedImage';
+				};
+				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
+				email: string | null;
+				role: string | null;
+				taskDescription: string | null;
+			}>;
+		};
+	};
+} | null;
+
 // Source: ./src/lib/sanity/queries/pages/contact.ts
 // Variable: contactPageQuery
 // Query: *[_type == 'contact'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
@@ -2981,6 +3067,7 @@ export type SocialMediaQueryResult = SocialFields | null;
 import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
+		'\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
 		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
 		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t\tshow,\n\t}\n": HomePageTestimonialsQueryResult;

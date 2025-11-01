@@ -1,28 +1,10 @@
 import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
-import { urlForImage } from '@/lib/sanity/utils';
 import type { GroupDance, SimpleBlockContent } from '@/types/sanity.types';
+import { getImageItems } from '@/utils/image';
 
 import styles from './main.module.css';
-
-interface ImageItem {
-	image: NonNullable<GroupDance['images']>[number];
-	src: string;
-	srcFull: string;
-}
-
-function getImageItems(images: GroupDance['images']): Array<ImageItem> {
-	if (!images || images.length === 0) return [];
-	const items = [];
-	for (const image of images) {
-		const source = urlForImage(image, 700, 1244);
-		const sourceFull = urlForImage(image, 1440, 2560);
-		if (!source || !sourceFull) continue;
-		items.push({ image, src: source, srcFull: sourceFull });
-	}
-	return items;
-}
 
 interface MainProps {
 	description: SimpleBlockContent;
@@ -31,7 +13,7 @@ interface MainProps {
 }
 
 export function Main({ description, gallery, title }: Readonly<MainProps>) {
-	const items = getImageItems(gallery);
+	const items = getImageItems(gallery, 700, 1244);
 	const imagesCount = items.length;
 
 	return (

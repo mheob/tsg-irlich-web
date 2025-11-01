@@ -60,10 +60,10 @@ export function ContactLink({
 	const directionStyle: CSSProperties = useMemo(
 		() => ({
 			...style,
-			direction: hasInteracted ? 'ltr' : 'rtl',
+			direction: children || hasInteracted ? 'ltr' : 'rtl',
 			unicodeBidi: 'bidi-override',
 		}),
-		[hasInteracted, style],
+		[children, hasInteracted, style],
 	);
 
 	const renderProps: AnchorHTMLAttributes<HTMLAnchorElement> = {
