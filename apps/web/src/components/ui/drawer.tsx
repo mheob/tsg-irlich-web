@@ -1,5 +1,3 @@
-'use client';
-
 import { cn } from '@tsgi-web/shared';
 import type { ComponentProps } from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';

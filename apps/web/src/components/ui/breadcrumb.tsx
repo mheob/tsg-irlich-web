@@ -1,7 +1,6 @@
-import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@tsgi-web/shared';
-import { ChevronsRight } from 'lucide-react';
+import { ChevronsRight, Ellipsis } from 'lucide-react';
 import type { ComponentProps } from 'react';
 
 export function Breadcrumb({ ...props }: ComponentProps<'nav'>) {
@@ -12,7 +11,7 @@ export function BreadcrumbList({ className, ...props }: ComponentProps<'ol'>) {
 	return (
 		<ol
 			className={cn(
-				'flex flex-wrap items-center gap-2 text-sm font-bold break-words md:text-lg',
+				'flex flex-wrap items-center gap-2 text-sm font-bold wrap-break-word md:text-lg',
 				className,
 			)}
 			data-slot="breadcrumb-list"
@@ -85,8 +84,8 @@ export function BreadcrumbEllipsis({ className, ...props }: ComponentProps<'span
 			role="presentation"
 			{...props}
 		>
-			<DotsHorizontalIcon className="size-4" />
-			<span className="sr-only">More</span>
+			<Ellipsis className="size-4" />
+			<span className="sr-only">Mehr</span>
 		</span>
 	);
 }

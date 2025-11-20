@@ -1,4 +1,3 @@
-import { PortableText } from 'next-sanity';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
@@ -9,7 +8,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog';
-import type { PortableTextValue } from '@/components/ui/portable-text';
+import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { ImageCard } from '@/types/sanity.types';

@@ -23,25 +23,3 @@ export function Intro({ text }: Readonly<IntroProps>) {
 		</section>
 	);
 }
-
-// .container {
-//   width: 100%;
-//   @media (width >= 40rem /* 640px */) {
-//     max-width: 40rem /* 640px */;
-//   }
-//   @media (width >= 48rem /* 768px */) {
-//     max-width: 48rem /* 768px */;
-//   }
-//   @media (width >= 64rem /* 1024px */) {
-//     max-width: 64rem /* 1024px */;
-//   }
-//   @media (width >= 80rem /* 1280px */) {
-//     max-width: 80rem /* 1280px */;
-//   }
-//   @media (width >= 96rem /* 1536px */) {
-//     max-width: 96rem /* 1536px */;
-//   }
-//   @media (width >= 120rem /* 1920px */) {
-//     max-width: 120rem /* 1920px */;
-//   }
-// }
