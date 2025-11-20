@@ -423,11 +423,11 @@ export type AboutUs = {
 				_key: string;
 			}>;
 		};
-		chronicleSection?: {
+		chronicleSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			chronicle?: Array<
+			chronicleCategories: Array<
 				{
 					_key: string;
 				} & ImageCard
@@ -585,9 +585,10 @@ export type Home = {
 
 export type ImageCard = {
 	_type: 'imageCard';
-	title?: string;
-	description?: string;
-	image?: {
+	title: string;
+	excerpt: string;
+	description: string;
+	image: {
 		asset?: {
 			_ref: string;
 			_type: 'reference';
@@ -1894,11 +1895,11 @@ export type AboutUsPageQueryResult = {
 				_key: string;
 			}>;
 		};
-		chronicleSection?: {
+		chronicleSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			chronicle?: Array<
+			chronicleCategories: Array<
 				{
 					_key: string;
 				} & ImageCard

@@ -7,8 +7,10 @@ export const buttonVariants = cva('btn', {
 	variants: {
 		variant: {
 			ghost: 'btn--ghost',
+			link: 'btn--link',
 			primary: 'btn--primary',
 			secondary: 'btn--secondary',
+			unstyled: 'btn--unstyled',
 		},
 	},
 });

@@ -2334,7 +2334,7 @@
                     },
                     "optional": true
                   },
-                  "chronicle": {
+                  "chronicleCategories": {
                     "type": "objectAttribute",
                     "value": {
                       "type": "array",
@@ -2354,11 +2354,11 @@
                         }
                       }
                     },
-                    "optional": true
+                    "optional": false
                   }
                 }
               },
-              "optional": true
+              "optional": false
             },
             "visionSection": {
               "type": "objectAttribute",
@@ -3326,14 +3326,21 @@
           "value": {
             "type": "string"
           },
-          "optional": true
+          "optional": false
+        },
+        "excerpt": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": false
         },
         "description": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
           },
-          "optional": true
+          "optional": false
         },
         "image": {
           "type": "objectAttribute",
@@ -3416,7 +3423,7 @@
               }
             }
           },
-          "optional": true
+          "optional": false
         }
       }
     }
