@@ -1,5 +1,11 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["github>mheob/renovate-config"],
+	"packageRules": [
+		{
+			"allowedVersions": "22.x",
+			"matchPackageNames": ["@types/node"]
+		}
+	],
 	"schedule": ["before 4am on Thursday"]
 }
