@@ -89,8 +89,19 @@ interface PortableTextProps {
 export function PortableText({ value }: Readonly<PortableTextProps>) {
 	const components: PortableTextComponents = {
 		block: {
+			blockquote: ({ children }) => (
+				<blockquote className="border-l-4 border-gray-300 pl-4">{children}</blockquote>
+			),
 			h2: H2WithAnchor,
 			h3: H3WithAnchor,
+		},
+		list: {
+			bullet: ({ children }) => <ul className="list-disc pl-4">{children}</ul>,
+			number: ({ children }) => <ol className="list-decimal pl-4">{children}</ol>,
+		},
+		listItem: {
+			bullet: ({ children }) => <li className="ml-2">{children}</li>,
+			number: ({ children }) => <li className="ml-2">{children}</li>,
 		},
 		marks: {
 			link: Link,

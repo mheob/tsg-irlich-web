@@ -9,11 +9,15 @@ interface IntroProps {
 }
 
 export function Intro({ content }: Readonly<IntroProps>) {
+	if (!content?.images?.length) {
+		return null;
+	}
+
 	const mainImage = getImageItems([content.images[0]], 1024, 1024)[0];
 	const footerImages = getImageItems(content.images.slice(1), 450, 800);
 
 	return (
-		<section className="">
+		<section>
 			<div className="py-10 md:container md:grid md:grid-cols-2 md:gap-16 md:py-28">
 				<div className="relative">
 					<ZoomableImage

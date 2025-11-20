@@ -423,11 +423,11 @@ export type AboutUs = {
 				_key: string;
 			}>;
 		};
-		chronicleSection?: {
+		chronicleSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			chronicle?: Array<
+			chronicleCategories: Array<
 				{
 					_key: string;
 				} & ImageCard
@@ -457,28 +457,6 @@ export type AboutUs = {
 			}>;
 		};
 	};
-};
-
-export type BlockContent = {
-	_type: 'blockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}>;
-		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}>;
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}>;
 };
 
 export type Home = {
@@ -585,9 +563,10 @@ export type Home = {
 
 export type ImageCard = {
 	_type: 'imageCard';
-	title?: string;
-	description?: string;
-	image?: {
+	title: string;
+	excerpt: string;
+	description: BlockContent;
+	image: {
 		asset?: {
 			_ref: string;
 			_type: 'reference';
@@ -601,6 +580,28 @@ export type ImageCard = {
 		description?: string;
 		_type: 'extendedImage';
 	};
+};
+
+export type BlockContent = {
+	_type: 'blockContent';
+	text?: Array<{
+		children?: Array<{
+			marks?: Array<string>;
+			text?: string;
+			_type: 'span';
+			_key: string;
+		}>;
+		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+		listItem?: 'bullet' | 'number';
+		markDefs?: Array<{
+			href?: string;
+			_type: 'link';
+			_key: string;
+		}>;
+		level?: number;
+		_type: 'block';
+		_key: string;
+	}>;
 };
 
 export type ExternalLink = {
@@ -1807,9 +1808,9 @@ export type AllSanitySchemaTypes =
 	| GroupsPage
 	| Contact
 	| AboutUs
-	| BlockContent
 	| Home
 	| ImageCard
+	| BlockContent
 	| ExternalLink
 	| DocumentDownload
 	| ContactNameMail
@@ -1894,11 +1895,11 @@ export type AboutUsPageQueryResult = {
 				_key: string;
 			}>;
 		};
-		chronicleSection?: {
+		chronicleSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			chronicle?: Array<
+			chronicleCategories: Array<
 				{
 					_key: string;
 				} & ImageCard

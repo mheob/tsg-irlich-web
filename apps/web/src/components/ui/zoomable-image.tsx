@@ -1,7 +1,12 @@
 import Image from 'next/image';
 import type { ComponentProps } from 'react';
 
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../with-logic/dialog';
+import {
+	ImageDialog,
+	ImageDialogContent,
+	ImageDialogTitle,
+	ImageDialogTrigger,
+} from './image-dialog';
 
 interface ZoomableImageProps extends ComponentProps<typeof Image> {
 	srcFull: string;
@@ -11,12 +16,12 @@ export function ZoomableImage({ alt, src, srcFull, ...props }: Readonly<Zoomable
 	if (!src || !srcFull) return null;
 
 	return (
-		<Dialog>
-			<DialogTrigger className="cursor-zoom-in" asChild>
+		<ImageDialog>
+			<ImageDialogTrigger className="cursor-zoom-in" asChild>
 				<Image alt={alt || ''} src={src} {...props} />
-			</DialogTrigger>
-			<DialogContent className="max-w-screen border-0 bg-transparent p-0 shadow-none">
-				<DialogTitle className="sr-only">{alt || ''}</DialogTitle>
+			</ImageDialogTrigger>
+			<ImageDialogContent className="max-w-screen border-0 bg-transparent p-0 shadow-none">
+				<ImageDialogTitle className="sr-only">{alt || ''}</ImageDialogTitle>
 				<div className="relative h-[calc(100vh-250px)] w-full">
 					<Image
 						alt={alt || ''}
@@ -26,7 +31,7 @@ export function ZoomableImage({ alt, src, srcFull, ...props }: Readonly<Zoomable
 						fill
 					/>
 				</div>
-			</DialogContent>
-		</Dialog>
+			</ImageDialogContent>
+		</ImageDialog>
 	);
 }

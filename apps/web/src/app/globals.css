@@ -123,6 +123,7 @@
 	text-align: center;
 	font-size: 0.75rem;
 	font-weight: 700;
+	cursor: pointer;
 	transition-property: color, background-color, border-color,
 		text-decoration-color, fill, stroke;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -145,9 +146,34 @@
 		padding-block: 0.5rem;
 
 		@media (width >= theme(--breakpoint-md)) {
-		padding-inline: 2.5rem;
-		padding-block: 1rem;
+			padding-inline: 2.5rem;
+			padding-block: 1rem;
 		}
+	}
+}
+
+@utility btn--ghost {
+	background-color: color-mix(in oklch, var(--color-background-low-contrast) 95%, transparent);
+	border-width: 1px;
+
+	&:hover {
+		background-color: color-mix(in oklch, var(--color-background-high-contrast) 50%, transparent);
+	}
+}
+
+@utility btn--link {
+	color: var(--color-primary);
+	text-decoration: underline;
+	padding: initial;
+	border-radius: initial;
+
+	& > :first-child {
+		border: initial;
+		padding: initial;
+	}
+
+	&:hover {
+		color: var(--color-primary-light);
 	}
 }
 
@@ -174,6 +200,44 @@
 
 	& > :first-child {
 		border-color: var(--color-secondary-foreground);
+	}
+}
+
+@utility btn--unstyled {
+	display: initial;
+	align-items: initial;
+	justify-content: initial;
+	gap: initial;
+	white-space: initial;
+	border-radius: initial;
+	padding: initial;
+	text-align: initial;
+	font-size: initial;
+	font-weight: initial;
+	transition-property: initial;
+	transition-timing-function: initial;
+	transition-duration: initial;
+
+	@media (width >= theme(--breakpoint-md)) {
+		padding: initial;
+		font-size: initial;
+	}
+
+	&:disabled {
+		pointer-events: initial;
+		opacity: initial;
+	}
+
+	& > :first-child {
+		border-radius: initial;
+		border-width: initial;
+		padding-inline: initial;
+		padding-block: initial;
+
+		@media (width >= theme(--breakpoint-md)) {
+			padding-inline: initial;
+			padding-block: initial;
+		}
 	}
 }
 

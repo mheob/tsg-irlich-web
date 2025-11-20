@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type ComponentPropsWithoutRef, useState } from 'react';
 
-import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/with-logic/drawer';
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 
 interface MobileLinkProps extends Omit<ComponentPropsWithoutRef<typeof Link>, 'href'> {
 	onOpenChange?: (open: boolean) => void;

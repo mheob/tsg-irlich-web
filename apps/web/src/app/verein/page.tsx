@@ -9,6 +9,7 @@ import { client } from '@/lib/sanity/client';
 import { aboutUsPageQuery } from '@/lib/sanity/queries/pages/about-us';
 
 import heroImage from '../mitgliedschaft/_assets/hero.webp';
+import { Chronicle } from './_sections/chronicle';
 import { Intro } from './_sections/intro';
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 export default async function VereinPage() {
 	const page = await client.fetch(aboutUsPageQuery);
 
-	if (!page || !page.content.introSection) {
+	if (!page?.content.introSection) {
 		const { notFound } = await import('next/navigation');
 		notFound();
 		return null;
@@ -37,9 +38,7 @@ export default async function VereinPage() {
 				title={page.title}
 			/>
 			<Intro content={page.content.introSection} />
-			<div className="container mx-auto grid h-[50vh] place-content-center bg-blue-200">
-				CHRONIC
-			</div>
+			<Chronicle content={page.content.chronicleSection} />
 			<Vision {...page.content.visionSection} />
 			<Stats stats={page.content.stats} withBackground />
 			<ContactPersons {...page.content.contactPersonsSection} />
