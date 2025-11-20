@@ -459,28 +459,6 @@ export type AboutUs = {
 	};
 };
 
-export type BlockContent = {
-	_type: 'blockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}>;
-		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}>;
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}>;
-};
-
 export type Home = {
 	_id: string;
 	_type: 'home';
@@ -587,7 +565,7 @@ export type ImageCard = {
 	_type: 'imageCard';
 	title: string;
 	excerpt: string;
-	description: string;
+	description: BlockContent;
 	image: {
 		asset?: {
 			_ref: string;
@@ -602,6 +580,28 @@ export type ImageCard = {
 		description?: string;
 		_type: 'extendedImage';
 	};
+};
+
+export type BlockContent = {
+	_type: 'blockContent';
+	text?: Array<{
+		children?: Array<{
+			marks?: Array<string>;
+			text?: string;
+			_type: 'span';
+			_key: string;
+		}>;
+		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+		listItem?: 'bullet' | 'number';
+		markDefs?: Array<{
+			href?: string;
+			_type: 'link';
+			_key: string;
+		}>;
+		level?: number;
+		_type: 'block';
+		_key: string;
+	}>;
 };
 
 export type ExternalLink = {
@@ -1808,9 +1808,9 @@ export type AllSanitySchemaTypes =
 	| GroupsPage
 	| Contact
 	| AboutUs
-	| BlockContent
 	| Home
 	| ImageCard
+	| BlockContent
 	| ExternalLink
 	| DocumentDownload
 	| ContactNameMail

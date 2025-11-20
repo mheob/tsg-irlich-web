@@ -23,7 +23,7 @@ const imageCard = defineField({
 		defineField({
 			title: 'Beschreibung',
 			name: 'description',
-			type: 'text',
+			type: 'blockContent',
 			validation: Rule => [Rule.required().error('Die Beschreibung ist erforderlich')],
 		}),
 		defineField({
