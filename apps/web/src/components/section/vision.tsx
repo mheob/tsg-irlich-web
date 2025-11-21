@@ -15,7 +15,7 @@ type VisionProps = Home['content']['visionSection'];
 
 export function Vision({ cta, intro, subtitle, title }: Readonly<VisionProps>) {
 	return (
-		<section className="relative items-center">
+		<section className="relative items-center" id="vision-section">
 			<div className="md:container md:grid md:grid-cols-[55%_45%] md:px-5 md:not-last-of-type:mx-auto">
 				<div className="relative container mx-auto h-80 px-5 md:static">
 					<div className={styles.bgRoundedEdge}></div>
@@ -54,7 +54,7 @@ export function Vision({ cta, intro, subtitle, title }: Readonly<VisionProps>) {
 					</SectionHeader>
 
 					<Button className="relative mt-12" asChild>
-						<Link href="#!">{cta}</Link>
+						<Link href="/verein#vision-section">{cta}</Link>
 					</Button>
 				</div>
 			</div>
