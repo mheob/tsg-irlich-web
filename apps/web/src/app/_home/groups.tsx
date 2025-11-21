@@ -1,6 +1,3 @@
-'use client';
-
-import { ArrowButtonGroup } from '@/components/ui/arrow-button';
 import { SectionHeader } from '@/components/ui/section-header';
 import type { Home } from '@/types/sanity.types';
 import { groupSections } from '@/utils/groups';
@@ -20,12 +17,9 @@ export function Groups({ subtitle, title }: Readonly<GroupsProps>) {
 			<div className={styles.bgBalls}></div>
 
 			<div className="container mx-auto px-5 py-10 md:py-32">
-				<div className="md:flex md:justify-between">
-					<SectionHeader isCenteredOnDesktop={false} subTitle={subtitle} title={title} isCentered />
-					<ArrowButtonGroup className="hidden md:flex" />
-				</div>
+				<SectionHeader isCenteredOnDesktop={false} subTitle={subtitle} title={title} isCentered />
 
-				<div className="my-6 flex flex-col gap-2 md:mt-24 md:flex-row md:gap-7 md:overflow-x-scroll">
+				<div className="my-6 grid grid-cols-1 gap-2 md:mt-24 md:grid-cols-2 md:gap-7 lg:grid-cols-3">
 					{groupSections?.map(({ icon, slug, title }, index) => (
 						<GroupCard
 							digit={index + 1}
@@ -36,8 +30,6 @@ export function Groups({ subtitle, title }: Readonly<GroupsProps>) {
 						/>
 					))}
 				</div>
-
-				<ArrowButtonGroup className="md:hidden" />
 			</div>
 		</section>
 	);
