@@ -1,28 +1,42 @@
-import { ArrowUp, Mail, MapPin, Phone } from 'lucide-react';
+import { cn } from '@tsgi-web/shared';
+import { ArrowUp, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 import TSGLogo from '@/icons/logos/tsg-logo';
 import { client } from '@/lib/sanity/client';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
+import type { TrainingTimeSection } from '@/types/sanity.types';
 import { getSocialMediaIcon } from '@/utils/icon';
+import { printGoogleMapsLink } from '@/utils/url';
 
+import { buttonVariants } from '../ui/button';
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogTitle,
+	DialogTrigger,
+} from '../ui/dialog';
+import { ExternalLink } from '../ui/external-link';
 import { SocialMediaIcon } from '../ui/social-media-icon';
 import { ContactLink } from '../with-logic/contact-link';
 
 const contact: {
-	address: string;
+	address: Parameters<typeof printGoogleMapsLink>[number];
 	email: string;
-	phone: string;
 } = {
-	address: 'Gotenstraße 20, 56567 Neuwied',
+	address: {
+		city: 'Neuwied',
+		houseNumber: '20',
+		name: 'TSG Irlich',
+		street: 'Gotenstraße',
+		zipCode: '56567',
+	},
 	email: 'info@tsg-irlich.de',
-	phone: '+49 2631 76987',
 };
 
-const mainNavigation: { href: string; label: string }[] = [
-	{ href: '/impressum', label: 'Impressum' },
-	{ href: '/datenschutz', label: 'Datenschutz' },
-];
+const simplifiedAddress = `${contact.address.street} ${contact.address.houseNumber}, ${contact.address.zipCode} ${contact.address.city}`;
 
 const imprint: { href: string; label: string } = { href: '/impressum', label: 'Impressum' };
 
@@ -42,7 +56,7 @@ export default async function Footer() {
 							<TSGLogo className="h-32 w-auto" />
 						</Link>
 
-						<h2 className="text-xl md:text-4xl">Folge uns</h2>
+						<h2 className="mt-7 text-xl md:text-4xl">Folge uns</h2>
 
 						<div className="flex gap-8 md:gap-4">
 							{socialMedia &&
@@ -60,56 +74,50 @@ export default async function Footer() {
 					<div className="mt-16 flex gap-8 md:mt-0 md:block md:text-xl/relaxed">
 						<section className="flex flex-col gap-12 md:w-auto md:flex-row md:gap-48">
 							{/* TODO: open modal with multiple links to several map providers */}
-							<a
-								className="hover:text-secondary group flex flex-col items-start gap-4 md:items-center"
-								href="#!"
-							>
-								<span
-									aria-label={`Besuche uns im Pappelstadion: ${contact.address}`}
-									className="group-hover:border-secondary rounded-full border border-white p-3 md:border-2"
-								>
-									<MapPin className="size-6 md:size-12" strokeWidth="1" />
-								</span>
-								<address>{contact.address}</address>
-							</a>
+							<Dialog>
+								<DialogTrigger className="hover:text-secondary group flex cursor-pointer flex-col items-start gap-4 transition-colors md:items-center">
+									<span
+										aria-label={`Besuche uns im Pappelstadion: ${contact.address}`}
+										className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2"
+									>
+										<MapPin className="size-6 md:size-12" strokeWidth="1" />
+									</span>
+									<address>{simplifiedAddress}</address>
+								</DialogTrigger>
+								<DialogContent>
+									<DialogTitle className="text-lg tracking-normal md:text-2xl">
+										Achtung: Du wechselst zu Google Maps
+									</DialogTitle>
+									<DialogDescription>
+										<p className="my-4 text-lg">
+											Du wechselst zu Google Maps, um unseren Standort zu sehen und die Route zu uns
+											zu berechnen.
+										</p>
+									</DialogDescription>
+									<DialogFooter>
+										<ExternalLink
+											className={cn(buttonVariants(), 'btn--primary')}
+											href={printGoogleMapsLink(contact.address)}
+										>
+											<span>Google Maps öffnen</span>
+										</ExternalLink>
+									</DialogFooter>
+								</DialogContent>
+							</Dialog>
 
 							<ContactLink
-								className="hover:text-secondary group flex flex-col items-start gap-4 md:items-center"
-								href={`tel:${contact.phone}`}
-							>
-								<span
-									aria-label={`Rufe uns an: ${contact.phone}`}
-									className="group-hover:border-secondary rounded-full border border-white p-3 md:border-2"
-								>
-									<Phone className="size-6 md:size-12" strokeWidth="1" />
-								</span>
-								<address>{contact.phone}</address>
-							</ContactLink>
-
-							<ContactLink
-								className="hover:text-secondary group flex flex-col items-start gap-4 md:items-center"
+								className="hover:text-secondary group flex flex-col items-start gap-4 transition-colors md:items-center"
 								href={`mailto:${contact.email}`}
 							>
 								<span
 									aria-label={`Schreibe uns eine E-Mail: ${contact.email}`}
-									className="group-hover:border-secondary rounded-full border border-white p-3 md:border-2"
+									className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2"
 								>
 									<Mail className="size-6 md:size-12" strokeWidth="1" />
 								</span>
 								<address>{contact.email}</address>
 							</ContactLink>
 						</section>
-
-						<nav className="flex flex-col gap-8 md:mt-12 md:flex-row md:justify-end md:gap-20">
-							<div className="font-bold">LINKS:</div>
-							<div className="flex flex-col gap-8 md:flex-row">
-								{mainNavigation.map(({ href, label }) => (
-									<Link className="hover:text-secondary" href={href} key={href}>
-										{label}
-									</Link>
-								))}
-							</div>
-						</nav>
 					</div>
 				</div>
 
