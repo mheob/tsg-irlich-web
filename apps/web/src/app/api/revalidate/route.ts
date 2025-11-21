@@ -22,7 +22,7 @@ export async function POST(request: NextRequest): Promise<NextResponse | Respons
 			return Response.json({ body, message }, { status: 400 });
 		}
 
-		console.log(body);
+		console.info('Revalidation webhook received:', body);
 
 		// Revalidate specific paths based on content type
 		switch (body._type) {
@@ -65,8 +65,8 @@ export async function POST(request: NextRequest): Promise<NextResponse | Respons
 			case 'news.article':
 			case 'news.category': {
 				// Revalidate news list and detail page if slug exists
-				revalidatePath('/aktuelles');
-				if (body.slug?.current) revalidatePath(`/aktuelles/${body.slug.current}`);
+				revalidatePath('/news');
+				if (body.slug?.current) revalidatePath(`/news/${body.slug.current}`);
 				break;
 			}
 			case 'group':

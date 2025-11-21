@@ -132,7 +132,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 # Test webhook locally (with ngrok or similar)
 curl -X POST http://localhost:3000/api/revalidate \
   -H "Content-Type: application/json" \
-  -d '{"_type": "news", "slug": {"current": "test"}}'
+  -d '{"_type": "news.article", "slug": {"current": "test"}}'
 ```
 
 ## Further Optimizations
