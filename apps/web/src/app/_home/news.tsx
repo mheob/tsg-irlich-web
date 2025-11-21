@@ -21,6 +21,7 @@ export function News({ articles, intro, subtitle, title }: Readonly<NewsProps>) 
 					subTitle={subtitle}
 					title={title}
 					isCentered
+					isCenteredOnDesktop
 				>
 					{intro}
 				</SectionHeader>

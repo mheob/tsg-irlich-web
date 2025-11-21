@@ -1,6 +1,5 @@
 {
 	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-	"enableFiletypes": ["astro"],
 	"enabled": true,
 	"ignorePaths": [
 		".git",
@@ -68,6 +67,7 @@
 		"nowrap",
 		"nvmrc",
 		"oneline",
+		"openssl",
 		"Openai",
 		"OPENAI",
 		"opengraph",
@@ -104,6 +104,7 @@
 		"typeof",
 		"vaul",
 		"vercel",
+		"verein",
 		"verwaltung",
 		"WCAG",
 		"webp",
