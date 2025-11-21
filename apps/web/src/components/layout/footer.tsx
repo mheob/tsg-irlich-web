@@ -1,17 +1,16 @@
-import { cn } from '@tsgi-web/shared';
 import { ArrowUp, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 import TSGLogo from '@/icons/logos/tsg-logo';
 import { client } from '@/lib/sanity/client';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
-import type { TrainingTimeSection } from '@/types/sanity.types';
 import { getSocialMediaIcon } from '@/utils/icon';
 import { printGoogleMapsLink } from '@/utils/url';
 
-import { buttonVariants } from '../ui/button';
+import { Button, buttonVariants } from '../ui/button';
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogFooter,
@@ -73,13 +72,12 @@ export default async function Footer() {
 
 					<div className="mt-16 flex gap-8 md:mt-0 md:block md:text-xl/relaxed">
 						<section className="flex flex-col gap-12 md:w-auto md:flex-row md:gap-48">
-							{/* TODO: open modal with multiple links to several map providers */}
 							<Dialog>
-								<DialogTrigger className="hover:text-secondary group flex cursor-pointer flex-col items-start gap-4 transition-colors md:items-center">
-									<span
-										aria-label={`Besuche uns im Pappelstadion: ${contact.address}`}
-										className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2"
-									>
+								<DialogTrigger
+									aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
+									className="hover:text-secondary group flex cursor-pointer flex-col items-start gap-4 transition-colors md:items-center"
+								>
+									<span className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2">
 										<MapPin className="size-6 md:size-12" strokeWidth="1" />
 									</span>
 									<address>{simplifiedAddress}</address>
@@ -88,15 +86,16 @@ export default async function Footer() {
 									<DialogTitle className="text-lg tracking-normal md:text-2xl">
 										Achtung: Du wechselst zu Google Maps
 									</DialogTitle>
-									<DialogDescription>
-										<p className="my-4 text-lg">
-											Du wechselst zu Google Maps, um unseren Standort zu sehen und die Route zu uns
-											zu berechnen.
-										</p>
+									<DialogDescription className="my-4 text-lg">
+										Du wechselst zu Google Maps, um unseren Standort zu sehen und die Route zu uns
+										zu berechnen.
 									</DialogDescription>
 									<DialogFooter>
+										<DialogClose asChild>
+											<Button variant="ghost">Hier bleiben</Button>
+										</DialogClose>
 										<ExternalLink
-											className={cn(buttonVariants(), 'btn--primary')}
+											className={buttonVariants()}
 											href={printGoogleMapsLink(contact.address)}
 										>
 											<span>Google Maps öffnen</span>
