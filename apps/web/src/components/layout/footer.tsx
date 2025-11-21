@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowUp, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
@@ -123,13 +125,13 @@ export default async function Footer() {
 				<section className="mt-12 flex flex-col-reverse items-center gap-4 md:flex-row md:justify-between">
 					<div className="mt-4 md:mt-0">©{currentYear} TSG Irlich. Alle Rechte vorbehalten.</div>
 					<nav className="flex items-center gap-4">
-						<a className="hover:text-secondary" href={imprint?.href}>
+						<Link className="hover:text-secondary" href={imprint?.href}>
 							{imprint?.label}
-						</a>{' '}
+						</Link>{' '}
 						|
-						<a className="hover:text-secondary" href={privacy?.href}>
+						<Link className="hover:text-secondary" href={privacy?.href}>
 							{privacy?.label}
-						</a>
+						</Link>
 						<a
 							aria-label="zum Seitenanfang springen"
 							className="bg-secondary hover:bg-secondary/80 ml-4 rounded-full p-1.5"
