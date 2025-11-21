@@ -22,8 +22,6 @@ export async function POST(request: NextRequest): Promise<NextResponse | Respons
 			return Response.json({ body, message }, { status: 400 });
 		}
 
-		console.info('Revalidation webhook received:', body);
-
 		// Revalidate specific paths based on content type
 		switch (body._type) {
 			// Single Pages
@@ -99,7 +97,7 @@ export async function POST(request: NextRequest): Promise<NextResponse | Respons
 		}
 
 		// Also revalidate by tag if you're using tag-based caching
-		revalidateTag(body._type, 'layout');
+		revalidateTag(body._type, 'max');
 
 		return NextResponse.json({
 			body,
