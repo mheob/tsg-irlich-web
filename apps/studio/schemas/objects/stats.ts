@@ -17,6 +17,11 @@ const stats = defineField({
 			],
 		}),
 		defineField({
+			title: 'Präfix (optional, z.B. ">")',
+			name: 'prefix',
+			type: 'string',
+		}),
+		defineField({
 			title: 'Wert',
 			name: 'value',
 			type: 'number',

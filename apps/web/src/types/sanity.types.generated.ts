@@ -38,6 +38,25 @@ export type NewsOverviewCategory = {
 	};
 };
 
+export type MetaFields = {
+	_type: 'metaFields';
+	metaTitle?: string;
+	metaDescription?: string;
+	openGraphImage?: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt?: string;
+		_type: 'image';
+	};
+};
+
 export type NewsArticlePage = {
 	_id: string;
 	_type: 'news-article-page';
@@ -84,9 +103,30 @@ export type DepartmentsPage = {
 	};
 };
 
+export type Slug = {
+	_type: 'slug';
+	current: string;
+	source?: string;
+};
+
 export type Spacer = {
 	_type: 'spacer';
 	variant?: 'default';
+};
+
+export type MainImage = {
+	_type: 'mainImage';
+	asset?: {
+		_ref: string;
+		_type: 'reference';
+		_weak?: boolean;
+		[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+	};
+	media?: unknown;
+	hotspot?: SanityImageHotspot;
+	crop?: SanityImageCrop;
+	alt: string;
+	description?: string;
 };
 
 export type Grid = {
@@ -94,21 +134,9 @@ export type Grid = {
 	title?: string;
 	columns: Columns;
 	items?: Array<
-		| {
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'mainImage';
+		| ({
 				_key: string;
-		  }
+		  } & MainImage)
 		| ({
 				_key: string;
 		  } & BlockContent)
@@ -119,6 +147,28 @@ export type Blockquote = {
 	_type: 'blockquote';
 	quote?: string;
 	author?: string;
+};
+
+export type BlockContent = {
+	_type: 'blockContent';
+	text?: Array<{
+		children?: Array<{
+			marks?: Array<string>;
+			text?: string;
+			_type: 'span';
+			_key: string;
+		}>;
+		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+		listItem?: 'bullet' | 'number';
+		markDefs?: Array<{
+			href?: string;
+			_type: 'link';
+			_key: string;
+		}>;
+		level?: number;
+		_type: 'block';
+		_key: string;
+	}>;
 };
 
 export type TrainingTime = {
@@ -139,8 +189,105 @@ export type TrainingTime = {
 export type Stats = {
 	_type: 'stats';
 	title: string;
+	prefix?: string;
 	value: number;
 	suffix?: string;
+};
+
+export type SocialFields = {
+	_type: 'socialFields';
+	whatsapp?: string;
+	facebook?: string;
+	instagram?: string;
+	youtube?: string;
+};
+
+export type SimpleBlockContent = {
+	_type: 'simpleBlockContent';
+	text?: Array<{
+		children?: Array<{
+			marks?: Array<string>;
+			text?: string;
+			_type: 'span';
+			_key: string;
+		}>;
+		style?: 'normal';
+		listItem?: 'bullet' | 'number';
+		markDefs?: Array<{
+			href?: string;
+			_type: 'link';
+			_key: string;
+		}>;
+		level?: number;
+		_type: 'block';
+		_key: string;
+	}>;
+};
+
+export type InternalLink = {
+	_type: 'internalLink';
+	title: string;
+	link?:
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'news.article';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'home';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'aboutUs';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'contact';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'groupsPage';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'imprint';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'membership';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'newsOverview';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'privacy';
+		  }
+		| {
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				[internalGroqTypeReferenceTo]?: 'singleGroupPage';
+		  };
 };
 
 export type SingleGroupPage = {
@@ -267,72 +414,6 @@ export type Imprint = {
 	credits: SimpleBlockContent;
 };
 
-export type InternalLink = {
-	_type: 'internalLink';
-	title: string;
-	link?:
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'news.article';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'home';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'aboutUs';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'contact';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'groupsPage';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'imprint';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'membership';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'newsOverview';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'privacy';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'singleGroupPage';
-		  };
-};
-
 export type GroupsPage = {
 	_id: string;
 	_type: 'groupsPage';
@@ -407,21 +488,11 @@ export type AboutUs = {
 			title: string;
 			subtitle: string;
 			intro: BlockContent;
-			images: Array<{
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'extendedImage';
-				_key: string;
-			}>;
+			images: Array<
+				{
+					_key: string;
+				} & ExtendedImage
+			>;
 		};
 		chronicleSection: {
 			title: string;
@@ -566,42 +637,22 @@ export type ImageCard = {
 	title: string;
 	excerpt: string;
 	description: BlockContent;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
+	image: ExtendedImage;
 };
 
-export type BlockContent = {
-	_type: 'blockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}>;
-		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}>;
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}>;
+export type ExtendedImage = {
+	_type: 'extendedImage';
+	asset?: {
+		_ref: string;
+		_type: 'reference';
+		_weak?: boolean;
+		[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+	};
+	media?: unknown;
+	hotspot?: SanityImageHotspot;
+	crop?: SanityImageCrop;
+	alt: string;
+	description?: string;
 };
 
 export type ExternalLink = {
@@ -671,14 +722,6 @@ export type SiteSettings = {
 	socialFields?: SocialFields;
 };
 
-export type SocialFields = {
-	_type: 'socialFields';
-	whatsapp?: string;
-	facebook?: string;
-	instagram?: string;
-	youtube?: string;
-};
-
 export type Venue = {
 	_id: string;
 	_type: 'venue';
@@ -711,6 +754,22 @@ export type Venue = {
 	};
 };
 
+export type SanityImageCrop = {
+	_type: 'sanity.imageCrop';
+	top: number;
+	bottom: number;
+	left: number;
+	right: number;
+};
+
+export type SanityImageHotspot = {
+	_type: 'sanity.imageHotspot';
+	x: number;
+	y: number;
+	height: number;
+	width: number;
+};
+
 export type Testimonial = {
 	_id: string;
 	_type: 'testimonial';
@@ -719,20 +778,7 @@ export type Testimonial = {
 	_rev: string;
 	firstName: string;
 	lastName: string;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
+	image: ExtendedImage;
 	role: string;
 	quote: string;
 	show?: boolean;
@@ -746,20 +792,7 @@ export type HonoraryMember = {
 	_rev: string;
 	firstName: string;
 	lastName: string;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
+	image: ExtendedImage;
 	memberSince: string;
 };
 
@@ -771,20 +804,7 @@ export type Person = {
 	_rev: string;
 	firstName: string;
 	lastName: string;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
+	image: ExtendedImage;
 	phone?: string;
 	contactAs: 'email' | 'phone' | 'whatsapp' | 'both';
 	affiliations?: Array<{
@@ -892,35 +912,12 @@ export type GroupTaekwondo = {
 		| 'Turnen'
 		| 'Wandern'
 		| 'Yoga';
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	images?: Array<{
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-		_key: string;
-	}>;
+	featuredImage: ExtendedImage;
+	images?: Array<
+		{
+			_key: string;
+		} & ExtendedImage
+	>;
 	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
@@ -962,35 +959,12 @@ export type GroupSoccer = {
 		| 'Turnen'
 		| 'Wandern'
 		| 'Yoga';
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	images?: Array<{
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-		_key: string;
-	}>;
+	featuredImage: ExtendedImage;
+	images?: Array<
+		{
+			_key: string;
+		} & ExtendedImage
+	>;
 	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
@@ -1032,35 +1006,12 @@ export type GroupOtherSports = {
 		| 'Turnen'
 		| 'Wandern'
 		| 'Yoga';
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	images?: Array<{
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-		_key: string;
-	}>;
+	featuredImage: ExtendedImage;
+	images?: Array<
+		{
+			_key: string;
+		} & ExtendedImage
+	>;
 	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
@@ -1102,35 +1053,12 @@ export type GroupDance = {
 		| 'Turnen'
 		| 'Wandern'
 		| 'Yoga';
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	images?: Array<{
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-		_key: string;
-	}>;
+	featuredImage: ExtendedImage;
+	images?: Array<
+		{
+			_key: string;
+		} & ExtendedImage
+	>;
 	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
@@ -1172,35 +1100,12 @@ export type GroupCourses = {
 		| 'Turnen'
 		| 'Wandern'
 		| 'Yoga';
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	images?: Array<{
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-		_key: string;
-	}>;
+	featuredImage: ExtendedImage;
+	images?: Array<
+		{
+			_key: string;
+		} & ExtendedImage
+	>;
 	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
@@ -1242,35 +1147,12 @@ export type GroupChildrenGymnastics = {
 		| 'Turnen'
 		| 'Wandern'
 		| 'Yoga';
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	images?: Array<{
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-		_key: string;
-	}>;
+	featuredImage: ExtendedImage;
+	images?: Array<
+		{
+			_key: string;
+		} & ExtendedImage
+	>;
 	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
@@ -1312,35 +1194,12 @@ export type GroupAdmin = {
 		| 'Turnen'
 		| 'Wandern'
 		| 'Yoga';
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
-	images?: Array<{
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-		_key: string;
-	}>;
+	featuredImage: ExtendedImage;
+	images?: Array<
+		{
+			_key: string;
+		} & ExtendedImage
+	>;
 	training?: {
 		trainingDescription?: SimpleBlockContent;
 		trainingTimes?: Array<
@@ -1350,28 +1209,6 @@ export type GroupAdmin = {
 		>;
 	};
 	isSportGroup: boolean;
-};
-
-export type SimpleBlockContent = {
-	_type: 'simpleBlockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}>;
-		style?: 'normal';
-		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}>;
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}>;
 };
 
 export type NewsCategory = {
@@ -1407,20 +1244,7 @@ export type NewsArticle = {
 		[internalGroqTypeReferenceTo]?: 'author';
 	};
 	meta?: MetaFields;
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'mainImage';
-	};
+	featuredImage: MainImage;
 	excerpt: string;
 	body?: Array<
 		| ({
@@ -1432,59 +1256,13 @@ export type NewsArticle = {
 		| ({
 				_key: string;
 		  } & Grid)
-		| {
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'mainImage';
+		| ({
 				_key: string;
-		  }
+		  } & MainImage)
 		| ({
 				_key: string;
 		  } & Spacer)
 	>;
-};
-
-export type MainImage = {
-	_type: 'mainImage';
-	asset?: {
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
-		[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-	};
-	media?: unknown;
-	hotspot?: SanityImageHotspot;
-	crop?: SanityImageCrop;
-	alt: string;
-	description?: string;
-};
-
-export type MetaFields = {
-	_type: 'metaFields';
-	metaTitle?: string;
-	metaDescription?: string;
-	openGraphImage?: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt?: string;
-		_type: 'image';
-	};
 };
 
 export type Author = {
@@ -1495,37 +1273,9 @@ export type Author = {
 	_rev: string;
 	firstName: string;
 	lastName: string;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
+	image: ExtendedImage;
 	email: string;
 	jobTitle: string;
-};
-
-export type ExtendedImage = {
-	_type: 'extendedImage';
-	asset?: {
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
-		[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-	};
-	media?: unknown;
-	hotspot?: SanityImageHotspot;
-	crop?: SanityImageCrop;
-	alt: string;
-	description?: string;
 };
 
 export type SanityAssistInstructionTask = {
@@ -1698,20 +1448,15 @@ export type SanityImageDimensions = {
 	aspectRatio: number;
 };
 
-export type SanityImageHotspot = {
-	_type: 'sanity.imageHotspot';
-	x: number;
-	y: number;
-	height: number;
-	width: number;
-};
-
-export type SanityImageCrop = {
-	_type: 'sanity.imageCrop';
-	top: number;
-	bottom: number;
-	left: number;
-	right: number;
+export type SanityImageMetadata = {
+	_type: 'sanity.imageMetadata';
+	location?: Geopoint;
+	dimensions?: SanityImageDimensions;
+	palette?: SanityImagePalette;
+	lqip?: string;
+	blurHash?: string;
+	hasAlpha?: boolean;
+	isOpaque?: boolean;
 };
 
 export type SanityFileAsset = {
@@ -1734,6 +1479,13 @@ export type SanityFileAsset = {
 	path?: string;
 	url?: string;
 	source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+	_type: 'sanity.assetSourceData';
+	name?: string;
+	id?: string;
+	url?: string;
 };
 
 export type SanityImageAsset = {
@@ -1759,17 +1511,6 @@ export type SanityImageAsset = {
 	source?: SanityAssetSourceData;
 };
 
-export type SanityImageMetadata = {
-	_type: 'sanity.imageMetadata';
-	location?: Geopoint;
-	dimensions?: SanityImageDimensions;
-	palette?: SanityImagePalette;
-	lqip?: string;
-	blurHash?: string;
-	hasAlpha?: boolean;
-	isOpaque?: boolean;
-};
-
 export type Geopoint = {
 	_type: 'geopoint';
 	lat?: number;
@@ -1777,47 +1518,41 @@ export type Geopoint = {
 	alt?: number;
 };
 
-export type Slug = {
-	_type: 'slug';
-	current: string;
-	source?: string;
-};
-
-export type SanityAssetSourceData = {
-	_type: 'sanity.assetSourceData';
-	name?: string;
-	id?: string;
-	url?: string;
-};
-
 export type AllSanitySchemaTypes =
 	| NewsOverviewCategory
+	| MetaFields
 	| NewsArticlePage
 	| DepartmentsPage
+	| Slug
 	| Spacer
+	| MainImage
 	| Grid
 	| Blockquote
+	| BlockContent
 	| TrainingTime
 	| Stats
+	| SocialFields
+	| SimpleBlockContent
+	| InternalLink
 	| SingleGroupPage
 	| Privacy
 	| NewsOverview
 	| Membership
 	| Imprint
-	| InternalLink
 	| GroupsPage
 	| Contact
 	| AboutUs
 	| Home
 	| ImageCard
-	| BlockContent
+	| ExtendedImage
 	| ExternalLink
 	| DocumentDownload
 	| ContactNameMail
 	| Columns
 	| SiteSettings
-	| SocialFields
 	| Venue
+	| SanityImageCrop
+	| SanityImageHotspot
 	| Testimonial
 	| HonoraryMember
 	| Person
@@ -1829,13 +1564,9 @@ export type AllSanitySchemaTypes =
 	| GroupCourses
 	| GroupChildrenGymnastics
 	| GroupAdmin
-	| SimpleBlockContent
 	| NewsCategory
 	| NewsArticle
-	| MainImage
-	| MetaFields
 	| Author
-	| ExtendedImage
 	| SanityAssistInstructionTask
 	| SanityAssistTaskStatus
 	| SanityAssistSchemaTypeAnnotations
@@ -1852,14 +1583,11 @@ export type AllSanitySchemaTypes =
 	| SanityImagePaletteSwatch
 	| SanityImagePalette
 	| SanityImageDimensions
-	| SanityImageHotspot
-	| SanityImageCrop
-	| SanityFileAsset
-	| SanityImageAsset
 	| SanityImageMetadata
-	| Geopoint
-	| Slug
-	| SanityAssetSourceData;
+	| SanityFileAsset
+	| SanityAssetSourceData
+	| SanityImageAsset
+	| Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/lib/sanity/queries/pages/about-us.ts
 // Variable: aboutUsPageQuery
@@ -1879,21 +1607,11 @@ export type AboutUsPageQueryResult = {
 			title: string;
 			subtitle: string;
 			intro: BlockContent;
-			images: Array<{
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'extendedImage';
-				_key: string;
-			}>;
+			images: Array<
+				{
+					_key: string;
+				} & ExtendedImage
+			>;
 		};
 		chronicleSection: {
 			title: string;
@@ -1924,20 +1642,7 @@ export type AboutUsPageQueryResult = {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
-				image: {
-					asset?: {
-						_ref: string;
-						_type: 'reference';
-						_weak?: boolean;
-						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-					};
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt: string;
-					description?: string;
-					_type: 'extendedImage';
-				};
+				image: ExtendedImage;
 				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 				email: string | null;
 				role: string | null;
@@ -1974,20 +1679,7 @@ export type ContactPageQueryResult = {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
-				image: {
-					asset?: {
-						_ref: string;
-						_type: 'reference';
-						_weak?: boolean;
-						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-					};
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt: string;
-					description?: string;
-					_type: 'extendedImage';
-				};
+				image: ExtendedImage;
 				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 				email: string | null;
 				role: string | null;
@@ -2090,20 +1782,7 @@ export type HomePageQueryResult = {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
-				image: {
-					asset?: {
-						_ref: string;
-						_type: 'reference';
-						_weak?: boolean;
-						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-					};
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt: string;
-					description?: string;
-					_type: 'extendedImage';
-				};
+				image: ExtendedImage;
 				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 				email: string | null;
 				role: string | null;
@@ -2122,20 +1801,7 @@ export type HomePageQueryResult = {
 export type HomePageTestimonialsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
+	image: ExtendedImage;
 	quote: string;
 	role: string;
 	show: boolean | null;
@@ -2230,20 +1896,7 @@ export type MembershipPageQueryResult = {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
-				image: {
-					asset?: {
-						_ref: string;
-						_type: 'reference';
-						_weak?: boolean;
-						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-					};
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt: string;
-					description?: string;
-					_type: 'extendedImage';
-				};
+				image: ExtendedImage;
 				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 				email: string | null;
 				role: string | null;
@@ -2298,20 +1951,7 @@ export type NewsArticleContentQueryResult = {
 	author: {
 		email: string;
 		firstName: string;
-		image: {
-			asset?: {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-			};
-			media?: unknown;
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt: string;
-			description?: string;
-			_type: 'extendedImage';
-		};
+		image: ExtendedImage;
 		lastName: string;
 		jobTitle: string;
 	};
@@ -2327,42 +1967,17 @@ export type NewsArticleContentQueryResult = {
 		  } & Grid)
 		| ({
 				_key: string;
-		  } & Spacer)
-		| {
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'mainImage';
+		  } & MainImage)
+		| ({
 				_key: string;
-		  }
+		  } & Spacer)
 	> | null;
 	categories: Array<{
 		slug: string;
 		title: string;
 	}>;
 	excerpt: string;
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'mainImage';
-	};
+	featuredImage: MainImage;
 	publishedAt: string;
 	slug: string;
 	title: string;
@@ -2389,20 +2004,7 @@ export type NewsOverviewCategoryPageQueryResult = {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
-				image: {
-					asset?: {
-						_ref: string;
-						_type: 'reference';
-						_weak?: boolean;
-						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-					};
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt: string;
-					description?: string;
-					_type: 'extendedImage';
-				};
+				image: ExtendedImage;
 				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 				email: string | null;
 				role: string | null;
@@ -2419,40 +2021,14 @@ export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
 	author: {
 		firstName: string;
 		lastName: string;
-		image: {
-			asset?: {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-			};
-			media?: unknown;
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt: string;
-			description?: string;
-			_type: 'extendedImage';
-		};
+		image: ExtendedImage;
 	};
 	categories: Array<{
 		title: string;
 		slug: string;
 	}>;
 	excerpt: string;
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'mainImage';
-	};
+	featuredImage: MainImage;
 	slug: string;
 	title: string;
 }>;
@@ -2482,20 +2058,7 @@ export type NewsOverviewPageQueryResult = {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
-				image: {
-					asset?: {
-						_ref: string;
-						_type: 'reference';
-						_weak?: boolean;
-						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-					};
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt: string;
-					description?: string;
-					_type: 'extendedImage';
-				};
+				image: ExtendedImage;
 				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 				email: string | null;
 				role: string | null;
@@ -2533,42 +2096,12 @@ export type OfferGroupsGroupPageQueryResult = {
 export type OfferGroupsGroupPageGroupsQueryResult =
 	| {
 			description: SimpleBlockContent;
-			featuredImage: null;
-			images: null;
-			title: string;
-			training: null;
-	  }
-	| {
-			description: SimpleBlockContent;
-			featuredImage: {
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'extendedImage';
-			};
-			images: Array<{
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'extendedImage';
-				_key: string;
-			}> | null;
+			featuredImage: ExtendedImage;
+			images: Array<
+				{
+					_key: string;
+				} & ExtendedImage
+			> | null;
 			title: string;
 			training: {
 				trainingDescription: SimpleBlockContent | null;
@@ -2629,6 +2162,20 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			} | null;
 	  }
 	| {
+			description: SimpleBlockContent;
+			featuredImage: null;
+			images: null;
+			title: string;
+			training: null;
+	  }
+	| {
+			description: null;
+			featuredImage: MainImage;
+			images: null;
+			title: string;
+			training: null;
+	  }
+	| {
 			description: null;
 			featuredImage: null;
 			images: null;
@@ -2650,26 +2197,6 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			training: null;
 	  }
 	| {
-			description: null;
-			featuredImage: {
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'mainImage';
-			};
-			images: null;
-			title: string;
-			training: null;
-	  }
-	| {
 			description: string | null;
 			featuredImage: null;
 			images: null;
@@ -2684,20 +2211,7 @@ export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
 	phone: string | null;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
+	image: ExtendedImage;
 	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 	email: string | null;
 	role: string | null;
@@ -2739,6 +2253,37 @@ export type OfferGroupsPageQueryResult = {
 // Query: *[_type == $groupType][] | order(sortOrder asc) {		icon,		featuredImage,		overviewTitle,		'slug': slug.current,		title,	}
 export type OfferGroupsPageGroupsQueryResult = Array<
 	| {
+			icon:
+				| 'Badminton'
+				| 'Bodenturnen'
+				| 'Cheerleading'
+				| 'Fitness'
+				| 'Fussball'
+				| 'Gymnastik'
+				| 'Jujutsu'
+				| 'Pilates'
+				| 'RopeSkipping'
+				| 'Sportakrobatik'
+				| 'SportInGebaeuden'
+				| 'StepAerobic'
+				| 'Taekwondo'
+				| 'Tanzen'
+				| 'Turnen'
+				| 'Wandern'
+				| 'Yoga';
+			featuredImage: ExtendedImage;
+			overviewTitle: string | null;
+			slug: string;
+			title: string;
+	  }
+	| {
+			icon: null;
+			featuredImage: MainImage;
+			overviewTitle: null;
+			slug: string;
+			title: string;
+	  }
+	| {
 			icon: null;
 			featuredImage: null;
 			overviewTitle: null;
@@ -2773,63 +2318,6 @@ export type OfferGroupsPageGroupsQueryResult = Array<
 			slug: string | null;
 			title: string;
 	  }
-	| {
-			icon:
-				| 'Badminton'
-				| 'Bodenturnen'
-				| 'Cheerleading'
-				| 'Fitness'
-				| 'Fussball'
-				| 'Gymnastik'
-				| 'Jujutsu'
-				| 'Pilates'
-				| 'RopeSkipping'
-				| 'Sportakrobatik'
-				| 'SportInGebaeuden'
-				| 'StepAerobic'
-				| 'Taekwondo'
-				| 'Tanzen'
-				| 'Turnen'
-				| 'Wandern'
-				| 'Yoga';
-			featuredImage: {
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'extendedImage';
-			};
-			overviewTitle: string | null;
-			slug: string;
-			title: string;
-	  }
-	| {
-			icon: null;
-			featuredImage: {
-				asset?: {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-				};
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				_type: 'mainImage';
-			};
-			overviewTitle: null;
-			slug: string;
-			title: string;
-	  }
 >;
 // Variable: offerGroupsPageContactPersonsQuery
 // Query: *[_type == 'person'][affiliations[0].role->email == $email] {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
@@ -2837,20 +2325,7 @@ export type OfferGroupsPageContactPersonsQueryResult = Array<{
 	firstName: string;
 	lastName: string;
 	phone: string | null;
-	image: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'extendedImage';
-	};
+	image: ExtendedImage;
 	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 	email: string | null;
 	role: string | null;
@@ -2889,20 +2364,7 @@ export type OfferPageQueryResult = {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
-				image: {
-					asset?: {
-						_ref: string;
-						_type: 'reference';
-						_weak?: boolean;
-						[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-					};
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt: string;
-					description?: string;
-					_type: 'extendedImage';
-				};
+				image: ExtendedImage;
 				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
 				email: string | null;
 				role: string | null;
@@ -2967,40 +2429,14 @@ export type NewsArticlesQueryResult = Array<{
 	author: {
 		firstName: string;
 		lastName: string;
-		image: {
-			asset?: {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-			};
-			media?: unknown;
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt: string;
-			description?: string;
-			_type: 'extendedImage';
-		};
+		image: ExtendedImage;
 	};
 	categories: Array<{
 		title: string;
 		slug: string;
 	}>;
 	excerpt: string;
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'mainImage';
-	};
+	featuredImage: MainImage;
 	slug: string;
 	title: string;
 }>;
@@ -3012,40 +2448,14 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 	author: {
 		firstName: string;
 		lastName: string;
-		image: {
-			asset?: {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-			};
-			media?: unknown;
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt: string;
-			description?: string;
-			_type: 'extendedImage';
-		};
+		image: ExtendedImage;
 	};
 	categories: Array<{
 		title: string;
 		slug: string;
 	}>;
 	excerpt: string;
-	featuredImage: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'mainImage';
-	};
+	featuredImage: MainImage;
 	slug: string;
 	title: string;
 }>;
