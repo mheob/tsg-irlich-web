@@ -31,6 +31,7 @@ export function Main({ description, gallery, title }: Readonly<MainProps>) {
 							sizes="100vw"
 							src={items[0].src}
 							srcFull={items[0].srcFull}
+							fill
 							priority
 						/>
 					</div>

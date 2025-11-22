@@ -1,7 +1,7 @@
 import { DOSBIcon, type DosbIconName } from '@tsgi-web/shared';
+import { ArrowUpRight } from 'lucide-react';
 import type { LinkProps } from 'next/link';
-
-import { ArrowLink } from '@/components/ui/arrow-button';
+import Link from 'next/link';
 
 interface GroupCardProps {
 	digit: number;
@@ -15,29 +15,29 @@ export function GroupCard({ digit, icon, slug, title }: Readonly<GroupCardProps>
 
 	return (
 		<article className="group relative h-56 min-w-[25%]">
-			<div className="mt-16 flex h-40 flex-col rounded-xl bg-white p-6 shadow-lg group-hover:bg-black/80">
+			<Link
+				className="mt-16 flex h-40 flex-col rounded-xl bg-white p-6 shadow-lg transition-colors group-hover:bg-black/80"
+				href={slug}
+			>
 				<div className="bg-primary text-primary-foreground -mt-16 grid size-20 place-content-center rounded-xl text-5xl md:size-24">
 					<DOSBIcon className="h-12 w-auto text-current md:h-16" icon={icon} />
 				</div>
 
-				<div className="text-stroke absolute end-4 top-20 text-5xl text-white group-hover:hidden md:text-7xl">
+				<div className="text-stroke absolute end-4 top-20 text-5xl text-white opacity-100 transition-all group-hover:opacity-0 md:text-7xl">
 					{doubleDigit}
 				</div>
 
-				<div className="flex flex-1 items-center justify-between group-hover:items-end">
-					<h3 className="mt-6 font-serif text-3xl uppercase group-hover:mt-0 group-hover:text-white">
+				<div className="relative flex flex-1">
+					<h3 className="mt-6 self-end font-serif text-3xl uppercase transition-colors group-hover:text-white">
 						{title}
 					</h3>
 
-					<ArrowLink
-						className="hidden text-sm group-hover:block"
-						direction="up-right"
-						href={slug}
-						size="32"
-						variant="ghost"
+					<ArrowUpRight
+						className="absolute end-0 bottom-0 text-white opacity-0 group-hover:opacity-100"
+						size={32}
 					/>
 				</div>
-			</div>
+			</Link>
 		</article>
 	);
 }

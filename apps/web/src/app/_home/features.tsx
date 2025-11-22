@@ -16,7 +16,7 @@ export function Features({ features, intro, subtitle, title }: Readonly<Features
 				<div className="mt-16 grid grid-cols-1 place-content-center gap-12 md:grid-cols-2">
 					{features?.map(({ icon, intro, title }) => {
 						if (!icon || !intro || !title) return null;
-						return <FeatureCard href="#!" icon={icon} intro={intro} key={title} title={title} />;
+						return <FeatureCard icon={icon} intro={intro} key={title} title={title} />;
 					})}
 				</div>
 			</div>
