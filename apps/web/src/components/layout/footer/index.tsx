@@ -9,7 +9,7 @@ import type { printGoogleMapsLink } from '@/utils/url';
 
 import { SocialMediaIcon } from '../../ui/social-media-icon';
 import { ContactLink } from '../../with-logic/contact-link';
-import AddressPin from './address-pin';
+import { AddressPin } from './address-pin';
 
 const contact: {
 	address: Parameters<typeof printGoogleMapsLink>[number];

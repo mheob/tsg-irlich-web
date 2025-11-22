@@ -1,7 +1,6 @@
 'use client';
 
 import { MapPin } from 'lucide-react';
-import type { HTMLAttributes } from 'react';
 
 import { Button, buttonVariants } from '@/components/ui/button';
 import { ExternalLink } from '@/components/ui/external-link';
@@ -17,11 +16,11 @@ import {
 	DialogTrigger,
 } from '../../ui/dialog';
 
-type AddressPinProps = HTMLAttributes<HTMLDivElement> & {
+interface AddressPinProps {
 	address: Parameters<typeof printGoogleMapsLink>[number];
-};
+}
 
-const AddressPin = ({ address }: AddressPinProps) => {
+export function AddressPin({ address }: Readonly<AddressPinProps>) {
 	const simplifiedAddress = `${address.street} ${address.houseNumber}, ${address.zipCode} ${address.city}`;
 
 	return (
@@ -54,6 +53,4 @@ const AddressPin = ({ address }: AddressPinProps) => {
 			</DialogContent>
 		</Dialog>
 	);
-};
-
-export default AddressPin;
+}

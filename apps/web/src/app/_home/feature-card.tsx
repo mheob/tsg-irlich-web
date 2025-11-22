@@ -44,7 +44,7 @@ export function FeatureCard({ icon, intro, title }: Readonly<FeatureCardProps>) 
 				<CardTitle className="mt-4 text-xl uppercase md:text-3xl">{title}</CardTitle>
 			</CardHeader>
 
-			<CardContent className="mt-2 group-hover:text-white md:text-xl">{intro}</CardContent>
+			<CardContent className="mt-2 md:text-xl">{intro}</CardContent>
 		</Card>
 	);
 }

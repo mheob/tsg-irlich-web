@@ -23,7 +23,7 @@ export function GroupCard({ digit, icon, slug, title }: Readonly<GroupCardProps>
 					<DOSBIcon className="h-12 w-auto text-current md:h-16" icon={icon} />
 				</div>
 
-				<div className="text-stroke absolute end-4 top-20 text-5xl text-white transition-all group-hover:opacity-0 md:text-7xl">
+				<div className="text-stroke absolute end-4 top-20 text-5xl text-white opacity-100 transition-all group-hover:opacity-0 md:text-7xl">
 					{doubleDigit}
 				</div>
 
@@ -32,7 +32,10 @@ export function GroupCard({ digit, icon, slug, title }: Readonly<GroupCardProps>
 						{title}
 					</h3>
 
-					<ArrowUpRight className="absolute end-0 bottom-0 text-white" size={32} />
+					<ArrowUpRight
+						className="absolute end-0 bottom-0 text-white opacity-0 group-hover:opacity-100"
+						size={32}
+					/>
 				</div>
 			</Link>
 		</article>
