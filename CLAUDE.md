@@ -147,6 +147,7 @@ bun run typegen               # Generate types for web
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_STUDIO_URL`
 - `SANITY_API_READ_TOKEN`
+- `SANITY_REVALIDATE_SECRET`,
 - `VERCEL_OIDC_TOKEN`
 
 ### Code Quality Tools
