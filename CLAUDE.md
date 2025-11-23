@@ -61,7 +61,7 @@ bun run extract-types          # Extract schema types for typegen
 
 - Built with **Turbo** for build orchestration and caching
 - **bun** as package manager with workspace support
-- Shared dependencies managed via catalog: references
+- Shared dependencies managed with explicit pinned versions
 - Node.js >=22.15 required
 
 ### Web App (Next.js)
