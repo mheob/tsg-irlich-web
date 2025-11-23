@@ -2852,10 +2852,25 @@
                     },
                     "optional": true
                   },
-                  "cta": {
+                  "ctaLongVision": {
                     "type": "objectAttribute",
                     "value": {
                       "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "longVisionTitle": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "longVision": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "inline",
+                      "name": "blockContent"
                     },
                     "optional": false
                   }

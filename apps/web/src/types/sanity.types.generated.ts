@@ -508,7 +508,9 @@ export type AboutUs = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			cta: string;
+			ctaLongVision: string;
+			longVisionTitle: string;
+			longVision: BlockContent;
 		};
 		stats: Array<
 			{
@@ -1627,7 +1629,9 @@ export type AboutUsPageQueryResult = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			cta: string;
+			ctaLongVision: string;
+			longVisionTitle: string;
+			longVision: BlockContent;
 		};
 		stats: Array<
 			{
