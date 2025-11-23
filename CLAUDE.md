@@ -17,23 +17,23 @@ containing:
 
 ```bash
 # Development
-pnpm dev                    # Start all apps in development mode
+bun run dev                    # Start all apps in development mode
 turbo dev                   # Alternative using turbo directly
 
 # Building
-pnpm build                  # Build all apps
-pnpm build:affected         # Build only affected packages
+bun run build                  # Build all apps
+bun run build:affected         # Build only affected packages
 turbo build --affected      # Alternative using turbo directly
 
 # Linting & Code Quality
-pnpm lint                   # Lint all apps
-pnpm lint:affected          # Lint only affected packages
-pnpm lint:root              # Lint root directory files
-pnpm lint:cspell            # Run spell check
+bun run lint                   # Lint all apps
+bun run lint:affected          # Lint only affected packages
+bun run lint:root              # Lint root directory files
+bun run lint:cspell            # Run spell check
 
 # Type Generation
-pnpm typegen                # Generate Sanity types for web app
-pnpm extract-types          # Extract Sanity schema types
+bun run typegen                # Generate Sanity types for web app
+bun run extract-types          # Extract Sanity schema types
 ```
 
 ### Individual App Commands
@@ -41,18 +41,18 @@ pnpm extract-types          # Extract Sanity schema types
 ```bash
 # Web app (apps/web)
 cd apps/web
-pnpm dev                    # Next.js dev server with Turbopack
-pnpm build                  # Production build
-pnpm start                  # Start production server
-pnpm lint                   # ESLint with auto-fix
-pnpm typegen               # Generate Sanity types
+bun run dev                    # Next.js dev server with Turbopack
+bun run build                  # Production build
+bun run start                  # Start production server
+bun run lint                   # ESLint with auto-fix
+bun run typegen               # Generate Sanity types
 
 # Studio app (apps/studio)
 cd apps/studio
-pnpm dev                    # Sanity Studio development
-pnpm build                  # Build Sanity Studio
-pnpm deploy                 # Deploy studio to Sanity
-pnpm extract-types          # Extract schema types for typegen
+bun run dev                    # Sanity Studio development
+bun run build                  # Build Sanity Studio
+bun run deploy                 # Deploy studio to Sanity
+bun run extract-types          # Extract schema types for typegen
 ```
 
 ## Architecture & Code Organization
@@ -60,7 +60,7 @@ pnpm extract-types          # Extract schema types for typegen
 ### Monorepo Structure
 
 - Built with **Turbo** for build orchestration and caching
-- **pnpm** as package manager with workspace support
+- **bun** as package manager with workspace support
 - Shared dependencies managed via catalog: references
 - Node.js >=22.15 required
 
@@ -124,8 +124,8 @@ pnpm extract-types          # Extract schema types for typegen
 
 ```bash
 # After schema changes, always run:
-pnpm extract-types          # Extract from studio
-pnpm typegen               # Generate types for web
+bun run extract-types         # Extract from studio
+bun run typegen               # Generate types for web
 ```
 
 ## Environment & Configuration
@@ -134,19 +134,20 @@ pnpm typegen               # Generate types for web
 
 **Studio (.env)**:
 
-- `SANITY_API_PROJECT_ID`
 - `SANITY_API_DATASET`
+- `SANITY_API_PROJECT_ID`
 - `SANITY_API_READ_TOKEN`
-- `SANITY_API_WRITE_TOKEN`
 - `SANITY_API_VERSION`
+- `SANITY_API_WRITE_TOKEN`
 
 **Web (.env.local)**:
 
-- `NEXT_PUBLIC_SANITY_PROJECT_ID`
-- `NEXT_PUBLIC_SANITY_DATASET`
 - `NEXT_PUBLIC_SANITY_API_VERSION`
-- `SANITY_API_READ_TOKEN`
+- `NEXT_PUBLIC_SANITY_DATASET`
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_STUDIO_URL`
+- `SANITY_API_READ_TOKEN`
+- `VERCEL_OIDC_TOKEN`
 
 ### Code Quality Tools
 

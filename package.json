@@ -2,6 +2,10 @@
 	"name": "@tsg-irlich-web/root",
 	"private": true,
 	"type": "module",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
 	"scripts": {
 		"build": "turbo build",
 		"build:affected": "turbo build --affected",
@@ -11,7 +15,7 @@
 		"lint": "turbo lint",
 		"lint:affected": "turbo lint --affected",
 		"lint:cspell": "cspell --unique --no-progress --no-must-find-files",
-		"lint:root": "eslint . --fix",
+		"lint:root": "bun --bun eslint . --fix",
 		"prepare": "husky",
 		"typegen:routes": "turbo typegen:routes",
 		"typegen:sanity": "turbo typegen:sanity"
@@ -19,41 +23,41 @@
 	"lint-staged": {
 		"*": [
 			"eslint --fix",
-			"pnpm run lint:cspell"
+			"nr lint:cspell"
 		]
 	},
 	"devDependencies": {
-		"@antfu/ni": "catalog:",
-		"@commitlint/cli": "catalog:",
-		"@cspell/dict-de-de": "catalog:",
-		"@eslint-react/eslint-plugin": "catalog:",
-		"@mheob/commitlint-config": "catalog:",
-		"@mheob/eslint-config": "catalog:",
-		"@mheob/prettier-config": "catalog:",
-		"@next/eslint-plugin-next": "catalog:",
-		"commitizen": "catalog:",
-		"cspell": "catalog:",
-		"cz-git": "catalog:",
-		"eslint": "catalog:",
-		"eslint-plugin-react-hooks": "catalog:",
-		"eslint-plugin-react-refresh": "catalog:",
-		"husky": "catalog:",
-		"lint-staged": "catalog:",
-		"prettier": "catalog:",
-		"prettier-plugin-tailwindcss": "catalog:",
-		"taze": "catalog:",
-		"turbo": "catalog:",
-		"typescript": "catalog:"
+		"@antfu/ni": "^27.0.1",
+		"@commitlint/cli": "^20.1.0",
+		"@cspell/dict-de-de": "^4.1.2",
+		"@eslint-react/eslint-plugin": "^2.3.7",
+		"@mheob/commitlint-config": "^1.2.5",
+		"@mheob/eslint-config": "^9.0.1",
+		"@mheob/prettier-config": "^3.4.0",
+		"@next/eslint-plugin-next": "^16.0.3",
+		"@types/bun": "^1.3.3",
+		"commitizen": "^4.3.1",
+		"cspell": "^9.3.2",
+		"cz-git": "^1.12.0",
+		"eslint": "^9.39.1",
+		"eslint-plugin-react-hooks": "^7.0.1",
+		"eslint-plugin-react-refresh": "^0.4.24",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.2.7",
+		"prettier": "^3.6.2",
+		"prettier-plugin-tailwindcss": "^0.7.1",
+		"taze": "^19.9.0",
+		"turbo": "^2.6.1",
+		"typescript": "^5.9.3"
 	},
-	"packageManager": "pnpm@10.23.0",
+	"packageManager": "bun@1.3.3",
 	"engines": {
+		"bun": "1.3.3",
 		"node": "^22.21.1"
 	},
-	"pnpm": {
-		"overrides": {
-			"prismjs": ">=1.30.0",
-			"tar-fs": "^2.1.3",
-			"undici": ">=7.10.0"
-		}
+	"overrides": {
+		"prismjs": ">=1.30.0",
+		"tar-fs": "^2.1.3",
+		"undici": ">=7.10.0"
 	}
 }
