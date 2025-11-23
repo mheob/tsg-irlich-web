@@ -9,7 +9,7 @@ import gymnasticImage from './_assets/kinderturnen.webp';
 import coursesImage from './_assets/kurse.webp';
 import taekwondoImage from './_assets/taekwondo.webp';
 import danceImage from './_assets/tanzen.webp';
-import otherSportsImage from './_assets/weitere-sportarten.webp';
+import otherSportsImage from './_assets/weitere.webp';
 
 interface OfferGroupImage {
 	alt: ImageProps['alt'];
