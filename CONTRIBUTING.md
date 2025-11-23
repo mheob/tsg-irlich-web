@@ -65,7 +65,7 @@ contributing to this project.
    NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
    NEXT_PUBLIC_SANITY_STUDIO_URL=http://localhost:3333
    SANITY_API_READ_TOKEN=your_read_token
-   SANITY_REVALIDATE_SECRET=your_revalidate_secret,
+   SANITY_REVALIDATE_SECRET=your_revalidate_secret
    VERCEL_OIDC_TOKEN=your_vercel_token
    ```
 
