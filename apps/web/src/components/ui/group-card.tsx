@@ -30,7 +30,7 @@ export function GroupCard({
 }: Readonly<GroupCardProps>) {
 	return (
 		<article className="relative aspect-video shadow-lg transition-transform duration-200 hover:scale-105">
-			<div className="absolute inset-0 z-[-1] rounded-xl bg-black/30" />
+			<div className="absolute inset-0 z-[-1] rounded-xl bg-black/50" />
 			<Image
 				alt={title}
 				className="absolute inset-0 z-[-2] rounded-xl"

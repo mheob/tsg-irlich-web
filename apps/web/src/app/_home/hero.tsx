@@ -20,7 +20,7 @@ export async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 	const socialMedia = await client.fetch(socialMediaQuery);
 
 	return (
-		<section className="relative md:-mt-40 md:grid md:h-dvh md:place-content-center md:pt-48">
+		<section className="relative md:-mt-40 md:grid md:h-dvh md:pt-48">
 			<div className="container mx-auto items-center pt-5 md:flex">
 				<div className="md:w-1/2">
 					<SectionHeader level="h1" subTitle={subtitle} title={title}>
@@ -44,8 +44,8 @@ export async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 						className={cn(
 							'absolute',
 							'start-[10%] end-[10%] bottom-20 w-[80%]',
-							'md:start-1/2 md:end-auto md:bottom-10 md:w-[40%]',
-							'3xl:bottom-10 3xl:end-auto 3xl:start-1/2 3xl:w-[33%]',
+							'md:start-1/2 md:end-auto md:bottom-15 md:w-[40%]',
+							'3xl:bottom-15 3xl:w-[30%]',
 						)}
 						alt="Ein Frau, die am meditieren ist."
 						src={HeroImage}
