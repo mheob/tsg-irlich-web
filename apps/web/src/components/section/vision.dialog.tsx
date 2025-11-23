@@ -30,7 +30,7 @@ export function LongVisionDialog({
 						asChild
 					>
 						<div>
-							<PortableText value={longVision.text as PortableTextValue} />
+							{longVision?.text && <PortableText value={longVision.text as PortableTextValue} />}
 						</div>
 					</DialogDescription>
 				</ScrollArea>

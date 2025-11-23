@@ -4,6 +4,7 @@ import nextPlugin from '@next/eslint-plugin-next';
 export default mheob(
 	{
 		react: true,
+		toml: true,
 	},
 	{
 		ignores: ['.sonarlint', '**/*.generated.*', 'apps/studio/schema.json'],

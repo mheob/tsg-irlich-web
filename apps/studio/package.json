@@ -10,30 +10,30 @@
 		"deploy:schema": "sanity schema deploy",
 		"dev": "sanity dev",
 		"extract-types": "sanity schema extract --enforce-required-fields",
-		"lint": "eslint . --fix",
+		"lint": "bun --bun eslint . --fix",
 		"start": "sanity start"
 	},
 	"dependencies": {
-		"@sanity/assist": "catalog:",
-		"@sanity/icons": "catalog:",
-		"@sanity/locale-de-de": "catalog:",
-		"@sanity/ui": "catalog:",
-		"@sanity/vision": "catalog:",
+		"@sanity/assist": "^5.0.2",
+		"@sanity/icons": "^3.7.4",
+		"@sanity/locale-de-de": "^1.1.27",
+		"@sanity/ui": "^3.1.11",
+		"@sanity/vision": "^4.18.0",
 		"@tsgi-web/shared": "workspace:*",
-		"dotenv": "catalog:",
-		"react": "catalog:",
-		"react-dom": "catalog:",
-		"react-icons": "catalog:",
-		"sanity": "catalog:",
-		"sanity-plugin-media": "catalog:",
-		"slugify": "catalog:",
+		"dotenv": "^17.2.3",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0",
+		"react-icons": "^5.5.0",
+		"sanity": "^4.18.0",
+		"sanity-plugin-media": "^4.0.0",
+		"slugify": "^1.6.6",
 		"styled-components": "^6.1.19",
-		"zod": "catalog:"
+		"zod": "^4.1.12"
 	},
 	"devDependencies": {
-		"@types/react": "catalog:",
-		"@types/react-dom": "catalog:",
-		"eslint": "catalog:",
-		"typescript": "catalog:"
+		"@types/react": "^19.2.6",
+		"@types/react-dom": "^19.2.3",
+		"eslint": "^9.39.1",
+		"typescript": "^5.9.3"
 	}
 }

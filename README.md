@@ -21,7 +21,7 @@ project features a Next.js frontend with Sanity CMS for content management, buil
 
 ## 🏗️ Project Architecture
 
-This is a **monorepo** built with **Turbo** and **pnpm** containing:
+This is a **monorepo** built with **Turbo** and **bun** containing:
 
 - **`apps/web`** - Next.js 16 frontend application with App Router
 - **`apps/studio`** - Sanity Studio CMS for content management
@@ -50,7 +50,7 @@ This is a **monorepo** built with **Turbo** and **pnpm** containing:
 ### Development Tools
 
 - **Turbo** for build orchestration and caching
-- **pnpm** for package management with workspace support
+- **bun** for package management with workspace support
 - **ESLint** with custom configuration
 - **Prettier** with Tailwind CSS plugin
 - **Commitlint** for conventional commits
@@ -107,8 +107,9 @@ tsg-web/
 ### Prerequisites
 
 - **Node.js** >= 22.20.0
-- **pnpm** package manager
+- **bun** package manager
 - **Git** for version control
+- **@antfu/ni** for talking to the package manager
 
 ### Installation
 
@@ -119,38 +120,45 @@ tsg-web/
    cd web
    ```
 
-2. **Install dependencies**
+2. **Install @antfu/ni globally**
 
    ```bash
-   pnpm install
+   npm i -g @antfu/ni
    ```
 
-3. **Set up environment variables**
+3. **Install dependencies**
+
+   ```bash
+   ni
+   ```
+
+4. **Set up environment variables**
 
    For the Studio (`apps/studio/.env`):
 
    ```bash
-   SANITY_API_PROJECT_ID=your_project_id
    SANITY_API_DATASET=production
+   SANITY_API_PROJECT_ID=your_project_id
    SANITY_API_READ_TOKEN=your_read_token
+   SANITY_API_VERSION=2025-02-19
    SANITY_API_WRITE_TOKEN=your_write_token
-   SANITY_API_VERSION=2024-01-01
    ```
 
    For the Web app (`apps/web/.env.local`):
 
    ```bash
-   NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_SANITY_API_VERSION=2025-02-19
    NEXT_PUBLIC_SANITY_DATASET=production
-   NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
-   SANITY_API_READ_TOKEN=your_read_token
+   NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
    NEXT_PUBLIC_SANITY_STUDIO_URL=http://localhost:3333
+   SANITY_API_READ_TOKEN=your_read_token
+   VERCEL_OIDC_TOKEN=your_vercel_token
    ```
 
-4. **Start development servers**
+5. **Start development servers**
 
    ```bash
-   pnpm dev
+   nr dev
    ```
 
 ## 📜 Available Scripts
@@ -159,13 +167,13 @@ tsg-web/
 
 ```bash
 
-pnpm dev                    # Start all apps in development mode
-pnpm build                  # Build all apps for production
-pnpm build:affected         # Build only affected packages
-pnpm lint                   # Lint all apps
-pnpm lint:affected          # Lint only affected packages
-pnpm typegen                # Generate Sanity types for web app
-pnpm extract-types          # Extract Sanity schema types
+nr dev                    # Start all apps in development mode
+nr build                  # Build all apps for production
+nr build:affected         # Build only affected packages
+nr lint                   # Lint all apps
+nr lint:affected          # Lint only affected packages
+nr typegen                # Generate Sanity types for web app
+nr extract-types          # Extract Sanity schema types
 ```
 
 ### Individual App Commands
@@ -174,20 +182,20 @@ pnpm extract-types          # Extract Sanity schema types
 
 ```bash
 cd apps/web
-pnpm dev                    # Next.js dev server with Turbopack
-pnpm build                  # Production build
-pnpm start                  # Start production server
-pnpm typegen                # Generate Sanity types
+nr dev                    # Next.js dev server with Turbopack
+nr build                  # Production build
+nr start                  # Start production server
+nr typegen                # Generate Sanity types
 ```
 
 #### Studio App (apps/studio)
 
 ```bash
 cd apps/studio
-pnpm dev                    # Sanity Studio development
-pnpm build                  # Build Sanity Studio
-pnpm deploy                 # Deploy studio to Sanity
-pnpm extract-types          # Extract schema types
+nr dev                    # Sanity Studio development
+nr build                  # Build Sanity Studio
+nr deploy                 # Deploy studio to Sanity
+nr extract-types          # Extract schema types
 ```
 
 ## 🏃‍♂️ Sports Groups & Departments

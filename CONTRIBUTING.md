@@ -21,7 +21,7 @@ contributing to this project.
 ### Prerequisites
 
 - **Node.js** >= 22.20
-- **pnpm** (package manager)
+- **bun** (package manager)
 - **Git** for version control
 
 ### Development Setup
@@ -33,38 +33,45 @@ contributing to this project.
    cd web
    ```
 
-2. **Install dependencies**
+2. **Install @antfu/ni globally**
 
    ```bash
-   pnpm install
+   npm i -g @antfu/ni
    ```
 
-3. **Set up environment variables**
-
-   For the Studio (apps/studio/.env):
+3. **Install dependencies**
 
    ```bash
-   SANITY_API_PROJECT_ID=
-   SANITY_API_DATASET=
-   SANITY_API_READ_TOKEN=
-   SANITY_API_WRITE_TOKEN=
-   SANITY_API_VERSION=
+   ni
    ```
 
-   For the Web app (apps/web/.env.local):
+4. **Set up environment variables**
+
+   For the Studio (`apps/studio/.env`):
 
    ```bash
-   NEXT_PUBLIC_SANITY_PROJECT_ID=
-   NEXT_PUBLIC_SANITY_DATASET=
-   NEXT_PUBLIC_SANITY_API_VERSION=
-   SANITY_API_READ_TOKEN=
-   NEXT_PUBLIC_SANITY_STUDIO_URL=
+   SANITY_API_DATASET=production
+   SANITY_API_PROJECT_ID=your_project_id
+   SANITY_API_READ_TOKEN=your_read_token
+   SANITY_API_VERSION=2025-02-19
+   SANITY_API_WRITE_TOKEN=your_write_token
    ```
 
-4. **Start development servers**
+   For the Web app (`apps/web/.env.local`):
 
    ```bash
-   pnpm dev
+   NEXT_PUBLIC_SANITY_API_VERSION=2025-02-19
+   NEXT_PUBLIC_SANITY_DATASET=production
+   NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_SANITY_STUDIO_URL=http://localhost:3333
+   SANITY_API_READ_TOKEN=your_read_token
+   VERCEL_OIDC_TOKEN=your_vercel_token
+   ```
+
+5. **Start development servers**
+
+   ```bash
+   nr dev
    ```
 
 ## Code Standards
@@ -177,8 +184,8 @@ export const myDataQuery = defineQuery(groq`
 After making any changes to Sanity schemas, always run:
 
 ```bash
-pnpm extract-types  # Extract from studio
-pnpm typegen       # Generate types for web
+bun run extract-types  # Extract from studio
+bun run typegen       # Generate types for web
 ```
 
 ## Commit Guidelines
@@ -213,13 +220,6 @@ This project uses **Conventional Commits** with Commitizen.
 - **shared**: Changes to shared packages
 - **deps**: Dependency updates
 
-### Using Commitizen
-
-```bash
-git add .
-pnpm commit  # or use commitizen CLI
-```
-
 ### Examples
 
 ```text
@@ -248,9 +248,9 @@ chore(deps): update all non-major dependencies
 3. **Run quality checks**
 
    ```bash
-   pnpm lint              # Run linting
-   pnpm lint:cspell       # Run spell check
-   pnpm build             # Ensure build succeeds
+   bun run lint              # Run linting
+   bun run lint:cspell       # Run spell check
+   bun run build             # Ensure build succeeds
    ```
 
 4. **Push your branch**
@@ -307,11 +307,11 @@ web/
 
 ```bash
 # Run all tests
-pnpm test
+bun run test
 
 # Run tests for specific app
 cd apps/web
-pnpm test
+bun run test
 ```
 
 ### Writing Tests
@@ -337,16 +337,16 @@ pnpm test
 2. Use `defineType()` and `defineField()`
 3. Add German titles/descriptions
 4. Include appropriate icon
-5. Run type generation: `pnpm extract-types && pnpm typegen`
+5. Run type generation: `bun run extract-types && bun run typegen`
 
 ### Updating Dependencies
 
 ```bash
 # Update all non-major dependencies
-pnpm update
+bun update
 
 # Check for outdated packages
-pnpm outdated
+bun outdated
 ```
 
 ## Getting Help

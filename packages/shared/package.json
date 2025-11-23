@@ -10,20 +10,19 @@
 		"./*": "./src/*.ts"
 	},
 	"scripts": {
-		"lint": "eslint . --fix"
+		"lint": "bun --bun eslint . --fix"
 	},
 	"dependencies": {
-		"clsx": "catalog:",
-		"react": "catalog:",
-		"react-dom": "catalog:",
-		"tailwind-merge": "catalog:"
+		"clsx": "^2.1.1",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0",
+		"tailwind-merge": "^3.4.0"
 	},
 	"devDependencies": {
-		"@mheob/tsconfig": "catalog:",
-		"@types/node": "catalog:",
-		"@types/react": "catalog:",
-		"@types/react-dom": "catalog:",
-		"eslint": "catalog:",
-		"typescript": "catalog:"
+		"@mheob/tsconfig": "^2.2.1",
+		"@types/react": "^19.2.6",
+		"@types/react-dom": "^19.2.3",
+		"eslint": "^9.39.1",
+		"typescript": "^5.9.3"
 	}
 }

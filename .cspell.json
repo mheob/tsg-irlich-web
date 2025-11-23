@@ -6,15 +6,16 @@
 		".sonarlint",
 		".vscode",
 		"*.svg",
+		"*.tsbuildinfo",
 		"**/*generated.*",
+		"**/bun-*.yaml",
 		"**/coverage",
 		"**/dist",
 		"**/logs",
 		"**/node_modules",
 		"**/package.json",
-		"**/pnpm-*.yaml",
 		"**/schema.json",
-		"**/turbo.json"
+		"**/turbo.json",
 	],
 	"import": ["@cspell/dict-de-de/cspell-ext.json"],
 	"language": "en,de,lorem",
@@ -112,6 +113,6 @@
 		"xlarge",
 		"youtube",
 		"zoomable",
-		"Zoomable"
-	]
+		"Zoomable",
+	],
 }
