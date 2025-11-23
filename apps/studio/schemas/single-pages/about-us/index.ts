@@ -7,11 +7,11 @@ import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
-import { visionField } from '@/shared/sections/vision';
 
 import { chronicle, contactPersons, intro, stats, vision } from './_groups';
 import { chronicleField } from './chronicle';
 import { introField } from './intro';
+import { visionField } from './vision';
 
 const aboutUsPage = defineType({
 	title: 'Über uns',

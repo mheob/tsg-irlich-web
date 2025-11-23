@@ -7,13 +7,17 @@ import { SectionHeader } from '@/components/ui/section-header';
 import visionImage1 from '@/images/vision/vision-1.webp';
 import visionImage2 from '@/images/vision/vision-2.webp';
 import visionImage3 from '@/images/vision/vision-3.webp';
-import type { Home } from '@/types/sanity.types';
+import type { AboutUs, Home } from '@/types/sanity.types';
+
+import { LongVisionDialog } from './vision.dialog';
 
 import styles from './vision.module.css';
 
-type VisionProps = Home['content']['visionSection'];
+type VisionProps =
+	| (AboutUs['content']['visionSection'] & { _type: 'aboutUs' })
+	| (Home['content']['visionSection'] & { _type: 'home' });
 
-export function Vision({ cta, intro, subtitle, title }: Readonly<VisionProps>) {
+export function Vision(props: Readonly<VisionProps>) {
 	return (
 		<section className="relative items-center" id="vision-section">
 			<div className="md:container md:grid md:grid-cols-[55%_45%] md:px-5 md:not-last-of-type:mx-auto">
@@ -49,13 +53,21 @@ export function Vision({ cta, intro, subtitle, title }: Readonly<VisionProps>) {
 				</div>
 
 				<div className="container mx-auto px-5 pt-18 pb-10 text-center md:py-60 md:text-left">
-					<SectionHeader isCenteredOnDesktop={false} subTitle={subtitle} title={title} isCentered>
-						{intro}
+					<SectionHeader
+						isCenteredOnDesktop={false}
+						subTitle={props.subtitle}
+						title={props.title}
+						isCentered
+					>
+						{props.intro}
 					</SectionHeader>
 
-					<Button className="relative mt-12" asChild>
-						<Link href="/verein#vision-section">{cta}</Link>
-					</Button>
+					{props._type === 'home' && (
+						<Button className="relative mt-12" asChild>
+							<Link href="/verein#vision-section">{props.cta}</Link>
+						</Button>
+					)}
+					{props._type === 'aboutUs' && <LongVisionDialog {...props} />}
 				</div>
 			</div>
 		</section>

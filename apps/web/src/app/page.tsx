@@ -39,7 +39,7 @@ export default async function HomePage() {
 		<>
 			<Hero intro={page.intro} subtitle={page.subtitle} title={page.title} />
 			<Features {...page.content.featureSection} />
-			<Vision {...page.content.visionSection} />
+			<Vision {...{ ...page.content.visionSection, _type: page._type }} />
 			<Groups {...page.content.groupsSection} />
 			<Stats stats={page.content.stats} />
 			<Pricing {...page.content.pricingSection} />

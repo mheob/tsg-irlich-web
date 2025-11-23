@@ -39,7 +39,7 @@ export default async function VereinPage() {
 			/>
 			<Intro content={page.content.introSection} />
 			<Chronicle content={page.content.chronicleSection} />
-			<Vision {...page.content.visionSection} />
+			<Vision {...{ ...page.content.visionSection, _type: page._type }} />
 			<Stats stats={page.content.stats} withBackground />
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<Newsletter />
