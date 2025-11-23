@@ -4,9 +4,10 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Stats } from '@/components/section/stats';
+import heroImage from '@/images/angebot/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { offerPageQuery } from '@/lib/sanity/queries/pages/offer';
-import { fallbackImage, getOGImage } from '@/utils/groups';
+import { getOGImage } from '@/utils/groups';
 
 import { Groups } from './_sections/groups';
 
@@ -17,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 	const { intro, title } = page.content.departmentsSection;
 
-	const image = getOGImage('FALLBACK');
+	const image = getOGImage('heroImage');
 
 	return {
 		description: intro ?? '',
@@ -41,7 +42,11 @@ export default async function OfferPage() {
 
 	return (
 		<>
-			<Hero image={fallbackImage} subTitle={page.subtitle} title={page.title} />
+			<Hero
+				image={{ alt: 'TSG Irlich Schiedsrichter-Trikot in blau von JAKO', src: heroImage }}
+				subTitle={page.subtitle}
+				title={page.title}
+			/>
 			<Groups {...page.content.departmentsSection} />
 			<Stats stats={page.content.stats} />
 			<ContactPersons {...page.content.contactPersonsSection} />

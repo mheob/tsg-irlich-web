@@ -5,10 +5,10 @@ import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Stats } from '@/components/section/stats';
 import { Vision } from '@/components/section/vision';
+import heroImage from '@/images/verein/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { aboutUsPageQuery } from '@/lib/sanity/queries/pages/about-us';
 
-import heroImage from '../mitgliedschaft/_assets/hero.webp';
 import { Chronicle } from './_sections/chronicle';
 import { Intro } from './_sections/intro';
 

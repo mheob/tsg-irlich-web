@@ -4,10 +4,9 @@ import { ContactForm } from '@/components/section/contact-form';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
+import contactImage from '@/images/kontakt/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { contactPageQuery } from '@/lib/sanity/queries/pages/contact';
-
-import contactImage from './_assets/contact.webp';
 
 export const metadata: Metadata = {
 	description:

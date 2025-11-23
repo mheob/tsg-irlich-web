@@ -4,10 +4,10 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Pricing } from '@/components/section/pricing';
+import heroImage from '@/images/mitgliedschaft/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { membershipPageQuery } from '@/lib/sanity/queries/pages/membership';
 
-import heroImage from './_assets/hero.webp';
 import { Downloads } from './_sections/downloads';
 import { Intro } from './_sections/intro';
 
