@@ -27,7 +27,13 @@ export function ChronicleCard({
 			<div>
 				<div className="relative block h-60 w-full overflow-hidden rounded-t-xl">
 					{imageSource && (
-						<Image alt={image.alt} sizes="(max-width: 48rem) 100vw, 800px" src={imageSource} fill />
+						<Image
+							alt={image.alt}
+							className="object-cover"
+							sizes="(max-width: 48rem) 100vw, 800px"
+							src={imageSource}
+							fill
+						/>
 					)}
 				</div>
 

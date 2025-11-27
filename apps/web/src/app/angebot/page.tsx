@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 	const { intro, title } = page.content.departmentsSection;
 
-	const image = getOGImage('heroImage');
+	const image = getOGImage('FALLBACK');
 
 	return {
 		description: intro ?? '',
