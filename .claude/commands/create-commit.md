@@ -15,6 +15,7 @@ description: Create a git commit
 
 Create a single git commit based on the above changes.
 
-Use conventional commits with a title length of max 50 characters. See @commitlint.config.js for more details.
+Use conventional commits with a title length of max 50 characters. See @commitlint.config.js for more details. Include a useful
+commit body.
 
 Please omit mention Claude as author and generator.
