@@ -21,7 +21,7 @@
 		"@radix-ui/react-separator": "^1.1.8",
 		"@radix-ui/react-slot": "^1.2.4",
 		"@sanity/client": "^7.13.0",
-		"@sanity/image-url": "^1.2.0",
+		"@sanity/image-url": "^2.0.0",
 		"@tailwindcss/postcss": "^4.1.17",
 		"@tailwindcss/typography": "^0.5.19",
 		"@tsgi-web/shared": "workspace:*",
