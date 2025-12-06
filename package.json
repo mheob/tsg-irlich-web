@@ -17,6 +17,7 @@
 		"lint:cspell": "cspell --unique --no-progress --no-must-find-files",
 		"lint:root": "bun --bun eslint . --fix",
 		"prepare": "husky",
+		"typecheck": "turbo typecheck",
 		"typegen:routes": "turbo typegen:routes",
 		"typegen:sanity": "turbo typegen:sanity"
 	},

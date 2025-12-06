@@ -1,8 +1,9 @@
 import { createImageUrlBuilder } from '@sanity/image-url';
 import type { Image } from 'sanity';
 
-import { dataset, projectId } from '@/lib/sanity/api';
-import type { SanityFileAsset } from '@/types/sanity.types';
+import type { MainImage, SanityFileAsset } from '@/types/sanity.types';
+
+import { client } from './client';
 
 /**
  * Generates a download URL for a Sanity file asset, appending a .pdf extension and setting the download filename.
@@ -44,10 +45,7 @@ export function getFileSize(sanitySize?: number): string {
 	return `${size.toFixed(index)} ${units[index]}`;
 }
 
-const imageBuilder = createImageUrlBuilder({
-	dataset: dataset || '',
-	projectId: projectId || '',
-});
+const imageBuilder = createImageUrlBuilder(client);
 
 /**
  * Generates a URL for a Sanity image with optional dimensions.
@@ -69,8 +67,11 @@ const imageBuilder = createImageUrlBuilder({
  * const autoUrl = urlForImage(sanityImage);
  * ```
  */
-// eslint-disable-next-line ts/no-explicit-any
-export const urlForImage = (image: any, height?: number, width?: number): string | undefined => {
+export const urlForImage = (
+	image: null | Omit<MainImage, '_type'> | undefined,
+	height?: number,
+	width?: number,
+): string | undefined => {
 	if (!image?.asset?._ref || !imageBuilder) return;
 	return height
 		? imageBuilder

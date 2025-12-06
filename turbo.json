@@ -25,6 +25,7 @@
 			],
 			"outputs": ["dist/**"]
 		},
+		"typecheck": {},
 		"typegen:routes": {},
 		"typegen:sanity": {
 			"dependsOn": ["studio#extract-types"]

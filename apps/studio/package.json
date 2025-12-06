@@ -11,7 +11,8 @@
 		"dev": "sanity dev",
 		"extract-types": "sanity schema extract --enforce-required-fields",
 		"lint": "bun --bun eslint . --fix",
-		"start": "sanity start"
+		"start": "sanity start",
+		"typecheck": "bun --bun tsc --noEmit"
 	},
 	"dependencies": {
 		"@sanity/assist": "^5.0.2",
