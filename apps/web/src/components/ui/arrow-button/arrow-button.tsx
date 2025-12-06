@@ -28,19 +28,16 @@ interface ArrowProps {
 }
 
 interface ArrowElementProps
-	extends ComponentPropsWithRef<'div'>,
-		VariantProps<typeof ArrowButtonVariants>,
-		ArrowProps {}
+	extends ComponentPropsWithRef<'div'>, VariantProps<typeof ArrowButtonVariants>, ArrowProps {}
 
 interface ArrowAnchorProps
-	extends ComponentPropsWithRef<typeof Link>,
+	extends
+		ComponentPropsWithRef<typeof Link>,
 		VariantProps<typeof ArrowButtonVariants>,
 		ArrowProps {}
 
 interface ArrowButtonProps
-	extends ComponentPropsWithRef<'button'>,
-		VariantProps<typeof ArrowButtonVariants>,
-		ArrowProps {
+	extends ComponentPropsWithRef<'button'>, VariantProps<typeof ArrowButtonVariants>, ArrowProps {
 	buttonType?: 'button' | 'reset' | 'submit';
 }
 
