@@ -12,8 +12,7 @@ import { getInitials } from '@/utils/image';
 import { ContactButton } from '../ui/contact-button';
 
 interface ContactPersonItemProps
-	extends ContactPerson,
-		Omit<ComponentPropsWithoutRef<'article'>, 'role'> {}
+	extends ContactPerson, Omit<ComponentPropsWithoutRef<'article'>, 'role'> {}
 
 function ContactPersonItem({
 	contactAs,

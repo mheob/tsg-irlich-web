@@ -38,25 +38,6 @@ export type NewsOverviewCategory = {
 	};
 };
 
-export type MetaFields = {
-	_type: 'metaFields';
-	metaTitle?: string;
-	metaDescription?: string;
-	openGraphImage?: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt?: string;
-		_type: 'image';
-	};
-};
-
 export type NewsArticlePage = {
 	_id: string;
 	_type: 'news-article-page';
@@ -222,6 +203,25 @@ export type SimpleBlockContent = {
 		_type: 'block';
 		_key: string;
 	}>;
+};
+
+export type MetaFields = {
+	_type: 'metaFields';
+	metaTitle?: string;
+	metaDescription?: string;
+	openGraphImage?: {
+		asset?: {
+			_ref: string;
+			_type: 'reference';
+			_weak?: boolean;
+			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+		};
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		alt?: string;
+		_type: 'image';
+	};
 };
 
 export type InternalLink = {
@@ -1522,7 +1522,6 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
 	| NewsOverviewCategory
-	| MetaFields
 	| NewsArticlePage
 	| DepartmentsPage
 	| Slug
@@ -1535,6 +1534,7 @@ export type AllSanitySchemaTypes =
 	| Stats
 	| SocialFields
 	| SimpleBlockContent
+	| MetaFields
 	| InternalLink
 	| SingleGroupPage
 	| Privacy
