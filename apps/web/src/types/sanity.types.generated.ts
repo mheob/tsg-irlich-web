@@ -1587,17 +1587,17 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/lib/sanity/queries/main-navigation.ts
 // Variable: mainNavigationQuery
-// Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"slug": link->slug.current,			title		}	}
+// Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"slug": coalesce(link->slug.current, '#!'),			title		}	}
 export type MainNavigationQueryResult = {
 	mainNavigation: Array<
 		| {
 				_key: string;
-				slug: null;
+				slug: string | '#!';
 				title: string;
 		  }
 		| {
 				_key: string;
-				slug: string | null;
+				slug: '#!';
 				title: string;
 		  }
 	>;
@@ -2494,7 +2494,7 @@ export type SocialMediaQueryResult = SocialFields | null;
 import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
-		'\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t"slug": link->slug.current,\n\t\t\ttitle\n\t\t}\n\t}\n': MainNavigationQueryResult;
+		"\n\t*[_type == 'site-settings'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t\"slug\": coalesce(link->slug.current, '#!'),\n\t\t\ttitle\n\t\t}\n\t}\n": MainNavigationQueryResult;
 		'\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
 		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
 		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;

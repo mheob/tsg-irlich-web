@@ -10,21 +10,21 @@ import { Button } from '@/components/ui/button';
 import TSGLogo from '@/icons/logos/tsg-logo';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
 
+function getHref(slug: string) {
+	return slug === 'home' ? '/' : `/${slug}`;
+}
+
 type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
 
 interface NavigationProps {
 	navItems: NavItem[];
 }
 
-export function Navigation({ navItems }: NavigationProps) {
+export function Navigation({ navItems }: Readonly<NavigationProps>) {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileOpen, setIsMobileOpen] = useState(false);
 
 	const pathname = usePathname();
-
-	const getHref = useCallback((slug: string) => {
-		return slug === 'home' ? '/' : `/${slug}`;
-	}, []);
 
 	const isActivePage = useCallback(
 		(slug: string) => {
@@ -73,21 +73,18 @@ export function Navigation({ navItems }: NavigationProps) {
 
 					{/* Desktop Navigation */}
 					<div className="hidden items-center space-x-3 lg:flex">
-						{navItems.map(item => {
-							if (!item.slug) return null;
-							return (
-								<Link
-									className={cn(
-										'hover:bg-secondary/40 text-primary flex h-16 items-center px-3 py-2 font-bold uppercase transition-colors',
-										{ 'border-secondary border-b-2': isActivePage(item.slug) },
-									)}
-									href={getHref(item.slug)}
-									key={item._key}
-								>
-									{item.title}
-								</Link>
-							);
-						})}
+						{navItems.map(item => (
+							<Link
+								className={cn(
+									'hover:bg-secondary/40 text-primary flex h-16 items-center px-3 py-2 font-bold uppercase transition-colors',
+									{ 'border-secondary border-b-2': isActivePage(item.slug) },
+								)}
+								href={getHref(item.slug)}
+								key={item._key}
+							>
+								{item.title}
+							</Link>
+						))}
 					</div>
 
 					{/* Contact Button (Desktop) */}
@@ -125,22 +122,19 @@ export function Navigation({ navItems }: NavigationProps) {
 						},
 					)}
 				>
-					{navItems.map(item => {
-						if (!item.slug) return null;
-						return (
-							<Link
-								className={cn(
-									'text-foreground block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-900',
-									{ 'bg-secondary/40': isActivePage(item.slug) },
-								)}
-								href={getHref(item.slug)}
-								key={item._key}
-								onClick={() => setIsMobileOpen(false)}
-							>
-								{item.title}
-							</Link>
-						);
-					})}
+					{navItems.map(item => (
+						<Link
+							className={cn(
+								'text-foreground block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-900',
+								{ 'bg-secondary/40': isActivePage(item.slug) },
+							)}
+							href={getHref(item.slug)}
+							key={item._key}
+							onClick={() => setIsMobileOpen(false)}
+						>
+							{item.title}
+						</Link>
+					))}
 
 					<div className="px-3 py-6 sm:hidden">
 						<Button

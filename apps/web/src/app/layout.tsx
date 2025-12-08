@@ -51,7 +51,11 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const mainNavigationQueryResults = await client.fetch(mainNavigationQuery);
+	const mainNavigationQueryResults = await client.fetch(
+		mainNavigationQuery,
+		{},
+		{ next: { revalidate: 60 * 60 * 12 /* 12 hours */ } },
+	);
 
 	return (
 		<html lang="de">
