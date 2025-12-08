@@ -4,7 +4,7 @@ import { cn } from '@tsgi-web/shared';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import TSGLogo from '@/icons/logos/tsg-logo';
@@ -16,6 +16,11 @@ function getHref(slug: string) {
 
 type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
 
+interface NavItemWithActive extends Omit<NavItem, 'slug'> {
+	isActive: boolean;
+	slug: string;
+}
+
 interface NavigationProps {
 	navItems: NavItem[];
 }
@@ -25,7 +30,6 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 	const [isMobileOpen, setIsMobileOpen] = useState(false);
 
 	const pathname = usePathname();
-
 	const isActivePage = useCallback(
 		(slug: string) => {
 			const href = slug === 'home' ? '/' : `/${slug}`;
@@ -33,6 +37,14 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 		},
 		[pathname],
 	);
+
+	const navItemsWithActive: NavItemWithActive[] = useMemo(() => {
+		return navItems.map(item => ({
+			...item,
+			isActive: isActivePage(item.slug),
+			slug: getHref(item.slug),
+		}));
+	}, [navItems, isActivePage]);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -73,13 +85,13 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 
 					{/* Desktop Navigation */}
 					<div className="hidden items-center space-x-3 lg:flex">
-						{navItems.map(item => (
+						{navItemsWithActive.map(item => (
 							<Link
 								className={cn(
 									'hover:bg-secondary/40 text-primary flex h-16 items-center px-3 py-2 font-bold uppercase transition-colors',
-									{ 'border-secondary border-b-2': isActivePage(item.slug) },
+									{ 'border-secondary border-b-2': item.isActive },
 								)}
-								href={getHref(item.slug)}
+								href={item.slug}
 								key={item._key}
 							>
 								{item.title}
@@ -122,13 +134,13 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 						},
 					)}
 				>
-					{navItems.map(item => (
+					{navItemsWithActive.map(item => (
 						<Link
 							className={cn(
 								'text-foreground block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-900',
-								{ 'bg-secondary/40': isActivePage(item.slug) },
+								{ 'bg-secondary/40': item.isActive },
 							)}
-							href={getHref(item.slug)}
+							href={item.slug}
 							key={item._key}
 							onClick={() => setIsMobileOpen(false)}
 						>
