@@ -10,8 +10,10 @@ import { Button } from '@/components/ui/button';
 import TSGLogo from '@/icons/logos/tsg-logo';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
 
+type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
+
 interface NavigationProps {
-	navItems: NonNullable<MainNavigationQueryResult>['mainNavigation'];
+	navItems: NavItem[];
 }
 
 export function Navigation({ navItems }: NavigationProps) {
@@ -20,8 +22,15 @@ export function Navigation({ navItems }: NavigationProps) {
 
 	const pathname = usePathname();
 
+	const getHref = useCallback((slug: string) => {
+		return slug === 'home' ? '/' : `/${slug}`;
+	}, []);
+
 	const isActivePage = useCallback(
-		(href: string) => (pathname === '/' && href === '/home') || pathname.startsWith(href),
+		(slug: string) => {
+			const href = slug === 'home' ? '/' : `/${slug}`;
+			return pathname === href || (pathname.startsWith(`/${slug}`) && slug !== 'home');
+		},
 		[pathname],
 	);
 
@@ -70,9 +79,9 @@ export function Navigation({ navItems }: NavigationProps) {
 								<Link
 									className={cn(
 										'hover:bg-secondary/40 text-primary flex h-16 items-center px-3 py-2 font-bold uppercase transition-colors',
-										{ 'border-secondary border-b-2': isActivePage(`/${item.slug}`) },
+										{ 'border-secondary border-b-2': isActivePage(item.slug) },
 									)}
-									href={item.slug === 'home' ? '/' : `/${item.slug}`}
+									href={getHref(item.slug)}
 									key={item._key}
 								>
 									{item.title}
@@ -122,9 +131,9 @@ export function Navigation({ navItems }: NavigationProps) {
 							<Link
 								className={cn(
 									'text-foreground block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-900',
-									{ 'bg-secondary/40': isActivePage(`/${item.slug}`) },
+									{ 'bg-secondary/40': isActivePage(item.slug) },
 								)}
-								href={item.slug === 'home' ? '/' : `/${item.slug}`}
+								href={getHref(item.slug)}
 								key={item._key}
 								onClick={() => setIsMobileOpen(false)}
 							>
