@@ -1,5 +1,119 @@
 [
   {
+    "name": "singleGroupPage",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "singleGroupPage"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "subtitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "meta": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "metaFields"
+        },
+        "optional": true
+      },
+      "content": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "contactPersonsSection": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "title": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "subtitle": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "intro": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  }
+                }
+              },
+              "optional": false
+            },
+            "trainingSection": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "title": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  }
+                }
+              },
+              "optional": false
+            }
+          }
+        },
+        "optional": false
+      }
+    }
+  },
+  {
     "name": "newsOverviewCategory",
     "type": "document",
     "attributes": {
@@ -193,7 +307,7 @@
     }
   },
   {
-    "name": "departmentsPage",
+    "name": "groupsPage",
     "type": "document",
     "attributes": {
       "_id": {
@@ -206,7 +320,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "departmentsPage"
+          "value": "groupsPage"
         }
       },
       "_createdAt": {
@@ -226,14 +340,6 @@
         "value": {
           "type": "string"
         }
-      },
-      "slug": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "slug"
-        },
-        "optional": true
       },
       "title": {
         "type": "objectAttribute",
@@ -262,7 +368,7 @@
         "value": {
           "type": "object",
           "attributes": {
-            "departmentsSection": {
+            "groupsSection": {
               "type": "objectAttribute",
               "value": {
                 "type": "object",
@@ -339,50 +445,6 @@
                       "type": "string"
                     },
                     "optional": true
-                  },
-                  "contactPersons": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "array",
-                      "of": {
-                        "type": "object",
-                        "attributes": {
-                          "_ref": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "string"
-                            }
-                          },
-                          "_type": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "string",
-                              "value": "reference"
-                            }
-                          },
-                          "_weak": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "boolean"
-                            },
-                            "optional": true
-                          }
-                        },
-                        "dereferencesTo": "person",
-                        "rest": {
-                          "type": "object",
-                          "attributes": {
-                            "_key": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "optional": false
                   }
                 }
               },
@@ -391,36 +453,6 @@
           }
         },
         "optional": false
-      }
-    }
-  },
-  {
-    "name": "slug",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "slug"
-          }
-        },
-        "current": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": false
-        },
-        "source": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        }
       }
     }
   },
@@ -1457,33 +1489,7 @@
                     "optional": true
                   }
                 },
-                "dereferencesTo": "groupsPage"
-              },
-              {
-                "type": "object",
-                "attributes": {
-                  "_ref": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    }
-                  },
-                  "_type": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string",
-                      "value": "reference"
-                    }
-                  },
-                  "_weak": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "boolean"
-                    },
-                    "optional": true
-                  }
-                },
-                "dereferencesTo": "imprint"
+                "dereferencesTo": "departmentsPage"
               },
               {
                 "type": "object",
@@ -1587,7 +1593,7 @@
                     "optional": true
                   }
                 },
-                "dereferencesTo": "singleGroupPage"
+                "dereferencesTo": "imprint"
               }
             ]
           },
@@ -1597,7 +1603,7 @@
     }
   },
   {
-    "name": "singleGroupPage",
+    "name": "imprint",
     "type": "document",
     "attributes": {
       "_id": {
@@ -1610,7 +1616,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "singleGroupPage"
+          "value": "imprint"
         }
       },
       "_createdAt": {
@@ -1630,6 +1636,14 @@
         "value": {
           "type": "string"
         }
+      },
+      "slug": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
+        },
+        "optional": true
       },
       "title": {
         "type": "objectAttribute",
@@ -1653,60 +1667,132 @@
         },
         "optional": true
       },
-      "content": {
+      "intro": {
         "type": "objectAttribute",
         "value": {
-          "type": "object",
-          "attributes": {
-            "contactPersonsSection": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "object",
-                "attributes": {
-                  "title": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    },
-                    "optional": false
-                  },
-                  "subtitle": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    },
-                    "optional": false
-                  },
-                  "intro": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    },
-                    "optional": true
-                  }
-                }
-              },
-              "optional": false
-            },
-            "trainingSection": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "object",
-                "attributes": {
-                  "title": {
-                    "type": "objectAttribute",
-                    "value": {
-                      "type": "string"
-                    },
-                    "optional": false
-                  }
-                }
-              },
-              "optional": false
-            }
-          }
+          "type": "inline",
+          "name": "simpleBlockContent"
+        },
+        "optional": true
+      },
+      "address": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "simpleBlockContent"
         },
         "optional": false
+      },
+      "registerCourt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "registerNo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "represented": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "simpleBlockContent"
+        },
+        "optional": false
+      },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "contactForm": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internalLink"
+        },
+        "optional": false
+      },
+      "responsible": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "consumerDisputeResolution": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "technicalQuestionsName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "technicalQuestionsEmail": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "support": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "simpleBlockContent"
+        },
+        "optional": false
+      },
+      "credits": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "simpleBlockContent"
+        },
+        "optional": false
+      }
+    }
+  },
+  {
+    "name": "slug",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "slug"
+          }
+        },
+        "current": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": false
+        },
+        "source": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
       }
     }
   },
@@ -2166,7 +2252,7 @@
     }
   },
   {
-    "name": "imprint",
+    "name": "departmentsPage",
     "type": "document",
     "attributes": {
       "_id": {
@@ -2179,7 +2265,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "imprint"
+          "value": "departmentsPage"
         }
       },
       "_createdAt": {
@@ -2230,168 +2316,12 @@
         },
         "optional": true
       },
-      "intro": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "simpleBlockContent"
-        },
-        "optional": true
-      },
-      "address": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "simpleBlockContent"
-        },
-        "optional": false
-      },
-      "registerCourt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "registerNo": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "represented": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "simpleBlockContent"
-        },
-        "optional": false
-      },
-      "email": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "contactForm": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "internalLink"
-        },
-        "optional": false
-      },
-      "responsible": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "consumerDisputeResolution": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "technicalQuestionsName": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "technicalQuestionsEmail": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "support": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "simpleBlockContent"
-        },
-        "optional": false
-      },
-      "credits": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "simpleBlockContent"
-        },
-        "optional": false
-      }
-    }
-  },
-  {
-    "name": "groupsPage",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "groupsPage"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "title": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "subtitle": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "meta": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "metaFields"
-        },
-        "optional": true
-      },
       "content": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
           "attributes": {
-            "groupsSection": {
+            "departmentsSection": {
               "type": "objectAttribute",
               "value": {
                 "type": "object",
@@ -2468,6 +2398,50 @@
                       "type": "string"
                     },
                     "optional": true
+                  },
+                  "contactPersons": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "array",
+                      "of": {
+                        "type": "object",
+                        "attributes": {
+                          "_ref": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "_type": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string",
+                              "value": "reference"
+                            }
+                          },
+                          "_weak": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "boolean"
+                            },
+                            "optional": true
+                          }
+                        },
+                        "dereferencesTo": "person",
+                        "rest": {
+                          "type": "object",
+                          "attributes": {
+                            "_key": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "optional": false
                   }
                 }
               },
@@ -4109,7 +4083,7 @@
             ]
           }
         },
-        "optional": true
+        "optional": false
       },
       "legalNavigation": {
         "type": "objectAttribute",

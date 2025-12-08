@@ -13,6 +13,27 @@
  */
 
 // Source: schema.json
+export type SingleGroupPage = {
+	_id: string;
+	_type: 'singleGroupPage';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: {
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+		trainingSection: {
+			title: string;
+		};
+	};
+};
+
 export type NewsOverviewCategory = {
 	_id: string;
 	_type: 'newsOverviewCategory';
@@ -48,18 +69,17 @@ export type NewsArticlePage = {
 	subtitle: string;
 };
 
-export type DepartmentsPage = {
+export type GroupsPage = {
 	_id: string;
-	_type: 'departmentsPage';
+	_type: 'groupsPage';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
-	slug?: Slug;
 	title: string;
 	subtitle: string;
 	meta?: MetaFields;
 	content: {
-		departmentsSection: {
+		groupsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
@@ -73,21 +93,8 @@ export type DepartmentsPage = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
 		};
 	};
-};
-
-export type Slug = {
-	_type: 'slug';
-	current: string;
-	source?: string;
 };
 
 export type Spacer = {
@@ -256,13 +263,7 @@ export type InternalLink = {
 				_ref: string;
 				_type: 'reference';
 				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'groupsPage';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'imprint';
+				[internalGroqTypeReferenceTo]?: 'departmentsPage';
 		  }
 		| {
 				_ref: string;
@@ -286,29 +287,39 @@ export type InternalLink = {
 				_ref: string;
 				_type: 'reference';
 				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'singleGroupPage';
+				[internalGroqTypeReferenceTo]?: 'imprint';
 		  };
 };
 
-export type SingleGroupPage = {
+export type Imprint = {
 	_id: string;
-	_type: 'singleGroupPage';
+	_type: 'imprint';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
+	slug?: Slug;
 	title: string;
 	subtitle: string;
 	meta?: MetaFields;
-	content: {
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		trainingSection: {
-			title: string;
-		};
-	};
+	intro?: SimpleBlockContent;
+	address: SimpleBlockContent;
+	registerCourt: string;
+	registerNo: string;
+	represented: SimpleBlockContent;
+	email: string;
+	contactForm: InternalLink;
+	responsible: string;
+	consumerDisputeResolution: string;
+	technicalQuestionsName: string;
+	technicalQuestionsEmail: string;
+	support: SimpleBlockContent;
+	credits: SimpleBlockContent;
+};
+
+export type Slug = {
+	_type: 'slug';
+	current: string;
+	source?: string;
 };
 
 export type Privacy = {
@@ -389,9 +400,9 @@ export type Membership = {
 	};
 };
 
-export type Imprint = {
+export type DepartmentsPage = {
 	_id: string;
-	_type: 'imprint';
+	_type: 'departmentsPage';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
@@ -399,32 +410,8 @@ export type Imprint = {
 	title: string;
 	subtitle: string;
 	meta?: MetaFields;
-	intro?: SimpleBlockContent;
-	address: SimpleBlockContent;
-	registerCourt: string;
-	registerNo: string;
-	represented: SimpleBlockContent;
-	email: string;
-	contactForm: InternalLink;
-	responsible: string;
-	consumerDisputeResolution: string;
-	technicalQuestionsName: string;
-	technicalQuestionsEmail: string;
-	support: SimpleBlockContent;
-	credits: SimpleBlockContent;
-};
-
-export type GroupsPage = {
-	_id: string;
-	_type: 'groupsPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
 	content: {
-		groupsSection: {
+		departmentsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
@@ -438,6 +425,13 @@ export type GroupsPage = {
 			title: string;
 			subtitle: string;
 			intro?: string;
+			contactPersons: Array<{
+				_ref: string;
+				_type: 'reference';
+				_weak?: boolean;
+				_key: string;
+				[internalGroqTypeReferenceTo]?: 'person';
+			}>;
 		};
 	};
 };
@@ -708,7 +702,7 @@ export type SiteSettings = {
 		title: string;
 		cta: string;
 	};
-	mainNavigation?: Array<
+	mainNavigation: Array<
 		| ({
 				_key: string;
 		  } & InternalLink)
@@ -1521,10 +1515,10 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+	| SingleGroupPage
 	| NewsOverviewCategory
 	| NewsArticlePage
-	| DepartmentsPage
-	| Slug
+	| GroupsPage
 	| Spacer
 	| MainImage
 	| Grid
@@ -1536,12 +1530,12 @@ export type AllSanitySchemaTypes =
 	| SimpleBlockContent
 	| MetaFields
 	| InternalLink
-	| SingleGroupPage
+	| Imprint
+	| Slug
 	| Privacy
 	| NewsOverview
 	| Membership
-	| Imprint
-	| GroupsPage
+	| DepartmentsPage
 	| Contact
 	| AboutUs
 	| Home
@@ -1591,6 +1585,24 @@ export type AllSanitySchemaTypes =
 	| SanityImageAsset
 	| Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/lib/sanity/queries/main-navigation.ts
+// Variable: mainNavigationQuery
+// Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"slug": link->slug.current,			title		}	}
+export type MainNavigationQueryResult = {
+	mainNavigation: Array<
+		| {
+				_key: string;
+				slug: null;
+				title: string;
+		  }
+		| {
+				_key: string;
+				slug: string | null;
+				title: string;
+		  }
+	>;
+} | null;
+
 // Source: ./src/lib/sanity/queries/pages/about-us.ts
 // Variable: aboutUsPageQuery
 // Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
@@ -2482,6 +2494,7 @@ export type SocialMediaQueryResult = SocialFields | null;
 import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
+		'\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t"slug": link->slug.current,\n\t\t\ttitle\n\t\t}\n\t}\n': MainNavigationQueryResult;
 		'\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
 		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
 		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
