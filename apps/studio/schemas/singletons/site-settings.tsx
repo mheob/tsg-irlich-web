@@ -119,6 +119,7 @@ const siteSettings = defineType({
 			],
 			description: 'Seiten und/oder Links für die Hauptnavigation hinzufügen',
 			group: 'navigation',
+			validation: Rule => Rule.required().error('Das Hauptmenü ist erforderlich'),
 		}),
 
 		defineField({
@@ -142,6 +143,7 @@ const siteSettings = defineType({
 	preview: {
 		prepare: () => ({ title: 'Generelle Einstellungen' }),
 	},
+	validation: Rule => Rule.required().error('Die generellen Einstellungen sind erforderlich'),
 });
 
 export default siteSettings;

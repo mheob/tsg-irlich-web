@@ -17,7 +17,7 @@
 	"dependencies": {
 		"@sanity/assist": "^5.0.2",
 		"@sanity/icons": "^3.7.4",
-		"@sanity/locale-de-de": "^1.1.27",
+		"@sanity/locale-de-de": "^1.1.28",
 		"@sanity/ui": "^3.1.11",
 		"@sanity/vision": "^4.20.3",
 		"@tsgi-web/shared": "workspace:*",

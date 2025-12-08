@@ -7,6 +7,8 @@ import { Anton, Bebas_Neue, Inter } from 'next/font/google';
 
 import Footer from '@/components/layout/footer';
 import { Navigation } from '@/components/with-logic/navigation';
+import { client } from '@/lib/sanity/client';
+import { mainNavigationQuery } from '@/lib/sanity/queries/main-navigation';
 
 import './globals.css';
 
@@ -44,11 +46,21 @@ export const metadata: Metadata = {
 	/* eslint-enable perfectionist/sort-objects */
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const mainNavigationQueryResults = await client
+		.fetch(mainNavigationQuery, {}, { next: { revalidate: 60 * 60 * 12 } })
+		.catch(() => null);
+
+	const navItems = mainNavigationQueryResults?.mainNavigation ?? [];
+
+	if (navItems.length === 0) {
+		console.warn('No navigation items loaded from Sanity');
+	}
+
 	return (
 		<html lang="de">
 			<body
@@ -57,7 +69,7 @@ export default function RootLayout({
 					'flex h-screen flex-col',
 				)}
 			>
-				<Navigation />
+				<Navigation navItems={navItems} />
 				<main className="grid flex-1">{children}</main>
 				<Footer />
 				<Analytics />

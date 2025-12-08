@@ -4,23 +4,46 @@ import { cn } from '@tsgi-web/shared';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import TSGLogo from '@/icons/logos/tsg-logo';
+import type { MainNavigationQueryResult } from '@/types/sanity.types';
 
-export function Navigation() {
+function getHref(slug: string) {
+	return slug === 'home' ? '/' : `/${slug}`;
+}
+
+function isActivePage(pathname: string, slug: string) {
+	return pathname === getHref(slug) || (pathname.startsWith(`/${slug}`) && slug !== 'home');
+}
+
+type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
+
+interface NavItemWithActive extends Omit<NavItem, 'slug'> {
+	isActive: boolean;
+	slug: string;
+}
+
+interface NavigationProps {
+	navItems: NavItem[];
+}
+
+export function Navigation({ navItems }: Readonly<NavigationProps>) {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileOpen, setIsMobileOpen] = useState(false);
 
 	const pathname = usePathname();
 
-	const isDarkForeground = useMemo(() => pathname === '/', [pathname]);
-	const isActivePage = useCallback(
-		(href: string) =>
-			(pathname === '/' && href === '/') || (pathname.startsWith(href) && href !== '/'),
-		[pathname],
-	);
+	const navItemsWithActive: NavItemWithActive[] = useMemo(() => {
+		return navItems
+			.filter(item => item.slug !== '#!')
+			.map(item => ({
+				...item,
+				isActive: isActivePage(pathname, item.slug),
+				slug: getHref(item.slug),
+			}));
+	}, [navItems, pathname]);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -31,22 +54,14 @@ export function Navigation() {
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 
-	const navItems = [
-		{ _id: 'home', href: '/', label: 'Home' },
-		{ _id: 'verein', href: '/verein', label: 'Verein' },
-		{ _id: 'angebot', href: '/angebot', label: 'Angebot' },
-		{ _id: 'news', href: '/news', label: 'Aktuelles' },
-		{ _id: 'mitgliedschaft', href: '/mitgliedschaft', label: 'Mitgliedschaft' },
-	];
-
 	return (
 		<nav
 			className={cn('fixed inset-x-0 top-0 z-50 bg-white/70 transition-all duration-300', {
-				'bg-white/80': isMobileOpen,
+				'bg-white': isMobileOpen,
 				'shadow-sm backdrop-blur-md': isScrolled,
 			})}
 		>
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div className="container mx-auto">
 				<div
 					className={cn('relative flex items-center justify-between lg:h-32', {
 						'lg:h-16': isScrolled,
@@ -69,19 +84,16 @@ export function Navigation() {
 
 					{/* Desktop Navigation */}
 					<div className="hidden items-center space-x-3 lg:flex">
-						{navItems.map(item => (
+						{navItemsWithActive.map(item => (
 							<Link
 								className={cn(
-									'hover:bg-secondary/40 flex h-16 items-center px-3 py-2 font-bold text-white uppercase transition-colors',
-									{ 'text-foreground': isScrolled || isDarkForeground },
-									{
-										'border-secondary border-b-2': isActivePage(item.href),
-									},
+									'hover:bg-secondary/40 text-primary flex h-16 items-center px-3 py-2 font-bold uppercase transition-colors',
+									{ 'border-secondary border-b-2': item.isActive },
 								)}
-								href={item.href}
-								key={item._id}
+								href={item.slug}
+								key={item._key}
 							>
-								{item.label}
+								{item.title}
 							</Link>
 						))}
 					</div>
@@ -121,14 +133,17 @@ export function Navigation() {
 						},
 					)}
 				>
-					{navItems.map(item => (
+					{navItemsWithActive.map(item => (
 						<Link
-							className="text-foreground block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-900"
-							href={item.href}
-							key={item._id}
+							className={cn(
+								'text-foreground block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-900',
+								{ 'bg-secondary/40': item.isActive },
+							)}
+							href={item.slug}
+							key={item._key}
 							onClick={() => setIsMobileOpen(false)}
 						>
-							{item.label}
+							{item.title}
 						</Link>
 					))}
 
