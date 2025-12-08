@@ -20,7 +20,7 @@ export async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 	const socialMedia = await client.fetch(socialMediaQuery);
 
 	return (
-		<section className="relative md:-mt-40 md:grid md:h-dvh md:pt-48">
+		<section className="relative pt-20 md:grid md:h-dvh md:pt-48">
 			<div className="container mx-auto items-center pt-5 md:flex">
 				<div className="md:w-1/2">
 					<SectionHeader level="h1" subTitle={subtitle} title={title}>
