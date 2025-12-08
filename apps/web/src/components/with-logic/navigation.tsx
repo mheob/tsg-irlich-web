@@ -4,7 +4,7 @@ import { cn } from '@tsgi-web/shared';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import TSGLogo from '@/icons/logos/tsg-logo';
@@ -12,6 +12,10 @@ import type { MainNavigationQueryResult } from '@/types/sanity.types';
 
 function getHref(slug: string) {
 	return slug === 'home' ? '/' : `/${slug}`;
+}
+
+function isActivePage(pathname: string, slug: string) {
+	return pathname === getHref(slug) || (pathname.startsWith(`/${slug}`) && slug !== 'home');
 }
 
 type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
@@ -30,21 +34,16 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 	const [isMobileOpen, setIsMobileOpen] = useState(false);
 
 	const pathname = usePathname();
-	const isActivePage = useCallback(
-		(slug: string) => {
-			const href = slug === 'home' ? '/' : `/${slug}`;
-			return pathname === href || (pathname.startsWith(`/${slug}`) && slug !== 'home');
-		},
-		[pathname],
-	);
 
 	const navItemsWithActive: NavItemWithActive[] = useMemo(() => {
-		return navItems.map(item => ({
-			...item,
-			isActive: isActivePage(item.slug),
-			slug: getHref(item.slug),
-		}));
-	}, [navItems, isActivePage]);
+		return navItems
+			.filter(item => item.slug !== '#!')
+			.map(item => ({
+				...item,
+				isActive: isActivePage(pathname, item.slug),
+				slug: getHref(item.slug),
+			}));
+	}, [navItems, pathname]);
 
 	useEffect(() => {
 		const handleScroll = () => {

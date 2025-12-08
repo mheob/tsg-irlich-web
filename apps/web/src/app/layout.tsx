@@ -51,11 +51,15 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const mainNavigationQueryResults = await client.fetch(
-		mainNavigationQuery,
-		{},
-		{ next: { revalidate: 60 * 60 * 12 /* 12 hours */ } },
-	);
+	const mainNavigationQueryResults = await client
+		.fetch(mainNavigationQuery, {}, { next: { revalidate: 60 * 60 * 12 } })
+		.catch(() => null);
+
+	const navItems = mainNavigationQueryResults?.mainNavigation ?? [];
+
+	if (navItems.length === 0) {
+		console.warn('No navigation items loaded from Sanity');
+	}
 
 	return (
 		<html lang="de">
@@ -65,7 +69,7 @@ export default async function RootLayout({
 					'flex h-screen flex-col',
 				)}
 			>
-				<Navigation navItems={mainNavigationQueryResults?.mainNavigation ?? []} />
+				<Navigation navItems={navItems} />
 				<main className="grid flex-1">{children}</main>
 				<Footer />
 				<Analytics />
