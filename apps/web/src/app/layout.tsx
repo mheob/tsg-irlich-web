@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 import { Anton, Bebas_Neue, Inter } from 'next/font/google';
 
 import Footer from '@/components/layout/footer';
-import MainNav from '@/components/layout/main-nav';
+import { Navigation } from '@/components/with-logic/navigation';
 
 import './globals.css';
 
@@ -57,7 +57,7 @@ export default function RootLayout({
 					'flex h-screen flex-col',
 				)}
 			>
-				<MainNav />
+				<Navigation />
 				<main className="grid flex-1">{children}</main>
 				<Footer />
 				<Analytics />

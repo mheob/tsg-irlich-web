@@ -15,6 +15,7 @@ export function Button({
 	children,
 	className,
 	fullWidth = false,
+	size,
 	variant,
 	...props
 }: Readonly<ButtonProps>) {
@@ -22,7 +23,7 @@ export function Button({
 
 	return (
 		<Comp
-			className={cn(buttonVariants({ className, variant }), { 'btn--width-full': fullWidth })}
+			className={cn(buttonVariants({ className, size, variant }), { 'btn--width-full': fullWidth })}
 			data-slot="button"
 			{...props}
 		>

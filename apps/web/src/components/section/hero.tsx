@@ -15,7 +15,7 @@ export function Hero({ children, image, subTitle, title, ...props }: Readonly<He
 	return (
 		<section
 			className={cn(
-				'relative -mt-40 h-[360px] md:h-[600px]',
+				'relative h-[360px] md:h-[600px]',
 				'from-primary/70 to-primary/30 bg-linear-to-r text-white',
 			)}
 			{...props}

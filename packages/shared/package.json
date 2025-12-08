@@ -10,7 +10,8 @@
 		"./*": "./src/*.ts"
 	},
 	"scripts": {
-		"lint": "bun --bun eslint . --fix"
+		"lint": "bun --bun eslint . --fix",
+		"typecheck": "bun --bun tsc --noEmit"
 	},
 	"dependencies": {
 		"clsx": "^2.1.1",
