@@ -1,3 +1,4 @@
+import { shuffleArray } from '@tsgi-web/shared';
 import type { Metadata } from 'next';
 
 import { ContactForm } from '@/components/section/contact-form';
@@ -41,6 +42,9 @@ export default async function HomePage() {
 		return null;
 	}
 
+	const shuffledTestimonials =
+		testimonials && testimonials.length >= 3 ? shuffleArray(testimonials).slice(0, 3) : [];
+
 	return (
 		<>
 			<Hero intro={page.intro} subtitle={page.subtitle} title={page.title} />
@@ -49,7 +53,7 @@ export default async function HomePage() {
 			<Groups {...page.content.groupsSection} />
 			<Stats stats={page.content.stats} />
 			<Pricing {...page.content.pricingSection} />
-			<Testimonials {...page.content.testimonialSection} testimonials={testimonials} />
+			<Testimonials {...page.content.testimonialSection} testimonials={shuffledTestimonials} />
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<ContactForm />
 			<News {...page.content.newsSection} articles={newsArticles} />
