@@ -1,3 +1,4 @@
+import { cn } from '@tsgi-web/shared';
 // cSpell:words taekwondo
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,11 +21,19 @@ type VisionProps =
 export function Vision(props: Readonly<VisionProps>) {
 	return (
 		<section className="relative items-center" id="vision-section">
-			<div className="md:container md:grid md:grid-cols-[55%_45%] md:px-5 md:not-last-of-type:mx-auto">
-				<div className="relative container mx-auto h-80 px-5 md:static">
+			<div className="lg:grid lg:grid-cols-[55%_45%] lg:px-5 lg:not-last-of-type:mx-auto">
+				<div className="relative mx-auto h-80 px-5 lg:static">
 					<div className={styles.bgRoundedEdge}></div>
 
-					<div className="absolute top-5 bottom-24 left-[calc(50%-6rem)] size-40 md:top-20 md:left-[calc(28%-12rem)] md:size-56 lg:size-96">
+					<div
+						className={cn(
+							'absolute',
+							'top-5 bottom-24 left-[calc(50%-6rem)] size-40',
+							'sm:top-10 sm:left-[calc(50%-6rem)] sm:size-48',
+							'md:left-[calc(50%-8rem)] md:size-64',
+							'lg:top-20 lg:left-[calc(28%-12rem)] lg:size-80',
+						)}
+					>
 						<Image
 							alt="Scheck-Übergabe: TSG Irlich überreicht 250 Euro Spende zum Wiederaufbau des Engerser Lockschuppens."
 							className="rounded-full"
@@ -33,7 +42,15 @@ export function Vision(props: Readonly<VisionProps>) {
 						/>
 					</div>
 
-					<div className="absolute end-8 bottom-8 size-32 md:top-[calc(50%-3rem)] md:left-[calc(13%-8rem)] md:size-48 lg:size-64">
+					<div
+						className={cn(
+							'absolute',
+							'end-8 bottom-8 size-32',
+							'sm:end-4 sm:top-[calc(50%-3rem)] sm:size-40',
+							'md:size-48',
+							'lg:top-[calc(50%-3rem)] lg:left-[calc(13%-8rem)] lg:size-64',
+						)}
+					>
 						<Image
 							alt="Tanzgruppe 'Funky Diamonds' der TSG Irlich präsentiert eine Choreografie in rot-weißen Kostümen auf der Bühne"
 							className="rounded-full"
@@ -42,7 +59,15 @@ export function Vision(props: Readonly<VisionProps>) {
 						/>
 					</div>
 
-					<div className="absolute -bottom-4 left-10 size-32 md:bottom-24 md:left-[calc(29%-8rem)] md:size-48 lg:size-64">
+					<div
+						className={cn(
+							'absolute',
+							'-bottom-4 left-10 size-32',
+							'sm:-bottom-4 sm:left-4 sm:size-40',
+							'md:-bottom-8 md:size-48',
+							'lg:bottom-24 lg:left-[calc(29%-8rem)] lg:size-48',
+						)}
+					>
 						<Image
 							alt="Jugend-Fußballmannschaft der TSG Irlich in gelb-blauen Trikots steht Arm in Arm auf dem Sportplatz"
 							className="rounded-full"
@@ -52,7 +77,7 @@ export function Vision(props: Readonly<VisionProps>) {
 					</div>
 				</div>
 
-				<div className="container mx-auto px-5 pt-18 pb-10 text-center md:py-60 md:text-left">
+				<div className="container mx-auto px-5 pt-18 pb-10 text-center md:py-32 md:text-left">
 					<SectionHeader
 						isCenteredOnDesktop={false}
 						subTitle={props.subtitle}

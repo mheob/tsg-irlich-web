@@ -10,7 +10,7 @@ interface ChronicleProps {
 export function Chronicle({ content }: Readonly<ChronicleProps>) {
 	return (
 		<section className="bg-background-low-contrast">
-			<div className="py-10 md:container md:py-28">
+			<div className="container py-10 md:py-28">
 				<SectionHeader
 					subTitle={content.subtitle}
 					title={content.title}

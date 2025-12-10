@@ -7,7 +7,7 @@
 	clip-path: ellipse(120% 100% at 15% 0%);
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 64rem) {
 	.bgRoundedEdge {
 		inset-block: 0;
 		left: 0;
