@@ -4491,13 +4491,6 @@
           "type": "string"
         },
         "optional": false
-      },
-      "show": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
       }
     }
   },

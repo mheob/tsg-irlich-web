@@ -28,12 +28,12 @@ export const homePageQuery = defineQuery(`
  * @returns The testimonials for the home page
  */
 export const homePageTestimonialsQuery = defineQuery(`
-	*[_type == 'home'][0].content.testimonialSection.testimonials[0..2]-> {
+	*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {
+		_id,
 		firstName,
 		lastName,
 		image,
 		quote,
 		role,
-		show,
 	}
 `);
