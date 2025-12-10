@@ -39,14 +39,6 @@ const testimonial = defineType({
 				Rule.max(350).warning('Das Zitat sollte nicht länger als 350 Zeichen sein'),
 			],
 		}),
-		defineField({
-			title: 'Zitat anzeigen',
-			name: 'show',
-			type: 'boolean',
-			description: 'Das Zitat soll aktuell angezeigt werden.',
-			group: 'quote',
-			initialValue: false,
-		}),
 	],
 	preview: {
 		prepare: ({ media, firstName, lastName, role }) => ({

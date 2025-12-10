@@ -5,7 +5,6 @@ import { Quote } from 'lucide-react';
 import Image from 'next/image';
 import type { HTMLAttributes } from 'react';
 
-import { ArrowButtonGroup } from '@/components/ui/arrow-button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types';
@@ -112,11 +111,9 @@ export function TestimonialGroup({ testimonials }: Readonly<TestimonialGroupProp
 		<div>
 			<div className="bg-primary-border-primary-foreground mt-10 ml-6 rounded-xl shadow-xl md:mt-0 md:ml-0 md:py-16 md:pr-28 md:pl-12">
 				{testimonials.map((props, index) => (
-					<TestimonialItem {...props} isHighlighted={index === 1} key={props.lastName} />
+					<TestimonialItem {...props} isHighlighted={index === 1} key={props._id} />
 				))}
 			</div>
-
-			<ArrowButtonGroup className="mt-10 md:mt-24" />
 		</div>
 	);
 }

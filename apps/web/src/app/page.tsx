@@ -16,6 +16,8 @@ import { Hero } from './_home/hero';
 import { News } from './_home/news';
 import { Testimonials } from './_home/testimonials';
 
+const TESTIMONIALS_REVALIDATE_SECONDS = 60 * 60 * 12; /* 12 hours */
+
 export const metadata: Metadata = {
 	description:
 		'Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.',
@@ -25,7 +27,11 @@ export const metadata: Metadata = {
 export default async function HomePage() {
 	const [page, testimonials, newsArticles] = await Promise.all([
 		client.fetch(homePageQuery),
-		client.fetch(homePageTestimonialsQuery),
+		client.fetch(
+			homePageTestimonialsQuery,
+			{},
+			{ next: { revalidate: TESTIMONIALS_REVALIDATE_SECONDS } },
+		),
 		client.fetch(newsArticlesQuery),
 	]);
 
