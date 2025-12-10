@@ -10,7 +10,7 @@ import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
 
-export default async function ImprintPageTsx() {
+export default async function ImprintPage() {
 	const page = await client.fetch(imprintPageQuery);
 
 	if (!page) {
@@ -30,7 +30,7 @@ export default async function ImprintPageTsx() {
 				title={page.title}
 			/>
 
-			<section className="px-5 md:container md:mx-auto md:py-32">
+			<section className="container md:mx-auto md:py-32">
 				<article className={cn('mx-auto max-w-[65ch]', textClassName)}>
 					<h2 className="text-3xl font-bold">Impressum</h2>
 
@@ -60,7 +60,7 @@ export default async function ImprintPageTsx() {
 					<h3>Redaktionell verantwortlich</h3>
 					<p>{page.responsible}</p>
 
-					<h3>Verbraucherstreitbeilegung/Universalschlichtungsstelle</h3>
+					<h3>Verbraucherstreitbeilegung / Universalschlichtungsstelle</h3>
 					<p>{page.consumerDisputeResolution}</p>
 
 					<h3>Technischer Ansprechpartner</h3>
