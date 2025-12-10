@@ -59,10 +59,10 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 	}
 
 	return (
-		<section className="bg-background-low-contrast md:py-32">
-			<div className="md:container md:mx-auto md:px-5">
-				<div className="bg-white px-5 py-10 md:flex md:flex-row-reverse md:rounded-lg md:px-14 md:py-24">
-					<div className="hidden md:relative md:block md:w-1/2">
+		<section className="md:bg-background-low-contrast md:py-32">
+			<div className="container bg-white">
+				<div className="py-10 md:flex md:flex-row-reverse md:rounded-lg md:py-24">
+					<div className="hidden lg:relative lg:block lg:w-1/2">
 						<div className="bg-secondary absolute top-0 right-0 grid size-60 place-content-center rounded-full lg:size-80">
 							<Image
 								alt="'FUNKY DIAMONDS'-Spielerin mit geflochtener Frisur und Pferdeschwanz in schwarzem Trikot und Rückennummer 6, telefoniert während eines Spiels."
@@ -71,7 +71,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 								fill
 							/>
 						</div>
-						<div className="bg-secondary absolute top-1/2 right-[calc(70%-8rem)] grid size-52 place-content-center rounded-full">
+						<div className="bg-secondary absolute top-1/2 right-[calc(60%-8rem)] grid size-64 place-content-center rounded-full">
 							<Image
 								alt="Gruppe der TSG Irlich in blauen Trikots posiert für ein Mannschaftsfoto auf dem Spielfeld, während eine Fotografin in schwarzem Kleid mit Kamera auf Stativ das Foto macht."
 								className="rounded-full"
@@ -79,7 +79,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 								fill
 							/>
 						</div>
-						<div className="bg-secondary absolute right-[calc(25%-8rem)] bottom-0 grid size-52 place-content-center rounded-full">
+						<div className="bg-secondary absolute right-[calc(30%-8rem)] bottom-0 grid size-52 place-content-center rounded-full">
 							<Image
 								alt="PR-Team-Mitglied der TSG Irlich in blau-weißem Vereinstrikot mit Kamera auf Stativ bei der Arbeit im Freien."
 								className="rounded-full"

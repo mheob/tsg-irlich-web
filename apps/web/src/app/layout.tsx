@@ -33,6 +33,8 @@ const inter = Inter({
 	weight: ['400', '700'],
 });
 
+const NAVIGATION_REVALIDATE_SECONDS = 60 * 60 * 12; /* 12 hours */
+
 const baseUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
 	: 'http://localhost:3000';
@@ -52,7 +54,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const mainNavigationQueryResults = await client
-		.fetch(mainNavigationQuery, {}, { next: { revalidate: 60 * 60 * 12 } })
+		.fetch(mainNavigationQuery, {}, { next: { revalidate: NAVIGATION_REVALIDATE_SECONDS } })
 		.catch(() => null);
 
 	const navItems = mainNavigationQueryResults?.mainNavigation ?? [];
