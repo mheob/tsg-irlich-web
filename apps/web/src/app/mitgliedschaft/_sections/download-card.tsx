@@ -16,23 +16,24 @@ export function DownloadCard({ download }: Readonly<DownloadCardProps>) {
 	return (
 		<Link
 			aria-label={`Das PDF "${download.title}" herunterladen`}
+			className={cn('flex flex-1')}
 			href={getDownloadFileUrl(download.document.asset)}
 		>
 			<Card
 				className={cn(
-					'flex flex-col items-center gap-8',
+					'flex flex-1 flex-col items-center justify-between gap-8',
 					'hover:bg-primary hover:text-primary-foreground',
 					'transition-colors',
 				)}
 			>
-				<FileText aria-hidden="true" size={60} strokeWidth={1} />
-				<header className="place-content-center">
+				<header className="flex flex-col items-center">
+					<FileText aria-hidden="true" size={60} strokeWidth={1} />
 					<CardTitle className="mt-4 text-center text-xl uppercase md:text-3xl">
 						{download.title}
 					</CardTitle>
 				</header>
 
-				<CardContent className="mt-2 group-hover:text-white md:text-xl">
+				<CardContent className="mt-2 italic group-hover:text-white md:text-lg">
 					Dateigröße: {getFileSize(download.document.asset?.size)}
 				</CardContent>
 			</Card>

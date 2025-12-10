@@ -20,14 +20,14 @@ export async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 	const socialMedia = await client.fetch(socialMediaQuery);
 
 	return (
-		<section className="relative pt-20 md:grid md:h-dvh md:pt-48">
-			<div className="container mx-auto items-center pt-5 md:flex">
-				<div className="md:w-1/2">
+		<section className="relative pt-20 lg:grid lg:h-dvh lg:pt-48">
+			<div className="items-center pt-5 lg:container lg:flex">
+				<div className="lg:no-container container lg:w-1/2">
 					<SectionHeader level="h1" subTitle={subtitle} title={title}>
 						{intro}
 					</SectionHeader>
 
-					<div className="text-primary my-12 flex gap-8">
+					<div className="text-primary mt-8 mb-16 flex gap-8">
 						<Button asChild>
 							<Link href="/kontakt">Kontakt aufnehmen</Link>
 						</Button>
@@ -36,15 +36,17 @@ export async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 					</div>
 				</div>
 
-				<div className="relative grid h-96 md:static md:ml-auto">
+				<div className="relative grid h-96 lg:static lg:ml-auto">
 					<div className={styles.bgRoundedEdge}></div>
 					<div className={styles.bgBalls}></div>
 
 					<Image
 						className={cn(
-							'absolute',
-							'start-[10%] end-[10%] bottom-20 w-[80%]',
-							'md:start-1/2 md:end-auto md:bottom-15 md:w-[40%]',
+							'absolute -z-1',
+							'start-[15%] end-[15%] bottom-10 w-[70%]',
+							'sm:start-[20%] sm:end-[20%] sm:bottom-5 sm:w-[60%]',
+							'md:start-[30%] md:end-[30%] md:bottom-5 md:w-[40%]',
+							'lg:start-1/2 lg:end-auto lg:bottom-15 lg:w-[30%]',
 							'3xl:bottom-15 3xl:w-[30%]',
 						)}
 						alt="Ein Frau, die am meditieren ist."
@@ -55,7 +57,7 @@ export async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
 						className={cn(
 							'flex text-white',
 							'w-full items-end justify-around justify-self-end py-10',
-							'md:flex-col md:justify-center md:gap-10',
+							'lg:flex-col lg:justify-center lg:gap-10',
 						)}
 					>
 						{socialMedia &&

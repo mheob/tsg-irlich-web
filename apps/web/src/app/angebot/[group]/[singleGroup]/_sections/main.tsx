@@ -18,8 +18,14 @@ export function Main({ description, gallery, title }: Readonly<MainProps>) {
 
 	return (
 		<section className={`${styles.bg} relative z-0`}>
-			<div className="container mx-auto px-5 py-10 md:py-32">
-				<SectionHeader className="mb-10" level="h1" title={title} isCentered isCenteredOnDesktop>
+			<div className="container py-10 md:py-32">
+				<SectionHeader
+					className="mb-10 [&>p]:mt-6"
+					level="h1"
+					title={title}
+					isCentered
+					isCenteredOnDesktop
+				>
 					<PortableText value={description.text as PortableTextValue} />
 				</SectionHeader>
 

@@ -27,7 +27,7 @@ export function AddressPin({ address }: Readonly<AddressPinProps>) {
 		<Dialog>
 			<DialogTrigger
 				aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
-				className="hover:text-secondary group flex cursor-pointer flex-col items-start gap-4 transition-colors md:items-center"
+				className="hover:text-secondary group flex cursor-pointer items-center gap-4 transition-colors sm:flex-col"
 			>
 				<span className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2">
 					<MapPin className="size-6 md:size-12" strokeWidth="1" />

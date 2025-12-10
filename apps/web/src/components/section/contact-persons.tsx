@@ -19,7 +19,7 @@ export function ContactPersons({
 }: Readonly<ContactPersonsProps>) {
 	return (
 		<section className={cn(styles.bg, 'bg-primary text-primary-foreground relative z-0')}>
-			<div className="container mx-auto px-5 pt-10 pb-24 md:pt-28 md:pb-40">
+			<div className="container pt-10 pb-24 md:pt-28 md:pb-40">
 				<SectionHeader
 					descriptionClassName="text-primary-foreground"
 					subTitle={subtitle}

@@ -89,6 +89,13 @@
 	}
 }
 
+@utility no-container {
+	width: initial;
+	max-width: initial;
+	margin-inline: initial;
+	padding-inline: initial;
+}
+
 /*
 	The default border color has changed to `currentColor` in Tailwind CSS v4,
 	so we've added these compatibility styles to make sure everything still

@@ -18,8 +18,8 @@ export function Intro({ content }: Readonly<IntroProps>) {
 
 	return (
 		<section>
-			<div className="py-10 md:container md:grid md:grid-cols-2 md:gap-16 md:py-28">
-				<div className="relative">
+			<div className="container py-10 lg:grid lg:grid-cols-2 lg:gap-16 lg:py-28">
+				<div className="relative hidden lg:block">
 					<ZoomableImage
 						alt={mainImage.image.alt}
 						className="rounded-2xl object-cover"
@@ -31,8 +31,9 @@ export function Intro({ content }: Readonly<IntroProps>) {
 					/>
 				</div>
 
-				<div className="md:flex md:flex-col md:justify-between md:gap-10">
+				<div className="lg:flex lg:flex-col lg:justify-between lg:gap-10">
 					<SectionHeader
+						className="[&>p]:mt-6"
 						isCenteredOnDesktop={false}
 						subTitle={content.subtitle}
 						title={content.title}
@@ -41,7 +42,7 @@ export function Intro({ content }: Readonly<IntroProps>) {
 						<PortableText value={content.intro.text as PortableTextValue} />
 					</SectionHeader>
 
-					<div className="relative md:grid md:grid-cols-2 md:gap-8">
+					<div className="relative mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-8 lg:mt-0">
 						{footerImages.map(({ image, src, srcFull }) => (
 							<div className="relative aspect-video rounded-2xl" key={image._key}>
 								<ZoomableImage

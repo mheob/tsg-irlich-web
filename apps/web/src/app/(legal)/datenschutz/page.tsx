@@ -8,7 +8,7 @@ import { privacyPageQuery } from '@/lib/sanity/queries/pages/privacy';
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
 
-export default async function PrivacyPageTsx() {
+export default async function PrivacyPage() {
 	const page = await client.fetch(privacyPageQuery);
 
 	if (!page) {
@@ -28,13 +28,13 @@ export default async function PrivacyPageTsx() {
 				title={page.title}
 			/>
 
-			<section className="px-5 md:container md:mx-auto md:grid md:grid-cols-8 md:gap-12 md:py-32">
-				<div className="col-span-1" />
-				<aside className={cn('col-span-2', textClassName)}>
+			<section className="container py-10 md:grid md:grid-cols-8 md:gap-12 md:py-32">
+				<div className="md:col-span-1" />
+				<aside className={cn('md:col-span-2', textClassName)}>
 					<PortableText value={page.introText.text as PortableTextValue} />
 				</aside>
 
-				<article className={cn('col-span-5 max-w-[65ch]', textClassName)}>
+				<article className={cn('md:col-span-5 md:max-w-[65ch]', textClassName)}>
 					<PortableText value={page.content.text as PortableTextValue} />
 				</article>
 			</section>

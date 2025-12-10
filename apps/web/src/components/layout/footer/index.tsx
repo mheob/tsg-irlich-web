@@ -36,7 +36,7 @@ export default async function Footer() {
 
 	return (
 		<footer className="bg-primary w-full text-white">
-			<div className="container mx-auto px-5 pt-16 pb-4 md:pt-40">
+			<div className="container pt-16 pb-4 md:pt-40">
 				<div className="md:flex md:justify-between">
 					<section className="flex flex-col items-center gap-5">
 						<Link href="/">
@@ -58,12 +58,12 @@ export default async function Footer() {
 						</div>
 					</section>
 
-					<div className="mt-16 flex gap-8 md:mt-0 md:block md:text-xl/relaxed">
-						<section className="flex flex-col gap-12 md:w-auto md:flex-row md:gap-48">
+					<div className="mt-16 flex justify-center gap-8 md:mt-0 md:block md:text-xl/relaxed">
+						<section className="flex flex-col items-center gap-12 sm:w-auto sm:flex-row sm:gap-48">
 							<AddressPin address={contact.address} />
 
 							<ContactLink
-								className="hover:text-secondary group flex flex-col items-start gap-4 transition-colors md:items-center"
+								className="hover:text-secondary group flex items-center gap-4 transition-colors sm:flex-col"
 								href={`mailto:${contact.email}`}
 							>
 								<span

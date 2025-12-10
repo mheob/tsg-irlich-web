@@ -71,8 +71,8 @@ export default async function NewsArticlePage({
 				title={hero.title}
 			/>
 
-			<div className="container my-10 justify-center divide-y md:my-32 md:flex md:divide-x md:divide-y-0">
-				<article className="prose lg:prose-xl pb-10 md:pr-10">
+			<div className="container my-10 justify-center divide-y lg:my-32 lg:flex lg:divide-x lg:divide-y-0">
+				<article className="prose lg:prose-xl pb-10 lg:pr-10">
 					<h1 className="text-4xl leading-tight! font-bold hyphens-auto md:text-6xl">
 						{article.title}
 					</h1>
@@ -162,7 +162,7 @@ export default async function NewsArticlePage({
 					})}
 				</article>
 
-				<aside className="pt-10 md:pt-0 md:pl-10">
+				<aside className="pt-10 lg:pt-0 lg:pl-10">
 					<Author article={article} />
 					<Categories article={article} />
 					<SocialMedia />
