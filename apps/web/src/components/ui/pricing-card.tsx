@@ -30,11 +30,11 @@ export function PricingCard({
 	return (
 		<article
 			className={cn(
-				'flex flex-col justify-between overflow-hidden rounded-xl shadow-lg md:w-1/4',
+				'flex flex-col justify-between overflow-hidden rounded-xl shadow-lg lg:max-w-1/3',
 				'hover:bg-gray-light bg-white p-8 text-black',
 				'transition-all duration-300',
-				{ 'md:-translate-y-16 md:hover:-translate-y-8': isHighlighted },
-				{ 'md:hover:-translate-y-8': !isHighlighted },
+				{ 'lg:-translate-y-16 lg:hover:-translate-y-8': isHighlighted },
+				{ 'lg:hover:-translate-y-8': !isHighlighted },
 			)}
 		>
 			{isHighlighted && (
