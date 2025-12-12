@@ -30,7 +30,7 @@ export function OperationSystemField({ form }: Readonly<OperationSystemFieldProp
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Betriebssystem</FormLabel>
-					<Select defaultValue={field.value} onValueChange={field.onChange}>
+					<Select onValueChange={field.onChange} value={field.value}>
 						<FormControl>
 							<SelectTrigger>
 								<SelectValue placeholder="Welches Betriebssystem wird verwendet?" />
