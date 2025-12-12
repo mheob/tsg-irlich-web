@@ -15,7 +15,7 @@ import { DeviceField } from './device-field';
 import { EmailField } from './email-field';
 import { ErrorAlert } from './error-alert';
 import { FeedbackTypeField } from './feedback-type';
-import { OperationSystemField } from './operations-system-field';
+import { OperationSystemField } from './operation-system-field';
 import { ScreenshotsField } from './screenshots-field';
 import { Submit } from './submit';
 import { SuccessAlert } from './success-alert';

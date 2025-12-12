@@ -79,11 +79,12 @@ export const uploadToLinear = actionClient
 			throw new Error('Failed to get upload URL');
 		}
 
-		const { assetUrl, headers, uploadUrl } = uploadUrlResult.data.fileUpload.uploadFile;
+		const { assetUrl, headers, uploadUrl } = uploadUrlResult.data.fileUpload.uploadFile ?? {};
+		if (!uploadUrl || !assetUrl) return { error: 'Failed to get upload URL', success: false };
 
 		// Step 2: Upload file to the pre-signed URL
 		const uploadHeaders: Record<string, string> = {};
-		for (const header of headers) {
+		for (const header of headers ?? []) {
 			uploadHeaders[header.key] = header.value;
 		}
 

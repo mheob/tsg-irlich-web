@@ -39,8 +39,10 @@ export function FeedbackTypeField({ form }: Readonly<FeedbackTypeFieldProps>) {
 					<FormLabel>Art des Feedbacks</FormLabel>
 					<FormControl>
 						<ToggleGroup
+							onValueChange={value => {
+								if (value) field.onChange(value);
+							}}
 							className="flex-col items-start justify-start sm:flex-row sm:items-center"
-							onValueChange={field.onChange}
 							type="single"
 							value={field.value}
 						>
@@ -51,7 +53,7 @@ export function FeedbackTypeField({ form }: Readonly<FeedbackTypeFieldProps>) {
 									key={type.value}
 									value={type.value}
 								>
-									<type.icon className="h-4 w-4" />
+									<type.icon className="size-4" />
 									{type.label}
 								</ToggleGroupItem>
 							))}

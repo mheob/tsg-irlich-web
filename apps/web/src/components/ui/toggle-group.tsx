@@ -44,8 +44,8 @@ export function ToggleGroupItem({
 		<ToggleGroupPrimitive.Item
 			className={cn(
 				toggleVariants({
-					size: context.size ?? size,
-					variant: context.variant ?? variant,
+					size: context?.size ?? size,
+					variant: context?.variant ?? variant,
 				}),
 				className,
 			)}

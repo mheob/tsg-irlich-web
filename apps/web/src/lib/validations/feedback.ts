@@ -7,7 +7,10 @@ export const feedbackFormSchema = z.object({
 		.min(20, 'Die Beschreibung muss mindestens 20 Zeichen lang sein')
 		.max(2000, 'Die Beschreibung darf maximal 2000 Zeichen lang sein'),
 	device: z.string().optional(),
-	email: z.email('Bitte gib eine gültige E-Mail-Adresse ein').optional().or(z.literal('')),
+	email: z
+		.email({ message: 'Bitte gib eine gültige E-Mail-Adresse ein' })
+		.optional()
+		.or(z.literal('')),
 	operationSystem: z.enum(['windows', 'macos', 'linux', 'ios', 'android', 'other']).optional(),
 	screenshotUrls: z.array(z.string()).optional(),
 	title: z
