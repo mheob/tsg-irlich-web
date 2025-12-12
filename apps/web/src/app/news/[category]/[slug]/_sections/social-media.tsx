@@ -1,11 +1,12 @@
 import { SocialMediaIcon } from '@/components/ui/social-media-icon';
-import { client } from '@/lib/sanity/client';
-import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
+import type { SocialMediaQueryResult } from '@/types/sanity.types';
 import { getSocialMediaIcon } from '@/utils/icon';
 
-export async function SocialMedia() {
-	const socialMedia = await client.fetch(socialMediaQuery);
+interface SocialMediaProps {
+	socialMedia?: null | SocialMediaQueryResult;
+}
 
+export async function SocialMedia({ socialMedia }: Readonly<SocialMediaProps>) {
 	if (!socialMedia) return null;
 
 	return (

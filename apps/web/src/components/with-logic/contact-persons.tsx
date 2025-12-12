@@ -60,10 +60,10 @@ function ContactPersonItem({
 
 			<div className="-mt-24 ml-8 flex h-full flex-col gap-4 rounded-xl bg-white text-black md:-mt-36 md:gap-12">
 				<header className="pt-6 pr-12 pl-28 md:pl-40">
-					<h3 className="font-serif text-2xl md:text-3xl">
+					<h3 className="font-serif text-2xl md:text-4xl">
 						{firstName} {lastName}
 					</h3>
-					<p className="mb-2 text-sm md:text-lg xl:h-[2lh]">{role}</p>
+					<p className="mb-2 text-sm md:text-lg">{role}</p>
 					<div className="flex gap-6">
 						{email && <ContactButton email={email} />}
 						{showPhone && <ContactButton phone={phone} />}
@@ -88,8 +88,8 @@ export function ContactPersons({ contactPersons }: Readonly<ContactPersonsProps>
 		<div
 			className={cn(
 				'grid items-stretch gap-x-8 gap-y-20',
-				{ 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3': cpLength % 3 === 0 },
-				{ 'grid-cols-1 xl:grid-cols-2': cpLength % 3 !== 0 && cpLength % 2 === 0 },
+				{ 'grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3': cpLength % 3 === 0 },
+				{ 'grid-cols-1 lg:grid-cols-2': cpLength % 3 !== 0 && cpLength % 2 === 0 },
 				{ 'grid-cols-1': cpLength % 3 !== 0 && cpLength % 2 !== 0 && cpLength % 1 === 0 },
 			)}
 		>

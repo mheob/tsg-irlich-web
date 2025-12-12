@@ -7,18 +7,16 @@ import { SectionHeader } from '@/components/ui/section-header';
 import { SocialMediaIcon } from '@/components/ui/social-media-icon';
 import ArrowCta from '@/icons/design/arrow-cta';
 import HeroImage from '@/images/home/hero.webp';
-import { client } from '@/lib/sanity/client';
-import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
-import type { Home } from '@/types/sanity.types';
+import type { Home, SocialMediaQueryResult } from '@/types/sanity.types';
 import { getSocialMediaIcon } from '@/utils/icon';
 
 import styles from './hero.module.css';
 
-type HeroProps = Pick<Home, 'intro' | 'subtitle' | 'title'>;
+interface HeroProps extends Pick<Home, 'intro' | 'subtitle' | 'title'> {
+	socialMedia: SocialMediaQueryResult;
+}
 
-export async function Hero({ intro, subtitle, title }: Readonly<HeroProps>) {
-	const socialMedia = await client.fetch(socialMediaQuery);
-
+export async function Hero({ intro, socialMedia, subtitle, title }: Readonly<HeroProps>) {
 	return (
 		<section className="relative pt-20 lg:grid lg:h-dvh lg:pt-48">
 			<div className="items-center pt-5 lg:container lg:flex">

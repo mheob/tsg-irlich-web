@@ -10,6 +10,7 @@ import { Vision } from '@/components/section/vision';
 import { client } from '@/lib/sanity/client';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
+import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 
 import { Features } from './_home/features';
 import { Groups } from './_home/groups';
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-	const [page, testimonials, newsArticles] = await Promise.all([
+	const [page, testimonials, newsArticles, socialMedia] = await Promise.all([
 		client.fetch(homePageQuery),
 		client.fetch(
 			homePageTestimonialsQuery,
@@ -34,6 +35,7 @@ export default async function HomePage() {
 			{ next: { revalidate: TESTIMONIALS_REVALIDATE_SECONDS } },
 		),
 		client.fetch(newsArticlesQuery),
+		client.fetch(socialMediaQuery),
 	]);
 
 	if (!page) {
@@ -47,7 +49,12 @@ export default async function HomePage() {
 
 	return (
 		<>
-			<Hero intro={page.intro} subtitle={page.subtitle} title={page.title} />
+			<Hero
+				intro={page.intro}
+				socialMedia={socialMedia}
+				subtitle={page.subtitle}
+				title={page.title}
+			/>
 			<Features {...page.content.featureSection} />
 			<Vision {...{ ...page.content.visionSection, _type: page._type }} />
 			<Groups {...page.content.groupsSection} />
