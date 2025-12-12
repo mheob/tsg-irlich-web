@@ -2,45 +2,53 @@
 
 import process from 'node:process';
 
-import type { FeedbackFormValues, LinearIssueResponse } from '@/lib/validations/feedback';
+import { actionClient } from '@/lib/actions/safe-action';
+import { feedbackFormSchema } from '@/lib/validations/feedback';
 
 const LINEAR_API_URL = 'https://api.linear.app/graphql';
 
-export async function createLinearIssue(data: FeedbackFormValues): Promise<LinearIssueResponse> {
-	const apiKey = process.env.LINEAR_API_KEY;
-	const teamId = process.env.LINEAR_TEAM_ID;
+export const createLinearIssue = actionClient
+	.inputSchema(feedbackFormSchema)
+	.action(async ({ parsedInput: data }) => {
+		const apiKey = process.env.LINEAR_API_KEY;
+		const teamId = process.env.LINEAR_TEAM_ID;
 
-	if (!apiKey || !teamId) {
-		console.error('Missing LINEAR_API_KEY or LINEAR_TEAM_ID');
-		return {
-			error: 'Server configuration error',
-			success: false,
-		};
-	}
-
-	// Build description with metadata
-	const descriptionParts = [data.description];
-
-	// Add screenshots if present
-	if (data.screenshotUrls && data.screenshotUrls.length > 0) {
-		descriptionParts.push('', '## Screenshots');
-		for (const url of data.screenshotUrls) {
-			descriptionParts.push(`![Screenshot](${url})`);
+		if (!apiKey || !teamId) {
+			console.error('Missing LINEAR_API_KEY or LINEAR_TEAM_ID');
+			throw new Error('Server configuration error');
 		}
-	}
 
-	descriptionParts.push('', '---', `**Type:** ${data.type}`);
+		// Build description with metadata
+		const descriptionParts = [data.description];
 
-	if (data.browser) descriptionParts.push(`**Browser:** ${data.browser}`);
-	if (data.operationSystem) descriptionParts.push(`**Operation System:** ${data.operationSystem}`);
-	if (data.device) descriptionParts.push(`**Device:** ${data.device}`);
-	if (data.email) descriptionParts.push(`**Reporter Email:** ${data.email}`);
+		// Add screenshots if present
+		if (data.screenshotUrls && data.screenshotUrls.length > 0) {
+			descriptionParts.push('', '## Screenshots');
+			for (const url of data.screenshotUrls) {
+				descriptionParts.push(`![Screenshot](${url})`);
+			}
+		}
 
-	descriptionParts.push(`**Source:** Feedback Form form tsg-irlich.de`);
+		descriptionParts.push('', '---', `**Type:** ${data.type}`);
 
-	const description = descriptionParts.join('\n');
+		if (data.browser) {
+			descriptionParts.push(`**Browser:** ${data.browser}`);
+		}
+		if (data.operationSystem) {
+			descriptionParts.push(`**Operation System:** ${data.operationSystem}`);
+		}
+		if (data.device) {
+			descriptionParts.push(`**Device:** ${data.device}`);
+		}
+		if (data.email) {
+			descriptionParts.push(`**Reporter Email:** ${data.email}`);
+		}
 
-	const mutation = `
+		descriptionParts.push(`**Source:** Feedback Form from tsg-irlich.de`);
+
+		const description = descriptionParts.join('\n');
+
+		const mutation = `
     mutation CreateIssue($input: IssueCreateInput!) {
       issueCreate(input: $input) {
         success
@@ -52,7 +60,6 @@ export async function createLinearIssue(data: FeedbackFormValues): Promise<Linea
     }
   `;
 
-	try {
 		const response = await fetch(LINEAR_API_URL, {
 			body: JSON.stringify({
 				query: mutation,
@@ -79,31 +86,17 @@ export async function createLinearIssue(data: FeedbackFormValues): Promise<Linea
 
 		if (result.errors) {
 			console.error('Linear API errors:', result.errors);
-			return {
-				error: 'Failed to create issue',
-				success: false,
-			};
+			throw new Error('Failed to create issue');
 		}
 
 		const issueData = result.data?.issueCreate;
 
 		if (!issueData?.success) {
-			return {
-				error: 'Issue creation failed',
-				success: false,
-			};
+			throw new Error('Issue creation failed');
 		}
 
 		return {
-			issueId: issueData.issue.id,
-			issueIdentifier: issueData.issue.identifier,
-			success: true,
+			issueId: issueData.issue.id as string,
+			issueIdentifier: issueData.issue.identifier as string,
 		};
-	} catch (error) {
-		console.error('Error creating Linear issue:', error);
-		return {
-			error: 'Network error',
-			success: false,
-		};
-	}
-}
+	});

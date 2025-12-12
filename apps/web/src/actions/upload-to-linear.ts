@@ -2,36 +2,35 @@
 
 import process from 'node:process';
 
-import type { UploadResponse } from '@/lib/validations/feedback';
+import { z } from 'zod';
+
+import { actionClient } from '@/lib/actions/safe-action';
 
 const LINEAR_API_URL = 'https://api.linear.app/graphql';
 
-export async function uploadToLinear(formData: FormData): Promise<UploadResponse> {
-	const apiKey = process.env.LINEAR_API_KEY;
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB for Linear Free Plan
+const ALLOWED_TYPES = new Set(['image/png', 'image/jpeg', 'image/gif', 'image/webp']);
 
-	if (!apiKey) {
-		return { error: 'Server configuration error', success: false };
-	}
+const uploadSchema = z.object({
+	file: z
+		.instanceof(File)
+		.refine(file => ALLOWED_TYPES.has(file.type), {
+			message: 'Invalid file type. Only images are allowed.',
+		})
+		.refine(file => file.size <= MAX_FILE_SIZE, {
+			message: 'File too large. Maximum size is 10MB.',
+		}),
+});
 
-	const file = formData.get('file') as File | null;
+export const uploadToLinear = actionClient
+	.inputSchema(uploadSchema)
+	.action(async ({ parsedInput: { file } }) => {
+		const apiKey = process.env.LINEAR_API_KEY;
 
-	if (!file) {
-		return { error: 'No file provided', success: false };
-	}
+		if (!apiKey) {
+			throw new Error('Server configuration error');
+		}
 
-	// Validate file type
-	const allowedTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
-	if (!allowedTypes.includes(file.type)) {
-		return { error: 'Invalid file type. Only images are allowed.', success: false };
-	}
-
-	// Validate file size (max 10MB for Linear Free Plan)
-	const maxSize = 10 * 1024 * 1024;
-	if (file.size > maxSize) {
-		return { error: 'File too large. Maximum size is 10MB.', success: false };
-	}
-
-	try {
 		// Step 1: Request upload URL from Linear
 		const uploadUrlQuery = `
       mutation FileUpload($contentType: String!, $filename: String!, $size: Int!) {
@@ -58,12 +57,6 @@ export async function uploadToLinear(formData: FormData): Promise<UploadResponse
 			},
 		};
 
-		console.info('Linear API Request:', {
-			contentType: file.type,
-			filename: file.name,
-			size: file.size,
-		});
-
 		const uploadUrlResponse = await fetch(LINEAR_API_URL, {
 			body: JSON.stringify(requestBody),
 			headers: {
@@ -75,9 +68,6 @@ export async function uploadToLinear(formData: FormData): Promise<UploadResponse
 
 		const uploadUrlResult = await uploadUrlResponse.json();
 
-		console.info('Linear API Response Status:', uploadUrlResponse.status);
-		console.info('Linear API Response Body:', JSON.stringify(uploadUrlResult, null, 2));
-
 		if (!uploadUrlResponse.ok) {
 			throw new Error(
 				`Failed to get upload URL: ${uploadUrlResponse.status} - ${JSON.stringify(uploadUrlResult)}`,
@@ -86,7 +76,7 @@ export async function uploadToLinear(formData: FormData): Promise<UploadResponse
 
 		if (uploadUrlResult.errors || !uploadUrlResult.data?.fileUpload?.success) {
 			console.error('Linear fileUpload error:', uploadUrlResult.errors);
-			return { error: 'Failed to get upload URL', success: false };
+			throw new Error('Failed to get upload URL');
 		}
 
 		const { assetUrl, headers, uploadUrl } = uploadUrlResult.data.fileUpload.uploadFile;
@@ -113,14 +103,6 @@ export async function uploadToLinear(formData: FormData): Promise<UploadResponse
 		}
 
 		return {
-			assetUrl,
-			success: true,
+			assetUrl: assetUrl as string,
 		};
-	} catch (error) {
-		console.error('Error uploading to Linear:', error);
-		return {
-			error: 'Upload failed. Please try again.',
-			success: false,
-		};
-	}
-}
+	});

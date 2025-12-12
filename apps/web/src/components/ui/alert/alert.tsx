@@ -15,6 +15,7 @@ export function Alert({
 export function AlertTitle({ className, ...props }: ComponentProps<'h5'>) {
 	return (
 		<h5
+			children={props.children || 'MISSING TITLE'}
 			className={cn('mb-1 text-xl leading-none font-medium tracking-tight md:text-3xl', className)}
 			{...props}
 		/>

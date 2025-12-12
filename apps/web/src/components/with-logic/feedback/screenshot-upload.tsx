@@ -27,7 +27,7 @@ export function ScreenshotUpload({
 	maxFiles = 5,
 	onChange,
 	value,
-}: ScreenshotUploadProps) {
+}: Readonly<ScreenshotUploadProps>) {
 	const [isDragging, setIsDragging] = useState(false);
 	const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
 
@@ -58,19 +58,20 @@ export function ScreenshotUpload({
 			]);
 
 			try {
-				const formData = new FormData();
-				formData.append('file', file);
+				const result = await uploadToLinear({ file });
 
-				const result = await uploadToLinear(formData);
-
-				if (result.success && result.assetUrl) {
+				if (result?.data?.assetUrl) {
 					// Remove from uploading, add to value
 					setUploadingFiles(previous => previous.filter(f => f.id !== id));
-					onChange([...value, result.assetUrl]);
+					onChange([...value, result.data.assetUrl]);
 				} else {
 					// Mark as error
 					setUploadingFiles(previous =>
-						previous.map(f => (f.id === id ? { ...f, error: result.error, progress: 'error' } : f)),
+						previous.map(f =>
+							f.id === id
+								? { ...f, error: result?.serverError || 'Upload failed', progress: 'error' }
+								: f,
+						),
 					);
 				}
 			} catch {
@@ -119,6 +120,16 @@ export function ScreenshotUpload({
 		},
 		[maxFiles, processFile, value.length],
 	);
+
+	useEffect(() => {
+		return () => {
+			for (const file of uploadingFiles) {
+				if (file.preview) {
+					URL.revokeObjectURL(file.preview);
+				}
+			}
+		};
+	}, [uploadingFiles]);
 
 	// Handle paste from clipboard
 	useEffect(() => {
@@ -207,11 +218,12 @@ export function ScreenshotUpload({
 								src={url}
 							/>
 							<button
+								aria-label={`Remove screenshot ${index + 1}`}
 								className="bg-destructive text-destructive-foreground absolute top-1 right-1 rounded-full p-1 opacity-0 transition-opacity group-hover:opacity-100"
 								onClick={() => removeUrl(url)}
 								type="button"
 							>
-								<X className="h-4 w-4" />
+								<X className="size-6" />
 							</button>
 						</div>
 					))}
@@ -225,11 +237,11 @@ export function ScreenshotUpload({
 							<Image alt={file.name} className="object-cover opacity-50" src={file.preview} fill />
 							<div className="absolute inset-0 flex items-center justify-center">
 								{file.progress === 'uploading' && (
-									<Loader2 className="text-primary h-6 w-6 animate-spin" />
+									<Loader2 className="text-primary size-6 animate-spin" />
 								)}
 								{file.progress === 'error' && (
 									<div className="text-destructive flex flex-col items-center">
-										<AlertCircle className="h-6 w-6" />
+										<AlertCircle className="size-6" />
 										<span className="mt-1 text-xs">{file.error}</span>
 									</div>
 								)}
@@ -240,7 +252,7 @@ export function ScreenshotUpload({
 									onClick={() => removeUploading(file.id)}
 									type="button"
 								>
-									<X className="h-4 w-4" />
+									<X className="size-6" />
 								</button>
 							)}
 						</div>
