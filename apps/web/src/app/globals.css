@@ -28,8 +28,11 @@
 	--color-chart-4: oklch(0.83 0.1 88);
 	--color-chart-5: oklch(0.78 0.1 59);
 
-	--color-destructive: oklch(0.64 0.21 25);
-	--color-destructive-foreground: oklch(0.99 0 0);
+	--color-destructive-foreground: oklch(0.64 0.21 25);
+	--color-destructive: oklch(0.97 0.02 18);
+
+	--color-success: oklch(0.97 0.02 146);
+	--color-success-foreground: oklch(0.46 0.16 143);
 
 	--color-foreground: oklch(0.20 0 0);
 	--color-input: oklch(0.99 0 0);

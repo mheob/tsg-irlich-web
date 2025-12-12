@@ -94,7 +94,6 @@ contributing to this project.
 
 - Use **function declarations** (not const) for React components
 - Prefer **named exports** over default exports
-- Place TypeScript interfaces at the end of files
 - Follow **micro folder structure** - break components into small, focused parts
 - Minimize 'use client' usage - prefer server components
 
