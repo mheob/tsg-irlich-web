@@ -10,6 +10,7 @@ import {
 	newsArticleContentQuery,
 	newsArticleHeroQuery,
 } from '@/lib/sanity/queries/pages/news-article';
+import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { urlForImage } from '@/lib/sanity/utils';
 
 import { Author } from './_sections/author';
@@ -50,9 +51,10 @@ export default async function NewsArticlePage({
 }: Readonly<PageProps<'/news/[category]/[slug]'>>) {
 	const { slug } = await params;
 
-	const [hero, article] = await Promise.all([
+	const [hero, article, socialMedia] = await Promise.all([
 		client.fetch(newsArticleHeroQuery),
 		client.fetch(newsArticleContentQuery, { slug }),
+		client.fetch(socialMediaQuery),
 	]);
 
 	if (!article || !hero) {
@@ -165,7 +167,7 @@ export default async function NewsArticlePage({
 				<aside className="pt-10 lg:pt-0 lg:pl-10">
 					<Author article={article} />
 					<Categories article={article} />
-					<SocialMedia />
+					<SocialMedia socialMedia={socialMedia} />
 				</aside>
 			</div>
 		</>
