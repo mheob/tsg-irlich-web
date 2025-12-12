@@ -79,7 +79,12 @@ export default async function Footer() {
 				</div>
 
 				<section className="mt-12 flex flex-col-reverse items-center gap-4 md:flex-row md:justify-between">
-					<div className="mt-4 md:mt-0">©{currentYear} TSG Irlich. Alle Rechte vorbehalten.</div>
+					<div className="mt-4 md:mt-0">
+						©{currentYear} TSG Irlich. Alle Rechte vorbehalten. |{' '}
+						<Link className="text-secondary font-bold hover:text-white" href="/kontakt/feedback">
+							Beta-Feedback geben
+						</Link>{' '}
+					</div>
 					<nav className="flex items-center gap-4">
 						<Link className="hover:text-secondary" href={imprint?.href}>
 							{imprint?.label}

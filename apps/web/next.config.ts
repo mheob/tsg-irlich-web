@@ -1,11 +1,19 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-	/* config options here */
+	experimental: {
+		serverActions: {
+			bodySizeLimit: '2mb',
+		},
+	},
 	images: {
 		remotePatterns: [
 			{
 				hostname: 'cdn.sanity.io',
+				protocol: 'https',
+			},
+			{
+				hostname: 'uploads.linear.app',
 				protocol: 'https',
 			},
 		],
