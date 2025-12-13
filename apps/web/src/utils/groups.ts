@@ -3,13 +3,13 @@ import type { DosbIconName } from '@tsgi-web/shared/icons/dosb.types';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import type { ImageProps } from 'next/image';
 
-import fallbackImageFile from '@/images/angebot/groups/_fallback.webp';
 import soccerImage from '@/images/angebot/groups/fussball.webp';
 import gymnasticImage from '@/images/angebot/groups/kinderturnen.webp';
 import coursesImage from '@/images/angebot/groups/kurse.webp';
 import taekwondoImage from '@/images/angebot/groups/taekwondo.webp';
 import danceImage from '@/images/angebot/groups/tanzen.webp';
 import otherSportsImage from '@/images/angebot/groups/weitere-sportarten.webp';
+import fallbackImageFile from '@/images/angebot/hero.webp';
 
 interface OfferGroupImage {
 	alt: ImageProps['alt'];
