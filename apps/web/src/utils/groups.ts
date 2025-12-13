@@ -25,7 +25,7 @@ export interface GroupSection {
 }
 
 export const fallbackImage: OfferGroupImage = {
-	alt: 'Vier Kinder in blauen Sportuniformen, die Handstände gegen eine Wand machen.',
+	alt: 'Sporthalle mit drei verschiedenen Trainingsgruppen: Links üben Kinder und ein Trainer in weißen Taekwondo-Anzügen mit schwarzem Gürtel synchrone Kicks, in der Mitte zeigen Mädchen in türkis-blauen Gymnastik-Trikots mit bunten Federn eine Beinübung, und rechts spielen Kinder unter Anleitung von Trainern in dunkelblauen Shirts Fußball auf einer grünen Kunstrasenfläche. Im Hintergrund sind bunte Gymnastikbälle und Sportgeräte zu sehen.',
 	src: fallbackImageFile,
 };
 
