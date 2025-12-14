@@ -1,0 +1,22 @@
+{
+	"name": "@tsg-web/email",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"build": "echo 'email build'",
+		"dev:email": "email dev --port 3001",
+		"export": "echo 'email export'"
+	},
+	"dependencies": {
+		"@react-email/components": "^1.0.1",
+		"@tsgi-web/shared": "workspace:*",
+		"react": "^19.2.3",
+		"react-dom": "^19.2.3"
+	},
+	"devDependencies": {
+		"@react-email/preview-server": "^5.0.8",
+		"@types/react": "^19.2.7",
+		"@types/react-dom": "^19.2.3",
+		"react-email": "^5.0.8"
+	}
+}

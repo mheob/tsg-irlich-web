@@ -11,6 +11,7 @@
 		"build:affected": "turbo build --affected",
 		"cspell": "cspell .",
 		"dev": "turbo dev",
+		"dev:email": "turbo dev:email",
 		"extract-types": "turbo extract-types",
 		"lint": "turbo lint",
 		"lint:affected": "turbo lint --affected",

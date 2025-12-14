@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"composite": false,
+		"jsx": "react-jsx",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"noEmit": true,
+		"strict": true,
+		"strictNullChecks": true,
+		"skipLibCheck": true,
+	},
+	"include": ["**/*.ts", "**/*.tsx", "../shared/src/logos/tsg-logo.tsx"],
+	"exclude": ["node_modules", ".react-email"],
+}
