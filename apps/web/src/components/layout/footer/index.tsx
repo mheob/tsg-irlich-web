@@ -1,7 +1,7 @@
+import { TSGLogo } from '@tsgi-web/shared';
 import { ArrowUp, Mail } from 'lucide-react';
 import Link from 'next/link';
 
-import TSGLogo from '@/icons/logos/tsg-logo';
 import { client } from '@/lib/sanity/client';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { getSocialMediaIcon } from '@/utils/icon';
