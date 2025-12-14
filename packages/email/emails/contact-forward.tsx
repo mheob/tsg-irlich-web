@@ -33,7 +33,7 @@ export default function ContactForwardEmail({
 	contactMessage = 'Hallo liebes Team von der TSG Irlich! Ich wende mich folgendem Anliegen an euch...',
 	contactName = 'Max Mustermann',
 	salutation = 'Hallo liebes PR-Team!',
-}: ContactForwardEmailProps) {
+}: Readonly<ContactForwardEmailProps>) {
 	return (
 		<Html>
 			<Head />

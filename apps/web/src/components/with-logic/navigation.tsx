@@ -1,7 +1,6 @@
 'use client';
 
-import { cn } from '@tsgi-web/shared';
-import { TSGLogo } from '@tsgi-web/shared';
+import { cn, TSGLogo } from '@tsgi-web/shared';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
