@@ -3,9 +3,9 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"build": "echo 'email build'",
+		"build": "email build",
 		"dev:email": "email dev --port 3001",
-		"export": "echo 'email export'"
+		"export": "email export"
 	},
 	"dependencies": {
 		"@react-email/components": "^1.0.1",

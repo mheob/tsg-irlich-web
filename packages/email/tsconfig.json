@@ -9,6 +9,6 @@
 		"strictNullChecks": true,
 		"skipLibCheck": true,
 	},
-	"include": ["**/*.ts", "**/*.tsx", "../shared/src/logos/tsg-logo.tsx"],
+	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": ["node_modules", ".react-email"],
 }
