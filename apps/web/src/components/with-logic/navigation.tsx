@@ -1,13 +1,13 @@
 'use client';
 
 import { cn } from '@tsgi-web/shared';
+import { TSGLogo } from '@tsgi-web/shared';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import TSGLogo from '@/icons/logos/tsg-logo';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
 
 function getHref(slug: string) {

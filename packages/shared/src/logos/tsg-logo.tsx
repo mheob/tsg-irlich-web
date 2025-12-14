@@ -1,8 +1,8 @@
-interface TSGLogoProps {
-	className?: string;
-}
+import type { ComponentProps } from 'react';
 
-export default function TSGLogo({ className = 'h-16 w-auto' }: Readonly<TSGLogoProps>) {
+type TSGLogoProps = ComponentProps<'svg'>;
+
+export function TSGLogo({ className = 'h-16 w-auto', ...props }: Readonly<TSGLogoProps>) {
 	return (
 		<svg
 			className={className}
@@ -12,6 +12,7 @@ export default function TSGLogo({ className = 'h-16 w-auto' }: Readonly<TSGLogoP
 			viewBox="0 0 1024 768"
 			xmlns="http://www.w3.org/2000/svg"
 			xmlSpace="preserve"
+			{...props}
 		>
 			<path
 				d="M983 233c-26-46-64-87-111-122A607 607 0 0 0 512 0C376 0 248 39 152 111c-47 35-85 76-111 122a302 302 0 0 0 0 302c26 46 64 87 111 122 96 72 224 111 360 111s264-39 360-111c47-35 85-76 111-122a302 302 0 0 0 0-302"
