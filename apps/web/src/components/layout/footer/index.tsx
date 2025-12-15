@@ -49,6 +49,7 @@ export default async function Footer() {
 							{socialMedia &&
 								Object.entries(socialMedia).map(([name, url]) => (
 									<SocialMediaIcon
+										className="size-6 md:size-8"
 										href={url}
 										icon={getSocialMediaIcon(name)}
 										key={url}
