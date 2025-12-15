@@ -5,13 +5,13 @@ import {
 	Heading,
 	Hr,
 	Html,
+	Img,
 	Link,
 	Preview,
 	Section,
 	Tailwind,
 	Text,
 } from '@react-email/components';
-import { TSGLogo } from '@tsgi-web/shared';
 
 import { tailwindConfig } from '../tailwind-config';
 
@@ -24,27 +24,32 @@ interface ContactForwardEmailProps {
 	contactEmail: string;
 	contactMessage: string;
 	contactName: string;
-	salutation: string;
+	receiver?: string;
 }
 
-export default function ContactForwardEmail({
+export function ContactForwardEmail({
 	baseUrl = 'https://next.tsg-irlich.de',
 	contactEmail = 'info@tsg-irlich.de',
 	contactMessage = 'Hallo liebes Team von der TSG Irlich! Ich wende mich folgendem Anliegen an euch...',
 	contactName = 'Max Mustermann',
-	salutation = 'Hallo liebes PR-Team!',
-}: ContactForwardEmailProps) {
+	receiver,
+}: Readonly<ContactForwardEmailProps>) {
 	return (
 		<Html>
 			<Head />
 
 			<Tailwind config={tailwindConfig}>
-				<Body className="mx-auto my-auto box-border bg-white px-2 font-sans">
+				<Body className="mx-auto my-auto bg-white px-2 font-sans">
 					<Preview>{`Von ${baseUrl} kommt eine Anfrage von ${contactName}.`}</Preview>
 
 					<Container className="border-border mx-auto my-10 max-w-2xl rounded border border-solid p-5">
 						<Section className="mt-[32px] flex justify-center">
-							<TSGLogo className="h-32" />
+							<Img
+								alt="TSG Irlich Logo"
+								height="128"
+								src={`${baseUrl}/tsg-irlich-logo.png`}
+								width="171"
+							/>
 						</Section>
 
 						<Heading className="my-[30px] text-center text-2xl text-black">
@@ -56,7 +61,13 @@ export default function ContactForwardEmail({
 						</Heading>
 
 						<Section>
-							<Text className="text-base">{salutation}</Text>
+							{receiver ? (
+								<Text className="text-base">
+									Hi! Es gibt eine Anfrage, die in deine Zuständigkeit ({receiver}) fällt.
+								</Text>
+							) : (
+								<Text className="text-base">Hi! Es gibt eine neue, allgemeine Anfrage.</Text>
+							)}
 							<Text className="text-base">
 								<strong>{contactName}</strong> &lt;
 								<Link className="text-primary" href={`mailto:${contactEmail}`}>
@@ -64,7 +75,8 @@ export default function ContactForwardEmail({
 								</Link>
 								&gt; hat dir eine Nachricht gesendet:
 							</Text>
-							<Text className="bg-background-high-contrast rounded-xl p-4 text-base italic">
+
+							<Text className="bg-background-high-contrast rounded-xl p-4 text-base whitespace-pre-line italic">
 								{contactMessage}
 							</Text>
 						</Section>
@@ -81,3 +93,5 @@ export default function ContactForwardEmail({
 		</Html>
 	);
 }
+
+export default ContactForwardEmail;

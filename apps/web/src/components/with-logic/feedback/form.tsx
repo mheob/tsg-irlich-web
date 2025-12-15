@@ -8,12 +8,11 @@ import { createLinearIssue } from '@/actions/create-linear-issue';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { feedbackFormSchema, type FeedbackFormValues } from '@/lib/validations/feedback';
 
-import { Form } from '../form';
+import { ErrorAlert, Form } from '../form';
 import { BrowserField } from './browse-field';
 import { DescriptionField } from './description-field';
 import { DeviceField } from './device-field';
 import { EmailField } from './email-field';
-import { ErrorAlert } from './error-alert';
 import { FeedbackTypeField } from './feedback-type';
 import { OperationSystemField } from './operation-system-field';
 import { ScreenshotsField } from './screenshots-field';
@@ -46,20 +45,20 @@ export function FeedbackForm() {
 
 	const selectedType = form.watch('type');
 
-	async function onSubmit(data: FeedbackFormValues) {
+	async function onSubmit(values: FeedbackFormValues) {
 		setIsSubmitting(true);
 		setSubmitResult(null);
 
 		try {
 			const result = await createLinearIssue({
-				browser: data.browser,
-				description: data.description,
-				device: data.device,
-				email: data.email,
-				operationSystem: data.operationSystem,
+				browser: values.browser,
+				description: values.description,
+				device: values.device,
+				email: values.email,
+				operationSystem: values.operationSystem,
 				screenshotUrls: screenshotUrls.length > 0 ? screenshotUrls : undefined,
-				title: data.title,
-				type: data.type,
+				title: values.title,
+				type: values.type,
 			});
 
 			if (result?.data) {

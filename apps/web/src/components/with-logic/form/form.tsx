@@ -45,7 +45,7 @@ export function FormLabel({ className, ...props }: ComponentProps<typeof LabelPr
 
 	return (
 		<Label
-			className={cn('data-[error=true]:text-destructive', className)}
+			className={cn('data-[error=true]:text-destructive-foreground', className)}
 			data-error={Boolean(error)}
 			data-slot="form-label"
 			htmlFor={formItemId}
@@ -89,7 +89,7 @@ export function FormMessage({ className, ...props }: ComponentProps<'p'>) {
 	}
 	return (
 		<p
-			className={cn('text-destructive px-3 text-sm', className)}
+			className={cn('text-destructive-foreground px-3 text-sm', className)}
 			data-slot="form-message"
 			id={formMessageId}
 			{...props}

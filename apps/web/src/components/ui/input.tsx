@@ -28,6 +28,7 @@ interface InputWithLabelProps extends ComponentProps<typeof Input> {
 
 export function InputWithLabel({
 	children,
+	field,
 	wrapperClassName,
 	...props
 }: Readonly<InputWithLabelProps>) {
@@ -35,7 +36,7 @@ export function InputWithLabel({
 		<FormItem className={wrapperClassName}>
 			<FormLabel>{children}</FormLabel>
 			<FormControl>
-				<Input {...props} />
+				<Input {...field} {...props} />
 			</FormControl>
 			<FormMessage />
 		</FormItem>

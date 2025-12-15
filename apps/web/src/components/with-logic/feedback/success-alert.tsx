@@ -14,7 +14,9 @@ export function SuccessAlert({ identifier }: Readonly<SuccessAlertProps>) {
 			<AlertDescription className="mt-2">
 				Dein Feedback wurde erfolgreich übermittelt.
 				{identifier && (
-					<span className="mt-2 block text-base md:text-lg">{`Deine Ticketnummer für Nachfragen lautet: ${identifier}.`}</span>
+					<span className="mt-2 block text-base md:text-lg">
+						Deine Ticketnummer für Nachfragen lautet: {identifier}.
+					</span>
 				)}
 			</AlertDescription>
 		</Alert>

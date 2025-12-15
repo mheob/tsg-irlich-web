@@ -1,7 +1,9 @@
 {
-	"name": "@tsg-web/email",
+	"name": "@tsgi-web/email",
 	"version": "0.1.0",
-	"private": true,
+	"exports": {
+		".": "./emails/index.ts"
+	},
 	"scripts": {
 		"build": "email build",
 		"dev:email": "email dev --port 3001",
