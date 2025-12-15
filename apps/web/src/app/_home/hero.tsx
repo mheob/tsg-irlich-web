@@ -1,12 +1,10 @@
 import { cn } from '@tsgi-web/shared';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
 import { SocialMediaIcon } from '@/components/ui/social-media-icon';
 import ArrowCta from '@/icons/design/arrow-cta';
-import HeroImage from '@/images/home/hero.webp';
 import type { Home, SocialMediaQueryResult } from '@/types/sanity.types';
 import { getSocialMediaIcon } from '@/utils/icon';
 
@@ -20,12 +18,12 @@ export async function Hero({ intro, socialMedia, subtitle, title }: Readonly<Her
 	return (
 		<section className="relative pt-20 lg:grid lg:h-dvh lg:pt-48">
 			<div className="items-center pt-5 lg:container lg:flex">
-				<div className="lg:no-container container lg:w-1/2">
+				<div className="lg:no-container container lg:w-3/5">
 					<SectionHeader level="h1" subTitle={subtitle} title={title}>
 						{intro}
 					</SectionHeader>
 
-					<div className="text-primary mt-8 mb-16 flex gap-8">
+					<div className="text-primary mt-8 flex gap-8">
 						<Button asChild>
 							<Link href="/kontakt">Kontakt aufnehmen</Link>
 						</Button>
@@ -37,19 +35,6 @@ export async function Hero({ intro, socialMedia, subtitle, title }: Readonly<Her
 				<div className="relative grid h-96 lg:static lg:ml-auto">
 					<div className={styles.bgRoundedEdge}></div>
 					<div className={styles.bgBalls}></div>
-
-					<Image
-						className={cn(
-							'absolute -z-1',
-							'start-[15%] end-[15%] bottom-10 w-[70%]',
-							'sm:start-[20%] sm:end-[20%] sm:bottom-5 sm:w-[60%]',
-							'md:start-[30%] md:end-[30%] md:bottom-5 md:w-[40%]',
-							'lg:start-1/2 lg:end-auto lg:bottom-15 lg:w-[30%]',
-							'3xl:bottom-15 3xl:w-[30%]',
-						)}
-						alt="Ein Frau, die am meditieren ist."
-						src={HeroImage}
-					/>
 
 					<nav
 						className={cn(
