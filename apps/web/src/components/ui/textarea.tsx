@@ -23,6 +23,7 @@ interface TextareaWithLabelProps extends ComponentPropsWithRef<typeof Textarea> 
 
 export function TextareaWithLabel({
 	children,
+	field,
 	wrapperClassName,
 	...props
 }: Readonly<TextareaWithLabelProps>) {
@@ -30,7 +31,7 @@ export function TextareaWithLabel({
 		<FormItem className={wrapperClassName}>
 			<FormLabel>{children}</FormLabel>
 			<FormControl>
-				<Textarea {...props} />
+				<Textarea {...field} {...props} />
 			</FormControl>
 			<FormMessage />
 		</FormItem>

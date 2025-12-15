@@ -1,3 +1,4 @@
+export { ErrorAlert } from './error-alert';
 export {
 	Form,
 	FormControl,
@@ -7,3 +8,4 @@ export {
 	FormLabel,
 	FormMessage,
 } from './form';
+export { SuccessAlert } from './success-alert';

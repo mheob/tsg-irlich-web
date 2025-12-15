@@ -168,6 +168,7 @@ interface SelectWithLabelProps extends ComponentProps<typeof Select> {
 export function SelectWithLabel({
 	children,
 	field,
+	onValueChange,
 	placeholder,
 	selectItems,
 	wrapperClassName,
@@ -177,7 +178,11 @@ export function SelectWithLabel({
 		<FormItem className={wrapperClassName}>
 			<FormLabel>{children}</FormLabel>
 			<FormControl>
-				<Select {...props} defaultValue={field?.value} onValueChange={field?.onChange}>
+				<Select
+					{...props}
+					defaultValue={field?.value}
+					onValueChange={onValueChange ?? field?.onChange}
+				>
 					<SelectTrigger>
 						<SelectValue placeholder={placeholder} />
 					</SelectTrigger>
