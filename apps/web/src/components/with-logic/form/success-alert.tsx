@@ -9,7 +9,7 @@ export function SuccessAlert() {
 			<AlertTitle>Vielen Dank!</AlertTitle>
 			<AlertDescription className="mt-2">
 				<p className="text-success-foreground mt-4">
-					Dein Anfrage wurde erfolgreich übermittelt.
+					Deine Anfrage wurde erfolgreich übermittelt.
 					<br />
 					Wir werden uns schnellstmöglich um deine Anfrage kümmern.
 				</p>

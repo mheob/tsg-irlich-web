@@ -28,17 +28,15 @@ function mapSelectItems(receiver?: ContactNameMail[]): { label: string; value: s
 	);
 }
 
+type SubmitResult = null | { error: string; success: false } | { success: true };
+
 interface ContactFormProps {
 	receiver?: ContactNameMail[];
 }
 
 export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [submitResult, setSubmitResult] = useState<null | {
-		error?: string;
-		identifier?: string;
-		success: boolean;
-	}>(null);
+	const [submitResult, setSubmitResult] = useState<SubmitResult>(null);
 
 	const selectItems = mapSelectItems(receiver);
 
@@ -47,7 +45,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 			email: '',
 			message: '',
 			name: '',
-			receiver: receiver ? { email: '', label: '' } : undefined,
+			receiver: undefined,
 		},
 		resolver: zodResolver(contactFormSchema),
 	});
@@ -64,13 +62,11 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 				receiver: values.receiver ?? undefined,
 			});
 
-			if (result?.data) {
+			if (!result?.serverError && !result?.validationErrors && result?.data) {
 				setSubmitResult({
-					identifier: result.data.emailId,
 					success: true,
 				});
 				form.reset();
-				console.info(`emailId: ${result.data.emailId}`);
 			} else {
 				setSubmitResult({
 					error: result?.serverError || 'Ein Fehler ist aufgetreten',

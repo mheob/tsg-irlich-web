@@ -178,11 +178,7 @@ export function SelectWithLabel({
 		<FormItem className={wrapperClassName}>
 			<FormLabel>{children}</FormLabel>
 			<FormControl>
-				<Select
-					{...props}
-					defaultValue={field?.value}
-					onValueChange={onValueChange ?? field?.onChange}
-				>
+				<Select {...props} onValueChange={onValueChange ?? field?.onChange} value={field?.value}>
 					<SelectTrigger>
 						<SelectValue placeholder={placeholder} />
 					</SelectTrigger>

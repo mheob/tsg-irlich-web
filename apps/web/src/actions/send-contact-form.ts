@@ -13,11 +13,11 @@ export const sendContactForm = actionClient
 	.action(async ({ parsedInput: data }) => {
 		const { email, message, name, receiver } = data;
 
-		const { data: emailData, error } = await resend.emails.send({
+		const { error } = await resend.emails.send({
 			bcc: ['it@tsg-irlich.de'],
 			from: 'TSG Irlich - Benachrichtigungen <webseite@notifications.tsg-irlich.de>',
 			react: ContactForwardEmail({
-				baseUrl: process.env.VERCEL_URL ?? 'https://www.tsg-irlich.de',
+				baseUrl: `https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? 'www.tsg-irlich.de'}`,
 				contactEmail: email,
 				contactMessage: message,
 				contactName: name,
@@ -32,8 +32,4 @@ export const sendContactForm = actionClient
 			console.error('Resend API error:', error);
 			throw new Error('Email could not be sent');
 		}
-
-		return {
-			emailId: emailData?.id,
-		};
 	});
