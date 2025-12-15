@@ -66,10 +66,18 @@ export function ContactLink({
 		[children, hasInteracted, style],
 	);
 
+	const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+		if (!hasInteracted) {
+			event.preventDefault();
+			setHasInteracted(true);
+		}
+	};
+
 	const renderProps: AnchorHTMLAttributes<HTMLAnchorElement> = {
 		...props,
 		'aria-label': hasInteracted ? undefined : 'Kontaktlink - tippen zum Anzeigen',
 		href: hasInteracted ? createContactLink({ header, href }) : '#',
+		onClick: handleClick,
 		onContextMenu: handleInteraction,
 		onFocus: handleInteraction,
 		onKeyDown: event => {
@@ -78,6 +86,7 @@ export function ContactLink({
 			}
 		},
 		onMouseOver: handleInteraction,
+		onTouchStart: handleInteraction,
 		role: hasInteracted ? 'link' : 'button',
 		style: directionStyle,
 	};
