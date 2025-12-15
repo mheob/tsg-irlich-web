@@ -169,7 +169,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 															const selected = selectItems.find(item => item.value === value);
 															field?.onChange({ email: value, label: selected?.label ?? '' });
 														}}
-														field={field}
+														field={{ ...field, value: field.value?.email ?? '' }}
 														placeholder="Wähle eine Empfängergruppe"
 														selectItems={selectItems}
 														wrapperClassName="w-full"
