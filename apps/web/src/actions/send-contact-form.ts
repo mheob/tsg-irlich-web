@@ -17,7 +17,7 @@ export const sendContactForm = actionClient
 			bcc: ['it@tsg-irlich.de'],
 			from: 'TSG Irlich - Benachrichtigungen <webseite@notifications.tsg-irlich.de>',
 			react: ContactForwardEmail({
-				baseUrl: `https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? 'www.tsg-irlich.de'}`,
+				baseUrl: `https://${process.env.VERCEL_URL ?? 'www.tsg-irlich.de'}`,
 				contactEmail: email,
 				contactMessage: message,
 				contactName: name,

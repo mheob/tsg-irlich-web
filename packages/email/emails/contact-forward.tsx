@@ -28,7 +28,7 @@ interface ContactForwardEmailProps {
 }
 
 export function ContactForwardEmail({
-	baseUrl = 'https://next.tsg-irlich.de',
+	baseUrl = 'https://www.tsg-irlich.de',
 	contactEmail = 'info@tsg-irlich.de',
 	contactMessage = 'Hallo liebes Team von der TSG Irlich! Ich wende mich folgendem Anliegen an euch...',
 	contactName = 'Max Mustermann',
