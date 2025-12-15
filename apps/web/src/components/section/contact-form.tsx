@@ -62,7 +62,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 				receiver: values.receiver ?? undefined,
 			});
 
-			if (!result?.serverError && !result?.validationErrors && result?.data) {
+			if (!result?.serverError && !result?.validationErrors) {
 				setSubmitResult({
 					success: true,
 				});
@@ -137,7 +137,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 							</div>
 
 							<Form {...form}>
-								<form onSubmit={form.handleSubmit(onSubmit)}>
+								<form className="flex-1" onSubmit={form.handleSubmit(onSubmit)}>
 									<SectionHeader isCenteredOnDesktop={false} title="Kontaktiere uns" isCentered />
 
 									<div className="mt-10 flex flex-col gap-10 md:mt-20">
