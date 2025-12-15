@@ -1,6 +1,6 @@
 'use client';
 
-import type { AnchorHTMLAttributes, CSSProperties } from 'react';
+import type { AnchorHTMLAttributes, CSSProperties, MouseEvent } from 'react';
 import { useMemo, useState } from 'react';
 
 function reverse(stringToReverse: string): string {
@@ -66,7 +66,7 @@ export function ContactLink({
 		[children, hasInteracted, style],
 	);
 
-	const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+	const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
 		if (!hasInteracted) {
 			event.preventDefault();
 			setHasInteracted(true);
