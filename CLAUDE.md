@@ -7,8 +7,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 TSG Irlich website - a Next.js application with Sanity CMS for a German sports club. This is a monorepo built with Turbo
 containing:
 
-- **apps/web**: Next.js 15 frontend with App Router, TypeScript, Tailwind CSS, Shadcn UI
+- **apps/web**: Next.js 16 frontend with App Router, TypeScript, Tailwind CSS, Shadcn UI
 - **apps/studio**: Sanity Studio CMS for content management
+- **packages/email**: React Email templates for transactional emails
 - **packages/shared**: Shared utilities and types
 
 ## Development Commands
@@ -31,9 +32,13 @@ bun run lint:affected          # Lint only affected packages
 bun run lint:root              # Lint root directory files
 bun run lint:cspell            # Run spell check
 
-# Type Generation
-bun run typegen                # Generate Sanity types for web app
-bun run extract-types          # Extract Sanity schema types
+# Type Checking & Generation
+bun run typecheck              # Type check all apps
+bun run typegen:sanity         # Generate Sanity types for web app
+bun run typegen:routes         # Generate Next.js route types
+
+# Email Development
+bun run dev:email              # Start React Email preview server
 ```
 
 ### Individual App Commands
@@ -41,11 +46,13 @@ bun run extract-types          # Extract Sanity schema types
 ```bash
 # Web app (apps/web)
 cd apps/web
-bun run dev                    # Next.js dev server with Turbopack
+bun run dev                    # Next.js dev server
 bun run build                  # Production build
 bun run start                  # Start production server
 bun run lint                   # ESLint with auto-fix
-bun run typegen               # Generate Sanity types
+bun run typecheck              # Type check with TypeScript
+bun run typegen:sanity         # Generate Sanity types
+bun run typegen:routes         # Generate Next.js route types
 
 # Studio app (apps/studio)
 cd apps/studio
@@ -53,6 +60,13 @@ bun run dev                    # Sanity Studio development
 bun run build                  # Build Sanity Studio
 bun run deploy                 # Deploy studio to Sanity
 bun run extract-types          # Extract schema types for typegen
+bun run typecheck              # Type check with TypeScript
+
+# Email package (packages/email)
+cd packages/email
+bun run dev:email              # React Email preview server (port 3001)
+bun run build                  # Build email templates
+bun run export                 # Export email templates
 ```
 
 ## Architecture & Code Organization
@@ -62,7 +76,7 @@ bun run extract-types          # Extract schema types for typegen
 - Built with **Turbo** for build orchestration and caching
 - **bun** as package manager with workspace support
 - Shared dependencies managed with explicit pinned versions
-- Node.js >=22.15 required
+- Node.js ^22.21.1 and Bun 1.3.4 required
 
 ### Web App (Next.js)
 
@@ -124,8 +138,11 @@ bun run extract-types          # Extract schema types for typegen
 
 ```bash
 # After schema changes, always run:
-bun run extract-types         # Extract from studio
-bun run typegen               # Generate types for web
+cd apps/studio && bun run extract-types   # Extract from studio
+cd apps/web && bun run typegen:sanity     # Generate types for web
+
+# Or from root:
+turbo extract-types && turbo typegen:sanity
 ```
 
 ## Environment & Configuration
