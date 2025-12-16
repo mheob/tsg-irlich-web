@@ -25,6 +25,7 @@ This is a **monorepo** built with **Turbo** and **bun** containing:
 
 - **`apps/web`** - Next.js 16 frontend application with App Router
 - **`apps/studio`** - Sanity Studio CMS for content management
+- **`packages/email`** - React Email templates for transactional emails
 - **`packages/shared`** - Shared utilities, types, and components
 
 ## 🚀 Tech Stack
@@ -46,6 +47,11 @@ This is a **monorepo** built with **Turbo** and **bun** containing:
 - **German localization** support
 - **Custom plugins** for enhanced functionality
 - **Media management** with Sanity plugins
+
+### Email (packages/email)
+
+- **React Email** for transactional email templates
+- **Resend** integration for email delivery
 
 ### Development Tools
 
@@ -74,6 +80,7 @@ tsg-web/
 │       ├── plugins/         # Custom Sanity plugins
 │       └── components/      # Studio UI components
 ├── packages/
+│   ├── email/               # React Email templates
 │   └── shared/              # Shared utilities and types
 └── turbo.json               # Turbo configuration
 ```
@@ -106,8 +113,8 @@ tsg-web/
 
 ### Prerequisites
 
-- **Node.js** >= 22.20.0
-- **bun** package manager
+- **Node.js** ^22.21.1
+- **bun** 1.3.4 package manager
 - **Git** for version control
 - **@antfu/ni** for talking to the package manager
 
@@ -152,7 +159,12 @@ tsg-web/
    NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
    NEXT_PUBLIC_SANITY_STUDIO_URL=http://localhost:3333
    SANITY_API_READ_TOKEN=your_read_token
+   SANITY_REVALIDATE_SECRET=your_revalidate_secret
+   RESEND_API_KEY=your_resend_api_key
+   LINEAR_API_KEY=your_linear_api_key
+   LINEAR_TEAM_ID=your_linear_team_id
    VERCEL_OIDC_TOKEN=your_vercel_token
+   VERCEL_URL=your_vercel_url
    ```
 
 5. **Start development servers**
@@ -166,14 +178,15 @@ tsg-web/
 ### Root Commands
 
 ```bash
-
 nr dev                    # Start all apps in development mode
+nr dev:email              # Start React Email preview server
 nr build                  # Build all apps for production
 nr build:affected         # Build only affected packages
 nr lint                   # Lint all apps
 nr lint:affected          # Lint only affected packages
-nr typegen                # Generate Sanity types for web app
-nr extract-types          # Extract Sanity schema types
+nr typecheck              # Type check all apps
+nr typegen:sanity         # Generate Sanity types for web app
+nr typegen:routes         # Generate Next.js route types
 ```
 
 ### Individual App Commands
@@ -182,10 +195,12 @@ nr extract-types          # Extract Sanity schema types
 
 ```bash
 cd apps/web
-nr dev                    # Next.js dev server with Turbopack
+nr dev                    # Next.js dev server
 nr build                  # Production build
 nr start                  # Start production server
-nr typegen                # Generate Sanity types
+nr typecheck              # Type check with TypeScript
+nr typegen:sanity         # Generate Sanity types
+nr typegen:routes         # Generate Next.js route types
 ```
 
 #### Studio App (apps/studio)
@@ -195,7 +210,17 @@ cd apps/studio
 nr dev                    # Sanity Studio development
 nr build                  # Build Sanity Studio
 nr deploy                 # Deploy studio to Sanity
-nr extract-types          # Extract schema types
+nr extract-types          # Extract schema types for typegen
+nr typecheck              # Type check with TypeScript
+```
+
+#### Email Package (packages/email)
+
+```bash
+cd packages/email
+nr dev:email              # React Email preview server (port 3001)
+nr build                  # Build email templates
+nr export                 # Export email templates
 ```
 
 ## 🏃‍♂️ Sports Groups & Departments
@@ -248,4 +273,5 @@ This project is private and proprietary to TSG Irlich 1882.
 
 ## 📞 Contact
 
-For questions about this project, please contact the development team or visit our [contact page](https://tsg-irlich.de/kontakt).
+For questions about this project, please contact the development team or visit our
+[contact page](https://www.tsg-irlich.de/kontakt).

@@ -20,8 +20,8 @@ contributing to this project.
 
 ### Prerequisites
 
-- **Node.js** >= 22.20
-- **bun** (package manager)
+- **Node.js** ^22.21.1
+- **bun** 1.3.4 (package manager)
 - **Git** for version control
 
 ### Development Setup
@@ -60,13 +60,17 @@ contributing to this project.
    For the Web app (`apps/web/.env.local`):
 
    ```bash
+   LINEAR_API_KEY=your_linear_api_key
+   LINEAR_TEAM_ID=your_linear_team_id
    NEXT_PUBLIC_SANITY_API_VERSION=2025-02-19
    NEXT_PUBLIC_SANITY_DATASET=production
    NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
    NEXT_PUBLIC_SANITY_STUDIO_URL=http://localhost:3333
    SANITY_API_READ_TOKEN=your_read_token
    SANITY_REVALIDATE_SECRET=your_revalidate_secret
+   RESEND_API_KEY=your_resend_api_key
    VERCEL_OIDC_TOKEN=your_vercel_token
+   VERCEL_URL=your_vercel_url
    ```
 
 5. **Start development servers**
@@ -112,7 +116,7 @@ interface MyComponentProps {
 ### React & Next.js Best Practices
 
 - **Server Components** by default - only use 'use client' when necessary
-- Use Next.js 15 App Router patterns
+- Use Next.js 16 App Router patterns
 - Implement responsive design with mobile-first Tailwind approach
 - Optimize images using `next/image`
 - Use error boundaries with `error.tsx` files
@@ -184,8 +188,11 @@ export const myDataQuery = defineQuery(groq`
 After making any changes to Sanity schemas, always run:
 
 ```bash
-bun run extract-types  # Extract from studio
-bun run typegen       # Generate types for web
+cd apps/studio && bun run extract-types   # Extract from studio
+cd apps/web && bun run typegen:sanity     # Generate types for web
+
+# Or from root:
+turbo extract-types && turbo typegen:sanity
 ```
 
 ## Commit Guidelines
@@ -217,6 +224,7 @@ This project uses **Conventional Commits** with Commitizen.
 
 - **web**: Changes to the web app (apps/web)
 - **studio**: Changes to Sanity Studio (apps/studio)
+- **email**: Changes to email templates (packages/email)
 - **shared**: Changes to shared packages
 - **deps**: Dependency updates
 
@@ -250,6 +258,7 @@ chore(deps): update all non-major dependencies
    ```bash
    bun run lint              # Run linting
    bun run lint:cspell       # Run spell check
+   bun run typecheck         # Run type checking
    bun run build             # Ensure build succeeds
    ```
 
@@ -275,6 +284,7 @@ chore(deps): update all non-major dependencies
 - [ ] Code follows project conventions
 - [ ] Commits follow conventional commit format
 - [ ] All linting checks pass
+- [ ] Type checking passes (`bun run typecheck`)
 - [ ] Build succeeds without errors
 - [ ] Types are generated if Sanity schemas changed
 - [ ] Documentation updated if needed
@@ -290,15 +300,16 @@ web/
 │   │   │   ├── app/      # App Router pages
 │   │   │   ├── components/
 │   │   │   ├── lib/      # Utilities and helpers
-│   │   │   └── styles/
+│   │   │   └── types/
 │   │   └── package.json
 │   └── studio/           # Sanity CMS
 │       ├── schemas/      # Content schemas
 │       └── package.json
 ├── packages/
+│   ├── email/            # React Email templates
 │   └── shared/           # Shared utilities
-├── turbo.json           # Turbo configuration
-└── package.json         # Root package.json
+├── turbo.json            # Turbo configuration
+└── package.json          # Root package.json
 ```
 
 ## Testing
@@ -337,7 +348,7 @@ bun run test
 2. Use `defineType()` and `defineField()`
 3. Add German titles/descriptions
 4. Include appropriate icon
-5. Run type generation: `bun run extract-types && bun run typegen`
+5. Run type generation: `turbo extract-types && turbo typegen:sanity`
 
 ### Updating Dependencies
 

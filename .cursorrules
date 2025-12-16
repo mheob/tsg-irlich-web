@@ -1,0 +1,142 @@
+# Cursor Rules for TSG Irlich Website
+
+## Project Context
+
+TSG Irlich website - a Next.js 16 monorepo with Sanity CMS for a German sports club. Built with Turbo, Bun, TypeScript, Tailwind CSS, and Shadcn UI.
+
+## Code Style & Conventions
+
+### File & Directory Naming
+
+- Use **kebab-case** for all file and directory names
+- Use `.tsx` for React components, `.ts` for utilities
+- Use `.module.css` for CSS modules (alongside Tailwind)
+
+### Code Naming
+
+- **camelCase** for variables, functions, methods
+- **PascalCase** for classes, types, interfaces, React components
+- **CONSTANT_CASE** for constants and enum values
+- Use descriptive names with auxiliary verbs (isLoading, hasError, canDelete)
+
+### React Components
+
+- Use **function declarations** (not const arrow functions) for React components
+- Prefer **named exports** over default exports
+- Place TypeScript interfaces at the **end of the file**
+- Follow **micro folder structure** - break components into small, focused parts
+- Minimize 'use client' usage - prefer server components by default
+
+**Example:**
+
+```tsx
+export function MyComponent({ title }: MyComponentProps) {
+  return <div>{title}</div>;
+}
+
+interface MyComponentProps {
+  title: string;
+}
+```
+
+## Architecture Rules
+
+### Next.js App Router
+
+- **Server Components** by default - only use 'use client' when necessary
+- Use Next.js 16 App Router patterns
+- Implement error boundaries with `error.tsx` files
+- Use type-safe server actions with `next-safe-action`
+- Use `react-hook-form` + `Zod` for form validation
+
+### Styling
+
+- Use **Tailwind CSS** with utility-first approach
+- Follow **Shadcn UI** component patterns with CVA (Class Variance Authority)
+- Components in `src/components/ui/` should follow Shadcn conventions
+- Mobile-first responsive design
+
+### Image Optimization
+
+- Always use `next/image` for images
+- Use WebP format when possible
+- Optimize Sanity image URLs
+
+## Sanity CMS Rules
+
+### Schema Development
+
+- Always use `defineField()` for every field and `defineType()` for types
+- Import `defineField`, `defineType`, `defineArrayMember` from 'sanity'
+- Include icons from `lucide-react` or `sanity/icons`
+- Use **German titles and descriptions** for content editors
+- Follow the established schema folder structure
+
+### GROQ Queries
+
+- Import `defineQuery` and `groq` from 'next-sanity'
+- Export queries as constants using `defineQuery`
+- **Do not expand images** in GROQ unless explicitly needed
+- Use reusable fragments with underscore prefix (`_richText`, `_buttons`)
+- Use camelCase naming with "Query" suffix
+
+### Type Generation
+
+After making schema changes, always run:
+
+```bash
+cd apps/studio && bun run extract-types
+cd apps/web && bun run typegen:sanity
+```
+
+## Development Workflow
+
+### Commands
+
+- Use `bun run dev` from root to start all apps
+- Use `turbo` commands for build orchestration
+- Run `bun run lint` before committing
+- Run `bun run typecheck` to verify types
+
+### Monorepo Structure
+
+- `apps/web`: Next.js frontend
+- `apps/studio`: Sanity Studio CMS
+- `packages/email`: React Email templates
+- `packages/shared`: Shared utilities and types
+
+### Dependencies
+
+- Node.js ^22.21.1 required
+- Bun 1.3.4 as package manager
+- Use workspace-aware commands
+
+## Code Quality
+
+### Before Committing
+
+- Run `bun run lint` (auto-fixes when possible)
+- Run `bun run typecheck`
+- Run `bun run lint:cspell` for spell checking
+- Ensure build succeeds: `bun run build`
+
+### Commit Messages
+
+- Use Conventional Commits format
+- Include scope: `feat(web):`, `fix(studio):`, etc.
+- Types: feat, fix, docs, style, refactor, perf, test, chore
+
+## Important Reminders
+
+1. **Server Components First**: Default to server components, only add 'use client' when needed
+2. **Type Safety**: Always generate types after Sanity schema changes
+3. **German Content**: Sanity schema titles/descriptions should be in German
+4. **No Image Expansion**: Don't expand images in GROQ queries unless necessary
+5. **Function Declarations**: Use `function Component()` not `const Component = ()`
+6. **Named Exports**: Prefer named exports over default exports
+7. **Interfaces at End**: Place TypeScript interfaces at the end of component files
+
+## Documentation
+
+- See `CLAUDE.md` for detailed project documentation
+- See `CONTRIBUTING.md` for contribution guidelines
