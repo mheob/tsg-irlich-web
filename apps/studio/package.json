@@ -19,17 +19,17 @@
 		"@sanity/icons": "^3.7.4",
 		"@sanity/locale-de-de": "^1.1.28",
 		"@sanity/ui": "^3.1.11",
-		"@sanity/vision": "^4.21.0",
+		"@sanity/vision": "^4.21.1",
 		"@tsgi-web/shared": "workspace:*",
 		"dotenv": "^17.2.3",
 		"react": "^19.2.3",
 		"react-dom": "^19.2.3",
 		"react-icons": "^5.5.0",
-		"sanity": "^4.21.0",
+		"sanity": "^4.21.1",
 		"sanity-plugin-media": "^4.1.0",
 		"slugify": "^1.6.6",
 		"styled-components": "^6.1.19",
-		"zod": "^4.2.0"
+		"zod": "^4.2.1"
 	},
 	"devDependencies": {
 		"@types/react": "^19.2.7",
