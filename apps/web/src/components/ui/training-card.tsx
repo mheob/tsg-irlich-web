@@ -3,11 +3,10 @@ import { cn } from '@tsgi-web/shared';
 import { Calendar, Clock, CloudSnow, LucideMessageCircleWarning, MapPin, Sun } from 'lucide-react';
 
 import type { TrainingTimeSection } from '@/types/sanity.types';
-import { printGoogleMapsLink } from '@/utils/url';
 
+import { GoToGoogleMaps } from '../section/go-to-google-maps';
 import { Button } from './button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
-import { ExternalLink } from './external-link';
 
 interface TrainingCardProps {
 	training: TrainingTimeSection;
@@ -88,11 +87,15 @@ export function TrainingCard({ training }: Readonly<TrainingCardProps>) {
 				)}
 
 				<CardDescription className="mt-6 text-sm">
-					<Button title="Google Maps wird in einem neuen Tab geöffnet" variant="secondary" asChild>
-						<ExternalLink href={printGoogleMapsLink(training.venue.location)}>
-							Route auf Google Maps berechnen
-						</ExternalLink>
-					</Button>
+					<GoToGoogleMaps address={training.venue.location}>
+						<Button
+							title="Google Maps wird in einem neuen Tab geöffnet"
+							variant="secondary"
+							asChild
+						>
+							<span>Route auf Google Maps berechnen</span>
+						</Button>
+					</GoToGoogleMaps>
 				</CardDescription>
 			</CardContent>
 		</Card>

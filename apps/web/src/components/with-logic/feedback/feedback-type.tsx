@@ -42,7 +42,8 @@ export function FeedbackTypeField({ form }: Readonly<FeedbackTypeFieldProps>) {
 							onValueChange={value => {
 								if (value) field.onChange(value);
 							}}
-							className="flex-col items-start justify-start sm:flex-row sm:items-center"
+							className="flex-col items-start justify-start sm:flex-row sm:items-center sm:gap-4"
+							defaultValue="question"
 							type="single"
 							value={field.value}
 						>
@@ -52,6 +53,7 @@ export function FeedbackTypeField({ form }: Readonly<FeedbackTypeFieldProps>) {
 									className="flex items-center gap-2 px-4"
 									key={type.value}
 									value={type.value}
+									variant="outline"
 								>
 									<type.icon className="size-4" />
 									{type.label}

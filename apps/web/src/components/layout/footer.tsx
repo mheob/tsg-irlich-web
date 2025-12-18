@@ -1,15 +1,15 @@
 import { TSGLogo } from '@tsgi-web/shared';
-import { ArrowUp, Mail } from 'lucide-react';
+import { ArrowUp, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
+import { GoToGoogleMaps } from '@/components/section/go-to-google-maps';
 import { client } from '@/lib/sanity/client';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { getSocialMediaIcon } from '@/utils/icon';
 import type { printGoogleMapsLink } from '@/utils/url';
 
-import { SocialMediaIcon } from '../../ui/social-media-icon';
-import { ContactLink } from '../../with-logic/contact-link';
-import { AddressPin } from './address-pin';
+import { SocialMediaIcon } from '../ui/social-media-icon';
+import { ContactLink } from '../with-logic/contact-link';
 
 const contact: {
 	address: Parameters<typeof printGoogleMapsLink>[number];
@@ -33,6 +33,8 @@ const currentYear = new Date().getFullYear();
 
 export default async function Footer() {
 	const socialMedia = await client.fetch(socialMediaQuery);
+
+	const simplifiedAddress = `${contact.address.street} ${contact.address.houseNumber}, ${contact.address.zipCode} ${contact.address.city}`;
 
 	return (
 		<footer className="bg-primary w-full text-white">
@@ -61,7 +63,16 @@ export default async function Footer() {
 
 					<div className="mt-16 flex justify-center gap-8 md:mt-0 md:block md:text-xl/relaxed">
 						<section className="flex flex-col items-center gap-12 sm:w-auto sm:flex-row sm:gap-48">
-							<AddressPin address={contact.address} />
+							<GoToGoogleMaps
+								address={contact.address}
+								aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
+								className="hover:text-secondary group flex cursor-pointer items-center gap-4 transition-colors sm:flex-col"
+							>
+								<span className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2">
+									<MapPin className="size-6 md:size-12" strokeWidth="1" />
+								</span>
+								<address>{simplifiedAddress}</address>
+							</GoToGoogleMaps>
 
 							<ContactLink
 								className="hover:text-secondary group flex items-center gap-4 transition-colors sm:flex-col"

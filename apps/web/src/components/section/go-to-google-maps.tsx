@@ -1,6 +1,6 @@
 'use client';
 
-import { MapPin } from 'lucide-react';
+import type { ComponentProps } from 'react';
 
 import { Button, buttonVariants } from '@/components/ui/button';
 import { ExternalLink } from '@/components/ui/external-link';
@@ -14,26 +14,16 @@ import {
 	DialogFooter,
 	DialogTitle,
 	DialogTrigger,
-} from '../../ui/dialog';
+} from '../ui/dialog';
 
-interface AddressPinProps {
+interface GoToGoogleMapsProps extends ComponentProps<typeof DialogTrigger> {
 	address: Parameters<typeof printGoogleMapsLink>[number];
 }
 
-export function AddressPin({ address }: Readonly<AddressPinProps>) {
-	const simplifiedAddress = `${address.street} ${address.houseNumber}, ${address.zipCode} ${address.city}`;
-
+export function GoToGoogleMaps({ address, children, ...props }: Readonly<GoToGoogleMapsProps>) {
 	return (
 		<Dialog>
-			<DialogTrigger
-				aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
-				className="hover:text-secondary group flex cursor-pointer items-center gap-4 transition-colors sm:flex-col"
-			>
-				<span className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2">
-					<MapPin className="size-6 md:size-12" strokeWidth="1" />
-				</span>
-				<address>{simplifiedAddress}</address>
-			</DialogTrigger>
+			<DialogTrigger {...props}>{children}</DialogTrigger>
 			<DialogContent>
 				<DialogTitle className="text-lg tracking-normal md:text-2xl">
 					Achtung: Du wechselst zu Google Maps
@@ -46,9 +36,11 @@ export function AddressPin({ address }: Readonly<AddressPinProps>) {
 					<DialogClose asChild>
 						<Button variant="ghost">Hier bleiben</Button>
 					</DialogClose>
-					<ExternalLink className={buttonVariants()} href={printGoogleMapsLink(address)}>
-						<span>Google Maps öffnen</span>
-					</ExternalLink>
+					<DialogClose asChild>
+						<ExternalLink className={buttonVariants()} href={printGoogleMapsLink(address)}>
+							<span>Google Maps öffnen</span>
+						</ExternalLink>
+					</DialogClose>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
