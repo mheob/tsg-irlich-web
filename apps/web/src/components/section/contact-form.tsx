@@ -90,7 +90,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 
 	return (
 		<section className="md:bg-background-low-contrast md:py-32">
-			<div className="container bg-white">
+			<div className="bg-background container">
 				<div className="py-10 md:flex md:flex-row-reverse md:rounded-lg md:py-24">
 					{submitResult?.success ? (
 						<div className="flex-1">

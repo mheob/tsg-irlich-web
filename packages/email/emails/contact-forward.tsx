@@ -39,7 +39,7 @@ export function ContactForwardEmail({
 			<Head />
 
 			<Tailwind config={tailwindConfig}>
-				<Body className="mx-auto my-auto bg-white px-2 font-sans">
+				<Body className="bg-background mx-auto my-auto px-2 font-sans">
 					<Preview>{`Von ${baseUrl} kommt eine Anfrage von ${contactName}.`}</Preview>
 
 					<Container className="border-border mx-auto my-10 max-w-2xl rounded border border-solid p-5">
