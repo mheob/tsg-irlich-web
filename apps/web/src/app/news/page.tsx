@@ -54,7 +54,7 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 					<LatestNewsPagination
 						articles={paginatedArticles ?? []}
 						currentPage={currentPage}
-						hasNextPage={totalArticles - START_INDEX > currentPage * ITEMS_PER_PAGE}
+						hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
 					/>
 				</section>
 			</section>

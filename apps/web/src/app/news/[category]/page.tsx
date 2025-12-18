@@ -122,7 +122,7 @@ export default async function NewsCategoryPage({
 				<LatestNewsPagination
 					articles={paginatedArticles ?? []}
 					currentPage={currentPage}
-					hasNextPage={totalArticles > currentPage * ITEMS_PER_PAGE}
+					hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
 				/>
 			</section>
 
