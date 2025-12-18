@@ -20,8 +20,8 @@ This is the main web application for the TSG Irlich website, featuring:
 
 ### Prerequisites
 
-- **Node.js** ^22.21.1
-- **bun** 1.3.4 (package manager)
+- **Node.js** ^24.12.0
+- **bun** 1.3.5 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation

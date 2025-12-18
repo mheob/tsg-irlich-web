@@ -76,7 +76,7 @@ bun run export                 # Export email templates
 - Built with **Turbo** for build orchestration and caching
 - **bun** as package manager with workspace support
 - Shared dependencies managed with explicit pinned versions
-- Node.js ^22.21.1 and Bun 1.3.4 required
+- Node.js ^24.12.0 and Bun 1.3.5 required
 
 ### Web App (Next.js)
 

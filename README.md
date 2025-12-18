@@ -42,7 +42,7 @@ This is a **monorepo** built with **Turbo** and **bun** containing:
 
 ### CMS (apps/studio)
 
-- **Sanity 4** headless CMS
+- **Sanity 5** headless CMS
 - **Sanity Studio** with custom configuration
 - **German localization** support
 - **Custom plugins** for enhanced functionality
@@ -113,8 +113,8 @@ tsg-web/
 
 ### Prerequisites
 
-- **Node.js** ^22.21.1
-- **bun** 1.3.4 package manager
+- **Node.js** ^24.12.0
+- **bun** 1.3.5 package manager
 - **Git** for version control
 - **@antfu/ni** for talking to the package manager
 
