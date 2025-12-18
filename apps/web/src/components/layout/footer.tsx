@@ -65,12 +65,11 @@ export default async function Footer() {
 						<section className="flex flex-col items-center gap-12 sm:w-auto sm:flex-row sm:gap-48">
 							<GoToGoogleMaps
 								address={contact.address}
-								aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
 								className="hover:text-secondary group flex cursor-pointer items-center gap-4 transition-colors sm:flex-col"
 							>
 								<span
+									aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
 									className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2"
-									aria-hidden
 								>
 									<MapPin className="size-6 md:size-12" strokeWidth="1" />
 								</span>
