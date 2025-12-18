@@ -68,7 +68,10 @@ export default async function Footer() {
 								aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
 								className="hover:text-secondary group flex cursor-pointer items-center gap-4 transition-colors sm:flex-col"
 							>
-								<span className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2">
+								<span
+									className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2"
+									aria-hidden
+								>
 									<MapPin className="size-6 md:size-12" strokeWidth="1" />
 								</span>
 								<address>{simplifiedAddress}</address>
