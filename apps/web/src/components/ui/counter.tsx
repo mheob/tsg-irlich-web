@@ -1,13 +1,18 @@
 import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithRef } from 'react';
 
-import { DEFAULT_LOCALE } from '@/constants/time';
 import type { Stats } from '@/types/sanity.types';
+
+import { NumberTicker } from '../with-logic/number-ticker';
 
 function CounterItem({ prefix = '', suffix = '', title, value }: Readonly<Stats>) {
 	return (
 		<div className="flex flex-col items-center gap-2 py-8 md:justify-center">
-			<div className="font-sans-serif text-3xl font-bold sm:text-4xl md:text-6xl xl:text-7xl">{`${prefix}${value.toLocaleString(DEFAULT_LOCALE)}${suffix}`}</div>
+			<div className="font-sans-serif text-3xl font-bold sm:text-4xl md:text-6xl xl:text-7xl">
+				{prefix}
+				<NumberTicker value={value} />
+				{suffix}
+			</div>
 			<h2 className="text-center text-lg md:text-xl xl:text-2xl">{title}</h2>
 		</div>
 	);
