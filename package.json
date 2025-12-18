@@ -20,7 +20,8 @@
 		"prepare": "husky",
 		"typecheck": "turbo typecheck",
 		"typegen:routes": "turbo typegen:routes",
-		"typegen:sanity": "turbo typegen:sanity"
+		"typegen:sanity": "turbo typegen:sanity",
+		"update": "taze"
 	},
 	"lint-staged": {
 		"*": [
