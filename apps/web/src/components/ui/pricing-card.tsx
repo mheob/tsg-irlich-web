@@ -31,7 +31,7 @@ export function PricingCard({
 		<article
 			className={cn(
 				'flex flex-col justify-between overflow-hidden rounded-xl shadow-lg lg:max-w-1/3',
-				'hover:bg-gray-light bg-white p-8 text-black',
+				'hover:bg-gray-light bg-background p-8 text-black',
 				'transition-all duration-300',
 				{ 'lg:-translate-y-16 lg:hover:-translate-y-8': isHighlighted },
 				{ 'lg:hover:-translate-y-8': !isHighlighted },

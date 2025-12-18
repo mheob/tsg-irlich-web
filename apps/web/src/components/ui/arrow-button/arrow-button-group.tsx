@@ -48,6 +48,7 @@ export function ArrowButtonGroup({
 				<>
 					<ArrowButton
 						aria-label="Zurück"
+						data-disabled={isDisabledPrevious}
 						direction="left"
 						disabled={isDisabledPrevious}
 						size={size}
@@ -55,6 +56,7 @@ export function ArrowButtonGroup({
 					/>
 					<ArrowButton
 						aria-label="Weiter"
+						data-disabled={isDisabledNext}
 						direction="right"
 						disabled={isDisabledNext}
 						size={size}
@@ -68,6 +70,7 @@ export function ArrowButtonGroup({
 						<ArrowElement
 							aria-disabled={isDisabledPrevious}
 							aria-label="Zurück"
+							data-disabled={isDisabledPrevious}
 							direction="left"
 							size={size}
 							variant="ghost"
@@ -76,6 +79,7 @@ export function ArrowButtonGroup({
 						<ArrowLink
 							aria-disabled={isDisabledPrevious}
 							aria-label="Zurück"
+							data-disabled={isDisabledPrevious}
 							direction="left"
 							href={hrefPrev}
 							scroll={scroll}
@@ -87,6 +91,7 @@ export function ArrowButtonGroup({
 						<ArrowElement
 							aria-disabled={isDisabledNext}
 							aria-label="Weiter"
+							data-disabled={isDisabledNext}
 							direction="right"
 							size={size}
 							variant="secondary"
@@ -95,6 +100,7 @@ export function ArrowButtonGroup({
 						<ArrowLink
 							aria-disabled={isDisabledNext}
 							aria-label="Weiter"
+							data-disabled={isDisabledNext}
 							direction="right"
 							href={hrefNext}
 							scroll={scroll}

@@ -2,7 +2,7 @@
 description: Create a Pull Request
 ---
 
-Create a Pull Request:
+Create a Pull Request to the `main` branch:
 
 - the title is written as conventional commit with a max length of 50 characters
 - the description is organized in "Summary", "Changes" and "Motivation"

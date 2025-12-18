@@ -13,7 +13,7 @@ export function Newsletter() {
 			<div
 				className={cn(
 					styles.bg,
-					'relative z-1 mx-auto max-w-(--breakpoint-lg) rounded-lg bg-white px-5 pt-10 pb-12 md:-mb-16 md:px-14 md:pt-24',
+					'bg-background relative z-1 mx-auto max-w-(--breakpoint-lg) rounded-lg px-5 pt-10 pb-12 md:-mb-16 md:px-14 md:pt-24',
 				)}
 			>
 				<SectionHeader
@@ -23,7 +23,7 @@ export function Newsletter() {
 				/>
 
 				<form
-					className="relative z-1 mt-16 flex max-w-(--breakpoint-sm) items-center justify-between gap-2 rounded-md bg-white px-2 pb-2 shadow-xl md:mx-auto md:gap-6 md:px-6"
+					className="bg-background relative z-1 mt-16 flex max-w-(--breakpoint-sm) items-center justify-between gap-2 rounded-md px-2 pb-2 shadow-xl md:mx-auto md:gap-6 md:px-6"
 					method="post"
 				>
 					<label

@@ -18,7 +18,7 @@ export function NewsArticlePreviewWide({
 	const authorImageSource = urlForImage(author.image, 56);
 
 	return (
-		<article className="group rounded-xl bg-white text-black md:grid md:grid-cols-[50%_50%]">
+		<article className="group bg-background rounded-xl text-black md:grid md:grid-cols-[50%_50%]">
 			{featuredImageSource && (
 				<Link
 					className="relative block aspect-[2.5/1] w-full overflow-hidden rounded-t-xl md:aspect-auto md:rounded-t-none md:rounded-l-xl"

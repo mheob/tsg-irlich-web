@@ -58,7 +58,7 @@ function ContactPersonItem({
 				</div>
 			)}
 
-			<div className="-mt-24 ml-8 flex h-full flex-col gap-4 rounded-xl bg-white text-black md:-mt-36 md:gap-12">
+			<div className="bg-background -mt-24 ml-8 flex h-full flex-col gap-4 rounded-xl text-black md:-mt-36 md:gap-12">
 				<header className="pt-6 pr-12 pl-28 md:pl-40">
 					<h3 className="font-serif text-2xl md:text-4xl">
 						{firstName} {lastName}

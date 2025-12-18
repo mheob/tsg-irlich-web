@@ -107,8 +107,8 @@ cd apps/web && bun run typegen:sanity
 
 ### Dependencies
 
-- Node.js ^22.21.1 required
-- Bun 1.3.4 as package manager
+- Node.js ^24.12.0 required
+- Bun 1.3.5 as package manager
 - Use workspace-aware commands
 
 ## Code Quality

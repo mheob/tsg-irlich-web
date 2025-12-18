@@ -7,7 +7,7 @@ create and manage sports groups, news articles, people, testimonials, and other 
 
 This Sanity Studio instance provides a custom content editing environment for the TSG Irlich website, featuring:
 
-- **Sanity Studio 4** - Modern content editing interface
+- **Sanity Studio 5** - Modern content editing interface
 - **Custom schemas** for sports groups, news, people, and more
 - **German language** interface for content editors
 - **Type-safe** schema definitions with TypeScript
@@ -18,8 +18,8 @@ This Sanity Studio instance provides a custom content editing environment for th
 
 ### Prerequisites
 
-- **Node.js** ^22.21.1
-- **bun** 1.3.4 (package manager)
+- **Node.js** ^24.12.0
+- **bun** 1.3.5 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation

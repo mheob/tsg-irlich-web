@@ -55,8 +55,8 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 
 	return (
 		<nav
-			className={cn('fixed inset-x-0 top-0 z-50 bg-white/70 transition-all duration-300', {
-				'bg-white': isMobileOpen,
+			className={cn('bg-background/70 fixed inset-x-0 top-0 z-50 transition-all duration-300', {
+				'bg-background': isMobileOpen,
 				'shadow-sm backdrop-blur-md': isScrolled,
 			})}
 		>

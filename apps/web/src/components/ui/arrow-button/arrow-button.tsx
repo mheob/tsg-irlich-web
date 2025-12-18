@@ -1,3 +1,4 @@
+import { cn } from '@tsgi-web/shared';
 import type { VariantProps } from 'class-variance-authority';
 import {
 	ArrowDown,
@@ -79,7 +80,13 @@ export function ArrowButton({
 
 export function ArrowElement({ className, direction, size, variant, ...props }: ArrowElementProps) {
 	return (
-		<div className={ArrowButtonVariants({ className, variant })} {...props}>
+		<div
+			className={cn(
+				ArrowButtonVariants({ className, variant }),
+				'data-[disabled=true]:hover:bg-secondary data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-70',
+			)}
+			{...props}
+		>
 			<Arrow className={size} direction={direction} />
 		</div>
 	);

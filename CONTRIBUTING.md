@@ -20,8 +20,8 @@ contributing to this project.
 
 ### Prerequisites
 
-- **Node.js** ^22.21.1
-- **bun** 1.3.4 (package manager)
+- **Node.js** ^24.12.0
+- **bun** 1.3.5 (package manager)
 - **Git** for version control
 
 ### Development Setup

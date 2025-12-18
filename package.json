@@ -20,7 +20,8 @@
 		"prepare": "husky",
 		"typecheck": "turbo typecheck",
 		"typegen:routes": "turbo typegen:routes",
-		"typegen:sanity": "turbo typegen:sanity"
+		"typegen:sanity": "turbo typegen:sanity",
+		"update": "taze"
 	},
 	"lint-staged": {
 		"*": [
@@ -43,7 +44,7 @@
 		"cz-git": "^1.12.0",
 		"eslint": "^9.39.2",
 		"eslint-plugin-react-hooks": "^7.0.1",
-		"eslint-plugin-react-refresh": "^0.4.25",
+		"eslint-plugin-react-refresh": "^0.4.26",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.2.7",
 		"prettier": "^3.7.4",
@@ -52,10 +53,10 @@
 		"turbo": "^2.6.3",
 		"typescript": "^5.9.3"
 	},
-	"packageManager": "bun@1.3.4",
+	"packageManager": "bun@1.3.5",
 	"engines": {
 		"bun": "1.3.4",
-		"node": "^22.21.1"
+		"node": "^24.12.0"
 	},
 	"overrides": {
 		"glob": "^10.5.0 || >=11.1.0",
