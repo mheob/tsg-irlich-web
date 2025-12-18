@@ -7,6 +7,13 @@ import { useEffect, useRef } from 'react';
 
 import { DEFAULT_LOCALE } from '@/constants/time';
 
+function formatNumber(value: number, decimalPlaces: number) {
+	return Intl.NumberFormat(DEFAULT_LOCALE, {
+		maximumFractionDigits: decimalPlaces,
+		minimumFractionDigits: decimalPlaces,
+	}).format(Number(value.toFixed(decimalPlaces)));
+}
+
 interface NumberTickerProps extends ComponentPropsWithoutRef<'span'> {
 	decimalPlaces?: number;
 	delay?: number;
@@ -41,26 +48,18 @@ export function NumberTicker({
 		}
 	}, [motionValue, isInView, delay, value, direction, startValue]);
 
-	useEffect(
-		() =>
-			springValue.on('change', latest => {
-				if (reference.current) {
-					reference.current.textContent = Intl.NumberFormat(DEFAULT_LOCALE, {
-						maximumFractionDigits: decimalPlaces,
-						minimumFractionDigits: decimalPlaces,
-					}).format(Number(latest.toFixed(decimalPlaces)));
-				}
-			}),
-		[springValue, decimalPlaces],
-	);
+	useEffect(() => {
+		const unsubscribe = springValue.on('change', latest => {
+			if (reference.current) {
+				reference.current.textContent = formatNumber(latest, decimalPlaces);
+			}
+		});
+		return unsubscribe;
+	}, [springValue, decimalPlaces]);
 
 	return (
-		<span
-			className={cn('inline-block text-black tabular-nums', className)}
-			ref={reference}
-			{...props}
-		>
-			{startValue}
+		<span className={cn('inline-block tabular-nums', className)} ref={reference} {...props}>
+			{formatNumber(direction === 'down' ? value : startValue, decimalPlaces)}
 		</span>
 	);
 }
