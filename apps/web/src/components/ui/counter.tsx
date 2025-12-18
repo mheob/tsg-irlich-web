@@ -9,9 +9,9 @@ function CounterItem({ prefix = '', suffix = '', title, value }: Readonly<Stats>
 	return (
 		<div className="flex flex-col items-center gap-2 py-8 md:justify-center">
 			<div className="font-sans-serif text-3xl font-bold sm:text-4xl md:text-6xl xl:text-7xl">
-				{prefix}
+				{prefix && <span>{prefix}</span>}
 				<NumberTicker value={value} />
-				{suffix}
+				{suffix && <span>{suffix}</span>}
 			</div>
 			<h2 className="text-center text-lg md:text-xl xl:text-2xl">{title}</h2>
 		</div>
