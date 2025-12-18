@@ -83,7 +83,7 @@ export function ArrowElement({ className, direction, size, variant, ...props }: 
 		<div
 			className={cn(
 				ArrowButtonVariants({ className, variant }),
-				'hover:bg-secondary cursor-not-allowed data-[disabled=true]:opacity-70',
+				'data-[disabled=true]:hover:bg-secondary data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-70',
 			)}
 			{...props}
 		>
