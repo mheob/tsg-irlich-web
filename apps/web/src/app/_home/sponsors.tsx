@@ -19,16 +19,19 @@ export function Sponsors({ className, sponsors, ...props }: Readonly<SponsorsPro
 					'xl:grid-cols-4',
 				)}
 			>
-				{sponsors.map(sponsor => (
-					<Image
-						alt={sponsor.name}
-						className="rounded-xl"
-						height={120}
-						key={sponsor._id}
-						src={urlForImage(sponsor.logo, 120, 420) ?? ''}
-						width={420}
-					/>
-				))}
+				{sponsors
+					.filter(sponsor => sponsor.logo?.asset?._ref)
+					.map(sponsor => (
+						<Image
+							alt={sponsor.name}
+							className="rounded-xl"
+							height={120}
+							key={sponsor._id}
+							// eslint-disable-next-line ts/no-non-null-assertion
+							src={urlForImage(sponsor.logo, 120, 420)!}
+							width={420}
+						/>
+					))}
 			</div>
 		</section>
 	);
