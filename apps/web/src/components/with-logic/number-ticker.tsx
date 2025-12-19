@@ -11,7 +11,7 @@ function formatNumber(value: number, decimalPlaces: number) {
 	return Intl.NumberFormat(DEFAULT_LOCALE, {
 		maximumFractionDigits: decimalPlaces,
 		minimumFractionDigits: decimalPlaces,
-	}).format(Number(value.toFixed(decimalPlaces)));
+	}).format(value);
 }
 
 interface NumberTickerProps extends ComponentPropsWithoutRef<'span'> {
@@ -58,7 +58,13 @@ export function NumberTicker({
 	}, [springValue, decimalPlaces]);
 
 	return (
-		<span className={cn('inline-block tabular-nums', className)} ref={reference} {...props}>
+		<span
+			aria-atomic="true"
+			aria-live="polite"
+			className={cn('inline-block tabular-nums', className)}
+			ref={reference}
+			{...props}
+		>
 			{formatNumber(direction === 'down' ? value : startValue, decimalPlaces)}
 		</span>
 	);
