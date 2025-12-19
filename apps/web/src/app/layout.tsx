@@ -35,9 +35,12 @@ const inter = Inter({
 
 const NAVIGATION_REVALIDATE_SECONDS = 60 * 60 * 12; /* 12 hours */
 
-const baseUrl = process.env.VERCEL_URL
-	? `https://${process.env.VERCEL_URL}`
-	: 'http://localhost:3000';
+let baseUrl = 'http://localhost:3000';
+if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+	baseUrl = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+} else if (process.env.NODE_ENV === 'production') {
+	baseUrl = 'https://next.tsg-irlich.de';
+}
 
 export const metadata: Metadata = {
 	/* eslint-disable perfectionist/sort-objects */

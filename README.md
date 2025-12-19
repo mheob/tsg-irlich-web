@@ -164,7 +164,7 @@ tsg-web/
    LINEAR_API_KEY=your_linear_api_key
    LINEAR_TEAM_ID=your_linear_team_id
    VERCEL_OIDC_TOKEN=your_vercel_token
-   VERCEL_URL=your_vercel_url
+   VERCEL_PROJECT_PRODUCTION_URL=your_vercel_project_production_url
    ```
 
 5. **Start development servers**

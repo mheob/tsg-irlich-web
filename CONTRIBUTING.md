@@ -70,7 +70,7 @@ contributing to this project.
    SANITY_REVALIDATE_SECRET=your_revalidate_secret
    RESEND_API_KEY=your_resend_api_key
    VERCEL_OIDC_TOKEN=your_vercel_token
-   VERCEL_URL=your_vercel_url
+   VERCEL_PROJECT_PRODUCTION_URL=your_VERCEL_PROJECT_PRODUCTION_URL
    ```
 
 5. **Start development servers**
