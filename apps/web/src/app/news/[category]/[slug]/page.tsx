@@ -11,11 +11,13 @@ import {
 	newsArticleHeroQuery,
 } from '@/lib/sanity/queries/pages/news-article';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
+import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import { urlForImage } from '@/lib/sanity/utils';
 
 import { Author } from './_sections/author';
 import { Categories } from './_sections/categories';
 import { SocialMedia } from './_sections/social-media';
+import { Sponsors } from './_sections/sponsors';
 
 export async function generateMetadata({
 	params,
@@ -51,10 +53,11 @@ export default async function NewsArticlePage({
 }: Readonly<PageProps<'/news/[category]/[slug]'>>) {
 	const { slug } = await params;
 
-	const [hero, article, socialMedia] = await Promise.all([
+	const [hero, article, socialMedia, sponsors] = await Promise.all([
 		client.fetch(newsArticleHeroQuery),
 		client.fetch(newsArticleContentQuery, { slug }),
 		client.fetch(socialMediaQuery),
+		client.fetch(sponsorsQuery),
 	]);
 
 	if (!article || !hero) {
@@ -168,6 +171,7 @@ export default async function NewsArticlePage({
 					<Author article={article} />
 					<Categories article={article} />
 					<SocialMedia socialMedia={socialMedia} />
+					<Sponsors sponsors={sponsors} />
 				</aside>
 			</div>
 		</>

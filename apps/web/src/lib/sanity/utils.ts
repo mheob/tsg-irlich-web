@@ -1,7 +1,7 @@
 import { createImageUrlBuilder } from '@sanity/image-url';
 import type { Image } from 'sanity';
 
-import type { MainImage, SanityFileAsset } from '@/types/sanity.types';
+import type { SanityFileAsset, SanityImage, SanityImageReference } from '@/types/sanity.types';
 
 import { client } from './client';
 
@@ -68,7 +68,7 @@ const imageBuilder = createImageUrlBuilder(client);
  * ```
  */
 export const urlForImage = (
-	image: null | Omit<MainImage, '_type'> | undefined,
+	image: null | SanityImage | SanityImageReference | undefined,
 	height?: number,
 	width?: number,
 ): string | undefined => {

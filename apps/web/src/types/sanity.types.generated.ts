@@ -2559,6 +2559,22 @@ export type NewsCategoryQueryResult = {
 // Query: *[_type == 'site-settings'][0].socialFields
 export type SocialMediaQueryResult = SocialFields | null;
 
+// Source: src/lib/sanity/queries/shared/sponsors.ts
+// Variable: sponsorsQuery
+// Query: *[_type== 'sponsors'][] {		_id,		name,		logo,		website,	} | order(name asc)
+export type SponsorsQueryResult = Array<{
+	_id: string;
+	name: string;
+	logo: {
+		asset?: SanityImageAssetReference;
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		_type: 'image';
+	} | null;
+	website: string | null;
+}>;
+
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
@@ -2590,5 +2606,6 @@ declare module '@sanity/client' {
 		'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
 		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle\n\t}\n': NewsCategoryQueryResult;
 		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
+		"\n\t*[_type== 'sponsors'][] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t\twebsite,\n\t} | order(name asc)\n": SponsorsQueryResult;
 	}
 }
