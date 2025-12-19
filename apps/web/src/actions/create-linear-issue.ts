@@ -11,10 +11,14 @@ export const createLinearIssue = actionClient
 	.inputSchema(feedbackFormSchema)
 	.action(async ({ parsedInput: data }) => {
 		const apiKey = process.env.LINEAR_API_KEY;
+		const assigneeId = process.env.LINEAR_ASSIGNEE_ID;
+		const labelId = process.env.LINEAR_LABEL_ID;
 		const teamId = process.env.LINEAR_TEAM_ID;
 
-		if (!apiKey || !teamId) {
-			console.error('Missing LINEAR_API_KEY or LINEAR_TEAM_ID');
+		if (!apiKey || !assigneeId || !labelId || !teamId) {
+			console.error(
+				'Missing LINEAR_API_KEY or LINEAR_ASSIGNEE_ID or LINEAR_LABEL_ID or LINEAR_TEAM_ID',
+			);
 			throw new Error('Server configuration error');
 		}
 
@@ -65,7 +69,9 @@ export const createLinearIssue = actionClient
 				query: mutation,
 				variables: {
 					input: {
+						assigneeId,
 						description,
+						labelIds: [labelId],
 						teamId,
 						title: `[${data.type.toUpperCase()}] ${data.title}`,
 					},
