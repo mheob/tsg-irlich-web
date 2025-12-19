@@ -67,7 +67,7 @@ export default async function HomePage() {
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<ContactForm />
 			<News {...page.content.newsSection} articles={newsArticles} />
-			<Sponsors sponsors={sponsors} />
+			{sponsors && sponsors.length > 0 && <Sponsors sponsors={sponsors} />}
 			<Newsletter />
 		</>
 	);

@@ -22,9 +22,10 @@ export function Sponsors({ className, sponsors, ...props }: Readonly<SponsorsPro
 				{sponsors.map(sponsor => (
 					<Image
 						alt={sponsor.name}
-						height={100}
+						className="rounded-xl"
+						height={120}
 						key={sponsor._id}
-						src={urlForImage(sponsor.logo, 100, 420) ?? ''}
+						src={urlForImage(sponsor.logo, 120, 420) ?? ''}
 						width={420}
 					/>
 				))}

@@ -171,7 +171,7 @@ export default async function NewsArticlePage({
 					<Author article={article} />
 					<Categories article={article} />
 					<SocialMedia socialMedia={socialMedia} />
-					<Sponsors sponsors={sponsors} />
+					{sponsors && sponsors.length > 0 && <Sponsors sponsors={sponsors} />}
 				</aside>
 			</div>
 		</>

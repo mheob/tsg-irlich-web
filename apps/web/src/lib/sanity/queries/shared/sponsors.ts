@@ -6,7 +6,7 @@ import { defineQuery } from 'next-sanity';
  * @returns All sponsors
  */
 export const sponsorsQuery = defineQuery(`
-	*[_type== 'sponsors'][] {
+	*[_type == 'sponsors'][] {
 		_id,
 		name,
 		logo,

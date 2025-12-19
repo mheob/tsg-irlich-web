@@ -1,7 +1,7 @@
 import { RiHeart2Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-const testimonial = defineType({
+const sponsors = defineType({
 	title: 'Sponsoren',
 	name: 'sponsors',
 	type: 'document',
@@ -23,6 +23,10 @@ const testimonial = defineType({
 			name: 'website',
 			type: 'url',
 			description: 'Die Website des Sponsors.',
+			validation: Rule => [
+				Rule.required().error('Die Website ist erforderlich'),
+				Rule.uri({ scheme: ['http', 'https'] }).error('Die Website muss eine gültige URL sein'),
+			],
 		}),
 
 		defineField({
@@ -30,8 +34,9 @@ const testimonial = defineType({
 			name: 'logo',
 			type: 'image',
 			description: 'Das Logo des Sponsors.',
+			validation: Rule => [Rule.required().error('Das Logo ist erforderlich')],
 		}),
 	],
 });
 
-export default testimonial;
+export default sponsors;
