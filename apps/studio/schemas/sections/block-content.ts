@@ -17,6 +17,41 @@ const blockContent = defineField({
 					title: 'Block',
 					type: 'block',
 					marks: {
+						annotations: [
+							{
+								name: 'internalLink',
+								type: 'object',
+								title: 'Interner Link',
+								fields: [
+									{
+										name: 'reference',
+										type: 'reference',
+										title: 'Referenz',
+										to: [
+											{ type: 'home' },
+											{ type: 'aboutUs' },
+											{ type: 'contact' },
+											{ type: 'group.admin' },
+											{ type: 'group.children-gymnastics' },
+											{ type: 'group.courses' },
+											{ type: 'group.dance' },
+											{ type: 'group.other-sports' },
+											{ type: 'group.soccer' },
+											{ type: 'group.taekwondo' },
+											{ type: 'membership' },
+											{ type: 'news.article' },
+											{ type: 'newsOverview' },
+										],
+									},
+								],
+							},
+							{
+								name: 'externalLink',
+								type: 'object',
+								title: 'Externer Link',
+								fields: [{ name: 'url', type: 'url' }],
+							},
+						],
 						decorators: [
 							{ title: 'Strong', value: 'strong' },
 							{ title: 'Italic', value: 'em' },

@@ -4,8 +4,7 @@ export const excerptField = defineField({
 	title: 'Vorschautext',
 	name: 'excerpt',
 	type: 'text',
-	description:
-		'Kurze Beschreibung, die auf den Übersichtsseiten angezeigt wird und wenn Leute deinen Beitrag auf sozialen Medien teilen.',
+	description: 'Kurze Beschreibung, die auf den Übersichtsseiten angezeigt wird.',
 	group: 'excerpt',
 	validation: Rule => [Rule.required().error('Der Vorschautext ist erforderlich')],
 });

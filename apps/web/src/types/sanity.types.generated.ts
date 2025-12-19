@@ -12,7 +12,25 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: schema.json
+// Source: ../studio/schema.json
+export type PersonReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'person';
+};
+
+export type ContactPersonsSection = {
+	title: string;
+	subtitle: string;
+	intro?: string;
+	contactPersons: Array<
+		{
+			_key: string;
+		} & PersonReference
+	>;
+};
+
 export type SingleGroupPage = {
 	_id: string;
 	_type: 'singleGroupPage';
@@ -44,18 +62,7 @@ export type NewsOverviewCategory = {
 	subtitle: string;
 	meta?: MetaFields;
 	content: {
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
-		};
+		contactPersonsSection: ContactPersonsSection;
 	};
 };
 
@@ -102,14 +109,16 @@ export type Spacer = {
 	variant?: 'default';
 };
 
+export type SanityImageAssetReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+};
+
 export type MainImage = {
 	_type: 'mainImage';
-	asset?: {
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
-		[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-	};
+	asset?: SanityImageAssetReference;
 	media?: unknown;
 	hotspot?: SanityImageHotspot;
 	crop?: SanityImageCrop;
@@ -137,6 +146,97 @@ export type Blockquote = {
 	author?: string;
 };
 
+export type HomeReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'home';
+};
+
+export type AboutUsReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'aboutUs';
+};
+
+export type ContactReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'contact';
+};
+
+export type GroupAdminReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'group.admin';
+};
+
+export type GroupChildrenGymnasticsReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'group.children-gymnastics';
+};
+
+export type GroupCoursesReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'group.courses';
+};
+
+export type GroupDanceReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'group.dance';
+};
+
+export type GroupOtherSportsReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'group.other-sports';
+};
+
+export type GroupSoccerReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'group.soccer';
+};
+
+export type GroupTaekwondoReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'group.taekwondo';
+};
+
+export type MembershipReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'membership';
+};
+
+export type NewsArticleReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'news.article';
+};
+
+export type NewsOverviewReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'newsOverview';
+};
+
 export type BlockContent = {
 	_type: 'blockContent';
 	text?: Array<{
@@ -148,15 +248,42 @@ export type BlockContent = {
 		}>;
 		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
 		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}>;
+		markDefs?: Array<
+			| {
+					reference?:
+						| HomeReference
+						| AboutUsReference
+						| ContactReference
+						| GroupAdminReference
+						| GroupChildrenGymnasticsReference
+						| GroupCoursesReference
+						| GroupDanceReference
+						| GroupOtherSportsReference
+						| GroupSoccerReference
+						| GroupTaekwondoReference
+						| MembershipReference
+						| NewsArticleReference
+						| NewsOverviewReference;
+					_type: 'internalLink';
+					_key: string;
+			  }
+			| {
+					url?: string;
+					_type: 'externalLink';
+					_key: string;
+			  }
+		>;
 		level?: number;
 		_type: 'block';
 		_key: string;
 	}>;
+};
+
+export type VenueReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'venue';
 };
 
 export type TrainingTime = {
@@ -165,12 +292,7 @@ export type TrainingTime = {
 	weekday: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 	startTime: string;
 	endTime: string;
-	venue: {
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
-		[internalGroqTypeReferenceTo]?: 'venue';
-	};
+	venue: VenueReference;
 	note?: string;
 };
 
@@ -217,12 +339,7 @@ export type MetaFields = {
 	metaTitle?: string;
 	metaDescription?: string;
 	openGraphImage?: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
+		asset?: SanityImageAssetReference;
 		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
@@ -231,64 +348,40 @@ export type MetaFields = {
 	};
 };
 
+export type DepartmentsPageReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'departmentsPage';
+};
+
+export type PrivacyReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'privacy';
+};
+
+export type ImprintReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'imprint';
+};
+
 export type InternalLink = {
 	_type: 'internalLink';
 	title: string;
 	link?:
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'news.article';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'home';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'aboutUs';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'contact';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'departmentsPage';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'membership';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'newsOverview';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'privacy';
-		  }
-		| {
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				[internalGroqTypeReferenceTo]?: 'imprint';
-		  };
+		| NewsArticleReference
+		| HomeReference
+		| AboutUsReference
+		| ContactReference
+		| DepartmentsPageReference
+		| MembershipReference
+		| NewsOverviewReference
+		| PrivacyReference
+		| ImprintReference;
 };
 
 export type Imprint = {
@@ -339,67 +432,6 @@ export type Privacy = {
 	content: BlockContent;
 };
 
-export type NewsOverview = {
-	_id: string;
-	_type: 'newsOverview';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
-		};
-	};
-};
-
-export type Membership = {
-	_id: string;
-	_type: 'membership';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	intro: BlockContent;
-	downloadsSection: {
-		title: string;
-		subtitle: string;
-		intro?: string;
-		downloads: Array<
-			{
-				_key: string;
-			} & DocumentDownload
-		>;
-	};
-	contactPersonsSection: {
-		title: string;
-		subtitle: string;
-		intro?: string;
-		contactPersons: Array<{
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			_key: string;
-			[internalGroqTypeReferenceTo]?: 'person';
-		}>;
-	};
-};
-
 export type DepartmentsPage = {
 	_id: string;
 	_type: 'departmentsPage';
@@ -421,210 +453,7 @@ export type DepartmentsPage = {
 				_key: string;
 			} & Stats
 		>;
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
-		};
-	};
-};
-
-export type Contact = {
-	_id: string;
-	_type: 'contact';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		receiver: Array<
-			{
-				_key: string;
-			} & ContactNameMail
-		>;
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
-		};
-	};
-};
-
-export type AboutUs = {
-	_id: string;
-	_type: 'aboutUs';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		introSection?: {
-			title: string;
-			subtitle: string;
-			intro: BlockContent;
-			images: Array<
-				{
-					_key: string;
-				} & ExtendedImage
-			>;
-		};
-		chronicleSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			chronicleCategories: Array<
-				{
-					_key: string;
-				} & ImageCard
-			>;
-		};
-		visionSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			ctaLongVision: string;
-			longVisionTitle: string;
-			longVision: BlockContent;
-		};
-		stats: Array<
-			{
-				_key: string;
-			} & Stats
-		>;
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
-		};
-	};
-};
-
-export type Home = {
-	_id: string;
-	_type: 'home';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	intro?: string;
-	meta?: MetaFields;
-	content: {
-		featureSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			features?: Array<{
-				title: string;
-				intro: string;
-				icon: string;
-				_type: 'feature';
-				_key: string;
-			}>;
-		};
-		visionSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			cta: string;
-		};
-		groupsSection: {
-			title: string;
-			subtitle: string;
-		};
-		stats: Array<
-			{
-				_key: string;
-			} & Stats
-		>;
-		pricingSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			pricingYouth: {
-				title: string;
-				subtitle: string;
-				intro?: string;
-				price: number;
-				benefitsTitle: string;
-				benefits: Array<string>;
-				cta: string;
-			};
-			pricingFamily: {
-				title: string;
-				subtitle: string;
-				intro?: string;
-				price: number;
-				benefitsTitle: string;
-				benefits: Array<string>;
-				cta: string;
-			};
-			pricingAdult: {
-				title: string;
-				subtitle: string;
-				intro?: string;
-				price: number;
-				benefitsTitle: string;
-				benefits: Array<string>;
-				cta: string;
-			};
-		};
-		testimonialSection: {
-			title: string;
-			subtitle: string;
-			testimonials?: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'testimonial';
-			}>;
-		};
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'person';
-			}>;
-		};
-		newsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
+		contactPersonsSection: ContactPersonsSection;
 	};
 };
 
@@ -636,14 +465,15 @@ export type ImageCard = {
 	image: ExtendedImage;
 };
 
+export type ExternalLink = {
+	_type: 'externalLink';
+	title: string;
+	url: string;
+};
+
 export type ExtendedImage = {
 	_type: 'extendedImage';
-	asset?: {
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
-		[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-	};
+	asset?: SanityImageAssetReference;
 	media?: unknown;
 	hotspot?: SanityImageHotspot;
 	crop?: SanityImageCrop;
@@ -651,22 +481,18 @@ export type ExtendedImage = {
 	description?: string;
 };
 
-export type ExternalLink = {
-	_type: 'externalLink';
-	title: string;
-	url: string;
+export type SanityFileAssetReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'sanity.fileAsset';
 };
 
 export type DocumentDownload = {
 	_type: 'documentDownload';
 	title: string;
 	document: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.fileAsset';
-		};
+		asset?: SanityFileAssetReference;
 		media?: unknown;
 		_type: 'file';
 	};
@@ -728,12 +554,7 @@ export type Venue = {
 	description: SimpleBlockContent;
 	type: 'hall-1' | 'hall-2' | 'hall-3' | 'cinder' | 'hybrid' | 'artificial-turf' | 'grass';
 	mainImage?: {
-		asset?: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-		};
+		asset?: SanityImageAssetReference;
 		media?: unknown;
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
@@ -779,6 +600,23 @@ export type Testimonial = {
 	quote: string;
 };
 
+export type Sponsors = {
+	_id: string;
+	_type: 'sponsors';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	name: string;
+	website?: string;
+	logo?: {
+		asset?: SanityImageAssetReference;
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		_type: 'image';
+	};
+};
+
 export type HonoraryMember = {
 	_id: string;
 	_type: 'honoraryMember';
@@ -789,6 +627,13 @@ export type HonoraryMember = {
 	lastName: string;
 	image: ExtendedImage;
 	memberSince: string;
+};
+
+export type RoleReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'role';
 };
 
 export type Person = {
@@ -812,54 +657,14 @@ export type Person = {
 			| 'soccer'
 			| 'taekwondo';
 		team:
-			| {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'group.admin';
-			  }
-			| {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'group.children-gymnastics';
-			  }
-			| {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'group.courses';
-			  }
-			| {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'group.dance';
-			  }
-			| {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'group.other-sports';
-			  }
-			| {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'group.soccer';
-			  }
-			| {
-					_ref: string;
-					_type: 'reference';
-					_weak?: boolean;
-					[internalGroqTypeReferenceTo]?: 'group.taekwondo';
-			  };
-		role: {
-			_ref: string;
-			_type: 'reference';
-			_weak?: boolean;
-			[internalGroqTypeReferenceTo]?: 'role';
-		};
+			| GroupAdminReference
+			| GroupChildrenGymnasticsReference
+			| GroupCoursesReference
+			| GroupDanceReference
+			| GroupOtherSportsReference
+			| GroupSoccerReference
+			| GroupTaekwondoReference;
+		role: RoleReference;
 		taskDescription: string;
 		sortOrder?: number;
 		_type: 'affiliation';
@@ -875,6 +680,163 @@ export type Role = {
 	_rev: string;
 	title: string;
 	email?: string;
+};
+
+export type NewsCategory = {
+	_id: string;
+	_type: 'news.category';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	slug: Slug;
+};
+
+export type NewsCategoryReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'news.category';
+};
+
+export type AuthorReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'author';
+};
+
+export type NewsArticle = {
+	_id: string;
+	_type: 'news.article';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	publishedAt: string;
+	title: string;
+	slug: Slug;
+	categories: Array<
+		{
+			_key: string;
+		} & NewsCategoryReference
+	>;
+	author: AuthorReference;
+	meta?: MetaFields;
+	featuredImage: MainImage;
+	excerpt: string;
+	body?: Array<
+		| ({
+				_key: string;
+		  } & BlockContent)
+		| ({
+				_key: string;
+		  } & Blockquote)
+		| ({
+				_key: string;
+		  } & Grid)
+		| ({
+				_key: string;
+		  } & MainImage)
+		| ({
+				_key: string;
+		  } & Spacer)
+	>;
+};
+
+export type AboutUs = {
+	_id: string;
+	_type: 'aboutUs';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: {
+		introSection?: {
+			title: string;
+			subtitle: string;
+			intro: BlockContent;
+			images: Array<
+				{
+					_key: string;
+				} & ExtendedImage
+			>;
+		};
+		chronicleSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			chronicleCategories: Array<
+				{
+					_key: string;
+				} & ImageCard
+			>;
+		};
+		visionSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			ctaLongVision: string;
+			longVisionTitle: string;
+			longVision: BlockContent;
+		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
+		contactPersonsSection: ContactPersonsSection;
+	};
+};
+
+export type Membership = {
+	_id: string;
+	_type: 'membership';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	intro: BlockContent;
+	downloadsSection: {
+		title: string;
+		subtitle: string;
+		intro?: string;
+		downloads: Array<
+			{
+				_key: string;
+			} & DocumentDownload
+		>;
+	};
+	contactPersonsSection: {
+		title: string;
+		subtitle: string;
+		intro?: string;
+		contactPersons: Array<
+			{
+				_key: string;
+			} & PersonReference
+		>;
+	};
+};
+
+export type NewsOverview = {
+	_id: string;
+	_type: 'newsOverview';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: {
+		contactPersonsSection: ContactPersonsSection;
+	};
 };
 
 export type GroupTaekwondo = {
@@ -1206,58 +1168,120 @@ export type GroupAdmin = {
 	isSportGroup: boolean;
 };
 
-export type NewsCategory = {
+export type Contact = {
 	_id: string;
-	_type: 'news.category';
+	_type: 'contact';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
+	slug?: Slug;
 	title: string;
-	slug: Slug;
+	subtitle: string;
+	meta?: MetaFields;
+	content: {
+		receiver: Array<
+			{
+				_key: string;
+			} & ContactNameMail
+		>;
+		contactPersonsSection: ContactPersonsSection;
+	};
 };
 
-export type NewsArticle = {
+export type TestimonialReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'testimonial';
+};
+
+export type Home = {
 	_id: string;
-	_type: 'news.article';
+	_type: 'home';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
-	publishedAt: string;
+	slug?: Slug;
 	title: string;
-	slug: Slug;
-	categories: Array<{
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
-		_key: string;
-		[internalGroqTypeReferenceTo]?: 'news.category';
-	}>;
-	author: {
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
-		[internalGroqTypeReferenceTo]?: 'author';
-	};
+	subtitle: string;
+	intro?: string;
 	meta?: MetaFields;
-	featuredImage: MainImage;
-	excerpt: string;
-	body?: Array<
-		| ({
+	content: {
+		featureSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			features?: Array<{
+				title: string;
+				intro: string;
+				icon: string;
+				_type: 'feature';
 				_key: string;
-		  } & BlockContent)
-		| ({
+			}>;
+		};
+		visionSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			cta: string;
+		};
+		groupsSection: {
+			title: string;
+			subtitle: string;
+		};
+		stats: Array<
+			{
 				_key: string;
-		  } & Blockquote)
-		| ({
-				_key: string;
-		  } & Grid)
-		| ({
-				_key: string;
-		  } & MainImage)
-		| ({
-				_key: string;
-		  } & Spacer)
-	>;
+			} & Stats
+		>;
+		pricingSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+			pricingYouth: {
+				title: string;
+				subtitle: string;
+				intro?: string;
+				price: number;
+				benefitsTitle: string;
+				benefits: Array<string>;
+				cta: string;
+			};
+			pricingFamily: {
+				title: string;
+				subtitle: string;
+				intro?: string;
+				price: number;
+				benefitsTitle: string;
+				benefits: Array<string>;
+				cta: string;
+			};
+			pricingAdult: {
+				title: string;
+				subtitle: string;
+				intro?: string;
+				price: number;
+				benefitsTitle: string;
+				benefits: Array<string>;
+				cta: string;
+			};
+		};
+		testimonialSection: {
+			title: string;
+			subtitle: string;
+			testimonials?: Array<
+				{
+					_key: string;
+				} & TestimonialReference
+			>;
+		};
+		contactPersonsSection: ContactPersonsSection;
+		newsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+	};
 };
 
 export type Author = {
@@ -1311,14 +1335,16 @@ export type SanityAssistOutputField = {
 	path?: string;
 };
 
+export type AssistInstructionContextReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'assist.instruction.context';
+};
+
 export type SanityAssistInstructionContext = {
 	_type: 'sanity.assist.instruction.context';
-	reference: {
-		_ref: string;
-		_type: 'reference';
-		_weak?: boolean;
-		[internalGroqTypeReferenceTo]?: 'assist.instruction.context';
-	};
+	reference: AssistInstructionContextReference;
 };
 
 export type AssistInstructionContext = {
@@ -1514,33 +1540,49 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+	| PersonReference
+	| ContactPersonsSection
 	| SingleGroupPage
 	| NewsOverviewCategory
 	| NewsArticlePage
 	| GroupsPage
 	| Spacer
+	| SanityImageAssetReference
 	| MainImage
 	| Grid
 	| Blockquote
+	| HomeReference
+	| AboutUsReference
+	| ContactReference
+	| GroupAdminReference
+	| GroupChildrenGymnasticsReference
+	| GroupCoursesReference
+	| GroupDanceReference
+	| GroupOtherSportsReference
+	| GroupSoccerReference
+	| GroupTaekwondoReference
+	| MembershipReference
+	| NewsArticleReference
+	| NewsOverviewReference
 	| BlockContent
+	| VenueReference
 	| TrainingTime
 	| Stats
 	| SocialFields
 	| SimpleBlockContent
 	| MetaFields
+	| DepartmentsPageReference
+	| PrivacyReference
+	| ImprintReference
 	| InternalLink
 	| Imprint
 	| Slug
 	| Privacy
-	| NewsOverview
-	| Membership
 	| DepartmentsPage
-	| Contact
-	| AboutUs
-	| Home
 	| ImageCard
-	| ExtendedImage
 	| ExternalLink
+	| ExtendedImage
+	| SanityFileAssetReference
 	| DocumentDownload
 	| ContactNameMail
 	| Columns
@@ -1549,9 +1591,18 @@ export type AllSanitySchemaTypes =
 	| SanityImageCrop
 	| SanityImageHotspot
 	| Testimonial
+	| Sponsors
 	| HonoraryMember
+	| RoleReference
 	| Person
 	| Role
+	| NewsCategory
+	| NewsCategoryReference
+	| AuthorReference
+	| NewsArticle
+	| AboutUs
+	| Membership
+	| NewsOverview
 	| GroupTaekwondo
 	| GroupSoccer
 	| GroupOtherSports
@@ -1559,14 +1610,16 @@ export type AllSanitySchemaTypes =
 	| GroupCourses
 	| GroupChildrenGymnastics
 	| GroupAdmin
-	| NewsCategory
-	| NewsArticle
+	| Contact
+	| TestimonialReference
+	| Home
 	| Author
 	| SanityAssistInstructionTask
 	| SanityAssistTaskStatus
 	| SanityAssistSchemaTypeAnnotations
 	| SanityAssistOutputType
 	| SanityAssistOutputField
+	| AssistInstructionContextReference
 	| SanityAssistInstructionContext
 	| AssistInstructionContext
 	| SanityAssistInstructionUserInput
@@ -1583,8 +1636,10 @@ export type AllSanitySchemaTypes =
 	| SanityAssetSourceData
 	| SanityImageAsset
 	| Geopoint;
+
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/lib/sanity/queries/main-navigation.ts
+
+// Source: src/lib/sanity/queries/main-navigation.ts
 // Variable: mainNavigationQuery
 // Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"slug": coalesce(link->slug.current, '#!'),			title		}	}
 export type MainNavigationQueryResult = {
@@ -1602,7 +1657,7 @@ export type MainNavigationQueryResult = {
 	>;
 } | null;
 
-// Source: ./src/lib/sanity/queries/pages/about-us.ts
+// Source: src/lib/sanity/queries/pages/about-us.ts
 // Variable: aboutUsPageQuery
 // Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type AboutUsPageQueryResult = {
@@ -1667,7 +1722,7 @@ export type AboutUsPageQueryResult = {
 	};
 } | null;
 
-// Source: ./src/lib/sanity/queries/pages/contact.ts
+// Source: src/lib/sanity/queries/pages/contact.ts
 // Variable: contactPageQuery
 // Query: *[_type == 'contact'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type ContactPageQueryResult = {
@@ -1704,7 +1759,7 @@ export type ContactPageQueryResult = {
 	};
 } | null;
 
-// Source: ./src/lib/sanity/queries/pages/home.ts
+// Source: src/lib/sanity/queries/pages/home.ts
 // Variable: homePageQuery
 // Query: *[_type == 'home'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type HomePageQueryResult = {
@@ -1781,13 +1836,11 @@ export type HomePageQueryResult = {
 		testimonialSection: {
 			title: string;
 			subtitle: string;
-			testimonials?: Array<{
-				_ref: string;
-				_type: 'reference';
-				_weak?: boolean;
-				_key: string;
-				[internalGroqTypeReferenceTo]?: 'testimonial';
-			}>;
+			testimonials?: Array<
+				{
+					_key: string;
+				} & TestimonialReference
+			>;
 		};
 		contactPersonsSection: {
 			title: string;
@@ -1811,6 +1864,8 @@ export type HomePageQueryResult = {
 		};
 	};
 } | null;
+
+// Source: src/lib/sanity/queries/pages/home.ts
 // Variable: homePageTestimonialsQuery
 // Query: *[_type == 'home'][0].content.testimonialSection.testimonials[]-> {		_id,		firstName,		lastName,		image,		quote,		role,	}
 export type HomePageTestimonialsQueryResult = Array<{
@@ -1822,7 +1877,7 @@ export type HomePageTestimonialsQueryResult = Array<{
 	role: string;
 }> | null;
 
-// Source: ./src/lib/sanity/queries/pages/imprint.ts
+// Source: src/lib/sanity/queries/pages/imprint.ts
 // Variable: imprintPageQuery
 // Query: *[_type == 'imprint'][0] {		...,		"contactForm": contactForm {			title,			"slug": link->slug.current		}	}
 export type ImprintPageQueryResult = {
@@ -1853,7 +1908,7 @@ export type ImprintPageQueryResult = {
 	credits: SimpleBlockContent;
 } | null;
 
-// Source: ./src/lib/sanity/queries/pages/membership.ts
+// Source: src/lib/sanity/queries/pages/membership.ts
 // Variable: membershipPageQuery
 // Query: {		"membership": *[_type == 'membership'][0] {			...,			downloadsSection {				...,				downloads[] {					...,					document {						...,						asset->					}				}			},			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		},		"pricingSection": *[_type == 'home'][0].content.pricingSection	}
 export type MembershipPageQueryResult = {
@@ -1953,13 +2008,15 @@ export type MembershipPageQueryResult = {
 	} | null;
 };
 
-// Source: ./src/lib/sanity/queries/pages/news-article.ts
+// Source: src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleHeroQuery
 // Query: *[_type == 'news-article-page'][0] {		title,		subtitle,	}
 export type NewsArticleHeroQueryResult = {
 	title: string;
 	subtitle: string;
 } | null;
+
+// Source: src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleContentQuery
 // Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[],		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		publishedAt,		"slug": slug.current,		title,	}
 export type NewsArticleContentQueryResult = {
@@ -1998,7 +2055,7 @@ export type NewsArticleContentQueryResult = {
 	title: string;
 } | null;
 
-// Source: ./src/lib/sanity/queries/pages/news-overview-category.ts
+// Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsOverviewCategoryPageQuery
 // Query: *[_type == 'newsOverviewCategory'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type NewsOverviewCategoryPageQueryResult = {
@@ -2028,6 +2085,8 @@ export type NewsOverviewCategoryPageQueryResult = {
 		};
 	};
 } | null;
+
+// Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsArticlesPaginatedForCategoryQuery
 // Query: *[_type == 'news.article' && $category in categories[]->slug.current]	| order(publishedAt desc) [$start..$end] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
 export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
@@ -2047,11 +2106,13 @@ export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
 	slug: string;
 	title: string;
 }>;
+
+// Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsArticlesTotalForCategoryQuery
 // Query: count(*[_type == "news.article" && $category in categories[]->slug.current])
 export type NewsArticlesTotalForCategoryQueryResult = number;
 
-// Source: ./src/lib/sanity/queries/pages/news-overview.ts
+// Source: src/lib/sanity/queries/pages/news-overview.ts
 // Variable: newsOverviewPageQuery
 // Query: *[_type == 'newsOverview'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type NewsOverviewPageQueryResult = {
@@ -2083,7 +2144,7 @@ export type NewsOverviewPageQueryResult = {
 	};
 } | null;
 
-// Source: ./src/lib/sanity/queries/pages/offer-groups-group.ts
+// Source: src/lib/sanity/queries/pages/offer-groups-group.ts
 // Variable: offerGroupsGroupPageQuery
 // Query: *[_type == 'singleGroupPage'][0]
 export type OfferGroupsGroupPageQueryResult = {
@@ -2106,6 +2167,8 @@ export type OfferGroupsGroupPageQueryResult = {
 		};
 	};
 } | null;
+
+// Source: src/lib/sanity/queries/pages/offer-groups-group.ts
 // Variable: offerGroupsGroupPageGroupsQuery
 // Query: *[_type == $groupType && slug.current == $slug][0] {		description,		featuredImage,		images,		title,		training {			trainingDescription,			trainingTimes[] {				...,				venue->			}		}	}
 export type OfferGroupsGroupPageGroupsQueryResult =
@@ -2151,12 +2214,7 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 							| 'hall-3'
 							| 'hybrid';
 						mainImage?: {
-							asset?: {
-								_ref: string;
-								_type: 'reference';
-								_weak?: boolean;
-								[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-							};
+							asset?: SanityImageAssetReference;
 							media?: unknown;
 							hotspot?: SanityImageHotspot;
 							crop?: SanityImageCrop;
@@ -2219,6 +2277,8 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			training: null;
 	  }
 	| null;
+
+// Source: src/lib/sanity/queries/pages/offer-groups-group.ts
 // Variable: offerGroupsGroupPageContactPersonsQuery
 // Query: *[		_type == 'person' &&		defined(affiliations[team->slug.current == $slug][0])	]|order(lastName asc) {		_id,		firstName,		lastName,		phone,		image,		contactAs,		"email": affiliations[team->slug.current == $slug][0].team->email,		"role":  affiliations[team->slug.current == $slug][0].role->title,		"team":  affiliations[team->slug.current == $slug][0].team->title,		"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,	}
 export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
@@ -2234,7 +2294,7 @@ export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
 	taskDescription: string | null;
 }>;
 
-// Source: ./src/lib/sanity/queries/pages/offer-groups.ts
+// Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageQuery
 // Query: *[_type == 'groupsPage'][0]
 export type OfferGroupsPageQueryResult = {
@@ -2264,6 +2324,8 @@ export type OfferGroupsPageQueryResult = {
 		};
 	};
 } | null;
+
+// Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageGroupsQuery
 // Query: *[_type == $groupType][] | order(sortOrder asc) {		icon,		featuredImage,		overviewTitle,		'slug': slug.current,		title,	}
 export type OfferGroupsPageGroupsQueryResult = Array<
@@ -2334,6 +2396,8 @@ export type OfferGroupsPageGroupsQueryResult = Array<
 			title: string;
 	  }
 >;
+
+// Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageContactPersonsQuery
 // Query: *[_type == 'person'][affiliations[0].role->email == $email] {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
 export type OfferGroupsPageContactPersonsQueryResult = Array<{
@@ -2347,7 +2411,7 @@ export type OfferGroupsPageContactPersonsQueryResult = Array<{
 	taskDescription: string | null;
 }>;
 
-// Source: ./src/lib/sanity/queries/pages/offer.ts
+// Source: src/lib/sanity/queries/pages/offer.ts
 // Variable: offerPageQuery
 // Query: *[_type == 'departmentsPage'][0] {	...,	content {		...,		contactPersonsSection {			...,			contactPersons[]-> {				  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,			}		}	}}
 export type OfferPageQueryResult = {
@@ -2389,7 +2453,7 @@ export type OfferPageQueryResult = {
 	};
 } | null;
 
-// Source: ./src/lib/sanity/queries/pages/privacy.ts
+// Source: src/lib/sanity/queries/pages/privacy.ts
 // Variable: privacyPageQuery
 // Query: *[_type == 'privacy'][0]
 export type PrivacyPageQueryResult = {
@@ -2409,7 +2473,7 @@ export type PrivacyPageQueryResult = {
 	content: BlockContent;
 } | null;
 
-// Source: ./src/lib/sanity/queries/shared/groups.ts
+// Source: src/lib/sanity/queries/shared/groups.ts
 // Variable: groupsQuery
 // Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_id,		title,		icon,	}
 export type GroupsQueryResult = Array<{
@@ -2435,7 +2499,7 @@ export type GroupsQueryResult = Array<{
 		| 'Yoga';
 }>;
 
-// Source: ./src/lib/sanity/queries/shared/news.ts
+// Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesQuery
 // Query: *[_type == 'news.article'] | order(publishedAt desc) [0..2] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
 export type NewsArticlesQueryResult = Array<{
@@ -2455,6 +2519,8 @@ export type NewsArticlesQueryResult = Array<{
 	slug: string;
 	title: string;
 }>;
+
+// Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesPaginatedQuery
 // Query: *[_type == 'news.article'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
 export type NewsArticlesPaginatedQueryResult = Array<{
@@ -2474,9 +2540,13 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 	slug: string;
 	title: string;
 }>;
+
+// Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesTotalQuery
 // Query: count(*[_type == "news.article"])
 export type NewsArticlesTotalQueryResult = number;
+
+// Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsCategoryQuery
 // Query: *[_type == 'news.category' && slug.current == $slug][0] {		"slug": slug.current,		title	}
 export type NewsCategoryQueryResult = {
@@ -2484,10 +2554,25 @@ export type NewsCategoryQueryResult = {
 	title: string;
 } | null;
 
-// Source: ./src/lib/sanity/queries/shared/social-media.ts
+// Source: src/lib/sanity/queries/shared/social-media.ts
 // Variable: socialMediaQuery
 // Query: *[_type == 'site-settings'][0].socialFields
 export type SocialMediaQueryResult = SocialFields | null;
+
+// Source: src/lib/sanity/queries/shared/sponsors.ts
+// Variable: sponsorsQuery
+// Query: *[_type== 'sponsors'][] {		_id,		name,		logo,	} | order(name asc)
+export type SponsorsQueryResult = Array<{
+	_id: string;
+	name: string;
+	logo: {
+		asset?: SanityImageAssetReference;
+		media?: unknown;
+		hotspot?: SanityImageHotspot;
+		crop?: SanityImageCrop;
+		_type: 'image';
+	} | null;
+}>;
 
 // Query TypeMap
 import '@sanity/client';
@@ -2520,5 +2605,6 @@ declare module '@sanity/client' {
 		'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
 		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle\n\t}\n': NewsCategoryQueryResult;
 		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
+		"\n\t*[_type== 'sponsors'][] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
 	}
 }

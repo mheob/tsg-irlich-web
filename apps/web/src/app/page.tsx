@@ -11,11 +11,13 @@ import { client } from '@/lib/sanity/client';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
+import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 
 import { Features } from './_home/features';
 import { Groups } from './_home/groups';
 import { Hero } from './_home/hero';
 import { News } from './_home/news';
+import { Sponsors } from './_home/sponsors';
 import { Testimonials } from './_home/testimonials';
 
 const TESTIMONIALS_REVALIDATE_SECONDS = 60 * 60 * 12; /* 12 hours */
@@ -27,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-	const [page, testimonials, newsArticles, socialMedia] = await Promise.all([
+	const [page, testimonials, newsArticles, socialMedia, sponsors] = await Promise.all([
 		client.fetch(homePageQuery),
 		client.fetch(
 			homePageTestimonialsQuery,
@@ -36,6 +38,7 @@ export default async function HomePage() {
 		),
 		client.fetch(newsArticlesQuery),
 		client.fetch(socialMediaQuery),
+		client.fetch(sponsorsQuery),
 	]);
 
 	if (!page) {
@@ -64,6 +67,7 @@ export default async function HomePage() {
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<ContactForm />
 			<News {...page.content.newsSection} articles={newsArticles} />
+			{sponsors && sponsors.length > 0 && <Sponsors sponsors={sponsors} />}
 			<Newsletter />
 		</>
 	);

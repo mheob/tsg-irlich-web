@@ -148,7 +148,7 @@ LINEAR_TEAM_ID=your_linear_team_id
 
 # Vercel
 VERCEL_OIDC_TOKEN=your_vercel_token
-VERCEL_URL=your_vercel_url
+VERCEL_PROJECT_PRODUCTION_URL=your_VERCEL_PROJECT_PRODUCTION_URL
 ```
 
 ## Type Generation

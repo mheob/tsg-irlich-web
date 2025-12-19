@@ -2,6 +2,7 @@ import type {
 	GroupDance,
 	HomePageQueryResult,
 	internalGroqTypeReferenceTo,
+	SanityImageAssetReference,
 	SanityImageCrop,
 	SanityImageHotspot,
 	Stats,
@@ -21,7 +22,15 @@ export interface StatsSection {
 	stats: Array<Stats & { _key: string }>;
 }
 
-interface SanityImage {
+export interface SanityImage {
+	_type: 'image';
+	asset?: SanityImageAssetReference;
+	crop?: SanityImageCrop;
+	hotspot?: SanityImageHotspot;
+	media?: unknown;
+}
+
+export interface SanityImageReference {
 	asset?: {
 		_ref: string;
 		_type: 'reference';
@@ -33,10 +42,10 @@ interface SanityImage {
 	hotspot?: SanityImageHotspot;
 }
 
-export interface ExtendedImage extends SanityImage {
+export interface ExtendedImage extends SanityImageReference {
 	_type: 'extendedImage';
 }
 
-export interface MainImage extends SanityImage {
+export interface MainImage extends SanityImageReference {
 	_type: 'mainImage';
 }

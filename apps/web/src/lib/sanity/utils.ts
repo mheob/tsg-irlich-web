@@ -1,7 +1,7 @@
 import { createImageUrlBuilder } from '@sanity/image-url';
 import type { Image } from 'sanity';
 
-import type { MainImage, SanityFileAsset } from '@/types/sanity.types';
+import type { SanityFileAsset, SanityImage, SanityImageReference } from '@/types/sanity.types';
 
 import { client } from './client';
 
@@ -68,7 +68,7 @@ const imageBuilder = createImageUrlBuilder(client);
  * ```
  */
 export const urlForImage = (
-	image: null | Omit<MainImage, '_type'> | undefined,
+	image: null | SanityImage | SanityImageReference | undefined,
 	height?: number,
 	width?: number,
 ): string | undefined => {
@@ -79,8 +79,9 @@ export const urlForImage = (
 				.width(width ?? height)
 				.height(height)
 				.fit('crop')
+				.format('webp')
 				.url()
-		: imageBuilder.image(image).auto('format').fit('max').url();
+		: imageBuilder.image(image).auto('format').fit('max').format('webp').url();
 };
 
 /**
@@ -106,7 +107,12 @@ export function resolveOpenGraphImage(
 	height = 627,
 ): undefined | { alt: string; height: number; url: string; width: number } {
 	if (!image || !imageBuilder) return;
-	const url = imageBuilder.image(image)?.width(width).height(height).fit('crop').url();
-	if (!url) return;
+	const url = imageBuilder
+		.image(image)
+		.width(width)
+		.height(height)
+		.fit('crop')
+		.format('webp')
+		.url();
 	return { alt: image.alt as string, height, url, width };
 }

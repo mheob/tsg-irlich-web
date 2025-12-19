@@ -169,7 +169,7 @@ turbo extract-types && turbo typegen:sanity
 - `SANITY_API_READ_TOKEN`
 - `SANITY_REVALIDATE_SECRET`
 - `VERCEL_OIDC_TOKEN`
-- `VERCEL_URL`
+- `VERCEL_PROJECT_PRODUCTION_URL`
 
 ### Code Quality Tools
 

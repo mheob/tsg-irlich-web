@@ -39,11 +39,13 @@ export const singletonPlugin = definePlugin((types: string[]) => {
 export function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureResolver {
 	return S => {
 		// The default root list items (except custom ones)
-		const defaultListItems = S.documentTypeListItems().filter(
-			listItem =>
-				!typeDefinitionArray.some(singleton => singleton.name === listItem.getId()) &&
-				isExcludedDefaultListItem(listItem.getId()),
-		);
+		const defaultListItems = S.documentTypeListItems()
+			.filter(
+				listItem =>
+					!typeDefinitionArray.some(singleton => singleton.name === listItem.getId()) &&
+					isExcludedDefaultListItem(listItem.getId()),
+			)
+			.toSorted((a, b) => a.getTitle()?.localeCompare(b.getTitle() ?? '') ?? 0);
 
 		return S.list()
 			.title('Base')
