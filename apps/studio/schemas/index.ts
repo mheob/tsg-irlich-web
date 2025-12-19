@@ -11,6 +11,7 @@ import newsArticle from './documents/news.article';
 import newsCategory from './documents/news.category';
 import person from './documents/person';
 import role from './documents/role';
+import sponsors from './documents/sponsors';
 import testimonial from './documents/testimonial';
 import venue from './documents/venue';
 import columns from './objects/columns';
@@ -61,6 +62,7 @@ export const schemaTypes = [
 	groupOtherSports,
 	groupSoccer,
 	groupTaekwondo,
+	sponsors,
 	testimonial,
 	venue,
 

@@ -15,7 +15,7 @@ const meta = defineField({
 				Rule.max(65).warning('Der Titel sollte idealerweise maximal 65 Zeichen lang sein.'),
 		}),
 		defineField({
-			title: 'Meta-Beschreibung',
+			title: 'Meta-Beschreibung (überschreibt den Standardtitel)',
 			name: 'metaDescription',
 			type: 'text',
 			validation: Rule =>
