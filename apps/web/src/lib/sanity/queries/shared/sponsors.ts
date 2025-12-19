@@ -10,6 +10,5 @@ export const sponsorsQuery = defineQuery(`
 		_id,
 		name,
 		logo,
-		website,
 	} | order(name asc)
 `);
