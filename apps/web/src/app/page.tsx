@@ -19,14 +19,26 @@ import { Hero } from './_home/hero';
 import { News } from './_home/news';
 import { Sponsors } from './_home/sponsors';
 import { Testimonials } from './_home/testimonials';
+import { getOpenGraphImageOptions } from './news/_shared/utils';
 
 const TESTIMONIALS_REVALIDATE_SECONDS = 60 * 60 * 12; /* 12 hours */
 
-export const metadata: Metadata = {
-	description:
-		'Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.',
-	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const page = await client.fetch(homePageQuery);
+
+	if (!page) return {};
+
+	const description = page.meta?.metaDescription ?? '';
+	const image = page.meta?.openGraphImage;
+	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
+	const title = page.meta?.metaTitle ?? page.title ?? '';
+
+	return {
+		description,
+		openGraph: { description, images, title },
+		title,
+	};
+}
 
 export default async function HomePage() {
 	const [page, testimonials, newsArticles, socialMedia, sponsors] = await Promise.all([

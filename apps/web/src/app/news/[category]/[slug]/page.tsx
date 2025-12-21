@@ -14,6 +14,7 @@ import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import { urlForImage } from '@/lib/sanity/utils';
 
+import { getOpenGraphImageOptions } from '../../_shared/utils';
 import { Author } from './_sections/author';
 import { Categories } from './_sections/categories';
 import { SocialMedia } from './_sections/social-media';
@@ -28,23 +29,15 @@ export async function generateMetadata({
 
 	if (!article) return {};
 
+	const description = article.meta?.metaDescription ?? article.excerpt ?? '';
+	const image = article.meta?.openGraphImage ?? article.featuredImage;
+	const images = image ? getOpenGraphImageOptions(image, article.title) : [];
+	const title = article.meta?.metaTitle ?? article.title ?? '';
+
 	return {
-		description: article.excerpt ?? '',
-		openGraph: {
-			description: article.excerpt ?? '',
-			images: article.featuredImage
-				? [
-						{
-							alt: article.featuredImage.alt ?? article.title,
-							height: 630,
-							url: urlForImage(article.featuredImage, 630, 1200) ?? '',
-							width: 1200,
-						},
-					]
-				: [],
-			title: article.title ?? '',
-		},
-		title: article.title ?? '',
+		description,
+		openGraph: { description, images, title },
+		title,
 	};
 }
 

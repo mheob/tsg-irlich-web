@@ -41,7 +41,7 @@ export default async function Footer() {
 			<div className="container pt-16 pb-4 md:pt-40">
 				<div className="md:flex md:justify-between">
 					<section className="flex flex-col items-center gap-5">
-						<Link href="/">
+						<Link href="/" title="Zur Startseite wechseln">
 							<TSGLogo className="h-32 w-auto" />
 						</Link>
 

@@ -11,6 +11,8 @@ import danceImage from '@/images/angebot/groups/tanzen.webp';
 import otherSportsImage from '@/images/angebot/groups/weitere-sportarten.webp';
 import fallbackImageFile from '@/images/angebot/hero.webp';
 
+import { getBaseUrl } from './url';
+
 interface OfferGroupImage {
 	alt: ImageProps['alt'];
 	src: ImageProps['src'];
@@ -99,7 +101,7 @@ export function getOGImage(group: string): OpenGraph['images'] {
 	return {
 		alt: groupSection?.image?.alt ?? fallbackImage.alt,
 		height: 630,
-		url: imageURL,
+		url: `${getBaseUrl()}${imageURL}`,
 		width: 1200,
 	};
 }

@@ -11,10 +11,10 @@ import {
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
 import { newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
-import { urlForImage } from '@/lib/sanity/utils';
 
 import newsOverviewImage from '../_assets/news-overview.webp';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
+import { getOpenGraphImageOptions } from '../_shared/utils';
 
 const START_INDEX = 0;
 const ITEMS_PER_PAGE = 9;
@@ -34,39 +34,21 @@ function getCurrentPage(page?: string | string[]): {
 
 export async function generateMetadata({
 	params,
-	searchParams,
 }: Readonly<PageProps<'/news/[category]'>>): Promise<Metadata> {
 	const { category: categoryParameter } = await params;
-	const { seite } = await searchParams;
 
-	const { end, start } = getCurrentPage(seite);
+	const category = await client.fetch(newsCategoryQuery, { slug: categoryParameter });
+	if (!category) return {};
 
-	const articles = await client.fetch(newsArticlesPaginatedForCategoryQuery, {
-		category: categoryParameter,
-		end,
-		start,
-	});
-
-	if (!articles?.length) return {};
-	const article = articles[0];
+	const description = category.meta?.metaDescription ?? '';
+	const image = category.meta?.openGraphImage;
+	const images = image ? getOpenGraphImageOptions(image, category.title) : [];
+	const title = category.meta?.metaTitle ?? category.title ?? '';
 
 	return {
-		description: article.excerpt ?? '',
-		openGraph: {
-			description: article.excerpt ?? '',
-			images: article.featuredImage
-				? [
-						{
-							alt: article.featuredImage.alt ?? article.title,
-							height: 630,
-							url: urlForImage(article.featuredImage, 630, 1200) ?? '',
-							width: 1200,
-						},
-					]
-				: [],
-			title: article.title ?? '',
-		},
-		title: article.title ?? '',
+		description,
+		openGraph: { description, images, title },
+		title,
 	};
 }
 

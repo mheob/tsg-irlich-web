@@ -1,19 +1,11 @@
 'use server';
 
-import process from 'node:process';
-
 import { ContactForwardEmail } from '@tsgi-web/email';
 
 import { actionClient } from '@/lib/actions/safe-action';
 import { resend } from '@/lib/resend';
 import { contactFormSchema } from '@/lib/validations/contact-form';
-
-let baseUrl = 'http://localhost:3000';
-if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-	baseUrl = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-} else if (process.env.NODE_ENV === 'production') {
-	baseUrl = 'https://next.tsg-irlich.de';
-}
+import { getBaseUrl } from '@/utils/url';
 
 export const sendContactForm = actionClient
 	.inputSchema(contactFormSchema)
@@ -24,7 +16,7 @@ export const sendContactForm = actionClient
 			bcc: ['it@tsg-irlich.de'],
 			from: 'TSG Irlich - Benachrichtigungen <webseite@notifications.tsg-irlich.de>',
 			react: ContactForwardEmail({
-				baseUrl,
+				baseUrl: getBaseUrl(),
 				contactEmail: email,
 				contactMessage: message,
 				contactName: name,

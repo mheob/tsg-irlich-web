@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
@@ -13,9 +15,27 @@ import {
 import newsOverviewImage from './_assets/news-overview.webp';
 import { LatestNews } from './_sections/latest-news';
 import { LatestNewsPagination } from './_sections/latest-news-pagination';
+import { getOpenGraphImageOptions } from './_shared/utils';
 
 const START_INDEX = 3;
 const ITEMS_PER_PAGE = 6;
+
+export async function generateMetadata(): Promise<Metadata> {
+	const page = await client.fetch(newsOverviewPageQuery);
+
+	if (!page) return {};
+
+	const description = page.meta?.metaDescription ?? '';
+	const image = page.meta?.openGraphImage;
+	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
+	const title = page.meta?.metaTitle ?? page.title ?? '';
+
+	return {
+		description,
+		openGraph: { description, images, title },
+		title,
+	};
+}
 
 export default async function NewsOverviewPage({ searchParams }: Readonly<PageProps<'/news'>>) {
 	const { seite } = await searchParams;
