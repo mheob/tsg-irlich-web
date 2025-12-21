@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { featuredImage } from '@/lib/sanity/queries';
+import { featuredImage, meta } from '@/lib/sanity/queries';
 
 /**
  * Query to get the groups page
@@ -21,6 +21,7 @@ export const offerGroupsGroupPageGroupsQuery = defineQuery(`
 		description,
 		${featuredImage},
 		images,
+		${meta},
 		title,
 		training {
 			trainingDescription,

@@ -7,8 +7,8 @@ import { Stats } from '@/components/section/stats';
 import heroImage from '@/images/angebot/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { offerPageQuery } from '@/lib/sanity/queries/pages/offer';
-import { getOGImage } from '@/utils/groups';
 
+import { getOpenGraphImageOptions } from '../news/_shared/utils';
 import { Groups } from './_sections/groups';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,17 +16,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
 	if (!page) return {};
 
-	const { intro, title } = page.content.departmentsSection;
-
-	const image = getOGImage('FALLBACK');
+	const description = page.meta?.metaDescription ?? '';
+	const image = page.meta?.openGraphImage;
+	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
+	const title = page.meta?.metaTitle ?? page.title ?? '';
 
 	return {
-		description: intro ?? '',
-		openGraph: {
-			description: intro ?? '',
-			images: image ?? [],
-			title,
-		},
+		description,
+		openGraph: { description, images, title },
 		title,
 	};
 }

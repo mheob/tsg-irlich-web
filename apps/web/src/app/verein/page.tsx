@@ -9,14 +9,26 @@ import heroImage from '@/images/verein/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { aboutUsPageQuery } from '@/lib/sanity/queries/pages/about-us';
 
+import { getOpenGraphImageOptions } from '../news/_shared/utils';
 import { Chronicle } from './_sections/chronicle';
 import { Intro } from './_sections/intro';
 
-export const metadata: Metadata = {
-	description:
-		'Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.',
-	title: 'Über uns — TSG Irlich',
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const page = await client.fetch(aboutUsPageQuery);
+
+	if (!page) return {};
+
+	const description = page.meta?.metaDescription ?? '';
+	const image = page.meta?.openGraphImage;
+	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
+	const title = page.meta?.metaTitle ?? page.title ?? '';
+
+	return {
+		description,
+		openGraph: { description, images, title },
+		title,
+	};
+}
 
 export default async function VereinPage() {
 	const page = await client.fetch(aboutUsPageQuery);

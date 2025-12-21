@@ -9,4 +9,6 @@ export const contactPersons = /* groq */ `
   "taskDescription": affiliations[0].taskDescription,
 `;
 
+export const meta = /* groq */ `meta { metaTitle, metaDescription, openGraphImage}`;
+
 export const featuredImage = /* groq */ `featuredImage`;

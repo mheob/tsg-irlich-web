@@ -60,7 +60,6 @@ export type NewsOverviewCategory = {
 	_rev: string;
 	title: string;
 	subtitle: string;
-	meta?: MetaFields;
 	content: {
 		contactPersonsSection: ContactPersonsSection;
 	};
@@ -607,8 +606,8 @@ export type Sponsors = {
 	_updatedAt: string;
 	_rev: string;
 	name: string;
-	website?: string;
-	logo?: {
+	website: string;
+	logo: {
 		asset?: SanityImageAssetReference;
 		media?: unknown;
 		hotspot?: SanityImageHotspot;
@@ -690,6 +689,7 @@ export type NewsCategory = {
 	_rev: string;
 	title: string;
 	slug: Slug;
+	meta?: MetaFields;
 };
 
 export type NewsCategoryReference = {
@@ -848,6 +848,7 @@ export type GroupTaekwondo = {
 	title: string;
 	slug: Slug;
 	email: string;
+	meta?: MetaFields;
 	overviewTitle?: string;
 	sortOrder: number;
 	description: SimpleBlockContent;
@@ -895,6 +896,7 @@ export type GroupSoccer = {
 	title: string;
 	slug: Slug;
 	email: string;
+	meta?: MetaFields;
 	overviewTitle?: string;
 	sortOrder: number;
 	description: SimpleBlockContent;
@@ -942,6 +944,7 @@ export type GroupOtherSports = {
 	title: string;
 	slug: Slug;
 	email: string;
+	meta?: MetaFields;
 	overviewTitle?: string;
 	sortOrder: number;
 	description: SimpleBlockContent;
@@ -989,6 +992,7 @@ export type GroupDance = {
 	title: string;
 	slug: Slug;
 	email: string;
+	meta?: MetaFields;
 	overviewTitle?: string;
 	sortOrder: number;
 	description: SimpleBlockContent;
@@ -1036,6 +1040,7 @@ export type GroupCourses = {
 	title: string;
 	slug: Slug;
 	email: string;
+	meta?: MetaFields;
 	overviewTitle?: string;
 	sortOrder: number;
 	description: SimpleBlockContent;
@@ -1083,6 +1088,7 @@ export type GroupChildrenGymnastics = {
 	title: string;
 	slug: Slug;
 	email: string;
+	meta?: MetaFields;
 	overviewTitle?: string;
 	sortOrder: number;
 	description: SimpleBlockContent;
@@ -1130,6 +1136,7 @@ export type GroupAdmin = {
 	title: string;
 	slug: Slug;
 	email: string;
+	meta?: MetaFields;
 	overviewTitle?: string;
 	sortOrder: number;
 	description: SimpleBlockContent;
@@ -2018,7 +2025,7 @@ export type NewsArticleHeroQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleContentQuery
-// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[],		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		publishedAt,		"slug": slug.current,		title,	}
+// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[],		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		meta { metaTitle, metaDescription, openGraphImage},		publishedAt,		"slug": slug.current,		title,	}
 export type NewsArticleContentQueryResult = {
 	author: {
 		email: string;
@@ -2050,6 +2057,18 @@ export type NewsArticleContentQueryResult = {
 	}>;
 	excerpt: string;
 	featuredImage: MainImage;
+	meta: {
+		metaTitle: string | null;
+		metaDescription: string | null;
+		openGraphImage: {
+			asset?: SanityImageAssetReference;
+			media?: unknown;
+			hotspot?: SanityImageHotspot;
+			crop?: SanityImageCrop;
+			alt?: string;
+			_type: 'image';
+		} | null;
+	} | null;
 	publishedAt: string;
 	slug: string;
 	title: string;
@@ -2066,7 +2085,6 @@ export type NewsOverviewCategoryPageQueryResult = {
 	_rev: string;
 	title: string;
 	subtitle: string;
-	meta?: MetaFields;
 	content: {
 		contactPersonsSection: {
 			title: string;
@@ -2088,7 +2106,7 @@ export type NewsOverviewCategoryPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsArticlesPaginatedForCategoryQuery
-// Query: *[_type == 'news.article' && $category in categories[]->slug.current]	| order(publishedAt desc) [$start..$end] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
+// Query: *[_type == 'news.article' && $category in categories[]->slug.current]	| order(publishedAt desc) [$start..$end] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
 export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
 	_id: string;
 	publishedAt: string;
@@ -2102,6 +2120,18 @@ export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
 		slug: string;
 	}>;
 	excerpt: string;
+	meta: {
+		metaTitle: string | null;
+		metaDescription: string | null;
+		openGraphImage: {
+			asset?: SanityImageAssetReference;
+			media?: unknown;
+			hotspot?: SanityImageHotspot;
+			crop?: SanityImageCrop;
+			alt?: string;
+			_type: 'image';
+		} | null;
+	} | null;
 	featuredImage: MainImage;
 	slug: string;
 	title: string;
@@ -2170,7 +2200,7 @@ export type OfferGroupsGroupPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/offer-groups-group.ts
 // Variable: offerGroupsGroupPageGroupsQuery
-// Query: *[_type == $groupType && slug.current == $slug][0] {		description,		featuredImage,		images,		title,		training {			trainingDescription,			trainingTimes[] {				...,				venue->			}		}	}
+// Query: *[_type == $groupType && slug.current == $slug][0] {		description,		featuredImage,		images,		meta { metaTitle, metaDescription, openGraphImage},		title,		training {			trainingDescription,			trainingTimes[] {				...,				venue->			}		}	}
 export type OfferGroupsGroupPageGroupsQueryResult =
 	| {
 			description: SimpleBlockContent;
@@ -2180,6 +2210,18 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 					_key: string;
 				} & ExtendedImage
 			> | null;
+			meta: {
+				metaTitle: string | null;
+				metaDescription: string | null;
+				openGraphImage: {
+					asset?: SanityImageAssetReference;
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt?: string;
+					_type: 'image';
+				} | null;
+			} | null;
 			title: string;
 			training: {
 				trainingDescription: SimpleBlockContent | null;
@@ -2238,6 +2280,7 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			description: SimpleBlockContent;
 			featuredImage: null;
 			images: null;
+			meta: null;
 			title: string;
 			training: null;
 	  }
@@ -2245,6 +2288,18 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			description: null;
 			featuredImage: MainImage;
 			images: null;
+			meta: {
+				metaTitle: string | null;
+				metaDescription: string | null;
+				openGraphImage: {
+					asset?: SanityImageAssetReference;
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt?: string;
+					_type: 'image';
+				} | null;
+			} | null;
 			title: string;
 			training: null;
 	  }
@@ -2252,6 +2307,7 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			description: null;
 			featuredImage: null;
 			images: null;
+			meta: null;
 			title: null;
 			training: null;
 	  }
@@ -2259,6 +2315,7 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			description: null;
 			featuredImage: null;
 			images: null;
+			meta: null;
 			title: string;
 			training: null;
 	  }
@@ -2266,13 +2323,53 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			description: null;
 			featuredImage: null;
 			images: null;
+			meta: null;
 			title: string | null;
+			training: null;
+	  }
+	| {
+			description: null;
+			featuredImage: null;
+			images: null;
+			meta: {
+				metaTitle: string | null;
+				metaDescription: string | null;
+				openGraphImage: {
+					asset?: SanityImageAssetReference;
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt?: string;
+					_type: 'image';
+				} | null;
+			} | null;
+			title: null;
+			training: null;
+	  }
+	| {
+			description: null;
+			featuredImage: null;
+			images: null;
+			meta: {
+				metaTitle: string | null;
+				metaDescription: string | null;
+				openGraphImage: {
+					asset?: SanityImageAssetReference;
+					media?: unknown;
+					hotspot?: SanityImageHotspot;
+					crop?: SanityImageCrop;
+					alt?: string;
+					_type: 'image';
+				} | null;
+			} | null;
+			title: string;
 			training: null;
 	  }
 	| {
 			description: string | null;
 			featuredImage: null;
 			images: null;
+			meta: null;
 			title: string | null;
 			training: null;
 	  }
@@ -2501,7 +2598,7 @@ export type GroupsQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesQuery
-// Query: *[_type == 'news.article'] | order(publishedAt desc) [0..2] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
+// Query: *[_type == 'news.article'] | order(publishedAt desc) [0..2] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
 export type NewsArticlesQueryResult = Array<{
 	_id: string;
 	publishedAt: string;
@@ -2515,6 +2612,18 @@ export type NewsArticlesQueryResult = Array<{
 		slug: string;
 	}>;
 	excerpt: string;
+	meta: {
+		metaTitle: string | null;
+		metaDescription: string | null;
+		openGraphImage: {
+			asset?: SanityImageAssetReference;
+			media?: unknown;
+			hotspot?: SanityImageHotspot;
+			crop?: SanityImageCrop;
+			alt?: string;
+			_type: 'image';
+		} | null;
+	} | null;
 	featuredImage: MainImage;
 	slug: string;
 	title: string;
@@ -2522,7 +2631,7 @@ export type NewsArticlesQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesPaginatedQuery
-// Query: *[_type == 'news.article'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	featuredImage,	"slug": slug.current,	title,	}
+// Query: *[_type == 'news.article'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
 export type NewsArticlesPaginatedQueryResult = Array<{
 	_id: string;
 	publishedAt: string;
@@ -2536,6 +2645,18 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 		slug: string;
 	}>;
 	excerpt: string;
+	meta: {
+		metaTitle: string | null;
+		metaDescription: string | null;
+		openGraphImage: {
+			asset?: SanityImageAssetReference;
+			media?: unknown;
+			hotspot?: SanityImageHotspot;
+			crop?: SanityImageCrop;
+			alt?: string;
+			_type: 'image';
+		} | null;
+	} | null;
 	featuredImage: MainImage;
 	slug: string;
 	title: string;
@@ -2548,10 +2669,22 @@ export type NewsArticlesTotalQueryResult = number;
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsCategoryQuery
-// Query: *[_type == 'news.category' && slug.current == $slug][0] {		"slug": slug.current,		title	}
+// Query: *[_type == 'news.category' && slug.current == $slug][0] {		"slug": slug.current,		title,		meta { metaTitle, metaDescription, openGraphImage}	}
 export type NewsCategoryQueryResult = {
 	slug: string;
 	title: string;
+	meta: {
+		metaTitle: string | null;
+		metaDescription: string | null;
+		openGraphImage: {
+			asset?: SanityImageAssetReference;
+			media?: unknown;
+			hotspot?: SanityImageHotspot;
+			crop?: SanityImageCrop;
+			alt?: string;
+			_type: 'image';
+		} | null;
+	} | null;
 } | null;
 
 // Source: src/lib/sanity/queries/shared/social-media.ts
@@ -2561,7 +2694,7 @@ export type SocialMediaQueryResult = SocialFields | null;
 
 // Source: src/lib/sanity/queries/shared/sponsors.ts
 // Variable: sponsorsQuery
-// Query: *[_type== 'sponsors'][] {		_id,		name,		logo,	} | order(name asc)
+// Query: *[_type == 'sponsors'] {		_id,		name,		logo,	} | order(name asc)
 export type SponsorsQueryResult = Array<{
 	_id: string;
 	name: string;
@@ -2571,7 +2704,7 @@ export type SponsorsQueryResult = Array<{
 		hotspot?: SanityImageHotspot;
 		crop?: SanityImageCrop;
 		_type: 'image';
-	} | null;
+	};
 }>;
 
 // Query TypeMap
@@ -2586,13 +2719,13 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\ttitle,\n\t\t\t"slug": link->slug.current\n\t\t}\n\t}\n': ImprintPageQueryResult;
 		'\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
-		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
+		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
 		'\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
-		'\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
+		'\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
 		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
 		'\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
 		"*[_type == 'singleGroupPage'][0]": OfferGroupsGroupPageQueryResult;
-		'\n\t*[_type == $groupType && slug.current == $slug][0] {\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n': OfferGroupsGroupPageGroupsQueryResult;
+		'\n\t*[_type == $groupType && slug.current == $slug][0] {\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n': OfferGroupsGroupPageGroupsQueryResult;
 		'\n\t*[\n\t\t_type == \'person\' &&\n\t\tdefined(affiliations[team->slug.current == $slug][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t"email": affiliations[team->slug.current == $slug][0].team->email,\n\t\t"role":  affiliations[team->slug.current == $slug][0].role->title,\n\t\t"team":  affiliations[team->slug.current == $slug][0].team->title,\n\t\t"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,\n\t}\n': OfferGroupsGroupPageContactPersonsQueryResult;
 		"*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
 		"\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\tfeaturedImage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
@@ -2600,11 +2733,11 @@ declare module '@sanity/client' {
 		'\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
 		"*[_type == 'privacy'][0]": PrivacyPageQueryResult;
 		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
-		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
-		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
+		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
+		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
 		'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
-		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle\n\t}\n': NewsCategoryQueryResult;
+		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n': NewsCategoryQueryResult;
 		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
-		"\n\t*[_type== 'sponsors'][] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
+		"\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
 	}
 }

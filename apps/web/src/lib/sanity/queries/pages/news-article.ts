@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { featuredImage } from '@/lib/sanity/queries';
+import { featuredImage, meta } from '@/lib/sanity/queries';
 
 /**
  * Query to get the news article hero
@@ -36,6 +36,7 @@ export const newsArticleContentQuery = defineQuery(`
 		},
 		excerpt,
 		${featuredImage},
+		${meta},
 		publishedAt,
 		"slug": slug.current,
 		title,

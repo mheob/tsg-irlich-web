@@ -8,14 +8,26 @@ import heroImage from '@/images/mitgliedschaft/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { membershipPageQuery } from '@/lib/sanity/queries/pages/membership';
 
+import { getOpenGraphImageOptions } from '../news/_shared/utils';
 import { Downloads } from './_sections/downloads';
 import { Intro } from './_sections/intro';
 
-export const metadata: Metadata = {
-	description:
-		'Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.',
-	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const page = await client.fetch(membershipPageQuery);
+
+	if (!page.membership) return {};
+
+	const description = page.membership.meta?.metaDescription ?? '';
+	const image = page.membership.meta?.openGraphImage;
+	const images = image ? getOpenGraphImageOptions(image, page.membership.title) : [];
+	const title = page.membership.meta?.metaTitle ?? page.membership.title ?? '';
+
+	return {
+		description,
+		openGraph: { description, images, title },
+		title,
+	};
+}
 
 export default async function ContactPage() {
 	const page = await client.fetch(membershipPageQuery);

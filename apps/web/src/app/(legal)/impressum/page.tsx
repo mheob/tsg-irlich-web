@@ -1,6 +1,8 @@
 import { cn } from '@tsgi-web/shared';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { Hero } from '@/components/section/hero';
 import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { ContactLink } from '@/components/with-logic/contact-link';
@@ -9,6 +11,23 @@ import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
 
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
+
+export async function generateMetadata(): Promise<Metadata> {
+	const page = await client.fetch(imprintPageQuery);
+
+	if (!page) return {};
+
+	const description = page.meta?.metaDescription ?? '';
+	const image = page.meta?.openGraphImage;
+	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
+	const title = page.meta?.metaTitle ?? page.title ?? '';
+
+	return {
+		description,
+		openGraph: { description, images, title },
+		title,
+	};
+}
 
 export default async function ImprintPage() {
 	const page = await client.fetch(imprintPageQuery);

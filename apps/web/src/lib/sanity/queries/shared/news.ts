@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { featuredImage } from '@/lib/sanity/queries';
+import { featuredImage, meta } from '@/lib/sanity/queries';
 
 export const newsArticle = /* groq */ `
 	_id,
@@ -8,6 +8,7 @@ export const newsArticle = /* groq */ `
 	author->{ firstName, lastName, image },
 	categories[]->{ title, "slug": slug.current },
 	excerpt,
+	meta { metaTitle, metaDescription, openGraphImage},
 	${featuredImage},
 	"slug": slug.current,
 	title,
@@ -32,6 +33,7 @@ export const newsArticlesTotalQuery = defineQuery(`count(*[_type == "news.articl
 export const newsCategoryQuery = defineQuery(`
 	*[_type == 'news.category' && slug.current == $slug][0] {
 		"slug": slug.current,
-		title
+		title,
+		${meta}
 	}
 `);

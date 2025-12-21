@@ -1,5 +1,7 @@
 import { cn } from '@tsgi-web/shared';
+import type { Metadata } from 'next';
 
+import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { Hero } from '@/components/section/hero';
 import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { client } from '@/lib/sanity/client';
@@ -7,6 +9,23 @@ import { privacyPageQuery } from '@/lib/sanity/queries/pages/privacy';
 
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
+
+export async function generateMetadata(): Promise<Metadata> {
+	const page = await client.fetch(privacyPageQuery);
+
+	if (!page) return {};
+
+	const description = page.meta?.metaDescription ?? '';
+	const image = page.meta?.openGraphImage;
+	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
+	const title = page.meta?.metaTitle ?? page.title ?? '';
+
+	return {
+		description,
+		openGraph: { description, images, title },
+		title,
+	};
+}
 
 export default async function PrivacyPage() {
 	const page = await client.fetch(privacyPageQuery);

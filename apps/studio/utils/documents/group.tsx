@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 
 import { emailField } from '@/shared/fields/contact';
 import { slugField } from '@/shared/fields/general';
+import { metaField } from '@/shared/fields/meta';
 
 import { getFieldWithoutGroup } from '../fields';
 
@@ -44,6 +45,8 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 			getFieldWithoutGroup(slugField),
 
 			getFieldWithoutGroup(emailField),
+
+			getFieldWithoutGroup(metaField),
 
 			defineField({
 				description: 'Optional, Fallback: Name. Wird für die Gruppen-Übersicht verwendet.',

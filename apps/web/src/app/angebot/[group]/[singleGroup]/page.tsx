@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
@@ -11,7 +12,7 @@ import {
 } from '@/lib/sanity/queries/pages/offer-groups-group';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { SimpleBlockContent } from '@/types/sanity.types.generated';
-import { getCurrentDepartment, getOGImage } from '@/utils/groups';
+import { getCurrentDepartment } from '@/utils/groups';
 
 import { Main } from './_sections/main';
 import { Training } from './_sections/training';
@@ -19,22 +20,28 @@ import { Training } from './_sections/training';
 export async function generateMetadata({
 	params,
 }: PageProps<'/angebot/[group]/[singleGroup]'>): Promise<Metadata> {
-	const { singleGroup: singleGroupParameter } = await params;
+	const { group, singleGroup } = await params;
 
-	const page = await client.fetch(offerGroupsGroupPageQuery);
+	const currentDepartment = getCurrentDepartment(group);
 
-	if (!page) return {};
+	if (!currentDepartment) return {};
 
-	const image = getOGImage(singleGroupParameter);
+	const page = await client.fetch(offerGroupsGroupPageGroupsQuery, {
+		groupType: currentDepartment?._type,
+		slug: singleGroup,
+	});
+
+	if (!page?.meta) return {};
+
+	const description = page.meta?.metaDescription ?? '';
+	const image = page.meta?.openGraphImage ?? page.featuredImage;
+	const images = image ? getOpenGraphImageOptions(image, page.title ?? '') : [];
+	const title = page.meta.metaTitle ?? (page.title ? `${page.title} — TSG Irlich` : '');
 
 	return {
-		description: page.subtitle ?? '',
-		openGraph: {
-			description: page.subtitle ?? '',
-			images: image ?? [],
-			title: `${page.title ?? ''} — TSG Irlich`,
-		},
-		title: `${page.title ?? ''} — TSG Irlich`,
+		description,
+		openGraph: { description, images, title },
+		title,
 	};
 }
 
