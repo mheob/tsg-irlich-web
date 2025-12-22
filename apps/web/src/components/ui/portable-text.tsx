@@ -86,9 +86,11 @@ const ExternalLink: PortableTextMarkComponent = ({ children, value }) => (
 	</a>
 );
 
-const InternalLink: PortableTextMarkComponent = ({ children, value }) => (
-	<NextLink href={`/${value?.link?.slug}`}>{children}</NextLink>
-);
+const InternalLink: PortableTextMarkComponent = ({ children, value }) => {
+	const slug = value?.link && typeof value.link.slug === 'string' ? value.link.slug : undefined;
+	if (!slug) return children;
+	return <NextLink href={`/${slug}`}>{children}</NextLink>;
+};
 
 const Link: PortableTextMarkComponent = ({ children, value }) => {
 	const href = value?.href || value?.url;
