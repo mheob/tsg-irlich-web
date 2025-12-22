@@ -12,11 +12,17 @@ import {
 	type PortableTextBlock,
 	type PortableTextComponent,
 	type PortableTextComponents,
+	type PortableTextListComponent,
+	type PortableTextListItemComponent,
 	type PortableTextMarkComponent,
 	PortableText as PortableTextPrimitive,
 	type PortableTextProps as PortableTextPrimitiveProps,
 } from 'next-sanity';
 import NextLink from 'next/link';
+
+const Blockquote: PortableTextComponent<PortableTextBlock> = ({ children }) => (
+	<blockquote className="border-l-4 border-gray-300 pl-4">{children}</blockquote>
+);
 
 function HeadingAnchorLink({ value }: Readonly<{ value: PortableTextBlock }>) {
 	return (
@@ -57,8 +63,37 @@ const H3WithAnchor: PortableTextComponent<PortableTextBlock> = ({ children, valu
 	</h3>
 );
 
+const BulletList: PortableTextListComponent = ({ children }) => (
+	<ul className="list-disc pl-4">{children}</ul>
+);
+
+const NumberList: PortableTextListComponent = ({ children }) => (
+	<ol className="list-decimal pl-4">{children}</ol>
+);
+
+const ListItem: PortableTextListItemComponent = ({ children }) => (
+	<li className="ml-2">{children}</li>
+);
+
+const ExternalLink: PortableTextMarkComponent = ({ children, value }) => (
+	<a
+		aria-label={`${children?.toString() || 'Link'} (öffnet in neuem Tab)`} // NOSONAR
+		href={value?.href}
+		rel="noopener noreferrer"
+		target="_blank"
+	>
+		{children}
+	</a>
+);
+
+const InternalLink: PortableTextMarkComponent = ({ children, value }) => {
+	const slug = value?.link && typeof value.link.slug === 'string' ? value.link.slug : undefined;
+	if (!slug) return children;
+	return <NextLink href={`/${slug}`}>{children}</NextLink>;
+};
+
 const Link: PortableTextMarkComponent = ({ children, value }) => {
-	const href = value?.href;
+	const href = value?.href || value?.url;
 	if (!href || typeof href !== 'string') return children;
 
 	// Regex finds starting with `/` or `https://` or `http://`, an optional subdomain and then `tsg-irlich.de`
@@ -71,7 +106,7 @@ const Link: PortableTextMarkComponent = ({ children, value }) => {
 	return (
 		<a
 			aria-label={`${children?.toString() || 'Link'} (öffnet in neuem Tab)`} // NOSONAR
-			href={value.href}
+			href={href}
 			rel="noopener noreferrer"
 			target="_blank"
 		>
@@ -89,21 +124,21 @@ interface PortableTextProps {
 export function PortableText({ value }: Readonly<PortableTextProps>) {
 	const components: PortableTextComponents = {
 		block: {
-			blockquote: ({ children }) => (
-				<blockquote className="border-l-4 border-gray-300 pl-4">{children}</blockquote>
-			),
+			blockquote: Blockquote,
 			h2: H2WithAnchor,
 			h3: H3WithAnchor,
 		},
 		list: {
-			bullet: ({ children }) => <ul className="list-disc pl-4">{children}</ul>,
-			number: ({ children }) => <ol className="list-decimal pl-4">{children}</ol>,
+			bullet: BulletList,
+			number: NumberList,
 		},
 		listItem: {
-			bullet: ({ children }) => <li className="ml-2">{children}</li>,
-			number: ({ children }) => <li className="ml-2">{children}</li>,
+			bullet: ListItem,
+			number: ListItem,
 		},
 		marks: {
+			externalLink: ExternalLink,
+			internalLink: InternalLink,
 			link: Link,
 		},
 	};

@@ -82,7 +82,7 @@ export default async function NewsArticlePage({
 							}
 							case 'blockquote': {
 								return (
-									<blockquote className="border-l-primary md:text-2xl" key={block._key}>
+									<blockquote key={block._key}>
 										"{block.quote}"
 										<cite className="text-muted-foreground block text-right not-italic">
 											{block.author}

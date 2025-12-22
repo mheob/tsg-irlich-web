@@ -29,7 +29,21 @@ export const newsArticleContentQuery = defineQuery(`
 			lastName,
 			jobTitle,
 		},
-		body[],
+		body[] {
+			...,
+			text[] {
+				...,
+				markDefs[] {
+					...,
+					_type == "internalLink" => {
+						"link": link-> {
+							_type,
+							"slug": slug.current
+						}
+					}
+				}
+			}
+		},
 		categories[] -> {
 			"slug": slug.current,
 			title

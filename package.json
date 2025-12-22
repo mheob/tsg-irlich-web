@@ -50,7 +50,7 @@
 		"prettier": "^3.7.4",
 		"prettier-plugin-tailwindcss": "^0.7.2",
 		"taze": "^19.9.2",
-		"turbo": "^2.6.3",
+		"turbo": "^2.7.1",
 		"typescript": "^5.9.3"
 	},
 	"packageManager": "bun@1.3.5",

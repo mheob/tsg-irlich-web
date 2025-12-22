@@ -319,6 +319,22 @@
 		1px 1px 0 #000;
 }
 
+@utility prose {
+	--tw-prose-links: var(--color-primary);
+	--tw-prose-quotes: var(--color-muted-foreground);
+	--tw-prose-quote-borders: var(--color-secondary);
+
+	a:hover {
+		color: var(--color-primary-light);
+	}
+
+	blockquote {
+		padding-inline: 1.5rem;
+		padding-block: 0.5rem;
+	}
+}
+
+
 @layer base {
 	*, ::before, ::after {
 		border-color: var(--color-border);
