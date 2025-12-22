@@ -52,97 +52,21 @@ export type SingleGroupPage = {
 	};
 };
 
-export type NewsOverviewCategory = {
+export type Privacy = {
 	_id: string;
-	_type: 'newsOverviewCategory';
+	_type: 'privacy';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
-	title: string;
-	subtitle: string;
-	content: {
-		contactPersonsSection: ContactPersonsSection;
-	};
-};
-
-export type NewsArticlePage = {
-	_id: string;
-	_type: 'news-article-page';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-};
-
-export type GroupsPage = {
-	_id: string;
-	_type: 'groupsPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
+	slug?: Slug;
 	title: string;
 	subtitle: string;
 	meta?: MetaFields;
-	content: {
-		groupsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		stats: Array<
-			{
-				_key: string;
-			} & Stats
-		>;
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-	};
-};
-
-export type Spacer = {
-	_type: 'spacer';
-	variant?: 'default';
-};
-
-export type SanityImageAssetReference = {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-};
-
-export type MainImage = {
-	_type: 'mainImage';
-	asset?: SanityImageAssetReference;
-	media?: unknown;
-	hotspot?: SanityImageHotspot;
-	crop?: SanityImageCrop;
-	alt: string;
-	description?: string;
-};
-
-export type Grid = {
-	_type: 'grid';
-	title?: string;
-	columns: Columns;
-	items?: Array<
-		| ({
-				_key: string;
-		  } & MainImage)
-		| ({
-				_key: string;
-		  } & BlockContent)
-	>;
-};
-
-export type Blockquote = {
-	_type: 'blockquote';
-	quote?: string;
-	author?: string;
+	introText: BlockContent;
+	address: string;
+	phone?: string;
+	email: string;
+	content: BlockContent;
 };
 
 export type HomeReference = {
@@ -249,7 +173,7 @@ export type BlockContent = {
 		listItem?: 'bullet' | 'number';
 		markDefs?: Array<
 			| {
-					reference?:
+					link:
 						| HomeReference
 						| AboutUsReference
 						| ContactReference
@@ -267,7 +191,7 @@ export type BlockContent = {
 					_key: string;
 			  }
 			| {
-					url?: string;
+					href: string;
 					_type: 'externalLink';
 					_key: string;
 			  }
@@ -276,6 +200,195 @@ export type BlockContent = {
 		_type: 'block';
 		_key: string;
 	}>;
+};
+
+export type Slug = {
+	_type: 'slug';
+	current: string;
+	source?: string;
+};
+
+export type NewsOverviewCategory = {
+	_id: string;
+	_type: 'newsOverviewCategory';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	subtitle: string;
+	content: {
+		contactPersonsSection: ContactPersonsSection;
+	};
+};
+
+export type NewsArticlePage = {
+	_id: string;
+	_type: 'news-article-page';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	subtitle: string;
+};
+
+export type Imprint = {
+	_id: string;
+	_type: 'imprint';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	intro?: SimpleBlockContent;
+	address: SimpleBlockContent;
+	registerCourt: string;
+	registerNo: string;
+	represented: SimpleBlockContent;
+	email: string;
+	contactForm: InternalLink;
+	responsible: string;
+	consumerDisputeResolution: string;
+	technicalQuestionsName: string;
+	technicalQuestionsEmail: string;
+	support: SimpleBlockContent;
+	credits: SimpleBlockContent;
+};
+
+export type SimpleBlockContent = {
+	_type: 'simpleBlockContent';
+	text?: Array<{
+		children?: Array<{
+			marks?: Array<string>;
+			text?: string;
+			_type: 'span';
+			_key: string;
+		}>;
+		style?: 'normal';
+		listItem?: 'bullet' | 'number';
+		markDefs?: Array<{
+			href?: string;
+			_type: 'link';
+			_key: string;
+		}>;
+		level?: number;
+		_type: 'block';
+		_key: string;
+	}>;
+};
+
+export type InternalLink = {
+	_type: 'internalLink';
+	link:
+		| HomeReference
+		| AboutUsReference
+		| ContactReference
+		| GroupAdminReference
+		| GroupChildrenGymnasticsReference
+		| GroupCoursesReference
+		| GroupDanceReference
+		| GroupOtherSportsReference
+		| GroupSoccerReference
+		| GroupTaekwondoReference
+		| MembershipReference
+		| NewsArticleReference
+		| NewsOverviewReference;
+};
+
+export type GroupsPage = {
+	_id: string;
+	_type: 'groupsPage';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: {
+		groupsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+	};
+};
+
+export type DepartmentsPage = {
+	_id: string;
+	_type: 'departmentsPage';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: {
+		departmentsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
+		contactPersonsSection: ContactPersonsSection;
+	};
+};
+
+export type Spacer = {
+	_type: 'spacer';
+	variant?: 'default';
+};
+
+export type SanityImageAssetReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+};
+
+export type MainImage = {
+	_type: 'mainImage';
+	asset?: SanityImageAssetReference;
+	media?: unknown;
+	hotspot?: SanityImageHotspot;
+	crop?: SanityImageCrop;
+	alt: string;
+	description?: string;
+};
+
+export type Grid = {
+	_type: 'grid';
+	title?: string;
+	columns: Columns;
+	items?: Array<
+		| ({
+				_key: string;
+		  } & MainImage)
+		| ({
+				_key: string;
+		  } & BlockContent)
+	>;
+};
+
+export type Blockquote = {
+	_type: 'blockquote';
+	quote?: string;
+	author?: string;
 };
 
 export type VenueReference = {
@@ -311,28 +424,6 @@ export type SocialFields = {
 	youtube?: string;
 };
 
-export type SimpleBlockContent = {
-	_type: 'simpleBlockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}>;
-		style?: 'normal';
-		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}>;
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}>;
-};
-
 export type MetaFields = {
 	_type: 'metaFields';
 	metaTitle?: string;
@@ -347,115 +438,6 @@ export type MetaFields = {
 	};
 };
 
-export type DepartmentsPageReference = {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'departmentsPage';
-};
-
-export type PrivacyReference = {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'privacy';
-};
-
-export type ImprintReference = {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'imprint';
-};
-
-export type InternalLink = {
-	_type: 'internalLink';
-	title: string;
-	link?:
-		| NewsArticleReference
-		| HomeReference
-		| AboutUsReference
-		| ContactReference
-		| DepartmentsPageReference
-		| MembershipReference
-		| NewsOverviewReference
-		| PrivacyReference
-		| ImprintReference;
-};
-
-export type Imprint = {
-	_id: string;
-	_type: 'imprint';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	intro?: SimpleBlockContent;
-	address: SimpleBlockContent;
-	registerCourt: string;
-	registerNo: string;
-	represented: SimpleBlockContent;
-	email: string;
-	contactForm: InternalLink;
-	responsible: string;
-	consumerDisputeResolution: string;
-	technicalQuestionsName: string;
-	technicalQuestionsEmail: string;
-	support: SimpleBlockContent;
-	credits: SimpleBlockContent;
-};
-
-export type Slug = {
-	_type: 'slug';
-	current: string;
-	source?: string;
-};
-
-export type Privacy = {
-	_id: string;
-	_type: 'privacy';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	introText: BlockContent;
-	address: string;
-	phone?: string;
-	email: string;
-	content: BlockContent;
-};
-
-export type DepartmentsPage = {
-	_id: string;
-	_type: 'departmentsPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		departmentsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		stats: Array<
-			{
-				_key: string;
-			} & Stats
-		>;
-		contactPersonsSection: ContactPersonsSection;
-	};
-};
-
 export type ImageCard = {
 	_type: 'imageCard';
 	title: string;
@@ -466,8 +448,7 @@ export type ImageCard = {
 
 export type ExternalLink = {
 	_type: 'externalLink';
-	title: string;
-	url: string;
+	href: string;
 };
 
 export type ExtendedImage = {
@@ -1550,14 +1531,7 @@ export type AllSanitySchemaTypes =
 	| PersonReference
 	| ContactPersonsSection
 	| SingleGroupPage
-	| NewsOverviewCategory
-	| NewsArticlePage
-	| GroupsPage
-	| Spacer
-	| SanityImageAssetReference
-	| MainImage
-	| Grid
-	| Blockquote
+	| Privacy
 	| HomeReference
 	| AboutUsReference
 	| ContactReference
@@ -1572,20 +1546,24 @@ export type AllSanitySchemaTypes =
 	| NewsArticleReference
 	| NewsOverviewReference
 	| BlockContent
+	| Slug
+	| NewsOverviewCategory
+	| NewsArticlePage
+	| Imprint
+	| SimpleBlockContent
+	| InternalLink
+	| GroupsPage
+	| DepartmentsPage
+	| Spacer
+	| SanityImageAssetReference
+	| MainImage
+	| Grid
+	| Blockquote
 	| VenueReference
 	| TrainingTime
 	| Stats
 	| SocialFields
-	| SimpleBlockContent
 	| MetaFields
-	| DepartmentsPageReference
-	| PrivacyReference
-	| ImprintReference
-	| InternalLink
-	| Imprint
-	| Slug
-	| Privacy
-	| DepartmentsPage
 	| ImageCard
 	| ExternalLink
 	| ExtendedImage
@@ -1654,12 +1632,12 @@ export type MainNavigationQueryResult = {
 		| {
 				_key: string;
 				slug: string | '#!';
-				title: string;
+				title: null;
 		  }
 		| {
 				_key: string;
 				slug: '#!';
-				title: string;
+				title: null;
 		  }
 	>;
 } | null;
@@ -1904,7 +1882,7 @@ export type ImprintPageQueryResult = {
 	represented: SimpleBlockContent;
 	email: string;
 	contactForm: {
-		title: string;
+		title: null;
 		slug: string | null;
 	};
 	responsible: string;
@@ -2025,7 +2003,7 @@ export type NewsArticleHeroQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleContentQuery
-// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[],		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		meta { metaTitle, metaDescription, openGraphImage},		publishedAt,		"slug": slug.current,		title,	}
+// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[] {			...,			text[] {				...,				markDefs[] {					...,					_type == "internalLink" => {						"link": link-> {							_type,							"slug": slug.current						}					}				}			}		},		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		meta { metaTitle, metaDescription, openGraphImage},		publishedAt,		"slug": slug.current,		title,	}
 export type NewsArticleContentQueryResult = {
 	author: {
 		email: string;
@@ -2035,21 +2013,126 @@ export type NewsArticleContentQueryResult = {
 		jobTitle: string;
 	};
 	body: Array<
-		| ({
+		| {
 				_key: string;
-		  } & BlockContent)
-		| ({
+				_type: 'blockContent';
+				text: Array<{
+					children?: Array<{
+						marks?: Array<string>;
+						text?: string;
+						_type: 'span';
+						_key: string;
+					}>;
+					style?: 'blockquote' | 'h2' | 'h3' | 'normal';
+					listItem?: 'bullet' | 'number';
+					markDefs: Array<
+						| {
+								href: string;
+								_type: 'externalLink';
+								_key: string;
+						  }
+						| {
+								link:
+									| {
+											_type: 'aboutUs';
+											slug: string | null;
+									  }
+									| {
+											_type: 'contact';
+											slug: string | null;
+									  }
+									| {
+											_type: 'group.admin';
+											slug: string;
+									  }
+									| {
+											_type: 'group.children-gymnastics';
+											slug: string;
+									  }
+									| {
+											_type: 'group.courses';
+											slug: string;
+									  }
+									| {
+											_type: 'group.dance';
+											slug: string;
+									  }
+									| {
+											_type: 'group.other-sports';
+											slug: string;
+									  }
+									| {
+											_type: 'group.soccer';
+											slug: string;
+									  }
+									| {
+											_type: 'group.taekwondo';
+											slug: string;
+									  }
+									| {
+											_type: 'home';
+											slug: string | null;
+									  }
+									| {
+											_type: 'membership';
+											slug: string | null;
+									  }
+									| {
+											_type: 'news.article';
+											slug: string;
+									  }
+									| {
+											_type: 'newsOverview';
+											slug: string | null;
+									  };
+								_type: 'internalLink';
+								_key: string;
+						  }
+					> | null;
+					level?: number;
+					_type: 'block';
+					_key: string;
+				}> | null;
+		  }
+		| {
 				_key: string;
-		  } & Blockquote)
-		| ({
+				_type: 'blockquote';
+				quote?: string;
+				author?: string;
+				text: null;
+		  }
+		| {
 				_key: string;
-		  } & Grid)
-		| ({
+				_type: 'grid';
+				title?: string;
+				columns: Columns;
+				items?: Array<
+					| ({
+							_key: string;
+					  } & BlockContent)
+					| ({
+							_key: string;
+					  } & MainImage)
+				>;
+				text: null;
+		  }
+		| {
 				_key: string;
-		  } & MainImage)
-		| ({
+				_type: 'mainImage';
+				asset?: SanityImageAssetReference;
+				media?: unknown;
+				hotspot?: SanityImageHotspot;
+				crop?: SanityImageCrop;
+				alt: string;
+				description?: string;
+				text: null;
+		  }
+		| {
 				_key: string;
-		  } & Spacer)
+				_type: 'spacer';
+				variant?: 'default';
+				text: null;
+		  }
 	> | null;
 	categories: Array<{
 		slug: string;
@@ -2719,7 +2802,7 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\ttitle,\n\t\t\t"slug": link->slug.current\n\t\t}\n\t}\n': ImprintPageQueryResult;
 		'\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
-		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[],\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
+		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
 		'\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
 		'\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
 		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;

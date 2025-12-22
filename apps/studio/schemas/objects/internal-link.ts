@@ -1,34 +1,33 @@
-import { RiLinksLine } from 'react-icons/ri';
+import { LinkIcon } from '@sanity/icons';
 import { defineField } from 'sanity';
 
 const internalLink = defineField({
 	title: 'Internal Link',
 	name: 'internalLink',
 	type: 'object',
-	icon: RiLinksLine,
+	icon: LinkIcon,
 	fields: [
-		{
-			title: 'Title',
-			name: 'title',
-			type: 'string',
-			validation: Rule => Rule.required(),
-		},
 		{
 			title: 'Link',
 			name: 'link',
 			type: 'reference',
+			description: 'Internen Link hinzufügen',
 			to: [
-				{ type: 'news.article' },
-				// Single Pages
 				{ type: 'home' },
 				{ type: 'aboutUs' },
 				{ type: 'contact' },
-				{ type: 'departmentsPage' },
+				{ type: 'group.admin' },
+				{ type: 'group.children-gymnastics' },
+				{ type: 'group.courses' },
+				{ type: 'group.dance' },
+				{ type: 'group.other-sports' },
+				{ type: 'group.soccer' },
+				{ type: 'group.taekwondo' },
 				{ type: 'membership' },
+				{ type: 'news.article' },
 				{ type: 'newsOverview' },
-				{ type: 'privacy' },
-				{ type: 'imprint' },
 			],
+			validation: Rule => Rule.required().error('Der Link ist erforderlich'),
 		},
 	],
 });

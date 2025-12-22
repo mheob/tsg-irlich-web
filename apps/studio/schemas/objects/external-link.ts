@@ -1,23 +1,17 @@
-import { RiExternalLinkLine } from 'react-icons/ri';
+import { EarthGlobeIcon } from '@sanity/icons';
 import { defineField } from 'sanity';
 
 const externalLink = defineField({
 	title: 'External Link',
 	name: 'externalLink',
 	type: 'object',
-	icon: RiExternalLinkLine,
+	icon: EarthGlobeIcon,
 	fields: [
 		{
-			title: 'Title',
-			name: 'title',
-			type: 'string',
-			validation: Rule => Rule.required().error('Der Titel ist erforderlich'),
-		},
-		{
 			title: 'URL',
-			name: 'url',
+			name: 'href',
 			type: 'url',
-			description: 'Add external link',
+			description: 'Externen Link hinzufügen',
 			validation: Rule => Rule.required().error('Die URL ist erforderlich'),
 		},
 	],
