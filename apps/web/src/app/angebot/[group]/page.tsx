@@ -30,13 +30,13 @@ export async function generateMetadata({
 	const image = getOGImage(groupParameter);
 
 	return {
-		description: page.meta?.metaDescription ?? '',
+		description: page.metaDescription ?? '',
 		openGraph: {
-			description: page.meta?.metaDescription ?? '',
+			description: page.metaDescription ?? '',
 			images: image ?? [],
-			title: `${currentDepartment?.title ?? ''} bei der TSG Irlich`,
+			title: `${currentDepartment?.title ?? 'Sport'} bei der TSG Irlich`,
 		},
-		title: `${currentDepartment?.title ?? ''} bei der TSG Irlich`,
+		title: `${currentDepartment?.title ?? 'Sport'} bei der TSG Irlich`,
 	};
 }
 

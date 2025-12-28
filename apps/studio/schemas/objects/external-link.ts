@@ -13,16 +13,12 @@ const externalLink = defineField({
 			type: 'url',
 			description: 'Externen Link hinzufügen',
 			validation: Rule =>
-				Rule.required()
-					.custom((url: string) => {
-						if (!url) return true;
-						const internalPattern = /tsg-irlich\.de/i;
-						if (internalPattern.test(url)) {
-							return 'Interne URLs sollten stattdessen den Internen Link-Annotation verwenden';
-						}
-						return true;
-					})
-					.error('Die URL ist erforderlich'),
+				Rule.uri({
+					allowRelative: false,
+					scheme: ['http', 'https', 'mailto', 'tel'],
+				})
+					.min(6)
+					.error('Die URL ist ungültig.'),
 		},
 	],
 });
