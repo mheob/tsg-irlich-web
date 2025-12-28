@@ -39,7 +39,6 @@ export type SingleGroupPage = {
 	_rev: string;
 	title: string;
 	subtitle: string;
-	meta?: MetaFields;
 	content: {
 		contactPersonsSection: {
 			title: string;
@@ -304,7 +303,7 @@ export type GroupsPage = {
 	_rev: string;
 	title: string;
 	subtitle: string;
-	meta?: MetaFields;
+	metaDescription?: string;
 	content: {
 		groupsSection: {
 			title: string;
@@ -2268,7 +2267,6 @@ export type OfferGroupsGroupPageQueryResult = {
 	_rev: string;
 	title: string;
 	subtitle: string;
-	meta?: MetaFields;
 	content: {
 		contactPersonsSection: {
 			title: string;
@@ -2485,7 +2483,7 @@ export type OfferGroupsPageQueryResult = {
 	_rev: string;
 	title: string;
 	subtitle: string;
-	meta?: MetaFields;
+	metaDescription?: string;
 	content: {
 		groupsSection: {
 			title: string;

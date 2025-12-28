@@ -130,14 +130,6 @@
         },
         "optional": false
       },
-      "meta": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "metaFields"
-        },
-        "optional": true
-      },
       "content": {
         "type": "objectAttribute",
         "value": {
@@ -1563,11 +1555,10 @@
         },
         "optional": false
       },
-      "meta": {
+      "metaDescription": {
         "type": "objectAttribute",
         "value": {
-          "type": "inline",
-          "name": "metaFields"
+          "type": "string"
         },
         "optional": true
       },

@@ -1,10 +1,10 @@
-@media (min-width: 48rem) {
+@media (min-width: 64rem) {
 	.bg::after {
 		content: '';
 		position: absolute;
 		inset: 0;
 		background-image: url('../../icons/design/arrow-newsletter.svg');
-		background-position: 93% 75%;
+		background-position: 93% 60%;
 		background-repeat: no-repeat;
 		background-size: 120px;
 		z-index: -1;

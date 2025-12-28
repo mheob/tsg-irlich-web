@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const alertVariants = cva(
-	'relative w-full rounded-lg border px-6 py-3 text-sm [&>svg+div]:translate-y-[-4px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
+	'relative w-full rounded-lg border px-6 py-3 text-sm flex flex-row items-center [&>svg]:size-6 [&>svg]:mr-3 [&_p]:text-inherit',
 	{
 		defaultVariants: {
 			variant: 'default',

@@ -3,7 +3,6 @@ import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
 import { defaultHeroFields } from '@/shared/fields/general';
-import { metaField } from '@/shared/fields/meta';
 import { statsField } from '@/shared/sections/stats';
 
 import { contactPersons, groups, stats } from './_groups';
@@ -21,7 +20,16 @@ const groupsPage = defineType({
 		...defaultHeroFields,
 
 		// meta
-		metaField,
+		defineField({
+			title: 'Meta-Beschreibung (überschreibt die Standardbeschreibung)',
+			name: 'metaDescription',
+			type: 'text',
+			group: 'meta',
+			validation: Rule =>
+				Rule.min(130)
+					.max(160)
+					.warning('Die Beschreibung sollte idealerweise von 130 bis 160 Zeichen lang sein.'),
+		}),
 
 		// content
 		defineField({
