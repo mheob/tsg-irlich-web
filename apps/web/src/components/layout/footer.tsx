@@ -29,7 +29,7 @@ const contact: {
 
 const imprint: { href: string; label: string } = { href: '/impressum', label: 'Impressum' };
 const privacy: { href: string; label: string } = { href: '/datenschutz', label: 'Datenschutz' };
-const accessability: { href: string; label: string } = {
+const accessibility: { href: string; label: string } = {
 	href: '/barrierefreiheit',
 	label: 'Barrierefreiheit',
 };
@@ -112,8 +112,8 @@ export default async function Footer() {
 							{privacy?.label}
 						</Link>{' '}
 						|
-						<Link className="hover:text-secondary" href={accessability?.href}>
-							{accessability?.label}
+						<Link className="hover:text-secondary" href={accessibility?.href}>
+							{accessibility?.label}
 						</Link>
 						<a
 							aria-label="zum Seitenanfang springen"

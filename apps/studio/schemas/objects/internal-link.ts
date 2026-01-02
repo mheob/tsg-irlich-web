@@ -26,7 +26,7 @@ const internalLink = defineField({
 				{ type: 'membership' },
 				{ type: 'news.article' },
 				{ type: 'newsOverview' },
-				{ type: 'accessability' },
+				{ type: 'accessibility' },
 				{ type: 'privacy' },
 				{ type: 'imprint' },
 			],

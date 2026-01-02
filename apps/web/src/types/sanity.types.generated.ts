@@ -51,9 +51,60 @@ export type SingleGroupPage = {
 	};
 };
 
-export type Privacy = {
+export type NewsOverviewCategory = {
 	_id: string;
-	_type: 'privacy';
+	_type: 'newsOverviewCategory';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	subtitle: string;
+	content: {
+		contactPersonsSection: ContactPersonsSection;
+	};
+};
+
+export type NewsArticlePage = {
+	_id: string;
+	_type: 'news-article-page';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	subtitle: string;
+};
+
+export type GroupsPage = {
+	_id: string;
+	_type: 'groupsPage';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	title: string;
+	subtitle: string;
+	metaDescription?: string;
+	content: {
+		groupsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
+		contactPersonsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+	};
+};
+
+export type DepartmentsPage = {
+	_id: string;
+	_type: 'departmentsPage';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
@@ -61,11 +112,67 @@ export type Privacy = {
 	title: string;
 	subtitle: string;
 	meta?: MetaFields;
-	introText: BlockContent;
-	address: string;
-	phone?: string;
-	email: string;
-	content: BlockContent;
+	content: {
+		departmentsSection: {
+			title: string;
+			subtitle: string;
+			intro?: string;
+		};
+		stats: Array<
+			{
+				_key: string;
+			} & Stats
+		>;
+		contactPersonsSection: ContactPersonsSection;
+	};
+};
+
+export type Slug = {
+	_type: 'slug';
+	current: string;
+	source?: string;
+};
+
+export type Spacer = {
+	_type: 'spacer';
+	variant?: 'default';
+};
+
+export type SanityImageAssetReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+};
+
+export type MainImage = {
+	_type: 'mainImage';
+	asset?: SanityImageAssetReference;
+	media?: unknown;
+	hotspot?: SanityImageHotspot;
+	crop?: SanityImageCrop;
+	alt: string;
+	description?: string;
+};
+
+export type Grid = {
+	_type: 'grid';
+	title?: string;
+	columns: Columns;
+	items?: Array<
+		| ({
+				_key: string;
+		  } & MainImage)
+		| ({
+				_key: string;
+		  } & BlockContent)
+	>;
+};
+
+export type Blockquote = {
+	_type: 'blockquote';
+	quote?: string;
+	author?: string;
 };
 
 export type HomeReference = {
@@ -159,6 +266,27 @@ export type NewsOverviewReference = {
 	[internalGroqTypeReferenceTo]?: 'newsOverview';
 };
 
+export type AccessibilityReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'accessibility';
+};
+
+export type PrivacyReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'privacy';
+};
+
+export type ImprintReference = {
+	_ref: string;
+	_type: 'reference';
+	_weak?: boolean;
+	[internalGroqTypeReferenceTo]?: 'imprint';
+};
+
 export type BlockContent = {
 	_type: 'blockContent';
 	text?: Array<{
@@ -185,7 +313,10 @@ export type BlockContent = {
 						| GroupTaekwondoReference
 						| MembershipReference
 						| NewsArticleReference
-						| NewsOverviewReference;
+						| NewsOverviewReference
+						| AccessibilityReference
+						| PrivacyReference
+						| ImprintReference;
 					_type: 'internalLink';
 					_key: string;
 			  }
@@ -199,208 +330,6 @@ export type BlockContent = {
 		_type: 'block';
 		_key: string;
 	}>;
-};
-
-export type Slug = {
-	_type: 'slug';
-	current: string;
-	source?: string;
-};
-
-export type NewsOverviewCategory = {
-	_id: string;
-	_type: 'newsOverviewCategory';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-	content: {
-		contactPersonsSection: ContactPersonsSection;
-	};
-};
-
-export type NewsArticlePage = {
-	_id: string;
-	_type: 'news-article-page';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-};
-
-export type Imprint = {
-	_id: string;
-	_type: 'imprint';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	intro?: SimpleBlockContent;
-	address: SimpleBlockContent;
-	registerCourt: string;
-	registerNo: string;
-	represented: SimpleBlockContent;
-	email: string;
-	contactForm: InternalLink;
-	responsible: string;
-	consumerDisputeResolution: string;
-	technicalQuestionsName: string;
-	technicalQuestionsEmail: string;
-	support: SimpleBlockContent;
-	credits: SimpleBlockContent;
-};
-
-export type SimpleBlockContent = {
-	_type: 'simpleBlockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}>;
-		style?: 'normal';
-		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}>;
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}>;
-};
-
-export type InternalLink = {
-	_type: 'internalLink';
-	link:
-		| HomeReference
-		| AboutUsReference
-		| ContactReference
-		| GroupAdminReference
-		| GroupChildrenGymnasticsReference
-		| GroupCoursesReference
-		| GroupDanceReference
-		| GroupOtherSportsReference
-		| GroupSoccerReference
-		| GroupTaekwondoReference
-		| MembershipReference
-		| NewsArticleReference
-		| NewsOverviewReference;
-};
-
-export type GroupsPage = {
-	_id: string;
-	_type: 'groupsPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-	metaDescription?: string;
-	content: {
-		groupsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		stats: Array<
-			{
-				_key: string;
-			} & Stats
-		>;
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-	};
-};
-
-export type DepartmentsPage = {
-	_id: string;
-	_type: 'departmentsPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		departmentsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		stats: Array<
-			{
-				_key: string;
-			} & Stats
-		>;
-		contactPersonsSection: ContactPersonsSection;
-	};
-};
-
-export type Accessability = {
-	_id: string;
-	_type: 'accessability';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: BlockContent;
-};
-
-export type Spacer = {
-	_type: 'spacer';
-	variant?: 'default';
-};
-
-export type SanityImageAssetReference = {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-};
-
-export type MainImage = {
-	_type: 'mainImage';
-	asset?: SanityImageAssetReference;
-	media?: unknown;
-	hotspot?: SanityImageHotspot;
-	crop?: SanityImageCrop;
-	alt: string;
-	description?: string;
-};
-
-export type Grid = {
-	_type: 'grid';
-	title?: string;
-	columns: Columns;
-	items?: Array<
-		| ({
-				_key: string;
-		  } & MainImage)
-		| ({
-				_key: string;
-		  } & BlockContent)
-	>;
-};
-
-export type Blockquote = {
-	_type: 'blockquote';
-	quote?: string;
-	author?: string;
 };
 
 export type VenueReference = {
@@ -436,6 +365,28 @@ export type SocialFields = {
 	youtube?: string;
 };
 
+export type SimpleBlockContent = {
+	_type: 'simpleBlockContent';
+	text?: Array<{
+		children?: Array<{
+			marks?: Array<string>;
+			text?: string;
+			_type: 'span';
+			_key: string;
+		}>;
+		style?: 'normal';
+		listItem?: 'bullet' | 'number';
+		markDefs?: Array<{
+			href?: string;
+			_type: 'link';
+			_key: string;
+		}>;
+		level?: number;
+		_type: 'block';
+		_key: string;
+	}>;
+};
+
 export type MetaFields = {
 	_type: 'metaFields';
 	metaTitle?: string;
@@ -448,6 +399,27 @@ export type MetaFields = {
 		alt?: string;
 		_type: 'image';
 	};
+};
+
+export type InternalLink = {
+	_type: 'internalLink';
+	link:
+		| HomeReference
+		| AboutUsReference
+		| ContactReference
+		| GroupAdminReference
+		| GroupChildrenGymnasticsReference
+		| GroupCoursesReference
+		| GroupDanceReference
+		| GroupOtherSportsReference
+		| GroupSoccerReference
+		| GroupTaekwondoReference
+		| MembershipReference
+		| NewsArticleReference
+		| NewsOverviewReference
+		| AccessibilityReference
+		| PrivacyReference
+		| ImprintReference;
 };
 
 export type ImageCard = {
@@ -815,6 +787,61 @@ export type Membership = {
 			} & PersonReference
 		>;
 	};
+};
+
+export type Accessibility = {
+	_id: string;
+	_type: 'accessibility';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: BlockContent;
+};
+
+export type Privacy = {
+	_id: string;
+	_type: 'privacy';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	introText: BlockContent;
+	address: string;
+	phone?: string;
+	email: string;
+	content: BlockContent;
+};
+
+export type Imprint = {
+	_id: string;
+	_type: 'imprint';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	intro?: SimpleBlockContent;
+	address: SimpleBlockContent;
+	registerCourt: string;
+	registerNo: string;
+	represented: SimpleBlockContent;
+	email: string;
+	contactForm: InternalLink;
+	responsible: string;
+	consumerDisputeResolution: string;
+	technicalQuestionsName: string;
+	technicalQuestionsEmail: string;
+	support: SimpleBlockContent;
+	credits: SimpleBlockContent;
 };
 
 export type NewsOverview = {
@@ -1543,7 +1570,16 @@ export type AllSanitySchemaTypes =
 	| PersonReference
 	| ContactPersonsSection
 	| SingleGroupPage
-	| Privacy
+	| NewsOverviewCategory
+	| NewsArticlePage
+	| GroupsPage
+	| DepartmentsPage
+	| Slug
+	| Spacer
+	| SanityImageAssetReference
+	| MainImage
+	| Grid
+	| Blockquote
 	| HomeReference
 	| AboutUsReference
 	| ContactReference
@@ -1557,26 +1593,17 @@ export type AllSanitySchemaTypes =
 	| MembershipReference
 	| NewsArticleReference
 	| NewsOverviewReference
+	| AccessibilityReference
+	| PrivacyReference
+	| ImprintReference
 	| BlockContent
-	| Slug
-	| NewsOverviewCategory
-	| NewsArticlePage
-	| Imprint
-	| SimpleBlockContent
-	| InternalLink
-	| GroupsPage
-	| DepartmentsPage
-	| Accessability
-	| Spacer
-	| SanityImageAssetReference
-	| MainImage
-	| Grid
-	| Blockquote
 	| VenueReference
 	| TrainingTime
 	| Stats
 	| SocialFields
+	| SimpleBlockContent
 	| MetaFields
+	| InternalLink
 	| ImageCard
 	| ExternalLink
 	| ExtendedImage
@@ -1600,6 +1627,9 @@ export type AllSanitySchemaTypes =
 	| NewsArticle
 	| AboutUs
 	| Membership
+	| Accessibility
+	| Privacy
+	| Imprint
 	| NewsOverview
 	| GroupTaekwondo
 	| GroupSoccer
@@ -1720,12 +1750,12 @@ export type AboutUsPageQueryResult = {
 	};
 } | null;
 
-// Source: src/lib/sanity/queries/pages/accessability.ts
-// Variable: accessabilityPageQuery
-// Query: *[_type == 'accessability'][0]
-export type AccessabilityPageQueryResult = {
+// Source: src/lib/sanity/queries/pages/accessibility.ts
+// Variable: accessibilityPageQuery
+// Query: *[_type == 'accessibility'][0]
+export type AccessibilityPageQueryResult = {
 	_id: string;
-	_type: 'accessability';
+	_type: 'accessibility';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
@@ -2067,6 +2097,10 @@ export type NewsArticleContentQueryResult = {
 											slug: string | null;
 									  }
 									| {
+											_type: 'accessibility';
+											slug: string | null;
+									  }
+									| {
 											_type: 'contact';
 											slug: string | null;
 									  }
@@ -2103,6 +2137,10 @@ export type NewsArticleContentQueryResult = {
 											slug: string | null;
 									  }
 									| {
+											_type: 'imprint';
+											slug: string | null;
+									  }
+									| {
 											_type: 'membership';
 											slug: string | null;
 									  }
@@ -2112,6 +2150,10 @@ export type NewsArticleContentQueryResult = {
 									  }
 									| {
 											_type: 'newsOverview';
+											slug: string | null;
+									  }
+									| {
+											_type: 'privacy';
 											slug: string | null;
 									  };
 								_type: 'internalLink';
@@ -2824,7 +2866,7 @@ declare module '@sanity/client' {
 	interface SanityQueries {
 		"\n\t*[_type == 'site-settings'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t\"slug\": coalesce(link->slug.current, '#!'),\n\t\t\ttitle\n\t\t}\n\t}\n": MainNavigationQueryResult;
 		'\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
-		"*[_type == 'accessability'][0]": AccessabilityPageQueryResult;
+		"*[_type == 'accessibility'][0]": AccessibilityPageQueryResult;
 		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
 		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t}\n": HomePageTestimonialsQueryResult;

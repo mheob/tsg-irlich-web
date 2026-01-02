@@ -7,9 +7,9 @@ import { general, meta } from '@/shared/field-groups';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
-const accessabilityPage = defineType({
+const accessibilityPage = defineType({
 	title: 'Barrierefreiheit',
-	name: 'accessability',
+	name: 'accessibility',
 	type: 'document',
 	icon: RiWheelchairLine,
 	groups: [general, meta, { name: 'content', title: 'Barrierefreiheit' }],
@@ -37,4 +37,4 @@ const accessabilityPage = defineType({
 	},
 });
 
-export default accessabilityPage;
+export default accessibilityPage;
