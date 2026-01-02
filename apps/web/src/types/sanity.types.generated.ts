@@ -190,7 +190,7 @@ export type BlockContent = {
 					_key: string;
 			  }
 			| {
-					href: string;
+					href?: string;
 					_type: 'externalLink';
 					_key: string;
 			  }
@@ -348,6 +348,19 @@ export type DepartmentsPage = {
 	};
 };
 
+export type Accessability = {
+	_id: string;
+	_type: 'accessability';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: BlockContent;
+};
+
 export type Spacer = {
 	_type: 'spacer';
 	variant?: 'default';
@@ -447,7 +460,7 @@ export type ImageCard = {
 
 export type ExternalLink = {
 	_type: 'externalLink';
-	href: string;
+	href?: string;
 };
 
 export type ExtendedImage = {
@@ -1553,6 +1566,7 @@ export type AllSanitySchemaTypes =
 	| InternalLink
 	| GroupsPage
 	| DepartmentsPage
+	| Accessability
 	| Spacer
 	| SanityImageAssetReference
 	| MainImage
@@ -1704,6 +1718,22 @@ export type AboutUsPageQueryResult = {
 			}>;
 		};
 	};
+} | null;
+
+// Source: src/lib/sanity/queries/pages/accessability.ts
+// Variable: accessabilityPageQuery
+// Query: *[_type == 'accessability'][0]
+export type AccessabilityPageQueryResult = {
+	_id: string;
+	_type: 'accessability';
+	_createdAt: string;
+	_updatedAt: string;
+	_rev: string;
+	slug?: Slug;
+	title: string;
+	subtitle: string;
+	meta?: MetaFields;
+	content: BlockContent;
 } | null;
 
 // Source: src/lib/sanity/queries/pages/contact.ts
@@ -2026,7 +2056,7 @@ export type NewsArticleContentQueryResult = {
 					listItem?: 'bullet' | 'number';
 					markDefs: Array<
 						| {
-								href: string;
+								href?: string;
 								_type: 'externalLink';
 								_key: string;
 						  }
@@ -2794,6 +2824,7 @@ declare module '@sanity/client' {
 	interface SanityQueries {
 		"\n\t*[_type == 'site-settings'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t\"slug\": coalesce(link->slug.current, '#!'),\n\t\t\ttitle\n\t\t}\n\t}\n": MainNavigationQueryResult;
 		'\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
+		"*[_type == 'accessability'][0]": AccessabilityPageQueryResult;
 		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
 		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t}\n": HomePageTestimonialsQueryResult;

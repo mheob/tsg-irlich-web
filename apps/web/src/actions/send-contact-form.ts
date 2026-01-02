@@ -24,7 +24,7 @@ export const sendContactForm = actionClient
 			}),
 			replyTo: email,
 			subject: `Webseiten-Kontaktformular: Neue Nachricht von ${name}`,
-			to: [/*receiver.email,*/ 'it@tsg-irlich.de'],
+			to: [receiver?.email ?? 'it@tsg-irlich.de'],
 		});
 
 		if (error) {

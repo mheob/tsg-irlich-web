@@ -7,6 +7,7 @@ import { media } from 'sanity-plugin-media';
 import { structureTool } from 'sanity/structure';
 
 import aboutUsPage from '@/schemas/single-pages/about-us';
+import accessabilityPage from '@/schemas/single-pages/accessability';
 import contactPage from '@/schemas/single-pages/contact';
 import groupsPage from '@/schemas/single-pages/groups';
 import homePage from '@/schemas/single-pages/home';
@@ -43,6 +44,7 @@ export function getPlugins(): PluginOptions[] {
 				newsOverviewCategoryPage,
 				groupsPage,
 				singleGroupPage,
+				accessabilityPage,
 				privacyPage,
 				imprintPage,
 				siteSettings,
