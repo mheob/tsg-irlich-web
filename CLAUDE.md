@@ -16,29 +16,27 @@ containing:
 
 ### Root Commands (use these for most tasks)
 
+Use `nr` (from @antfu/ni) as the preferred command runner:
+
 ```bash
 # Development
-bun run dev                    # Start all apps in development mode
-turbo dev                   # Alternative using turbo directly
+nr dev                         # Start all apps in development mode
+nr dev:email                   # Start React Email preview server
 
 # Building
-bun run build                  # Build all apps
-bun run build:affected         # Build only affected packages
-turbo build --affected      # Alternative using turbo directly
+nr build                       # Build all apps
+nr build:affected              # Build only affected packages
 
 # Linting & Code Quality
-bun run lint                   # Lint all apps
-bun run lint:affected          # Lint only affected packages
-bun run lint:root              # Lint root directory files
-bun run lint:cspell            # Run spell check
+nr lint                        # Lint all apps
+nr lint:affected               # Lint only affected packages
+nr lint:root                   # Lint root directory files
+nr lint:cspell                 # Run spell check
 
 # Type Checking & Generation
-bun run typecheck              # Type check all apps
-bun run typegen:sanity         # Generate Sanity types for web app
-bun run typegen:routes         # Generate Next.js route types
-
-# Email Development
-bun run dev:email              # Start React Email preview server
+nr typecheck                   # Type check all apps
+nr typegen:sanity              # Generate Sanity types for web app
+nr typegen:routes              # Generate Next.js route types
 ```
 
 ### Individual App Commands
@@ -46,27 +44,27 @@ bun run dev:email              # Start React Email preview server
 ```bash
 # Web app (apps/web)
 cd apps/web
-bun run dev                    # Next.js dev server
-bun run build                  # Production build
-bun run start                  # Start production server
-bun run lint                   # ESLint with auto-fix
-bun run typecheck              # Type check with TypeScript
-bun run typegen:sanity         # Generate Sanity types
-bun run typegen:routes         # Generate Next.js route types
+nr dev                         # Next.js dev server
+nr build                       # Production build
+nr start                       # Start production server
+nr lint                        # ESLint with auto-fix
+nr typecheck                   # Type check with TypeScript
+nr typegen:sanity              # Generate Sanity types
+nr typegen:routes              # Generate Next.js route types
 
 # Studio app (apps/studio)
 cd apps/studio
-bun run dev                    # Sanity Studio development
-bun run build                  # Build Sanity Studio
-bun run deploy                 # Deploy studio to Sanity
-bun run extract-types          # Extract schema types for typegen
-bun run typecheck              # Type check with TypeScript
+nr dev                         # Sanity Studio development
+nr build                       # Build Sanity Studio
+nr deploy                      # Deploy studio to Sanity
+nr extract-types               # Extract schema types for typegen
+nr typecheck                   # Type check with TypeScript
 
 # Email package (packages/email)
 cd packages/email
-bun run dev:email              # React Email preview server (port 3001)
-bun run build                  # Build email templates
-bun run export                 # Export email templates
+nr dev:email                   # React Email preview server (port 3001)
+nr build                       # Build email templates
+nr export                      # Export email templates
 ```
 
 ## Architecture & Code Organization
@@ -137,12 +135,8 @@ bun run export                 # Export email templates
 ### Type Generation Workflow
 
 ```bash
-# After schema changes, always run:
-cd apps/studio && bun run extract-types   # Extract from studio
-cd apps/web && bun run typegen:sanity     # Generate types for web
-
-# Or from root:
-turbo extract-types && turbo typegen:sanity
+# After schema changes, always run from root:
+nr extract-types && nr typegen:sanity
 ```
 
 ## Environment & Configuration
