@@ -32,6 +32,7 @@ import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
 import aboutUsPage from './single-pages/about-us';
+import accessibilityPage from './single-pages/accessibility';
 import contactPage from './single-pages/contact';
 import groupsPage from './single-pages/groups';
 import homePage from './single-pages/home';
@@ -91,6 +92,7 @@ export const schemaTypes = [
 
 	// Single Pages
 	aboutUsPage,
+	accessibilityPage,
 	contactPage,
 	departmentsPage,
 	groupsPage,

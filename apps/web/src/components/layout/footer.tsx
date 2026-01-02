@@ -1,3 +1,5 @@
+// cSpell:words barrierefreiheit
+
 import { TSGLogo } from '@tsgi-web/shared';
 import { ArrowUp, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
@@ -26,9 +28,11 @@ const contact: {
 };
 
 const imprint: { href: string; label: string } = { href: '/impressum', label: 'Impressum' };
-
 const privacy: { href: string; label: string } = { href: '/datenschutz', label: 'Datenschutz' };
-
+const accessibility: { href: string; label: string } = {
+	href: '/barrierefreiheit',
+	label: 'Barrierefreiheit',
+};
 const currentYear = new Date().getFullYear();
 
 export default async function Footer() {
@@ -96,8 +100,8 @@ export default async function Footer() {
 					<div className="mt-4 md:mt-0">
 						©{currentYear} TSG Irlich. Alle Rechte vorbehalten. |{' '}
 						<Link className="text-secondary font-bold hover:text-white" href="/kontakt/feedback">
-							Beta-Feedback geben
-						</Link>{' '}
+							Feedback geben
+						</Link>
 					</div>
 					<nav className="flex items-center gap-4">
 						<Link className="hover:text-secondary" href={imprint?.href}>
@@ -106,6 +110,10 @@ export default async function Footer() {
 						|
 						<Link className="hover:text-secondary" href={privacy?.href}>
 							{privacy?.label}
+						</Link>{' '}
+						|
+						<Link className="hover:text-secondary" href={accessibility?.href}>
+							{accessibility?.label}
 						</Link>
 						<a
 							aria-label="zum Seitenanfang springen"

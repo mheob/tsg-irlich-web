@@ -43,7 +43,7 @@ export function FeedbackTypeField({ form }: Readonly<FeedbackTypeFieldProps>) {
 								if (value) field.onChange(value);
 							}}
 							className="flex-col items-start justify-start sm:flex-row sm:items-center sm:gap-4"
-							defaultValue="question"
+							defaultValue="bug"
 							type="single"
 							value={field.value}
 						>
