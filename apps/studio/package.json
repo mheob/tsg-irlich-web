@@ -29,7 +29,7 @@
 		"sanity-plugin-media": "^4.1.1",
 		"slugify": "^1.6.6",
 		"styled-components": "^6.1.19",
-		"zod": "^4.2.1"
+		"zod": "^4.3.4"
 	},
 	"devDependencies": {
 		"@types/react": "^19.2.7",

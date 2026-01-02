@@ -2840,6 +2840,59 @@ export type NewsCategoryQueryResult = {
 	} | null;
 } | null;
 
+// Source: src/lib/sanity/queries/shared/sitemap.ts
+// Variable: sitemapNewsArticlesQuery
+// Query: *[_type == 'news.article'] | order(publishedAt desc) {		"slug": slug.current,		"category": categories[0]->slug.current,		"lastModified": _updatedAt	}
+export type SitemapNewsArticlesQueryResult = Array<{
+	slug: string;
+	category: string | null;
+	lastModified: string;
+}>;
+
+// Source: src/lib/sanity/queries/shared/sitemap.ts
+// Variable: sitemapNewsCategoriesQuery
+// Query: *[_type == 'news.category'] {		"slug": slug.current,		"lastModified": _updatedAt	}
+export type SitemapNewsCategoriesQueryResult = Array<{
+	slug: string;
+	lastModified: string;
+}>;
+
+// Source: src/lib/sanity/queries/shared/sitemap.ts
+// Variable: sitemapGroupsQuery
+// Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_type,		"slug": slug.current,		"lastModified": _updatedAt	}
+export type SitemapGroupsQueryResult = Array<
+	| {
+			_type: 'group.children-gymnastics';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.courses';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.dance';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.other-sports';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.soccer';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.taekwondo';
+			slug: string;
+			lastModified: string;
+	  }
+>;
+
 // Source: src/lib/sanity/queries/shared/social-media.ts
 // Variable: socialMediaQuery
 // Query: *[_type == 'site-settings'][0].socialFields
@@ -2891,6 +2944,9 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
 		'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
 		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n': NewsCategoryQueryResult;
+		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
+		'\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
+		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
 		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
 		"\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
 	}
