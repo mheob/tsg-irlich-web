@@ -2907,7 +2907,7 @@ export type PrivacyPageQueryResult = {
 
 // Source: src/lib/sanity/queries/rss.ts
 // Variable: rssNewsArticlesQuery
-// Query: *[_type == 'news.article'] | order(publishedAt desc) [0..49] {		title,		excerpt,		"slug": slug.current,		"category": categories[0]->slug.current,		"categoryTitle": categories[0]->title,		"author": author->{ firstName, lastName },		publishedAt,		_updatedAt	}
+// Query: *[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..49] {		title,		excerpt,		"slug": slug.current,		"category": categories[0]->slug.current,		"categoryTitle": categories[0]->title,		"author": author->{ firstName, lastName, email },		publishedAt,		_updatedAt	}
 export type RssNewsArticlesQueryResult = Array<{
 	title: string;
 	excerpt: string;
@@ -2917,6 +2917,7 @@ export type RssNewsArticlesQueryResult = Array<{
 	author: {
 		firstName: string;
 		lastName: string;
+		email: string;
 	};
 	publishedAt: string;
 	_updatedAt: string;
@@ -3061,7 +3062,7 @@ export type SponsorsQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapNewsArticlesQuery
-// Query: *[_type == 'news.article'] | order(publishedAt desc) {		"slug": slug.current,		"category": categories[0]->slug.current,		"lastModified": _updatedAt	}
+// Query: *[_type == 'news.article'] | order(publishedAt desc) [0..9999] {  // Sitemap limit		"slug": slug.current,		"category": categories[0]->slug.current,		"lastModified": _updatedAt	}
 export type SitemapNewsArticlesQueryResult = Array<{
 	slug: string;
 	category: string | null;
@@ -3138,7 +3139,7 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
 		'\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
 		'\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': PrivacyPageQueryResult;
-		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
+		'\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName, email },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
 		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
@@ -3146,7 +3147,7 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n': NewsCategoryQueryResult;
 		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
 		"\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
-		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
+		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..9999] {  // Sitemap limit\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
 		'\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
 		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
 	}

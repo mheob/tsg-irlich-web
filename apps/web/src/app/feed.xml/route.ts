@@ -12,12 +12,12 @@ export async function GET(): Promise<Response> {
 		.filter(article => article.slug && article.category)
 		.map(article => {
 			const articleUrl = `${baseUrl}/news/${article.category}/${article.slug}`;
+			const authorEmail = article.author?.email || 'info@tsg-irlich.de';
 			const authorName = article.author
 				? `${article.author.firstName} ${article.author.lastName}`
 				: 'TSG Irlich';
-			const pubDate = article.publishedAt
-				? new Date(article.publishedAt).toUTCString()
-				: new Date(article._updatedAt).toUTCString();
+			const author = `${authorEmail} (${authorName})`;
+			const pubDate = new Date(article.publishedAt).toUTCString();
 
 			return `
 		<item>
@@ -26,7 +26,7 @@ export async function GET(): Promise<Response> {
 			<guid isPermaLink="true">${articleUrl}</guid>
 			<description><![CDATA[${article.excerpt ?? ''}]]></description>
 			<pubDate>${pubDate}</pubDate>
-			<author>${authorName}</author>
+			<author>${author}</author>
 			${article.categoryTitle ? `<category>${article.categoryTitle}</category>` : ''}
 		</item>`;
 		})

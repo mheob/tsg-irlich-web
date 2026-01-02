@@ -92,7 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	// Individual group pages (e.g., /angebot/fussball/herren-1)
 	const groupPages: MetadataRoute.Sitemap = (groups ?? [])
-		.filter(group => group.slug && group._type)
+		.filter(group => group.slug && group._type && groupTypeToSlug[group._type])
 		.map(group => ({
 			changeFrequency: 'monthly' as const,
 			lastModified: group.lastModified ? new Date(group.lastModified) : undefined,
