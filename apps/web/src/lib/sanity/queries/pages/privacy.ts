@@ -5,4 +5,23 @@ import { defineQuery } from 'next-sanity';
  *
  * @returns The privacy page with all fields
  */
-export const privacyPageQuery = defineQuery(`*[_type == 'privacy'][0]`);
+export const privacyPageQuery = defineQuery(`
+	*[_type == 'privacy'][0] {
+		...,
+		content {
+			...,
+			text[] {
+				...,
+				markDefs[] {
+					...,
+					_type == "internalLink" => {
+						"link": link-> {
+							_type,
+							"slug": slug.current
+						}
+					}
+				}
+			}
+		}
+	}
+`);
