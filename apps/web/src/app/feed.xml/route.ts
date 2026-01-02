@@ -27,7 +27,7 @@ export async function GET(): Promise<Response> {
 			<description><![CDATA[${article.excerpt ?? ''}]]></description>
 			<pubDate>${pubDate}</pubDate>
 			<author>${author}</author>
-			${article.categoryTitle ? `<category>${article.categoryTitle}</category>` : ''}
+			${article.categoryTitle ? `<category><![CDATA[${article.categoryTitle}]]></category>` : ''}
 		</item>`;
 		})
 		.join('');

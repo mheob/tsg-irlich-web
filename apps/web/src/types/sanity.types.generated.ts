@@ -3062,7 +3062,7 @@ export type SponsorsQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapNewsArticlesQuery
-// Query: *[_type == 'news.article'] | order(publishedAt desc) [0..9999] {  // Sitemap limit		"slug": slug.current,		"category": categories[0]->slug.current,		"lastModified": _updatedAt	}
+// Query: *[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {		"slug": slug.current,		"category": categories[0]->slug.current,		"lastModified": _updatedAt	}
 export type SitemapNewsArticlesQueryResult = Array<{
 	slug: string;
 	category: string | null;
@@ -3147,7 +3147,7 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n': NewsCategoryQueryResult;
 		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
 		"\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
-		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..9999] {  // Sitemap limit\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
+		'\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
 		'\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
 		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
 	}

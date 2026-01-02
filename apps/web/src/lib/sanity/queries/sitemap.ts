@@ -3,10 +3,13 @@ import { defineQuery } from 'next-sanity';
 /**
  * Query to get all news articles for the sitemap
  *
- * @returns All news articles with slug, category, and updated date
+ * Returns the latest 10,000 published news articles with slug, category,
+ * and last modified date for sitemap generation.
+ *
+ * @returns All published news articles with slug, category, and last modified date
  */
 export const sitemapNewsArticlesQuery = defineQuery(`
-	*[_type == 'news.article'] | order(publishedAt desc) [0..9999] {  // Sitemap limit
+	*[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {
 		"slug": slug.current,
 		"category": categories[0]->slug.current,
 		"lastModified": _updatedAt
