@@ -5,7 +5,7 @@ import {
 	sitemapGroupsQuery,
 	sitemapNewsArticlesQuery,
 	sitemapNewsCategoriesQuery,
-} from '@/lib/sanity/queries/shared/sitemap';
+} from '@/lib/sanity/queries/sitemap';
 import { groupSections } from '@/utils/groups';
 import { getBaseUrl } from '@/utils/url';
 
