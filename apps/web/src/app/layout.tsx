@@ -35,12 +35,11 @@ const inter = Inter({
 const NAVIGATION_REVALIDATE_SECONDS = 60 * 60 * 12; /* 12 hours */
 
 export const metadata: Metadata = {
-	/* eslint-disable perfectionist/sort-objects */
-	metadataBase: new URL(getBaseUrl()),
-	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
+	alternates: { types: { 'application/rss+xml': '/feed.xml' } },
 	description:
 		'Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.',
-	/* eslint-enable perfectionist/sort-objects */
+	metadataBase: new URL(getBaseUrl()),
+	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
 };
 
 export default async function RootLayout({

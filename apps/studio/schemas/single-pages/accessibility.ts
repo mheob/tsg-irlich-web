@@ -1,5 +1,3 @@
-// cSpell:words barrierefreiheit
-
 import { RiWheelchairLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 

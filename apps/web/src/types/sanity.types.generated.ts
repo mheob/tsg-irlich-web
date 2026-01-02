@@ -1752,7 +1752,7 @@ export type AboutUsPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/accessibility.ts
 // Variable: accessibilityPageQuery
-// Query: *[_type == 'accessibility'][0]
+// Query: *[_type == 'accessibility'][0] {		...,		content {			...,			text[] {				...,				markDefs[] {					...,					_type == "internalLink" => {						"link": link-> {							_type,							"slug": slug.current						}					}				}			}		}	}
 export type AccessibilityPageQueryResult = {
 	_id: string;
 	_type: 'accessibility';
@@ -1763,7 +1763,98 @@ export type AccessibilityPageQueryResult = {
 	title: string;
 	subtitle: string;
 	meta?: MetaFields;
-	content: BlockContent;
+	content: {
+		_type: 'blockContent';
+		text: Array<{
+			children?: Array<{
+				marks?: Array<string>;
+				text?: string;
+				_type: 'span';
+				_key: string;
+			}>;
+			style?: 'blockquote' | 'h2' | 'h3' | 'normal';
+			listItem?: 'bullet' | 'number';
+			markDefs: Array<
+				| {
+						href?: string;
+						_type: 'externalLink';
+						_key: string;
+				  }
+				| {
+						link:
+							| {
+									_type: 'aboutUs';
+									slug: string | null;
+							  }
+							| {
+									_type: 'accessibility';
+									slug: string | null;
+							  }
+							| {
+									_type: 'contact';
+									slug: string | null;
+							  }
+							| {
+									_type: 'group.admin';
+									slug: string;
+							  }
+							| {
+									_type: 'group.children-gymnastics';
+									slug: string;
+							  }
+							| {
+									_type: 'group.courses';
+									slug: string;
+							  }
+							| {
+									_type: 'group.dance';
+									slug: string;
+							  }
+							| {
+									_type: 'group.other-sports';
+									slug: string;
+							  }
+							| {
+									_type: 'group.soccer';
+									slug: string;
+							  }
+							| {
+									_type: 'group.taekwondo';
+									slug: string;
+							  }
+							| {
+									_type: 'home';
+									slug: string | null;
+							  }
+							| {
+									_type: 'imprint';
+									slug: string | null;
+							  }
+							| {
+									_type: 'membership';
+									slug: string | null;
+							  }
+							| {
+									_type: 'news.article';
+									slug: string;
+							  }
+							| {
+									_type: 'newsOverview';
+									slug: string | null;
+							  }
+							| {
+									_type: 'privacy';
+									slug: string | null;
+							  };
+						_type: 'internalLink';
+						_key: string;
+				  }
+			> | null;
+			level?: number;
+			_type: 'block';
+			_key: string;
+		}> | null;
+	};
 } | null;
 
 // Source: src/lib/sanity/queries/pages/contact.ts
@@ -2705,7 +2796,7 @@ export type OfferPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/privacy.ts
 // Variable: privacyPageQuery
-// Query: *[_type == 'privacy'][0]
+// Query: *[_type == 'privacy'][0] {		...,		content {			...,			text[] {				...,				markDefs[] {					...,					_type == "internalLink" => {						"link": link-> {							_type,							"slug": slug.current						}					}				}			}		}	}
 export type PrivacyPageQueryResult = {
 	_id: string;
 	_type: 'privacy';
@@ -2720,8 +2811,117 @@ export type PrivacyPageQueryResult = {
 	address: string;
 	phone?: string;
 	email: string;
-	content: BlockContent;
+	content: {
+		_type: 'blockContent';
+		text: Array<{
+			children?: Array<{
+				marks?: Array<string>;
+				text?: string;
+				_type: 'span';
+				_key: string;
+			}>;
+			style?: 'blockquote' | 'h2' | 'h3' | 'normal';
+			listItem?: 'bullet' | 'number';
+			markDefs: Array<
+				| {
+						href?: string;
+						_type: 'externalLink';
+						_key: string;
+				  }
+				| {
+						link:
+							| {
+									_type: 'aboutUs';
+									slug: string | null;
+							  }
+							| {
+									_type: 'accessibility';
+									slug: string | null;
+							  }
+							| {
+									_type: 'contact';
+									slug: string | null;
+							  }
+							| {
+									_type: 'group.admin';
+									slug: string;
+							  }
+							| {
+									_type: 'group.children-gymnastics';
+									slug: string;
+							  }
+							| {
+									_type: 'group.courses';
+									slug: string;
+							  }
+							| {
+									_type: 'group.dance';
+									slug: string;
+							  }
+							| {
+									_type: 'group.other-sports';
+									slug: string;
+							  }
+							| {
+									_type: 'group.soccer';
+									slug: string;
+							  }
+							| {
+									_type: 'group.taekwondo';
+									slug: string;
+							  }
+							| {
+									_type: 'home';
+									slug: string | null;
+							  }
+							| {
+									_type: 'imprint';
+									slug: string | null;
+							  }
+							| {
+									_type: 'membership';
+									slug: string | null;
+							  }
+							| {
+									_type: 'news.article';
+									slug: string;
+							  }
+							| {
+									_type: 'newsOverview';
+									slug: string | null;
+							  }
+							| {
+									_type: 'privacy';
+									slug: string | null;
+							  };
+						_type: 'internalLink';
+						_key: string;
+				  }
+			> | null;
+			level?: number;
+			_type: 'block';
+			_key: string;
+		}> | null;
+	};
 } | null;
+
+// Source: src/lib/sanity/queries/rss.ts
+// Variable: rssNewsArticlesQuery
+// Query: *[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..49] {		title,		excerpt,		"slug": slug.current,		"category": categories[0]->slug.current,		"categoryTitle": categories[0]->title,		"author": author->{ firstName, lastName, email },		publishedAt,		_updatedAt	}
+export type RssNewsArticlesQueryResult = Array<{
+	title: string;
+	excerpt: string;
+	slug: string;
+	category: string | null;
+	categoryTitle: string | null;
+	author: {
+		firstName: string;
+		lastName: string;
+		email: string;
+	};
+	publishedAt: string;
+	_updatedAt: string;
+}>;
 
 // Source: src/lib/sanity/queries/shared/groups.ts
 // Variable: groupsQuery
@@ -2860,13 +3060,66 @@ export type SponsorsQueryResult = Array<{
 	};
 }>;
 
+// Source: src/lib/sanity/queries/sitemap.ts
+// Variable: sitemapNewsArticlesQuery
+// Query: *[_type == 'news.article'] | order(publishedAt desc) [0..9999] {  // Sitemap limit		"slug": slug.current,		"category": categories[0]->slug.current,		"lastModified": _updatedAt	}
+export type SitemapNewsArticlesQueryResult = Array<{
+	slug: string;
+	category: string | null;
+	lastModified: string;
+}>;
+
+// Source: src/lib/sanity/queries/sitemap.ts
+// Variable: sitemapNewsCategoriesQuery
+// Query: *[_type == 'news.category'] {		"slug": slug.current,		"lastModified": _updatedAt	}
+export type SitemapNewsCategoriesQueryResult = Array<{
+	slug: string;
+	lastModified: string;
+}>;
+
+// Source: src/lib/sanity/queries/sitemap.ts
+// Variable: sitemapGroupsQuery
+// Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_type,		"slug": slug.current,		"lastModified": _updatedAt	}
+export type SitemapGroupsQueryResult = Array<
+	| {
+			_type: 'group.children-gymnastics';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.courses';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.dance';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.other-sports';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.soccer';
+			slug: string;
+			lastModified: string;
+	  }
+	| {
+			_type: 'group.taekwondo';
+			slug: string;
+			lastModified: string;
+	  }
+>;
+
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
 	interface SanityQueries {
 		"\n\t*[_type == 'site-settings'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t\"slug\": coalesce(link->slug.current, '#!'),\n\t\t\ttitle\n\t\t}\n\t}\n": MainNavigationQueryResult;
 		'\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
-		"*[_type == 'accessibility'][0]": AccessibilityPageQueryResult;
+		'\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AccessibilityPageQueryResult;
 		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
 		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t}\n": HomePageTestimonialsQueryResult;
@@ -2885,7 +3138,8 @@ declare module '@sanity/client' {
 		"\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\tfeaturedImage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
 		'\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
 		'\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
-		"*[_type == 'privacy'][0]": PrivacyPageQueryResult;
+		'\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': PrivacyPageQueryResult;
+		'\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName, email },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
 		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
 		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
@@ -2893,5 +3147,8 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n': NewsCategoryQueryResult;
 		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
 		"\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
+		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..9999] {  // Sitemap limit\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
+		'\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
+		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
 	}
 }

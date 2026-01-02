@@ -1,5 +1,3 @@
-// cSpell:words barrierefreiheit
-
 import { TSGLogo } from '@tsgi-web/shared';
 import { ArrowUp, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
