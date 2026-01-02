@@ -188,11 +188,8 @@ export const myDataQuery = defineQuery(groq`
 After making any changes to Sanity schemas, always run:
 
 ```bash
-cd apps/studio && bun run extract-types   # Extract from studio
-cd apps/web && bun run typegen:sanity     # Generate types for web
-
-# Or from root:
-turbo extract-types && turbo typegen:sanity
+# From root:
+nr extract-types && nr typegen:sanity
 ```
 
 ## Commit Guidelines
@@ -348,7 +345,7 @@ bun run test
 2. Use `defineType()` and `defineField()`
 3. Add German titles/descriptions
 4. Include appropriate icon
-5. Run type generation: `turbo extract-types && turbo typegen:sanity`
+5. Run type generation: `nr extract-types && nr typegen:sanity`
 
 ### Updating Dependencies
 

@@ -91,7 +91,9 @@ tsg-web/
 
 - **Multi-language support** (German)
 - **Responsive design** for all devices
-- **SEO optimized** with Next.js metadata
+- **SEO optimized** with dynamic sitemap, robots.txt, and metadata
+- **PWA support** with web app manifest and icons
+- **RSS feed** for news articles
 - **Performance optimized** with image optimization
 - **About us** description of the club
 - **Contact forms** with validation
@@ -99,6 +101,7 @@ tsg-web/
 - **Sports groups** and departments showcase
 - **Member testimonials**
 - **Training schedules**
+- **Accessibility page** with accessibility statement
 
 ### CMS Features
 
