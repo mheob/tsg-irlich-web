@@ -110,6 +110,9 @@ export async function subscribe(
 		const token = await getAccessToken();
 		const listId = env('CLEVERREACH_LIST_ID');
 		const formId = env('CLEVERREACH_FORM_ID');
+		const referer = env('VERCEL_PROJECT_PRODUCTION_URL')
+			? `https://${env('VERCEL_PROJECT_PRODUCTION_URL')}`
+			: '';
 
 		// First, add the receiver to the group
 		const addResponse = await fetch(`${CLEVERREACH_API_BASE}/v3/groups.json/${listId}/receivers`, {
@@ -150,7 +153,7 @@ export async function subscribe(
 			{
 				body: JSON.stringify({
 					doidata: {
-						referer: doiMetadata?.referer ?? env('VERCEL_PROJECT_PRODUCTION_URL') ?? '',
+						referer: doiMetadata?.referer ?? referer,
 						user_agent: doiMetadata?.userAgent ?? 'Mozilla/5.0',
 						user_ip: doiMetadata?.userIp ?? '0.0.0.0',
 					},

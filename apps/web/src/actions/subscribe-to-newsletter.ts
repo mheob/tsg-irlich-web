@@ -4,7 +4,6 @@ import { headers } from 'next/headers';
 import { treeifyError } from 'zod';
 
 import { subscribe, subscriberSchema } from '@/lib/cleverreach';
-import { env } from '@/lib/env';
 
 // Form state type for useActionState
 export type NewsletterFormState =
@@ -53,7 +52,7 @@ export async function subscribeToNewsletter(
 	const headersList = await headers();
 	const userIp = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ?? '0.0.0.0';
 	const userAgent = headersList.get('user-agent') ?? 'Mozilla/5.0';
-	const referer = headersList.get('referer') ?? env('VERCEL_PROJECT_PRODUCTION_URL') ?? '';
+	const referer = headersList.get('referer') ?? '';
 
 	// Attempt to subscribe the user via CleverReach integration
 	const result = await subscribe(validation.data, { referer, userAgent, userIp });
