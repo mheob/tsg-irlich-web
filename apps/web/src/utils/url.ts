@@ -1,13 +1,12 @@
-import process from 'node:process';
-
 import { GOOGLE_MAPS_URL } from '@/constants/urls';
+import { env } from '@/lib/env';
 import type { TrainingTimeSection } from '@/types/sanity.types';
 
 /**
  * Returns the canonical base URL for the application depending on the runtime environment.
  *
  * - Uses the VERCEL_PROJECT_PRODUCTION_URL (from Vercel environment) if present.
- * - Falls back to 'https://next.tsg-irlich.de' when in production mode.
+ * - Falls back to 'https://www.tsg-irlich.de' when in production mode.
  * - Defaults to 'http://localhost:3000' for development.
  *
  * @returns The base URL (protocol and domain) for the current deployment environment.
@@ -16,13 +15,14 @@ import type { TrainingTimeSection } from '@/types/sanity.types';
  * const baseUrl = getBaseUrl(); // e.g., "https://mein-projekt.vercel.app"
  */
 export function getBaseUrl(): string {
-	let baseUrl = 'http://localhost:3000';
-	if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-		baseUrl = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-	} else if (process.env.NODE_ENV === 'production') {
-		baseUrl = 'https://next.tsg-irlich.de';
+	const vercelUrl = env('VERCEL_PROJECT_PRODUCTION_URL');
+	if (vercelUrl) {
+		return `https://${vercelUrl}`;
 	}
-	return baseUrl;
+	if (env('NODE_ENV') === 'production') {
+		return 'https://www.tsg-irlich.de';
+	}
+	return 'http://localhost:3000';
 }
 
 /**

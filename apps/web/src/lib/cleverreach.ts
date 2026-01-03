@@ -1,31 +1,7 @@
 // cspell:words doidata, sendactivationmail
-import process from 'node:process';
-
 import { z } from 'zod';
 
-const envSchema = z.object({
-	CLEVERREACH_CLIENT_ID: z.string().min(1),
-	CLEVERREACH_CLIENT_SECRET: z.string().min(1),
-	CLEVERREACH_FORM_ID: z.string().min(1),
-	CLEVERREACH_LIST_ID: z.string().min(1),
-});
-
-type Env = z.infer<typeof envSchema>;
-
-function getEnv(): Env {
-	const result = envSchema.safeParse({
-		CLEVERREACH_CLIENT_ID: process.env.CLEVERREACH_CLIENT_ID,
-		CLEVERREACH_CLIENT_SECRET: process.env.CLEVERREACH_CLIENT_SECRET,
-		CLEVERREACH_FORM_ID: process.env.CLEVERREACH_FORM_ID,
-		CLEVERREACH_LIST_ID: process.env.CLEVERREACH_LIST_ID,
-	});
-
-	if (!result.success) {
-		throw new Error(`Missing CleverReach environment variables: ${result.error.message}`);
-	}
-
-	return result.data;
-}
+import { env } from './env';
 
 const CLEVERREACH_API_BASE = 'https://rest.cleverreach.com';
 
@@ -48,16 +24,14 @@ async function getAccessToken(): Promise<string> {
 		return tokenCache.token;
 	}
 
-	const env = getEnv();
-
 	/**
 	 * Request a new access token from CleverReach OAuth endpoint.
 	 * See https://rest.cleverreach.com/howto/auth/
 	 */
 	const response = await fetch(`${CLEVERREACH_API_BASE}/oauth/token.php`, {
 		body: new URLSearchParams({
-			client_id: env.CLEVERREACH_CLIENT_ID,
-			client_secret: env.CLEVERREACH_CLIENT_SECRET,
+			client_id: env('CLEVERREACH_CLIENT_ID'),
+			client_secret: env('CLEVERREACH_CLIENT_SECRET'),
 			grant_type: 'client_credentials',
 		}),
 		headers: {
@@ -134,25 +108,23 @@ export async function subscribe(
 
 	try {
 		const token = await getAccessToken();
-		const env = getEnv();
+		const listId = env('CLEVERREACH_LIST_ID');
+		const formId = env('CLEVERREACH_FORM_ID');
 
 		// First, add the receiver to the group
-		const addResponse = await fetch(
-			`${CLEVERREACH_API_BASE}/v3/groups.json/${env.CLEVERREACH_LIST_ID}/receivers`,
-			{
-				body: JSON.stringify({
-					activated: 0,
-					email,
-					registered: Math.floor(Date.now() / 1000),
-					source: 'Next.js Website',
-				}),
-				headers: {
-					Authorization: `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				},
-				method: 'POST',
+		const addResponse = await fetch(`${CLEVERREACH_API_BASE}/v3/groups.json/${listId}/receivers`, {
+			body: JSON.stringify({
+				activated: 0,
+				email,
+				registered: Math.floor(Date.now() / 1000),
+				source: 'Next.js Website',
+			}),
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
 			},
-		);
+			method: 'POST',
+		});
 
 		if (!addResponse.ok) {
 			const errorData = await addResponse.json().catch(() => ({}));
@@ -174,16 +146,16 @@ export async function subscribe(
 
 		// Then trigger the Double Opt-in email
 		const doiResponse = await fetch(
-			`${CLEVERREACH_API_BASE}/v3/forms.json/${env.CLEVERREACH_FORM_ID}/send/activate`,
+			`${CLEVERREACH_API_BASE}/v3/forms.json/${formId}/send/activate`,
 			{
 				body: JSON.stringify({
 					doidata: {
-						referer: doiMetadata?.referer ?? process.env.NEXT_PUBLIC_SITE_URL ?? '',
+						referer: doiMetadata?.referer ?? env('VERCEL_PROJECT_PRODUCTION_URL') ?? '',
 						user_agent: doiMetadata?.userAgent ?? 'Mozilla/5.0',
 						user_ip: doiMetadata?.userIp ?? '0.0.0.0',
 					},
 					email,
-					groups_ids: [env.CLEVERREACH_LIST_ID],
+					groups_ids: [listId],
 				}),
 				headers: {
 					Authorization: `Bearer ${token}`,

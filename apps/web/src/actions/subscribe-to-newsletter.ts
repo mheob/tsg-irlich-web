@@ -1,17 +1,16 @@
 'use server';
 
-import process from 'node:process';
-
 import { headers } from 'next/headers';
 import { treeifyError } from 'zod';
 
 import { subscribe, subscriberSchema } from '@/lib/cleverreach';
+import { env } from '@/lib/env';
 
 // Form state type for useActionState
 export type NewsletterFormState =
 	| null
-	| { error: string; message: string; success: false }
-	| { message: string; success: true };
+	| { error: string; message: string; success: false; title: string }
+	| { message: string; success: true; title: string };
 
 /**
  * Server action for subscribing a user to the newsletter via CleverReach.
@@ -46,6 +45,7 @@ export async function subscribeToNewsletter(
 			error: fieldErrors.errors[0],
 			message: 'Bitte überprüfen Deine Eingaben.',
 			success: false,
+			title: 'Fehler',
 		};
 	}
 
@@ -53,7 +53,7 @@ export async function subscribeToNewsletter(
 	const headersList = await headers();
 	const userIp = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ?? '0.0.0.0';
 	const userAgent = headersList.get('user-agent') ?? 'Mozilla/5.0';
-	const referer = headersList.get('referer') ?? process.env.NEXT_PUBLIC_SITE_URL ?? '';
+	const referer = headersList.get('referer') ?? env('VERCEL_PROJECT_PRODUCTION_URL') ?? '';
 
 	// Attempt to subscribe the user via CleverReach integration
 	const result = await subscribe(validation.data, { referer, userAgent, userIp });
@@ -70,12 +70,14 @@ export async function subscribeToNewsletter(
 			error: result.error,
 			message: errorMessages[result.code ?? ''] ?? result.error,
 			success: false,
+			title: 'Fehler',
 		};
 	}
 
 	return {
 		message:
-			'Vielen Dank! Bitte bestätige Deine Anmeldung über den Link in der E-Mail, die wir Dir gesendet haben.',
+			'Bitte bestätige Deine Anmeldung über den Link in der E-Mail, die wir Dir gesendet haben.',
 		success: true,
+		title: 'Vielen Dank!',
 	};
 }

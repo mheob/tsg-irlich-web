@@ -1,15 +1,15 @@
-import process from 'node:process';
-
 import { parseBody } from 'next-sanity/webhook';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
+
+import { env } from '@/lib/env';
 
 export async function POST(request: NextRequest): Promise<NextResponse | Response> {
 	try {
 		const { body, isValidSignature } = await parseBody<{
 			_type: string;
 			slug?: { current: string };
-		}>(request, process.env.SANITY_REVALIDATE_SECRET);
+		}>(request, env('SANITY_REVALIDATE_SECRET'));
 
 		// Validate webhook signature
 		if (!isValidSignature) {
