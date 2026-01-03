@@ -5,10 +5,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 export function SuccessAlert() {
 	return (
 		<Alert variant="success">
-			<div>
-				<Check className="size-6" />
-				<AlertTitle>Vielen Dank!</AlertTitle>
-			</div>
+			<Check />
+			<AlertTitle>Vielen Dank!</AlertTitle>
 			<AlertDescription className="mt-2">
 				<p className="text-success-foreground mt-4">
 					Deine Anfrage wurde erfolgreich übermittelt.

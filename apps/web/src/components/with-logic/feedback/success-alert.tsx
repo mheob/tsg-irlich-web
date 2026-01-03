@@ -9,10 +9,8 @@ interface SuccessAlertProps {
 export function SuccessAlert({ identifier }: Readonly<SuccessAlertProps>) {
 	return (
 		<Alert variant="success">
-			<div>
-				<Check className="size-6" />
-				<AlertTitle>Vielen Dank!</AlertTitle>
-			</div>
+			<Check />
+			<AlertTitle>Vielen Dank!</AlertTitle>
 			<AlertDescription className="mt-2">
 				Dein Feedback wurde erfolgreich übermittelt.
 				{identifier && (

@@ -1,10 +1,9 @@
 'use server';
 
-import process from 'node:process';
-
 import { z } from 'zod';
 
 import { actionClient } from '@/lib/actions/safe-action';
+import { env } from '@/lib/env';
 
 const LINEAR_API_URL = 'https://api.linear.app/graphql';
 
@@ -25,11 +24,7 @@ const uploadSchema = z.object({
 export const uploadToLinear = actionClient
 	.inputSchema(uploadSchema)
 	.action(async ({ parsedInput: { file } }) => {
-		const apiKey = process.env.LINEAR_API_KEY;
-
-		if (!apiKey) {
-			throw new Error('Server configuration error');
-		}
+		const apiKey = env('LINEAR_API_KEY');
 
 		// Step 1: Request upload URL from Linear
 		const uploadUrlQuery = `

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SectionHeader } from '@/components/ui/section-header';
 
-import { Alert, AlertDescription } from '../ui/alert';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
 import styles from './newsletter.module.css';
 
@@ -43,6 +43,7 @@ export function Newsletter() {
 						) : (
 							<AlertCircle className="mt-1 size-8! self-start" />
 						)}
+						<AlertTitle>{state.title}</AlertTitle>
 						<AlertDescription>
 							<p>{state.message}</p>
 						</AlertDescription>

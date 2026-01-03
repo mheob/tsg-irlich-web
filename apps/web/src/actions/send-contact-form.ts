@@ -3,6 +3,7 @@
 import { ContactForwardEmail } from '@tsgi-web/email';
 
 import { actionClient } from '@/lib/actions/safe-action';
+import { env } from '@/lib/env';
 import { resend } from '@/lib/resend';
 import { contactFormSchema } from '@/lib/validations/contact-form';
 import { getBaseUrl } from '@/utils/url';
@@ -11,6 +12,11 @@ export const sendContactForm = actionClient
 	.inputSchema(contactFormSchema)
 	.action(async ({ parsedInput: data }) => {
 		const { email, message, name, receiver } = data;
+
+		const to =
+			env('NODE_ENV') === 'production'
+				? (receiver?.email ?? 'it@tsg-irlich.de')
+				: 'it@tsg-irlich.de';
 
 		const { error } = await resend.emails.send({
 			bcc: ['it@tsg-irlich.de'],
@@ -24,7 +30,7 @@ export const sendContactForm = actionClient
 			}),
 			replyTo: email,
 			subject: `Webseiten-Kontaktformular: Neue Nachricht von ${name}`,
-			to: [receiver?.email ?? 'it@tsg-irlich.de'],
+			to,
 		});
 
 		if (error) {
