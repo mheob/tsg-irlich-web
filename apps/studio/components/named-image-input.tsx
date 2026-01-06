@@ -22,6 +22,7 @@ import { mediaAssetSource } from 'sanity-plugin-media';
 
 import { apiVersion } from '@/env';
 
+const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'] as const;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const GENERIC_FILENAME_PATTERN =
 	/^(?:IMG[-_]|DSC[-_]|SCR[-_]|Screenshot|Bildschirmfoto|\d{8}[-_])/i;
@@ -100,21 +101,17 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 		setUploadError(null);
 
 		try {
-			const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'];
 			const extension = pendingFile.name.split('.').pop()?.toLowerCase();
 			if (!extension || !ALLOWED_EXTENSIONS.includes(extension)) {
 				setUploadError('Nicht unterstütztes Dateiformat');
 				return;
 			}
 			const sanitizeFilename = (name: string): string => {
-				return (
-					name
-						.trim()
-						// cspell:disable-next-line
-						.replaceAll(/[^\wäöüß-]/gi, '-') // Replace special chars (keep German umlauts)
-						.replaceAll(/(-)+/g, '-') // Collapse multiple dashes
-						.replaceAll(/(^-|-$)/g, '')
-				); // Remove leading/trailing dashes
+				return name
+					.trim()
+					.replaceAll(/[^\p{L}\p{N}-]/gu, '-') // \p{L} = letters, \p{N} = numbers
+					.replaceAll(/(-)+/g, '-') // Collapse multiple dashes
+					.replaceAll(/(^-|-$)/g, ''); // Remove leading/trailing dashes
 			};
 			const newFilename = `${sanitizeFilename(filename)}.${extension}`;
 
@@ -139,13 +136,15 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 			setUploadError(null); // Clear previous errors
 		} catch (error) {
 			console.error('Upload failed:', error);
-			const errorMessage =
-				error instanceof Error && error.message.includes('size')
-					? 'Datei ist zu groß'
-					: error instanceof Error && error.message.includes('permission') // NOSONAR
-						? 'Keine Berechtigung zum Hochladen'
-						: 'Upload fehlgeschlagen. Bitte versuche es erneut.';
-			setUploadError(errorMessage);
+			if (error instanceof Error) {
+				if (error.name === 'FileSizeError' || error.message.includes('size')) {
+					setUploadError('Datei ist zu groß');
+				} else if (error.name === 'PermissionError' || error.message.includes('permission')) {
+					setUploadError('Keine Berechtigung zum Hochladen');
+				} else {
+					setUploadError('Upload fehlgeschlagen. Bitte versuche es erneut.');
+				}
+			}
 		} finally {
 			setIsUploading(false);
 		}

@@ -13,19 +13,19 @@ const extendedImage = defineField({
 		input: NamedImageInput,
 	},
 	fields: [
-		{
+		defineField({
 			title: 'Alt-Text',
 			name: 'alt',
 			type: 'string',
 			description: 'Beschreibe, was auf dem Bild zu sehen ist (für SEO und Barrierefreiheit).',
 			validation: Rule => [Rule.required().error('Der "Alt-Text" ist erforderlich')],
-		},
-		{
+		}),
+		defineField({
 			title: 'Bildbeschreibung',
 			name: 'description',
 			type: 'string',
 			description: 'Die Bildunterschrift wird unter dem Bild angezeigt.',
-		},
+		}),
 	],
 	options: {
 		hotspot: true,
