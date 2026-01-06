@@ -21,9 +21,12 @@ export function Groups({
 				<SectionHeader
 					title={
 						<>
-							{title}{' '}
+							{title}
 							{currentDepartment?.title && currentDepartment.title.trim() !== '' && (
-								<span className="text-primary">{currentDepartment.title.trim()}</span>
+								<>
+									{' '}
+									<span className="text-primary">{currentDepartment.title.trim()}</span>
+								</>
 							)}
 						</>
 					}

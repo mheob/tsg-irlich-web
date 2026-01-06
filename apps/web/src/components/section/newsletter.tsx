@@ -93,7 +93,10 @@ export function Newsletter() {
 				<p className="text-muted-foreground mx-auto mt-8 text-center text-sm">
 					Mit der Anmeldung erklärst Du Dich damit einverstanden, dass wir Dir regelmäßig
 					Informationen per E-Mail zusenden. Du kannst Dich jederzeit über den Abmeldelink in jeder
-					E-Mail abmelden. Siehe auch unsere{' '}
+					E-Mail abmelden.
+				</p>
+				<p className="text-muted-foreground mx-auto mt-2 text-center text-sm">
+					Siehe auch unsere{' '}
 					<Link className="text-primary hover:text-primary-light underline" href="/datenschutz">
 						Datenschutzerklärung
 					</Link>

@@ -42,16 +42,16 @@ const meta = defineField({
 					type: 'string',
 					validation: Rule =>
 						Rule.custom((alt, context) => {
-							// eslint-disable-next-line ts/no-explicit-any
-							const ogImage = context.document?.ogImage as any;
-							if (ogImage?.asset?._ref && !alt) return 'Required';
+							const parent = context.parent as { asset?: { _ref?: string } };
+							if (parent?.asset?._ref && !alt) {
+								return 'Alt-Text ist erforderlich wenn ein Bild ausgewählt wurde';
+							}
 							return true;
 						}),
 				}),
 			],
 			options: {
 				hotspot: true,
-				aiAssist: { imageDescriptionField: 'alt' },
 			},
 		}),
 	],
