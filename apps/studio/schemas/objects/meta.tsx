@@ -1,6 +1,8 @@
 import { RiShareLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
+import { NamedImageInput } from '@/components/named-image-input';
+
 const meta = defineField({
 	title: 'Meta Information',
 	name: 'metaFields',
@@ -29,6 +31,9 @@ const meta = defineField({
 			type: 'image',
 			description:
 				'Wird auf den Karten in sozialen Medien und in Suchmaschinenergebnissen angezeigt',
+			components: {
+				input: NamedImageInput,
+			},
 			fields: [
 				defineField({
 					description: 'Wichtig für Barrierefreiheit und SEO.',
