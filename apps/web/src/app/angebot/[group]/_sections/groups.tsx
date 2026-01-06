@@ -19,8 +19,18 @@ export function Groups({
 		<section className={`${styles.bg} bg-background-low-contrast relative z-0`}>
 			<div className="container mx-auto px-5 py-10 md:py-32">
 				<SectionHeader
+					title={
+						<>
+							{title}
+							{currentDepartment?.title && currentDepartment.title.trim() !== '' && (
+								<>
+									{' '}
+									<span className="text-primary">{currentDepartment.title.trim()}</span>
+								</>
+							)}
+						</>
+					}
 					subTitle={subtitle}
-					title={`${title} ${currentDepartment?.title}`.trim()}
 					isCentered
 					isCenteredOnDesktop
 				>

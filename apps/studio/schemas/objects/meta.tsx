@@ -1,6 +1,8 @@
 import { RiShareLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
+import { NamedImageInput } from '@/components/named-image-input';
+
 const meta = defineField({
 	title: 'Meta Information',
 	name: 'metaFields',
@@ -29,6 +31,9 @@ const meta = defineField({
 			type: 'image',
 			description:
 				'Wird auf den Karten in sozialen Medien und in Suchmaschinenergebnissen angezeigt',
+			components: {
+				input: NamedImageInput,
+			},
 			fields: [
 				defineField({
 					description: 'Wichtig für Barrierefreiheit und SEO.',
@@ -37,16 +42,16 @@ const meta = defineField({
 					type: 'string',
 					validation: Rule =>
 						Rule.custom((alt, context) => {
-							// eslint-disable-next-line ts/no-explicit-any
-							const ogImage = context.document?.ogImage as any;
-							if (ogImage?.asset?._ref && !alt) return 'Required';
+							const parent = context.parent as { asset?: { _ref?: string } };
+							if (parent?.asset?._ref && !alt) {
+								return 'Alt-Text ist erforderlich wenn ein Bild ausgewählt wurde';
+							}
 							return true;
 						}),
 				}),
 			],
 			options: {
 				hotspot: true,
-				aiAssist: { imageDescriptionField: 'alt' },
 			},
 		}),
 	],

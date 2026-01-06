@@ -93,7 +93,13 @@ export default async function NewsCategoryPage({
 				<SectionHeader
 					title={
 						<>
-							Aktuelles aus dem Bereich <span className="text-primary">{category.title}</span>
+							Aktuelles aus dem Bereich
+							{category.title && category.title.trim() !== '' && (
+								<>
+									{' '}
+									<span className="text-primary">{category.title.trim()}</span>
+								</>
+							)}
 						</>
 					}
 					className="pb-8 md:pb-14"

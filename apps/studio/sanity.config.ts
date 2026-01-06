@@ -21,6 +21,16 @@ export default defineConfig({
 				? input.filter(({ action }) => action && singletonActions.has(action))
 				: input,
 	},
+	form: {
+		// Disable the default for file assets
+		file: {
+			assetSources: sources => sources.filter(source => source.name !== 'sanity-default'),
+		},
+		// Disable the default for image assets (use sanity-plugin-media only)
+		image: {
+			assetSources: sources => sources.filter(source => source.name !== 'sanity-default'),
+		},
+	},
 	icon: Logo,
 	name: 'default',
 	plugins: getPlugins(),
