@@ -68,17 +68,26 @@ This is a **monorepo** built with **Turbo** and **bun** containing:
 ```text
 tsg-web/
 ├── apps/
-│   ├── web/                 # Next.js frontend application
-│   │   ├── src/
-│   │   │   ├── app/         # App Router pages
-│   │   │   ├── components/  # React components
-│   │   │   ├── lib/         # Utilities and configurations
-│   │   │   └── types/       # TypeScript type definitions
-│   │   └── public/          # Static assets
 │   └── studio/              # Sanity Studio CMS
-│       ├── schemas/         # Content schemas
-│       ├── plugins/         # Custom Sanity plugins
-│       └── components/      # Studio UI components
+│   │   ├── components/      # Studio UI components
+│   │   ├── plugins/         # Custom Sanity plugins
+│   │   ├── schemas/         # Content schemas
+│   │   ├── shared/          # Studio UI components
+│   │   ├── structure/       # Studio UI structure
+│   │   └── utils/           # Sanity utilities
+│   ├── web/                 # Next.js frontend application
+│   │   ├── public/          # Static assets
+│   │   └── src/
+│   │       ├── actions/     # Server actions
+│   │       ├── app/         # App Router pages
+│   │       ├── components/  # React components
+│   │       ├── constants/   # Constants
+│   │       ├── hook/        # React hooks
+│   │       ├── icons/       # Icons
+│   │       ├── images/      # Images
+│   │       ├── lib/         # Utilities and configurations
+│   │       ├── types/       # TypeScript type definitions
+│   │       └── utils/       # Utilities
 ├── packages/
 │   ├── email/               # React Email templates
 │   └── shared/              # Shared utilities and types

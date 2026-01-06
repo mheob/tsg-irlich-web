@@ -4,7 +4,7 @@
 		"dbaeumer.vscode-eslint",
 		"davidanson.vscode-markdownlint",
 		"edwinhuish.better-comments-next",
-		"esbenp.prettier-vscode",
+		"prettier.prettier-vscode",
 		"sanity-io.vscode-sanity",
 		"mheob.vscode-snippets",
 		"sonarsource.sonarlint-vscode",

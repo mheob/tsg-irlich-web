@@ -20,7 +20,7 @@ export function Groups({
 			<div className="container mx-auto px-5 py-10 md:py-32">
 				<SectionHeader
 					subTitle={subtitle}
-					title={`${title} ${currentDepartment?.title}`.trim()}
+					title={`${title} <span className="text-primary">${currentDepartment?.title}</span>`.trim()}
 					isCentered
 					isCenteredOnDesktop
 				>
