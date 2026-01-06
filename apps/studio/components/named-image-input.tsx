@@ -100,7 +100,12 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 		setUploadError(null);
 
 		try {
-			const extension = pendingFile.name.split('.').pop() || 'jpg';
+			const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'];
+			const extension = pendingFile.name.split('.').pop()?.toLowerCase();
+			if (!extension || !ALLOWED_EXTENSIONS.includes(extension)) {
+				setUploadError('Nicht unterstütztes Dateiformat');
+				return;
+			}
 			const sanitizeFilename = (name: string): string => {
 				return (
 					name
@@ -134,11 +139,13 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 			setUploadError(null); // Clear previous errors
 		} catch (error) {
 			console.error('Upload failed:', error);
-			setUploadError(
-				error instanceof Error ? error.message : 'Upload fehlgeschlagen. Bitte versuche es erneut.',
-			);
-			// Keep dialog open so user can retry
-			return;
+			const errorMessage =
+				error instanceof Error && error.message.includes('size')
+					? 'Datei ist zu groß'
+					: error instanceof Error && error.message.includes('permission') // NOSONAR
+						? 'Keine Berechtigung zum Hochladen'
+						: 'Upload fehlgeschlagen. Bitte versuche es erneut.';
+			setUploadError(errorMessage);
 		} finally {
 			setIsUploading(false);
 		}
@@ -269,6 +276,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 							icon={UploadIcon}
 							mode="ghost"
 							onClick={handleUploadClick}
+							role="button"
 							text="Hochladen"
 							tone="primary"
 						/>
@@ -276,6 +284,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 							icon={SearchIcon}
 							mode="ghost"
 							onClick={handleOpenMediaLibrary}
+							role="button"
 							text="Mediathek"
 						/>
 					</Flex>
@@ -296,9 +305,11 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 								<Text size={1} muted>
 									Originaler Dateiname: {pendingFile.name}
 								</Text>
-								<Text size={1} style={{ color: 'var(--card-critical-fg-color)' }}>
-									{uploadError}
-								</Text>
+								{uploadError && (
+									<Text size={1} style={{ color: 'var(--card-critical-fg-color)' }}>
+										{uploadError}
+									</Text>
+								)}
 								<TextInput
 									disabled={isUploading}
 									onChange={event => setFilename(event.currentTarget.value)}
@@ -317,12 +328,14 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 									disabled={isUploading}
 									mode="ghost"
 									onClick={handleCancelDialog}
+									role="button"
 									text="Abbrechen"
 								/>
 								<Button
 									disabled={!filename.trim() || isUploading}
 									icon={isUploading ? Spinner : undefined}
 									onClick={handleConfirmUpload}
+									role="button"
 									text={isUploading ? 'Wird hochgeladen...' : 'Hochladen'}
 									tone="primary"
 								/>
