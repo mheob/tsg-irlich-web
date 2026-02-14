@@ -52,6 +52,12 @@
 		},
 		"web#build": {
 			"dependsOn": ["^build"],
+			"env": [
+				"CLEVERREACH_CLIENT_ID",
+				"CLEVERREACH_CLIENT_SECRET",
+				"CLEVERREACH_FORM_ID",
+				"CLEVERREACH_LIST_ID"
+			],
 			"outputs": [".next/**", "!.next/cache/**"]
 		}
 	}

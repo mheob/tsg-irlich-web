@@ -7,7 +7,7 @@ import { Newsletter } from '@/components/section/newsletter';
 import { Pricing } from '@/components/section/pricing';
 import { Stats } from '@/components/section/stats';
 import { Vision } from '@/components/section/vision';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
@@ -21,10 +21,8 @@ import { Sponsors } from './_home/sponsors';
 import { Testimonials } from './_home/testimonials';
 import { getOpenGraphImageOptions } from './news/_shared/utils';
 
-const TESTIMONIALS_REVALIDATE_SECONDS = 60 * 60 * 12; /* 12 hours */
-
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(homePageQuery);
+	const { data: page } = await sanityFetch({ query: homePageQuery });
 
 	if (!page) return {};
 
@@ -41,16 +39,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-	const [page, testimonials, newsArticles, socialMedia, sponsors] = await Promise.all([
-		client.fetch(homePageQuery),
-		client.fetch(
-			homePageTestimonialsQuery,
-			{},
-			{ next: { revalidate: TESTIMONIALS_REVALIDATE_SECONDS } },
-		),
-		client.fetch(newsArticlesQuery),
-		client.fetch(socialMediaQuery),
-		client.fetch(sponsorsQuery),
+	const [
+		{ data: page },
+		{ data: testimonials },
+		{ data: newsArticles },
+		{ data: socialMedia },
+		{ data: sponsors },
+	] = await Promise.all([
+		sanityFetch({ query: homePageQuery }),
+		sanityFetch({ query: homePageTestimonialsQuery }),
+		sanityFetch({ query: newsArticlesQuery }),
+		sanityFetch({ query: socialMediaQuery }),
+		sanityFetch({ query: sponsorsQuery }),
 	]);
 
 	if (!page) {

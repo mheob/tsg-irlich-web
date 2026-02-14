@@ -4,7 +4,7 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { SectionHeader } from '@/components/ui/section-header';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import { newsOverviewPageQuery } from '@/lib/sanity/queries/pages/news-overview';
 import {
 	newsArticlesPaginatedQuery,
@@ -21,7 +21,7 @@ const START_INDEX = 3;
 const ITEMS_PER_PAGE = 6;
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(newsOverviewPageQuery);
+	const { data: page } = await sanityFetch({ query: newsOverviewPageQuery });
 
 	if (!page) return {};
 
@@ -42,15 +42,19 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 	const pageString = Array.isArray(seite) ? seite[0] : seite;
 	const currentPage = Number.parseInt(pageString ?? '1', 10);
 
-	const [page, totalArticles, articles, paginatedArticles] = await Promise.all([
-		client.fetch(newsOverviewPageQuery),
-		client.fetch(newsArticlesTotalQuery),
-		client.fetch(newsArticlesQuery),
-		client.fetch(newsArticlesPaginatedQuery, {
-			end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
-			start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
-		}),
-	]);
+	const [{ data: page }, { data: totalArticles }, { data: articles }, { data: paginatedArticles }] =
+		await Promise.all([
+			sanityFetch({ query: newsOverviewPageQuery }),
+			sanityFetch({ query: newsArticlesTotalQuery }),
+			sanityFetch({ query: newsArticlesQuery }),
+			sanityFetch({
+				params: {
+					end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
+					start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
+				},
+				query: newsArticlesPaginatedQuery,
+			}),
+		]);
 
 	if (!page) return null;
 
@@ -74,7 +78,7 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 					<LatestNewsPagination
 						articles={paginatedArticles ?? []}
 						currentPage={currentPage}
-						hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
+						hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < (totalArticles ?? 0)}
 					/>
 				</section>
 			</section>

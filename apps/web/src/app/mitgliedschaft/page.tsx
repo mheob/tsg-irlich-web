@@ -5,7 +5,7 @@ import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Pricing } from '@/components/section/pricing';
 import heroImage from '@/images/mitgliedschaft/hero.webp';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import { membershipPageQuery } from '@/lib/sanity/queries/pages/membership';
 
 import { getOpenGraphImageOptions } from '../news/_shared/utils';
@@ -13,7 +13,7 @@ import { Downloads } from './_sections/downloads';
 import { Intro } from './_sections/intro';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(membershipPageQuery);
+	const { data: page } = await sanityFetch({ query: membershipPageQuery });
 
 	if (!page.membership) return {};
 
@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-	const page = await client.fetch(membershipPageQuery);
+	const { data: page } = await sanityFetch({ query: membershipPageQuery });
 
 	if (!page.membership || !page.pricingSection) {
 		const { notFound } = await import('next/navigation');

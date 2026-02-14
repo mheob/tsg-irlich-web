@@ -1,21 +1,46 @@
-/* eslint-disable node/prefer-global/process */
+import { z } from 'zod';
+
+// Individual schemas for lazy validation
+const schemas = {
+	SANITY_STUDIO_DATASET: z.string().min(1, 'Missing SANITY_STUDIO_DATASET'),
+	SANITY_STUDIO_PREVIEW_ORIGIN: z.url().default('http://localhost:3000'),
+	SANITY_STUDIO_PROJECT_ID: z.string().min(1, 'Missing SANITY_STUDIO_PROJECT_ID'),
+	SANITY_STUDIO_VERSION: z.string().default('2025-09-05'),
+} as const;
+
+type EnvKey = keyof typeof schemas;
+type EnvValue<K extends EnvKey> = z.infer<(typeof schemas)[K]>;
+
+// Cache for validated values
+const cache = new Map<EnvKey, unknown>();
 
 /**
- * Asserts that a value is defined and returns it, throwing an error if undefined.
- * Used to validate required environment variables.
+ * Validates and returns a single environment variable.
+ * Only validates the requested variable, allowing modules to load
+ * even if other environment variables are missing.
  *
- * @param value - The value to check
- * @param errorMessage - The error message to throw if value is undefined
- * @returns The value if defined
- * @throws {Error} Error if value is undefined
- * @example
- * ```ts
- * const requiredValue = assertValue(process.env.REQUIRED_VAR, 'Missing REQUIRED_VAR');
- * ```
+ * Note: Uses import.meta.env for Vite/browser compatibility.
+ *
+ * @param key - The environment variable key to validate
+ * @returns The validated environment variable value
+ * @throws {Error} If the environment variable is missing or invalid
  */
-function assertValue<T>(value: T | undefined, errorMessage: string): T {
-	if (!value) throw new Error(errorMessage);
-	return value;
+export function env<K extends EnvKey>(key: K): EnvValue<K> {
+	if (cache.has(key)) {
+		return cache.get(key) as EnvValue<K>;
+	}
+
+	const schema = schemas[key];
+	// Use import.meta.env for Vite compatibility (Sanity Studio uses Vite)
+	const value = import.meta.env[key];
+	const result = schema.safeParse(value);
+
+	if (!result.success) {
+		throw new Error(`Invalid environment variable ${key}: ${z.prettifyError(result.error)}`);
+	}
+
+	cache.set(key, result.data);
+	return result.data as EnvValue<K>;
 }
 
 /**
@@ -23,20 +48,14 @@ function assertValue<T>(value: T | undefined, errorMessage: string): T {
  * This is loaded from the `SANITY_STUDIO_DATASET` environment variable.
  * If the environment variable is missing, an error will be thrown.
  */
-export const dataset = assertValue(
-	process.env.SANITY_STUDIO_DATASET,
-	'Missing environment variable: SANITY_STUDIO_DATASET',
-);
+export const dataset = env('SANITY_STUDIO_DATASET');
 
 /**
  * The Sanity Studio project ID to use.
  * This is loaded from the `SANITY_STUDIO_PROJECT_ID` environment variable.
  * If the environment variable is missing, an error will be thrown.
  */
-export const projectId = assertValue(
-	process.env.SANITY_STUDIO_PROJECT_ID,
-	'Missing environment variable: SANITY_STUDIO_PROJECT_ID',
-);
+export const projectId = env('SANITY_STUDIO_PROJECT_ID');
 
 /**
  * The Sanity Studio API version to use.
@@ -45,4 +64,4 @@ export const projectId = assertValue(
  *
  * @see https://www.sanity.io/docs/api-versioning for how versioning works
  */
-export const apiVersion = process.env.SANITY_STUDIO_VERSION ?? '2025-09-05';
+export const apiVersion = env('SANITY_STUDIO_VERSION');

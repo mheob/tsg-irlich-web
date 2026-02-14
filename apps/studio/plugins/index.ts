@@ -4,6 +4,7 @@ import { deDELocale } from '@sanity/locale-de-de';
 import { visionTool } from '@sanity/vision';
 import type { PluginOptions } from 'sanity';
 import { media } from 'sanity-plugin-media';
+import { presentationTool } from 'sanity/presentation';
 import { structureTool } from 'sanity/structure';
 
 import aboutUsPage from '@/schemas/single-pages/about-us';
@@ -21,6 +22,7 @@ import privacyPage from '@/schemas/single-pages/privacy';
 import singleGroupPage from '@/schemas/single-pages/single-group';
 import siteSettings from '@/schemas/singletons/site-settings';
 
+import { env } from '../env';
 import { assistWithPresets } from './assist';
 import { pageStructure, singletonPlugin } from './singleton';
 
@@ -49,6 +51,15 @@ export function getPlugins(): PluginOptions[] {
 				imprintPage,
 				siteSettings,
 			]),
+		}),
+		presentationTool({
+			previewUrl: {
+				origin: env('SANITY_STUDIO_PREVIEW_ORIGIN'),
+				preview: '/',
+				previewMode: {
+					enable: '/api/draft-mode/enable',
+				},
+			},
 		}),
 		// Configures the global "new document" button, and document actions,
 		// to suit the Settings document singleton

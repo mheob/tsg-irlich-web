@@ -5,14 +5,14 @@ import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Stats } from '@/components/section/stats';
 import heroImage from '@/images/angebot/hero.webp';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import { offerPageQuery } from '@/lib/sanity/queries/pages/offer';
 
 import { getOpenGraphImageOptions } from '../news/_shared/utils';
 import { Groups } from './_sections/groups';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(offerPageQuery);
+	const { data: page } = await sanityFetch({ query: offerPageQuery });
 
 	if (!page) return {};
 
@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function OfferPage() {
-	const page = await client.fetch(offerPageQuery);
+	const { data: page } = await sanityFetch({ query: offerPageQuery });
 
 	if (!page) {
 		const { notFound } = await import('next/navigation');

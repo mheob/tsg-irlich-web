@@ -22,7 +22,7 @@ import { mediaAssetSource } from 'sanity-plugin-media';
 
 import { apiVersion } from '@/env';
 
-const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'] as const;
+const ALLOWED_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg']);
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const GENERIC_FILENAME_PATTERN =
 	/^(?:IMG[-_]|DSC[-_]|SCR[-_]|Screenshot|Bildschirmfoto|\d{8}[-_])/i;

@@ -6,14 +6,14 @@ import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { Hero } from '@/components/section/hero';
 import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { ContactLink } from '@/components/with-logic/contact-link';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
 
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(imprintPageQuery);
+	const { data: page } = await sanityFetch({ query: imprintPageQuery });
 
 	if (!page) return {};
 
@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ImprintPage() {
-	const page = await client.fetch(imprintPageQuery);
+	const { data: page } = await sanityFetch({ query: imprintPageQuery });
 
 	if (!page) {
 		const { notFound } = await import('next/navigation');

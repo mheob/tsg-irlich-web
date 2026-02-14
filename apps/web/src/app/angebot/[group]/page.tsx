@@ -5,7 +5,7 @@ import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Stats } from '@/components/section/stats';
 import { EMAIL_MASS_SPORT_DEPARTMENT, EMAIL_SOCCER_DEPARTMENT } from '@/constants/query-fields';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import {
 	offerGroupsPageContactPersonsQuery,
 	offerGroupsPageGroupsQuery,
@@ -23,7 +23,7 @@ export async function generateMetadata({
 
 	const currentDepartment = getCurrentDepartment(groupParameter);
 
-	const page = await client.fetch(offerGroupsPageQuery);
+	const { data: page } = await sanityFetch({ query: offerGroupsPageQuery });
 
 	if (!page) return {};
 
@@ -45,11 +45,17 @@ export default async function GroupsPage({ params }: PageProps<'/angebot/[group]
 
 	const currentDepartment = getCurrentDepartment(group);
 
-	const [page, groups, offerPersons] = await Promise.all([
-		client.fetch(offerGroupsPageQuery),
-		client.fetch(offerGroupsPageGroupsQuery, { groupType: currentDepartment?._type }),
-		client.fetch(offerGroupsPageContactPersonsQuery, {
-			email: group === 'fussball' ? EMAIL_SOCCER_DEPARTMENT : EMAIL_MASS_SPORT_DEPARTMENT,
+	const [{ data: page }, { data: groups }, { data: offerPersons }] = await Promise.all([
+		sanityFetch({ query: offerGroupsPageQuery }),
+		sanityFetch({
+			params: { groupType: currentDepartment?._type },
+			query: offerGroupsPageGroupsQuery,
+		}),
+		sanityFetch({
+			params: {
+				email: group === 'fussball' ? EMAIL_SOCCER_DEPARTMENT : EMAIL_MASS_SPORT_DEPARTMENT,
+			},
+			query: offerGroupsPageContactPersonsQuery,
 		}),
 	]);
 

@@ -4,7 +4,7 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { SectionHeader } from '@/components/ui/section-header';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import {
 	newsArticlesPaginatedForCategoryQuery,
 	newsArticlesTotalForCategoryQuery,
@@ -37,7 +37,10 @@ export async function generateMetadata({
 }: Readonly<PageProps<'/news/[category]'>>): Promise<Metadata> {
 	const { category: categoryParameter } = await params;
 
-	const category = await client.fetch(newsCategoryQuery, { slug: categoryParameter });
+	const { data: category } = await sanityFetch({
+		params: { slug: categoryParameter },
+		query: newsCategoryQuery,
+	});
 	if (!category) return {};
 
 	const description = category.meta?.metaDescription ?? '';
@@ -61,16 +64,19 @@ export default async function NewsCategoryPage({
 
 	const { currentPage, end, start } = getCurrentPage(seite);
 
-	const [page, totalArticles, category, paginatedArticles] = await Promise.all([
-		client.fetch(newsOverviewCategoryPageQuery),
-		client.fetch(newsArticlesTotalForCategoryQuery, { category: categoryParameter }),
-		client.fetch(newsCategoryQuery, { slug: categoryParameter }),
-		client.fetch(newsArticlesPaginatedForCategoryQuery, {
-			category: categoryParameter,
-			end,
-			start,
-		}),
-	]);
+	const [{ data: page }, { data: totalArticles }, { data: category }, { data: paginatedArticles }] =
+		await Promise.all([
+			sanityFetch({ query: newsOverviewCategoryPageQuery }),
+			sanityFetch({
+				params: { category: categoryParameter },
+				query: newsArticlesTotalForCategoryQuery,
+			}),
+			sanityFetch({ params: { slug: categoryParameter }, query: newsCategoryQuery }),
+			sanityFetch({
+				params: { category: categoryParameter, end, start },
+				query: newsArticlesPaginatedForCategoryQuery,
+			}),
+		]);
 
 	if (!page || !category) {
 		const { notFound } = await import('next/navigation');
@@ -110,7 +116,7 @@ export default async function NewsCategoryPage({
 				<LatestNewsPagination
 					articles={paginatedArticles ?? []}
 					currentPage={currentPage}
-					hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
+					hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < (totalArticles ?? 0)}
 				/>
 			</section>
 

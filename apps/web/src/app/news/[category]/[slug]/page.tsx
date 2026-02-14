@@ -5,7 +5,7 @@ import { Hero } from '@/components/section/hero';
 import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import {
 	newsArticleContentQuery,
 	newsArticleHeroQuery,
@@ -25,7 +25,10 @@ export async function generateMetadata({
 }: Readonly<PageProps<'/news/[category]/[slug]'>>): Promise<Metadata> {
 	const { slug } = await params;
 
-	const article = await client.fetch(newsArticleContentQuery, { slug });
+	const { data: article } = await sanityFetch({
+		params: { slug },
+		query: newsArticleContentQuery,
+	});
 
 	if (!article) return {};
 
@@ -46,12 +49,13 @@ export default async function NewsArticlePage({
 }: Readonly<PageProps<'/news/[category]/[slug]'>>) {
 	const { slug } = await params;
 
-	const [hero, article, socialMedia, sponsors] = await Promise.all([
-		client.fetch(newsArticleHeroQuery),
-		client.fetch(newsArticleContentQuery, { slug }),
-		client.fetch(socialMediaQuery),
-		client.fetch(sponsorsQuery),
-	]);
+	const [{ data: hero }, { data: article }, { data: socialMedia }, { data: sponsors }] =
+		await Promise.all([
+			sanityFetch({ query: newsArticleHeroQuery }),
+			sanityFetch({ params: { slug }, query: newsArticleContentQuery }),
+			sanityFetch({ query: socialMediaQuery }),
+			sanityFetch({ query: sponsorsQuery }),
+		]);
 
 	if (!article || !hero) {
 		const { notFound } = await import('next/navigation');

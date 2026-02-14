@@ -5,13 +5,13 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import contactImage from '@/images/kontakt/hero.webp';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import { contactPageQuery } from '@/lib/sanity/queries/pages/contact';
 
 import { getOpenGraphImageOptions } from '../news/_shared/utils';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(contactPageQuery);
+	const { data: page } = await sanityFetch({ query: contactPageQuery });
 
 	if (!page) return {};
 
@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-	const page = await client.fetch(contactPageQuery);
+	const { data: page } = await sanityFetch({ query: contactPageQuery });
 
 	if (!page) {
 		const { notFound } = await import('next/navigation');

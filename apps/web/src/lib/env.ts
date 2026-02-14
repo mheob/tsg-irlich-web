@@ -1,4 +1,4 @@
-import process from 'node:process';
+/* eslint-disable node/prefer-global/process */
 
 import { z } from 'zod';
 
@@ -15,7 +15,7 @@ const schemas = {
 	NEXT_PUBLIC_SANITY_API_VERSION: z.string().default('2025-12-15'),
 	NEXT_PUBLIC_SANITY_DATASET: z.string().min(1, 'Missing NEXT_PUBLIC_SANITY_DATASET'),
 	NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1, 'Missing NEXT_PUBLIC_SANITY_PROJECT_ID'),
-	NEXT_PUBLIC_SANITY_STUDIO_URL: z.url().optional(),
+	NEXT_PUBLIC_SANITY_STUDIO_URL: z.url().optional().default('http://localhost:3333'),
 	NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 	RESEND_API_KEY: z.string().min(1, 'Missing RESEND_API_KEY'),
 	SANITY_API_READ_TOKEN: z.string().min(1, 'Missing SANITY_API_READ_TOKEN'),
