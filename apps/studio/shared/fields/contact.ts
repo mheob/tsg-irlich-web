@@ -7,7 +7,7 @@ export const addressField = defineField({
 	name: 'address',
 	type: 'text',
 	group: 'contact',
-	validation: Rule => [Rule.required().error('Die Anschrift ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Die Anschrift ist erforderlich')],
 });
 
 export const emailField = defineField({
@@ -15,7 +15,7 @@ export const emailField = defineField({
 	name: 'email',
 	type: 'email',
 	group: 'contact',
-	validation: Rule => [Rule.required().error('Die E-Mail ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Die E-Mail ist erforderlich')],
 });
 
 export const phoneField = defineField({
@@ -23,7 +23,7 @@ export const phoneField = defineField({
 	name: 'phone',
 	type: 'string',
 	group: 'contact',
-	validation: Rule => [
+	validation: (Rule) => [
 		Rule.regex(phoneFieldRegex).error(
 			'Telefonnummer ist ungültig, sie muss wie folgt aussehen: +49 123 456789',
 		),
@@ -45,7 +45,7 @@ export const contactAsField = defineField({
 	},
 	initialValue: ({ parent }) => (parent?.phone ? 'both' : 'email'),
 	hidden: ({ parent }) => !parent?.phone,
-	validation: Rule => [Rule.required().error('Die "Kontakt per"-Auswahl ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Die "Kontakt per"-Auswahl ist erforderlich')],
 });
 
 export const contactPersonsField = defineField({
@@ -54,5 +54,5 @@ export const contactPersonsField = defineField({
 	type: 'array',
 	of: [{ type: 'reference', to: [{ type: 'person' }] }],
 	group: 'content',
-	validation: Rule => [Rule.required().error('Ansprechpartner ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Ansprechpartner ist erforderlich')],
 });

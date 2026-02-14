@@ -10,5 +10,5 @@ export const trainingsField = defineField({
 	icon: RiLinksLine,
 	group: 'trainings',
 	fields: [removeGroupFromField(titleField)],
-	validation: Rule => [Rule.required().error('Trainingszeiten und -orte sind erforderlich')],
+	validation: (Rule) => [Rule.required().error('Trainingszeiten und -orte sind erforderlich')],
 });

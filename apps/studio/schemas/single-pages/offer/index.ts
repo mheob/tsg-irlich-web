@@ -36,7 +36,7 @@ const offerPage = defineType({
 			group: 'content',
 			groups: [departments, stats, contactPersons],
 			fields: [departmentsField, statsField, contactPersonsSectionField],
-			validation: Rule => Rule.required(),
+			validation: (Rule) => Rule.required(),
 		}),
 	],
 	preview: {

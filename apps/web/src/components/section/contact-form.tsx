@@ -165,8 +165,8 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 											<FormField
 												render={({ field }) => (
 													<SelectWithLabel
-														onValueChange={value => {
-															const selected = selectItems.find(item => item.value === value);
+														onValueChange={(value) => {
+															const selected = selectItems.find((item) => item.value === value);
 															field?.onChange({ email: value, label: selected?.label ?? '' });
 														}}
 														field={{ ...field, value: field.value?.email ?? '' }}

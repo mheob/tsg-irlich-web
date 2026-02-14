@@ -28,7 +28,7 @@ const privacyPage = defineType({
 			name: 'introText',
 			type: 'blockContent',
 			group: 'contact',
-			validation: Rule => [Rule.required().error('Einleitungstext ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Einleitungstext ist erforderlich')],
 		}),
 		addressField,
 		phoneField,
@@ -40,7 +40,7 @@ const privacyPage = defineType({
 			name: 'content',
 			type: 'blockContent',
 			group: 'content',
-			validation: Rule => [Rule.required().error('Datenschutzerklärung ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Datenschutzerklärung ist erforderlich')],
 		}),
 	],
 	preview: {

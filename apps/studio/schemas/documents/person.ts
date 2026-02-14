@@ -42,12 +42,12 @@ const person = defineType({
 
 							options: {
 								layout: 'dropdown',
-								list: DEPARTMENTS.map(department => ({
+								list: DEPARTMENTS.map((department) => ({
 									title: department.title,
 									value: department.slug,
 								})),
 							},
-							validation: Rule => [
+							validation: (Rule) => [
 								Rule.required().error('Die Gruppe oder Abteilung ist erforderlich'),
 							],
 						}),
@@ -102,7 +102,7 @@ const person = defineType({
 									}
 								},
 							},
-							validation: Rule => [
+							validation: (Rule) => [
 								Rule.required().error('Die Gruppe oder das Team ist erforderlich'),
 							],
 						}),
@@ -113,7 +113,7 @@ const person = defineType({
 							type: 'reference',
 							to: [{ type: 'role' }],
 							description: 'Die Rolle oder Funktion der Person (z.B. Vorstand Finanzen).',
-							validation: Rule => [
+							validation: (Rule) => [
 								Rule.required().error('Die Rolle oder Funktion ist erforderlich'),
 							],
 						}),
@@ -125,7 +125,7 @@ const person = defineType({
 							description:
 								'Kurze Aufgabenbeschreibung zum Posten der Person (ca. 270 bis 330 Zeichen).',
 							components: { input: TextInput },
-							validation: Rule => [
+							validation: (Rule) => [
 								Rule.required()
 									.min(128)
 									.error('Die Aufgabenbeschreibung muss mindestens 128 Zeichen lang sein.'),

@@ -18,9 +18,9 @@ const documentDownloadField = defineField({
 			options: {
 				accept: 'application/pdf',
 			},
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().error('Dokument ist erforderlich'),
-				Rule.custom(file => {
+				Rule.custom((file) => {
 					if (!file) return true; // let required() handle this
 
 					const asset = file.asset as { mimeType?: string };

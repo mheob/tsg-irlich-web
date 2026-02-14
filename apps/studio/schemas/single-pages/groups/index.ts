@@ -25,7 +25,7 @@ const groupsPage = defineType({
 			name: 'metaDescription',
 			type: 'text',
 			group: 'meta',
-			validation: Rule =>
+			validation: (Rule) =>
 				Rule.min(130)
 					.max(160)
 					.warning('Die Beschreibung sollte idealerweise von 130 bis 160 Zeichen lang sein.'),
@@ -40,7 +40,7 @@ const groupsPage = defineType({
 			group: 'content',
 			groups: [groups, stats, contactPersons],
 			fields: [groupsField, statsField, contactPersonsField],
-			validation: Rule => Rule.required(),
+			validation: (Rule) => Rule.required(),
 		}),
 	],
 	preview: {

@@ -7,7 +7,7 @@ export const authorField = defineField({
 	to: [{ type: 'author' }],
 	description: 'Autor für Beitrag auswählen',
 	group: 'meta',
-	validation: Rule => [Rule.required().error('Der Autor ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Der Autor ist erforderlich')],
 });
 
 export const metaField = defineField({

@@ -13,10 +13,10 @@ const ALLOWED_TYPES = new Set(['image/png', 'image/jpeg', 'image/gif', 'image/we
 const uploadSchema = z.object({
 	file: z
 		.instanceof(File)
-		.refine(file => ALLOWED_TYPES.has(file.type), {
+		.refine((file) => ALLOWED_TYPES.has(file.type), {
 			message: 'Invalid file type. Only images are allowed.',
 		})
-		.refine(file => file.size <= MAX_FILE_SIZE, {
+		.refine((file) => file.size <= MAX_FILE_SIZE, {
 			message: 'File too large. Maximum size is 10MB.',
 		}),
 });

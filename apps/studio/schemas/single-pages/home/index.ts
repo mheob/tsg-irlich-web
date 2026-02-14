@@ -58,7 +58,7 @@ const homePage = defineType({
 				contactPersonsSectionField,
 				newsField,
 			],
-			validation: Rule => [Rule.required().error('Inhalte sind erforderlich')],
+			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
 	preview: {

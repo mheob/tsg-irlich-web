@@ -40,7 +40,7 @@ const blockContent = defineField({
 		select: {
 			blocks: 'text',
 		},
-		// eslint-disable-next-line ts/no-explicit-any
+		// biome-ignore lint: `any` is fine here for us
 		prepare(value: Record<string, any>) {
 			const block: PortableTextTextBlock<PortableTextSpan> | undefined = value.blocks.find(
 				(block: PortableTextTextBlock<PortableTextSpan>) => block._type === 'block',
@@ -48,8 +48,8 @@ const blockContent = defineField({
 			return {
 				title: block
 					? `Text: ${block.children
-							.filter(child => child._type === 'span')
-							.map(span => span.text)
+							.filter((child) => child._type === 'span')
+							.map((span) => span.text)
 							.join('')}`
 					: 'No title',
 			};

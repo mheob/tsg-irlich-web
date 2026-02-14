@@ -13,7 +13,7 @@ export function LatestNews({ articles, ...props }: Readonly<LatestNewsProps>) {
 			<NewsArticlePreview article={articles[0]} />
 
 			<div className="flex flex-col gap-5 lg:gap-10">
-				{articles.slice(1).map(article => (
+				{articles.slice(1).map((article) => (
 					<NewsArticlePreview article={article} columns={2} key={article._id} />
 				))}
 			</div>

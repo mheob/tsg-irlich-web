@@ -55,7 +55,7 @@ export function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) 
 			aria-disabled="true"
 			className={cn('font-normal', className)}
 			data-slot="breadcrumb-page"
-			role="link"
+			role="presentation"
 			{...props}
 		/>
 	);

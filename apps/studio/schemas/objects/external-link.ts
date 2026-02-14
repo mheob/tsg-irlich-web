@@ -12,7 +12,7 @@ const externalLink = defineField({
 			name: 'href',
 			type: 'url',
 			description: 'Externen Link hinzufügen',
-			validation: Rule =>
+			validation: (Rule) =>
 				Rule.uri({
 					allowRelative: false,
 					scheme: ['http', 'https', 'mailto', 'tel'],

@@ -16,13 +16,13 @@ export function Sponsors({ className, sponsors, ...props }: Readonly<SponsorsPro
 
 			<div className="text-primary mt-4 flex flex-col gap-10">
 				{sponsors
-					.filter(sponsor => sponsor.logo?.asset?._ref)
-					.map(sponsor => (
+					.filter((sponsor) => sponsor.logo?.asset?._ref)
+					.map((sponsor) => (
 						<Image
 							alt={sponsor.name}
 							height={98}
 							key={sponsor._id}
-							// eslint-disable-next-line ts/no-non-null-assertion
+							// biome-ignore lint/style/noNonNullAssertion: we are sure that the logo exists
 							src={urlForImage(sponsor.logo, 98, 325)!}
 							width={325}
 						/>

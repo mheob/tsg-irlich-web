@@ -95,7 +95,7 @@ export const groupSections: GroupSection[] = [
 ];
 
 export function getOGImage(group: string): OpenGraph['images'] {
-	const groupSection = groupSections.find(section => section.slug === `/angebot/${group}`);
+	const groupSection = groupSections.find((section) => section.slug === `/angebot/${group}`);
 	const imageURL = groupSection ? `/og/angebot/groups/${group}.webp` : `/og/angebot.webp`;
 
 	return {
@@ -107,10 +107,10 @@ export function getOGImage(group: string): OpenGraph['images'] {
 }
 
 export function getGroupImage(group: string, path = ''): GroupSection['image'] {
-	const groupSection = groupSections.find(section => section.slug === `${path}${group}`);
+	const groupSection = groupSections.find((section) => section.slug === `${path}${group}`);
 	return groupSection?.image ?? fallbackImage;
 }
 
 export function getCurrentDepartment(group: string): GroupSection | undefined {
-	return groupSections.find(g => g.slug === `/angebot/${group}`);
+	return groupSections.find((g) => g.slug === `/angebot/${group}`);
 }

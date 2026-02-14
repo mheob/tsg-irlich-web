@@ -18,7 +18,7 @@ export function Downloads({ downloads, intro, subtitle, title }: Readonly<Downlo
 				</SectionHeader>
 
 				<div className="mt-16 grid grid-cols-1 place-content-center gap-12 lg:grid-cols-3">
-					{downloads?.map(download => {
+					{downloads?.map((download) => {
 						if (!download) return null;
 						return <DownloadCard download={download} key={download._key} />;
 					})}

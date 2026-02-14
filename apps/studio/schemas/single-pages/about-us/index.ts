@@ -38,7 +38,7 @@ const aboutUsPage = defineType({
 			group: 'content',
 			groups: [intro, chronicle, vision, stats, contactPersons],
 			fields: [introField, chronicleField, visionField, statsField, contactPersonsSectionField],
-			validation: Rule => [Rule.required().error('Inhalte sind erforderlich')],
+			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
 	preview: {

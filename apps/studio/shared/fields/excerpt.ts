@@ -6,7 +6,7 @@ export const excerptField = defineField({
 	type: 'text',
 	description: 'Kurze Beschreibung, die auf den Übersichtsseiten angezeigt wird.',
 	group: 'excerpt',
-	validation: Rule => [
+	validation: (Rule) => [
 		Rule.required().error('Der Vorschautext ist erforderlich'),
 		Rule.min(130)
 			.max(160)
@@ -20,5 +20,5 @@ export const featuredImageField = defineField({
 	type: 'mainImage',
 	description: 'Bild, das in Beitragslisten angezeigt wird.',
 	group: 'excerpt',
-	validation: Rule => [Rule.required().error('Das Vorschaubild ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Das Vorschaubild ist erforderlich')],
 });

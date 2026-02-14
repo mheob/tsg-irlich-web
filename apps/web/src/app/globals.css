@@ -1,4 +1,5 @@
-@import 'tailwindcss';
+/* biome-ignore-all lint/correctness/noUnknownFunction: the unknown functions comes from tailwind */
+@import "tailwindcss";
 
 @plugin "@tailwindcss/typography";
 
@@ -9,7 +10,7 @@
 	--radius-sm: calc(var(--radius) - 4px);
 
 	--color-accent: oklch(0.97 0 0);
-	--color-accent-foreground: oklch(0.20 0 0);
+	--color-accent-foreground: oklch(0.2 0 0);
 
 	--color-background: oklch(1 0 0);
 	--color-background-high-contrast: oklch(0.91 0 286);
@@ -20,7 +21,7 @@
 	--color-border: oklch(0.77 0 266);
 
 	--color-card: oklch(1 0 0);
-	--color-card-foreground: oklch(0.20 0 0);
+	--color-card-foreground: oklch(0.2 0 0);
 
 	--color-chart-1: oklch(0.82 0.23 143);
 	--color-chart-2: oklch(0.63 0.1 184);
@@ -34,33 +35,34 @@
 	--color-success: oklch(0.97 0.02 146);
 	--color-success-foreground: oklch(0.46 0.16 143);
 
-	--color-foreground: oklch(0.20 0 0);
+	--color-foreground: oklch(0.2 0 0);
 	--color-input: oklch(0.99 0 0);
 
 	--color-muted: oklch(0.77 0.02 264);
-	--color-muted-foreground: oklch(0.40 0.02 264);
+	--color-muted-foreground: oklch(0.4 0.02 264);
 
 	--color-popover: oklch(1 0 0);
-	--color-popover-foreground: oklch(0.20 0 0);
+	--color-popover-foreground: oklch(0.2 0 0);
 
 	--color-primary-dark: oklch(0.38 0.11 276);
 	--color-primary: oklch(0.33 0.09 286);
 	--color-primary-foreground: oklch(0.99 0 0);
-	--color-primary-light: oklch(0.50 0.17 281);
+	--color-primary-light: oklch(0.5 0.17 281);
 
 	--color-ring: oklch(0.62 0.17 273);
 
 	--color-secondary: oklch(0.88 0.18 94);
-	--color-secondary-foreground: oklch(0.20 0 0);
+	--color-secondary-foreground: oklch(0.2 0 0);
 	--color-secondary-light: oklch(0.91 0.19 100);
 	--color-secondary-dark: oklch(0.72 0.15 85);
 
-	--font-sans: Inter, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-	--font-sans-serif: Anton, ui-sans-serif, system-ui, sans-serif,
-		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-	--font-serif: Bebas Neue, ui-serif, Georgia, Cambria, 'Times New Roman',
-		Times, serif;
+	--font-sans:
+		Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+		"Segoe UI Symbol", "Noto Color Emoji";
+	--font-sans-serif:
+		Anton, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+		"Segoe UI Symbol", "Noto Color Emoji";
+	--font-serif: Bebas Neue, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 
 	--breakpoint-3xl: 120rem;
 
@@ -134,8 +136,7 @@
 	font-size: 0.75rem;
 	font-weight: 700;
 	cursor: pointer;
-	transition-property: color, background-color, border-color,
-		text-decoration-color, fill, stroke;
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 150ms;
 
@@ -334,9 +335,10 @@
 	}
 }
 
-
 @layer base {
-	*, ::before, ::after {
+	*,
+	::before,
+	::after {
 		border-color: var(--color-border);
 	}
 
@@ -355,7 +357,9 @@
 	h6,
 	.title,
 	.subTitle {
-		font-family: Anton, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+		font-family:
+			Anton, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+			"Segoe UI Symbol", "Noto Color Emoji";
 		text-wrap: balance;
 	}
 
@@ -386,8 +390,8 @@
 }
 
 @layer components {
-		textarea {
-			height: 4lh;
-			max-height: 12lh;
+	textarea {
+		height: 4lh;
+		max-height: 12lh;
 	}
 }

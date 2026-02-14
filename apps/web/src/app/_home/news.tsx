@@ -27,7 +27,7 @@ export function News({ articles, intro, subtitle, title }: Readonly<NewsProps>) 
 				</SectionHeader>
 
 				<div className="mt-10 flex flex-col justify-center gap-12 md:mt-32">
-					{articles.map(article => (
+					{articles.map((article) => (
 						<NewsArticlePreviewWide key={article.slug} {...article} />
 					))}
 				</div>

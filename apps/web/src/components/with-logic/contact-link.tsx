@@ -6,7 +6,7 @@ import { useMemo, useState } from 'react';
 function reverse(stringToReverse: string): string {
 	return [...stringToReverse]
 		.toReversed()
-		.map(char => {
+		.map((char) => {
 			if (char === '(') return ')';
 			if (char === ')') return '(';
 			return char;
@@ -18,7 +18,7 @@ function createContactLink({ header, href }: Pick<ContactLinkProps, 'header' | '
 	const combinedHeader =
 		(header &&
 			Object.keys(header)
-				.map(key => `${key}=${encodeURIComponent(header[key] ?? '')}`)
+				.map((key) => `${key}=${encodeURIComponent(header[key] ?? '')}`)
 				.join('&')) ||
 		'';
 
@@ -80,7 +80,7 @@ export function ContactLink({
 		onClick: handleClick,
 		onContextMenu: handleInteraction,
 		onFocus: handleInteraction,
-		onKeyDown: event => {
+		onKeyDown: (event) => {
 			if (event.key === 'Enter' || event.key === ' ') {
 				handleInteraction();
 			}

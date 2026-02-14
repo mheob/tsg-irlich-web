@@ -49,7 +49,7 @@ const siteSettings = defineType({
 					name: 'address',
 					type: 'string',
 					description: 'Adresse (Straße Hausnummer, Postleitzahl Ort)',
-					validation: Rule => [Rule.required().error('Die Adresse ist erforderlich')],
+					validation: (Rule) => [Rule.required().error('Die Adresse ist erforderlich')],
 				}),
 
 				defineField({
@@ -57,7 +57,7 @@ const siteSettings = defineType({
 					name: 'phone',
 					type: 'string',
 					description: 'Telefonnummer',
-					validation: Rule => [
+					validation: (Rule) => [
 						Rule.required().error('Die Telefonnummer ist erforderlich'),
 						Rule.regex(phoneFieldRegex).error(
 							'Telefonnummer ist ungültig, sie muss wie folgt aussehen: +49 123 456789',
@@ -70,7 +70,7 @@ const siteSettings = defineType({
 					name: 'email',
 					type: 'string',
 					description: 'E-Mail',
-					validation: Rule => [Rule.required().error('Die E-Mail ist erforderlich')],
+					validation: (Rule) => [Rule.required().error('Die E-Mail ist erforderlich')],
 				}),
 			],
 		}),
@@ -88,7 +88,7 @@ const siteSettings = defineType({
 					name: 'title',
 					type: 'string',
 					description: 'Titel des Newsletters',
-					validation: Rule => [Rule.required().error('Der "Newsletter Titel" ist erforderlich')],
+					validation: (Rule) => [Rule.required().error('Der "Newsletter Titel" ist erforderlich')],
 				}),
 
 				defineField({
@@ -96,7 +96,7 @@ const siteSettings = defineType({
 					name: 'cta',
 					type: 'string',
 					description: 'Text für den Newsletter Absende-Button',
-					validation: Rule => [
+					validation: (Rule) => [
 						Rule.required()
 							.min(3)
 							.error('Der "Newsletter Button Text" muss mindestens 3 Zeichen lang sein'),
@@ -119,7 +119,7 @@ const siteSettings = defineType({
 			],
 			description: 'Seiten und/oder Links für die Hauptnavigation hinzufügen',
 			group: 'navigation',
-			validation: Rule => Rule.required().error('Das Hauptmenü ist erforderlich'),
+			validation: (Rule) => Rule.required().error('Das Hauptmenü ist erforderlich'),
 		}),
 
 		defineField({
@@ -143,7 +143,7 @@ const siteSettings = defineType({
 	preview: {
 		prepare: () => ({ title: 'Generelle Einstellungen' }),
 	},
-	validation: Rule => Rule.required().error('Die generellen Einstellungen sind erforderlich'),
+	validation: (Rule) => Rule.required().error('Die generellen Einstellungen sind erforderlich'),
 });
 
 export default siteSettings;

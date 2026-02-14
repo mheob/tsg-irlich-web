@@ -52,7 +52,7 @@ export function ScreenshotUpload({
 			const preview = URL.createObjectURL(file);
 
 			// Add to uploading state
-			setUploadingFiles(previous => [
+			setUploadingFiles((previous) => [
 				...previous,
 				{ id, name: file.name, preview, progress: 'uploading' },
 			]);
@@ -62,12 +62,12 @@ export function ScreenshotUpload({
 
 				if (result?.data?.assetUrl) {
 					// Remove from uploading, add to value
-					setUploadingFiles(previous => previous.filter(f => f.id !== id));
+					setUploadingFiles((previous) => previous.filter((f) => f.id !== id));
 					onChange([...value, result.data.assetUrl]);
 				} else {
 					// Mark as error
-					setUploadingFiles(previous =>
-						previous.map(f =>
+					setUploadingFiles((previous) =>
+						previous.map((f) =>
 							f.id === id
 								? { ...f, error: result?.serverError || 'Upload failed', progress: 'error' }
 								: f,
@@ -75,8 +75,8 @@ export function ScreenshotUpload({
 					);
 				}
 			} catch {
-				setUploadingFiles(previous =>
-					previous.map(f =>
+				setUploadingFiles((previous) =>
+					previous.map((f) =>
 						f.id === id ? { ...f, error: 'Upload failed', progress: 'error' } : f,
 					),
 				);
@@ -154,22 +154,22 @@ export function ScreenshotUpload({
 	}, [disabled, canAddMore, processFile]);
 
 	const removeUrl = (urlToRemove: string) => {
-		onChange(value.filter(url => url !== urlToRemove));
+		onChange(value.filter((url) => url !== urlToRemove));
 	};
 
 	const removeUploading = (id: string) => {
-		setUploadingFiles(previous => {
-			const file = previous.find(f => f.id === id);
+		setUploadingFiles((previous) => {
+			const file = previous.find((f) => f.id === id);
 			if (file?.preview) {
 				URL.revokeObjectURL(file.preview);
 			}
-			return previous.filter(f => f.id !== id);
+			return previous.filter((f) => f.id !== id);
 		});
 	};
 
 	return (
 		<div className="space-y-3">
-			{/* Dropzone */}
+			{/* Drop zone */}
 			<label
 				className={cn(
 					'flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors',
@@ -212,7 +212,7 @@ export function ScreenshotUpload({
 							className="bg-muted group relative aspect-video overflow-hidden rounded-lg border"
 							key={url}
 						>
-							<img
+							<Image
 								alt={`Screenshot ${index + 1}`}
 								className="absolute inset-0 h-full w-full object-cover"
 								src={url}
@@ -229,7 +229,7 @@ export function ScreenshotUpload({
 					))}
 
 					{/* Uploading images */}
-					{uploadingFiles.map(file => (
+					{uploadingFiles.map((file) => (
 						<div
 							className="bg-muted relative aspect-video overflow-hidden rounded-lg border"
 							key={file.id}

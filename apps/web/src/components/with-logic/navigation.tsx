@@ -36,8 +36,8 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 
 	const navItemsWithActive: NavItemWithActive[] = useMemo(() => {
 		return navItems
-			.filter(item => item.slug !== '#!')
-			.map(item => ({
+			.filter((item) => item.slug !== '#!')
+			.map((item) => ({
 				...item,
 				isActive: isActivePage(pathname, item.slug),
 				slug: getHref(item.slug),
@@ -83,7 +83,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 
 					{/* Desktop Navigation */}
 					<div className="hidden items-center space-x-3 lg:flex">
-						{navItemsWithActive.map(item => (
+						{navItemsWithActive.map((item) => (
 							<Link
 								className={cn(
 									'hover:bg-secondary/40 text-primary flex h-16 items-center px-3 py-2 font-bold uppercase transition-colors',
@@ -132,7 +132,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 						},
 					)}
 				>
-					{navItemsWithActive.map(item => (
+					{navItemsWithActive.map((item) => (
 						<Link
 							className={cn(
 								'text-foreground block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-900',

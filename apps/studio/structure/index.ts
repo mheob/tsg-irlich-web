@@ -132,7 +132,7 @@ function getGroupSinglePages(
 					.title('Einzelseiten')
 					.items(
 						typeDefinitionArray
-							.map(typeDefinition => {
+							.map((typeDefinition) => {
 								return S.listItem()
 									.title(typeDefinition.title ?? typeDefinition.name)
 									.id(typeDefinition.name)
@@ -141,7 +141,7 @@ function getGroupSinglePages(
 										S.document().schemaType(typeDefinition.name).documentId(typeDefinition.name),
 									);
 							})
-							.filter(typeDefinition => isExcludedSingletonListItem(typeDefinition.getId())),
+							.filter((typeDefinition) => isExcludedSingletonListItem(typeDefinition.getId())),
 					),
 			),
 	];

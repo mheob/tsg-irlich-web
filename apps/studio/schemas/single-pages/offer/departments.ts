@@ -10,5 +10,5 @@ export const departmentsField = defineField({
 	icon: RiLinksLine,
 	group: 'departments',
 	fields: [...getDefaultPageSectionFieldsWithGroup()],
-	validation: Rule => Rule.required(),
+	validation: (Rule) => Rule.required(),
 });

@@ -49,7 +49,7 @@ export function NumberTicker({
 	}, [motionValue, isInView, delay, value, direction, startValue]);
 
 	useEffect(() => {
-		const unsubscribe = springValue.on('change', latest => {
+		const unsubscribe = springValue.on('change', (latest) => {
 			if (reference.current) {
 				reference.current.textContent = formatNumber(latest, decimalPlaces);
 			}

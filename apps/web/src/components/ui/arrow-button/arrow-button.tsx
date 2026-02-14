@@ -29,16 +29,19 @@ interface ArrowProps {
 }
 
 interface ArrowElementProps
-	extends ComponentPropsWithRef<'div'>, VariantProps<typeof ArrowButtonVariants>, ArrowProps {}
+	extends ComponentPropsWithRef<'div'>,
+		VariantProps<typeof ArrowButtonVariants>,
+		ArrowProps {}
 
 interface ArrowAnchorProps
-	extends
-		ComponentPropsWithRef<typeof Link>,
+	extends ComponentPropsWithRef<typeof Link>,
 		VariantProps<typeof ArrowButtonVariants>,
 		ArrowProps {}
 
 interface ArrowButtonProps
-	extends ComponentPropsWithRef<'button'>, VariantProps<typeof ArrowButtonVariants>, ArrowProps {
+	extends ComponentPropsWithRef<'button'>,
+		VariantProps<typeof ArrowButtonVariants>,
+		ArrowProps {
 	buttonType?: 'button' | 'reset' | 'submit';
 }
 
@@ -51,14 +54,22 @@ function Arrow({
 }>) {
 	switch (direction) {
 		/* eslint-disable unicorn/switch-case-braces, prettier/prettier */
-		case 'down': return <ArrowDown className={className} strokeWidth={2} />;
-		case 'down-left': return <ArrowDownLeft className={className} strokeWidth={2} />;
-		case 'down-right': return <ArrowDownRight className={className} strokeWidth={2} />;
-		case 'left': return <ArrowLeft className={className} strokeWidth={2} />;
-		case 'right': return <ArrowRight className={className} strokeWidth={2} />;
-		case 'up': return <ArrowUp className={className} strokeWidth={2} />;
-		case 'up-left': return <ArrowUpLeft className={className} strokeWidth={2} />;
-		case 'up-right': return <ArrowUpRight className={className} strokeWidth={2} />;
+		case 'down':
+			return <ArrowDown className={className} strokeWidth={2} />;
+		case 'down-left':
+			return <ArrowDownLeft className={className} strokeWidth={2} />;
+		case 'down-right':
+			return <ArrowDownRight className={className} strokeWidth={2} />;
+		case 'left':
+			return <ArrowLeft className={className} strokeWidth={2} />;
+		case 'right':
+			return <ArrowRight className={className} strokeWidth={2} />;
+		case 'up':
+			return <ArrowUp className={className} strokeWidth={2} />;
+		case 'up-left':
+			return <ArrowUpLeft className={className} strokeWidth={2} />;
+		case 'up-right':
+			return <ArrowUpRight className={className} strokeWidth={2} />;
 		/* eslint-enable unicorn/switch-case-braces, prettier/prettier */
 	}
 }

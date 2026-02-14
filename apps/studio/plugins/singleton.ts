@@ -20,7 +20,7 @@ export const singletonPlugin = definePlugin((types: string[]) => {
 			// https://user-images.githubusercontent.com/81981/195728798-e0c6cf7e-d442-4e58-af3a-8cd99d7fcc28.png
 			newDocumentOptions: (previous, { creationContext }) => {
 				if (creationContext.type === 'global') {
-					return previous.filter(templateItem => !types.includes(templateItem.templateId));
+					return previous.filter((templateItem) => !types.includes(templateItem.templateId));
 				}
 				return previous;
 			},
@@ -37,12 +37,12 @@ export const singletonPlugin = definePlugin((types: string[]) => {
  * @returns The StructureResolver
  */
 export function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureResolver {
-	return S => {
+	return (S) => {
 		// The default root list items (except custom ones)
 		const defaultListItems = S.documentTypeListItems()
 			.filter(
-				listItem =>
-					!typeDefinitionArray.some(singleton => singleton.name === listItem.getId()) &&
+				(listItem) =>
+					!typeDefinitionArray.some((singleton) => singleton.name === listItem.getId()) &&
 					isExcludedDefaultListItem(listItem.getId()),
 			)
 			.toSorted((a, b) => a.getTitle()?.localeCompare(b.getTitle() ?? '') ?? 0);

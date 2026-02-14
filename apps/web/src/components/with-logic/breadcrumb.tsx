@@ -19,7 +19,7 @@ function getBreadcrumbItemsPaths(pathname: string) {
 	const breadcrumbItems = pathname.split('/').slice(1);
 
 	let breadcrumbItemsPathsLast = '';
-	const breadcrumbItemsPaths = breadcrumbItems.slice(0, -1).map(item => {
+	const breadcrumbItemsPaths = breadcrumbItems.slice(0, -1).map((item) => {
 		const path = `${breadcrumbItemsPathsLast}/${item}`;
 		breadcrumbItemsPathsLast = `/${item}`;
 		return { path, title: capitalizeWords(item) };
@@ -45,7 +45,7 @@ export default function Breadcrumb({ currentPage, ...props }: Readonly<Breadcrum
 					</BreadcrumbLink>
 				</BreadcrumbItem>
 
-				{breadcrumbItemsPaths.map(item => (
+				{breadcrumbItemsPaths.map((item) => (
 					<Fragment key={item.path}>
 						<BreadcrumbSeparator />
 						<BreadcrumbItem>

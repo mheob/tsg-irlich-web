@@ -27,7 +27,7 @@ const accessibilityPage = defineType({
 			name: 'content',
 			type: 'blockContent',
 			group: 'content',
-			validation: Rule => [Rule.required().error('Barrierefreiheit ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Barrierefreiheit ist erforderlich')],
 		}),
 	],
 	preview: {

@@ -24,11 +24,11 @@ export default defineConfig({
 	form: {
 		// Disable the default for file assets
 		file: {
-			assetSources: sources => sources.filter(source => source.name !== 'sanity-default'),
+			assetSources: (sources) => sources.filter((source) => source.name !== 'sanity-default'),
 		},
 		// Disable the default for image assets (use sanity-plugin-media only)
 		image: {
-			assetSources: sources => sources.filter(source => source.name !== 'sanity-default'),
+			assetSources: (sources) => sources.filter((source) => source.name !== 'sanity-default'),
 		},
 	},
 	icon: Logo,
@@ -37,7 +37,7 @@ export default defineConfig({
 	projectId,
 	schema: {
 		// Filter out singleton types from the global “New document” menu options
-		templates: templates => templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+		templates: (templates) => templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
 		types: schemaTypes,
 	},
 	title: 'TSG Irlich 1882',

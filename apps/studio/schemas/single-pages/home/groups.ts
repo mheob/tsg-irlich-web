@@ -11,5 +11,5 @@ export const groupsField = defineField({
 	icon: RiLinksLine,
 	group: 'groups',
 	fields: [getFieldWithoutGroup(titleField), getFieldWithoutGroup(subTitleField)],
-	validation: Rule => [Rule.required().error('Gruppen sind erforderlich')],
+	validation: (Rule) => [Rule.required().error('Gruppen sind erforderlich')],
 });

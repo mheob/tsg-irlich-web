@@ -21,7 +21,7 @@ const honoraryMember = defineType({
 			name: 'memberSince',
 			type: 'string',
 			group: 'personal',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().min(2).error('Der Eintrag muss mindestens 2 Zeichen lang sein'),
 				Rule.max(10).warning('Der Eintrag sollte nicht länger als 10 Zeichen sein'),
 			],

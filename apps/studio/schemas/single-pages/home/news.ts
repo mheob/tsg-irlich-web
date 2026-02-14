@@ -10,5 +10,5 @@ export const newsField = defineField({
 	icon: RiLinksLine,
 	group: 'news',
 	fields: [...getDefaultPageSectionFieldsWithGroup()],
-	validation: Rule => [Rule.required().error('News sind erforderlich')],
+	validation: (Rule) => [Rule.required().error('News sind erforderlich')],
 });

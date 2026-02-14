@@ -31,7 +31,7 @@ const newsOverviewPage = defineType({
 			group: 'content',
 			groups: [{ title: 'Ansprechpartner', name: 'contactPersons' }],
 			fields: [contactPersonsSectionField],
-			validation: Rule => [Rule.required().error('Inhalte sind erforderlich')],
+			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
 	preview: {

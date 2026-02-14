@@ -21,7 +21,7 @@ const testimonial = defineType({
 			type: 'string',
 			description: 'Die Rolle oder Funktion des Zitierenden.',
 			group: 'personal',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().min(3).error('Die Rolle muss mindestens 3 Zeichen lang sein'),
 				Rule.max(64).warning('Die Rolle sollte nicht länger als 64 Zeichen sein'),
 			],
@@ -34,7 +34,7 @@ const testimonial = defineType({
 			type: 'text',
 			description: 'Das Zitat über die TSG.',
 			group: 'quote',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().min(64).error('Das Zitat muss mindestens 64 Zeichen lang sein'),
 				Rule.max(350).warning('Das Zitat sollte nicht länger als 350 Zeichen sein'),
 			],

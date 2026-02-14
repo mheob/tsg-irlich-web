@@ -15,7 +15,7 @@
 
 .subTitle::before,
 .subTitle::after {
-	content: '';
+	content: "";
 	position: absolute;
 	top: calc(50% - 2px);
 	width: 3rem;
@@ -33,7 +33,7 @@
 .title {
 	margin-top: 1rem;
 	font-size: 2rem;
-  line-height: var(--leading-tight);
+	line-height: var(--leading-tight);
 }
 
 @media (min-width: 48rem) {

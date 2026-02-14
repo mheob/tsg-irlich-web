@@ -8,7 +8,7 @@ export const statsField = defineField({
 	icon: RiLinksLine,
 	group: 'stats',
 	of: [{ type: 'stats' }],
-	validation: Rule => [
+	validation: (Rule) => [
 		Rule.required().min(3).error('Mindestens 3 Statistiken müssen vorhanden sein'),
 		Rule.max(4).error('Maximal 4 Statistiken dürfen gesetzt werden'),
 	],

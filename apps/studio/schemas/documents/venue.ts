@@ -13,7 +13,7 @@ const venue = defineType({
 			title: 'Name',
 			name: 'title',
 			type: 'string',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().min(3).error('Der Name muss mindestens 3 Zeichen lang sein'),
 				Rule.max(64).warning('Der Name sollte nicht länger als 64 Zeichen sein'),
 			],
@@ -24,7 +24,7 @@ const venue = defineType({
 			name: 'description',
 			type: 'simpleBlockContent',
 			description: 'Eine kurze Beschreibung der Sportstätte.',
-			validation: Rule => [Rule.required().error('Die Beschreibung ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Die Beschreibung ist erforderlich')],
 		}),
 
 		defineField({
@@ -43,7 +43,7 @@ const venue = defineType({
 					{ title: 'Rasenplatz', value: 'grass' },
 				],
 			},
-			validation: Rule => [Rule.required().error('Die "Art der Sportstätte" ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Die "Art der Sportstätte" ist erforderlich')],
 		}),
 
 		defineField({
@@ -62,7 +62,7 @@ const venue = defineType({
 					title: 'Name des Standortes',
 					name: 'name',
 					type: 'string',
-					validation: Rule => [
+					validation: (Rule) => [
 						Rule.required().min(2).error('Der Name muss mindestens 2 Zeichen lang sein'),
 						Rule.max(64).warning('Der Name sollte nicht länger als 64 Zeichen sein'),
 					],
@@ -72,7 +72,7 @@ const venue = defineType({
 					title: 'Straße',
 					name: 'street',
 					type: 'string',
-					validation: Rule => [
+					validation: (Rule) => [
 						Rule.required().min(2).error('Die Straße muss mindestens 2 Zeichen lang sein'),
 						Rule.max(128).warning('Die Straße sollte nicht länger als 128 Zeichen sein'),
 					],
@@ -82,7 +82,7 @@ const venue = defineType({
 					title: 'Hausnummer',
 					name: 'houseNumber',
 					type: 'string',
-					validation: Rule => [
+					validation: (Rule) => [
 						Rule.required().min(1).error('Die Hausnummer muss mindestens 1 Zeichen lang sein'),
 						Rule.max(8).warning('Die Hausnummer sollte nicht länger als 8 Zeichen sein'),
 					],
@@ -92,7 +92,7 @@ const venue = defineType({
 					title: 'Postleitzahl',
 					name: 'zipCode',
 					type: 'string',
-					validation: Rule => [
+					validation: (Rule) => [
 						Rule.regex(/^\d{5}$/).error('Die Postleitzahl muss aus genau 5 Zahlen bestehen'),
 					],
 				}),
@@ -101,7 +101,7 @@ const venue = defineType({
 					title: 'Stadt',
 					name: 'city',
 					type: 'string',
-					validation: Rule => [
+					validation: (Rule) => [
 						Rule.required().min(3).error('Die Stadt muss mindestens 3 Zeichen lang sein'),
 						Rule.max(64).warning('Die Stadt sollte nicht länger als 64 Zeichen sein'),
 					],

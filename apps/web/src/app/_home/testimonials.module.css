@@ -1,9 +1,9 @@
 @media (min-width: 48rem) {
 	.bg::before {
-		content: '';
+		content: "";
 		position: absolute;
 		inset: 0;
-		background-image: url('../../icons/design/bg-design-bottom-left.svg');
+		background-image: url("../../icons/design/bg-design-bottom-left.svg");
 		background-position: -5% 105%;
 		background-repeat: no-repeat;
 		background-size: 30%;

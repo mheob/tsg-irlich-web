@@ -1,0 +1,16 @@
+dictionaries = [
+    "de",
+    "en_us",
+]
+words = [
+    "dosb",
+    "gotenstraße",
+    "irlich",
+    "lucide",
+    "mheob",
+    "neuwied",
+    "nosonar",
+    "pappelstadion",
+    "tsg",
+    "tsgi",
+]
