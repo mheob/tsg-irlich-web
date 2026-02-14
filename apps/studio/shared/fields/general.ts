@@ -37,7 +37,7 @@ export const slugField = defineField({
 		slugify,
 		source: 'title',
 	},
-	validation: Rule => [Rule.required().error('Die Slug ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Die Slug ist erforderlich')],
 });
 
 export const subTitleField = defineField({
@@ -45,7 +45,7 @@ export const subTitleField = defineField({
 	name: 'subtitle',
 	type: 'string',
 	group: 'general',
-	validation: Rule => [
+	validation: (Rule) => [
 		Rule.required().min(3).error('Der Untertitel muss mindestens 3 Zeichen lang sein'),
 		Rule.max(50).warning('Der Untertitel sollte nicht länger als 50 Zeichen sein'),
 	],
@@ -56,7 +56,7 @@ export const titleField = defineField({
 	name: 'title',
 	type: 'string',
 	group: 'general',
-	validation: Rule => [
+	validation: (Rule) => [
 		Rule.required().min(3).error('Der Titel muss mindestens 3 Zeichen lang sein'),
 		Rule.max(65).warning('Der Titel sollte nicht länger als 65 Zeichen sein'),
 	],
@@ -75,7 +75,7 @@ export const defaultPageSectionFields = [titleField, subTitleField, introField];
 export function getDefaultPageSectionFieldsWithGroup(
 	group?: string,
 ): ReturnType<typeof defineField>[] {
-	return defaultPageSectionFields.map(field => ({ ...field, group }));
+	return defaultPageSectionFields.map((field) => ({ ...field, group }));
 }
 
 /**

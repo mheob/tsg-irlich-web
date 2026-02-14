@@ -65,7 +65,7 @@ export function PricingCard({
 					</div>
 					<h3 className="font-sans text-lg font-bold">{benefitsTitle}</h3>
 					<ul className="mt-4 md:text-lg">
-						{benefits.map(benefit => (
+						{benefits.map((benefit) => (
 							<li className="flex items-start gap-2" key={benefit}>
 								<CheckCircle className="text-primary-light mt-1 h-5 w-5 min-w-6" /> {benefit}
 							</li>

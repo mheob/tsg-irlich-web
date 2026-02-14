@@ -30,7 +30,7 @@ const internalLink = defineField({
 				{ type: 'privacy' },
 				{ type: 'imprint' },
 			],
-			validation: Rule => Rule.required().error('Der Link ist erforderlich'),
+			validation: (Rule) => Rule.required().error('Der Link ist erforderlich'),
 		},
 	],
 });

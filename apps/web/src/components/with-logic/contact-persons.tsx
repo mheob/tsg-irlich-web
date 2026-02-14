@@ -12,7 +12,8 @@ import { getInitials } from '@/utils/image';
 import { ContactButton } from '../ui/contact-button';
 
 interface ContactPersonItemProps
-	extends ContactPerson, Omit<ComponentPropsWithoutRef<'article'>, 'role'> {}
+	extends ContactPerson,
+		Omit<ComponentPropsWithoutRef<'article'>, 'role'> {}
 
 function ContactPersonItem({
 	contactAs,
@@ -93,7 +94,7 @@ export function ContactPersons({ contactPersons }: Readonly<ContactPersonsProps>
 				{ 'grid-cols-1': cpLength % 3 !== 0 && cpLength % 2 !== 0 && cpLength % 1 === 0 },
 			)}
 		>
-			{contactPersons.map(props => (
+			{contactPersons.map((props) => (
 				<ContactPersonItem key={props.lastName} {...props} />
 			))}
 		</div>

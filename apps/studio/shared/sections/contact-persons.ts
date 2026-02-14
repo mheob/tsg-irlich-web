@@ -12,5 +12,5 @@ export const contactPersonsSectionField = defineField({
 	icon: RiLinksLine,
 	group: 'contactPersons',
 	fields: [...getDefaultPageSectionFieldsWithGroup(), getFieldWithoutGroup(contactPersonsField)],
-	validation: Rule => [Rule.required().error('Ansprechpartner ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Ansprechpartner ist erforderlich')],
 });

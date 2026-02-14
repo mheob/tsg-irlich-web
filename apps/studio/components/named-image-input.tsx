@@ -311,7 +311,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 								)}
 								<TextInput
 									disabled={isUploading}
-									onChange={event => setFilename(event.currentTarget.value)}
+									onChange={(event) => setFilename(event.currentTarget.value)}
 									onKeyDown={handleKeyDown}
 									placeholder="Beschreibenden Dateinamen eingeben"
 									value={filename}

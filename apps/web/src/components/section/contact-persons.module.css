@@ -1,10 +1,11 @@
 @media (min-width: 48rem) {
 	.bg::before {
-		content: '';
+		content: "";
 		position: absolute;
 		inset: 0;
-		background-image: url('../../icons/design/bg-silhouette-dehnen.svg'),
-			url('../../icons/design/bg-silhouette-fussball-dribbeln.svg');
+		background-image:
+			url("../../icons/design/bg-silhouette-dehnen.svg"),
+			url("../../icons/design/bg-silhouette-fussball-dribbeln.svg");
 		background-position:
 			0% 10%,
 			115% 105%;

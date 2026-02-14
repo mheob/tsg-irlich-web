@@ -37,7 +37,7 @@ export function OperationSystemField({ form }: Readonly<OperationSystemFieldProp
 							</SelectTrigger>
 						</FormControl>
 						<SelectContent>
-							{operationSystemOptions.map(option => (
+							{operationSystemOptions.map((option) => (
 								<SelectItem key={option.value} value={option.value}>
 									{option.label}
 								</SelectItem>

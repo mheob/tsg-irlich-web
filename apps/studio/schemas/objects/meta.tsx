@@ -13,14 +13,14 @@ const meta = defineField({
 			title: 'Meta-Title (überschreibt den Standardtitel)',
 			name: 'metaTitle',
 			type: 'string',
-			validation: Rule =>
+			validation: (Rule) =>
 				Rule.max(65).warning('Der Titel sollte idealerweise maximal 65 Zeichen lang sein.'),
 		}),
 		defineField({
 			title: 'Meta-Beschreibung (überschreibt die Standardbeschreibung)',
 			name: 'metaDescription',
 			type: 'text',
-			validation: Rule =>
+			validation: (Rule) =>
 				Rule.min(130)
 					.max(160)
 					.warning('Die Beschreibung sollte idealerweise von 130 bis 160 Zeichen lang sein.'),
@@ -40,7 +40,7 @@ const meta = defineField({
 					name: 'alt',
 					title: 'Alternativer Text',
 					type: 'string',
-					validation: Rule =>
+					validation: (Rule) =>
 						Rule.custom((alt, context) => {
 							const parent = context.parent as { asset?: { _ref?: string } };
 							if (parent?.asset?._ref && !alt) {

@@ -23,7 +23,7 @@ const trainingTimeField = defineField({
 					{ title: 'Winter', value: 'winter' },
 				],
 			},
-			validation: Rule => [Rule.required().error('Jahreszeit ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Jahreszeit ist erforderlich')],
 		}),
 
 		defineField({
@@ -41,7 +41,7 @@ const trainingTimeField = defineField({
 					{ title: 'Sonntag', value: 'sunday' },
 				],
 			},
-			validation: Rule => [Rule.required().error('Wochentag ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Wochentag ist erforderlich')],
 		}),
 
 		defineField({
@@ -49,7 +49,7 @@ const trainingTimeField = defineField({
 			name: 'startTime',
 			type: 'string',
 			components: { input: TimePicker },
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().error('Startzeit ist erforderlich'),
 				Rule.regex(timeFieldRegex).error('Ungültige Startzeit, HH:mm erwartet'),
 			],
@@ -60,7 +60,7 @@ const trainingTimeField = defineField({
 			name: 'endTime',
 			type: 'string',
 			components: { input: TimePicker },
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().error('Endzeit ist erforderlich'),
 				Rule.regex(timeFieldRegex).error('Ungültige Endzeit, HH:mm erwartet'),
 			],
@@ -71,14 +71,14 @@ const trainingTimeField = defineField({
 			name: 'venue',
 			type: 'reference',
 			to: [{ type: 'venue' }],
-			validation: Rule => [Rule.required().error('Trainingsort ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Trainingsort ist erforderlich')],
 		}),
 
 		defineField({
 			title: 'Notizen',
 			name: 'note',
 			type: 'string',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.min(2).error('Notiz sollte mindestens 2 Zeichen lang sein'),
 				Rule.max(256).warning('Notiz sollte nicht länger als 256 Zeichen sein'),
 			],

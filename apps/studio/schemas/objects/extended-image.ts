@@ -18,7 +18,7 @@ const extendedImage = defineField({
 			name: 'alt',
 			type: 'string',
 			description: 'Beschreibe, was auf dem Bild zu sehen ist (für SEO und Barrierefreiheit).',
-			validation: Rule => [Rule.required().error('Der "Alt-Text" ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Der "Alt-Text" ist erforderlich')],
 		}),
 		defineField({
 			title: 'Bildbeschreibung',

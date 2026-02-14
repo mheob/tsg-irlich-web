@@ -15,7 +15,7 @@ export function Categories({ article, ...props }: Readonly<CategoriesProps>) {
 
 			<div className="mt-3 flex items-center gap-4">
 				{/* // FIXME: get ALL news categories and highlight the current categories */}
-				{article.categories?.map(category => (
+				{article.categories?.map((category) => (
 					<Link className={badgeVariants()} href={`/news/${category.slug}`} key={category.slug}>
 						{category.title}
 					</Link>

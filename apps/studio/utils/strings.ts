@@ -46,6 +46,6 @@ export function slugify(input: string): string {
 		trim: true,
 	})
 		.split('-')
-		.filter(word => !unneededWords.has(word))
+		.filter((word) => !unneededWords.has(word))
 		.join('-');
 }

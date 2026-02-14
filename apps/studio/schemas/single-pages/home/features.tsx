@@ -28,7 +28,7 @@ export const featuresField = defineField({
 							name: 'title',
 							type: 'string',
 							description: 'Der Titel des Merkmals.',
-							validation: Rule => [
+							validation: (Rule) => [
 								Rule.required().min(10).error('Der Titel muss mindestens 10 Zeichen lang sein'),
 								Rule.max(65).warning('Der Titel sollte nicht länger als 65 Zeichen sein'),
 							],
@@ -39,7 +39,7 @@ export const featuresField = defineField({
 							name: 'intro',
 							type: 'string',
 							description: 'Die Beschreibung des Merkmals.',
-							validation: Rule => [
+							validation: (Rule) => [
 								Rule.required().min(10).error('Das Intro muss mindestens 10 Zeichen lang sein'),
 								Rule.max(120).warning('Das Intro sollte nicht länger als 120 Zeichen sein'),
 							],
@@ -60,14 +60,14 @@ export const featuresField = defineField({
 									<kbd>OneIcon</kbd>).
 								</>
 							),
-							validation: Rule => [Rule.required().error('Das Icon ist erforderlich')],
+							validation: (Rule) => [Rule.required().error('Das Icon ist erforderlich')],
 						}),
 					],
 				}),
 			],
 			description: "Merkmale (USP's), die auf der Homepage angezeigt werden.",
-			validation: Rule => [
-				Rule.custom(features => {
+			validation: (Rule) => [
+				Rule.custom((features) => {
 					return features?.length === 4 || features?.length === 6
 						? true
 						: 'Es müssen genau 4 oder 6 Merkmale gewählt werden';
@@ -75,5 +75,5 @@ export const featuresField = defineField({
 			],
 		}),
 	],
-	validation: Rule => [Rule.required().error('Merkmale sind erforderlich')],
+	validation: (Rule) => [Rule.required().error('Merkmale sind erforderlich')],
 });

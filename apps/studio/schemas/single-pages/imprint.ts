@@ -39,21 +39,21 @@ const imprintPage = defineType({
 			name: 'registerCourt',
 			type: 'string',
 			group: 'content',
-			validation: Rule => [Rule.required().error('Registergericht ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Registergericht ist erforderlich')],
 		}),
 		defineField({
 			title: 'Registernummer',
 			name: 'registerNo',
 			type: 'string',
 			group: 'content',
-			validation: Rule => [Rule.required().error('Registernummer ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Registernummer ist erforderlich')],
 		}),
 		defineField({
 			title: 'Vertreten durch',
 			name: 'represented',
 			type: 'simpleBlockContent',
 			group: 'content',
-			validation: Rule => [Rule.required().error('Feld "Vertreten durch" ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Feld "Vertreten durch" ist erforderlich')],
 		}),
 		defineField({
 			...emailField,
@@ -64,21 +64,21 @@ const imprintPage = defineType({
 			name: 'contactForm',
 			type: 'internalLink',
 			group: 'content',
-			validation: Rule => [Rule.required().error('Link zum Kontaktformular ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Link zum Kontaktformular ist erforderlich')],
 		}),
 		defineField({
 			title: 'Redaktionell verantwortlich',
 			name: 'responsible',
 			type: 'string',
 			group: 'content',
-			validation: Rule => [Rule.required().error('Redaktionell verantwortlich ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Redaktionell verantwortlich ist erforderlich')],
 		}),
 		defineField({
 			title: 'Verbraucherstreitbeilegung/Universalschlichtungsstelle',
 			name: 'consumerDisputeResolution',
 			type: 'string',
 			group: 'content',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().error(
 					'Verbraucherstreitbeilegung/Universalschlichtungsstelle ist erforderlich',
 				),
@@ -89,7 +89,7 @@ const imprintPage = defineType({
 			name: 'technicalQuestionsName',
 			type: 'string',
 			group: 'content',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().error('Name Technischer Ansprechpartner ist erforderlich'),
 			],
 		}),
@@ -98,7 +98,7 @@ const imprintPage = defineType({
 			name: 'technicalQuestionsEmail',
 			type: 'email',
 			group: 'content',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().error('E-Mail Technischer Ansprechpartner ist erforderlich'),
 			],
 		}),
@@ -107,7 +107,7 @@ const imprintPage = defineType({
 			name: 'support',
 			type: 'simpleBlockContent',
 			group: 'content',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().error('Freundliche Unterstützung durch ist erforderlich'),
 			],
 		}),
@@ -116,7 +116,7 @@ const imprintPage = defineType({
 			name: 'credits',
 			type: 'simpleBlockContent',
 			group: 'content',
-			validation: Rule => [Rule.required().error('Bildnachweis ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Bildnachweis ist erforderlich')],
 		}),
 	],
 	preview: {

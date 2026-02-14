@@ -33,7 +33,7 @@ const membershipPage = defineType({
 			name: 'intro',
 			type: 'blockContent',
 			group: 'content',
-			validation: Rule => [Rule.required().error('Intro ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Intro ist erforderlich')],
 		}),
 
 		defineField({
@@ -50,10 +50,10 @@ const membershipPage = defineType({
 					name: 'downloads',
 					type: 'array',
 					of: [{ type: 'documentDownload' }],
-					validation: Rule => [Rule.required().error('Downloads sind erforderlich')],
+					validation: (Rule) => [Rule.required().error('Downloads sind erforderlich')],
 				}),
 			],
-			validation: Rule => [Rule.required().error('Dokumente sind erforderlich')],
+			validation: (Rule) => [Rule.required().error('Dokumente sind erforderlich')],
 		}),
 
 		defineField({

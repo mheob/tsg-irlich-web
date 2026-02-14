@@ -64,7 +64,7 @@ export function NewsArticlePreview({
 				<p className="text-muted-foreground line-clamp-3 h-[3lh] text-sm md:text-xl">{excerpt}</p>
 
 				<div className="flex gap-4">
-					{categories?.map(category => (
+					{categories?.map((category) => (
 						<Link
 							className={badgeVariants({ size: 'sm' })}
 							href={`/news/${category.slug}`}

@@ -18,7 +18,7 @@ export const visionField = defineField({
 			type: 'string',
 			description:
 				'Text, der auf dem Call to Action Button angezeigt wird, um die Lange Vision zu öffnen.',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required()
 					.min(5)
 					.error(
@@ -34,15 +34,15 @@ export const visionField = defineField({
 			title: 'Titel der Lange Vision',
 			name: 'longVisionTitle',
 			type: 'string',
-			validation: Rule => [Rule.required().error('Der Titel der Lange Vision ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Der Titel der Lange Vision ist erforderlich')],
 		}),
 
 		defineField({
 			title: 'Lange Vision',
 			name: 'longVision',
 			type: 'blockContent',
-			validation: Rule => [Rule.required().error('Lange Vision ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Lange Vision ist erforderlich')],
 		}),
 	],
-	validation: Rule => [Rule.required().error('Vision ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Vision ist erforderlich')],
 });

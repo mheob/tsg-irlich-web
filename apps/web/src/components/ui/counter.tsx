@@ -36,7 +36,7 @@ export function Counter({ className, values, ...props }: Readonly<CounterProps>)
 			{...props}
 		>
 			{values?.length
-				? values.map(value => <CounterItem key={value.title} {...value} />)
+				? values.map((value) => <CounterItem key={value.title} {...value} />)
 				: 'No values'}
 		</div>
 	);

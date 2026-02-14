@@ -11,13 +11,13 @@ const contactTo = defineField({
 			title: 'Name',
 			name: 'name',
 			type: 'string',
-			validation: Rule => [Rule.required().error('Der Name ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Der Name ist erforderlich')],
 		},
 		{
 			title: 'E-Mail',
 			name: 'email',
 			type: 'email',
-			validation: Rule => [Rule.required().error('Die E-Mail ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Die E-Mail ist erforderlich')],
 		},
 	],
 });

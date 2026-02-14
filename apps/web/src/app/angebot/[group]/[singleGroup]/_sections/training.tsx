@@ -40,7 +40,7 @@ export function Training({ title, training }: Readonly<TrainingProps>) {
 							},
 						)}
 					>
-						{training.trainingTimes?.map(training => (
+						{training.trainingTimes?.map((training) => (
 							<TrainingCard key={`${training._key}`} training={training} />
 						))}
 					</div>

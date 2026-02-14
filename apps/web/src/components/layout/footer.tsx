@@ -69,11 +69,12 @@ export default async function Footer() {
 								address={contact.address}
 								className="hover:text-secondary group flex cursor-pointer items-center gap-4 transition-colors sm:flex-col"
 							>
-								<span
-									aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
-									className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2"
-								>
-									<MapPin className="size-6 md:size-12" strokeWidth="1" />
+								<span className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2">
+									<MapPin
+										aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
+										className="size-6 md:size-12"
+										strokeWidth="1"
+									/>
 								</span>
 								<address>{simplifiedAddress}</address>
 							</GoToGoogleMaps>
@@ -82,11 +83,12 @@ export default async function Footer() {
 								className="hover:text-secondary group flex items-center gap-4 transition-colors sm:flex-col"
 								href={`mailto:${contact.email}`}
 							>
-								<span
-									aria-label={`Schreibe uns eine E-Mail: ${contact.email}`}
-									className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2"
-								>
-									<Mail className="size-6 md:size-12" strokeWidth="1" />
+								<span className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2">
+									<Mail
+										aria-label={`Schreibe uns eine E-Mail: ${contact.email}`}
+										className="size-6 md:size-12"
+										strokeWidth="1"
+									/>
 								</span>
 								<address>{contact.email}</address>
 							</ContactLink>

@@ -36,7 +36,7 @@ export function NewsArticlePreviewWide({
 
 			<div className="flex flex-col justify-between gap-3 p-5 md:px-14 md:py-8">
 				<div className="flex gap-6 text-sm md:text-lg">
-					{categories?.map(category => (
+					{categories?.map((category) => (
 						<Link href={`/news/${category.slug}`} key={category.slug}>
 							{category.title}
 						</Link>

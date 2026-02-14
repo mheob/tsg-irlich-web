@@ -9,8 +9,8 @@ export async function GET(): Promise<Response> {
 	const articles = await client.fetch(rssNewsArticlesQuery);
 
 	const rssItems = (articles ?? [])
-		.filter(article => article.slug && article.category)
-		.map(article => {
+		.filter((article) => article.slug && article.category)
+		.map((article) => {
 			const articleUrl = `${baseUrl}/news/${article.category}/${article.slug}`;
 			const authorEmail = article.author?.email || 'info@tsg-irlich.de';
 			const authorName = article.author

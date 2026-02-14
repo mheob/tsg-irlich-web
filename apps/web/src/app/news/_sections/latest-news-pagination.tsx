@@ -16,7 +16,7 @@ export function LatestNewsPagination({
 	return (
 		<>
 			<div className="grid gap-5 md:grid-cols-2 md:gap-10 lg:grid-cols-3">
-				{articles.map(article => (
+				{articles.map((article) => (
 					<NewsArticlePreview article={article} key={article._id} />
 				))}
 			</div>

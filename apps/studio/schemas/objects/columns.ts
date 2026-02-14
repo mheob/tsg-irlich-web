@@ -7,7 +7,7 @@ const columns = defineField({
 	type: 'object',
 	description: 'Items per row',
 	icon: RiLayoutColumnLine,
-	validation: Rule => Rule.required(),
+	validation: (Rule) => Rule.required(),
 	fields: [
 		{
 			title: 'Small screens',

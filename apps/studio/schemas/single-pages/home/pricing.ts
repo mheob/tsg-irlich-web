@@ -10,14 +10,14 @@ const pricingCardFields = [
 		title: 'Preis',
 		name: 'price',
 		type: 'number',
-		validation: Rule => [Rule.required().error('Preis ist erforderlich')],
+		validation: (Rule) => [Rule.required().error('Preis ist erforderlich')],
 	}),
 
 	defineField({
 		title: 'Titel Vorteile',
 		name: 'benefitsTitle',
 		type: 'string',
-		validation: Rule => [Rule.required().error('Titel Vorteile ist erforderlich')],
+		validation: (Rule) => [Rule.required().error('Titel Vorteile ist erforderlich')],
 	}),
 
 	defineField({
@@ -25,14 +25,14 @@ const pricingCardFields = [
 		name: 'benefits',
 		type: 'array',
 		of: [{ type: 'string' }],
-		validation: Rule => [Rule.required().error('Vorteile sind erforderlich')],
+		validation: (Rule) => [Rule.required().error('Vorteile sind erforderlich')],
 	}),
 
 	defineField({
 		title: 'Button Text',
 		name: 'cta',
 		type: 'string',
-		validation: Rule => [Rule.required().error('Button Text ist erforderlich')],
+		validation: (Rule) => [Rule.required().error('Button Text ist erforderlich')],
 	}),
 ];
 
@@ -50,7 +50,7 @@ export const pricingField = defineField({
 			name: 'pricingYouth',
 			type: 'object',
 			fields: pricingCardFields,
-			validation: Rule => [Rule.required().error('Preistabelle Jugendliche ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Preistabelle Jugendliche ist erforderlich')],
 		}),
 
 		defineField({
@@ -58,7 +58,7 @@ export const pricingField = defineField({
 			name: 'pricingFamily',
 			type: 'object',
 			fields: pricingCardFields,
-			validation: Rule => [Rule.required().error('Preistabelle Familie ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Preistabelle Familie ist erforderlich')],
 		}),
 
 		defineField({
@@ -66,8 +66,8 @@ export const pricingField = defineField({
 			name: 'pricingAdult',
 			type: 'object',
 			fields: pricingCardFields,
-			validation: Rule => [Rule.required().error('Preistabelle Erwachsene ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Preistabelle Erwachsene ist erforderlich')],
 		}),
 	],
-	validation: Rule => [Rule.required().error('Preistabelle ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Preistabelle ist erforderlich')],
 });

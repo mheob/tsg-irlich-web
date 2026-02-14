@@ -84,7 +84,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	];
 
 	// Group category pages (e.g., /angebot/fussball)
-	const groupCategoryPages: MetadataRoute.Sitemap = groupSections.map(section => ({
+	const groupCategoryPages: MetadataRoute.Sitemap = groupSections.map((section) => ({
 		changeFrequency: 'weekly',
 		priority: 0.7,
 		url: `${baseUrl}${section.slug}`,
@@ -92,8 +92,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	// Individual group pages (e.g., /angebot/fussball/herren-1)
 	const groupPages: MetadataRoute.Sitemap = (groups ?? [])
-		.filter(group => group.slug && group._type && groupTypeToSlug[group._type])
-		.map(group => ({
+		.filter((group) => group.slug && group._type && groupTypeToSlug[group._type])
+		.map((group) => ({
 			changeFrequency: 'monthly' as const,
 			lastModified: group.lastModified ? new Date(group.lastModified) : undefined,
 			priority: 0.6,
@@ -102,8 +102,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	// News category pages (e.g., /news/vereinsleben)
 	const newsCategoryPages: MetadataRoute.Sitemap = (newsCategories ?? [])
-		.filter(category => category.slug)
-		.map(category => ({
+		.filter((category) => category.slug)
+		.map((category) => ({
 			changeFrequency: 'weekly' as const,
 			lastModified: category.lastModified ? new Date(category.lastModified) : undefined,
 			priority: 0.6,
@@ -112,8 +112,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	// News article pages (e.g., /news/vereinsleben/artikel-slug)
 	const newsArticlePages: MetadataRoute.Sitemap = (newsArticles ?? [])
-		.filter(article => article.slug && article.category)
-		.map(article => ({
+		.filter((article) => article.slug && article.category)
+		.map((article) => ({
 			changeFrequency: 'monthly' as const,
 			lastModified: article.lastModified ? new Date(article.lastModified) : undefined,
 			priority: 0.5,

@@ -17,11 +17,11 @@ export const visionField = defineField({
 			name: 'cta',
 			type: 'string',
 			description: 'Text, der auf dem Call to Action Button angezeigt wird.',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().min(5).error('Der "Button Text" muss mindestens 5 Zeichen lang sein'),
 				Rule.max(25).warning('Der "Button Text" sollte nicht länger als 25 Zeichen sein'),
 			],
 		}),
 	],
-	validation: Rule => [Rule.required().error('Vision ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Vision ist erforderlich')],
 });

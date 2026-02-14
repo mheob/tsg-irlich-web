@@ -36,7 +36,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				name: 'title',
 				title: 'Name',
 				type: 'string',
-				validation: Rule => [
+				validation: (Rule) => [
 					Rule.required().min(2).error('Name muss mindestens 2 Zeichen lang sein'),
 					Rule.max(64).warning('Name sollte nicht länger als 64 Zeichen sein'),
 				],
@@ -53,7 +53,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				name: 'overviewTitle',
 				title: 'Übersichts-Titel',
 				type: 'string',
-				validation: Rule => [
+				validation: (Rule) => [
 					Rule.min(2).warning('Übersichts-Titel muss mindestens 2 Zeichen lang sein'),
 					Rule.max(64).warning('Übersichts-Titel sollte nicht länger als 64 Zeichen sein'),
 				],
@@ -64,7 +64,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				name: 'sortOrder',
 				title: 'Sortierreihenfolge',
 				type: 'number',
-				validation: Rule => Rule.required().error('Sortierreihenfolge ist erforderlich'),
+				validation: (Rule) => Rule.required().error('Sortierreihenfolge ist erforderlich'),
 			}),
 
 			defineField({
@@ -72,7 +72,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				name: 'description',
 				title: 'Beschreibung',
 				type: 'simpleBlockContent',
-				validation: Rule => [Rule.required().error('Beschreibung ist erforderlich')],
+				validation: (Rule) => [Rule.required().error('Beschreibung ist erforderlich')],
 			}),
 
 			defineField({
@@ -93,12 +93,12 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				),
 				name: 'icon',
 				options: {
-					list: DOSB_ICONS.map(icon => ({ title: icon, value: icon })),
+					list: DOSB_ICONS.map((icon) => ({ title: icon, value: icon })),
 				},
 				title: 'Icon',
 				type: 'string',
 				hidden: !isSportGroup,
-				validation: Rule => [Rule.required().error('Icon ist erforderlich')],
+				validation: (Rule) => [Rule.required().error('Icon ist erforderlich')],
 			}),
 
 			defineField({
@@ -108,7 +108,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'Hintergrundbild',
 				type: 'extendedImage',
 				hidden: !isSportGroup,
-				validation: Rule => [Rule.required().error('Bild ist erforderlich')],
+				validation: (Rule) => [Rule.required().error('Bild ist erforderlich')],
 			}),
 
 			defineField({
@@ -118,7 +118,9 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'Bildergalerie',
 				type: 'array',
 				hidden: !isSportGroup,
-				validation: Rule => [Rule.max(3).error('Es dürfen maximal drei Bilder ausgewählt werden.')],
+				validation: (Rule) => [
+					Rule.max(3).error('Es dürfen maximal drei Bilder ausgewählt werden.'),
+				],
 			}),
 
 			defineField({
@@ -141,7 +143,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				],
 				hidden: ({ document }) =>
 					(document?.title as string)?.toLowerCase() === 'schiedsrichter' || !isSportGroup,
-				validation: Rule => [
+				validation: (Rule) => [
 					Rule.custom((value, context) => {
 						if (
 							isSportGroup &&
@@ -162,7 +164,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'Ist Sportgruppe',
 				type: 'boolean',
 				hidden: true,
-				validation: Rule => [Rule.required().error('"Ist Sportgruppe" ist erforderlich')],
+				validation: (Rule) => [Rule.required().error('"Ist Sportgruppe" ist erforderlich')],
 			}),
 		],
 
@@ -199,6 +201,6 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'nach Sortierreihenfolge - absteigend',
 			},
 		],
-		validation: Rule => [Rule.required().error('Gruppe ist erforderlich')],
+		validation: (Rule) => [Rule.required().error('Gruppe ist erforderlich')],
 	});
 }

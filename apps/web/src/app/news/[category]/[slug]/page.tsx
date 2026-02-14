@@ -75,7 +75,7 @@ export default async function NewsArticlePage({
 						{article.title}
 					</h1>
 
-					{article.body?.map(block => {
+					{article.body?.map((block) => {
 						switch (block._type) {
 							case 'blockContent': {
 								return <PortableText key={block._key} value={block.text as PortableTextValue} />;
@@ -110,7 +110,7 @@ export default async function NewsArticlePage({
 										)}
 										key={block._key}
 									>
-										{block.items?.map(item => {
+										{block.items?.map((item) => {
 											if (item._type === 'mainImage') {
 												return (
 													<figure key={item._key}>

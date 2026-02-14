@@ -36,7 +36,7 @@ export function BrowserField({ form }: Readonly<BrowserFieldProps>) {
 							</SelectTrigger>
 						</FormControl>
 						<SelectContent>
-							{browserOptions.map(option => (
+							{browserOptions.map((option) => (
 								<SelectItem key={option.value} value={option.value}>
 									{option.label}
 								</SelectItem>

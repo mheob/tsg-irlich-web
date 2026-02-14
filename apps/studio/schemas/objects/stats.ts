@@ -11,7 +11,7 @@ const stats = defineField({
 			title: 'Beschriftung',
 			name: 'title',
 			type: 'string',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().min(2).error('Die Beschriftung muss mindestens 2 Zeichen lang sein'),
 				Rule.max(25).warning('Die Beschriftung sollte nicht länger als 25 Zeichen sein'),
 			],
@@ -25,7 +25,7 @@ const stats = defineField({
 			title: 'Wert',
 			name: 'value',
 			type: 'number',
-			validation: Rule => [Rule.required().error('Der Wert ist erforderlich')],
+			validation: (Rule) => [Rule.required().error('Der Wert ist erforderlich')],
 		}),
 		defineField({
 			title: 'Suffix (optional, z.B. "+")',
@@ -33,7 +33,7 @@ const stats = defineField({
 			type: 'string',
 		}),
 	],
-	validation: Rule => [Rule.required().error('Die Statistik ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Die Statistik ist erforderlich')],
 });
 
 export default stats;

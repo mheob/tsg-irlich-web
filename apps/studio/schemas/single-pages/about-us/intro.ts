@@ -17,7 +17,7 @@ export const introField = defineField({
 			title: 'Intro',
 			name: 'intro',
 			type: 'blockContent',
-			validation: Rule => [Rule.required().error('Intro ist erforderlich.')],
+			validation: (Rule) => [Rule.required().error('Intro ist erforderlich.')],
 		}),
 
 		defineField({
@@ -26,7 +26,7 @@ export const introField = defineField({
 			type: 'array',
 			of: [{ type: 'extendedImage' }],
 			description: 'Diese gewählten Bilder werden in der gewünschten Reihenfolge angezeigt.',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().length(3).error('Es müssen genau 3 Bilder ausgewählt werden.'),
 			],
 		}),

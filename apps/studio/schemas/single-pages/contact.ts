@@ -38,11 +38,11 @@ const contactPage = defineType({
 					type: 'array',
 					of: [{ type: 'contactNameMail' }],
 					description: 'Personen oder Bereiche, die im Kontaktformular kontaktiert werden können.',
-					validation: Rule => [Rule.required().error('Das Feld "Kontakt zu" ist erforderlich')],
+					validation: (Rule) => [Rule.required().error('Das Feld "Kontakt zu" ist erforderlich')],
 				}),
 				contactPersonsSectionField,
 			],
-			validation: Rule => [Rule.required().error('Inhalte sind erforderlich')],
+			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
 	preview: {

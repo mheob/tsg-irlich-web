@@ -29,7 +29,7 @@ const singleGroupPage = defineType({
 			group: 'content',
 			groups: [contactPersons, trainings],
 			fields: [contactPersonsField, trainingsField],
-			validation: Rule => Rule.required(),
+			validation: (Rule) => Rule.required(),
 		}),
 	],
 	preview: {

@@ -21,7 +21,7 @@ export function Chronicle({ content }: Readonly<ChronicleProps>) {
 				</SectionHeader>
 
 				<div className="mt-16 grid gap-8 md:gap-16 lg:grid-cols-3">
-					{content.chronicleCategories.map(category => (
+					{content.chronicleCategories.map((category) => (
 						<ChronicleCard category={category} key={category._key} />
 					))}
 				</div>

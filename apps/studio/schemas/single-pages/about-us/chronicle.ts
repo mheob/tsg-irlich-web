@@ -18,10 +18,10 @@ export const chronicleField = defineField({
 			type: 'array',
 			of: [{ type: 'imageCard' }],
 			description: 'Die Abschnitte der Chronik.',
-			validation: Rule => [
+			validation: (Rule) => [
 				Rule.required().length(3).error('Es müssen genau 3 Abschnitte gewählt werden'),
 			],
 		}),
 	],
-	validation: Rule => [Rule.required().error('Die Chronik ist erforderlich')],
+	validation: (Rule) => [Rule.required().error('Die Chronik ist erforderlich')],
 });
