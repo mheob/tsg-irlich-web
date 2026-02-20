@@ -1,6 +1,6 @@
-import { parseBody } from 'next-sanity/webhook';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
+import { parseBody } from 'next-sanity/webhook';
 
 import { env } from '@/lib/env';
 
