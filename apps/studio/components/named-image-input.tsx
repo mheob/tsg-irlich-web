@@ -102,7 +102,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 
 		try {
 			const extension = pendingFile.name.split('.').pop()?.toLowerCase();
-			if (!extension || !ALLOWED_EXTENSIONS.includes(extension)) {
+			if (!extension || !(ALLOWED_EXTENSIONS as ReadonlyArray<string>).includes(extension)) {
 				setUploadError('Nicht unterstütztes Dateiformat');
 				return;
 			}
