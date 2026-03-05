@@ -2,11 +2,12 @@
 
 import { client } from '@/lib/sanity/client';
 import { rssNewsArticlesQuery } from '@/lib/sanity/queries/rss';
+import type { RssNewsArticlesQueryResult } from '@/types/sanity.types';
 import { getBaseUrl } from '@/utils/url';
 
 export async function GET(): Promise<Response> {
 	const baseUrl = getBaseUrl();
-	const articles = await client.fetch(rssNewsArticlesQuery);
+	const articles = await client.fetch<RssNewsArticlesQueryResult>(rssNewsArticlesQuery);
 
 	const rssItems = (articles ?? [])
 		.filter((article) => article.slug && article.category)

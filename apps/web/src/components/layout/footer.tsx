@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { GoToGoogleMaps } from '@/components/section/go-to-google-maps';
 import { client } from '@/lib/sanity/client';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
+import type { SocialMediaQueryResult } from '@/types/sanity.types';
 import { getSocialMediaIcon } from '@/utils/icon';
 import type { printGoogleMapsLink } from '@/utils/url';
 
@@ -34,7 +35,7 @@ const accessibility: { href: string; label: string } = {
 const currentYear = new Date().getFullYear();
 
 export default async function Footer() {
-	const socialMedia = await client.fetch(socialMediaQuery);
+	const socialMedia = await client.fetch<SocialMediaQueryResult>(socialMediaQuery);
 
 	const simplifiedAddress = `${contact.address.street} ${contact.address.houseNumber}, ${contact.address.zipCode} ${contact.address.city}`;
 

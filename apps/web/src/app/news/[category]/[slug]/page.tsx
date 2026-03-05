@@ -13,6 +13,12 @@ import {
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import { urlForImage } from '@/lib/sanity/utils';
+import type {
+	NewsArticleContentQueryResult,
+	NewsArticleHeroQueryResult,
+	SocialMediaQueryResult,
+	SponsorsQueryResult,
+} from '@/types/sanity.types';
 
 import { getOpenGraphImageOptions } from '../../_shared/utils';
 import { Author } from './_sections/author';
@@ -25,7 +31,9 @@ export async function generateMetadata({
 }: Readonly<PageProps<'/news/[category]/[slug]'>>): Promise<Metadata> {
 	const { slug } = await params;
 
-	const article = await client.fetch(newsArticleContentQuery, { slug });
+	const article = await client.fetch<NewsArticleContentQueryResult>(newsArticleContentQuery, {
+		slug,
+	});
 
 	if (!article) return {};
 
@@ -47,10 +55,10 @@ export default async function NewsArticlePage({
 	const { slug } = await params;
 
 	const [hero, article, socialMedia, sponsors] = await Promise.all([
-		client.fetch(newsArticleHeroQuery),
-		client.fetch(newsArticleContentQuery, { slug }),
-		client.fetch(socialMediaQuery),
-		client.fetch(sponsorsQuery),
+		client.fetch<NewsArticleHeroQueryResult>(newsArticleHeroQuery),
+		client.fetch<NewsArticleContentQueryResult>(newsArticleContentQuery, { slug }),
+		client.fetch<SocialMediaQueryResult>(socialMediaQuery),
+		client.fetch<SponsorsQueryResult>(sponsorsQuery),
 	]);
 
 	if (!article || !hero) {
