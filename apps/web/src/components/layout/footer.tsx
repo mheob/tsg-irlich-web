@@ -105,17 +105,19 @@ export default async function Footer() {
 						</Link>
 					</div>
 					<nav className="flex items-center gap-4">
-						<Link className="hover:text-secondary" href={imprint?.href}>
-							{imprint?.label}
-						</Link>{' '}
-						|
-						<Link className="hover:text-secondary" href={privacy?.href}>
-							{privacy?.label}
-						</Link>{' '}
-						|
-						<Link className="hover:text-secondary" href={accessibility?.href}>
-							{accessibility?.label}
-						</Link>
+						<div className="sm:flex sm:items-center gap-2 sm:gap-4">
+							<Link className="hover:text-secondary" href={imprint?.href}>
+								{imprint?.label}
+							</Link>{' '}
+							|{' '}
+							<Link className="hover:text-secondary" href={privacy?.href}>
+								{privacy?.label}
+							</Link>{' '}
+							|{' '}
+							<Link className="hover:text-secondary" href={accessibility?.href}>
+								{accessibility?.label}
+							</Link>
+						</div>
 						<a
 							aria-label="zum Seitenanfang springen"
 							className="bg-secondary hover:bg-secondary/80 ml-4 rounded-full p-1.5"
