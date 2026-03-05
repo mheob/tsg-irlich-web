@@ -6,6 +6,11 @@ import {
 	sitemapNewsArticlesQuery,
 	sitemapNewsCategoriesQuery,
 } from '@/lib/sanity/queries/sitemap';
+import type {
+	SitemapGroupsQueryResult,
+	SitemapNewsArticlesQueryResult,
+	SitemapNewsCategoriesQueryResult,
+} from '@/types/sanity.types';
 import { groupSections } from '@/utils/groups';
 import { getBaseUrl } from '@/utils/url';
 
@@ -24,9 +29,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	// Fetch dynamic content from Sanity
 	const [newsArticles, newsCategories, groups] = await Promise.all([
-		client.fetch(sitemapNewsArticlesQuery),
-		client.fetch(sitemapNewsCategoriesQuery),
-		client.fetch(sitemapGroupsQuery),
+		client.fetch<SitemapNewsArticlesQueryResult>(sitemapNewsArticlesQuery),
+		client.fetch<SitemapNewsCategoriesQueryResult>(sitemapNewsCategoriesQuery),
+		client.fetch<SitemapGroupsQueryResult>(sitemapGroupsQuery),
 	]);
 
 	// Static pages
