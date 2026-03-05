@@ -76,8 +76,13 @@ export function ContactForwardEmail({
 								&gt; hat dir eine Nachricht gesendet:
 							</Text>
 
-							<Text className="bg-background-high-contrast rounded-xl p-4 text-base whitespace-pre-line italic">
-								{contactMessage}
+							<Text className="bg-background-high-contrast rounded-xl p-4 text-base italic">
+								{contactMessage.split('\n').map((line, index, arr) => (
+									<span key={`${index}-${line}`}>
+										{line}
+										{index < arr.length - 1 && <br />}
+									</span>
+								))}
 							</Text>
 						</Section>
 
