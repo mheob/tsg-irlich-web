@@ -9,9 +9,10 @@ import { privacyPageQuery } from '@/lib/sanity/queries/pages/privacy';
 
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
+import type { PrivacyPageQueryResult } from '@/types/sanity.types.generated';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(privacyPageQuery);
+	const page = await client.fetch<PrivacyPageQueryResult>(privacyPageQuery);
 
 	if (!page) return {};
 
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function PrivacyPage() {
-	const page = await client.fetch(privacyPageQuery);
+	const page = await client.fetch<PrivacyPageQueryResult>(privacyPageQuery);
 
 	if (!page) {
 		const { notFound } = await import('next/navigation');

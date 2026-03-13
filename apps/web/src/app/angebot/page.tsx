@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import type { OfferPageQueryResult } from '@/types/sanity.types.generated';
+
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
@@ -12,7 +14,7 @@ import { getOpenGraphImageOptions } from '../news/_shared/utils';
 import { Groups } from './_sections/groups';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(offerPageQuery);
+	const page = await client.fetch<OfferPageQueryResult>(offerPageQuery);
 
 	if (!page) return {};
 
@@ -29,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function OfferPage() {
-	const page = await client.fetch(offerPageQuery);
+	const page = await client.fetch<OfferPageQueryResult>(offerPageQuery);
 
 	if (!page) {
 		const { notFound } = await import('next/navigation');

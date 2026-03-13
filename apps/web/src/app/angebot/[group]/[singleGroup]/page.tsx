@@ -11,7 +11,12 @@ import {
 	offerGroupsGroupPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups-group';
 import { urlForImage } from '@/lib/sanity/utils';
-import type { SimpleBlockContent } from '@/types/sanity.types.generated';
+import type {
+	OfferGroupsGroupPageContactPersonsQueryResult,
+	OfferGroupsGroupPageGroupsQueryResult,
+	OfferGroupsGroupPageQueryResult,
+	SimpleBlockContent,
+} from '@/types/sanity.types.generated';
 import { getCurrentDepartment } from '@/utils/groups';
 
 import { Main } from './_sections/main';
@@ -26,10 +31,13 @@ export async function generateMetadata({
 
 	if (!currentDepartment) return {};
 
-	const page = await client.fetch(offerGroupsGroupPageGroupsQuery, {
-		groupType: currentDepartment?._type,
-		slug: singleGroup,
-	});
+	const page = await client.fetch<OfferGroupsGroupPageGroupsQueryResult>(
+		offerGroupsGroupPageGroupsQuery,
+		{
+			groupType: currentDepartment?._type,
+			slug: singleGroup,
+		},
+	);
 
 	if (!page?.meta) return {};
 
@@ -59,12 +67,15 @@ export default async function SingleGroupsPage({
 	}
 
 	const [page, groupData, coaches] = await Promise.all([
-		client.fetch(offerGroupsGroupPageQuery),
-		client.fetch(offerGroupsGroupPageGroupsQuery, {
+		client.fetch<OfferGroupsGroupPageQueryResult>(offerGroupsGroupPageQuery),
+		client.fetch<OfferGroupsGroupPageGroupsQueryResult>(offerGroupsGroupPageGroupsQuery, {
 			groupType: currentDepartment?._type,
 			slug: singleGroup,
 		}),
-		client.fetch(offerGroupsGroupPageContactPersonsQuery, { slug: singleGroup }),
+		client.fetch<OfferGroupsGroupPageContactPersonsQueryResult>(
+			offerGroupsGroupPageContactPersonsQuery,
+			{ slug: singleGroup },
+		),
 	]);
 
 	if (!page || !groupData) {

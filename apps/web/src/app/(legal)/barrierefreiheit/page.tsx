@@ -6,12 +6,13 @@ import { Hero } from '@/components/section/hero';
 import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
 import { client } from '@/lib/sanity/client';
 import { accessibilityPageQuery } from '@/lib/sanity/queries/pages/accessibility';
+import type { AccessibilityPageQueryResult } from '@/types/sanity.types.generated';
 
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(accessibilityPageQuery);
+	const page = await client.fetch<AccessibilityPageQueryResult>(accessibilityPageQuery);
 
 	if (!page) return {};
 
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AccessibilityPage() {
-	const page = await client.fetch(accessibilityPageQuery);
+	const page = await client.fetch<AccessibilityPageQueryResult>(accessibilityPageQuery);
 
 	if (!page) {
 		const { notFound } = await import('next/navigation');

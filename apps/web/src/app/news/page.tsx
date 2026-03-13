@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
 
 import { ContactPersons } from '@/components/section/contact-persons';
+import type {
+	NewsArticlesPaginatedQueryResult,
+	NewsArticlesQueryResult,
+	NewsArticlesTotalQueryResult,
+	NewsOverviewPageQueryResult,
+} from '@/types/sanity.types.generated';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -21,7 +27,7 @@ const START_INDEX = 3;
 const ITEMS_PER_PAGE = 6;
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(newsOverviewPageQuery);
+	const page = await client.fetch<NewsOverviewPageQueryResult>(newsOverviewPageQuery);
 
 	if (!page) return {};
 
@@ -43,10 +49,10 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 	const currentPage = Number.parseInt(pageString ?? '1', 10);
 
 	const [page, totalArticles, articles, paginatedArticles] = await Promise.all([
-		client.fetch(newsOverviewPageQuery),
-		client.fetch(newsArticlesTotalQuery),
-		client.fetch(newsArticlesQuery),
-		client.fetch(newsArticlesPaginatedQuery, {
+		client.fetch<NewsOverviewPageQueryResult>(newsOverviewPageQuery),
+		client.fetch<NewsArticlesTotalQueryResult>(newsArticlesTotalQuery),
+		client.fetch<NewsArticlesQueryResult>(newsArticlesQuery),
+		client.fetch<NewsArticlesPaginatedQueryResult>(newsArticlesPaginatedQuery, {
 			end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
 			start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
 		}),

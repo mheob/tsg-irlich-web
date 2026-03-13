@@ -9,7 +9,7 @@ export const imprintPageQuery = defineQuery(`
 	*[_type == 'imprint'][0] {
 		...,
 		"contactForm": contactForm {
-			title,
+			"title": link->title,
 			"slug": link->slug.current
 		}
 	}
