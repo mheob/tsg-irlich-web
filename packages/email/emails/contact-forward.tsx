@@ -78,6 +78,7 @@ export function ContactForwardEmail({
 
 							<Text className="bg-background-high-contrast rounded-xl p-4 text-base italic">
 								{contactMessage.split('\n').map((line, index, arr) => (
+									// biome-ignore lint/suspicious/noArrayIndexKey: index is safe here
 									<span key={`${index}-${line}`}>
 										{line}
 										{index < arr.length - 1 && <br />}

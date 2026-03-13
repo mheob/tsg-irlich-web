@@ -7,6 +7,7 @@ import Footer from '@/components/layout/footer';
 import { Navigation } from '@/components/with-logic/navigation';
 import { client } from '@/lib/sanity/client';
 import { mainNavigationQuery } from '@/lib/sanity/queries/main-navigation';
+import type { MainNavigationQueryResult } from '@/types/sanity.types.generated';
 import { getBaseUrl } from '@/utils/url';
 
 import './globals.css';
@@ -48,7 +49,11 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const mainNavigationQueryResults = await client
-		.fetch(mainNavigationQuery, {}, { next: { revalidate: NAVIGATION_REVALIDATE_SECONDS } })
+		.fetch<MainNavigationQueryResult>(
+			mainNavigationQuery,
+			{},
+			{ next: { revalidate: NAVIGATION_REVALIDATE_SECONDS } },
+		)
 		.catch(() => null);
 
 	const navItems = mainNavigationQueryResults?.mainNavigation ?? [];

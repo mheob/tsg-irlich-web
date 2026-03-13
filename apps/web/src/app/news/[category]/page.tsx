@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
 
 import { ContactPersons } from '@/components/section/contact-persons';
+import type {
+	NewsArticlesPaginatedForCategoryQueryResult,
+	NewsArticlesTotalForCategoryQueryResult,
+	NewsCategoryQueryResult,
+	NewsOverviewCategoryPageQueryResult,
+} from '@/types/sanity.types.generated';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -37,7 +43,9 @@ export async function generateMetadata({
 }: Readonly<PageProps<'/news/[category]'>>): Promise<Metadata> {
 	const { category: categoryParameter } = await params;
 
-	const category = await client.fetch(newsCategoryQuery, { slug: categoryParameter });
+	const category = await client.fetch<NewsCategoryQueryResult>(newsCategoryQuery, {
+		slug: categoryParameter,
+	});
 	if (!category) return {};
 
 	const description = category.meta?.metaDescription ?? '';
@@ -62,14 +70,19 @@ export default async function NewsCategoryPage({
 	const { currentPage, end, start } = getCurrentPage(seite);
 
 	const [page, totalArticles, category, paginatedArticles] = await Promise.all([
-		client.fetch(newsOverviewCategoryPageQuery),
-		client.fetch(newsArticlesTotalForCategoryQuery, { category: categoryParameter }),
-		client.fetch(newsCategoryQuery, { slug: categoryParameter }),
-		client.fetch(newsArticlesPaginatedForCategoryQuery, {
+		client.fetch<NewsOverviewCategoryPageQueryResult>(newsOverviewCategoryPageQuery),
+		client.fetch<NewsArticlesTotalForCategoryQueryResult>(newsArticlesTotalForCategoryQuery, {
 			category: categoryParameter,
-			end,
-			start,
 		}),
+		client.fetch<NewsCategoryQueryResult>(newsCategoryQuery, { slug: categoryParameter }),
+		client.fetch<NewsArticlesPaginatedForCategoryQueryResult>(
+			newsArticlesPaginatedForCategoryQuery,
+			{
+				category: categoryParameter,
+				end,
+				start,
+			},
+		),
 	]);
 
 	if (!page || !category) {

@@ -11,9 +11,10 @@ import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
 
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
+import type { ImprintPageQueryResult } from '@/types/sanity.types.generated';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(imprintPageQuery);
+	const page = await client.fetch<ImprintPageQueryResult>(imprintPageQuery);
 
 	if (!page) return {};
 
@@ -30,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ImprintPage() {
-	const page = await client.fetch(imprintPageQuery);
+	const page = await client.fetch<ImprintPageQueryResult>(imprintPageQuery);
 
 	if (!page) {
 		const { notFound } = await import('next/navigation');

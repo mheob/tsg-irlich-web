@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: ../studio/schema.json
 export type PersonReference = {
 	_ref: string;
@@ -1519,14 +1521,14 @@ export type SanityFileAsset = {
 	title?: string;
 	description?: string;
 	altText?: string;
-	sha1hash?: string;
-	extension?: string;
-	mimeType?: string;
-	size?: number;
-	assetId?: string;
+	sha1hash: string;
+	extension: string;
+	mimeType: string;
+	size: number;
+	assetId: string;
 	uploadId?: string;
-	path?: string;
-	url?: string;
+	path: string;
+	url: string;
 	source?: SanityAssetSourceData;
 };
 
@@ -1548,14 +1550,14 @@ export type SanityImageAsset = {
 	title?: string;
 	description?: string;
 	altText?: string;
-	sha1hash?: string;
-	extension?: string;
-	mimeType?: string;
-	size?: number;
-	assetId?: string;
+	sha1hash: string;
+	extension: string;
+	mimeType: string;
+	size: number;
+	assetId: string;
 	uploadId?: string;
-	path?: string;
-	url?: string;
+	path: string;
+	url: string;
 	metadata?: SanityImageMetadata;
 	source?: SanityAssetSourceData;
 };
@@ -1665,8 +1667,6 @@ export type AllSanitySchemaTypes =
 	| SanityAssetSourceData
 	| SanityImageAsset
 	| Geopoint;
-
-export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: src/lib/sanity/queries/main-navigation.ts
 // Variable: mainNavigationQuery
@@ -2015,7 +2015,7 @@ export type HomePageTestimonialsQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/pages/imprint.ts
 // Variable: imprintPageQuery
-// Query: *[_type == 'imprint'][0] {		...,		"contactForm": contactForm {			title,			"slug": link->slug.current		}	}
+// Query: *[_type == 'imprint'][0] {		...,		"contactForm": contactForm {			"title": link->title,			"slug": link->slug.current		}	}
 export type ImprintPageQueryResult = {
 	_id: string;
 	_type: 'imprint';
@@ -2033,7 +2033,7 @@ export type ImprintPageQueryResult = {
 	represented: SimpleBlockContent;
 	email: string;
 	contactForm: {
-		title: null;
+		title: string;
 		slug: string | null;
 	};
 	responsible: string;
@@ -2079,14 +2079,14 @@ export type MembershipPageQueryResult = {
 						title?: string;
 						description?: string;
 						altText?: string;
-						sha1hash?: string;
-						extension?: string;
-						mimeType?: string;
-						size?: number;
-						assetId?: string;
+						sha1hash: string;
+						extension: string;
+						mimeType: string;
+						size: number;
+						assetId: string;
 						uploadId?: string;
-						path?: string;
-						url?: string;
+						path: string;
+						url: string;
 						source?: SanityAssetSourceData;
 					} | null;
 					media?: unknown;
@@ -3124,7 +3124,7 @@ declare module '@sanity/client' {
 		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
 		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
 		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t}\n": HomePageTestimonialsQueryResult;
-		'\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\ttitle,\n\t\t\t"slug": link->slug.current\n\t\t}\n\t}\n': ImprintPageQueryResult;
+		'\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\t"title": link->title,\n\t\t\t"slug": link->slug.current\n\t\t}\n\t}\n': ImprintPageQueryResult;
 		'\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
 		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
 		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;

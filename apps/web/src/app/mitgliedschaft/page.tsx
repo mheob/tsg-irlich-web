@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { ContactPersons } from '@/components/section/contact-persons';
+import type { MembershipPageQueryResult } from '@/types/sanity.types.generated';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Pricing } from '@/components/section/pricing';
@@ -13,7 +14,7 @@ import { Downloads } from './_sections/downloads';
 import { Intro } from './_sections/intro';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch(membershipPageQuery);
+	const page = await client.fetch<MembershipPageQueryResult>(membershipPageQuery);
 
 	if (!page.membership) return {};
 
@@ -30,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-	const page = await client.fetch(membershipPageQuery);
+	const page = await client.fetch<MembershipPageQueryResult>(membershipPageQuery);
 
 	if (!page.membership || !page.pricingSection) {
 		const { notFound } = await import('next/navigation');
