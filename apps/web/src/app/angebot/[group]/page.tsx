@@ -50,10 +50,16 @@ export default async function GroupsPage({ params }: PageProps<'/angebot/[group]
 
 	const currentDepartment = getCurrentDepartment(group);
 
+	if (!currentDepartment) {
+		const { notFound } = await import('next/navigation');
+		notFound();
+		return null;
+	}
+
 	const [page, groups, offerPersons] = await Promise.all([
 		client.fetch<OfferGroupsPageQueryResult>(offerGroupsPageQuery),
 		client.fetch<OfferGroupsPageGroupsQueryResult>(offerGroupsPageGroupsQuery, {
-			groupType: currentDepartment?._type,
+			groupType: currentDepartment._type,
 		}),
 		client.fetch<OfferGroupsPageContactPersonsQueryResult>(offerGroupsPageContactPersonsQuery, {
 			email: group === 'fussball' ? EMAIL_SOCCER_DEPARTMENT : EMAIL_MASS_SPORT_DEPARTMENT,
