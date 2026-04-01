@@ -5,7 +5,7 @@
     "": {
       "name": "@tsgi-web/root",
       "devDependencies": {
-        "@antfu/ni": "28.3.0",
+        "@antfu/ni": "29.0.0",
         "@biomejs/biome": "2.4.6",
         "@commitlint/cli": "20.4.4",
         "@cspell/dict-de-de": "4.1.2",
@@ -155,7 +155,7 @@
 
     "@alloc/quick-lru": ["@alloc/quick-lru@5.2.0", "", {}, "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="],
 
-    "@antfu/ni": ["@antfu/ni@28.3.0", "", { "dependencies": { "ansis": "^4.2.0", "fzf": "^0.5.2", "package-manager-detector": "^1.6.0", "tinyexec": "^1.0.2", "tinyglobby": "^0.2.15" }, "bin": { "ni": "bin/ni.mjs", "nci": "bin/nci.mjs", "nr": "bin/nr.mjs", "nup": "bin/nup.mjs", "nd": "bin/nd.mjs", "nlx": "bin/nlx.mjs", "na": "bin/na.mjs", "nun": "bin/nun.mjs" } }, "sha512-JbRijiCNAGcQcyPfV0EXOJYwV27e/srXfTvETqzbbh4jzHBV2pDYiBz8rj5SyzX27aTbCK+qXR3x6g2WKokcrA=="],
+    "@antfu/ni": ["@antfu/ni@29.0.0", "", { "dependencies": { "ansis": "^4.2.0", "fzf": "^0.5.2", "package-manager-detector": "^1.6.0", "tinyexec": "^1.0.2", "tinyglobby": "^0.2.15" }, "bin": { "na": "bin/na.mjs", "nd": "bin/nd.mjs", "ni": "bin/ni.mjs", "nr": "bin/nr.mjs", "nci": "bin/nci.mjs", "nlx": "bin/nlx.mjs", "nun": "bin/nun.mjs", "nup": "bin/nup.mjs" } }, "sha512-JbKx3nSr2HRLtchKfg6RCBB6lwJvYZIeGFTO0fzjXdaekIFHPMN6gfnRUZU1raPvXTVF7EqGTWEreDnZVvrzwQ=="],
 
     "@architect/asap": ["@architect/asap@7.0.10", "", { "dependencies": { "@aws-lite/client": "~0.21.1", "@aws-lite/s3": "^0.1.21" } }, "sha512-oJjYDranGTCkp21bziF/fIxJfLTucitqg/ar5mmLPHyroNG3XF3SUIMvuNd1GNIe4oy40wvGEXvTToKYvUeOLA=="],
 
