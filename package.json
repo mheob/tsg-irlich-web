@@ -30,7 +30,7 @@
 		]
 	},
 	"devDependencies": {
-		"@antfu/ni": "28.3.0",
+		"@antfu/ni": "30.0.0",
 		"@biomejs/biome": "2.4.6",
 		"@commitlint/cli": "20.4.4",
 		"@cspell/dict-de-de": "4.1.2",
