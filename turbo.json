@@ -29,7 +29,6 @@
 			"persistent": true
 		},
 		"extract-types": {},
-		"format": {},
 		"lint": {},
 		"studio#build": {
 			"dependsOn": ["^build"],
