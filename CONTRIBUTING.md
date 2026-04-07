@@ -20,8 +20,8 @@ contributing to this project.
 
 ### Prerequisites
 
-- **Node.js** ^24.12.0
-- **bun** 1.3.5 (package manager)
+- **Node.js** ^24.14.1
+- **bun** 1.3.11 (package manager)
 - **Git** for version control
 
 ### Development Setup
@@ -33,19 +33,13 @@ contributing to this project.
    cd web
    ```
 
-2. **Install @antfu/ni globally**
+2. **Install dependencies**
 
    ```bash
-   npm i -g @antfu/ni
+   bun install
    ```
 
-3. **Install dependencies**
-
-   ```bash
-   ni
-   ```
-
-4. **Set up environment variables**
+3. **Set up environment variables**
 
    For the Studio (`apps/studio/.env`):
 
@@ -73,10 +67,10 @@ contributing to this project.
    VERCEL_PROJECT_PRODUCTION_URL=your_VERCEL_PROJECT_PRODUCTION_URL
    ```
 
-5. **Start development servers**
+4. **Start development servers**
 
    ```bash
-   nr dev
+   bun run dev
    ```
 
 ## Code Standards
@@ -189,7 +183,7 @@ After making any changes to Sanity schemas, always run:
 
 ```bash
 # From root:
-nr extract-types && nr typegen:sanity
+bun run extract-types && bun run typegen:sanity
 ```
 
 ## Commit Guidelines
@@ -254,7 +248,6 @@ chore(deps): update all non-major dependencies
 
    ```bash
    bun run lint              # Run linting
-   bun run lint:cspell       # Run spell check
    bun run typecheck         # Run type checking
    bun run build             # Ensure build succeeds
    ```
@@ -345,13 +338,13 @@ bun run test
 2. Use `defineType()` and `defineField()`
 3. Add German titles/descriptions
 4. Include appropriate icon
-5. Run type generation: `nr extract-types && nr typegen:sanity`
+5. Run type generation: `bun run extract-types && bun run typegen:sanity`
 
 ### Updating Dependencies
 
 ```bash
-# Update all non-major dependencies
-bun update
+# Update all dependencies
+bun update -ir
 
 # Check for outdated packages
 bun outdated
