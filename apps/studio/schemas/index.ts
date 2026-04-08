@@ -1,3 +1,5 @@
+// oxlint-disable import/max-dependencies
+
 import author from './documents/author';
 import groupAdmin from './documents/group.admin';
 import groupChildrenGymnastics from './documents/group.children-gymnastics';

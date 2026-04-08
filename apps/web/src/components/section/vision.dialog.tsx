@@ -4,7 +4,8 @@ import type { AboutUs } from '@/types/sanity.types';
 
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '../ui/dialog';
-import { PortableText, type PortableTextValue } from '../ui/portable-text';
+import { PortableText } from '../ui/portable-text';
+import type { PortableTextValue } from '../ui/portable-text';
 import { ScrollArea } from '../ui/scroll-area';
 
 type LongVisionDialogProps = Pick<
@@ -26,7 +27,7 @@ export function LongVisionDialog({
 				<DialogTitle className="text-lg tracking-normal md:text-2xl">{longVisionTitle}</DialogTitle>
 				<ScrollArea className="max-h-[calc(100vh-200px)]">
 					<DialogDescription
-						className="prose-sm lg:prose mt-10 text-base tracking-normal md:text-lg"
+						className="prose-sm mt-10 text-base tracking-normal md:text-lg lg:prose"
 						asChild
 					>
 						<div>

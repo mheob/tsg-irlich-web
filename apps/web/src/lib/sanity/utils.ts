@@ -5,6 +5,8 @@ import type { SanityFileAsset, SanityImage, SanityImageReference } from '@/types
 
 import { client } from './client';
 
+const BYTES_PER_KB = 1024;
+
 /**
  * Generates a download URL for a Sanity file asset, appending a .pdf extension and setting the download filename.
  *
@@ -17,8 +19,10 @@ import { client } from './client';
  * // url: "https://cdn.sanity.io/files/yourProjectId/yourDataset/yourFileId.pdf?dl=custom-filename.pdf"
  * ```
  */
-export function getDownloadFileUrl(downloadAsset?: null | SanityFileAsset): string {
-	if (!downloadAsset?.url || !downloadAsset.originalFilename) return '#!';
+function getDownloadFileUrl(downloadAsset?: null | SanityFileAsset): string {
+	if (!downloadAsset?.url || !downloadAsset.originalFilename) {
+		return '#!';
+	}
 	return `${downloadAsset.url}?dl=${downloadAsset.originalFilename}`;
 }
 
@@ -33,14 +37,16 @@ export function getDownloadFileUrl(downloadAsset?: null | SanityFileAsset): stri
  * getFileSize(0) // "—"
  * getFileSize(undefined) // "—"
  */
-export function getFileSize(sanitySize?: number): string {
-	if (!sanitySize || sanitySize < 1) return '—';
+function getFileSize(sanitySize?: number): string {
+	if (!sanitySize || sanitySize < 1) {
+		return '—';
+	}
 	const units = ['B', 'KB', 'MB', 'GB'];
 	let index = 0;
 	let size = sanitySize;
-	while (size >= 1024 && index < units.length - 1) {
-		size /= 1024;
-		index++;
+	while (size >= BYTES_PER_KB && index < units.length - 1) {
+		size /= BYTES_PER_KB;
+		index += 1;
 	}
 	return `${size.toFixed(index)} ${units[index]}`;
 }
@@ -67,12 +73,14 @@ const imageBuilder = createImageUrlBuilder(client);
  * const autoUrl = urlForImage(sanityImage);
  * ```
  */
-export const urlForImage = (
+const urlForImage = (
 	image: null | SanityImage | SanityImageReference | undefined,
 	height?: number,
 	width?: number,
 ): string | undefined => {
-	if (!image?.asset?._ref || !imageBuilder) return;
+	if (!image?.asset?._ref || !imageBuilder) {
+		return;
+	}
 	return height
 		? imageBuilder
 				.image(image)
@@ -101,12 +109,14 @@ export const urlForImage = (
  * const customOgImage = resolveOpenGraphImage(sanityImage, 800, 600);
  * ```
  */
-export function resolveOpenGraphImage(
+function resolveOpenGraphImage(
 	image: Image,
 	width = 1200,
 	height = 627,
 ): undefined | { alt: string; height: number; url: string; width: number } {
-	if (!image || !imageBuilder) return;
+	if (!image || !imageBuilder) {
+		return;
+	}
 	const url = imageBuilder
 		.image(image)
 		.width(width)
@@ -116,3 +126,5 @@ export function resolveOpenGraphImage(
 		.url();
 	return { alt: image.alt as string, height, url, width };
 }
+
+export { getDownloadFileUrl, getFileSize, urlForImage, resolveOpenGraphImage };

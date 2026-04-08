@@ -7,7 +7,12 @@ import { env } from '@/lib/env';
 
 const LINEAR_API_URL = 'https://api.linear.app/graphql';
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB for Linear Free Plan
+const BYTES_PER_KB = 1024;
+const KB_PER_MB = 1024;
+const MB_IN_BYTES = BYTES_PER_KB * KB_PER_MB;
+// 10MB for Linear Free Plan
+const MAX_FILE_SIZE_MB = 10;
+const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * MB_IN_BYTES;
 const ALLOWED_TYPES = new Set(['image/png', 'image/jpeg', 'image/gif', 'image/webp']);
 
 const uploadSchema = z.object({
@@ -21,84 +26,111 @@ const uploadSchema = z.object({
 		}),
 });
 
+const FILE_UPLOAD_MUTATION = `
+  mutation FileUpload($contentType: String!, $filename: String!, $size: Int!) {
+    fileUpload(contentType: $contentType, filename: $filename, size: $size) {
+      success
+      uploadFile {
+        uploadUrl
+        assetUrl
+        headers {
+          key
+          value
+        }
+      }
+    }
+  }
+`;
+
+interface UploadFileHeader {
+	key: string;
+	value: string;
+}
+
+interface UploadFile {
+	assetUrl: string;
+	headers: UploadFileHeader[];
+	uploadUrl: string;
+}
+
+function fetchUploadUrl(apiKey: string, file: File): Promise<Response> {
+	return fetch(LINEAR_API_URL, {
+		body: JSON.stringify({
+			query: FILE_UPLOAD_MUTATION,
+			variables: { contentType: file.type, filename: file.name, size: file.size },
+		}),
+		headers: {
+			Authorization: apiKey,
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
+}
+
+function extractUploadFile(result: Record<string, unknown>, status: number): UploadFile {
+	if (result.errors || !(result.data as Record<string, unknown>)?.fileUpload) {
+		console.error('Linear fileUpload error:', result.errors);
+		throw new Error(`Failed to get upload URL: ${status} - ${JSON.stringify(result)}`);
+	}
+
+	const uploadFile = (
+		(result.data as Record<string, unknown>).fileUpload as Record<string, unknown>
+	).uploadFile as UploadFile;
+
+	if (!uploadFile?.uploadUrl || !uploadFile?.assetUrl) {
+		throw new Error('Failed to get upload URL');
+	}
+
+	return uploadFile;
+}
+
+async function requestUploadUrl(apiKey: string, file: File): Promise<UploadFile> {
+	const response = await fetchUploadUrl(apiKey, file);
+	const result = await response.json();
+
+	return extractUploadFile(result, response.status);
+}
+
+function buildUploadHeaders(
+	fileHeaders: UploadFileHeader[],
+	contentType: string,
+): Record<string, string> {
+	const result: Record<string, string> = { 'Content-Type': contentType };
+
+	for (const { key, value } of fileHeaders) {
+		result[key] = value;
+	}
+
+	return result;
+}
+
+async function uploadFileToUrl(
+	uploadUrl: string,
+	headers: Record<string, string>,
+	file: File,
+): Promise<void> {
+	const fileBuffer = await file.arrayBuffer();
+
+	const response = await fetch(uploadUrl, {
+		body: fileBuffer,
+		headers,
+		method: 'PUT',
+	});
+
+	if (!response.ok) {
+		throw new Error(`Failed to upload file: ${response.status}`);
+	}
+}
+
 export const uploadToLinear = actionClient
 	.inputSchema(uploadSchema)
 	.action(async ({ parsedInput: { file } }) => {
 		const apiKey = env('LINEAR_API_KEY');
 
-		// Step 1: Request upload URL from Linear
-		const uploadUrlQuery = `
-      mutation FileUpload($contentType: String!, $filename: String!, $size: Int!) {
-        fileUpload(contentType: $contentType, filename: $filename, size: $size) {
-          success
-          uploadFile {
-            uploadUrl
-            assetUrl
-            headers {
-              key
-              value
-            }
-          }
-        }
-      }
-    `;
+		const { assetUrl, headers, uploadUrl } = await requestUploadUrl(apiKey, file);
+		const uploadHeaders = buildUploadHeaders(headers, file.type);
 
-		const requestBody = {
-			query: uploadUrlQuery,
-			variables: {
-				contentType: file.type,
-				filename: file.name,
-				size: file.size,
-			},
-		};
+		await uploadFileToUrl(uploadUrl, uploadHeaders, file);
 
-		const uploadUrlResponse = await fetch(LINEAR_API_URL, {
-			body: JSON.stringify(requestBody),
-			headers: {
-				Authorization: apiKey,
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-		});
-
-		const uploadUrlResult = await uploadUrlResponse.json();
-
-		if (!uploadUrlResponse.ok) {
-			throw new Error(
-				`Failed to get upload URL: ${uploadUrlResponse.status} - ${JSON.stringify(uploadUrlResult)}`,
-			);
-		}
-
-		if (uploadUrlResult.errors || !uploadUrlResult.data?.fileUpload?.success) {
-			console.error('Linear fileUpload error:', uploadUrlResult.errors);
-			throw new Error('Failed to get upload URL');
-		}
-
-		const { assetUrl, headers, uploadUrl } = uploadUrlResult.data.fileUpload.uploadFile ?? {};
-		if (!uploadUrl || !assetUrl) throw new Error('Failed to get upload URL');
-
-		// Step 2: Upload file to the pre-signed URL
-		const uploadHeaders: Record<string, string> = {};
-		for (const header of headers ?? []) {
-			uploadHeaders[header.key] = header.value;
-		}
-
-		const fileBuffer = await file.arrayBuffer();
-
-		const uploadResponse = await fetch(uploadUrl, {
-			body: fileBuffer,
-			headers: {
-				...uploadHeaders,
-				'Content-Type': file.type,
-			},
-			method: 'PUT',
-		});
-
-		if (!uploadResponse.ok) {
-			throw new Error(`Failed to upload file: ${uploadResponse.status}`);
-		}
-
-		return {
-			assetUrl: assetUrl as string,
-		};
+		return { assetUrl };
 	});

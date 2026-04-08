@@ -8,7 +8,7 @@ import { defineQuery } from 'next-sanity';
  *
  * @returns All published news articles with slug, category, and last modified date
  */
-export const sitemapNewsArticlesQuery = defineQuery(`
+const sitemapNewsArticlesQuery = defineQuery(`
 	*[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {
 		"slug": slug.current,
 		"category": categories[0]->slug.current,
@@ -21,7 +21,7 @@ export const sitemapNewsArticlesQuery = defineQuery(`
  *
  * @returns All news categories with slug and updated date
  */
-export const sitemapNewsCategoriesQuery = defineQuery(`
+const sitemapNewsCategoriesQuery = defineQuery(`
 	*[_type == 'news.category'] {
 		"slug": slug.current,
 		"lastModified": _updatedAt
@@ -33,7 +33,7 @@ export const sitemapNewsCategoriesQuery = defineQuery(`
  *
  * @returns All groups with slug, type, and updated date
  */
-export const sitemapGroupsQuery = defineQuery(`
+const sitemapGroupsQuery = defineQuery(`
 	*[_type in [
 		'group.soccer',
 		'group.children-gymnastics',
@@ -47,3 +47,5 @@ export const sitemapGroupsQuery = defineQuery(`
 		"lastModified": _updatedAt
 	}
 `);
+
+export { sitemapNewsArticlesQuery, sitemapNewsCategoriesQuery, sitemapGroupsQuery };

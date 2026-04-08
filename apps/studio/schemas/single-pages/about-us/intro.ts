@@ -4,31 +4,31 @@ import { defineField } from 'sanity';
 import { removeGroupFromField, subTitleField, titleField } from '@/shared/fields/general';
 
 export const introField = defineField({
-	title: 'Intro',
-	name: 'introSection',
-	type: 'object',
-	icon: RiLinksLine,
-	group: 'intro',
 	fields: [
 		removeGroupFromField(titleField),
 		removeGroupFromField(subTitleField),
 
 		defineField({
-			title: 'Intro',
 			name: 'intro',
+			title: 'Intro',
 			type: 'blockContent',
 			validation: (Rule) => [Rule.required().error('Intro ist erforderlich.')],
 		}),
 
 		defineField({
-			title: 'Bilder',
-			name: 'images',
-			type: 'array',
-			of: [{ type: 'extendedImage' }],
 			description: 'Diese gewählten Bilder werden in der gewünschten Reihenfolge angezeigt.',
+			name: 'images',
+			of: [{ type: 'extendedImage' }],
+			title: 'Bilder',
+			type: 'array',
 			validation: (Rule) => [
 				Rule.required().length(3).error('Es müssen genau 3 Bilder ausgewählt werden.'),
 			],
 		}),
 	],
+	group: 'intro',
+	icon: RiLinksLine,
+	name: 'introSection',
+	title: 'Intro',
+	type: 'object',
 });

@@ -1,3 +1,4 @@
+// oxlint-disable react_perf/jsx-no-new-function-as-prop
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,7 +17,8 @@ import { ErrorAlert, Form, FormField, SuccessAlert } from '@/components/with-log
 import contactImage1 from '@/images/contact/contact-1.webp';
 import contactImage2 from '@/images/contact/contact-2.webp';
 import contactImage3 from '@/images/contact/contact-3.webp';
-import { type ContactFormData, contactFormSchema } from '@/lib/validations/contact-form';
+import { contactFormSchema } from '@/lib/validations/contact-form';
+import type { ContactFormData } from '@/lib/validations/contact-form';
 import type { ContactNameMail } from '@/types/sanity.types';
 
 function mapSelectItems(receiver?: ContactNameMail[]): { label: string; value: string }[] {
@@ -90,7 +92,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 
 	return (
 		<section className="md:bg-background-low-contrast md:py-32">
-			<div className="bg-background container">
+			<div className="container bg-background">
 				<div className="py-10 md:flex md:flex-row-reverse md:rounded-lg md:py-24">
 					{submitResult?.success ? (
 						<div className="flex-1">
@@ -108,7 +110,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 					) : (
 						<>
 							<div className="hidden lg:relative lg:block lg:w-1/2">
-								<div className="bg-secondary absolute top-0 right-0 grid size-60 place-content-center rounded-full lg:size-80">
+								<div className="absolute top-0 right-0 grid size-60 place-content-center rounded-full bg-secondary lg:size-80">
 									<Image
 										alt="'FUNKY DIAMONDS'-Spielerin mit geflochtener Frisur und Pferdeschwanz in schwarzem Trikot und Rückennummer 6, telefoniert während eines Spiels."
 										className="rounded-full"
@@ -117,7 +119,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 									/>
 								</div>
 
-								<div className="bg-secondary absolute top-[42%] right-[calc(60%-8rem)] grid size-64 place-content-center rounded-full">
+								<div className="absolute top-[42%] right-[calc(60%-8rem)] grid size-64 place-content-center rounded-full bg-secondary">
 									<Image
 										alt="Gruppe der TSG Irlich in blauen Trikots posiert für ein Mannschaftsfoto auf dem Spielfeld, während eine Fotografin in schwarzem Kleid mit Kamera auf Stativ das Foto macht."
 										className="rounded-full"
@@ -126,7 +128,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 									/>
 								</div>
 
-								<div className="bg-secondary absolute right-[calc(30%-8rem)] bottom-0 grid size-52 place-content-center rounded-full">
+								<div className="absolute right-[calc(30%-8rem)] bottom-0 grid size-52 place-content-center rounded-full bg-secondary">
 									<Image
 										alt="PR-Team-Mitglied der TSG Irlich in blau-weißem Vereinstrikot mit Kamera auf Stativ bei der Arbeit im Freien."
 										className="rounded-full"
@@ -169,6 +171,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 															const selected = selectItems.find((item) => item.value === value);
 															field?.onChange({ email: value, label: selected?.label ?? '' });
 														}}
+														// oxlint-disable-next-line react_perf/jsx-no-new-object-as-prop
 														field={{ ...field, value: field.value?.email ?? '' }}
 														placeholder="Wähle eine Empfängergruppe"
 														selectItems={selectItems}

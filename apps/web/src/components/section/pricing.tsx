@@ -1,5 +1,7 @@
 import { Crown, Gem, Rocket } from 'lucide-react';
 
+import { cn } from '@tsgi-web/shared';
+
 import { PricingCard } from '@/components/ui/pricing-card';
 import { SectionHeader } from '@/components/ui/section-header';
 import type { Home } from '@/types/sanity.types';
@@ -17,7 +19,7 @@ export function Pricing({
 	title,
 }: Readonly<PricingProps>) {
 	return (
-		<section className={`${styles.bg} bg-primary relative z-0 text-white`}>
+		<section className={cn(styles.bg, 'relative z-0 bg-primary text-white')}>
 			<div className="container py-10 md:py-28">
 				<SectionHeader
 					descriptionClassName="text-primary-foreground"

@@ -1,6 +1,8 @@
+// oxlint-disable no-magic-numbers
+
 import { z } from 'zod';
 
-export const feedbackFormSchema = z.object({
+const feedbackFormSchema = z.object({
 	browser: z.enum(['chrome', 'firefox', 'edge', 'safari', 'other']).optional(),
 	description: z
 		.string()
@@ -20,17 +22,24 @@ export const feedbackFormSchema = z.object({
 	type: z.enum(['bug', 'feature', 'question'], { error: 'Bitte wähle einen Typ aus' }),
 });
 
-export type FeedbackFormValues = z.infer<typeof feedbackFormSchema>;
+type FeedbackFormValues = z.infer<typeof feedbackFormSchema>;
 
-export interface LinearIssueResponse {
+interface LinearIssueResponse {
 	error?: string;
 	issueId?: string;
 	issueIdentifier?: string;
 	success: boolean;
 }
 
-export interface UploadResponse {
+interface UploadResponse {
 	assetUrl?: string;
 	error?: string;
 	success: boolean;
 }
+
+export {
+	feedbackFormSchema,
+	type FeedbackFormValues,
+	type LinearIssueResponse,
+	type UploadResponse,
+};

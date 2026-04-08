@@ -1,14 +1,17 @@
 'use client';
 
-import { cn } from '@tsgi-web/shared';
 import { Quote } from 'lucide-react';
 import Image from 'next/image';
 import type { HTMLAttributes } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types';
 import { getInitials } from '@/utils/image';
+
+const IMAGE_SIZE = { desktop: 96, mobile: 40 };
 
 type Testimonial = NonNullable<HomePageTestimonialsQueryResult>[number];
 interface TestimonialItemProps extends Testimonial {
@@ -27,14 +30,14 @@ function TestimonialItem({
 }: Readonly<TestimonialItemProps>) {
 	const isMobile = useMediaQuery('(max-width: 48rem)');
 
-	const imageSource = urlForImage(image, 96);
+	const imageSource = urlForImage(image, IMAGE_SIZE.desktop);
 
 	return (
 		<article
 			className={cn(
 				'relative flex flex-col gap-4',
 				{
-					'bg-primary text-primary-foreground border-primary-foreground rounded-xl': isHighlighted,
+					'rounded-xl border-primary-foreground bg-primary text-primary-foreground': isHighlighted,
 				},
 				{ 'py-6 pr-10 pl-5': !isHighlighted && isMobile },
 				{ 'mr-2 -ml-6 py-6 pr-10 pl-5': isHighlighted && isMobile },
@@ -50,16 +53,16 @@ function TestimonialItem({
 							{ 'border-primary-foreground': isHighlighted },
 						)}
 						alt={image.alt}
-						height={isMobile ? 40 : 96}
+						height={isMobile ? IMAGE_SIZE.mobile : IMAGE_SIZE.desktop}
 						src={imageSource}
-						width={isMobile ? 40 : 96}
+						width={isMobile ? IMAGE_SIZE.mobile : IMAGE_SIZE.desktop}
 					/>
 				) : (
 					<div
 						className={cn(
 							'rounded-full border-2 md:border-4',
-							{ 'text-primary border-primary': !isHighlighted },
-							{ 'text-primary-foreground border-primary-foreground': isHighlighted },
+							{ 'border-primary text-primary': !isHighlighted },
+							{ 'border-primary-foreground text-primary-foreground': isHighlighted },
 							'grid size-10 place-items-center text-4xl font-bold md:size-24',
 						)}
 					>
@@ -94,7 +97,7 @@ function TestimonialItem({
 			</p>
 
 			{isHighlighted && (
-				<div className="absolute end-4 bottom-2 md:end-12 md:bottom-6">
+				<div className="absolute inset-e-4 bottom-2 md:inset-e-12 md:bottom-6">
 					<Quote className="size-6 md:size-14" strokeWidth="1" />
 				</div>
 			)}

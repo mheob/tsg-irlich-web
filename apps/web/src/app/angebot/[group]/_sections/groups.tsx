@@ -1,3 +1,5 @@
+import { cn } from '@tsgi-web/shared';
+
 import { GroupCard } from '@/components/ui/group-card';
 import { SectionHeader } from '@/components/ui/section-header';
 import type { GroupsPage, Groups as GroupsType } from '@/types/sanity.types';
@@ -16,7 +18,7 @@ export function Groups({
 	title,
 }: Readonly<GroupsProps>) {
 	return (
-		<section className={`${styles.bg} bg-background-low-contrast relative z-0`}>
+		<section className={cn(styles.bg, 'relative z-0 bg-background-low-contrast')}>
 			<div className="container mx-auto px-5 py-10 md:py-32">
 				<SectionHeader
 					title={

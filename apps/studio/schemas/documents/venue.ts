@@ -1,17 +1,15 @@
+// oxlint-disable no-magic-numbers
+
 import { RiMap2Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import extendedImage from '../objects/extended-image';
 
 const venue = defineType({
-	title: 'Sportstätte',
-	name: 'venue',
-	type: 'document',
-	icon: RiMap2Line,
 	fields: [
 		defineField({
-			title: 'Name',
 			name: 'title',
+			title: 'Name',
 			type: 'string',
 			validation: (Rule) => [
 				Rule.required().min(3).error('Der Name muss mindestens 3 Zeichen lang sein'),
@@ -20,18 +18,16 @@ const venue = defineType({
 		}),
 
 		defineField({
-			title: 'Beschreibung',
-			name: 'description',
-			type: 'simpleBlockContent',
 			description: 'Eine kurze Beschreibung der Sportstätte.',
+			name: 'description',
+			title: 'Beschreibung',
+			type: 'simpleBlockContent',
 			validation: (Rule) => [Rule.required().error('Die Beschreibung ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Art',
-			name: 'type',
-			type: 'string',
 			description: 'Art der Sportstätte.',
+			name: 'type',
 			options: {
 				list: [
 					{ title: 'Sporthalle (1 Feld)', value: 'hall-1' },
@@ -43,24 +39,23 @@ const venue = defineType({
 					{ title: 'Rasenplatz', value: 'grass' },
 				],
 			},
+			title: 'Art',
+			type: 'string',
 			validation: (Rule) => [Rule.required().error('Die "Art der Sportstätte" ist erforderlich')],
 		}),
 
 		defineField({
 			...extendedImage,
-			title: 'Image',
 			name: 'mainImage',
+			title: 'Image',
 		}),
 
 		defineField({
-			title: 'Standort',
-			name: 'location',
-			type: 'object',
 			description: 'Die Adresse zur Sportstätte.',
 			fields: [
 				defineField({
-					title: 'Name des Standortes',
 					name: 'name',
+					title: 'Name des Standortes',
 					type: 'string',
 					validation: (Rule) => [
 						Rule.required().min(2).error('Der Name muss mindestens 2 Zeichen lang sein'),
@@ -69,8 +64,8 @@ const venue = defineType({
 				}),
 
 				defineField({
-					title: 'Straße',
 					name: 'street',
+					title: 'Straße',
 					type: 'string',
 					validation: (Rule) => [
 						Rule.required().min(2).error('Die Straße muss mindestens 2 Zeichen lang sein'),
@@ -79,8 +74,8 @@ const venue = defineType({
 				}),
 
 				defineField({
-					title: 'Hausnummer',
 					name: 'houseNumber',
+					title: 'Hausnummer',
 					type: 'string',
 					validation: (Rule) => [
 						Rule.required().min(1).error('Die Hausnummer muss mindestens 1 Zeichen lang sein'),
@@ -89,8 +84,8 @@ const venue = defineType({
 				}),
 
 				defineField({
-					title: 'Postleitzahl',
 					name: 'zipCode',
+					title: 'Postleitzahl',
 					type: 'string',
 					validation: (Rule) => [
 						Rule.regex(/^\d{5}$/).error('Die Postleitzahl muss aus genau 5 Zahlen bestehen'),
@@ -98,8 +93,8 @@ const venue = defineType({
 				}),
 
 				defineField({
-					title: 'Stadt',
 					name: 'city',
+					title: 'Stadt',
 					type: 'string',
 					validation: (Rule) => [
 						Rule.required().min(3).error('Die Stadt muss mindestens 3 Zeichen lang sein'),
@@ -107,8 +102,15 @@ const venue = defineType({
 					],
 				}),
 			],
+			name: 'location',
+			title: 'Standort',
+			type: 'object',
 		}),
 	],
+	icon: RiMap2Line,
+	name: 'venue',
+	title: 'Sportstätte',
+	type: 'document',
 });
 
 export default venue;

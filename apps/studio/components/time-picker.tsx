@@ -1,18 +1,23 @@
 import { Box, TextInput } from '@sanity/ui';
-import { set, type StringInputProps, type StringSchemaType, unset } from 'sanity';
+import { useCallback } from 'react';
+import type { StringInputProps, StringSchemaType } from 'sanity';
+import { set, unset } from 'sanity';
 
 export default function TimePicker({
 	onChange,
 	value,
 }: Readonly<StringInputProps<StringSchemaType>>) {
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const inputValue = event.target.value;
-		if (inputValue) {
-			onChange(set(inputValue));
-		} else {
-			onChange(unset());
-		}
-	};
+	const handleChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			const inputValue = event.target.value;
+			if (inputValue) {
+				onChange(set(inputValue));
+			} else {
+				onChange(unset());
+			}
+		},
+		[onChange],
+	);
 
 	return (
 		<Box>

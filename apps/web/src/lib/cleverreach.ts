@@ -1,9 +1,15 @@
-// cspell:words doidata, sendactivationmail
 import { z } from 'zod';
+
+import { MS_PER_SECOND, timeSpanInMilliSeconds } from '@tsgi-web/shared';
 
 import { env } from './env';
 
+const UNIX_TIMESTAMP_DIVISOR = 1000;
+const HTTP_CONFLICT = 409;
+
 const CLEVERREACH_API_BASE = 'https://rest.cleverreach.com';
+
+const FIVE_MINUTES = timeSpanInMilliSeconds('minute') * 5;
 
 // Token cache to avoid unnecessary authentication requests
 let tokenCache: null | { expiresAt: number; token: string } = null;
@@ -20,7 +26,7 @@ let tokenCache: null | { expiresAt: number; token: string } = null;
  */
 async function getAccessToken(): Promise<string> {
 	// Use token cache if token is available and not about to expire (5 min buffer).
-	if (tokenCache && tokenCache.expiresAt > Date.now() + 5 * 60 * 1000) {
+	if (tokenCache && tokenCache.expiresAt > Date.now() + FIVE_MINUTES) {
 		return tokenCache.token;
 	}
 
@@ -49,7 +55,7 @@ async function getAccessToken(): Promise<string> {
 
 	// Store token and expiry for future requests (expires_in is seconds from now)
 	tokenCache = {
-		expiresAt: Date.now() + data.expires_in * 1000,
+		expiresAt: Date.now() + data.expires_in * MS_PER_SECOND,
 		token: data.access_token,
 	};
 
@@ -65,22 +71,136 @@ async function getAccessToken(): Promise<string> {
  *     return { error: validation.error.message, success: false };
  *   }
  */
-export const subscriberSchema = z.object({
+const subscriberSchema = z.object({
 	email: z.email('Invalid email address'),
 });
 
-export type SubscriberInput = z.infer<typeof subscriberSchema>;
+type SubscriberInput = z.infer<typeof subscriberSchema>;
 
 // Response types
-export type SubscribeResult =
+type SubscribeResult =
 	| { code?: string; error: string; success: false }
 	| { message: string; success: true };
 
 // DOI metadata for GDPR tracking
-export interface DoiMetadata {
+interface DoiMetadata {
 	referer: string;
 	userAgent: string;
 	userIp: string;
+}
+
+type AddReceiverResult = { code?: string; error: string; success: false } | { success: true };
+
+async function addReceiver(
+	email: string,
+	token: string,
+	listId: string,
+): Promise<AddReceiverResult> {
+	const response = await fetch(`${CLEVERREACH_API_BASE}/v3/groups.json/${listId}/receivers`, {
+		body: JSON.stringify({
+			activated: 0,
+			email,
+			registered: Math.floor(Date.now() / UNIX_TIMESTAMP_DIVISOR),
+			source: 'Next.js Website',
+		}),
+		headers: {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
+
+	if (response.ok) {
+		return { success: true };
+	}
+
+	const errorData = await response.json().catch(() => ({}));
+
+	if (response.status === HTTP_CONFLICT) {
+		return {
+			code: 'ALREADY_SUBSCRIBED',
+			error: 'This email is already subscribed',
+			success: false,
+		};
+	}
+
+	return {
+		code: errorData.error?.code?.toString(),
+		error: errorData.error?.message ?? 'Failed to add subscriber',
+		success: false,
+	};
+}
+
+interface SendDoiEmailParams {
+	doiMetadata: DoiMetadata;
+	email: string;
+	formId: string;
+	listId: string;
+	token: string;
+}
+
+async function sendDoiEmail({
+	doiMetadata,
+	email,
+	formId,
+	listId,
+	token,
+}: SendDoiEmailParams): Promise<void> {
+	const response = await fetch(`${CLEVERREACH_API_BASE}/v3/forms.json/${formId}/send/activate`, {
+		body: JSON.stringify({
+			doidata: {
+				referer: doiMetadata.referer,
+				user_agent: doiMetadata.userAgent,
+				user_ip: doiMetadata.userIp,
+			},
+			email,
+			groups_ids: [listId],
+		}),
+		headers: {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
+
+	if (!response.ok) {
+		console.error('Failed to send DOI email, but receiver was added:', await response.text());
+	}
+}
+
+function resolveDoiMetadata(doiMetadata?: DoiMetadata): DoiMetadata {
+	const productionUrl = env('VERCEL_PROJECT_PRODUCTION_URL');
+
+	return {
+		referer: doiMetadata?.referer ?? (productionUrl ? `https://${productionUrl}` : ''),
+		userAgent: doiMetadata?.userAgent ?? 'Mozilla/5.0',
+		userIp: doiMetadata?.userIp ?? '0.0.0.0',
+	};
+}
+
+async function performSubscription(
+	email: string,
+	doiMetadata?: DoiMetadata,
+): Promise<SubscribeResult> {
+	const token = await getAccessToken();
+	const listId = env('CLEVERREACH_LIST_ID');
+	const formId = env('CLEVERREACH_FORM_ID');
+
+	const addResult = await addReceiver(email, token, listId);
+
+	if (!addResult.success) {
+		return addResult;
+	}
+
+	await sendDoiEmail({
+		doiMetadata: resolveDoiMetadata(doiMetadata),
+		email,
+		formId,
+		listId,
+		token,
+	});
+
+	return { message: 'Please check your email to confirm your subscription', success: true };
 }
 
 /**
@@ -90,7 +210,7 @@ export interface DoiMetadata {
  * @param doiMetadata - The DOI metadata for GDPR tracking.
  * @returns The subscribe result.
  */
-export async function subscribe(
+async function subscribe(
 	input: SubscriberInput,
 	doiMetadata?: DoiMetadata,
 ): Promise<SubscribeResult> {
@@ -104,78 +224,8 @@ export async function subscribe(
 		};
 	}
 
-	const { email } = validation.data;
-
 	try {
-		const token = await getAccessToken();
-		const listId = env('CLEVERREACH_LIST_ID');
-		const formId = env('CLEVERREACH_FORM_ID');
-		const referer = env('VERCEL_PROJECT_PRODUCTION_URL')
-			? `https://${env('VERCEL_PROJECT_PRODUCTION_URL')}`
-			: '';
-
-		// First, add the receiver to the group
-		const addResponse = await fetch(`${CLEVERREACH_API_BASE}/v3/groups.json/${listId}/receivers`, {
-			body: JSON.stringify({
-				activated: 0,
-				email,
-				registered: Math.floor(Date.now() / 1000),
-				source: 'Next.js Website',
-			}),
-			headers: {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-		});
-
-		if (!addResponse.ok) {
-			const errorData = await addResponse.json().catch(() => ({}));
-
-			if (addResponse.status === 409) {
-				return {
-					code: 'ALREADY_SUBSCRIBED',
-					error: 'This email is already subscribed',
-					success: false,
-				};
-			}
-
-			return {
-				code: errorData.error?.code?.toString(),
-				error: errorData.error?.message ?? 'Failed to add subscriber',
-				success: false,
-			};
-		}
-
-		// Then trigger the Double Opt-in email
-		const doiResponse = await fetch(
-			`${CLEVERREACH_API_BASE}/v3/forms.json/${formId}/send/activate`,
-			{
-				body: JSON.stringify({
-					doidata: {
-						referer: doiMetadata?.referer ?? referer,
-						user_agent: doiMetadata?.userAgent ?? 'Mozilla/5.0',
-						user_ip: doiMetadata?.userIp ?? '0.0.0.0',
-					},
-					email,
-					groups_ids: [listId],
-				}),
-				headers: {
-					Authorization: `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				},
-				method: 'POST',
-			},
-		);
-
-		if (!doiResponse.ok) {
-			console.error('Failed to send DOI email, but receiver was added:', await doiResponse.text());
-		}
-
-		return {
-			message: 'Please check your email to confirm your subscription',
-			success: true,
-		};
+		return await performSubscription(validation.data.email, doiMetadata);
 	} catch (error) {
 		console.error('CleverReach subscription error:', error);
 
@@ -186,3 +236,11 @@ export async function subscribe(
 		};
 	}
 }
+
+export {
+	subscriberSchema,
+	type SubscriberInput,
+	type SubscribeResult,
+	type DoiMetadata,
+	subscribe,
+};

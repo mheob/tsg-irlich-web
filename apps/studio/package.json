@@ -12,6 +12,7 @@
 		"extract-types": "sanity schema extract --enforce-required-fields",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
+		"lint:github": "oxlint --format=github",
 		"start": "sanity start",
 		"typecheck": "tsc --noEmit"
 	},

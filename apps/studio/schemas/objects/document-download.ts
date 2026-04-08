@@ -4,24 +4,23 @@ import { titleField } from '@/shared/fields/general';
 import { getFieldWithoutGroup } from '@/utils/fields';
 
 const documentDownloadField = defineField({
-	title: 'Dokument zum herunterladen',
-	name: 'documentDownload',
-	type: 'object',
 	fields: [
 		getFieldWithoutGroup(titleField),
 
 		defineField({
-			title: 'Dokument',
-			name: 'document',
-			type: 'file',
 			description: 'Es können nur PDF-Dateien hochgeladen werden',
+			name: 'document',
 			options: {
 				accept: 'application/pdf',
 			},
+			title: 'Dokument',
+			type: 'file',
 			validation: (Rule) => [
 				Rule.required().error('Dokument ist erforderlich'),
 				Rule.custom((file) => {
-					if (!file) return true; // let required() handle this
+					if (!file) {
+						return true;
+					}
 
 					const asset = file.asset as { mimeType?: string };
 					return asset?.mimeType && asset.mimeType !== 'application/pdf'
@@ -31,6 +30,9 @@ const documentDownloadField = defineField({
 			],
 		}),
 	],
+	name: 'documentDownload',
+	title: 'Dokument zum herunterladen',
+	type: 'object',
 });
 
 export default documentDownloadField;

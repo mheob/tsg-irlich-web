@@ -8,12 +8,12 @@ export function SuccessAlert() {
 			<Check />
 			<AlertTitle>Vielen Dank!</AlertTitle>
 			<AlertDescription className="mt-2">
-				<p className="text-success-foreground mt-4">
+				<p className="mt-4 text-success-foreground">
 					Deine Anfrage wurde erfolgreich übermittelt.
 					<br />
 					Wir werden uns schnellstmöglich um deine Anfrage kümmern.
 				</p>
-				<p className="text-success-foreground mt-4">
+				<p className="mt-4 text-success-foreground">
 					Mit freundlichen Grüßen,
 					<br />
 					Dein Team der TSG Irlich

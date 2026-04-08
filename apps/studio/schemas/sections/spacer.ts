@@ -2,30 +2,29 @@ import { RiCheckboxIndeterminateLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 const spacer = defineField({
-	title: 'Spacer',
-	name: 'spacer',
-	type: 'object',
 	description: 'An empty block to create space between sections',
-	icon: RiCheckboxIndeterminateLine,
-	// hidden: true,
 	fields: [
 		defineField({
-			title: 'Variant',
+			initialValue: 'default',
 			name: 'variant',
-			type: 'string',
 			options: {
 				layout: 'radio',
 				list: [{ title: 'Default', value: 'default' }],
 			},
-			initialValue: 'default',
+			title: 'Variant',
+			type: 'string',
 		}),
 	],
+	icon: RiCheckboxIndeterminateLine,
+	name: 'spacer',
 	preview: {
 		prepare: ({ title }) => ({ title: `Spacer (${title})` }),
 		select: {
 			title: 'variant',
 		},
 	},
+	title: 'Spacer',
+	type: 'object',
 });
 
 export default spacer;

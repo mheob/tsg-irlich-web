@@ -2,50 +2,50 @@ import { RiLayoutGridLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 const grid = defineField({
-	title: 'Grid',
-	name: 'grid',
-	type: 'object',
 	description: 'This is a simple grid component, all items are going to be equally wide',
-	icon: RiLayoutGridLine,
-	groups: [
-		{
-			title: 'Columns',
-			name: 'columns',
-		},
-		{
-			title: 'Items',
-			name: 'items',
-		},
-	],
 	fields: [
 		{
-			title: 'Title',
 			name: 'title',
+			title: 'Title',
 			type: 'string',
 		},
 		{
-			title: 'Columns',
-			name: 'columns',
-			type: 'columns',
 			group: 'columns',
+			name: 'columns',
+			title: 'Columns',
+			type: 'columns',
 		},
 		{
-			title: 'Items',
-			name: 'items',
-			type: 'array',
-			of: [{ type: 'mainImage' }, { type: 'blockContent' }],
 			group: 'items',
+			name: 'items',
+			of: [{ type: 'mainImage' }, { type: 'blockContent' }],
 			options: {
 				layout: 'grid',
 			},
+			title: 'Items',
+			type: 'array',
 		},
 	],
+	groups: [
+		{
+			name: 'columns',
+			title: 'Columns',
+		},
+		{
+			name: 'items',
+			title: 'Items',
+		},
+	],
+	icon: RiLayoutGridLine,
+	name: 'grid',
 	preview: {
 		prepare: ({ title }) => ({ title }),
 		select: {
 			title: 'title',
 		},
 	},
+	title: 'Grid',
+	type: 'object',
 });
 
 export default grid;

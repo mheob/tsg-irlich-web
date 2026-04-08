@@ -1,6 +1,7 @@
 import { cn } from '@tsgi-web/shared';
 
-import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
+import { PortableText } from '@/components/ui/portable-text';
+import type { PortableTextValue } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import { TrainingCard } from '@/components/ui/training-card';
 import type { SimpleBlockContent, TrainingTimeSection } from '@/types/sanity.types';
@@ -17,7 +18,7 @@ interface TrainingProps {
 
 export function Training({ title, training }: Readonly<TrainingProps>) {
 	return (
-		<section className="bg-background-low-contrast relative z-0">
+		<section className="relative z-0 bg-background-low-contrast">
 			<div className="container mx-auto px-5 py-10 md:py-32">
 				<SectionHeader className="mb-16" title={title} isCentered isCenteredOnDesktop>
 					{training?.trainingDescription && (
@@ -40,8 +41,8 @@ export function Training({ title, training }: Readonly<TrainingProps>) {
 							},
 						)}
 					>
-						{training.trainingTimes?.map((training) => (
-							<TrainingCard key={`${training._key}`} training={training} />
+						{training.trainingTimes?.map((trainingTime) => (
+							<TrainingCard key={`${trainingTime._key}`} training={trainingTime} />
 						))}
 					</div>
 				)}

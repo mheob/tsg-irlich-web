@@ -6,32 +6,32 @@ import { defaultHeroFields } from '@/shared/fields/general';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 
 const newsOverviewCategory = defineType({
-	title: 'News Übersicht für Kategorie',
-	name: 'newsOverviewCategory',
-	type: 'document',
-	icon: RiBookletLine,
-	groups: [general, content],
 	fields: [
 		// ?: the "slug" comes from the news category itself; this page is rather the layout
 
-		// general
+		// General
 		...defaultHeroFields,
 
-		// content
+		// Content
 		defineField({
-			title: 'Inhalte',
-			name: 'content',
-			type: 'object',
-			icon: RiLinksLine,
-			group: 'content',
-			groups: [{ title: 'Ansprechpartner', name: 'contactPersons' }],
 			fields: [contactPersonsSectionField],
+			group: 'content',
+			groups: [{ name: 'contactPersons', title: 'Ansprechpartner' }],
+			icon: RiLinksLine,
+			name: 'content',
+			title: 'Inhalte',
+			type: 'object',
 			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
+	groups: [general, content],
+	icon: RiBookletLine,
+	name: 'newsOverviewCategory',
 	preview: {
 		prepare: () => ({ title: 'News Übersicht für Kategorie' }),
 	},
+	title: 'News Übersicht für Kategorie',
+	type: 'document',
 });
 
 export default newsOverviewCategory;

@@ -7,8 +7,12 @@ function reverse(stringToReverse: string): string {
 	return [...stringToReverse]
 		.toReversed()
 		.map((char) => {
-			if (char === '(') return ')';
-			if (char === ')') return '(';
+			if (char === '(') {
+				return ')';
+			}
+			if (char === ')') {
+				return '(';
+			}
 			return char;
 		})
 		.join('');

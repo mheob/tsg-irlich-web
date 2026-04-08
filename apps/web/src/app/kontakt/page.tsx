@@ -11,10 +11,17 @@ import type { ContactPageQueryResult } from '@/types/sanity.types.generated';
 
 import { getOpenGraphImageOptions } from '../news/_shared/utils';
 
+const HERO_IMAGE = {
+	alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
+	src: contactImage,
+};
+
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<ContactPageQueryResult>(contactPageQuery);
 
-	if (!page) return {};
+	if (!page) {
+		return {};
+	}
 
 	const description = page.meta?.metaDescription ?? '';
 	const image = page.meta?.openGraphImage;
@@ -39,14 +46,7 @@ export default async function ContactPage() {
 
 	return (
 		<>
-			<Hero
-				image={{
-					alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
-					src: contactImage,
-				}}
-				subTitle={page.subtitle}
-				title={page.title}
-			/>
+			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
 			<ContactForm receiver={page.content.receiver} />
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<Newsletter />

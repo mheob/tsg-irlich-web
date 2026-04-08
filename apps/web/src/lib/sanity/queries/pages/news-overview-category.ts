@@ -9,7 +9,7 @@ import { newsArticle } from '../shared/news';
  *
  * @returns The news overview category page
  */
-export const newsOverviewCategoryPageQuery = defineQuery(`
+const newsOverviewCategoryPageQuery = defineQuery(`
 	*[_type == 'newsOverviewCategory'][0] {
 		...,
 		content {
@@ -31,7 +31,7 @@ export const newsOverviewCategoryPageQuery = defineQuery(`
  * @param end - The end index
  * @returns An array of news articles
  */
-export const newsArticlesPaginatedForCategoryQuery = defineQuery(`
+const newsArticlesPaginatedForCategoryQuery = defineQuery(`
 	*[_type == 'news.article' && $category in categories[]->slug.current]
 	| order(publishedAt desc) [$start..$end] {
 		${newsArticle}
@@ -44,6 +44,12 @@ export const newsArticlesPaginatedForCategoryQuery = defineQuery(`
  * @param category - The category to get the total number of news articles for
  * @returns The total number of news articles
  */
-export const newsArticlesTotalForCategoryQuery = defineQuery(`
+const newsArticlesTotalForCategoryQuery = defineQuery(`
 	count(*[_type == "news.article" && $category in categories[]->slug.current])
 `);
+
+export {
+	newsOverviewCategoryPageQuery,
+	newsArticlesPaginatedForCategoryQuery,
+	newsArticlesTotalForCategoryQuery,
+};

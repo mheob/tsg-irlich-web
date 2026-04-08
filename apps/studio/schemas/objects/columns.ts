@@ -2,18 +2,11 @@ import { RiLayoutColumnLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 const columns = defineField({
-	title: 'Columns',
-	name: 'columns',
-	type: 'object',
 	description: 'Items per row',
-	icon: RiLayoutColumnLine,
-	validation: (Rule) => Rule.required(),
 	fields: [
 		{
-			title: 'Small screens',
-			name: 'small',
-			type: 'string',
 			description: 'Items per row for phone',
+			name: 'small',
 			options: {
 				list: [
 					{ title: '1 columns', value: '1' },
@@ -22,12 +15,12 @@ const columns = defineField({
 					{ title: '4 columns', value: '4' },
 				],
 			},
+			title: 'Small screens',
+			type: 'string',
 		},
 		{
-			title: 'Medium screens',
-			name: 'medium',
-			type: 'string',
 			description: 'Items per row for tablet',
+			name: 'medium',
 			options: {
 				list: [
 					{ title: '1 columns', value: '1' },
@@ -36,12 +29,12 @@ const columns = defineField({
 					{ title: '4 columns', value: '4' },
 				],
 			},
+			title: 'Medium screens',
+			type: 'string',
 		},
 		{
-			title: 'Large screens',
-			name: 'large',
-			type: 'string',
 			description: 'Items per row for desktop',
+			name: 'large',
 			options: {
 				list: [
 					{ title: '1 columns', value: '1' },
@@ -50,8 +43,15 @@ const columns = defineField({
 					{ title: '4 columns', value: '4' },
 				],
 			},
+			title: 'Large screens',
+			type: 'string',
 		},
 	],
+	icon: RiLayoutColumnLine,
+	name: 'columns',
+	title: 'Columns',
+	type: 'object',
+	validation: (Rule) => Rule.required(),
 });
 
 export default columns;

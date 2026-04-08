@@ -22,6 +22,8 @@ import { getCurrentDepartment } from '@/utils/groups';
 import { Main } from './_sections/main';
 import { Training } from './_sections/training';
 
+const IMAGE_SIZE = { height: 1920, width: 600 };
+
 export async function generateMetadata({
 	params,
 }: PageProps<'/angebot/[group]/[singleGroup]'>): Promise<Metadata> {
@@ -29,7 +31,9 @@ export async function generateMetadata({
 
 	const currentDepartment = getCurrentDepartment(group);
 
-	if (!currentDepartment) return {};
+	if (!currentDepartment) {
+		return {};
+	}
 
 	const page = await client.fetch<OfferGroupsGroupPageGroupsQueryResult>(
 		offerGroupsGroupPageGroupsQuery,
@@ -39,7 +43,9 @@ export async function generateMetadata({
 		},
 	);
 
-	if (!page?.meta) return {};
+	if (!page?.meta) {
+		return {};
+	}
 
 	const description = page.meta?.metaDescription ?? '';
 	const image = page.meta?.openGraphImage ?? page.featuredImage;
@@ -84,20 +90,27 @@ export default async function SingleGroupsPage({
 		return null;
 	}
 
-	const imageSource = urlForImage(groupData.featuredImage, 600, 1920);
+	const imageSource = urlForImage(groupData.featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
 
 	return (
 		<>
 			<Hero
-				image={{ alt: groupData.featuredImage?.alt ?? '', src: imageSource ?? '' }}
+				image={
+					groupData.featuredImage?.alt && imageSource
+						? // oxlint-disable-next-line react_perf/jsx-no-new-object-as-prop
+							{ alt: groupData.featuredImage.alt, src: imageSource }
+						: undefined
+				}
 				subTitle={page.subtitle}
 				title={page.title}
 			/>
 			<Main
 				description={
 					(groupData.description as SimpleBlockContent) ??
+					// oxlint-disable-next-line react_perf/jsx-no-new-object-as-prop
 					({ text: [] } as unknown as SimpleBlockContent)
 				}
+				// oxlint-disable-next-line react_perf/jsx-no-new-array-as-prop
 				gallery={groupData.images ?? []}
 				title={groupData.title ?? ''}
 			/>

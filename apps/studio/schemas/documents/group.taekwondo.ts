@@ -3,9 +3,9 @@ import { RiTeamLine } from 'react-icons/ri';
 import { getGroupDocument } from '@/utils/documents';
 
 const taekwondo = getGroupDocument({
-	title: 'Taekwondo',
-	name: 'group.taekwondo',
 	icon: RiTeamLine,
+	name: 'group.taekwondo',
+	title: 'Taekwondo',
 });
 
 export default taekwondo;

@@ -1,34 +1,36 @@
-export const additionalInformation = {
-	title: 'Zusätzliche Informationen',
+const additionalInformation = {
 	name: 'additionalInformation',
+	title: 'Zusätzliche Informationen',
 };
 
-export const contact = {
-	title: 'Kontaktdaten',
+const contact = {
 	name: 'contact',
+	title: 'Kontaktdaten',
 };
 
-export const content = {
-	title: 'Inhalt',
+const content = {
 	name: 'content',
+	title: 'Inhalt',
 };
 
-export const excerpt = {
-	title: 'Zusammenfassung',
+const excerpt = {
 	name: 'excerpt',
+	title: 'Zusammenfassung',
 };
 
-export const general = {
-	title: 'General',
+const general = {
 	name: 'general',
+	title: 'General',
 };
 
-export const meta = {
-	title: 'Meta information',
+const meta = {
 	name: 'meta',
+	title: 'Meta information',
 };
 
-export const personal = {
-	title: 'Persönliches',
+const personal = {
 	name: 'personal',
+	title: 'Persönliches',
 };
+
+export { additionalInformation, contact, content, excerpt, general, meta, personal };

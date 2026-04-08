@@ -1,9 +1,11 @@
-export const contactPersons = {
-	title: 'Ansprechpartner',
+const contactPersons = {
 	name: 'contactPersons',
+	title: 'Ansprechpartner',
 };
 
-export const trainings = {
-	title: 'Trainings',
+const trainings = {
 	name: 'trainings',
+	title: 'Trainings',
 };
+
+export { contactPersons, trainings };

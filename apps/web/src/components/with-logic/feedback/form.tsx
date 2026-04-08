@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 
 import { createLinearIssue } from '@/actions/create-linear-issue';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { feedbackFormSchema, type FeedbackFormValues } from '@/lib/validations/feedback';
+import { feedbackFormSchema } from '@/lib/validations/feedback';
+import type { FeedbackFormValues } from '@/lib/validations/feedback';
 
 import { ErrorAlert, Form } from '../form';
 import { BrowserField } from './browse-field';
@@ -88,11 +89,11 @@ export function FeedbackForm() {
 		<section className="md:bg-background-low-contrast md:py-32">
 			<Card className="container">
 				<CardHeader>
-					<CardTitle className="mb-4 text-3xl leading-tight md:mb-8 md:text-7xl">
+					<CardTitle className="mb-4 text-3xl/tight md:mb-8 md:text-7xl">
 						Gib uns dein Feedback zur neuen Webseite
 					</CardTitle>
 
-					<CardDescription className="text-muted-foreground text-lg md:text-xl">
+					<CardDescription className="text-lg text-muted-foreground md:text-xl">
 						Hilf uns, die App zu verbessern. Dein Feedback ist sehr wertvoll!
 					</CardDescription>
 				</CardHeader>

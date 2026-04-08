@@ -1,26 +1,27 @@
+// oxlint-disable max-lines, no-magic-numbers, no-inline-comments
+
 import { ImageIcon, SearchIcon, UploadIcon } from '@sanity/icons';
 import { Box, Button, Card, Dialog, Flex, Spinner, Stack, Text, TextInput } from '@sanity/ui';
-import {
-	type ChangeEvent,
-	type DragEvent,
-	type KeyboardEvent,
-	useCallback,
-	useId,
-	useRef,
-	useState,
-} from 'react';
-import {
-	type AssetFromSource,
-	type ImageValue,
-	type ObjectInputProps,
-	type ObjectSchemaType,
-	set,
-	setIfMissing,
-	useClient,
-} from 'sanity';
+import { useCallback, useId, useRef, useState } from 'react';
+import type { ChangeEvent, DragEvent, JSX, KeyboardEvent } from 'react';
+import { set, setIfMissing, useClient } from 'sanity';
+import type { AssetFromSource, ImageValue, ObjectInputProps, ObjectSchemaType } from 'sanity';
 import { mediaAssetSource } from 'sanity-plugin-media';
 
+import { EMPTY_ARRAY } from '@tsgi-web/shared';
+
 import { apiVersion } from '@/env';
+
+const STYLE_HIDDEN = { display: 'none' };
+const STYLE_TEXT_COLOR = { color: 'var(--card-critical-fg-color)' };
+
+const styleDragOver = (isDragOver: boolean) => ({
+	backgroundColor: isDragOver ? 'var(--card-bg2-color)' : undefined,
+	border: isDragOver
+		? '2px dashed var(--card-focus-ring-color)'
+		: '2px dashed var(--card-border-color)',
+	transition: 'all 0.15s ease',
+});
 
 const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'] as const;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -31,9 +32,11 @@ const validateFile = (file: File): null | string => {
 	if (!file.type.startsWith('image/')) {
 		return 'Bitte wähle eine Bilddatei';
 	}
+
 	if (file.size > MAX_FILE_SIZE) {
 		return `Datei ist zu groß (max. ${MAX_FILE_SIZE / 1024 / 1024}MB)`;
 	}
+
 	return null;
 };
 
@@ -41,12 +44,20 @@ const validateFilename = (filename: string): null | string => {
 	if (GENERIC_FILENAME_PATTERN.test(filename)) {
 		return 'Bitte einen beschreibenden Dateinamen eingeben (vermeide generische Namen wie IMG_1234)';
 	}
+
 	return null;
 };
 
+const sanitizeFilename = (name: string): string =>
+	name
+		.trim()
+		.replaceAll(/[^\p{L}\p{N}-]/gu, '-') // \p{L} = letters, \p{N} = numbers
+		.replaceAll(/(-)+/g, '-') // Collapse multiple dashes
+		.replaceAll(/(^-|-$)/g, '');
+
 type NamedImageInputProps = ObjectInputProps<ImageValue, ObjectSchemaType>;
 
-export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
+export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Element {
 	const { onChange, renderDefault, schemaType, value } = props;
 	const client = useClient({ apiVersion });
 	const fileInputReference = useRef<HTMLInputElement>(null);
@@ -88,7 +99,9 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 	}, []);
 
 	const handleConfirmUpload = useCallback(async () => {
-		if (!pendingFile || !filename.trim()) return;
+		if (!pendingFile || !filename.trim()) {
+			return;
+		}
 
 		// Validate filename before upload
 		const filenameError = validateFilename(filename.trim());
@@ -102,17 +115,10 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 
 		try {
 			const extension = pendingFile.name.split('.').pop()?.toLowerCase();
-			if (!extension || !(ALLOWED_EXTENSIONS as ReadonlyArray<string>).includes(extension)) {
+			if (!extension || !(ALLOWED_EXTENSIONS as readonly string[]).includes(extension)) {
 				setUploadError('Nicht unterstütztes Dateiformat');
 				return;
 			}
-			const sanitizeFilename = (name: string): string => {
-				return name
-					.trim()
-					.replaceAll(/[^\p{L}\p{N}-]/gu, '-') // \p{L} = letters, \p{N} = numbers
-					.replaceAll(/(-)+/g, '-') // Collapse multiple dashes
-					.replaceAll(/(^-|-$)/g, ''); // Remove leading/trailing dashes
-			};
 			const newFilename = `${sanitizeFilename(filename)}.${extension}`;
 
 			// Create a new file with the custom user-specified name
@@ -153,6 +159,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 	const handleKeyDown = useCallback(
 		(event: KeyboardEvent) => {
 			if (event.key === 'Enter' && filename.trim() && !isUploading) {
+				// oxlint-disable-next-line no-void
 				void handleConfirmUpload();
 			}
 		},
@@ -188,6 +195,10 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 			const nameWithoutExtension = file.name.replace(/\.[^/.]+$/, '');
 			setFilename(nameWithoutExtension);
 		}
+	}, []);
+
+	const handleFilenameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+		setFilename(event.currentTarget.value);
 	}, []);
 
 	const handleOpenMediaLibrary = useCallback(() => {
@@ -232,19 +243,13 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 				accept="image/*"
 				onChange={handleFileInputChange}
 				ref={fileInputReference}
-				style={{ display: 'none' }}
+				style={STYLE_HIDDEN}
 				type="file"
 			/>
 
 			{/* Dropzone area */}
 			<Card
-				style={{
-					backgroundColor: isDragOver ? 'var(--card-bg2-color)' : undefined,
-					border: isDragOver
-						? '2px dashed var(--card-focus-ring-color)'
-						: '2px dashed var(--card-border-color)',
-					transition: 'all 0.15s ease',
-				}}
+				style={styleDragOver(isDragOver)}
 				onDragLeave={handleDragLeave}
 				onDragOver={handleDragOver}
 				onDrop={handleDrop}
@@ -263,7 +268,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 							Bild hierher ziehen oder eine Option wählen
 						</Text>
 						{uploadError && !pendingFile && (
-							<Text size={1} style={{ color: 'var(--card-critical-fg-color)' }}>
+							<Text size={1} style={STYLE_TEXT_COLOR}>
 								{uploadError}
 							</Text>
 						)}
@@ -305,13 +310,13 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 									Originaler Dateiname: {pendingFile.name}
 								</Text>
 								{uploadError && (
-									<Text size={1} style={{ color: 'var(--card-critical-fg-color)' }}>
+									<Text size={1} style={STYLE_TEXT_COLOR}>
 										{uploadError}
 									</Text>
 								)}
 								<TextInput
 									disabled={isUploading}
-									onChange={(event) => setFilename(event.currentTarget.value)}
+									onChange={handleFilenameChange}
 									onKeyDown={handleKeyDown}
 									placeholder="Beschreibenden Dateinamen eingeben"
 									value={filename}
@@ -352,7 +357,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>) {
 					onClose={handleCloseMediaLibrary}
 					onSelect={handleMediaSelect}
 					schemaType={schemaType}
-					selectedAssets={[]}
+					selectedAssets={EMPTY_ARRAY}
 					selectionType="single"
 				/>
 			)}

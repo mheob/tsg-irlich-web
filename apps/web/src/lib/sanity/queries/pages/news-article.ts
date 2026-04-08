@@ -7,7 +7,7 @@ import { featuredImage, meta } from '@/lib/sanity/queries';
  *
  * @returns The news article hero
  */
-export const newsArticleHeroQuery = defineQuery(`
+const newsArticleHeroQuery = defineQuery(`
 	*[_type == 'news-article-page'][0] {
 		title,
 		subtitle,
@@ -20,7 +20,7 @@ export const newsArticleHeroQuery = defineQuery(`
  * @param slug - The slug of the news article
  * @returns The news article content
  */
-export const newsArticleContentQuery = defineQuery(`
+const newsArticleContentQuery = defineQuery(`
 	*[_type == 'news.article' && slug.current == $slug][0] {
 		author -> {
 			email,
@@ -56,3 +56,5 @@ export const newsArticleContentQuery = defineQuery(`
 		title,
 	}
 `);
+
+export { newsArticleHeroQuery, newsArticleContentQuery };

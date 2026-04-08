@@ -1,8 +1,11 @@
+// oxlint-disable import/no-namespace
+
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
-import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithoutRef, ComponentRef, RefObject } from 'react';
 
-export function ScrollBar({
+import { cn } from '@tsgi-web/shared';
+
+function ScrollBar({
 	className,
 	orientation = 'vertical',
 	ref,
@@ -22,12 +25,12 @@ export function ScrollBar({
 			ref={ref}
 			{...props}
 		>
-			<ScrollAreaPrimitive.ScrollAreaThumb className="bg-border relative flex-1 rounded-full" />
+			<ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
 		</ScrollAreaPrimitive.ScrollAreaScrollbar>
 	);
 }
 
-export function ScrollArea({
+function ScrollArea({
 	children,
 	className,
 	ref,
@@ -41,7 +44,7 @@ export function ScrollArea({
 			ref={ref}
 			{...props}
 		>
-			<ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
+			<ScrollAreaPrimitive.Viewport className="size-full rounded-[inherit]">
 				{children}
 			</ScrollAreaPrimitive.Viewport>
 			<ScrollBar />
@@ -49,3 +52,5 @@ export function ScrollArea({
 		</ScrollAreaPrimitive.Root>
 	);
 }
+
+export { ScrollArea, ScrollBar };

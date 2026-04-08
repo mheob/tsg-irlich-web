@@ -8,16 +8,16 @@
  *
  */
 
-import {
-	type PortableTextBlock,
-	type PortableTextComponent,
-	type PortableTextComponents,
-	type PortableTextListComponent,
-	type PortableTextListItemComponent,
-	type PortableTextMarkComponent,
-	PortableText as PortableTextPrimitive,
-	type PortableTextProps as PortableTextPrimitiveProps,
+import type {
+	PortableTextBlock,
+	PortableTextComponent,
+	PortableTextComponents,
+	PortableTextListComponent,
+	PortableTextListItemComponent,
+	PortableTextMarkComponent,
+	PortableTextProps as PortableTextPrimitiveProps,
 } from 'next-sanity';
+import { PortableText as PortableTextPrimitive } from 'next-sanity';
 import NextLink from 'next/link';
 
 const Blockquote: PortableTextComponent<PortableTextBlock> = ({ children }) => (
@@ -27,12 +27,12 @@ const Blockquote: PortableTextComponent<PortableTextBlock> = ({ children }) => (
 function HeadingAnchorLink({ value }: Readonly<{ value: PortableTextBlock }>) {
 	return (
 		<a
-			className="absolute start-0 top-0 bottom-0 -ml-6 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
+			className="absolute inset-y-0 inset-s-0 -ml-6 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
 			href={`#${value?._key}`}
 			title="Zum Abschnitt springen"
 		>
 			<svg
-				className="h-4 w-4"
+				className="size-4"
 				fill="none"
 				stroke="currentColor"
 				viewBox="0 0 24 24"
@@ -77,7 +77,7 @@ const ListItem: PortableTextListItemComponent = ({ children }) => (
 
 const ExternalLink: PortableTextMarkComponent = ({ children, value }) => (
 	<a
-		aria-label={`${children?.toString() || 'Link'} (öffnet in neuem Tab)`} // NOSONAR
+		aria-label={`${children?.toString() || 'Link'} (öffnet in neuem Tab)`}
 		href={value?.href}
 		rel="noopener noreferrer"
 		target="_blank"
@@ -88,13 +88,17 @@ const ExternalLink: PortableTextMarkComponent = ({ children, value }) => (
 
 const InternalLink: PortableTextMarkComponent = ({ children, value }) => {
 	const slug = value?.link && typeof value.link.slug === 'string' ? value.link.slug : undefined;
-	if (!slug) return children;
+	if (!slug) {
+		return children;
+	}
 	return <NextLink href={`/${slug}`}>{children}</NextLink>;
 };
 
 const Link: PortableTextMarkComponent = ({ children, value }) => {
 	const href = value?.href || value?.url;
-	if (!href || typeof href !== 'string') return children;
+	if (!href || typeof href !== 'string') {
+		return children;
+	}
 
 	// Regex finds starting with `/` or `https://` or `http://`, an optional subdomain and then `tsg-irlich.de`
 	const internalLinkRegex = /^(?:\/|https?:\/\/(?:[a-z0-9-]+\.)?tsg-irlich\.de(?:\/|$))/i;
@@ -105,7 +109,7 @@ const Link: PortableTextMarkComponent = ({ children, value }) => {
 
 	return (
 		<a
-			aria-label={`${children?.toString() || 'Link'} (öffnet in neuem Tab)`} // NOSONAR
+			aria-label={`${children?.toString() || 'Link'} (öffnet in neuem Tab)`}
 			href={href}
 			rel="noopener noreferrer"
 			target="_blank"
@@ -115,33 +119,35 @@ const Link: PortableTextMarkComponent = ({ children, value }) => {
 	);
 };
 
-export type PortableTextValue = PortableTextPrimitiveProps['value'];
+type PortableTextValue = PortableTextPrimitiveProps['value'];
 
 interface PortableTextProps {
 	value: PortableTextValue;
 }
 
-export function PortableText({ value }: Readonly<PortableTextProps>) {
-	const components: PortableTextComponents = {
-		block: {
-			blockquote: Blockquote,
-			h2: H2WithAnchor,
-			h3: H3WithAnchor,
-		},
-		list: {
-			bullet: BulletList,
-			number: NumberList,
-		},
-		listItem: {
-			bullet: ListItem,
-			number: ListItem,
-		},
-		marks: {
-			externalLink: ExternalLink,
-			internalLink: InternalLink,
-			link: Link,
-		},
-	};
+const components: PortableTextComponents = {
+	block: {
+		blockquote: Blockquote,
+		h2: H2WithAnchor,
+		h3: H3WithAnchor,
+	},
+	list: {
+		bullet: BulletList,
+		number: NumberList,
+	},
+	listItem: {
+		bullet: ListItem,
+		number: ListItem,
+	},
+	marks: {
+		externalLink: ExternalLink,
+		internalLink: InternalLink,
+		link: Link,
+	},
+};
 
+function PortableText({ value }: Readonly<PortableTextProps>) {
 	return <PortableTextPrimitive components={components} value={value} />;
 }
+
+export { PortableText, type PortableTextValue };

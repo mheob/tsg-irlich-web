@@ -7,12 +7,14 @@ import { urlForImage } from '@/lib/sanity/utils';
 import type { NewsArticleContentQueryResult } from '@/types/sanity.types';
 import { getLocaleDate } from '@/utils/time';
 
+const AUTHOR_IMAGE_SIZE = 64;
+
 interface AuthorProps extends ComponentPropsWithoutRef<'section'> {
 	article: NonNullable<NewsArticleContentQueryResult>;
 }
 
 export function Author({ article, ...props }: Readonly<AuthorProps>) {
-	const authorImageSource = urlForImage(article.author.image, 64);
+	const authorImageSource = urlForImage(article.author.image, AUTHOR_IMAGE_SIZE);
 
 	return (
 		<section {...props}>
@@ -20,6 +22,7 @@ export function Author({ article, ...props }: Readonly<AuthorProps>) {
 
 			<div className="mt-3 flex items-center gap-4">
 				{authorImageSource && (
+					// oxlint-disable-next-line no-warning-comments
 					// TODO: use shadcn's Avatar component
 					<Image
 						alt={article.author.image.alt}

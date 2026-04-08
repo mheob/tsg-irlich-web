@@ -1,14 +1,16 @@
-export const contactPersons = {
-	title: 'Ansprechpartner',
+const contactPersons = {
 	name: 'contactPersons',
+	title: 'Ansprechpartner',
 };
 
-export const departments = {
-	title: 'Sportangebote',
+const departments = {
 	name: 'departments',
+	title: 'Sportangebote',
 };
 
-export const stats = {
-	title: 'Stats',
+const stats = {
 	name: 'stats',
+	title: 'Stats',
 };
+
+export { contactPersons, departments, stats };

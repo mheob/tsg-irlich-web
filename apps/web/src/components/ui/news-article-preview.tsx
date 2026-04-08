@@ -1,12 +1,15 @@
-import { cn } from '@tsgi-web/shared';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { cn } from '@tsgi-web/shared';
 
 import { urlForImage } from '@/lib/sanity/utils';
 import type { NewsArticlesQueryResult } from '@/types/sanity.types';
 import { getLocaleDate } from '@/utils/time';
 
 import { badgeVariants } from './badge';
+
+const IMAGE_SIZE = { height: 450, width: 800 };
 
 interface NewsArticlePreviewProps {
 	article: NewsArticlesQueryResult[number];
@@ -17,11 +20,11 @@ export function NewsArticlePreview({
 	article: { author, categories, excerpt, featuredImage, publishedAt, slug, title },
 	columns = 1,
 }: Readonly<NewsArticlePreviewProps>) {
-	const featuredImageSource = urlForImage(featuredImage, 450, 800);
+	const featuredImageSource = urlForImage(featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
 
 	return (
 		<article
-			className={cn('bg-background group flex flex-col rounded-xl shadow-lg', {
+			className={cn('group flex flex-col rounded-xl bg-background shadow-lg', {
 				'md:grid md:grid-cols-2': columns === 2,
 			})}
 		>
@@ -43,7 +46,7 @@ export function NewsArticlePreview({
 			)}
 
 			<div className="flex flex-col gap-4 p-5">
-				<div className="text-primary text-sm md:text-lg">
+				<div className="text-sm text-primary md:text-lg">
 					<span>
 						{author.firstName} {author.lastName}
 					</span>
@@ -61,7 +64,7 @@ export function NewsArticlePreview({
 					</h2>
 				</Link>
 
-				<p className="text-muted-foreground line-clamp-3 h-[3lh] text-sm md:text-xl">{excerpt}</p>
+				<p className="line-clamp-3 h-[3lh] text-sm text-muted-foreground md:text-xl">{excerpt}</p>
 
 				<div className="flex gap-4">
 					{categories?.map((category) => (

@@ -30,6 +30,8 @@
 		},
 		"extract-types": {},
 		"lint": {},
+		"lint:fix": {},
+		"lint:github": {},
 		"studio#build": {
 			"dependsOn": ["^build"],
 			"env": [

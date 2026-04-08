@@ -8,10 +8,13 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog';
-import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
+import { PortableText } from '@/components/ui/portable-text';
+import type { PortableTextValue } from '@/components/ui/portable-text';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { ImageCard } from '@/types/sanity.types';
+
+const IMAGE_SIZE = { height: 300, width: 560 };
 
 interface ChronicleCardProps {
 	category: ImageCard;
@@ -20,10 +23,10 @@ interface ChronicleCardProps {
 export function ChronicleCard({
 	category: { description, excerpt, image, title },
 }: Readonly<ChronicleCardProps>) {
-	const imageSource = urlForImage(image, 300, 560);
+	const imageSource = urlForImage(image, IMAGE_SIZE.height, IMAGE_SIZE.width);
 
 	return (
-		<article className="bg-background group grid rounded-xl shadow-lg">
+		<article className="group grid rounded-xl bg-background shadow-lg">
 			<div>
 				<div className="relative block h-60 w-full overflow-hidden rounded-t-xl">
 					{imageSource && (
@@ -39,7 +42,7 @@ export function ChronicleCard({
 
 				<div className="px-4 md:px-8">
 					<h2 className="pt-4 text-xl md:pt-8 md:text-3xl">{title}</h2>
-					<p className="text-muted-foreground pt-4 text-sm md:pt-8 md:text-lg">{excerpt}</p>
+					<p className="pt-4 text-sm text-muted-foreground md:pt-8 md:text-lg">{excerpt}</p>
 				</div>
 			</div>
 
@@ -52,10 +55,11 @@ export function ChronicleCard({
 						<DialogTitle className="text-lg tracking-normal md:text-2xl">{title}</DialogTitle>
 						<ScrollArea className="max-h-[calc(100vh-200px)]">
 							<DialogDescription
-								className="prose-sm lg:prose mt-10 text-base tracking-normal md:text-lg"
+								className="prose-sm mt-10 text-base tracking-normal md:text-lg lg:prose"
 								asChild
 							>
 								<div>
+									{/* oxlint-disable-next-line react/jsx-max-depth*/}
 									<PortableText value={description.text as PortableTextValue} />
 								</div>
 							</DialogDescription>

@@ -1,5 +1,6 @@
-import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import styles from './section-header.module.css';
 
@@ -27,10 +28,9 @@ export function SectionHeader({
 	return (
 		<header
 			className={cn(
-				isCentered ? 'text-center' : '',
-				isCenteredOnDesktop
-					? 'md:text-center [&_p]:md:mx-auto'
-					: 'md:text-start [&_p]:md:text-start',
+				{ 'text-center': isCentered },
+				{ 'md:text-center [&_p]:md:mx-auto': isCenteredOnDesktop },
+				{ 'md:text-start [&_p]:md:text-start': !isCenteredOnDesktop },
 				'[&_p]:max-w-7xl [&_p]:md:mt-6 md:[&_p]:text-xl',
 				className,
 			)}
@@ -41,7 +41,7 @@ export function SectionHeader({
 						isCentered ? 'mx-auto' : '',
 						isCenteredOnDesktop ? 'md:mx-auto' : 'md:mx-0',
 						styles.subTitle,
-						'subTitle',
+						'sub-title',
 					)}
 				>
 					{subTitle}

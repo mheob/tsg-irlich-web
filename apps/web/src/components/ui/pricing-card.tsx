@@ -1,8 +1,8 @@
-/* cspell:words mitgliedschaft */
-import { cn } from '@tsgi-web/shared';
 import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import type { HTMLAttributes } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import type { Home } from '@/types/sanity.types';
 
@@ -40,7 +40,7 @@ export function PricingCard({
 			{isHighlighted && (
 				<div
 					className={cn(
-						'bg-secondary flex h-10 items-center justify-center text-xs font-bold',
+						'flex h-10 items-center justify-center bg-secondary text-xs font-bold',
 						'origin-center translate-x-[calc(50%-1rem)] translate-y-[calc(50%-1.5rem)] rotate-45',
 					)}
 				>
@@ -50,7 +50,7 @@ export function PricingCard({
 
 			<div className={cn({ 'md:-mt-10': isHighlighted })}>
 				<header className="flex items-center gap-4">
-					<div className="bg-primary-light/15 text-primary rounded-2xl p-4">{children}</div>
+					<div className="rounded-2xl bg-primary-light/15 p-4 text-primary">{children}</div>
 
 					<div>
 						<p className="text-lg">{subtitle}</p>
@@ -67,7 +67,7 @@ export function PricingCard({
 					<ul className="mt-4 md:text-lg">
 						{benefits.map((benefit) => (
 							<li className="flex items-start gap-2" key={benefit}>
-								<CheckCircle className="text-primary-light mt-1 h-5 w-5 min-w-6" /> {benefit}
+								<CheckCircle className="mt-1 size-5 min-w-6 text-primary-light" /> {benefit}
 							</li>
 						))}
 					</ul>

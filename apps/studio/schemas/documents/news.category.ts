@@ -6,19 +6,17 @@ import { slugField, titleField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
 const newsCategory = defineType({
-	title: 'News-Kategorie',
-	name: 'news.category',
-	type: 'document',
-	icon: RiBookletLine,
-	groups: [general, meta],
 	fields: [
-		// general
+		// General
 		titleField,
 		slugField,
 
-		// meta
+		// Meta
 		metaField,
 	],
+	groups: [general, meta],
+	icon: RiBookletLine,
+	name: 'news.category',
 	preview: {
 		prepare: ({ title }) => ({ title }),
 		select: {
@@ -26,6 +24,8 @@ const newsCategory = defineType({
 			title: 'title',
 		},
 	},
+	title: 'News-Kategorie',
+	type: 'document',
 });
 
 export default newsCategory;

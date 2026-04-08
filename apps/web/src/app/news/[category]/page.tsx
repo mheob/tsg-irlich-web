@@ -1,12 +1,6 @@
 import type { Metadata } from 'next';
 
 import { ContactPersons } from '@/components/section/contact-persons';
-import type {
-	NewsArticlesPaginatedForCategoryQueryResult,
-	NewsArticlesTotalForCategoryQueryResult,
-	NewsCategoryQueryResult,
-	NewsOverviewCategoryPageQueryResult,
-} from '@/types/sanity.types.generated';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -17,6 +11,12 @@ import {
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
 import { newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
+import type {
+	NewsArticlesPaginatedForCategoryQueryResult,
+	NewsArticlesTotalForCategoryQueryResult,
+	NewsCategoryQueryResult,
+	NewsOverviewCategoryPageQueryResult,
+} from '@/types/sanity.types.generated';
 
 import newsOverviewImage from '../_assets/news-overview.webp';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
@@ -24,6 +24,11 @@ import { getOpenGraphImageOptions } from '../_shared/utils';
 
 const START_INDEX = 0;
 const ITEMS_PER_PAGE = 9;
+
+const HERO_IMAGE = {
+	alt: 'Ein Handy und ein Kugelschreiber auf einer Zeitung sollen eine Nachrichtenübersicht darstellen.',
+	src: newsOverviewImage,
+};
 
 function getCurrentPage(page?: string | string[]): {
 	currentPage: number;
@@ -46,7 +51,9 @@ export async function generateMetadata({
 	const category = await client.fetch<NewsCategoryQueryResult>(newsCategoryQuery, {
 		slug: categoryParameter,
 	});
-	if (!category) return {};
+	if (!category) {
+		return {};
+	}
 
 	const description = category.meta?.metaDescription ?? '';
 	const image = category.meta?.openGraphImage;
@@ -93,14 +100,7 @@ export default async function NewsCategoryPage({
 
 	return (
 		<>
-			<Hero
-				image={{
-					alt: 'Ein Handy und ein Kugelschreiber auf einer Zeitung sollen eine Nachrichtenübersicht darstellen.',
-					src: newsOverviewImage,
-				}}
-				subTitle={page.subtitle}
-				title={category.title}
-			/>
+			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={category.title} />
 
 			<section className="container mx-auto py-10 md:py-28">
 				<SectionHeader
@@ -120,11 +120,13 @@ export default async function NewsCategoryPage({
 					isCentered
 				/>
 
-				<LatestNewsPagination
-					articles={paginatedArticles ?? []}
-					currentPage={currentPage}
-					hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
-				/>
+				{paginatedArticles && (
+					<LatestNewsPagination
+						articles={paginatedArticles}
+						currentPage={currentPage}
+						hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
+					/>
+				)}
 			</section>
 
 			<ContactPersons {...page.content.contactPersonsSection} />

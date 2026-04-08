@@ -1,3 +1,5 @@
+// oxlint-disable no-magic-numbers
+
 import { RiLinksLine, RiSettings5Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
@@ -6,26 +8,11 @@ import { meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/fields/meta';
 
 const siteSettings = defineType({
-	title: 'Generelle Einstellungen',
-	name: 'site-settings',
-	type: 'document',
-	icon: RiSettings5Line,
-	groups: [
-		meta,
-		{ name: 'contact', title: 'Kontakt' },
-		{ name: 'misc', title: 'Misc' },
-		{ name: 'navigation', title: 'Navigation' },
-		{ name: 'social', title: 'Social' },
-	],
 	fields: [
-		// meta
+		// Meta
 		metaField,
 
 		defineField({
-			title: 'Metadata Base',
-			name: 'metadataBase',
-			type: 'url',
-			group: 'meta',
 			description: (
 				<a
 					href="https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase"
@@ -35,28 +22,28 @@ const siteSettings = defineType({
 					Mehr Informationen
 				</a>
 			),
+			group: 'meta',
+			name: 'metadataBase',
+			title: 'Metadata Base',
+			type: 'url',
 		}),
 
-		// contact
+		// Contact
 		defineField({
-			title: 'Kontakt',
-			name: 'contact',
-			type: 'object',
-			group: 'contact',
 			fields: [
 				defineField({
-					title: 'Adresse',
-					name: 'address',
-					type: 'string',
 					description: 'Adresse (Straße Hausnummer, Postleitzahl Ort)',
+					name: 'address',
+					title: 'Adresse',
+					type: 'string',
 					validation: (Rule) => [Rule.required().error('Die Adresse ist erforderlich')],
 				}),
 
 				defineField({
-					title: 'Telefonnummer',
-					name: 'phone',
-					type: 'string',
 					description: 'Telefonnummer',
+					name: 'phone',
+					title: 'Telefonnummer',
+					type: 'string',
 					validation: (Rule) => [
 						Rule.required().error('Die Telefonnummer ist erforderlich'),
 						Rule.regex(phoneFieldRegex).error(
@@ -66,36 +53,35 @@ const siteSettings = defineType({
 				}),
 
 				defineField({
-					title: 'E-Mail',
-					name: 'email',
-					type: 'string',
 					description: 'E-Mail',
+					name: 'email',
+					title: 'E-Mail',
+					type: 'string',
 					validation: (Rule) => [Rule.required().error('Die E-Mail ist erforderlich')],
 				}),
 			],
+			group: 'contact',
+			name: 'contact',
+			title: 'Kontakt',
+			type: 'object',
 		}),
 
-		// misc
+		// Misc
 		defineField({
-			title: 'Newsletter',
-			name: 'newsletter',
-			type: 'object',
-			icon: RiLinksLine,
-			group: 'misc',
 			fields: [
 				defineField({
-					title: 'Titel',
-					name: 'title',
-					type: 'string',
 					description: 'Titel des Newsletters',
+					name: 'title',
+					title: 'Titel',
+					type: 'string',
 					validation: (Rule) => [Rule.required().error('Der "Newsletter Titel" ist erforderlich')],
 				}),
 
 				defineField({
-					title: 'Button Text',
-					name: 'cta',
-					type: 'string',
 					description: 'Text für den Newsletter Absende-Button',
+					name: 'cta',
+					title: 'Button Text',
+					type: 'string',
 					validation: (Rule) => [
 						Rule.required()
 							.min(3)
@@ -106,43 +92,59 @@ const siteSettings = defineType({
 					],
 				}),
 			],
+			group: 'misc',
+			icon: RiLinksLine,
+			name: 'newsletter',
+			title: 'Newsletter',
+			type: 'object',
 		}),
 
-		// navigation
+		// Navigation
 		defineField({
-			title: 'Hauptmenü',
+			description: 'Seiten und/oder Links für die Hauptnavigation hinzufügen',
+			group: 'navigation',
 			name: 'mainNavigation',
-			type: 'array',
 			of: [
 				{ title: 'Internal Link', type: 'internalLink' },
 				{ title: 'External Link', type: 'externalLink' },
 			],
-			description: 'Seiten und/oder Links für die Hauptnavigation hinzufügen',
-			group: 'navigation',
+			title: 'Hauptmenü',
+			type: 'array',
 			validation: (Rule) => Rule.required().error('Das Hauptmenü ist erforderlich'),
 		}),
 
 		defineField({
-			title: 'Rechtliches Menü',
-			name: 'legalNavigation',
-			type: 'array',
-			of: [{ title: 'Internal Link', type: 'internalLink' }],
 			description: 'Seiten für das rechtliches Menü hinzufügen',
 			group: 'navigation',
+			name: 'legalNavigation',
+			of: [{ title: 'Internal Link', type: 'internalLink' }],
+			title: 'Rechtliches Menü',
+			type: 'array',
 		}),
 
-		// social
+		// Social
 		defineField({
-			title: 'Social Media',
-			name: 'socialFields',
-			type: 'socialFields',
 			description: 'Social media',
 			group: 'social',
+			name: 'socialFields',
+			title: 'Social Media',
+			type: 'socialFields',
 		}),
 	],
+	groups: [
+		meta,
+		{ name: 'contact', title: 'Kontakt' },
+		{ name: 'misc', title: 'Misc' },
+		{ name: 'navigation', title: 'Navigation' },
+		{ name: 'social', title: 'Social' },
+	],
+	icon: RiSettings5Line,
+	name: 'site-settings',
 	preview: {
 		prepare: () => ({ title: 'Generelle Einstellungen' }),
 	},
+	title: 'Generelle Einstellungen',
+	type: 'document',
 	validation: (Rule) => Rule.required().error('Die generellen Einstellungen sind erforderlich'),
 });
 

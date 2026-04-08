@@ -1,10 +1,11 @@
-import { cn } from '@tsgi-web/shared';
 import type { VariantProps } from 'class-variance-authority';
 import type { ComponentProps } from 'react';
 
+import { cn } from '@tsgi-web/shared';
+
 import { alertVariants } from './variants';
 
-export function Alert({
+function Alert({
 	className,
 	variant,
 	...props
@@ -19,7 +20,7 @@ export function Alert({
 	);
 }
 
-export function AlertTitle({ className, ...props }: ComponentProps<'h5'>) {
+function AlertTitle({ className, ...props }: ComponentProps<'h5'>) {
 	return (
 		<h5
 			className={cn(
@@ -34,7 +35,7 @@ export function AlertTitle({ className, ...props }: ComponentProps<'h5'>) {
 	);
 }
 
-export function AlertDescription({ className, ...props }: ComponentProps<'div'>) {
+function AlertDescription({ className, ...props }: ComponentProps<'div'>) {
 	return (
 		<div
 			className={cn(
@@ -46,3 +47,5 @@ export function AlertDescription({ className, ...props }: ComponentProps<'div'>)
 		/>
 	);
 }
+
+export { Alert, AlertTitle, AlertDescription };

@@ -1,5 +1,6 @@
-import { cn } from '@tsgi-web/shared';
 import type { ComponentProps } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import { Counter } from '@/components/ui/counter';
 import type { Stats as StatsProperties } from '@/types/sanity.types';

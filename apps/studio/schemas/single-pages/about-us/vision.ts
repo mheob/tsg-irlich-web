@@ -1,23 +1,20 @@
+// oxlint-disable no-magic-numbers
+
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 export const visionField = defineField({
-	title: 'Vision',
-	name: 'visionSection',
-	type: 'object',
-	icon: RiLinksLine,
-	group: 'vision',
 	fields: [
 		...getDefaultPageSectionFieldsWithGroup(),
 
 		defineField({
-			title: 'Button Text zum Öffnen der Lange Vision',
-			name: 'ctaLongVision',
-			type: 'string',
 			description:
 				'Text, der auf dem Call to Action Button angezeigt wird, um die Lange Vision zu öffnen.',
+			name: 'ctaLongVision',
+			title: 'Button Text zum Öffnen der Lange Vision',
+			type: 'string',
 			validation: (Rule) => [
 				Rule.required()
 					.min(5)
@@ -31,18 +28,23 @@ export const visionField = defineField({
 		}),
 
 		defineField({
-			title: 'Titel der Lange Vision',
 			name: 'longVisionTitle',
+			title: 'Titel der Lange Vision',
 			type: 'string',
 			validation: (Rule) => [Rule.required().error('Der Titel der Lange Vision ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Lange Vision',
 			name: 'longVision',
+			title: 'Lange Vision',
 			type: 'blockContent',
 			validation: (Rule) => [Rule.required().error('Lange Vision ist erforderlich')],
 		}),
 	],
+	group: 'vision',
+	icon: RiLinksLine,
+	name: 'visionSection',
+	title: 'Vision',
+	type: 'object',
 	validation: (Rule) => [Rule.required().error('Vision ist erforderlich')],
 });

@@ -2,11 +2,13 @@
 	"name": "web",
 	"version": "0.1.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"build": "bun --bun next build",
 		"dev": "bun --bun next dev",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
+		"lint:github": "oxlint --format=github",
 		"start": "bun --bun next start",
 		"typecheck": "tsc --noEmit",
 		"typegen:routes": "bun --bun next typegen && tsc --noEmit",
@@ -36,7 +38,7 @@
 		"motion": "^12.38.0",
 		"next": "^16.2.2",
 		"next-safe-action": "^8.4.0",
-		"next-sanity": "^12.2.1",
+		"next-sanity": "^12.2.2",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
 		"react-hook-form": "^7.72.1",
@@ -53,7 +55,7 @@
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"oxlint": "^1.59.0",
-		"postcss": "^8.5.8",
+		"postcss": "^8.5.9",
 		"postcss-load-config": "^6.0.1",
 		"typescript": "^5.9.3"
 	}

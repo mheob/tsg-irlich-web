@@ -1,15 +1,13 @@
+// oxlint-disable no-magic-numbers
+
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 const stats = defineField({
-	title: 'Statistiken',
-	name: 'stats',
-	type: 'object',
-	icon: RiLinksLine,
 	fields: [
 		defineField({
-			title: 'Beschriftung',
 			name: 'title',
+			title: 'Beschriftung',
 			type: 'string',
 			validation: (Rule) => [
 				Rule.required().min(2).error('Die Beschriftung muss mindestens 2 Zeichen lang sein'),
@@ -17,22 +15,26 @@ const stats = defineField({
 			],
 		}),
 		defineField({
-			title: 'Präfix (optional, z.B. ">")',
 			name: 'prefix',
+			title: 'Präfix (optional, z.B. ">")',
 			type: 'string',
 		}),
 		defineField({
-			title: 'Wert',
 			name: 'value',
+			title: 'Wert',
 			type: 'number',
 			validation: (Rule) => [Rule.required().error('Der Wert ist erforderlich')],
 		}),
 		defineField({
-			title: 'Suffix (optional, z.B. "+")',
 			name: 'suffix',
+			title: 'Suffix (optional, z.B. "+")',
 			type: 'string',
 		}),
 	],
+	icon: RiLinksLine,
+	name: 'stats',
+	title: 'Statistiken',
+	type: 'object',
 	validation: (Rule) => [Rule.required().error('Die Statistik ist erforderlich')],
 });
 

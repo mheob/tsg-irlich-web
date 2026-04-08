@@ -5,7 +5,7 @@ interface FormItemContextValue {
 	id: string;
 }
 
-export const FormItemContext = createContext<FormItemContextValue>({} as FormItemContextValue);
+const FormItemContext = createContext<FormItemContextValue>({} as FormItemContextValue);
 
 interface FormFieldContextValue<
 	TFieldValues extends FieldValues = FieldValues,
@@ -14,4 +14,6 @@ interface FormFieldContextValue<
 	name: TName;
 }
 
-export const FormFieldContext = createContext<FormFieldContextValue>({} as FormFieldContextValue);
+const FormFieldContext = createContext<FormFieldContextValue>({} as FormFieldContextValue);
+
+export { FormItemContext, FormFieldContext };

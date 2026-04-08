@@ -34,13 +34,17 @@ interface FeedbackTypeFieldProps {
 export function FeedbackTypeField({ form }: Readonly<FeedbackTypeFieldProps>) {
 	return (
 		<FormField
+			// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Art des Feedbacks</FormLabel>
 					<FormControl>
 						<ToggleGroup
+							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onValueChange={(value) => {
-								if (value) field.onChange(value);
+								if (value) {
+									field.onChange(value);
+								}
 							}}
 							className="flex-col items-start justify-start sm:flex-row sm:items-center sm:gap-4"
 							defaultValue="bug"

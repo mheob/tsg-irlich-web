@@ -15,11 +15,13 @@ import type { GroupDance } from '@/types/sanity.types';
  * getInitials('', '') // Returns '??'
  * ```
  */
-export function getInitials(firstName: string, lastName: string): string {
+function getInitials(firstName: string, lastName: string): string {
 	const sanitizedFirst = (firstName || '').trim();
 	const sanitizedLast = (lastName || '').trim();
 
-	if (!sanitizedFirst && !sanitizedLast) return '??';
+	if (!sanitizedFirst && !sanitizedLast) {
+		return '??';
+	}
 
 	return `${sanitizedFirst.charAt(0) || '?'}${sanitizedLast.charAt(0) || '?'}`.toUpperCase();
 }
@@ -50,20 +52,23 @@ interface ImageItem {
  * // items[0].src is a display-size image, items[0].srcFull is a full-res image
  * ```
  */
-export function getImageItems(
-	images: GroupDance['images'],
-	height?: number,
-	width?: number,
-): Array<ImageItem> {
-	if (!images || images.length === 0) return [];
+function getImageItems(images: GroupDance['images'], height?: number, width?: number): ImageItem[] {
+	const FULL_IMAGE_SIZE = { height: 1440, width: 2560 };
+
+	if (!images || images.length === 0) {
+		return [];
+	}
 
 	const items = [];
 	for (const image of images) {
 		const source = urlForImage(image, height, width);
-		const sourceFull = urlForImage(image, 1440, 2560);
-		if (!source || !sourceFull) continue;
-		items.push({ image, src: source, srcFull: sourceFull });
+		const sourceFull = urlForImage(image, FULL_IMAGE_SIZE.height, FULL_IMAGE_SIZE.width);
+		if (source && sourceFull) {
+			items.push({ image, src: source, srcFull: sourceFull });
+		}
 	}
 
 	return items;
 }
+
+export { getInitials, getImageItems };

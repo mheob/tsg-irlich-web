@@ -1,4 +1,4 @@
-export const DOSB_ICONS = [
+const DOSB_ICONS = [
 	'Badminton',
 	'Bodenturnen',
 	'Cheerleading',
@@ -17,6 +17,8 @@ export const DOSB_ICONS = [
 	'Wandern',
 	'Yoga',
 ] as const;
-export type DosbIconName = (typeof DOSB_ICONS)[number];
+type DosbIconName = (typeof DOSB_ICONS)[number];
 
-export const DOSB_ICONS_SET = new Set(DOSB_ICONS);
+const DOSB_ICONS_SET = new Set(DOSB_ICONS);
+
+export { DOSB_ICONS, type DosbIconName, DOSB_ICONS_SET };

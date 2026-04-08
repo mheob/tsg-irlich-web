@@ -1,20 +1,22 @@
+// oxlint-disable import/no-namespace
+
 'use client';
 
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
-import { cn } from '@tsgi-web/shared';
-import { type ComponentProps, useId, useMemo } from 'react';
+import { useId, useMemo } from 'react';
+import type { ComponentProps } from 'react';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
+
+import { cn } from '@tsgi-web/shared';
 
 import { Label } from '@/components/ui/label';
 
 import { FormFieldContext, FormItemContext } from './form-context';
 import { useFormField } from './use-form-field';
 
-export { FormProvider as Form } from 'react-hook-form';
-
-export const FormField = <
+const FormField = <
 	TFieldValues extends FieldValues = FieldValues,
 	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
@@ -29,7 +31,7 @@ export const FormField = <
 	);
 };
 
-export function FormItem({ className, ...props }: ComponentProps<'div'>) {
+function FormItem({ className, ...props }: ComponentProps<'div'>) {
 	const id = useId();
 	const value = useMemo(() => ({ id }), [id]);
 
@@ -40,7 +42,7 @@ export function FormItem({ className, ...props }: ComponentProps<'div'>) {
 	);
 }
 
-export function FormLabel({ className, ...props }: ComponentProps<typeof LabelPrimitive.Root>) {
+function FormLabel({ className, ...props }: ComponentProps<typeof LabelPrimitive.Root>) {
 	const { error, formItemId } = useFormField();
 
 	return (
@@ -54,12 +56,12 @@ export function FormLabel({ className, ...props }: ComponentProps<typeof LabelPr
 	);
 }
 
-export function FormControl({ ...props }: ComponentProps<typeof Slot>) {
+function FormControl({ ...props }: ComponentProps<typeof Slot>) {
 	const { error, formDescriptionId, formItemId, formMessageId } = useFormField();
 
 	return (
 		<Slot
-			aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
+			aria-describedby={error ? `${formDescriptionId} ${formMessageId}` : formDescriptionId}
 			aria-invalid={Boolean(error)}
 			data-slot="form-control"
 			id={formItemId}
@@ -68,12 +70,12 @@ export function FormControl({ ...props }: ComponentProps<typeof Slot>) {
 	);
 }
 
-export function FormDescription({ className, ...props }: ComponentProps<'p'>) {
+function FormDescription({ className, ...props }: ComponentProps<'p'>) {
 	const { formDescriptionId } = useFormField();
 
 	return (
 		<p
-			className={cn('text-muted-foreground text-sm', className)}
+			className={cn('text-sm text-muted-foreground', className)}
 			data-slot="form-description"
 			id={formDescriptionId}
 			{...props}
@@ -81,15 +83,16 @@ export function FormDescription({ className, ...props }: ComponentProps<'p'>) {
 	);
 }
 
-export function FormMessage({ className, ...props }: ComponentProps<'p'>) {
+function FormMessage({ className, ...props }: ComponentProps<'p'>) {
 	const { error, formMessageId } = useFormField();
 	const body = error ? String(error?.message ?? '') : props.children;
 	if (!body) {
 		return null;
 	}
+
 	return (
 		<p
-			className={cn('text-destructive-foreground px-3 text-sm', className)}
+			className={cn('px-3 text-sm text-destructive-foreground', className)}
 			data-slot="form-message"
 			id={formMessageId}
 			{...props}
@@ -98,3 +101,7 @@ export function FormMessage({ className, ...props }: ComponentProps<'p'>) {
 		</p>
 	);
 }
+
+export { FormProvider as Form } from 'react-hook-form';
+
+export { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage };

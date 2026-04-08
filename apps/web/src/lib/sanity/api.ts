@@ -1,4 +1,4 @@
-/* eslint-disable node/prefer-global/process */
+// oxlint-disable node/no-process-env
 
 /**
  * Asserts that a value is defined and returns it, throwing an error if undefined.
@@ -14,7 +14,9 @@
  * ```
  */
 function assertValue<T>(value: T | undefined, errorMessage: string): T {
-	if (!value) throw new Error(errorMessage);
+	if (!value) {
+		throw new Error(errorMessage);
+	}
 	return value;
 }
 
@@ -23,7 +25,7 @@ function assertValue<T>(value: T | undefined, errorMessage: string): T {
  * This is loaded from the `NEXT_PUBLIC_SANITY_DATASET` environment variable.
  * If the environment variable is missing, an error will be thrown.
  */
-export const dataset = assertValue(
+const dataset = assertValue(
 	process.env.NEXT_PUBLIC_SANITY_DATASET,
 	'Missing environment variable: NEXT_PUBLIC_SANITY_DATASET',
 );
@@ -33,7 +35,7 @@ export const dataset = assertValue(
  * This is loaded from the `NEXT_PUBLIC_SANITY_PROJECT_ID` environment variable.
  * If the environment variable is missing, an error will be thrown.
  */
-export const projectId = assertValue(
+const projectId = assertValue(
 	process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
 	'Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID',
 );
@@ -45,11 +47,13 @@ export const projectId = assertValue(
  *
  * @see https://www.sanity.io/docs/api-versioning for how versioning works
  */
-export const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? '2025-09-05';
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? '2025-09-05';
 
 /**
  * The URL of the Sanity Studio.
  * This is loaded from the `NEXT_PUBLIC_SANITY_STUDIO_URL` environment variable,
  * or defaults to 'http://localhost:3333' if the environment variable is missing.
  */
-export const studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ?? 'http://localhost:3333';
+const studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL ?? 'http://localhost:3333';
+
+export { dataset, projectId, apiVersion, studioUrl };

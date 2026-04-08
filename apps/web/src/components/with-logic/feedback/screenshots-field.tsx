@@ -17,7 +17,7 @@ export function ScreenshotsField({
 	return (
 		<FormItem>
 			<FormLabel>
-				Screenshots <span className="text-muted-foreground text-base md:text-lg">(optional)</span>
+				Screenshots <span className="text-base text-muted-foreground md:text-lg">(optional)</span>
 			</FormLabel>
 			<ScreenshotUpload
 				disabled={isSubmitting}

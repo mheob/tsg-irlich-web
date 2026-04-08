@@ -1,12 +1,6 @@
 import type { Metadata } from 'next';
 
 import { ContactPersons } from '@/components/section/contact-persons';
-import type {
-	NewsArticlesPaginatedQueryResult,
-	NewsArticlesQueryResult,
-	NewsArticlesTotalQueryResult,
-	NewsOverviewPageQueryResult,
-} from '@/types/sanity.types.generated';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -17,6 +11,12 @@ import {
 	newsArticlesQuery,
 	newsArticlesTotalQuery,
 } from '@/lib/sanity/queries/shared/news';
+import type {
+	NewsArticlesPaginatedQueryResult,
+	NewsArticlesQueryResult,
+	NewsArticlesTotalQueryResult,
+	NewsOverviewPageQueryResult,
+} from '@/types/sanity.types.generated';
 
 import newsOverviewImage from './_assets/news-overview.webp';
 import { LatestNews } from './_sections/latest-news';
@@ -26,10 +26,17 @@ import { getOpenGraphImageOptions } from './_shared/utils';
 const START_INDEX = 3;
 const ITEMS_PER_PAGE = 6;
 
+const HERO_IMAGE = {
+	alt: 'Ein Handy und ein Kugelschreiber auf einer Zeitung sollen eine Nachrichtenübersicht darstellen.',
+	src: newsOverviewImage,
+};
+
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<NewsOverviewPageQueryResult>(newsOverviewPageQuery);
 
-	if (!page) return {};
+	if (!page) {
+		return {};
+	}
 
 	const description = page.meta?.metaDescription ?? '';
 	const image = page.meta?.openGraphImage;
@@ -58,18 +65,13 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 		}),
 	]);
 
-	if (!page) return null;
+	if (!page) {
+		return null;
+	}
 
 	return (
 		<>
-			<Hero
-				image={{
-					alt: 'Ein Handy und ein Kugelschreiber auf einer Zeitung sollen eine Nachrichtenübersicht darstellen.',
-					src: newsOverviewImage,
-				}}
-				subTitle={page.subtitle}
-				title={page.title}
-			/>
+			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
 
 			<section className="container mx-auto py-10 md:py-28">
 				<SectionHeader subTitle="News" title="Das Aktuellste von der TSG" isCentered />
@@ -77,11 +79,13 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 
 				<section className="mt-10 md:mt-28">
 					<h2 className="pb-8 text-xl md:pb-14 md:text-4xl">Alles Wissenswertes</h2>
-					<LatestNewsPagination
-						articles={paginatedArticles ?? []}
-						currentPage={currentPage}
-						hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
-					/>
+					{paginatedArticles && (
+						<LatestNewsPagination
+							articles={paginatedArticles}
+							currentPage={currentPage}
+							hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
+						/>
+					)}
 				</section>
 			</section>
 

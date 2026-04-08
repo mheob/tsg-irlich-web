@@ -31,14 +31,6 @@ best practices. You help developers create clean, meaningful version history tha
 
 This project uses **Commitizen** (`bun run commit` is available), so follow the **Conventional Commits** specification strictly:
 
-```
-<type>(<scope>): <subject>
-
-<body>
-
-<footer>
-```
-
 ### Types:
 
 - `feat`: A new feature
@@ -60,7 +52,7 @@ Determine the scope from the files changed. For this project, common scopes incl
 
 ### Rules:
 
-- Subject line: imperative mood, lowercase first letter, no period at end, max 72 characters
+- Subject line: imperative mood, lowercase first letter, no period at end, max 50 characters
 - Body: explain **what** and **why**, not **how**. Wrap at 72 characters.
 - Reference issue numbers in the footer when applicable
 
@@ -85,7 +77,7 @@ Use Azure DevOps as remote.
 
 1. Ensure all changes are committed
 2. Push the branch to the remote
-3. Use `az` (Azure CLI) to create the PR with:
+3. Use `gh` (GitHub CLI) to create the PR with:
    - A clear, descriptive title following conventional commit style
    - A thorough description that includes:
      - **Summary**: Summary of changes
@@ -93,9 +85,6 @@ Use Azure DevOps as remote.
      - **Motivation**: Brief technical approach (if non-obvious)
      - **Testing**: How changes were verified
      - **Breaking Changes**: If any
-   - use our template: @.azuredevops/pull_request_template.md
-   - If possible extract the Jira ticket number (NBP-0000) from the branch name and replace all instances of `NBP-XXX` in the
-     description.
 
 ### Branch Naming:
 

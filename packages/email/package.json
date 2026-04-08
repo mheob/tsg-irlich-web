@@ -1,6 +1,7 @@
 {
 	"name": "@tsgi-web/email",
 	"version": "0.1.0",
+	"type": "module",
 	"exports": {
 		".": "./emails/index.ts"
 	},
@@ -9,7 +10,8 @@
 		"dev:email": "email dev --port 3001",
 		"export": "email export",
 		"lint": "oxlint",
-		"lint:fix": "oxlint --fix"
+		"lint:fix": "oxlint --fix",
+		"lint:github": "oxlint --format=github"
 	},
 	"dependencies": {
 		"@react-email/components": "^1.0.11",

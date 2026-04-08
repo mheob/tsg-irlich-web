@@ -1,4 +1,3 @@
-import { cn } from '@tsgi-web/shared';
 import type { VariantProps } from 'class-variance-authority';
 import {
 	ArrowDown,
@@ -12,6 +11,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import type { ComponentProps, ComponentPropsWithRef } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import { ArrowButtonVariants } from './variants';
 
@@ -29,21 +30,16 @@ interface ArrowProps {
 }
 
 interface ArrowElementProps
-	extends ComponentPropsWithRef<'div'>,
-		VariantProps<typeof ArrowButtonVariants>,
-		ArrowProps {}
+	extends ComponentPropsWithRef<'div'>, VariantProps<typeof ArrowButtonVariants>, ArrowProps {}
 
 interface ArrowAnchorProps
-	extends ComponentPropsWithRef<typeof Link>,
+	extends
+		ComponentPropsWithRef<typeof Link>,
 		VariantProps<typeof ArrowButtonVariants>,
 		ArrowProps {}
 
 interface ArrowButtonProps
-	extends ComponentPropsWithRef<'button'>,
-		VariantProps<typeof ArrowButtonVariants>,
-		ArrowProps {
-	buttonType?: 'button' | 'reset' | 'submit';
-}
+	extends ComponentPropsWithRef<'button'>, VariantProps<typeof ArrowButtonVariants>, ArrowProps {}
 
 function Arrow({
 	className = 'size-8 md:size-12',
@@ -53,7 +49,7 @@ function Arrow({
 	direction: ArrowProps['direction'];
 }>) {
 	switch (direction) {
-		/* eslint-disable unicorn/switch-case-braces, prettier/prettier */
+		/* oxlint-disable unicorn/switch-case-braces */
 		case 'down':
 			return <ArrowDown className={className} strokeWidth={2} />;
 		case 'down-left':
@@ -70,12 +66,13 @@ function Arrow({
 			return <ArrowUpLeft className={className} strokeWidth={2} />;
 		case 'up-right':
 			return <ArrowUpRight className={className} strokeWidth={2} />;
-		/* eslint-enable unicorn/switch-case-braces, prettier/prettier */
+		default:
+			return null;
+		/* oxlint-enable unicorn/switch-case-braces */
 	}
 }
 
-export function ArrowButton({
-	buttonType = 'button',
+function ArrowButton({
 	className,
 	direction,
 	size,
@@ -83,18 +80,18 @@ export function ArrowButton({
 	...props
 }: Readonly<ArrowButtonProps>) {
 	return (
-		<button className={ArrowButtonVariants({ className, variant })} type={buttonType} {...props}>
+		<button className={ArrowButtonVariants({ className, variant })} type="button" {...props}>
 			<Arrow className={size} direction={direction} />
 		</button>
 	);
 }
 
-export function ArrowElement({ className, direction, size, variant, ...props }: ArrowElementProps) {
+function ArrowElement({ className, direction, size, variant, ...props }: ArrowElementProps) {
 	return (
 		<div
 			className={cn(
 				ArrowButtonVariants({ className, variant }),
-				'data-[disabled=true]:hover:bg-secondary data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-70',
+				'data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-70 data-[disabled=true]:hover:bg-secondary',
 			)}
 			{...props}
 		>
@@ -103,10 +100,12 @@ export function ArrowElement({ className, direction, size, variant, ...props }: 
 	);
 }
 
-export function ArrowLink({ className, direction, size, variant, ...props }: ArrowAnchorProps) {
+function ArrowLink({ className, direction, size, variant, ...props }: ArrowAnchorProps) {
 	return (
 		<Link className={ArrowButtonVariants({ className, variant })} {...props}>
 			<Arrow className={size} direction={direction} />
 		</Link>
 	);
 }
+
+export { ArrowButton, ArrowElement, ArrowLink };

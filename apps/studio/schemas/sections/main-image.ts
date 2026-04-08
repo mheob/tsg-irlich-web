@@ -4,8 +4,8 @@ import extendedImage from '@/schemas/objects/extended-image';
 
 const mainImage = defineField({
 	...extendedImage,
-	title: 'Image',
 	name: 'mainImage',
+	title: 'Image',
 });
 
 export default mainImage;

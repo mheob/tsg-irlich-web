@@ -145,7 +145,7 @@ export const mySchemaType = defineType({
 			name: 'title',
 			title: 'Titel',
 			type: 'string',
-			validation: Rule => Rule.required(),
+			validation: (Rule) => Rule.required(),
 		}),
 	],
 	icon: FileText,

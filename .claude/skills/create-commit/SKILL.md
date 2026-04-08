@@ -2,7 +2,7 @@
 name: create-commit
 description: Create a git commit
 user-invocable: true
-allowed-tools: Bash(cat*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git status:*), Bash(pnpm changeset:*)
+allowed-tools: Bash(cat*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git status:*)
 agent: git-versioning
 ---
 
@@ -16,12 +16,11 @@ agent: git-versioning
 ## Your tasks
 
 - make a feature branch is active
-- create changeset for each commit (at least an empty one, if no changeset is needed); don't write the change message too short
 - create a single git commit or multiple commits if it makes more sense based on the above changes
 
 ## Structure
 
-Use the format: `<type>: <short summary>` (e.g., `feat: add user login flow)` Keep the subject line under 50 characters Add a
+Use the format: `<type>: <short summary>` (e.g., `feat: add user login flow`) Keep the subject line under 50 characters Add a
 blank line between the subject and body if you need more detail Wrap body text at 72 characters
 
 ## Writing style

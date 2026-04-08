@@ -1,24 +1,26 @@
-export const chronicle = {
-	title: 'Chronik',
+const chronicle = {
 	name: 'chronicle',
+	title: 'Chronik',
 };
 
-export const contactPersons = {
-	title: 'Ansprechpartner',
+const contactPersons = {
 	name: 'contactPersons',
+	title: 'Ansprechpartner',
 };
 
-export const intro = {
-	title: 'Intro',
+const intro = {
 	name: 'intro',
+	title: 'Intro',
 };
 
-export const stats = {
-	title: 'Stats',
+const stats = {
 	name: 'stats',
+	title: 'Stats',
 };
 
-export const vision = {
-	title: 'Vision',
+const vision = {
 	name: 'vision',
+	title: 'Vision',
 };
+
+export { chronicle, contactPersons, intro, stats, vision };

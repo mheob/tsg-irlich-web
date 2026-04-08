@@ -1,4 +1,4 @@
-/* eslint-disable node/prefer-global/process */
+// oxlint-disable import/max-dependencies, node/no-process-env
 
 import { deDELocale } from '@sanity/locale-de-de';
 import { visionTool } from '@sanity/vision';
@@ -51,7 +51,7 @@ export function getPlugins(): PluginOptions[] {
 			]),
 		}),
 		// Configures the global "new document" button, and document actions,
-		// to suit the Settings document singleton
+		// To suit the Settings document singleton
 		singletonPlugin([
 			homePage.name,
 			aboutUsPage.name,
@@ -71,7 +71,9 @@ export function getPlugins(): PluginOptions[] {
 		assistWithPresets(),
 	];
 
-	if (process.env.NODE_ENV === 'development') plugins.push(visionTool());
+	if (process.env.NODE_ENV === 'development') {
+		plugins.push(visionTool());
+	}
 
 	return plugins;
 }

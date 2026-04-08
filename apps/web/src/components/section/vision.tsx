@@ -1,7 +1,7 @@
-import { cn } from '@tsgi-web/shared';
-// cSpell:words taekwondo
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { cn } from '@tsgi-web/shared';
 
 import { Button } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -23,7 +23,7 @@ export function Vision(props: Readonly<VisionProps>) {
 		<section className="relative items-center" id="vision-section">
 			<div className="lg:grid lg:grid-cols-[55%_45%] lg:px-5 lg:not-last-of-type:mx-auto">
 				<div className="relative mx-auto h-80 px-5 lg:static">
-					<div className={styles.bgRoundedEdge}></div>
+					<div className={styles.bgRoundedEdge} />
 
 					<div
 						className={cn(
@@ -45,8 +45,8 @@ export function Vision(props: Readonly<VisionProps>) {
 					<div
 						className={cn(
 							'absolute',
-							'end-8 bottom-8 size-32',
-							'sm:end-4 sm:top-[calc(50%-3rem)] sm:size-40',
+							'inset-e-8 bottom-8 size-32',
+							'sm:inset-e-4 sm:top-[calc(50%-3rem)] sm:size-40',
 							'md:size-48',
 							'lg:top-[calc(50%-3rem)] lg:left-[calc(13%-8rem)] lg:size-64',
 						)}

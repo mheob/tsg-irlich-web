@@ -1,14 +1,15 @@
-import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithRef, HTMLAttributes } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
+import { cn } from '@tsgi-web/shared';
+
 import { FormControl, FormItem, FormLabel, FormMessage } from '../with-logic/form';
 
-export function Textarea({ className, ...props }: ComponentPropsWithRef<'textarea'>) {
+function Textarea({ className, ...props }: ComponentPropsWithRef<'textarea'>) {
 	return (
 		<textarea
 			className={cn(
-				'placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 bg-background-high-contrast aria-invalid:ring-destructive/20 aria-invalid:border-destructive flex min-h-[7lh] w-full resize-y rounded-md px-4 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-xl',
+				'flex min-h-[7lh] w-full resize-y rounded-md bg-background-high-contrast px-4 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 md:text-xl',
 				className,
 			)}
 			{...props}
@@ -22,7 +23,7 @@ interface TextareaWithLabelProps extends ComponentPropsWithRef<typeof Textarea> 
 	wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
-export function TextareaWithLabel({
+function TextareaWithLabel({
 	children,
 	field,
 	wrapperClassName,
@@ -38,3 +39,5 @@ export function TextareaWithLabel({
 		</FormItem>
 	);
 }
+
+export { Textarea, TextareaWithLabel };

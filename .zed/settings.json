@@ -14,32 +14,58 @@
 		},
 		"JSON": {
 			"format_on_save": "on",
-			"formatter": [{ "language_server": { "name": "oxfmt" } }],
+			"formatter": [
+				{ "language_server": { "name": "oxfmt" } },
+				{ "code_action": "source.fixAll.oxc" }
+			],
 			"prettier": { "allowed": false }
 		},
 		"JSONC": {
 			"format_on_save": "on",
-			"formatter": [{ "language_server": { "name": "oxfmt" } }],
+			"formatter": [
+				{ "language_server": { "name": "oxfmt" } },
+				{ "code_action": "source.fixAll.oxc" }
+			],
 			"prettier": { "allowed": false }
 		},
 		"Markdown": {
 			"format_on_save": "on",
-			"formatter": [{ "language_server": { "name": "oxfmt" } }],
+			"formatter": [
+				{ "language_server": { "name": "oxfmt" } },
+				{ "code_action": "source.fixAll.oxc" }
+			],
 			"prettier": { "allowed": false }
 		},
 		"MDX": {
 			"format_on_save": "on",
-			"formatter": [{ "language_server": { "name": "oxfmt" } }],
+			"formatter": [
+				{ "language_server": { "name": "oxfmt" } },
+				{ "code_action": "source.fixAll.oxc" }
+			],
+			"prettier": { "allowed": false }
+		},
+		"TSX": {
+			"format_on_save": "on",
+			"formatter": [
+				{ "language_server": { "name": "oxfmt" } },
+				{ "code_action": "source.fixAll.oxc" }
+			],
 			"prettier": { "allowed": false }
 		},
 		"TypeScript": {
 			"format_on_save": "on",
-			"formatter": [{ "language_server": { "name": "oxfmt" } }],
+			"formatter": [
+				{ "language_server": { "name": "oxfmt" } },
+				{ "code_action": "source.fixAll.oxc" }
+			],
 			"prettier": { "allowed": false }
 		},
 		"YAML": {
 			"format_on_save": "on",
-			"formatter": [{ "language_server": { "name": "oxfmt" } }],
+			"formatter": [
+				{ "language_server": { "name": "oxfmt" } },
+				{ "code_action": "source.fixAll.oxc" }
+			],
 			"prettier": { "allowed": false }
 		}
 	},
@@ -47,20 +73,22 @@
 		"oxlint": {
 			"initialization_options": {
 				"settings": {
-					"configPath": null,
-					"disableNestedConfig": false,
-					"fixKind": "safe_fix",
-					"run": "onType",
-					"typeAware": true,
-					"unusedDisableDirectives": "deny"
+					"unusedDisableDirectives": "warn"
 				}
 			}
 		},
 		"oxfmt": {
 			"initialization_options": {
 				"settings": {
-					"fmt.configPath": null,
 					"run": "onSave"
+				}
+			}
+		},
+		"tailwindcss-language-server": {
+			"settings": {
+				"classFunctions": ["cn", "cva"],
+				"experimental.configFile": {
+					"apps/web/src/app/globals.css": "apps/web/src/**"
 				}
 			}
 		}

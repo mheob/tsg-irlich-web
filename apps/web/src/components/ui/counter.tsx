@@ -1,5 +1,6 @@
-import { cn } from '@tsgi-web/shared';
 import type { ComponentPropsWithRef } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import type { Stats } from '@/types/sanity.types';
 

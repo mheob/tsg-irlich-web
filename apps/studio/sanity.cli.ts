@@ -1,4 +1,4 @@
-/* eslint-disable node/prefer-global/process, unicorn/prefer-module */
+// oxlint-disable node/no-process-env
 
 import { defineCliConfig } from 'sanity/cli';
 
@@ -14,7 +14,7 @@ export default defineCliConfig({
 		},
 		resolve: {
 			alias: {
-				'@': __dirname,
+				'@': import.meta.dirname,
 			},
 		},
 	},

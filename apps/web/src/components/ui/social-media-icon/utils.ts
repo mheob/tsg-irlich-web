@@ -1,10 +1,5 @@
-import {
-	type IconType,
-	SiFacebook,
-	SiInstagram,
-	SiWhatsapp,
-	SiYoutube,
-} from '@icons-pack/react-simple-icons';
+import { SiFacebook, SiInstagram, SiWhatsapp, SiYoutube } from '@icons-pack/react-simple-icons';
+import type { IconType } from '@icons-pack/react-simple-icons';
 
 interface SocialMediaIcons {
 	facebook: IconType;

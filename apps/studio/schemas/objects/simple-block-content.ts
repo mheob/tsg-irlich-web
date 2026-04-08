@@ -2,19 +2,11 @@ import { RiFileTextLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 const simpleBlockContent = defineField({
-	title: 'Simple Block Content',
-	name: 'simpleBlockContent',
-	type: 'object',
-	icon: RiFileTextLine,
 	fields: [
 		{
-			title: 'Text',
 			name: 'text',
-			type: 'array',
 			of: [
 				{
-					title: 'Block',
-					type: 'block',
 					marks: {
 						decorators: [
 							{ title: 'Strong', value: 'strong' },
@@ -22,10 +14,18 @@ const simpleBlockContent = defineField({
 						],
 					},
 					styles: [{ title: 'Normal', value: 'normal' }],
+					title: 'Block',
+					type: 'block',
 				},
 			],
+			title: 'Text',
+			type: 'array',
 		},
 	],
+	icon: RiFileTextLine,
+	name: 'simpleBlockContent',
+	title: 'Simple Block Content',
+	type: 'object',
 });
 
 export default simpleBlockContent;

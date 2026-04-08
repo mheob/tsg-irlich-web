@@ -2,16 +2,12 @@ import { EarthGlobeIcon } from '@sanity/icons';
 import { defineField } from 'sanity';
 
 const externalLink = defineField({
-	title: 'External Link',
-	name: 'externalLink',
-	type: 'object',
-	icon: EarthGlobeIcon,
 	fields: [
 		{
-			title: 'URL',
-			name: 'href',
-			type: 'url',
 			description: 'Externen Link hinzufügen',
+			name: 'href',
+			title: 'URL',
+			type: 'url',
 			validation: (Rule) =>
 				Rule.uri({
 					allowRelative: false,
@@ -21,6 +17,10 @@ const externalLink = defineField({
 					.error('Die URL ist ungültig.'),
 		},
 	],
+	icon: EarthGlobeIcon,
+	name: 'externalLink',
+	title: 'External Link',
+	type: 'object',
 });
 
 export default externalLink;

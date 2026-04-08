@@ -1,110 +1,102 @@
-import { revalidatePath, revalidateTag } from 'next/cache';
-import { type NextRequest, NextResponse } from 'next/server';
 import { parseBody } from 'next-sanity/webhook';
+import type { ParsedBody } from 'next-sanity/webhook';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 import { env } from '@/lib/env';
 
+interface WebhookBody {
+	_type: string;
+	slug?: { current: string };
+}
+
+type RevalidateHandler = (slug?: string) => void;
+
+const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
+	aboutUs: () => revalidatePath('/verein'),
+	contact: () => revalidatePath('/kontakt'),
+	departmentsPage: () => revalidatePath('/angebot'),
+	group: (slug) => {
+		revalidatePath('/angebot');
+		if (slug) {
+			revalidatePath(`/angebot/${slug}`);
+		}
+	},
+	home: () => revalidatePath('/'),
+	imprint: () => revalidatePath('/impressum'),
+	membership: () => revalidatePath('/mitgliedschaft'),
+	navigation: () => revalidatePath('/', 'layout'),
+	'news.article': (slug) => {
+		revalidatePath('/news');
+		if (slug) {
+			revalidatePath(`/news/${slug}`);
+		}
+	},
+	'news.category': (slug) => {
+		revalidatePath('/news');
+		if (slug) {
+			revalidatePath(`/news/${slug}`);
+		}
+	},
+	newsOverview: () => revalidatePath('/news'),
+	person: () => {
+		revalidatePath('/');
+		revalidatePath('/angebot', 'layout');
+		revalidatePath('/kontakt');
+		revalidatePath('/news');
+		revalidatePath('/mitgliedschaft');
+		revalidatePath('/verein');
+	},
+	privacy: () => revalidatePath('/datenschutz'),
+	settings: () => revalidatePath('/', 'layout'),
+	testimonial: () => revalidatePath('/'),
+	venue: (slug) => {
+		revalidatePath('/angebot');
+		if (slug) {
+			revalidatePath(`/angebot/${slug}`);
+		}
+	},
+};
+
+function parseWebhook(request: NextRequest): Promise<ParsedBody<WebhookBody>> {
+	return parseBody<WebhookBody>(request, env('SANITY_REVALIDATE_SECRET'));
+}
+
+function validateWebhook(
+	body: WebhookBody | null,
+	isValidSignature: boolean | null,
+): Response | null {
+	if (!isValidSignature) {
+		return Response.json({ body, isValidSignature, message: 'Invalid signature' }, { status: 401 });
+	}
+
+	if (!body?._type) {
+		return Response.json({ body, message: 'Bad Request' }, { status: 400 });
+	}
+
+	return null;
+}
+
+function revalidateByType(body: WebhookBody): void {
+	const slug = body.slug?.current;
+	const handler = REVALIDATION_MAP[body._type] ?? (() => revalidatePath('/'));
+	handler(slug);
+	revalidateTag(body._type, 'max');
+}
+
 export async function POST(request: NextRequest): Promise<NextResponse | Response> {
 	try {
-		const { body, isValidSignature } = await parseBody<{
-			_type: string;
-			slug?: { current: string };
-		}>(request, env('SANITY_REVALIDATE_SECRET'));
+		const { body, isValidSignature } = await parseWebhook(request);
 
-		// Validate webhook signature
-		if (!isValidSignature) {
-			const message = 'Invalid signature';
-			return Response.json({ body, isValidSignature, message }, { status: 401 });
+		const errorResponse = validateWebhook(body, isValidSignature);
+		if (errorResponse) {
+			return errorResponse;
 		}
 
-		if (!body?._type) {
-			const message = 'Bad Request';
-			return Response.json({ body, message }, { status: 400 });
-		}
+		revalidateByType(body as WebhookBody);
 
-		// Revalidate specific paths based on content type
-		switch (body._type) {
-			// Single Pages
-			case 'home':
-			case 'testimonial': {
-				revalidatePath('/');
-				break;
-			}
-			case 'aboutUs': {
-				revalidatePath('/verein');
-				break;
-			}
-			case 'contact': {
-				revalidatePath('/kontakt');
-				break;
-			}
-			case 'departmentsPage': {
-				revalidatePath('/angebot');
-				break;
-			}
-			case 'membership': {
-				revalidatePath('/mitgliedschaft');
-				break;
-			}
-			case 'newsOverview': {
-				revalidatePath('/news');
-				break;
-			}
-			case 'privacy': {
-				revalidatePath('/datenschutz');
-				break;
-			}
-			case 'imprint': {
-				revalidatePath('/impressum');
-				break;
-			}
-
-			// News
-			case 'news.article':
-			case 'news.category': {
-				// Revalidate news list and detail page if slug exists
-				revalidatePath('/news');
-				if (body.slug?.current) revalidatePath(`/news/${body.slug.current}`);
-				break;
-			}
-			case 'group':
-			case 'venue': {
-				// Revalidate groups/sports pages
-				revalidatePath('/angebot');
-				if (body.slug?.current) revalidatePath(`/angebot/${body.slug.current}`);
-				break;
-			}
-			case 'person': {
-				// Revalidate verein/about pages that might display people
-				revalidatePath('/');
-				revalidatePath('/angebot', 'layout');
-				revalidatePath('/kontakt');
-				revalidatePath('/news');
-				revalidatePath('/mitgliedschaft');
-				revalidatePath('/verein');
-				break;
-			}
-			case 'settings':
-			case 'navigation': {
-				// Revalidate all pages when global settings change
-				revalidatePath('/', 'layout');
-				break;
-			}
-			default: {
-				// For unknown types, revalidate home page
-				revalidatePath('/');
-			}
-		}
-
-		// Also revalidate by tag if you're using tag-based caching
-		revalidateTag(body._type, 'max');
-
-		return NextResponse.json({
-			body,
-			now: Date.now(),
-			revalidated: true,
-			status: 200,
-		});
+		return NextResponse.json({ body, now: Date.now(), revalidated: true, status: 200 });
 	} catch (error: unknown) {
 		console.error(error);
 		return Response.json(

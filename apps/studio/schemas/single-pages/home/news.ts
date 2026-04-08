@@ -4,11 +4,11 @@ import { defineField } from 'sanity';
 import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 export const newsField = defineField({
-	title: 'News',
-	name: 'newsSection',
-	type: 'object',
-	icon: RiLinksLine,
-	group: 'news',
 	fields: [...getDefaultPageSectionFieldsWithGroup()],
+	group: 'news',
+	icon: RiLinksLine,
+	name: 'newsSection',
+	title: 'News',
+	type: 'object',
 	validation: (Rule) => [Rule.required().error('News sind erforderlich')],
 });

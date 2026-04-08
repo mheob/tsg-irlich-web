@@ -2,27 +2,27 @@ import { defineField } from 'sanity';
 
 import { phoneFieldRegex } from '@/constants/regex';
 
-export const addressField = defineField({
-	title: 'Anschrift',
-	name: 'address',
-	type: 'text',
+const addressField = defineField({
 	group: 'contact',
+	name: 'address',
+	title: 'Anschrift',
+	type: 'text',
 	validation: (Rule) => [Rule.required().error('Die Anschrift ist erforderlich')],
 });
 
-export const emailField = defineField({
-	title: 'E-Mail',
-	name: 'email',
-	type: 'email',
+const emailField = defineField({
 	group: 'contact',
+	name: 'email',
+	title: 'E-Mail',
+	type: 'email',
 	validation: (Rule) => [Rule.required().error('Die E-Mail ist erforderlich')],
 });
 
-export const phoneField = defineField({
-	title: 'Telefon',
-	name: 'phone',
-	type: 'string',
+const phoneField = defineField({
 	group: 'contact',
+	name: 'phone',
+	title: 'Telefon',
+	type: 'string',
 	validation: (Rule) => [
 		Rule.regex(phoneFieldRegex).error(
 			'Telefonnummer ist ungültig, sie muss wie folgt aussehen: +49 123 456789',
@@ -30,11 +30,11 @@ export const phoneField = defineField({
 	],
 });
 
-export const contactAsField = defineField({
-	title: 'Kontakt per',
-	name: 'contactAs',
-	type: 'string',
+const contactAsField = defineField({
 	group: 'contact',
+	hidden: ({ parent }) => !parent?.phone,
+	initialValue: ({ parent }) => (parent?.phone ? 'both' : 'email'),
+	name: 'contactAs',
 	options: {
 		list: [
 			{ title: 'nur per E-Mail', value: 'email' },
@@ -43,16 +43,18 @@ export const contactAsField = defineField({
 			{ title: 'per Telefon und WhatsApp', value: 'both' },
 		],
 	},
-	initialValue: ({ parent }) => (parent?.phone ? 'both' : 'email'),
-	hidden: ({ parent }) => !parent?.phone,
+	title: 'Kontakt per',
+	type: 'string',
 	validation: (Rule) => [Rule.required().error('Die "Kontakt per"-Auswahl ist erforderlich')],
 });
 
-export const contactPersonsField = defineField({
-	title: 'Ansprechpartner',
-	name: 'contactPersons',
-	type: 'array',
-	of: [{ type: 'reference', to: [{ type: 'person' }] }],
+const contactPersonsField = defineField({
 	group: 'content',
+	name: 'contactPersons',
+	of: [{ to: [{ type: 'person' }], type: 'reference' }],
+	title: 'Ansprechpartner',
+	type: 'array',
 	validation: (Rule) => [Rule.required().error('Ansprechpartner ist erforderlich')],
 });
+
+export { addressField, contactAsField, contactPersonsField, emailField, phoneField };

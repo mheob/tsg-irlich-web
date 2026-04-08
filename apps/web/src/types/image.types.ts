@@ -5,7 +5,7 @@ import type {
 	SanityImageHotspot,
 } from './sanity.types.generated';
 
-export interface SanityImage {
+interface SanityImage {
 	_type: 'image';
 	alt?: string;
 	asset?: SanityImageAssetReference;
@@ -14,7 +14,7 @@ export interface SanityImage {
 	media?: unknown;
 }
 
-export interface SanityImageReference {
+interface SanityImageReference {
 	asset?: {
 		_ref: string;
 		_type: 'reference';
@@ -26,12 +26,14 @@ export interface SanityImageReference {
 	hotspot?: SanityImageHotspot;
 }
 
-export interface ExtendedImage extends SanityImageReference {
+interface ExtendedImage extends SanityImageReference {
 	_type: 'extendedImage';
 }
 
-export interface MainImage extends SanityImageReference {
+interface MainImage extends SanityImageReference {
 	_type: 'mainImage';
 }
 
-export type AnyImage = ExtendedImage | MainImage | SanityImage;
+type AnyImage = ExtendedImage | MainImage | SanityImage;
+
+export type { SanityImage, SanityImageReference, ExtendedImage, MainImage, AnyImage };

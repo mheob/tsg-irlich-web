@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { cn } from '@tsgi-web/shared';
+
 import { Button } from '@/components/ui/button';
 import { NewsArticlePreviewWide } from '@/components/ui/news-article-preview-wide';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -14,7 +16,7 @@ interface NewsProps extends NewsFields {
 
 export function News({ articles, intro, subtitle, title }: Readonly<NewsProps>) {
 	return (
-		<section className={`${styles.bg} bg-primary relative z-0 text-white`}>
+		<section className={cn(styles.bg, 'relative z-0 bg-primary text-white')}>
 			<div className="container mx-auto px-5 py-10 md:py-28">
 				<SectionHeader
 					descriptionClassName="text-white"

@@ -1,3 +1,5 @@
+// oxlint-disable no-magic-numbers
+
 import { defineField } from 'sanity';
 
 import { slugify } from '@/utils/strings';
@@ -8,63 +10,63 @@ import { slugify } from '@/utils/strings';
  * @param slug - The slug to set as the initial value.
  * @returns The hidden slug field.
  */
-export function getHiddenSlugField(slug: string): ReturnType<typeof defineField> {
+function getHiddenSlugField(slug: string): ReturnType<typeof defineField> {
 	return defineField({
-		title: 'Slug',
-		name: 'slug',
-		type: 'slug',
 		group: 'general',
-		readOnly: true,
-		initialValue: { current: slug },
 		hidden: false,
+		initialValue: { current: slug },
+		name: 'slug',
+		readOnly: true,
+		title: 'Slug',
+		type: 'slug',
 	});
 }
 
-export const introField = defineField({
-	title: 'Intro',
-	name: 'intro',
-	type: 'text',
+const introField = defineField({
 	group: 'general',
+	name: 'intro',
+	title: 'Intro',
+	type: 'text',
 });
 
-export const slugField = defineField({
-	title: 'Slug',
-	name: 'slug',
-	type: 'slug',
+const slugField = defineField({
 	description: 'Ein Slug muss gesetzt werden, um die Seite anzeigen zu können.',
 	group: 'general',
+	name: 'slug',
 	options: {
 		slugify,
 		source: 'title',
 	},
+	title: 'Slug',
+	type: 'slug',
 	validation: (Rule) => [Rule.required().error('Die Slug ist erforderlich')],
 });
 
-export const subTitleField = defineField({
-	title: 'Untertitel',
-	name: 'subtitle',
-	type: 'string',
+const subTitleField = defineField({
 	group: 'general',
+	name: 'subtitle',
+	title: 'Untertitel',
+	type: 'string',
 	validation: (Rule) => [
 		Rule.required().min(3).error('Der Untertitel muss mindestens 3 Zeichen lang sein'),
 		Rule.max(50).warning('Der Untertitel sollte nicht länger als 50 Zeichen sein'),
 	],
 });
 
-export const titleField = defineField({
-	title: 'Titel',
-	name: 'title',
-	type: 'string',
+const titleField = defineField({
 	group: 'general',
+	name: 'title',
+	title: 'Titel',
+	type: 'string',
 	validation: (Rule) => [
 		Rule.required().min(3).error('Der Titel muss mindestens 3 Zeichen lang sein'),
 		Rule.max(65).warning('Der Titel sollte nicht länger als 65 Zeichen sein'),
 	],
 });
 
-export const defaultHeroFields = [titleField, subTitleField];
+const defaultHeroFields = [titleField, subTitleField];
 
-export const defaultPageSectionFields = [titleField, subTitleField, introField];
+const defaultPageSectionFields = [titleField, subTitleField, introField];
 
 /**
  * Returns the default page section fields with the specified group.
@@ -72,9 +74,7 @@ export const defaultPageSectionFields = [titleField, subTitleField, introField];
  * @param group - The group to add the fields to.
  * @returns The default page section fields with the specified group.
  */
-export function getDefaultPageSectionFieldsWithGroup(
-	group?: string,
-): ReturnType<typeof defineField>[] {
+function getDefaultPageSectionFieldsWithGroup(group?: string): ReturnType<typeof defineField>[] {
 	return defaultPageSectionFields.map((field) => ({ ...field, group }));
 }
 
@@ -84,8 +84,20 @@ export function getDefaultPageSectionFieldsWithGroup(
  * @param field - The field to remove the group from.
  * @returns The field with the group removed.
  */
-export function removeGroupFromField(
+function removeGroupFromField(
 	field: ReturnType<typeof defineField>,
 ): ReturnType<typeof defineField> {
 	return { ...field, group: undefined };
 }
+
+export {
+	defaultHeroFields,
+	defaultPageSectionFields,
+	getHiddenSlugField,
+	getDefaultPageSectionFieldsWithGroup,
+	introField,
+	removeGroupFromField,
+	slugField,
+	subTitleField,
+	titleField,
+};

@@ -10,7 +10,7 @@ import type { defineField } from 'sanity';
  * @param group - The group name to assign to the field.
  * @returns A new field definition object with the `group` property set.
  */
-export function getFieldWithGroup(
+function getFieldWithGroup(
 	field: ReturnType<typeof defineField>,
 	group: string,
 ): ReturnType<typeof defineField> {
@@ -26,8 +26,10 @@ export function getFieldWithGroup(
  * @param field - The field definition returned by `defineField`.
  * @returns A new field definition object with `group` set to undefined.
  */
-export function getFieldWithoutGroup(
+function getFieldWithoutGroup(
 	field: ReturnType<typeof defineField>,
 ): ReturnType<typeof defineField> {
 	return { ...field, group: undefined };
 }
+
+export { getFieldWithGroup, getFieldWithoutGroup };

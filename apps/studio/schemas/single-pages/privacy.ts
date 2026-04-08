@@ -7,45 +7,45 @@ import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
 const privacyPage = defineType({
-	title: 'Datenschutzerklärung',
-	name: 'privacy',
-	type: 'document',
-	icon: RiSettings5Line,
-	groups: [general, meta, contact, { name: 'content', title: 'Erklärung' }],
 	fields: [
 		// (hidden)
 		getHiddenSlugField('datenschutz'),
 
-		// general
+		// General
 		...defaultHeroFields,
 
-		// meta
+		// Meta
 		metaField,
 
-		// contact
+		// Contact
 		defineField({
-			title: 'Einleitungstext',
-			name: 'introText',
-			type: 'blockContent',
 			group: 'contact',
+			name: 'introText',
+			title: 'Einleitungstext',
+			type: 'blockContent',
 			validation: (Rule) => [Rule.required().error('Einleitungstext ist erforderlich')],
 		}),
 		addressField,
 		phoneField,
 		emailField,
 
-		// content
+		// Content
 		defineField({
-			title: 'Datenschutzerklärung',
-			name: 'content',
-			type: 'blockContent',
 			group: 'content',
+			name: 'content',
+			title: 'Datenschutzerklärung',
+			type: 'blockContent',
 			validation: (Rule) => [Rule.required().error('Datenschutzerklärung ist erforderlich')],
 		}),
 	],
+	groups: [general, meta, contact, { name: 'content', title: 'Erklärung' }],
+	icon: RiSettings5Line,
+	name: 'privacy',
 	preview: {
 		prepare: () => ({ title: 'Datenschutzerklärung' }),
 	},
+	title: 'Datenschutzerklärung',
+	type: 'document',
 });
 
 export default privacyPage;

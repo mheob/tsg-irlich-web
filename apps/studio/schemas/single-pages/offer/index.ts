@@ -1,4 +1,3 @@
-// cSpell:words angebot
 import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
@@ -12,36 +11,36 @@ import { contactPersons, departments, stats } from './_groups';
 import { departmentsField } from './departments';
 
 const offerPage = defineType({
-	title: 'Sportbereiche',
-	name: 'departmentsPage',
-	type: 'document',
-	icon: RiBookletLine,
-	groups: [general, meta, content],
 	fields: [
 		// (hidden)
 		getHiddenSlugField('angebot'),
 
-		// general
+		// General
 		...defaultHeroFields,
 
-		// meta
+		// Meta
 		metaField,
 
-		// content
+		// Content
 		defineField({
-			title: 'Inhalte',
-			name: 'content',
-			type: 'object',
-			icon: RiLinksLine,
+			fields: [departmentsField, statsField, contactPersonsSectionField],
 			group: 'content',
 			groups: [departments, stats, contactPersons],
-			fields: [departmentsField, statsField, contactPersonsSectionField],
+			icon: RiLinksLine,
+			name: 'content',
+			title: 'Inhalte',
+			type: 'object',
 			validation: (Rule) => Rule.required(),
 		}),
 	],
+	groups: [general, meta, content],
+	icon: RiBookletLine,
+	name: 'departmentsPage',
 	preview: {
 		prepare: () => ({ title: 'Sportangebot' }),
 	},
+	title: 'Sportbereiche',
+	type: 'document',
 });
 
 export default offerPage;

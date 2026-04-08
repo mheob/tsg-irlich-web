@@ -24,6 +24,7 @@ const groupTypeToSlug: Record<string, string> = {
 	'group.taekwondo': 'taekwondo',
 };
 
+// oxlint-disable-next-line max-lines-per-function
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const baseUrl = getBaseUrl();
 
