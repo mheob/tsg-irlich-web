@@ -1,3 +1,5 @@
+// oxlint-disable max-lines-per-function
+
 import { assist } from '@sanity/assist';
 import type { PluginOptions } from 'sanity';
 

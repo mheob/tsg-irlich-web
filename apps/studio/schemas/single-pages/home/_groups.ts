@@ -1,39 +1,41 @@
-export const contactPersons = {
-	title: 'Ansprechpartner',
+const contactPersons = {
 	name: 'contactPersons',
+	title: 'Ansprechpartner',
 };
 
-export const features = {
-	title: 'Merkmale',
+const features = {
 	name: 'features',
+	title: 'Merkmale',
 };
 
-export const groups = {
-	title: 'Gruppen',
+const groups = {
 	name: 'groups',
+	title: 'Gruppen',
 };
 
-export const news = {
-	title: 'News',
+const news = {
 	name: 'news',
+	title: 'News',
 };
 
-export const pricing = {
-	title: 'Preise',
+const pricing = {
 	name: 'pricing',
+	title: 'Preise',
 };
 
-export const stats = {
-	title: 'Stats',
+const stats = {
 	name: 'stats',
+	title: 'Stats',
 };
 
-export const testimonial = {
-	title: 'Referenz',
+const testimonial = {
 	name: 'testimonial',
+	title: 'Referenz',
 };
 
-export const vision = {
-	title: 'Vision',
+const vision = {
 	name: 'vision',
+	title: 'Vision',
 };
+
+export { contactPersons, features, groups, news, pricing, stats, testimonial, vision };

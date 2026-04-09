@@ -1,4 +1,6 @@
-export const contactPersons = /* groq */ `
+// oxlint-disable no-inline-comments
+
+const contactPersons = /* groq */ `
   firstName,
   lastName,
   phone,
@@ -9,6 +11,8 @@ export const contactPersons = /* groq */ `
   "taskDescription": affiliations[0].taskDescription,
 `;
 
-export const meta = /* groq */ `meta { metaTitle, metaDescription, openGraphImage}`;
+const meta = /* groq */ `meta { metaTitle, metaDescription, openGraphImage}`;
 
-export const featuredImage = /* groq */ `featuredImage`;
+const featuredImage = /* groq */ `featuredImage`;
+
+export { contactPersons, meta, featuredImage };

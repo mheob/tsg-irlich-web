@@ -7,7 +7,7 @@ import { featuredImage, meta } from '@/lib/sanity/queries';
  *
  * @returns The groups page
  */
-export const offerGroupsGroupPageQuery = defineQuery(`*[_type == 'singleGroupPage'][0]`);
+const offerGroupsGroupPageQuery = defineQuery(`*[_type == 'singleGroupPage'][0]`);
 
 /**
  * Query to get a single group document by type and slug
@@ -16,7 +16,7 @@ export const offerGroupsGroupPageQuery = defineQuery(`*[_type == 'singleGroupPag
  * @param slug - The slug of the group to fetch
  * @returns A single group document
  */
-export const offerGroupsGroupPageGroupsQuery = defineQuery(`
+const offerGroupsGroupPageGroupsQuery = defineQuery(`
 	*[_type == $groupType && slug.current == $slug][0] {
 		description,
 		${featuredImage},
@@ -39,7 +39,7 @@ export const offerGroupsGroupPageGroupsQuery = defineQuery(`
  * @param slug - The team / group slug
  * @returns An array of contact persons
  */
-export const offerGroupsGroupPageContactPersonsQuery = defineQuery(`
+const offerGroupsGroupPageContactPersonsQuery = defineQuery(`
 	*[
 		_type == 'person' &&
 		defined(affiliations[team->slug.current == $slug][0])
@@ -56,3 +56,9 @@ export const offerGroupsGroupPageContactPersonsQuery = defineQuery(`
 		"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,
 	}
 `);
+
+export {
+	offerGroupsGroupPageQuery,
+	offerGroupsGroupPageGroupsQuery,
+	offerGroupsGroupPageContactPersonsQuery,
+};

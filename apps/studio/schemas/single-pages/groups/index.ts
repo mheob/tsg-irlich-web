@@ -1,3 +1,5 @@
+// oxlint-disable no-magic-numbers
+
 import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
@@ -10,42 +12,42 @@ import { contactPersonsField } from './contact-persons';
 import { groupsField } from './groups';
 
 const groupsPage = defineType({
-	title: 'Gruppen',
-	name: 'groupsPage',
-	type: 'document',
-	icon: RiBookletLine,
-	groups: [general, meta, content],
 	fields: [
-		// general
+		// General
 		...defaultHeroFields,
 
-		// meta
+		// Meta
 		defineField({
-			title: 'Meta-Beschreibung (überschreibt die Standardbeschreibung)',
-			name: 'metaDescription',
-			type: 'text',
 			group: 'meta',
+			name: 'metaDescription',
+			title: 'Meta-Beschreibung (überschreibt die Standardbeschreibung)',
+			type: 'text',
 			validation: (Rule) =>
 				Rule.min(130)
 					.max(160)
 					.warning('Die Beschreibung sollte idealerweise von 130 bis 160 Zeichen lang sein.'),
 		}),
 
-		// content
+		// Content
 		defineField({
-			title: 'Inhalte',
-			name: 'content',
-			type: 'object',
-			icon: RiLinksLine,
+			fields: [groupsField, statsField, contactPersonsField],
 			group: 'content',
 			groups: [groups, stats, contactPersons],
-			fields: [groupsField, statsField, contactPersonsField],
+			icon: RiLinksLine,
+			name: 'content',
+			title: 'Inhalte',
+			type: 'object',
 			validation: (Rule) => Rule.required(),
 		}),
 	],
+	groups: [general, meta, content],
+	icon: RiBookletLine,
+	name: 'groupsPage',
 	preview: {
 		prepare: () => ({ title: 'Gruppen' }),
 	},
+	title: 'Gruppen',
+	type: 'document',
 });
 
 export default groupsPage;

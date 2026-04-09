@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import { EMPTY_ARRAY } from '@tsgi-web/shared';
+
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
@@ -30,7 +32,9 @@ export async function generateMetadata({
 
 	const page = await client.fetch<OfferGroupsPageQueryResult>(offerGroupsPageQuery);
 
-	if (!page) return {};
+	if (!page) {
+		return {};
+	}
 
 	const image = getOGImage(groupParameter);
 
@@ -85,7 +89,10 @@ export default async function GroupsPage({ params }: PageProps<'/angebot/[group]
 				groups={groups as GroupsType['groups']}
 			/>
 			<Stats stats={page.content.stats} />
-			<ContactPersons {...page.content.contactPersonsSection} contactPersons={offerPersons ?? []} />
+			<ContactPersons
+				{...page.content.contactPersonsSection}
+				contactPersons={offerPersons ?? EMPTY_ARRAY}
+			/>
 			<Newsletter />
 		</>
 	);

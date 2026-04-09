@@ -1,4 +1,5 @@
-// eslint-disable-next-line jsdoc/check-tag-names
+// oxlint-disable import/no-anonymous-default-export
+
 /** @type {import('postcss-load-config').Config} */
 export default {
 	plugins: {

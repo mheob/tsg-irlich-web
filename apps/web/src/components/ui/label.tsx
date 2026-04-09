@@ -1,6 +1,9 @@
+// oxlint-disable import/no-namespace
+
 import * as LabelPrimitive from '@radix-ui/react-label';
-import { cn } from '@tsgi-web/shared';
 import type { ComponentProps } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 export function Label({ className, ...props }: ComponentProps<typeof LabelPrimitive.Root>) {
 	return (

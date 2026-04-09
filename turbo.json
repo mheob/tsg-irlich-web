@@ -29,8 +29,9 @@
 			"persistent": true
 		},
 		"extract-types": {},
-		"format": {},
 		"lint": {},
+		"lint:fix": {},
+		"lint:github": {},
 		"studio#build": {
 			"dependsOn": ["^build"],
 			"env": [

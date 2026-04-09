@@ -1,3 +1,5 @@
+// oxlint-disable no-magic-numbers
+
 import { RiParentLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
@@ -6,33 +8,31 @@ import { emailField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
 
 const author = defineType({
-	title: 'Autor',
-	name: 'author',
-	type: 'document',
-	icon: RiParentLine,
-	groups: [personal, contact, additionalInformation],
 	fields: [
-		// personal
+		// Personal
 		firstNameField,
 		lastNameField,
 		portraitPictureField,
 
-		// contact
+		// Contact
 		emailField,
 
-		// additionalInformation
+		// AdditionalInformation
 		defineField({
-			title: 'Jobtitel',
-			name: 'jobTitle',
-			type: 'string',
 			description: 'Der Jobtitel bzw. Rolle oder Funktion des Autors.',
 			group: 'additionalInformation',
+			name: 'jobTitle',
+			title: 'Jobtitel',
+			type: 'string',
 			validation: (Rule) => [
 				Rule.required().min(5).error('Der Jobtitel muss mindestens 5 Zeichen lang sein.'),
 				Rule.max(64).warning('Der Jobtitel sollte maximal 64 Zeichen lang sein.'),
 			],
 		}),
 	],
+	groups: [personal, contact, additionalInformation],
+	icon: RiParentLine,
+	name: 'author',
 	preview: {
 		prepare: ({ firstName, lastName, media }) => ({ media, title: `${lastName}, ${firstName}` }),
 		select: {
@@ -41,6 +41,8 @@ const author = defineType({
 			media: 'image.asset',
 		},
 	},
+	title: 'Autor',
+	type: 'document',
 });
 
 export default author;

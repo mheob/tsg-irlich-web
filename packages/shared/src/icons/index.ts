@@ -1,2 +1,2 @@
-export * from './dosb';
 export * from './dosb.types';
+export * from './dosb';

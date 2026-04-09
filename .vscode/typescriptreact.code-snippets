@@ -15,9 +15,9 @@
 			"\t\t</section>",
 			"\t);",
 			"}",
-			""
+			"",
 		],
-		"description": "React functional component"
+		"description": "React functional component",
 	},
 	"React Page component": {
 		"prefix": "rcp",
@@ -39,8 +39,8 @@
 			"\t\t</>",
 			"\t);",
 			"}",
-			""
+			"",
 		],
-		"description": "React functional component"
-	}
+		"description": "React functional component",
+	},
 }

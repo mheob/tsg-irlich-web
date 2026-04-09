@@ -1,14 +1,17 @@
+// oxlint-disable import/no-namespace
+
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { cn } from '@tsgi-web/shared';
 import { X } from 'lucide-react';
 import type { ComponentPropsWithoutRef, ComponentRef, HTMLAttributes, RefObject } from 'react';
 
-export const Dialog = DialogPrimitive.Root;
-export const DialogTrigger = DialogPrimitive.Trigger;
-export const DialogPortal = DialogPrimitive.Portal;
-export const DialogClose = DialogPrimitive.Close;
+import { cn } from '@tsgi-web/shared';
 
-export function DialogOverlay({
+const Dialog = DialogPrimitive.Root;
+const DialogTrigger = DialogPrimitive.Trigger;
+const DialogPortal = DialogPrimitive.Portal;
+const DialogClose = DialogPrimitive.Close;
+
+function DialogOverlay({
 	className,
 	ref,
 	...props
@@ -18,7 +21,7 @@ export function DialogOverlay({
 	return (
 		<DialogPrimitive.Overlay
 			className={cn(
-				'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/80',
+				'fixed inset-0 z-50 bg-black/80 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0',
 				className,
 			)}
 			ref={ref}
@@ -27,7 +30,7 @@ export function DialogOverlay({
 	);
 }
 
-export function DialogContent({
+function DialogContent({
 	children,
 	className,
 	ref,
@@ -40,15 +43,15 @@ export function DialogContent({
 			<DialogOverlay />
 			<DialogPrimitive.Content
 				className={cn(
-					'bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed top-[50%] left-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg duration-200 sm:rounded-lg',
+					'fixed top-[50%] left-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] data-[state=open]:zoom-in-95 sm:rounded-lg',
 					className,
 				)}
 				ref={ref}
 				{...props}
 			>
 				{children}
-				<DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none">
-					<X className="text-primary size-8" />
+				<DialogPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+					<X className="size-8 text-primary" />
 					<span className="sr-only">Schließen</span>
 				</DialogPrimitive.Close>
 			</DialogPrimitive.Content>
@@ -56,7 +59,7 @@ export function DialogContent({
 	);
 }
 
-export function DialogHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+function DialogHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
 	return (
 		<div
 			className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)}
@@ -65,7 +68,7 @@ export function DialogHeader({ className, ...props }: HTMLAttributes<HTMLDivElem
 	);
 }
 
-export function DialogFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+function DialogFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
 	return (
 		<div
 			className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)}
@@ -74,7 +77,7 @@ export function DialogFooter({ className, ...props }: HTMLAttributes<HTMLDivElem
 	);
 }
 
-export function DialogTitle({
+function DialogTitle({
 	className,
 	ref,
 	...props
@@ -90,7 +93,7 @@ export function DialogTitle({
 	);
 }
 
-export function DialogDescription({
+function DialogDescription({
 	className,
 	ref,
 	...props
@@ -99,9 +102,22 @@ export function DialogDescription({
 }) {
 	return (
 		<DialogPrimitive.Description
-			className={cn('text-muted-foreground text-sm', className)}
+			className={cn('text-sm text-muted-foreground', className)}
 			ref={ref}
 			{...props}
 		/>
 	);
 }
+
+export {
+	Dialog,
+	DialogTrigger,
+	DialogPortal,
+	DialogClose,
+	DialogOverlay,
+	DialogContent,
+	DialogHeader,
+	DialogFooter,
+	DialogTitle,
+	DialogDescription,
+};

@@ -1,5 +1,5 @@
-/* eslint-disable node/prefer-global/process */
-
+// oxlint-disable node/no-process-env
+//
 /**
  * Asserts that a value is defined and returns it, throwing an error if undefined.
  * Used to validate required environment variables.
@@ -14,7 +14,10 @@
  * ```
  */
 function assertValue<T>(value: T | undefined, errorMessage: string): T {
-	if (!value) throw new Error(errorMessage);
+	if (!value) {
+		throw new Error(errorMessage);
+	}
+
 	return value;
 }
 
@@ -23,7 +26,7 @@ function assertValue<T>(value: T | undefined, errorMessage: string): T {
  * This is loaded from the `SANITY_STUDIO_DATASET` environment variable.
  * If the environment variable is missing, an error will be thrown.
  */
-export const dataset = assertValue(
+const dataset = assertValue(
 	process.env.SANITY_STUDIO_DATASET,
 	'Missing environment variable: SANITY_STUDIO_DATASET',
 );
@@ -33,7 +36,7 @@ export const dataset = assertValue(
  * This is loaded from the `SANITY_STUDIO_PROJECT_ID` environment variable.
  * If the environment variable is missing, an error will be thrown.
  */
-export const projectId = assertValue(
+const projectId = assertValue(
 	process.env.SANITY_STUDIO_PROJECT_ID,
 	'Missing environment variable: SANITY_STUDIO_PROJECT_ID',
 );
@@ -45,4 +48,6 @@ export const projectId = assertValue(
  *
  * @see https://www.sanity.io/docs/api-versioning for how versioning works
  */
-export const apiVersion = process.env.SANITY_STUDIO_VERSION ?? '2025-09-05';
+const apiVersion = process.env.SANITY_STUDIO_VERSION ?? '2025-09-05';
+
+export { apiVersion, dataset, projectId };

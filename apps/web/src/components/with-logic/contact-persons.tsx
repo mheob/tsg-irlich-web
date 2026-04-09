@@ -1,8 +1,9 @@
 'use client';
 
-import { cn } from '@tsgi-web/shared';
 import Image from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
@@ -11,9 +12,10 @@ import { getInitials } from '@/utils/image';
 
 import { ContactButton } from '../ui/contact-button';
 
+const IMAGE_SIZE = { desktop: 176, mobile: 120 };
+
 interface ContactPersonItemProps
-	extends ContactPerson,
-		Omit<ComponentPropsWithoutRef<'article'>, 'role'> {}
+	extends ContactPerson, Omit<ComponentPropsWithoutRef<'article'>, 'role'> {}
 
 function ContactPersonItem({
 	contactAs,
@@ -27,7 +29,9 @@ function ContactPersonItem({
 }: Readonly<ContactPersonItemProps>) {
 	const isMobile = useMediaQuery('(max-width: 48rem)');
 
-	const imageSource = isMobile ? urlForImage(image, 120) : urlForImage(image, 176);
+	const imageSource = isMobile
+		? urlForImage(image, IMAGE_SIZE.mobile)
+		: urlForImage(image, IMAGE_SIZE.desktop);
 
 	const showPhone = phone && (contactAs === 'phone' || contactAs === 'both');
 	const showWhatsapp = phone && (contactAs === 'whatsapp' || contactAs === 'both');
@@ -37,29 +41,29 @@ function ContactPersonItem({
 			{imageSource ? (
 				<Image
 					className={cn(
-						'bg-secondary-light text-primary border-primary',
+						'border-primary bg-secondary-light text-primary',
 						'relative z-1 grid place-items-center',
-						'rounded-full border-5 md:border-8',
+						`rounded-full border-5 md:border-8`,
 					)}
 					alt={image.alt}
-					height={isMobile ? 120 : 176}
+					height={isMobile ? IMAGE_SIZE.mobile : IMAGE_SIZE.desktop}
 					src={imageSource}
-					width={isMobile ? 120 : 176}
+					width={isMobile ? IMAGE_SIZE.mobile : IMAGE_SIZE.desktop}
 				/>
 			) : (
 				<div
 					className={cn(
-						'bg-secondary text-primary border-primary',
+						'border-primary bg-secondary text-primary',
 						'relative z-1 grid place-items-center',
-						'rounded-full border-5 md:border-8',
-						'size-32 text-6xl font-bold md:size-44',
+						`rounded-full border-5 md:border-8`,
+						`size-32 text-6xl font-bold md:size-44`,
 					)}
 				>
 					{getInitials(firstName, lastName)}
 				</div>
 			)}
 
-			<div className="bg-background -mt-24 ml-8 flex h-full flex-col gap-4 rounded-xl text-black md:-mt-36 md:gap-12">
+			<div className="-mt-24 ml-8 flex h-full flex-col gap-4 rounded-xl bg-background text-black md:-mt-36 md:gap-12">
 				<header className="pt-6 pr-12 pl-28 md:pl-40">
 					<h3 className="font-serif text-2xl md:text-4xl">
 						{firstName} {lastName}

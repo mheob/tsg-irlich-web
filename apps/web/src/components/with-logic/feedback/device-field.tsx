@@ -12,12 +12,13 @@ interface DeviceFieldProps {
 export function DeviceField({ form }: Readonly<DeviceFieldProps>) {
 	return (
 		<FormField
+			// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>
 						Gerät{' '}
-						<span className="text-muted-foreground text-base md:text-lg">
-							(z. B. iPhone 13 Pro, iPad Pro 13" oder Samsung S25 etc.)
+						<span className="text-base text-muted-foreground md:text-lg">
+							(z. B. iPhone 13 Pro, iPad Pro 13&quot; oder Samsung S25 etc.)
 						</span>
 					</FormLabel>
 					<FormControl>

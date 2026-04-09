@@ -18,8 +18,8 @@ This Sanity Studio instance provides a custom content editing environment for th
 
 ### Prerequisites
 
-- **Node.js** ^24.12.0
-- **bun** 1.3.5 (package manager)
+- **Node.js** ^24.14.1
+- **bun** 1.3.11 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation
@@ -145,7 +145,7 @@ export const mySchemaType = defineType({
 			name: 'title',
 			title: 'Titel',
 			type: 'string',
-			validation: Rule => Rule.required(),
+			validation: (Rule) => Rule.required(),
 		}),
 	],
 	icon: FileText,

@@ -25,29 +25,18 @@ import { pricingField } from './pricing';
 import { testimonialField } from './testimonial';
 
 const homePage = defineType({
-	title: 'Home',
-	name: 'home',
-	type: 'document',
-	icon: RiBookletLine,
-	groups: [general, meta, content],
 	fields: [
 		// (hidden)
 		getHiddenSlugField('home'),
 
-		// general
+		// General
 		...defaultPageSectionFields,
 
-		// meta
+		// Meta
 		metaField,
 
-		// content
+		// Content
 		defineField({
-			title: 'Inhalte',
-			name: 'content',
-			type: 'object',
-			icon: RiLinksLine,
-			group: 'content',
-			groups: [features, vision, groups, stats, pricing, testimonial, contactPersons, news],
 			fields: [
 				featuresField,
 				visionField,
@@ -58,12 +47,23 @@ const homePage = defineType({
 				contactPersonsSectionField,
 				newsField,
 			],
+			group: 'content',
+			groups: [features, vision, groups, stats, pricing, testimonial, contactPersons, news],
+			icon: RiLinksLine,
+			name: 'content',
+			title: 'Inhalte',
+			type: 'object',
 			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
+	groups: [general, meta, content],
+	icon: RiBookletLine,
+	name: 'home',
 	preview: {
 		prepare: () => ({ title: 'Home' }),
 	},
+	title: 'Home',
+	type: 'document',
 });
 
 export default homePage;

@@ -6,14 +6,16 @@ interface SocialMediaProps {
 	socialMedia?: null | SocialMediaQueryResult;
 }
 
-export async function SocialMedia({ socialMedia }: Readonly<SocialMediaProps>) {
-	if (!socialMedia) return null;
+export function SocialMedia({ socialMedia }: Readonly<SocialMediaProps>) {
+	if (!socialMedia) {
+		return null;
+	}
 
 	return (
 		<section className="mt-10">
 			<h3>Folge uns!</h3>
 
-			<div className="text-primary mt-4 flex gap-4">
+			<div className="mt-4 flex gap-4 text-primary">
 				{Object.entries(socialMedia).map(([name, url]) => (
 					<SocialMediaIcon href={url} icon={getSocialMediaIcon(name)} key={url} label={name} />
 				))}

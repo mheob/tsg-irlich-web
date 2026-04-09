@@ -2,32 +2,32 @@ import { RiShareLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 const socialFields = defineField({
-	title: 'Social',
-	name: 'socialFields',
-	type: 'object',
-	icon: RiShareLine,
 	fields: [
 		{
-			title: 'WhatsApp Number',
 			name: 'whatsapp',
+			title: 'WhatsApp Number',
 			type: 'url',
 		},
 		{
-			title: 'Facebook URL',
 			name: 'facebook',
+			title: 'Facebook URL',
 			type: 'url',
 		},
 		{
-			title: 'Instagram URL',
 			name: 'instagram',
+			title: 'Instagram URL',
 			type: 'url',
 		},
 		{
-			title: 'YouTube URL',
 			name: 'youtube',
+			title: 'YouTube URL',
 			type: 'url',
 		},
 	],
+	icon: RiShareLine,
+	name: 'socialFields',
+	title: 'Social',
+	type: 'object',
 });
 
 export default socialFields;

@@ -1,7 +1,7 @@
-/* biome-ignore-all lint/correctness/noUnknownFunction: the unknown functions comes from tailwind */
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@plugin "@tailwindcss/typography";
+@plugin '@tailwindcss/typography';
+@plugin 'tailwindcss-animate';
 
 @theme {
 	--radius: 0.5rem;
@@ -57,12 +57,12 @@
 	--color-secondary-dark: oklch(0.72 0.15 85);
 
 	--font-sans:
-		Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-		"Segoe UI Symbol", "Noto Color Emoji";
+		Inter, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol', 'Noto Color Emoji';
 	--font-sans-serif:
-		Anton, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-		"Segoe UI Symbol", "Noto Color Emoji";
-	--font-serif: Bebas Neue, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+		Anton, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol', 'Noto Color Emoji';
+	--font-serif: Bebas Neue, ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 
 	--breakpoint-3xl: 120rem;
 
@@ -356,10 +356,10 @@
 	h5,
 	h6,
 	.title,
-	.subTitle {
+	.sub-title {
 		font-family:
-			Anton, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-			"Segoe UI Symbol", "Noto Color Emoji";
+			Anton, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+			'Segoe UI Symbol', 'Noto Color Emoji';
 		text-wrap: balance;
 	}
 

@@ -4,11 +4,11 @@ import { defineField } from 'sanity';
 import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 export const groupsField = defineField({
-	title: 'Gruppen',
-	name: 'groupsSection',
-	type: 'object',
-	icon: RiLinksLine,
-	group: 'groups',
 	fields: [...getDefaultPageSectionFieldsWithGroup()],
+	group: 'groups',
+	icon: RiLinksLine,
+	name: 'groupsSection',
+	title: 'Gruppen',
+	type: 'object',
 	validation: (Rule) => Rule.required(),
 });

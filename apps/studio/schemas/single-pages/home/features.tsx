@@ -1,33 +1,27 @@
+// oxlint-disable no-magic-numbers
+
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 export const featuresField = defineField({
-	title: 'Merkmale',
-	name: 'featureSection',
-	type: 'object',
-	icon: RiLinksLine,
-	group: 'features',
 	fields: [
 		...getDefaultPageSectionFieldsWithGroup(),
 
 		defineField({
-			title: 'Merkmale',
+			description: "Merkmale (USP's), die auf der Homepage angezeigt werden.",
 			name: 'features',
-			type: 'array',
+			// oxlint-disable-next-line no-warning-comments
 			// TODO: add icon name (string) from https://... (see: /apps/studio/schemas/documents/group.tsx:63)
 			of: [
 				defineField({
-					title: 'Merkmal',
-					name: 'feature',
-					type: 'object',
 					fields: [
 						defineField({
-							title: 'Title',
-							name: 'title',
-							type: 'string',
 							description: 'Der Titel des Merkmals.',
+							name: 'title',
+							title: 'Title',
+							type: 'string',
 							validation: (Rule) => [
 								Rule.required().min(10).error('Der Titel muss mindestens 10 Zeichen lang sein'),
 								Rule.max(65).warning('Der Titel sollte nicht länger als 65 Zeichen sein'),
@@ -35,10 +29,10 @@ export const featuresField = defineField({
 						}),
 
 						defineField({
-							title: 'Intro',
-							name: 'intro',
-							type: 'string',
 							description: 'Die Beschreibung des Merkmals.',
+							name: 'intro',
+							title: 'Intro',
+							type: 'string',
 							validation: (Rule) => [
 								Rule.required().min(10).error('Das Intro muss mindestens 10 Zeichen lang sein'),
 								Rule.max(120).warning('Das Intro sollte nicht länger als 120 Zeichen sein'),
@@ -46,9 +40,6 @@ export const featuresField = defineField({
 						}),
 
 						defineField({
-							title: 'Icon',
-							name: 'icon',
-							type: 'string',
 							description: (
 								<>
 									Name des Icons aus{' '}
@@ -60,20 +51,32 @@ export const featuresField = defineField({
 									<kbd>OneIcon</kbd>).
 								</>
 							),
+							name: 'icon',
+							title: 'Icon',
+							type: 'string',
 							validation: (Rule) => [Rule.required().error('Das Icon ist erforderlich')],
 						}),
 					],
+					name: 'feature',
+					title: 'Merkmal',
+					type: 'object',
 				}),
 			],
-			description: "Merkmale (USP's), die auf der Homepage angezeigt werden.",
+			title: 'Merkmale',
+			type: 'array',
 			validation: (Rule) => [
-				Rule.custom((features) => {
-					return features?.length === 4 || features?.length === 6
+				Rule.custom((features) =>
+					features?.length === 4 || features?.length === 6
 						? true
-						: 'Es müssen genau 4 oder 6 Merkmale gewählt werden';
-				}),
+						: 'Es müssen genau 4 oder 6 Merkmale gewählt werden',
+				),
 			],
 		}),
 	],
+	group: 'features',
+	icon: RiLinksLine,
+	name: 'featureSection',
+	title: 'Merkmale',
+	type: 'object',
 	validation: (Rule) => [Rule.required().error('Merkmale sind erforderlich')],
 });

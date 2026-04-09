@@ -1,4 +1,5 @@
-import { pixelBasedPreset, type TailwindConfig } from '@react-email/components';
+import { pixelBasedPreset } from '@react-email/components';
+import type { TailwindConfig } from '@react-email/components';
 
 export const tailwindConfig: TailwindConfig = {
 	presets: [pixelBasedPreset],

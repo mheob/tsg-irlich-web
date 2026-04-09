@@ -6,33 +6,33 @@ import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 
 const accessibilityPage = defineType({
-	title: 'Barrierefreiheit',
-	name: 'accessibility',
-	type: 'document',
-	icon: RiWheelchairLine,
-	groups: [general, meta, { name: 'content', title: 'Barrierefreiheit' }],
 	fields: [
 		// (hidden)
 		getHiddenSlugField('barrierefreiheit'),
 
-		// general
+		// General
 		...defaultHeroFields,
 
-		// meta
+		// Meta
 		metaField,
 
-		// content
+		// Content
 		defineField({
-			title: 'Barrierefreiheit',
-			name: 'content',
-			type: 'blockContent',
 			group: 'content',
+			name: 'content',
+			title: 'Barrierefreiheit',
+			type: 'blockContent',
 			validation: (Rule) => [Rule.required().error('Barrierefreiheit ist erforderlich')],
 		}),
 	],
+	groups: [general, meta, { name: 'content', title: 'Barrierefreiheit' }],
+	icon: RiWheelchairLine,
+	name: 'accessibility',
 	preview: {
 		prepare: () => ({ title: 'Barrierefreiheit' }),
 	},
+	title: 'Barrierefreiheit',
+	type: 'document',
 });
 
 export default accessibilityPage;

@@ -15,7 +15,7 @@ export default defineConfig({
 	dataset,
 	document: {
 		// For singleton types, filter out actions that are not explicitly included
-		// in the `singletonActions` list defined above
+		// In the `singletonActions` list defined above
 		actions: (input, context) =>
 			singletonTypes.has(context.schemaType)
 				? input.filter(({ action }) => action && singletonActions.has(action))

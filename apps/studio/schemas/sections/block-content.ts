@@ -1,24 +1,17 @@
 import { RiFileTextLine } from 'react-icons/ri';
-import { defineField, type PortableTextSpan, type PortableTextTextBlock } from 'sanity';
+import { defineField } from 'sanity';
+import type { PortableTextSpan, PortableTextTextBlock } from 'sanity';
 
 import externalLink from '../objects/external-link';
 import internalLink from '../objects/internal-link';
 
 const blockContent = defineField({
-	title: 'Block Content',
-	name: 'blockContent',
-	type: 'object',
 	description: 'Text Block',
-	icon: RiFileTextLine,
 	fields: [
 		defineField({
-			title: 'Text',
 			name: 'text',
-			type: 'array',
 			of: [
 				{
-					title: 'Block',
-					type: 'block',
 					marks: {
 						annotations: [internalLink, externalLink],
 						decorators: [
@@ -32,18 +25,21 @@ const blockContent = defineField({
 						{ title: 'H3', value: 'h3' },
 						{ title: 'Quote', value: 'blockquote' },
 					],
+					title: 'Block',
+					type: 'block',
 				},
 			],
+			title: 'Text',
+			type: 'array',
 		}),
 	],
+	icon: RiFileTextLine,
+	name: 'blockContent',
 	preview: {
-		select: {
-			blocks: 'text',
-		},
-		// biome-ignore lint: `any` is fine here for us
+		// oxlint-disable-next-line typescript/no-explicit-any
 		prepare(value: Record<string, any>) {
 			const block: PortableTextTextBlock<PortableTextSpan> | undefined = value.blocks.find(
-				(block: PortableTextTextBlock<PortableTextSpan>) => block._type === 'block',
+				(currentBlock: PortableTextTextBlock<PortableTextSpan>) => currentBlock._type === 'block',
 			);
 			return {
 				title: block
@@ -54,7 +50,12 @@ const blockContent = defineField({
 					: 'No title',
 			};
 		},
+		select: {
+			blocks: 'text',
+		},
 	},
+	title: 'Block Content',
+	type: 'object',
 });
 
 export default blockContent;

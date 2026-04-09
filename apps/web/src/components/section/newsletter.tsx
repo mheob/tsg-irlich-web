@@ -1,11 +1,13 @@
 'use client';
 
-import { cn } from '@tsgi-web/shared';
 import { AlertCircle, AtSign, Check, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useActionState, useEffect, useRef } from 'react';
 
-import { type NewsletterFormState, subscribeToNewsletter } from '@/actions/subscribe-to-newsletter';
+import { cn } from '@tsgi-web/shared';
+
+import { subscribeToNewsletter } from '@/actions/subscribe-to-newsletter';
+import type { NewsletterFormState } from '@/actions/subscribe-to-newsletter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -33,7 +35,7 @@ export function Newsletter() {
 			<div
 				className={cn(
 					styles.bg,
-					'bg-background relative z-1 mx-auto max-w-(--breakpoint-lg) rounded-lg px-5 pt-10 pb-12 md:-mb-16 md:px-14 md:pt-24',
+					'relative z-1 mx-auto max-w-(--breakpoint-lg) rounded-lg bg-background px-5 pt-10 pb-12 md:-mb-16 md:px-14 md:pt-24',
 				)}
 			>
 				{state && (
@@ -58,12 +60,12 @@ export function Newsletter() {
 
 				<form
 					action={formAction}
-					className="bg-background relative z-1 mt-16 flex max-w-(--breakpoint-sm) items-center justify-between gap-2 rounded-md px-2 pb-2 shadow-xl md:mx-auto md:gap-6 md:px-6"
+					className="relative z-1 mt-16 flex max-w-(--breakpoint-sm) items-center justify-between gap-2 rounded-md bg-background px-2 pb-2 shadow-xl md:mx-auto md:gap-6 md:px-6"
 					ref={formReference}
 				>
 					<label
 						aria-label="E-Mail"
-						className="text-primary sr-only md:not-sr-only"
+						className="sr-only text-primary md:not-sr-only"
 						htmlFor="email"
 					>
 						<AtSign />
@@ -90,14 +92,14 @@ export function Newsletter() {
 					</Button>
 				</form>
 
-				<p className="text-muted-foreground mx-auto mt-8 text-center text-sm">
+				<p className="mx-auto mt-8 text-center text-sm text-muted-foreground">
 					Mit der Anmeldung erklärst Du Dich damit einverstanden, dass wir Dir regelmäßig
 					Informationen per E-Mail zusenden. Du kannst Dich jederzeit über den Abmeldelink in jeder
 					E-Mail abmelden.
 				</p>
-				<p className="text-muted-foreground mx-auto mt-2 text-center text-sm">
+				<p className="mx-auto mt-2 text-center text-sm text-muted-foreground">
 					Siehe auch unsere{' '}
-					<Link className="text-primary hover:text-primary-light underline" href="/datenschutz">
+					<Link className="text-primary underline hover:text-primary-light" href="/datenschutz">
 						Datenschutzerklärung
 					</Link>
 					.

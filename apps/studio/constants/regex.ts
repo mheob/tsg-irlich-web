@@ -14,7 +14,7 @@
  * Invalid: "+490 123 456789" (country code must be 2 digits)
  * Invalid: "+49 123456789" (missing space)
  */
-export const phoneFieldRegex = /^\+\d{2}\s\d{2,5}\s\d+$/;
+const phoneFieldRegex = /^\+\d{2}\s\d{2,5}\s\d+$/;
 
 /**
  * Regular expression for validating time strings in 24-hour format "HH:MM"
@@ -32,4 +32,6 @@ export const phoneFieldRegex = /^\+\d{2}\s\d{2,5}\s\d+$/;
  * Invalid: "24:00" (hours must be 00-23)
  * Invalid: "12:60" (minutes must be 00-59)
  */
-export const timeFieldRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+const timeFieldRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+export { phoneFieldRegex, timeFieldRegex };

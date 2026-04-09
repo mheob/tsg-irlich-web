@@ -1,9 +1,10 @@
 'use client';
 
-import { cn } from '@tsgi-web/shared';
 import { useInView, useMotionValue, useSpring } from 'motion/react';
 import type { ComponentPropsWithoutRef } from 'react';
 import { useEffect, useRef } from 'react';
+
+import { cn, timeSpanInMilliSeconds } from '@tsgi-web/shared';
 
 import { DEFAULT_LOCALE } from '@/constants/time';
 
@@ -41,9 +42,12 @@ export function NumberTicker({
 
 	useEffect(() => {
 		if (isInView) {
-			const timer = setTimeout(() => {
-				motionValue.set(direction === 'down' ? startValue : value);
-			}, delay * 1000);
+			const timer = setTimeout(
+				() => {
+					motionValue.set(direction === 'down' ? startValue : value);
+				},
+				delay * timeSpanInMilliSeconds('second'),
+			);
 			return () => clearTimeout(timer);
 		}
 	}, [motionValue, isInView, delay, value, direction, startValue]);

@@ -3,9 +3,9 @@ import { RiTeamLine } from 'react-icons/ri';
 import { getGroupDocument } from '@/utils/documents';
 
 const courses = getGroupDocument({
-	title: 'Kurse',
-	name: 'group.courses',
 	icon: RiTeamLine,
+	name: 'group.courses',
+	title: 'Kurse',
 });
 
 export default courses;

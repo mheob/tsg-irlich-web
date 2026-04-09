@@ -1,13 +1,17 @@
-import { DOSBIcon } from '@tsgi-web/shared';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { DOSBIcon } from '@tsgi-web/shared';
 
 import { ArrowElement } from '@/components/ui/arrow-button';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { Groups as GroupsType } from '@/types/sanity.types';
-import { getGroupImage, type GroupSection } from '@/utils/groups';
+import { getGroupImage } from '@/utils/groups';
+import type { GroupSection } from '@/utils/groups';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
+
+const IMAGE_SIZE = { height: 270, width: 480 };
 
 type Group = GroupsType['groups'][number];
 
@@ -34,7 +38,9 @@ export function GroupCard({
 			<Image
 				alt={title}
 				className="absolute inset-0 z-[-2] rounded-xl"
-				src={urlForImage(featuredImage, 270, 480) ?? getGroupImage(slug).src}
+				src={
+					urlForImage(featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width) ?? getGroupImage(slug).src
+				}
 				fill
 			/>
 
@@ -44,21 +50,21 @@ export function GroupCard({
 			>
 				<div className="flex h-full flex-row items-end justify-between p-6">
 					<div className="flex flex-col justify-end">
-						<div className="bg-secondary text-primary grid size-12 place-content-center rounded-full text-5xl md:size-14">
+						<div className="grid size-12 place-content-center rounded-full bg-secondary text-5xl text-primary md:size-14">
 							<DOSBIcon
 								className="size-8 w-auto text-current md:size-10"
 								icon={icon ?? getFirstLetter(title)}
 							/>
 						</div>
 
-						<h3 className="text-primary-foreground mt-6 line-clamp-1 font-serif text-3xl uppercase">
+						<h3 className="mt-6 line-clamp-1 font-serif text-3xl text-primary-foreground uppercase">
 							{overviewTitle ?? title}
 						</h3>
 					</div>
 
 					<ArrowElement
 						aria-hidden="true"
-						className="hover:bg-secondary self-end"
+						className="self-end hover:bg-secondary"
 						direction="up-right"
 						size="size-6 md:size-8"
 						variant="secondary"

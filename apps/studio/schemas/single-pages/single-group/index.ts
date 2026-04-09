@@ -9,32 +9,32 @@ import { contactPersonsField } from './contact-persons';
 import { trainingsField } from './training';
 
 const singleGroupPage = defineType({
-	title: 'Einzel-Gruppe',
-	name: 'singleGroupPage',
-	type: 'document',
-	icon: RiBookletLine,
-	groups: [general, content],
 	fields: [
 		// ?: the "slug" and `meta` comes from the news article itself; this page is rather the layout
 
-		// general
+		// General
 		...defaultHeroFields,
 
-		// content
+		// Content
 		defineField({
-			title: 'Inhalte',
-			name: 'content',
-			type: 'object',
-			icon: RiLinksLine,
+			fields: [contactPersonsField, trainingsField],
 			group: 'content',
 			groups: [contactPersons, trainings],
-			fields: [contactPersonsField, trainingsField],
+			icon: RiLinksLine,
+			name: 'content',
+			title: 'Inhalte',
+			type: 'object',
 			validation: (Rule) => Rule.required(),
 		}),
 	],
+	groups: [general, content],
+	icon: RiBookletLine,
+	name: 'singleGroupPage',
 	preview: {
 		prepare: () => ({ title: 'Einzel-Gruppe' }),
 	},
+	title: 'Einzel-Gruppe',
+	type: 'document',
 });
 
 export default singleGroupPage;

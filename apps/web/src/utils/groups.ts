@@ -1,7 +1,7 @@
-/* cspell:words angebot, kurse */
-import type { DosbIconName } from '@tsgi-web/shared/icons/dosb.types';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import type { ImageProps } from 'next/image';
+
+import type { DosbIconName } from '@tsgi-web/shared/icons/dosb.types';
 
 import soccerImage from '@/images/angebot/groups/fussball.webp';
 import gymnasticImage from '@/images/angebot/groups/kinderturnen.webp';
@@ -18,7 +18,7 @@ interface OfferGroupImage {
 	src: ImageProps['src'];
 }
 
-export interface GroupSection {
+interface GroupSection {
 	_type: string;
 	icon: DosbIconName;
 	image: OfferGroupImage;
@@ -26,12 +26,12 @@ export interface GroupSection {
 	title: string;
 }
 
-export const fallbackImage: OfferGroupImage = {
+const fallbackImage: OfferGroupImage = {
 	alt: 'Sporthalle mit drei verschiedenen Trainingsgruppen: Links üben Kinder und ein Trainer in weißen Taekwondo-Anzügen mit schwarzem Gürtel synchrone Kicks, in der Mitte zeigen Mädchen in türkis-blauen Gymnastik-Trikots mit bunten Federn eine Beinübung, und rechts spielen Kinder unter Anleitung von Trainern in dunkelblauen Shirts Fußball auf einer grünen Kunstrasenfläche. Im Hintergrund sind bunte Gymnastikbälle und Sportgeräte zu sehen.',
 	src: fallbackImageFile,
 };
 
-export const groupSections: GroupSection[] = [
+const groupSections: GroupSection[] = [
 	{
 		_type: 'group.soccer',
 		icon: 'Fussball',
@@ -94,7 +94,7 @@ export const groupSections: GroupSection[] = [
 	},
 ];
 
-export function getOGImage(group: string): OpenGraph['images'] {
+function getOGImage(group: string): OpenGraph['images'] {
 	const groupSection = groupSections.find((section) => section.slug === `/angebot/${group}`);
 	const imageURL = groupSection ? `/og/angebot/groups/${group}.webp` : `/og/angebot.webp`;
 
@@ -106,11 +106,20 @@ export function getOGImage(group: string): OpenGraph['images'] {
 	};
 }
 
-export function getGroupImage(group: string, path = ''): GroupSection['image'] {
+function getGroupImage(group: string, path = ''): GroupSection['image'] {
 	const groupSection = groupSections.find((section) => section.slug === `${path}${group}`);
 	return groupSection?.image ?? fallbackImage;
 }
 
-export function getCurrentDepartment(group: string): GroupSection | undefined {
+function getCurrentDepartment(group: string): GroupSection | undefined {
 	return groupSections.find((g) => g.slug === `/angebot/${group}`);
 }
+
+export {
+	fallbackImage,
+	groupSections,
+	getOGImage,
+	getGroupImage,
+	getCurrentDepartment,
+	type GroupSection,
+};

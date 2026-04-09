@@ -7,67 +7,67 @@ const pricingCardFields = [
 	...getDefaultPageSectionFieldsWithGroup(),
 
 	defineField({
-		title: 'Preis',
 		name: 'price',
+		title: 'Preis',
 		type: 'number',
 		validation: (Rule) => [Rule.required().error('Preis ist erforderlich')],
 	}),
 
 	defineField({
-		title: 'Titel Vorteile',
 		name: 'benefitsTitle',
+		title: 'Titel Vorteile',
 		type: 'string',
 		validation: (Rule) => [Rule.required().error('Titel Vorteile ist erforderlich')],
 	}),
 
 	defineField({
-		title: 'Vorteile',
 		name: 'benefits',
-		type: 'array',
 		of: [{ type: 'string' }],
+		title: 'Vorteile',
+		type: 'array',
 		validation: (Rule) => [Rule.required().error('Vorteile sind erforderlich')],
 	}),
 
 	defineField({
-		title: 'Button Text',
 		name: 'cta',
+		title: 'Button Text',
 		type: 'string',
 		validation: (Rule) => [Rule.required().error('Button Text ist erforderlich')],
 	}),
 ];
 
 export const pricingField = defineField({
-	title: 'Preistabelle',
-	name: 'pricingSection',
-	type: 'object',
-	icon: RiLinksLine,
-	group: 'pricing',
 	fields: [
 		...getDefaultPageSectionFieldsWithGroup(),
 
 		defineField({
-			title: 'Preistabelle Jugendliche',
-			name: 'pricingYouth',
-			type: 'object',
 			fields: pricingCardFields,
+			name: 'pricingYouth',
+			title: 'Preistabelle Jugendliche',
+			type: 'object',
 			validation: (Rule) => [Rule.required().error('Preistabelle Jugendliche ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Preistabelle Familie',
-			name: 'pricingFamily',
-			type: 'object',
 			fields: pricingCardFields,
+			name: 'pricingFamily',
+			title: 'Preistabelle Familie',
+			type: 'object',
 			validation: (Rule) => [Rule.required().error('Preistabelle Familie ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Preistabelle Erwachsene',
-			name: 'pricingAdult',
-			type: 'object',
 			fields: pricingCardFields,
+			name: 'pricingAdult',
+			title: 'Preistabelle Erwachsene',
+			type: 'object',
 			validation: (Rule) => [Rule.required().error('Preistabelle Erwachsene ist erforderlich')],
 		}),
 	],
+	group: 'pricing',
+	icon: RiLinksLine,
+	name: 'pricingSection',
+	title: 'Preistabelle',
+	type: 'object',
 	validation: (Rule) => [Rule.required().error('Preistabelle ist erforderlich')],
 });

@@ -12,10 +12,11 @@ interface EmailFieldProps {
 export function EmailField({ form }: Readonly<EmailFieldProps>) {
 	return (
 		<FormField
+			// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>
-						E-Mail <span className="text-muted-foreground text-base md:text-lg">(optional)</span>
+						E-Mail <span className="text-base text-muted-foreground md:text-lg">(optional)</span>
 					</FormLabel>
 					<FormControl>
 						<Input placeholder="deine@email.de" type="email" {...field} />

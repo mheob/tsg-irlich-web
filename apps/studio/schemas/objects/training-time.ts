@@ -1,4 +1,4 @@
-// cSpell:words monday tuesday wednesday thursday friday saturday sunday
+// oxlint-disable no-magic-numbers
 
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
@@ -7,15 +7,9 @@ import TimePicker from '@/components/time-picker';
 import { timeFieldRegex } from '@/constants/regex';
 
 const trainingTimeField = defineField({
-	title: 'Trainingszeiten und -orte',
-	name: 'trainingTime',
-	type: 'object',
-	icon: RiLinksLine,
 	fields: [
 		defineField({
-			title: 'Jahreszeit',
 			name: 'season',
-			type: 'string',
 			options: {
 				list: [
 					{ title: 'Ganzjährig', value: 'yearly' },
@@ -23,13 +17,13 @@ const trainingTimeField = defineField({
 					{ title: 'Winter', value: 'winter' },
 				],
 			},
+			title: 'Jahreszeit',
+			type: 'string',
 			validation: (Rule) => [Rule.required().error('Jahreszeit ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Wochentag',
 			name: 'weekday',
-			type: 'string',
 			options: {
 				list: [
 					{ title: 'Montag', value: 'monday' },
@@ -41,14 +35,16 @@ const trainingTimeField = defineField({
 					{ title: 'Sonntag', value: 'sunday' },
 				],
 			},
+			title: 'Wochentag',
+			type: 'string',
 			validation: (Rule) => [Rule.required().error('Wochentag ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Startzeit',
-			name: 'startTime',
-			type: 'string',
 			components: { input: TimePicker },
+			name: 'startTime',
+			title: 'Startzeit',
+			type: 'string',
 			validation: (Rule) => [
 				Rule.required().error('Startzeit ist erforderlich'),
 				Rule.regex(timeFieldRegex).error('Ungültige Startzeit, HH:mm erwartet'),
@@ -56,10 +52,10 @@ const trainingTimeField = defineField({
 		}),
 
 		defineField({
-			title: 'Endzeit',
-			name: 'endTime',
-			type: 'string',
 			components: { input: TimePicker },
+			name: 'endTime',
+			title: 'Endzeit',
+			type: 'string',
 			validation: (Rule) => [
 				Rule.required().error('Endzeit ist erforderlich'),
 				Rule.regex(timeFieldRegex).error('Ungültige Endzeit, HH:mm erwartet'),
@@ -67,16 +63,16 @@ const trainingTimeField = defineField({
 		}),
 
 		defineField({
-			title: 'Trainingsort',
 			name: 'venue',
-			type: 'reference',
+			title: 'Trainingsort',
 			to: [{ type: 'venue' }],
+			type: 'reference',
 			validation: (Rule) => [Rule.required().error('Trainingsort ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Notizen',
 			name: 'note',
+			title: 'Notizen',
 			type: 'string',
 			validation: (Rule) => [
 				Rule.min(2).error('Notiz sollte mindestens 2 Zeichen lang sein'),
@@ -84,19 +80,23 @@ const trainingTimeField = defineField({
 			],
 		}),
 	],
+	icon: RiLinksLine,
+	name: 'trainingTime',
 	preview: {
 		prepare: ({ weekday, endTime, venue, note, startTime, season }) => ({
 			title: `${season ?? '_'} | ${weekday ?? '_'}, ${startTime ?? '_'} - ${endTime ?? '_'} | ${venue ?? '_'} | ${note ?? '_'}`,
 		}),
 		select: {
 			endTime: 'endTime',
-			venue: 'venue.title',
 			note: 'note',
 			season: 'season',
 			startTime: 'startTime',
+			venue: 'venue.title',
 			weekday: 'weekday',
 		},
 	},
+	title: 'Trainingszeiten und -orte',
+	type: 'object',
 });
 
 export default trainingTimeField;

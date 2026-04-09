@@ -39,10 +39,10 @@ export function ContactForwardEmail({
 			<Head />
 
 			<Tailwind config={tailwindConfig}>
-				<Body className="bg-background mx-auto my-auto px-2 font-sans">
+				<Body className="m-auto bg-background px-2 font-sans">
 					<Preview>{`Von ${baseUrl} kommt eine Anfrage von ${contactName}.`}</Preview>
 
-					<Container className="border-border mx-auto my-10 max-w-2xl rounded border border-solid p-5">
+					<Container className="mx-auto my-10 max-w-2xl rounded border border-solid border-border p-5">
 						<Section className="mt-[32px] flex justify-center">
 							<Img
 								alt="TSG Irlich Logo"
@@ -76,9 +76,9 @@ export function ContactForwardEmail({
 								&gt; hat dir eine Nachricht gesendet:
 							</Text>
 
-							<Text className="bg-background-high-contrast rounded-xl p-4 text-base italic">
+							<Text className="rounded-xl bg-background-high-contrast p-4 text-base italic">
 								{contactMessage.split('\n').map((line, index, arr) => (
-									// biome-ignore lint/suspicious/noArrayIndexKey: index is safe here
+									// oxlint-disable-next-line react/no-array-index-key
 									<span key={`${index}-${line}`}>
 										{line}
 										{index < arr.length - 1 && <br />}

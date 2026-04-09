@@ -9,19 +9,14 @@ import { authorField, metaField } from '@/shared/fields/meta';
 import { formatDate } from '@/utils/time';
 
 const newsArticle = defineType({
-	title: 'News-Artikel',
-	name: 'news.article',
-	type: 'document',
-	icon: RiArticleLine,
-	groups: [general, meta, excerpt, content],
 	fields: [
-		// general
+		// General
 		defineField({
-			title: 'Veröffentlicht am',
-			name: 'publishedAt',
-			type: 'datetime',
-			initialValue: () => new Date().toISOString(),
 			group: 'general',
+			initialValue: () => new Date().toISOString(),
+			name: 'publishedAt',
+			title: 'Veröffentlicht am',
+			type: 'datetime',
 			validation: (Rule) => Rule.required().error('Es muss ein Datum ausgewählt werden.'),
 		}),
 
@@ -29,24 +24,24 @@ const newsArticle = defineType({
 		slugField,
 
 		defineField({
-			title: 'News-Kategorien',
-			name: 'categories',
-			type: 'array',
-			of: [{ type: 'reference', to: [{ type: 'news.category' }] }],
 			group: 'general',
+			name: 'categories',
+			of: [{ to: [{ type: 'news.category' }], type: 'reference' }],
+			title: 'News-Kategorien',
+			type: 'array',
 			validation: (Rule) =>
 				Rule.required().error('Es muss mindestens eine Kategorie ausgewählt werden.'),
 		}),
 
-		// meta
+		// Meta
 		authorField,
 		metaField,
 
-		// excerpt
+		// Excerpt
 		featuredImageField,
 		excerptField,
 
-		// content
+		// Content
 		defineField({
 			...contentField,
 			of: [
@@ -58,16 +53,19 @@ const newsArticle = defineType({
 			],
 		}),
 	],
+	groups: [general, meta, excerpt, content],
+	icon: RiArticleLine,
+	name: 'news.article',
 	orderings: [
 		{
-			title: 'Veröffentlicht, neuste zuerst',
+			by: [{ direction: 'desc', field: 'publishedAt' }],
 			name: 'publishedAtDesc',
-			by: [{ field: 'publishedAt', direction: 'desc' }],
+			title: 'Veröffentlicht, neuste zuerst',
 		},
 		{
-			title: 'Veröffentlicht, älteste zuerst',
+			by: [{ direction: 'asc', field: 'publishedAt' }],
 			name: 'publishedAtAsc',
-			by: [{ field: 'publishedAt', direction: 'asc' }],
+			title: 'Veröffentlicht, älteste zuerst',
 		},
 	],
 	preview: {
@@ -81,6 +79,8 @@ const newsArticle = defineType({
 			title: 'title',
 		},
 	},
+	title: 'News-Artikel',
+	type: 'document',
 });
 
 export default newsArticle;

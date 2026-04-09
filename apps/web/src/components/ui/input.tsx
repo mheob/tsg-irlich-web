@@ -1,16 +1,17 @@
-import { cn } from '@tsgi-web/shared';
 import type { ComponentProps, HTMLAttributes } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
+import { cn } from '@tsgi-web/shared';
+
 import { FormControl, FormItem, FormLabel, FormMessage } from '../with-logic/form';
 
-export function Input({ className, type, ...props }: ComponentProps<'input'>) {
+function Input({ className, type, ...props }: ComponentProps<'input'>) {
 	return (
 		<input
 			className={cn(
-				'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-secondary bg-background-high-contrast flex w-full min-w-0 rounded-md px-4 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-xl',
-				'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-				'aria-invalid:ring-destructive/20 aria-invalid:border-destructive',
+				'flex w-full min-w-0 rounded-md bg-background-high-contrast px-4 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none selection:bg-primary selection:text-secondary file:inline-flex file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-xl',
+				'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50',
+				'aria-invalid:border-destructive aria-invalid:ring-destructive/20',
 				className,
 			)}
 			data-slot="input"
@@ -26,7 +27,7 @@ interface InputWithLabelProps extends ComponentProps<typeof Input> {
 	wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
-export function InputWithLabel({
+function InputWithLabel({
 	children,
 	field,
 	wrapperClassName,
@@ -42,3 +43,5 @@ export function InputWithLabel({
 		</FormItem>
 	);
 }
+
+export { Input, InputWithLabel };

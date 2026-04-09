@@ -1,7 +1,8 @@
 import { Slot } from '@radix-ui/react-slot';
-import { cn } from '@tsgi-web/shared';
 import type { VariantProps } from 'class-variance-authority';
 import type { ComponentProps } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import { badgeVariants } from './variants';
 

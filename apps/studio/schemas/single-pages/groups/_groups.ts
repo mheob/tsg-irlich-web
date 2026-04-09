@@ -1,14 +1,16 @@
-export const contactPersons = {
-	title: 'Ansprechpartner',
+const contactPersons = {
 	name: 'contactPersons',
+	title: 'Ansprechpartner',
 };
 
-export const groups = {
-	title: 'Gruppen',
+const groups = {
 	name: 'groups',
+	title: 'Gruppen',
 };
 
-export const stats = {
-	title: 'Stats',
+const stats = {
 	name: 'stats',
+	title: 'Stats',
 };
+
+export { contactPersons, groups, stats };

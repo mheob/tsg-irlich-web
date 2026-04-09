@@ -1,4 +1,3 @@
-// cSpell:words mitgliedschaft
 import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
@@ -12,47 +11,42 @@ import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 
 const membershipPage = defineType({
-	title: 'Mitgliedschaft',
-	name: 'membership',
-	type: 'document',
-	icon: RiBookletLine,
-	groups: [general, meta, content],
 	fields: [
 		// (hidden)
 		getHiddenSlugField('mitgliedschaft'),
 
-		// general
+		// General
 		...defaultHeroFields,
 
-		// meta
+		// Meta
 		metaField,
 
-		// content
+		// Content
 		defineField({
-			title: 'Intro',
-			name: 'intro',
-			type: 'blockContent',
 			group: 'content',
+			name: 'intro',
+			title: 'Intro',
+			type: 'blockContent',
 			validation: (Rule) => [Rule.required().error('Intro ist erforderlich')],
 		}),
 
 		defineField({
-			title: 'Download Bereich',
-			name: 'downloadsSection',
-			type: 'object',
-			icon: RiLinksLine,
-			group: 'content',
 			fields: [
 				...getDefaultPageSectionFieldsWithGroup(),
 
 				defineField({
-					title: 'Downloads',
 					name: 'downloads',
-					type: 'array',
 					of: [{ type: 'documentDownload' }],
+					title: 'Downloads',
+					type: 'array',
 					validation: (Rule) => [Rule.required().error('Downloads sind erforderlich')],
 				}),
 			],
+			group: 'content',
+			icon: RiLinksLine,
+			name: 'downloadsSection',
+			title: 'Download Bereich',
+			type: 'object',
 			validation: (Rule) => [Rule.required().error('Dokumente sind erforderlich')],
 		}),
 
@@ -61,9 +55,14 @@ const membershipPage = defineType({
 			group: 'content',
 		}),
 	],
+	groups: [general, meta, content],
+	icon: RiBookletLine,
+	name: 'membership',
 	preview: {
 		prepare: () => ({ title: 'Mitgliedschaft' }),
 	},
+	title: 'Mitgliedschaft',
+	type: 'document',
 });
 
 export default membershipPage;

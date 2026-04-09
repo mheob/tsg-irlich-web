@@ -106,7 +106,9 @@ function getGroupSettings(S: StructureBuilder): ListItemBuilder[] {
  * @returns True if the singleton list item is excluded, false otherwise.
  */
 function isExcludedSingletonListItem(id?: string): boolean {
-	if (!id) return false;
+	if (!id) {
+		return false;
+	}
 	return !['site-settings'].includes(id);
 }
 
@@ -121,7 +123,9 @@ function getGroupSinglePages(
 	S: StructureBuilder,
 	typeDefinitionArray?: DocumentDefinition[],
 ): ListItemBuilder[] {
-	if (!typeDefinitionArray) return [];
+	if (!typeDefinitionArray) {
+		return [];
+	}
 	return [
 		S.listItem()
 			.title('Einzelseiten')
@@ -132,15 +136,15 @@ function getGroupSinglePages(
 					.title('Einzelseiten')
 					.items(
 						typeDefinitionArray
-							.map((typeDefinition) => {
-								return S.listItem()
+							.map((typeDefinition) =>
+								S.listItem()
 									.title(typeDefinition.title ?? typeDefinition.name)
 									.id(typeDefinition.name)
 									.icon(typeDefinition.icon)
 									.child(
 										S.document().schemaType(typeDefinition.name).documentId(typeDefinition.name),
-									);
-							})
+									),
+							)
 							.filter((typeDefinition) => isExcludedSingletonListItem(typeDefinition.getId())),
 					),
 			),
@@ -153,8 +157,10 @@ function getGroupSinglePages(
  * @param id - The id of the default list item.
  * @returns True if the default list item is excluded, false otherwise.
  */
-export function isExcludedDefaultListItem(id?: string): boolean {
-	if (!id) return false;
+function isExcludedDefaultListItem(id?: string): boolean {
+	if (!id) {
+		return false;
+	}
 	return ![
 		'assist.instruction.context',
 		'author',
@@ -182,7 +188,7 @@ export function isExcludedDefaultListItem(id?: string): boolean {
  * @param typeDefinitionArray - The array of document definitions.
  * @returns The group for the given name.
  */
-export function getGroup(
+function getGroup(
 	S: StructureBuilder,
 	name: DocumentGroup,
 	typeDefinitionArray?: DocumentDefinition[],
@@ -208,3 +214,5 @@ export function getGroup(
 		}
 	}
 }
+
+export { isExcludedDefaultListItem, getGroup };

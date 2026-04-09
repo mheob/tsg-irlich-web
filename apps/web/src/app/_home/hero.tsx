@@ -1,5 +1,6 @@
-import { cn } from '@tsgi-web/shared';
 import Link from 'next/link';
+
+import { cn } from '@tsgi-web/shared';
 
 import { Button } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -14,16 +15,16 @@ interface HeroProps extends Pick<Home, 'intro' | 'subtitle' | 'title'> {
 	socialMedia: SocialMediaQueryResult;
 }
 
-export async function Hero({ intro, socialMedia, subtitle, title }: Readonly<HeroProps>) {
+export function Hero({ intro, socialMedia, subtitle, title }: Readonly<HeroProps>) {
 	return (
 		<section className="relative pt-20 lg:grid lg:h-dvh lg:pt-48">
 			<div className="items-center pt-5 lg:container lg:flex">
-				<div className="lg:no-container container lg:w-3/5">
+				<div className="container lg:no-container lg:w-3/5">
 					<SectionHeader level="h1" subTitle={subtitle} title={title}>
 						{intro}
 					</SectionHeader>
 
-					<div className="text-primary mt-8 flex gap-8">
+					<div className="mt-8 flex gap-8 text-primary">
 						<Button asChild>
 							<Link href="/kontakt">Kontakt aufnehmen</Link>
 						</Button>
@@ -33,8 +34,8 @@ export async function Hero({ intro, socialMedia, subtitle, title }: Readonly<Her
 				</div>
 
 				<div className="relative grid h-96 lg:static lg:ml-auto">
-					<div className={styles.bgRoundedEdge}></div>
-					<div className={styles.bgBalls}></div>
+					<div className={styles.bgRoundedEdge} />
+					<div className={styles.bgBalls} />
 
 					<nav
 						className={cn(

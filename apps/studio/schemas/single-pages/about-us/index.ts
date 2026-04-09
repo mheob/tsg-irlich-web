@@ -1,4 +1,3 @@
-// cSpell:words verein
 import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
@@ -14,36 +13,36 @@ import { introField } from './intro';
 import { visionField } from './vision';
 
 const aboutUsPage = defineType({
-	title: 'Über uns',
-	name: 'aboutUs',
-	type: 'document',
-	icon: RiBookletLine,
-	groups: [general, meta, content],
 	fields: [
 		// (hidden)
 		getHiddenSlugField('verein'),
 
-		// general
+		// General
 		...defaultHeroFields,
 
-		// meta
+		// Meta
 		metaField,
 
-		// content
+		// Content
 		defineField({
-			title: 'Inhalte',
-			name: 'content',
-			type: 'object',
-			icon: RiLinksLine,
+			fields: [introField, chronicleField, visionField, statsField, contactPersonsSectionField],
 			group: 'content',
 			groups: [intro, chronicle, vision, stats, contactPersons],
-			fields: [introField, chronicleField, visionField, statsField, contactPersonsSectionField],
+			icon: RiLinksLine,
+			name: 'content',
+			title: 'Inhalte',
+			type: 'object',
 			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
+	groups: [general, meta, content],
+	icon: RiBookletLine,
+	name: 'aboutUs',
 	preview: {
 		prepare: () => ({ title: 'Über uns' }),
 	},
+	title: 'Über uns',
+	type: 'document',
 });
 
 export default aboutUsPage;

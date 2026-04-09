@@ -15,25 +15,23 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ../studio/schema.json
-export type PersonReference = {
+export interface PersonReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'person';
-};
+}
 
-export type ContactPersonsSection = {
+export interface ContactPersonsSection {
 	title: string;
 	subtitle: string;
 	intro?: string;
-	contactPersons: Array<
-		{
+	contactPersons: ({
 			_key: string;
-		} & PersonReference
-	>;
-};
+		} & PersonReference)[];
+}
 
-export type SingleGroupPage = {
+export interface SingleGroupPage {
 	_id: string;
 	_type: 'singleGroupPage';
 	_createdAt: string;
@@ -51,9 +49,9 @@ export type SingleGroupPage = {
 			title: string;
 		};
 	};
-};
+}
 
-export type NewsOverviewCategory = {
+export interface NewsOverviewCategory {
 	_id: string;
 	_type: 'newsOverviewCategory';
 	_createdAt: string;
@@ -64,9 +62,9 @@ export type NewsOverviewCategory = {
 	content: {
 		contactPersonsSection: ContactPersonsSection;
 	};
-};
+}
 
-export type NewsArticlePage = {
+export interface NewsArticlePage {
 	_id: string;
 	_type: 'news-article-page';
 	_createdAt: string;
@@ -74,9 +72,9 @@ export type NewsArticlePage = {
 	_rev: string;
 	title: string;
 	subtitle: string;
-};
+}
 
-export type GroupsPage = {
+export interface GroupsPage {
 	_id: string;
 	_type: 'groupsPage';
 	_createdAt: string;
@@ -91,20 +89,18 @@ export type GroupsPage = {
 			subtitle: string;
 			intro?: string;
 		};
-		stats: Array<
-			{
+		stats: ({
 				_key: string;
-			} & Stats
-		>;
+			} & Stats)[];
 		contactPersonsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
 		};
 	};
-};
+}
 
-export type DepartmentsPage = {
+export interface DepartmentsPage {
 	_id: string;
 	_type: 'departmentsPage';
 	_createdAt: string;
@@ -120,34 +116,32 @@ export type DepartmentsPage = {
 			subtitle: string;
 			intro?: string;
 		};
-		stats: Array<
-			{
+		stats: ({
 				_key: string;
-			} & Stats
-		>;
+			} & Stats)[];
 		contactPersonsSection: ContactPersonsSection;
 	};
-};
+}
 
-export type Slug = {
+export interface Slug {
 	_type: 'slug';
 	current: string;
 	source?: string;
-};
+}
 
-export type Spacer = {
+export interface Spacer {
 	_type: 'spacer';
 	variant?: 'default';
-};
+}
 
-export type SanityImageAssetReference = {
+export interface SanityImageAssetReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-};
+}
 
-export type MainImage = {
+export interface MainImage {
 	_type: 'mainImage';
 	asset?: SanityImageAssetReference;
 	media?: unknown;
@@ -155,153 +149,150 @@ export type MainImage = {
 	crop?: SanityImageCrop;
 	alt: string;
 	description?: string;
-};
+}
 
-export type Grid = {
+export interface Grid {
 	_type: 'grid';
 	title?: string;
 	columns: Columns;
-	items?: Array<
-		| ({
+	items?: (| ({
 				_key: string;
 		  } & MainImage)
 		| ({
 				_key: string;
-		  } & BlockContent)
-	>;
-};
+		  } & BlockContent))[];
+}
 
-export type Blockquote = {
+export interface Blockquote {
 	_type: 'blockquote';
 	quote?: string;
 	author?: string;
-};
+}
 
-export type HomeReference = {
+export interface HomeReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'home';
-};
+}
 
-export type AboutUsReference = {
+export interface AboutUsReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'aboutUs';
-};
+}
 
-export type ContactReference = {
+export interface ContactReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'contact';
-};
+}
 
-export type GroupAdminReference = {
+export interface GroupAdminReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'group.admin';
-};
+}
 
-export type GroupChildrenGymnasticsReference = {
+export interface GroupChildrenGymnasticsReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'group.children-gymnastics';
-};
+}
 
-export type GroupCoursesReference = {
+export interface GroupCoursesReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'group.courses';
-};
+}
 
-export type GroupDanceReference = {
+export interface GroupDanceReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'group.dance';
-};
+}
 
-export type GroupOtherSportsReference = {
+export interface GroupOtherSportsReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'group.other-sports';
-};
+}
 
-export type GroupSoccerReference = {
+export interface GroupSoccerReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'group.soccer';
-};
+}
 
-export type GroupTaekwondoReference = {
+export interface GroupTaekwondoReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'group.taekwondo';
-};
+}
 
-export type MembershipReference = {
+export interface MembershipReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'membership';
-};
+}
 
-export type NewsArticleReference = {
+export interface NewsArticleReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'news.article';
-};
+}
 
-export type NewsOverviewReference = {
+export interface NewsOverviewReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'newsOverview';
-};
+}
 
-export type AccessibilityReference = {
+export interface AccessibilityReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'accessibility';
-};
+}
 
-export type PrivacyReference = {
+export interface PrivacyReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'privacy';
-};
+}
 
-export type ImprintReference = {
+export interface ImprintReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'imprint';
-};
+}
 
-export type BlockContent = {
+export interface BlockContent {
 	_type: 'blockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
+	text?: {
+		children?: {
+			marks?: string[];
 			text?: string;
 			_type: 'span';
 			_key: string;
-		}>;
+		}[];
 		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
 		listItem?: 'bullet' | 'number';
-		markDefs?: Array<
-			| {
+		markDefs?: (| {
 					link:
 						| HomeReference
 						| AboutUsReference
@@ -326,22 +317,21 @@ export type BlockContent = {
 					href?: string;
 					_type: 'externalLink';
 					_key: string;
-			  }
-		>;
+			  })[];
 		level?: number;
 		_type: 'block';
 		_key: string;
-	}>;
-};
+	}[];
+}
 
-export type VenueReference = {
+export interface VenueReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'venue';
-};
+}
 
-export type TrainingTime = {
+export interface TrainingTime {
 	_type: 'trainingTime';
 	season: 'yearly' | 'summer' | 'winter';
 	weekday: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
@@ -349,47 +339,47 @@ export type TrainingTime = {
 	endTime: string;
 	venue: VenueReference;
 	note?: string;
-};
+}
 
-export type Stats = {
+export interface Stats {
 	_type: 'stats';
 	title: string;
 	prefix?: string;
 	value: number;
 	suffix?: string;
-};
+}
 
-export type SocialFields = {
+export interface SocialFields {
 	_type: 'socialFields';
 	whatsapp?: string;
 	facebook?: string;
 	instagram?: string;
 	youtube?: string;
-};
+}
 
-export type SimpleBlockContent = {
+export interface SimpleBlockContent {
 	_type: 'simpleBlockContent';
-	text?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
+	text?: {
+		children?: {
+			marks?: string[];
 			text?: string;
 			_type: 'span';
 			_key: string;
-		}>;
+		}[];
 		style?: 'normal';
 		listItem?: 'bullet' | 'number';
-		markDefs?: Array<{
+		markDefs?: {
 			href?: string;
 			_type: 'link';
 			_key: string;
-		}>;
+		}[];
 		level?: number;
 		_type: 'block';
 		_key: string;
-	}>;
-};
+	}[];
+}
 
-export type MetaFields = {
+export interface MetaFields {
 	_type: 'metaFields';
 	metaTitle?: string;
 	metaDescription?: string;
@@ -401,9 +391,9 @@ export type MetaFields = {
 		alt?: string;
 		_type: 'image';
 	};
-};
+}
 
-export type InternalLink = {
+export interface InternalLink {
 	_type: 'internalLink';
 	link:
 		| HomeReference
@@ -422,22 +412,22 @@ export type InternalLink = {
 		| AccessibilityReference
 		| PrivacyReference
 		| ImprintReference;
-};
+}
 
-export type ImageCard = {
+export interface ImageCard {
 	_type: 'imageCard';
 	title: string;
 	excerpt: string;
 	description: BlockContent;
 	image: ExtendedImage;
-};
+}
 
-export type ExternalLink = {
+export interface ExternalLink {
 	_type: 'externalLink';
 	href?: string;
-};
+}
 
-export type ExtendedImage = {
+export interface ExtendedImage {
 	_type: 'extendedImage';
 	asset?: SanityImageAssetReference;
 	media?: unknown;
@@ -445,16 +435,16 @@ export type ExtendedImage = {
 	crop?: SanityImageCrop;
 	alt: string;
 	description?: string;
-};
+}
 
-export type SanityFileAssetReference = {
+export interface SanityFileAssetReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'sanity.fileAsset';
-};
+}
 
-export type DocumentDownload = {
+export interface DocumentDownload {
 	_type: 'documentDownload';
 	title: string;
 	document: {
@@ -462,22 +452,22 @@ export type DocumentDownload = {
 		media?: unknown;
 		_type: 'file';
 	};
-};
+}
 
-export type ContactNameMail = {
+export interface ContactNameMail {
 	_type: 'contactNameMail';
 	name: string;
 	email: string;
-};
+}
 
-export type Columns = {
+export interface Columns {
 	_type: 'columns';
 	small?: '1' | '2' | '3' | '4';
 	medium?: '1' | '2' | '3' | '4';
 	large?: '1' | '2' | '3' | '4';
-};
+}
 
-export type SiteSettings = {
+export interface SiteSettings {
 	_id: string;
 	_type: 'site-settings';
 	_createdAt: string;
@@ -494,23 +484,19 @@ export type SiteSettings = {
 		title: string;
 		cta: string;
 	};
-	mainNavigation: Array<
-		| ({
+	mainNavigation: (| ({
 				_key: string;
 		  } & InternalLink)
 		| ({
 				_key: string;
-		  } & ExternalLink)
-	>;
-	legalNavigation?: Array<
-		{
+		  } & ExternalLink))[];
+	legalNavigation?: ({
 			_key: string;
-		} & InternalLink
-	>;
+		} & InternalLink)[];
 	socialFields?: SocialFields;
-};
+}
 
-export type Venue = {
+export interface Venue {
 	_id: string;
 	_type: 'venue';
 	_createdAt: string;
@@ -535,25 +521,25 @@ export type Venue = {
 		zipCode?: string;
 		city: string;
 	};
-};
+}
 
-export type SanityImageCrop = {
+export interface SanityImageCrop {
 	_type: 'sanity.imageCrop';
 	top: number;
 	bottom: number;
 	left: number;
 	right: number;
-};
+}
 
-export type SanityImageHotspot = {
+export interface SanityImageHotspot {
 	_type: 'sanity.imageHotspot';
 	x: number;
 	y: number;
 	height: number;
 	width: number;
-};
+}
 
-export type Testimonial = {
+export interface Testimonial {
 	_id: string;
 	_type: 'testimonial';
 	_createdAt: string;
@@ -564,9 +550,9 @@ export type Testimonial = {
 	image: ExtendedImage;
 	role: string;
 	quote: string;
-};
+}
 
-export type Sponsors = {
+export interface Sponsors {
 	_id: string;
 	_type: 'sponsors';
 	_createdAt: string;
@@ -581,9 +567,9 @@ export type Sponsors = {
 		crop?: SanityImageCrop;
 		_type: 'image';
 	};
-};
+}
 
-export type HonoraryMember = {
+export interface HonoraryMember {
 	_id: string;
 	_type: 'honoraryMember';
 	_createdAt: string;
@@ -593,16 +579,16 @@ export type HonoraryMember = {
 	lastName: string;
 	image: ExtendedImage;
 	memberSince: string;
-};
+}
 
-export type RoleReference = {
+export interface RoleReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'role';
-};
+}
 
-export type Person = {
+export interface Person {
 	_id: string;
 	_type: 'person';
 	_createdAt: string;
@@ -613,7 +599,7 @@ export type Person = {
 	image: ExtendedImage;
 	phone?: string;
 	contactAs: 'email' | 'phone' | 'whatsapp' | 'both';
-	affiliations?: Array<{
+	affiliations?: {
 		department:
 			| 'admin'
 			| 'children-gymnastics'
@@ -635,10 +621,10 @@ export type Person = {
 		sortOrder?: number;
 		_type: 'affiliation';
 		_key: string;
-	}>;
-};
+	}[];
+}
 
-export type Role = {
+export interface Role {
 	_id: string;
 	_type: 'role';
 	_createdAt: string;
@@ -646,9 +632,9 @@ export type Role = {
 	_rev: string;
 	title: string;
 	email?: string;
-};
+}
 
-export type NewsCategory = {
+export interface NewsCategory {
 	_id: string;
 	_type: 'news.category';
 	_createdAt: string;
@@ -657,23 +643,23 @@ export type NewsCategory = {
 	title: string;
 	slug: Slug;
 	meta?: MetaFields;
-};
+}
 
-export type NewsCategoryReference = {
+export interface NewsCategoryReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'news.category';
-};
+}
 
-export type AuthorReference = {
+export interface AuthorReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'author';
-};
+}
 
-export type NewsArticle = {
+export interface NewsArticle {
 	_id: string;
 	_type: 'news.article';
 	_createdAt: string;
@@ -682,17 +668,14 @@ export type NewsArticle = {
 	publishedAt: string;
 	title: string;
 	slug: Slug;
-	categories: Array<
-		{
+	categories: ({
 			_key: string;
-		} & NewsCategoryReference
-	>;
+		} & NewsCategoryReference)[];
 	author: AuthorReference;
 	meta?: MetaFields;
 	featuredImage: MainImage;
 	excerpt: string;
-	body?: Array<
-		| ({
+	body?: (| ({
 				_key: string;
 		  } & BlockContent)
 		| ({
@@ -706,11 +689,10 @@ export type NewsArticle = {
 		  } & MainImage)
 		| ({
 				_key: string;
-		  } & Spacer)
-	>;
-};
+		  } & Spacer))[];
+}
 
-export type AboutUs = {
+export interface AboutUs {
 	_id: string;
 	_type: 'aboutUs';
 	_createdAt: string;
@@ -725,21 +707,17 @@ export type AboutUs = {
 			title: string;
 			subtitle: string;
 			intro: BlockContent;
-			images: Array<
-				{
+			images: ({
 					_key: string;
-				} & ExtendedImage
-			>;
+				} & ExtendedImage)[];
 		};
 		chronicleSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			chronicleCategories: Array<
-				{
+			chronicleCategories: ({
 					_key: string;
-				} & ImageCard
-			>;
+				} & ImageCard)[];
 		};
 		visionSection: {
 			title: string;
@@ -749,16 +727,14 @@ export type AboutUs = {
 			longVisionTitle: string;
 			longVision: BlockContent;
 		};
-		stats: Array<
-			{
+		stats: ({
 				_key: string;
-			} & Stats
-		>;
+			} & Stats)[];
 		contactPersonsSection: ContactPersonsSection;
 	};
-};
+}
 
-export type Membership = {
+export interface Membership {
 	_id: string;
 	_type: 'membership';
 	_createdAt: string;
@@ -773,25 +749,21 @@ export type Membership = {
 		title: string;
 		subtitle: string;
 		intro?: string;
-		downloads: Array<
-			{
+		downloads: ({
 				_key: string;
-			} & DocumentDownload
-		>;
+			} & DocumentDownload)[];
 	};
 	contactPersonsSection: {
 		title: string;
 		subtitle: string;
 		intro?: string;
-		contactPersons: Array<
-			{
+		contactPersons: ({
 				_key: string;
-			} & PersonReference
-		>;
+			} & PersonReference)[];
 	};
-};
+}
 
-export type Accessibility = {
+export interface Accessibility {
 	_id: string;
 	_type: 'accessibility';
 	_createdAt: string;
@@ -802,9 +774,9 @@ export type Accessibility = {
 	subtitle: string;
 	meta?: MetaFields;
 	content: BlockContent;
-};
+}
 
-export type Privacy = {
+export interface Privacy {
 	_id: string;
 	_type: 'privacy';
 	_createdAt: string;
@@ -819,9 +791,9 @@ export type Privacy = {
 	phone?: string;
 	email: string;
 	content: BlockContent;
-};
+}
 
-export type Imprint = {
+export interface Imprint {
 	_id: string;
 	_type: 'imprint';
 	_createdAt: string;
@@ -844,9 +816,9 @@ export type Imprint = {
 	technicalQuestionsEmail: string;
 	support: SimpleBlockContent;
 	credits: SimpleBlockContent;
-};
+}
 
-export type NewsOverview = {
+export interface NewsOverview {
 	_id: string;
 	_type: 'newsOverview';
 	_createdAt: string;
@@ -859,9 +831,9 @@ export type NewsOverview = {
 	content: {
 		contactPersonsSection: ContactPersonsSection;
 	};
-};
+}
 
-export type GroupTaekwondo = {
+export interface GroupTaekwondo {
 	_id: string;
 	_type: 'group.taekwondo';
 	_createdAt: string;
@@ -893,23 +865,19 @@ export type GroupTaekwondo = {
 		| 'Wandern'
 		| 'Yoga';
 	featuredImage: ExtendedImage;
-	images?: Array<
-		{
+	images?: ({
 			_key: string;
-		} & ExtendedImage
-	>;
+		} & ExtendedImage)[];
 	training?: {
 		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: Array<
-			{
+		trainingTimes?: ({
 				_key: string;
-			} & TrainingTime
-		>;
+			} & TrainingTime)[];
 	};
 	isSportGroup: boolean;
-};
+}
 
-export type GroupSoccer = {
+export interface GroupSoccer {
 	_id: string;
 	_type: 'group.soccer';
 	_createdAt: string;
@@ -941,23 +909,19 @@ export type GroupSoccer = {
 		| 'Wandern'
 		| 'Yoga';
 	featuredImage: ExtendedImage;
-	images?: Array<
-		{
+	images?: ({
 			_key: string;
-		} & ExtendedImage
-	>;
+		} & ExtendedImage)[];
 	training?: {
 		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: Array<
-			{
+		trainingTimes?: ({
 				_key: string;
-			} & TrainingTime
-		>;
+			} & TrainingTime)[];
 	};
 	isSportGroup: boolean;
-};
+}
 
-export type GroupOtherSports = {
+export interface GroupOtherSports {
 	_id: string;
 	_type: 'group.other-sports';
 	_createdAt: string;
@@ -989,23 +953,19 @@ export type GroupOtherSports = {
 		| 'Wandern'
 		| 'Yoga';
 	featuredImage: ExtendedImage;
-	images?: Array<
-		{
+	images?: ({
 			_key: string;
-		} & ExtendedImage
-	>;
+		} & ExtendedImage)[];
 	training?: {
 		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: Array<
-			{
+		trainingTimes?: ({
 				_key: string;
-			} & TrainingTime
-		>;
+			} & TrainingTime)[];
 	};
 	isSportGroup: boolean;
-};
+}
 
-export type GroupDance = {
+export interface GroupDance {
 	_id: string;
 	_type: 'group.dance';
 	_createdAt: string;
@@ -1037,23 +997,19 @@ export type GroupDance = {
 		| 'Wandern'
 		| 'Yoga';
 	featuredImage: ExtendedImage;
-	images?: Array<
-		{
+	images?: ({
 			_key: string;
-		} & ExtendedImage
-	>;
+		} & ExtendedImage)[];
 	training?: {
 		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: Array<
-			{
+		trainingTimes?: ({
 				_key: string;
-			} & TrainingTime
-		>;
+			} & TrainingTime)[];
 	};
 	isSportGroup: boolean;
-};
+}
 
-export type GroupCourses = {
+export interface GroupCourses {
 	_id: string;
 	_type: 'group.courses';
 	_createdAt: string;
@@ -1085,23 +1041,19 @@ export type GroupCourses = {
 		| 'Wandern'
 		| 'Yoga';
 	featuredImage: ExtendedImage;
-	images?: Array<
-		{
+	images?: ({
 			_key: string;
-		} & ExtendedImage
-	>;
+		} & ExtendedImage)[];
 	training?: {
 		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: Array<
-			{
+		trainingTimes?: ({
 				_key: string;
-			} & TrainingTime
-		>;
+			} & TrainingTime)[];
 	};
 	isSportGroup: boolean;
-};
+}
 
-export type GroupChildrenGymnastics = {
+export interface GroupChildrenGymnastics {
 	_id: string;
 	_type: 'group.children-gymnastics';
 	_createdAt: string;
@@ -1133,23 +1085,19 @@ export type GroupChildrenGymnastics = {
 		| 'Wandern'
 		| 'Yoga';
 	featuredImage: ExtendedImage;
-	images?: Array<
-		{
+	images?: ({
 			_key: string;
-		} & ExtendedImage
-	>;
+		} & ExtendedImage)[];
 	training?: {
 		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: Array<
-			{
+		trainingTimes?: ({
 				_key: string;
-			} & TrainingTime
-		>;
+			} & TrainingTime)[];
 	};
 	isSportGroup: boolean;
-};
+}
 
-export type GroupAdmin = {
+export interface GroupAdmin {
 	_id: string;
 	_type: 'group.admin';
 	_createdAt: string;
@@ -1181,23 +1129,19 @@ export type GroupAdmin = {
 		| 'Wandern'
 		| 'Yoga';
 	featuredImage: ExtendedImage;
-	images?: Array<
-		{
+	images?: ({
 			_key: string;
-		} & ExtendedImage
-	>;
+		} & ExtendedImage)[];
 	training?: {
 		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: Array<
-			{
+		trainingTimes?: ({
 				_key: string;
-			} & TrainingTime
-		>;
+			} & TrainingTime)[];
 	};
 	isSportGroup: boolean;
-};
+}
 
-export type Contact = {
+export interface Contact {
 	_id: string;
 	_type: 'contact';
 	_createdAt: string;
@@ -1208,23 +1152,21 @@ export type Contact = {
 	subtitle: string;
 	meta?: MetaFields;
 	content: {
-		receiver: Array<
-			{
+		receiver: ({
 				_key: string;
-			} & ContactNameMail
-		>;
+			} & ContactNameMail)[];
 		contactPersonsSection: ContactPersonsSection;
 	};
-};
+}
 
-export type TestimonialReference = {
+export interface TestimonialReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'testimonial';
-};
+}
 
-export type Home = {
+export interface Home {
 	_id: string;
 	_type: 'home';
 	_createdAt: string;
@@ -1240,13 +1182,13 @@ export type Home = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			features?: Array<{
+			features?: {
 				title: string;
 				intro: string;
 				icon: string;
 				_type: 'feature';
 				_key: string;
-			}>;
+			}[];
 		};
 		visionSection: {
 			title: string;
@@ -1258,11 +1200,9 @@ export type Home = {
 			title: string;
 			subtitle: string;
 		};
-		stats: Array<
-			{
+		stats: ({
 				_key: string;
-			} & Stats
-		>;
+			} & Stats)[];
 		pricingSection: {
 			title: string;
 			subtitle: string;
@@ -1273,7 +1213,7 @@ export type Home = {
 				intro?: string;
 				price: number;
 				benefitsTitle: string;
-				benefits: Array<string>;
+				benefits: string[];
 				cta: string;
 			};
 			pricingFamily: {
@@ -1282,7 +1222,7 @@ export type Home = {
 				intro?: string;
 				price: number;
 				benefitsTitle: string;
-				benefits: Array<string>;
+				benefits: string[];
 				cta: string;
 			};
 			pricingAdult: {
@@ -1291,18 +1231,16 @@ export type Home = {
 				intro?: string;
 				price: number;
 				benefitsTitle: string;
-				benefits: Array<string>;
+				benefits: string[];
 				cta: string;
 			};
 		};
 		testimonialSection: {
 			title: string;
 			subtitle: string;
-			testimonials?: Array<
-				{
+			testimonials?: ({
 					_key: string;
-				} & TestimonialReference
-			>;
+				} & TestimonialReference)[];
 		};
 		contactPersonsSection: ContactPersonsSection;
 		newsSection: {
@@ -1311,9 +1249,9 @@ export type Home = {
 			intro?: string;
 		};
 	};
-};
+}
 
-export type Author = {
+export interface Author {
 	_id: string;
 	_type: 'author';
 	_createdAt: string;
@@ -1324,91 +1262,86 @@ export type Author = {
 	image: ExtendedImage;
 	email: string;
 	jobTitle: string;
-};
+}
 
-export type SanityAssistInstructionTask = {
+export interface SanityAssistInstructionTask {
 	_type: 'sanity.assist.instructionTask';
 	path?: string;
 	instructionKey?: string;
 	started?: string;
 	updated?: string;
 	info?: string;
-};
+}
 
-export type SanityAssistTaskStatus = {
+export interface SanityAssistTaskStatus {
 	_type: 'sanity.assist.task.status';
-	tasks?: Array<
-		{
+	tasks?: ({
 			_key: string;
-		} & SanityAssistInstructionTask
-	>;
-};
+		} & SanityAssistInstructionTask)[];
+}
 
-export type SanityAssistSchemaTypeAnnotations = {
+export interface SanityAssistSchemaTypeAnnotations {
 	_type: 'sanity.assist.schemaType.annotations';
 	title?: string;
-	fields?: Array<
-		{
+	fields?: ({
 			_key: string;
-		} & SanityAssistSchemaTypeField
-	>;
-};
+		} & SanityAssistSchemaTypeField)[];
+}
 
-export type SanityAssistOutputType = {
+export interface SanityAssistOutputType {
 	_type: 'sanity.assist.output.type';
 	type?: string;
-};
+}
 
-export type SanityAssistOutputField = {
+export interface SanityAssistOutputField {
 	_type: 'sanity.assist.output.field';
 	path?: string;
-};
+}
 
-export type AssistInstructionContextReference = {
+export interface AssistInstructionContextReference {
 	_ref: string;
 	_type: 'reference';
 	_weak?: boolean;
 	[internalGroqTypeReferenceTo]?: 'assist.instruction.context';
-};
+}
 
-export type SanityAssistInstructionContext = {
+export interface SanityAssistInstructionContext {
 	_type: 'sanity.assist.instruction.context';
 	reference: AssistInstructionContextReference;
-};
+}
 
-export type AssistInstructionContext = {
+export interface AssistInstructionContext {
 	_id: string;
 	_type: 'assist.instruction.context';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
 	title?: string;
-	context?: Array<{
-		children?: Array<{
-			marks?: Array<string>;
+	context?: {
+		children?: {
+			marks?: string[];
 			text?: string;
 			_type: 'span';
 			_key: string;
-		}>;
+		}[];
 		style?: 'normal';
 		listItem?: never;
 		markDefs?: null;
 		level?: number;
 		_type: 'block';
 		_key: string;
-	}>;
-};
+	}[];
+}
 
-export type SanityAssistInstructionUserInput = {
+export interface SanityAssistInstructionUserInput {
 	_type: 'sanity.assist.instruction.userInput';
 	message: string;
 	description?: string;
-};
+}
 
-export type SanityAssistInstructionPrompt = Array<{
-	children?: Array<
-		| {
-				marks?: Array<string>;
+export type SanityAssistInstructionPrompt = {
+	children?: (| {
+				marks?: string[];
 				text?: string;
 				_type: 'span';
 				_key: string;
@@ -1421,66 +1354,61 @@ export type SanityAssistInstructionPrompt = Array<{
 		  } & SanityAssistInstructionContext)
 		| ({
 				_key: string;
-		  } & SanityAssistInstructionUserInput)
-	>;
+		  } & SanityAssistInstructionUserInput))[];
 	style?: 'normal';
 	listItem?: never;
 	markDefs?: null;
 	level?: number;
 	_type: 'block';
 	_key: string;
-}>;
+}[];
 
-export type SanityAssistInstructionFieldRef = {
+export interface SanityAssistInstructionFieldRef {
 	_type: 'sanity.assist.instruction.fieldRef';
 	path?: string;
-};
+}
 
-export type SanityAssistInstruction = {
+export interface SanityAssistInstruction {
 	_type: 'sanity.assist.instruction';
 	prompt?: SanityAssistInstructionPrompt;
 	icon?: string;
 	title?: string;
 	userId?: string;
 	createdById?: string;
-	output?: Array<
-		| ({
+	output?: (| ({
 				_key: string;
 		  } & SanityAssistOutputField)
 		| ({
 				_key: string;
-		  } & SanityAssistOutputType)
-	>;
-};
+		  } & SanityAssistOutputType))[];
+}
 
-export type SanityAssistSchemaTypeField = {
+export interface SanityAssistSchemaTypeField {
 	_type: 'sanity.assist.schemaType.field';
 	path?: string;
-	instructions?: Array<
-		{
+	instructions?: ({
 			_key: string;
-		} & SanityAssistInstruction
-	>;
-};
+		} & SanityAssistInstruction)[];
+}
 
-export type MediaTag = {
+export interface MediaTag {
 	_id: string;
 	_type: 'media.tag';
 	_createdAt: string;
 	_updatedAt: string;
 	_rev: string;
 	name?: Slug;
-};
+}
 
-export type SanityImagePaletteSwatch = {
+export interface SanityImagePaletteSwatch {
 	_type: 'sanity.imagePaletteSwatch';
 	background?: string;
 	foreground?: string;
 	population?: number;
 	title?: string;
-};
+}
 
-export type SanityImagePalette = {
+export interface SanityImagePalette {
 	_type: 'sanity.imagePalette';
 	darkMuted?: SanityImagePaletteSwatch;
 	lightVibrant?: SanityImagePaletteSwatch;
@@ -1489,16 +1417,16 @@ export type SanityImagePalette = {
 	dominant?: SanityImagePaletteSwatch;
 	lightMuted?: SanityImagePaletteSwatch;
 	muted?: SanityImagePaletteSwatch;
-};
+}
 
-export type SanityImageDimensions = {
+export interface SanityImageDimensions {
 	_type: 'sanity.imageDimensions';
 	height: number;
 	width: number;
 	aspectRatio: number;
-};
+}
 
-export type SanityImageMetadata = {
+export interface SanityImageMetadata {
 	_type: 'sanity.imageMetadata';
 	location?: Geopoint;
 	dimensions?: SanityImageDimensions;
@@ -1508,9 +1436,9 @@ export type SanityImageMetadata = {
 	thumbHash?: string;
 	hasAlpha?: boolean;
 	isOpaque?: boolean;
-};
+}
 
-export type SanityFileAsset = {
+export interface SanityFileAsset {
 	_id: string;
 	_type: 'sanity.fileAsset';
 	_createdAt: string;
@@ -1530,16 +1458,16 @@ export type SanityFileAsset = {
 	path: string;
 	url: string;
 	source?: SanityAssetSourceData;
-};
+}
 
-export type SanityAssetSourceData = {
+export interface SanityAssetSourceData {
 	_type: 'sanity.assetSourceData';
 	name?: string;
 	id?: string;
 	url?: string;
-};
+}
 
-export type SanityImageAsset = {
+export interface SanityImageAsset {
 	_id: string;
 	_type: 'sanity.imageAsset';
 	_createdAt: string;
@@ -1560,14 +1488,14 @@ export type SanityImageAsset = {
 	url: string;
 	metadata?: SanityImageMetadata;
 	source?: SanityAssetSourceData;
-};
+}
 
-export type Geopoint = {
+export interface Geopoint {
 	_type: 'geopoint';
 	lat?: number;
 	lng?: number;
 	alt?: number;
-};
+}
 
 export type AllSanitySchemaTypes =
 	| PersonReference
@@ -1672,8 +1600,7 @@ export type AllSanitySchemaTypes =
 // Variable: mainNavigationQuery
 // Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"slug": coalesce(link->slug.current, '#!'),			title		}	}
 export type MainNavigationQueryResult = {
-	mainNavigation: Array<
-		| {
+	mainNavigation: (| {
 				_key: string;
 				slug: string | '#!';
 				title: null;
@@ -1682,8 +1609,7 @@ export type MainNavigationQueryResult = {
 				_key: string;
 				slug: '#!';
 				title: null;
-		  }
-	>;
+		  })[];
 } | null;
 
 // Source: src/lib/sanity/queries/pages/about-us.ts
@@ -1704,21 +1630,17 @@ export type AboutUsPageQueryResult = {
 			title: string;
 			subtitle: string;
 			intro: BlockContent;
-			images: Array<
-				{
+			images: ({
 					_key: string;
-				} & ExtendedImage
-			>;
+				} & ExtendedImage)[];
 		};
 		chronicleSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			chronicleCategories: Array<
-				{
+			chronicleCategories: ({
 					_key: string;
-				} & ImageCard
-			>;
+				} & ImageCard)[];
 		};
 		visionSection: {
 			title: string;
@@ -1728,16 +1650,14 @@ export type AboutUsPageQueryResult = {
 			longVisionTitle: string;
 			longVision: BlockContent;
 		};
-		stats: Array<
-			{
+		stats: ({
 				_key: string;
-			} & Stats
-		>;
+			} & Stats)[];
 		contactPersonsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			contactPersons: Array<{
+			contactPersons: {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
@@ -1746,7 +1666,7 @@ export type AboutUsPageQueryResult = {
 				email: string | null;
 				role: string | null;
 				taskDescription: string | null;
-			}>;
+			}[];
 		};
 	};
 } | null;
@@ -1766,17 +1686,16 @@ export type AccessibilityPageQueryResult = {
 	meta?: MetaFields;
 	content: {
 		_type: 'blockContent';
-		text: Array<{
-			children?: Array<{
-				marks?: Array<string>;
+		text: {
+			children?: {
+				marks?: string[];
 				text?: string;
 				_type: 'span';
 				_key: string;
-			}>;
+			}[];
 			style?: 'blockquote' | 'h2' | 'h3' | 'normal';
 			listItem?: 'bullet' | 'number';
-			markDefs: Array<
-				| {
+			markDefs: (| {
 						href?: string;
 						_type: 'externalLink';
 						_key: string;
@@ -1849,12 +1768,11 @@ export type AccessibilityPageQueryResult = {
 							  };
 						_type: 'internalLink';
 						_key: string;
-				  }
-			> | null;
+				  })[] | null;
 			level?: number;
 			_type: 'block';
 			_key: string;
-		}> | null;
+		}[] | null;
 	};
 } | null;
 
@@ -1872,16 +1790,14 @@ export type ContactPageQueryResult = {
 	subtitle: string;
 	meta?: MetaFields;
 	content: {
-		receiver: Array<
-			{
+		receiver: ({
 				_key: string;
-			} & ContactNameMail
-		>;
+			} & ContactNameMail)[];
 		contactPersonsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			contactPersons: Array<{
+			contactPersons: {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
@@ -1890,7 +1806,7 @@ export type ContactPageQueryResult = {
 				email: string | null;
 				role: string | null;
 				taskDescription: string | null;
-			}>;
+			}[];
 		};
 	};
 } | null;
@@ -1914,13 +1830,13 @@ export type HomePageQueryResult = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			features?: Array<{
+			features?: {
 				title: string;
 				intro: string;
 				icon: string;
 				_type: 'feature';
 				_key: string;
-			}>;
+			}[];
 		};
 		visionSection: {
 			title: string;
@@ -1932,11 +1848,9 @@ export type HomePageQueryResult = {
 			title: string;
 			subtitle: string;
 		};
-		stats: Array<
-			{
+		stats: ({
 				_key: string;
-			} & Stats
-		>;
+			} & Stats)[];
 		pricingSection: {
 			title: string;
 			subtitle: string;
@@ -1947,7 +1861,7 @@ export type HomePageQueryResult = {
 				intro?: string;
 				price: number;
 				benefitsTitle: string;
-				benefits: Array<string>;
+				benefits: string[];
 				cta: string;
 			};
 			pricingFamily: {
@@ -1956,7 +1870,7 @@ export type HomePageQueryResult = {
 				intro?: string;
 				price: number;
 				benefitsTitle: string;
-				benefits: Array<string>;
+				benefits: string[];
 				cta: string;
 			};
 			pricingAdult: {
@@ -1965,24 +1879,22 @@ export type HomePageQueryResult = {
 				intro?: string;
 				price: number;
 				benefitsTitle: string;
-				benefits: Array<string>;
+				benefits: string[];
 				cta: string;
 			};
 		};
 		testimonialSection: {
 			title: string;
 			subtitle: string;
-			testimonials?: Array<
-				{
+			testimonials?: ({
 					_key: string;
-				} & TestimonialReference
-			>;
+				} & TestimonialReference)[];
 		};
 		contactPersonsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			contactPersons: Array<{
+			contactPersons: {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
@@ -1991,7 +1903,7 @@ export type HomePageQueryResult = {
 				email: string | null;
 				role: string | null;
 				taskDescription: string | null;
-			}>;
+			}[];
 		};
 		newsSection: {
 			title: string;
@@ -2004,14 +1916,14 @@ export type HomePageQueryResult = {
 // Source: src/lib/sanity/queries/pages/home.ts
 // Variable: homePageTestimonialsQuery
 // Query: *[_type == 'home'][0].content.testimonialSection.testimonials[]-> {		_id,		firstName,		lastName,		image,		quote,		role,	}
-export type HomePageTestimonialsQueryResult = Array<{
+export type HomePageTestimonialsQueryResult = {
 	_id: string;
 	firstName: string;
 	lastName: string;
 	image: ExtendedImage;
 	quote: string;
 	role: string;
-}> | null;
+}[] | null;
 
 // Source: src/lib/sanity/queries/pages/imprint.ts
 // Variable: imprintPageQuery
@@ -2047,7 +1959,7 @@ export type ImprintPageQueryResult = {
 // Source: src/lib/sanity/queries/pages/membership.ts
 // Variable: membershipPageQuery
 // Query: {		"membership": *[_type == 'membership'][0] {			...,			downloadsSection {				...,				downloads[] {					...,					document {						...,						asset->					}				}			},			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		},		"pricingSection": *[_type == 'home'][0].content.pricingSection	}
-export type MembershipPageQueryResult = {
+export interface MembershipPageQueryResult {
 	membership: {
 		_id: string;
 		_type: 'membership';
@@ -2063,7 +1975,7 @@ export type MembershipPageQueryResult = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			downloads: Array<{
+			downloads: {
 				_key: string;
 				_type: 'documentDownload';
 				title: string;
@@ -2092,13 +2004,13 @@ export type MembershipPageQueryResult = {
 					media?: unknown;
 					_type: 'file';
 				};
-			}>;
+			}[];
 		};
 		contactPersonsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			contactPersons: Array<{
+			contactPersons: {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
@@ -2107,7 +2019,7 @@ export type MembershipPageQueryResult = {
 				email: string | null;
 				role: string | null;
 				taskDescription: string | null;
-			}>;
+			}[];
 		};
 	} | null;
 	pricingSection: {
@@ -2120,7 +2032,7 @@ export type MembershipPageQueryResult = {
 			intro?: string;
 			price: number;
 			benefitsTitle: string;
-			benefits: Array<string>;
+			benefits: string[];
 			cta: string;
 		};
 		pricingFamily: {
@@ -2129,7 +2041,7 @@ export type MembershipPageQueryResult = {
 			intro?: string;
 			price: number;
 			benefitsTitle: string;
-			benefits: Array<string>;
+			benefits: string[];
 			cta: string;
 		};
 		pricingAdult: {
@@ -2138,11 +2050,11 @@ export type MembershipPageQueryResult = {
 			intro?: string;
 			price: number;
 			benefitsTitle: string;
-			benefits: Array<string>;
+			benefits: string[];
 			cta: string;
 		};
 	} | null;
-};
+}
 
 // Source: src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleHeroQuery
@@ -2163,21 +2075,19 @@ export type NewsArticleContentQueryResult = {
 		lastName: string;
 		jobTitle: string;
 	};
-	body: Array<
-		| {
+	body: (| {
 				_key: string;
 				_type: 'blockContent';
-				text: Array<{
-					children?: Array<{
-						marks?: Array<string>;
+				text: {
+					children?: {
+						marks?: string[];
 						text?: string;
 						_type: 'span';
 						_key: string;
-					}>;
+					}[];
 					style?: 'blockquote' | 'h2' | 'h3' | 'normal';
 					listItem?: 'bullet' | 'number';
-					markDefs: Array<
-						| {
+					markDefs: (| {
 								href?: string;
 								_type: 'externalLink';
 								_key: string;
@@ -2250,12 +2160,11 @@ export type NewsArticleContentQueryResult = {
 									  };
 								_type: 'internalLink';
 								_key: string;
-						  }
-					> | null;
+						  })[] | null;
 					level?: number;
 					_type: 'block';
 					_key: string;
-				}> | null;
+				}[] | null;
 		  }
 		| {
 				_key: string;
@@ -2269,14 +2178,12 @@ export type NewsArticleContentQueryResult = {
 				_type: 'grid';
 				title?: string;
 				columns: Columns;
-				items?: Array<
-					| ({
+				items?: (| ({
 							_key: string;
 					  } & BlockContent)
 					| ({
 							_key: string;
-					  } & MainImage)
-				>;
+					  } & MainImage))[];
 				text: null;
 		  }
 		| {
@@ -2295,12 +2202,11 @@ export type NewsArticleContentQueryResult = {
 				_type: 'spacer';
 				variant?: 'default';
 				text: null;
-		  }
-	> | null;
-	categories: Array<{
+		  })[] | null;
+	categories: {
 		slug: string;
 		title: string;
-	}>;
+	}[];
 	excerpt: string;
 	featuredImage: MainImage;
 	meta: {
@@ -2336,7 +2242,7 @@ export type NewsOverviewCategoryPageQueryResult = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			contactPersons: Array<{
+			contactPersons: {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
@@ -2345,7 +2251,7 @@ export type NewsOverviewCategoryPageQueryResult = {
 				email: string | null;
 				role: string | null;
 				taskDescription: string | null;
-			}>;
+			}[];
 		};
 	};
 } | null;
@@ -2353,7 +2259,7 @@ export type NewsOverviewCategoryPageQueryResult = {
 // Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsArticlesPaginatedForCategoryQuery
 // Query: *[_type == 'news.article' && $category in categories[]->slug.current]	| order(publishedAt desc) [$start..$end] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
-export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
+export type NewsArticlesPaginatedForCategoryQueryResult = {
 	_id: string;
 	publishedAt: string;
 	author: {
@@ -2361,10 +2267,10 @@ export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
 		lastName: string;
 		image: ExtendedImage;
 	};
-	categories: Array<{
+	categories: {
 		title: string;
 		slug: string;
-	}>;
+	}[];
 	excerpt: string;
 	meta: {
 		metaTitle: string | null;
@@ -2381,7 +2287,7 @@ export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
 	featuredImage: MainImage;
 	slug: string;
 	title: string;
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsArticlesTotalForCategoryQuery
@@ -2406,7 +2312,7 @@ export type NewsOverviewPageQueryResult = {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			contactPersons: Array<{
+			contactPersons: {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
@@ -2415,7 +2321,7 @@ export type NewsOverviewPageQueryResult = {
 				email: string | null;
 				role: string | null;
 				taskDescription: string | null;
-			}>;
+			}[];
 		};
 	};
 } | null;
@@ -2450,11 +2356,9 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 	| {
 			description: SimpleBlockContent;
 			featuredImage: ExtendedImage;
-			images: Array<
-				{
+			images: ({
 					_key: string;
-				} & ExtendedImage
-			> | null;
+				} & ExtendedImage)[] | null;
 			meta: {
 				metaTitle: string | null;
 				metaDescription: string | null;
@@ -2470,7 +2374,7 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 			title: string;
 			training: {
 				trainingDescription: SimpleBlockContent | null;
-				trainingTimes: Array<{
+				trainingTimes: {
 					_key: string;
 					_type: 'trainingTime';
 					season: 'summer' | 'winter' | 'yearly';
@@ -2518,7 +2422,7 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 						};
 					};
 					note?: string;
-				}> | null;
+				}[] | null;
 			} | null;
 	  }
 	| {
@@ -2623,7 +2527,7 @@ export type OfferGroupsGroupPageGroupsQueryResult =
 // Source: src/lib/sanity/queries/pages/offer-groups-group.ts
 // Variable: offerGroupsGroupPageContactPersonsQuery
 // Query: *[		_type == 'person' &&		defined(affiliations[team->slug.current == $slug][0])	]|order(lastName asc) {		_id,		firstName,		lastName,		phone,		image,		contactAs,		"email": affiliations[team->slug.current == $slug][0].team->email,		"role":  affiliations[team->slug.current == $slug][0].role->title,		"team":  affiliations[team->slug.current == $slug][0].team->title,		"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,	}
-export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
+export type OfferGroupsGroupPageContactPersonsQueryResult = {
 	_id: string;
 	firstName: string;
 	lastName: string;
@@ -2634,7 +2538,7 @@ export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
 	role: string | null;
 	team: string | null;
 	taskDescription: string | null;
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageQuery
@@ -2654,11 +2558,9 @@ export type OfferGroupsPageQueryResult = {
 			subtitle: string;
 			intro?: string;
 		};
-		stats: Array<
-			{
+		stats: ({
 				_key: string;
-			} & Stats
-		>;
+			} & Stats)[];
 		contactPersonsSection: {
 			title: string;
 			subtitle: string;
@@ -2670,8 +2572,7 @@ export type OfferGroupsPageQueryResult = {
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageGroupsQuery
 // Query: *[_type == $groupType][] | order(sortOrder asc) {		icon,		featuredImage,		overviewTitle,		'slug': slug.current,		title,	}
-export type OfferGroupsPageGroupsQueryResult = Array<
-	| {
+export type OfferGroupsPageGroupsQueryResult = (| {
 			icon:
 				| 'Badminton'
 				| 'Bodenturnen'
@@ -2736,13 +2637,12 @@ export type OfferGroupsPageGroupsQueryResult = Array<
 			overviewTitle: null;
 			slug: string | null;
 			title: string;
-	  }
->;
+	  })[];
 
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageContactPersonsQuery
 // Query: *[_type == 'person'][affiliations[0].role->email == $email] {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
-export type OfferGroupsPageContactPersonsQueryResult = Array<{
+export type OfferGroupsPageContactPersonsQueryResult = {
 	firstName: string;
 	lastName: string;
 	phone: string | null;
@@ -2751,7 +2651,7 @@ export type OfferGroupsPageContactPersonsQueryResult = Array<{
 	email: string | null;
 	role: string | null;
 	taskDescription: string | null;
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/pages/offer.ts
 // Variable: offerPageQuery
@@ -2772,16 +2672,14 @@ export type OfferPageQueryResult = {
 			subtitle: string;
 			intro?: string;
 		};
-		stats: Array<
-			{
+		stats: ({
 				_key: string;
-			} & Stats
-		>;
+			} & Stats)[];
 		contactPersonsSection: {
 			title: string;
 			subtitle: string;
 			intro?: string;
-			contactPersons: Array<{
+			contactPersons: {
 				firstName: string;
 				lastName: string;
 				phone: string | null;
@@ -2790,7 +2688,7 @@ export type OfferPageQueryResult = {
 				email: string | null;
 				role: string | null;
 				taskDescription: string | null;
-			}>;
+			}[];
 		};
 	};
 } | null;
@@ -2814,17 +2712,16 @@ export type PrivacyPageQueryResult = {
 	email: string;
 	content: {
 		_type: 'blockContent';
-		text: Array<{
-			children?: Array<{
-				marks?: Array<string>;
+		text: {
+			children?: {
+				marks?: string[];
 				text?: string;
 				_type: 'span';
 				_key: string;
-			}>;
+			}[];
 			style?: 'blockquote' | 'h2' | 'h3' | 'normal';
 			listItem?: 'bullet' | 'number';
-			markDefs: Array<
-				| {
+			markDefs: (| {
 						href?: string;
 						_type: 'externalLink';
 						_key: string;
@@ -2897,19 +2794,18 @@ export type PrivacyPageQueryResult = {
 							  };
 						_type: 'internalLink';
 						_key: string;
-				  }
-			> | null;
+				  })[] | null;
 			level?: number;
 			_type: 'block';
 			_key: string;
-		}> | null;
+		}[] | null;
 	};
 } | null;
 
 // Source: src/lib/sanity/queries/rss.ts
 // Variable: rssNewsArticlesQuery
 // Query: *[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..49] {		title,		excerpt,		"slug": slug.current,		"category": categories[0]->slug.current,		"categoryTitle": categories[0]->title,		"author": author->{ firstName, lastName, email },		publishedAt,		_updatedAt	}
-export type RssNewsArticlesQueryResult = Array<{
+export type RssNewsArticlesQueryResult = {
 	title: string;
 	excerpt: string;
 	slug: string;
@@ -2922,12 +2818,12 @@ export type RssNewsArticlesQueryResult = Array<{
 	};
 	publishedAt: string;
 	_updatedAt: string;
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/shared/groups.ts
 // Variable: groupsQuery
 // Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_id,		title,		icon,	}
-export type GroupsQueryResult = Array<{
+export type GroupsQueryResult = {
 	_id: string;
 	title: string;
 	icon:
@@ -2948,12 +2844,12 @@ export type GroupsQueryResult = Array<{
 		| 'Turnen'
 		| 'Wandern'
 		| 'Yoga';
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesQuery
 // Query: *[_type == 'news.article'] | order(publishedAt desc) [0..2] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
-export type NewsArticlesQueryResult = Array<{
+export type NewsArticlesQueryResult = {
 	_id: string;
 	publishedAt: string;
 	author: {
@@ -2961,10 +2857,10 @@ export type NewsArticlesQueryResult = Array<{
 		lastName: string;
 		image: ExtendedImage;
 	};
-	categories: Array<{
+	categories: {
 		title: string;
 		slug: string;
-	}>;
+	}[];
 	excerpt: string;
 	meta: {
 		metaTitle: string | null;
@@ -2981,12 +2877,12 @@ export type NewsArticlesQueryResult = Array<{
 	featuredImage: MainImage;
 	slug: string;
 	title: string;
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesPaginatedQuery
 // Query: *[_type == 'news.article'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
-export type NewsArticlesPaginatedQueryResult = Array<{
+export type NewsArticlesPaginatedQueryResult = {
 	_id: string;
 	publishedAt: string;
 	author: {
@@ -2994,10 +2890,10 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 		lastName: string;
 		image: ExtendedImage;
 	};
-	categories: Array<{
+	categories: {
 		title: string;
 		slug: string;
-	}>;
+	}[];
 	excerpt: string;
 	meta: {
 		metaTitle: string | null;
@@ -3014,7 +2910,7 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 	featuredImage: MainImage;
 	slug: string;
 	title: string;
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesTotalQuery
@@ -3049,7 +2945,7 @@ export type SocialMediaQueryResult = SocialFields | null;
 // Source: src/lib/sanity/queries/shared/sponsors.ts
 // Variable: sponsorsQuery
 // Query: *[_type == 'sponsors'] {		_id,		name,		logo,	} | order(name asc)
-export type SponsorsQueryResult = Array<{
+export type SponsorsQueryResult = {
 	_id: string;
 	name: string;
 	logo: {
@@ -3059,30 +2955,29 @@ export type SponsorsQueryResult = Array<{
 		crop?: SanityImageCrop;
 		_type: 'image';
 	};
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapNewsArticlesQuery
 // Query: *[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {		"slug": slug.current,		"category": categories[0]->slug.current,		"lastModified": _updatedAt	}
-export type SitemapNewsArticlesQueryResult = Array<{
+export type SitemapNewsArticlesQueryResult = {
 	slug: string;
 	category: string | null;
 	lastModified: string;
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapNewsCategoriesQuery
 // Query: *[_type == 'news.category'] {		"slug": slug.current,		"lastModified": _updatedAt	}
-export type SitemapNewsCategoriesQueryResult = Array<{
+export type SitemapNewsCategoriesQueryResult = {
 	slug: string;
 	lastModified: string;
-}>;
+}[];
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapGroupsQuery
 // Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_type,		"slug": slug.current,		"lastModified": _updatedAt	}
-export type SitemapGroupsQueryResult = Array<
-	| {
+export type SitemapGroupsQueryResult = (| {
 			_type: 'group.children-gymnastics';
 			slug: string;
 			lastModified: string;
@@ -3111,8 +3006,7 @@ export type SitemapGroupsQueryResult = Array<
 			_type: 'group.taekwondo';
 			slug: string;
 			lastModified: string;
-	  }
->;
+	  })[];
 
 // Query TypeMap
 import '@sanity/client';

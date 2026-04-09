@@ -2,24 +2,24 @@ import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 const contactTo = defineField({
-	title: 'Kontakt zu',
-	name: 'contactNameMail',
-	type: 'object',
-	icon: RiLinksLine,
 	fields: [
 		{
-			title: 'Name',
 			name: 'name',
+			title: 'Name',
 			type: 'string',
 			validation: (Rule) => [Rule.required().error('Der Name ist erforderlich')],
 		},
 		{
-			title: 'E-Mail',
 			name: 'email',
+			title: 'E-Mail',
 			type: 'email',
 			validation: (Rule) => [Rule.required().error('Die E-Mail ist erforderlich')],
 		},
 	],
+	icon: RiLinksLine,
+	name: 'contactNameMail',
+	title: 'Kontakt zu',
+	type: 'object',
 });
 
 export default contactTo;

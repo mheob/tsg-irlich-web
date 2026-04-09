@@ -24,7 +24,7 @@ type ContactButtonProps = ComponentPropsWithRef<'a'> &
 	);
 
 export function ContactButton({ email, phone, whatsapp, ...props }: ContactButtonProps) {
-	if (email)
+	if (email) {
 		return (
 			<ContactLink
 				aria-label="E-Mail"
@@ -35,6 +35,7 @@ export function ContactButton({ email, phone, whatsapp, ...props }: ContactButto
 				<Mail aria-hidden="true" />
 			</ContactLink>
 		);
+	}
 
 	if (phone) {
 		return (

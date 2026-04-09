@@ -13,7 +13,9 @@ interface ZoomableImageProps extends ComponentProps<typeof Image> {
 }
 
 export function ZoomableImage({ alt, src, srcFull, ...props }: Readonly<ZoomableImageProps>) {
-	if (!src || !srcFull) return null;
+	if (!src || !srcFull) {
+		return null;
+	}
 
 	return (
 		<ImageDialog>
@@ -25,7 +27,7 @@ export function ZoomableImage({ alt, src, srcFull, ...props }: Readonly<Zoomable
 				<div className="relative h-[calc(100vh-250px)] w-full">
 					<Image
 						alt={alt || ''}
-						className="h-full w-full object-contain"
+						className="size-full object-contain"
 						loading="lazy"
 						src={srcFull}
 						fill

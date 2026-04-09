@@ -6,13 +6,23 @@ import type { AnyImage } from '@/types/image.types';
 type OpenGraph = Metadata['openGraph'];
 type OGImage = NonNullable<OpenGraph>['images'];
 
+const DEFAULT_OG_IMAGE_SIZE = { height: 630, width: 1200 };
+
 export function getOpenGraphImageOptions(image?: AnyImage, title?: string): OGImage {
-	if (!image) return;
+	if (!image) {
+		return;
+	}
+
+	const imageUrl = urlForImage(image, DEFAULT_OG_IMAGE_SIZE.height, DEFAULT_OG_IMAGE_SIZE.width);
+
+	if (!imageUrl) {
+		return;
+	}
 
 	return {
 		alt: image.alt ?? title ?? '',
-		height: 630,
-		url: urlForImage(image, 630, 1200) ?? '',
-		width: 1200,
+		height: DEFAULT_OG_IMAGE_SIZE.height,
+		url: imageUrl,
+		width: DEFAULT_OG_IMAGE_SIZE.width,
 	};
 }

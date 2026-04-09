@@ -1,10 +1,11 @@
 'use client';
 
-import { cn, TSGLogo } from '@tsgi-web/shared';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
+
+import { cn, TSGLogo } from '@tsgi-web/shared';
 
 import { Button } from '@/components/ui/button';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
@@ -34,19 +35,23 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 
 	const pathname = usePathname();
 
-	const navItemsWithActive: NavItemWithActive[] = useMemo(() => {
-		return navItems
-			.filter((item) => item.slug !== '#!')
-			.map((item) => ({
-				...item,
-				isActive: isActivePage(pathname, item.slug),
-				slug: getHref(item.slug),
-			}));
-	}, [navItems, pathname]);
+	const navItemsWithActive: NavItemWithActive[] = useMemo(
+		() =>
+			navItems
+				.filter((item) => item.slug !== '#!')
+				.map((item) =>
+					Object.assign(item, {
+						isActive: isActivePage(pathname, item.slug),
+						slug: getHref(item.slug),
+					}),
+				),
+		[navItems, pathname],
+	);
 
 	useEffect(() => {
 		const handleScroll = () => {
-			setIsScrolled(window.scrollY > 10);
+			const SCROLL_PADDING = 10;
+			setIsScrolled(window.scrollY > SCROLL_PADDING);
 		};
 
 		window.addEventListener('scroll', handleScroll);
@@ -55,7 +60,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 
 	return (
 		<nav
-			className={cn('bg-background/70 fixed inset-x-0 top-0 z-50 transition-all duration-300', {
+			className={cn('fixed inset-x-0 top-0 z-50 bg-background/70 transition-all duration-300', {
 				'bg-background': isMobileOpen,
 				'shadow-sm backdrop-blur-md': isScrolled,
 			})}
@@ -86,8 +91,8 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 						{navItemsWithActive.map((item) => (
 							<Link
 								className={cn(
-									'hover:bg-secondary/40 text-primary flex h-16 items-center px-3 py-2 font-bold uppercase transition-colors',
-									{ 'border-secondary border-b-2': item.isActive },
+									'flex h-16 items-center px-3 py-2 font-bold text-primary uppercase transition-colors hover:bg-secondary/40',
+									{ 'border-b-2 border-secondary': item.isActive },
 								)}
 								href={item.slug}
 								key={item._key}
@@ -113,11 +118,12 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					<div className="flex items-center gap-2 lg:hidden">
 						<button
 							aria-label="Toggle menu"
-							className="text-foreground inline-flex items-center justify-center rounded-md p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-900"
+							className="inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-gray-100 dark:hover:bg-gray-900"
+							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onClick={() => setIsMobileOpen(!isMobileOpen)}
 							type="button"
 						>
-							{isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+							{isMobileOpen ? <X className="size-6" /> : <Menu className="size-6" />}
 						</button>
 					</div>
 				</div>
@@ -135,11 +141,12 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					{navItemsWithActive.map((item) => (
 						<Link
 							className={cn(
-								'text-foreground block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-900',
+								'block rounded-md px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-gray-100 dark:hover:bg-gray-900',
 								{ 'bg-secondary/40': item.isActive },
 							)}
 							href={item.slug}
 							key={item._key}
+							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onClick={() => setIsMobileOpen(false)}
 						>
 							{item.title}
@@ -149,6 +156,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					<div className="px-3 py-6 sm:hidden">
 						<Button
 							className="uppercase"
+							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onClick={() => setIsMobileOpen(false)}
 							variant="secondary"
 							asChild

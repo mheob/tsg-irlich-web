@@ -14,7 +14,7 @@ import type { TrainingTimeSection } from '@/types/sanity.types';
  * @example
  * const baseUrl = getBaseUrl(); // e.g., "https://mein-projekt.vercel.app"
  */
-export function getBaseUrl(): string {
+function getBaseUrl(): string {
 	const vercelUrl = env('VERCEL_PROJECT_PRODUCTION_URL');
 	if (vercelUrl) {
 		return `https://${vercelUrl}`;
@@ -36,7 +36,7 @@ export function getBaseUrl(): string {
  * @param location.zipCode - The zip code of the venue.
  * @returns A URL string that opens the address in Google Maps.
  */
-export function printGoogleMapsLink({
+function printGoogleMapsLink({
 	city,
 	houseNumber,
 	name,
@@ -48,3 +48,5 @@ export function printGoogleMapsLink({
 	const address = parts.join(', ');
 	return `${GOOGLE_MAPS_URL}${encodeURIComponent(address)}`;
 }
+
+export { getBaseUrl, printGoogleMapsLink };

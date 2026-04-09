@@ -1,8 +1,12 @@
-import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
+import { PortableText } from '@/components/ui/portable-text';
+import type { PortableTextValue } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
 import type { AboutUs } from '@/types/sanity.types';
 import { getImageItems } from '@/utils/image';
+
+const MAIN_IMAGE_SIZE = { height: 1024, width: 1024 };
+const FOOTER_IMAGE_SIZE = { height: 450, width: 800 };
 
 interface IntroProps {
 	content: NonNullable<AboutUs['content']['introSection']>;
@@ -13,8 +17,16 @@ export function Intro({ content }: Readonly<IntroProps>) {
 		return null;
 	}
 
-	const mainImage = getImageItems([content.images[0]], 1024, 1024)[0];
-	const footerImages = getImageItems(content.images.slice(1), 450, 800);
+	const mainImage = getImageItems(
+		[content.images[0]],
+		MAIN_IMAGE_SIZE.height,
+		MAIN_IMAGE_SIZE.width,
+	)[0];
+	const footerImages = getImageItems(
+		content.images.slice(1),
+		FOOTER_IMAGE_SIZE.height,
+		FOOTER_IMAGE_SIZE.width,
+	);
 
 	return (
 		<section>

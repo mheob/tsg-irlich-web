@@ -1,5 +1,8 @@
-import { shuffleArray } from '@tsgi-web/shared';
+// oxlint-disable import/max-dependencies
+
 import type { Metadata } from 'next';
+
+import { EMPTY_ARRAY, shuffleArray } from '@tsgi-web/shared';
 
 import { ContactForm } from '@/components/section/contact-form';
 import { ContactPersons } from '@/components/section/contact-persons';
@@ -28,12 +31,15 @@ import { Sponsors } from './_home/sponsors';
 import { Testimonials } from './_home/testimonials';
 import { getOpenGraphImageOptions } from './news/_shared/utils';
 
-const TESTIMONIALS_REVALIDATE_SECONDS = 60 * 60 * 12; /* 12 hours */
+// oxlint-disable-next-line no-magic-numbers
+const TESTIMONIALS_REVALIDATE_SECONDS = 60 * 60 * 12;
 
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<HomePageQueryResult>(homePageQuery);
 
-	if (!page) return {};
+	if (!page) {
+		return {};
+	}
 
 	const description = page.meta?.metaDescription ?? '';
 	const image = page.meta?.openGraphImage;
@@ -67,7 +73,7 @@ export default async function HomePage() {
 	}
 
 	const shuffledTestimonials =
-		testimonials && testimonials.length >= 3 ? shuffleArray(testimonials).slice(0, 3) : [];
+		testimonials && testimonials.length >= 3 ? shuffleArray(testimonials).slice(0, 3) : EMPTY_ARRAY;
 
 	return (
 		<>

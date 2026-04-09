@@ -13,20 +13,20 @@ type GroupsProps = Home['content']['groupsSection'];
 export function Groups({ subtitle, title }: Readonly<GroupsProps>) {
 	return (
 		<section className="relative">
-			<div className={styles.bg}></div>
-			<div className={styles.bgBalls}></div>
+			<div className={styles.bg} />
+			<div className={styles.bgBalls} />
 
 			<div className="container mx-auto px-5 py-10 md:py-32">
 				<SectionHeader isCenteredOnDesktop={false} subTitle={subtitle} title={title} isCentered />
 
 				<div className="my-6 grid grid-cols-1 gap-2 md:mt-24 md:grid-cols-2 md:gap-7 lg:grid-cols-3">
-					{groupSections?.map(({ icon, slug, title }, index) => (
+					{groupSections?.map(({ icon, slug, title: groupSectionTitle }, index) => (
 						<GroupCard
 							digit={index + 1}
-							icon={icon || getFirstLetter(title)}
-							key={title}
+							icon={icon || getFirstLetter(groupSectionTitle)}
+							key={groupSectionTitle}
 							slug={slug}
-							title={title}
+							title={groupSectionTitle}
 						/>
 					))}
 				</div>

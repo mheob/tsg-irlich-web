@@ -125,10 +125,9 @@ tsg-web/
 
 ### Prerequisites
 
-- **Node.js** ^24.12.0
-- **bun** 1.3.5 package manager
+- **Node.js** ^24.14.1
+- **bun** 1.3.11 package manager
 - **Git** for version control
-- **@antfu/ni** for talking to the package manager
 
 ### Installation
 
@@ -139,19 +138,13 @@ tsg-web/
    cd web
    ```
 
-2. **Install @antfu/ni globally**
+2. **Install dependencies**
 
    ```bash
-   npm i -g @antfu/ni
+   bun install
    ```
 
-3. **Install dependencies**
-
-   ```bash
-   ni
-   ```
-
-4. **Set up environment variables**
+3. **Set up environment variables**
 
    For the Studio (`apps/studio/.env`):
 
@@ -179,10 +172,10 @@ tsg-web/
    VERCEL_PROJECT_PRODUCTION_URL=your_vercel_project_production_url
    ```
 
-5. **Start development servers**
+4. **Start development servers**
 
    ```bash
-   nr dev
+   bun run dev
    ```
 
 ## 📜 Available Scripts
@@ -190,15 +183,15 @@ tsg-web/
 ### Root Commands
 
 ```bash
-nr dev                    # Start all apps in development mode
-nr dev:email              # Start React Email preview server
-nr build                  # Build all apps for production
-nr build:affected         # Build only affected packages
-nr lint                   # Lint all apps
-nr lint:affected          # Lint only affected packages
-nr typecheck              # Type check all apps
-nr typegen:sanity         # Generate Sanity types for web app
-nr typegen:routes         # Generate Next.js route types
+bun run dev                    # Start all apps in development mode
+bun run dev:email              # Start React Email preview server
+bun run build                  # Build all apps for production
+bun run build:affected         # Build only affected packages
+bun run lint                   # Lint all apps
+bun run lint:affected          # Lint only affected packages
+bun run typecheck              # Type check all apps
+bun run typegen:sanity         # Generate Sanity types for web app
+bun run typegen:routes         # Generate Next.js route types
 ```
 
 ### Individual App Commands
@@ -207,32 +200,32 @@ nr typegen:routes         # Generate Next.js route types
 
 ```bash
 cd apps/web
-nr dev                    # Next.js dev server
-nr build                  # Production build
-nr start                  # Start production server
-nr typecheck              # Type check with TypeScript
-nr typegen:sanity         # Generate Sanity types
-nr typegen:routes         # Generate Next.js route types
+bun run dev                    # Next.js dev server
+bun run build                  # Production build
+bun run start                  # Start production server
+bun run typecheck              # Type check with TypeScript
+bun run typegen:sanity         # Generate Sanity types
+bun run typegen:routes         # Generate Next.js route types
 ```
 
 #### Studio App (apps/studio)
 
 ```bash
 cd apps/studio
-nr dev                    # Sanity Studio development
-nr build                  # Build Sanity Studio
-nr deploy                 # Deploy studio to Sanity
-nr extract-types          # Extract schema types for typegen
-nr typecheck              # Type check with TypeScript
+bun run dev                    # Sanity Studio development
+bun run build                  # Build Sanity Studio
+bun run deploy                 # Deploy studio to Sanity
+bun run extract-types          # Extract schema types for typegen
+bun run typecheck              # Type check with TypeScript
 ```
 
 #### Email Package (packages/email)
 
 ```bash
 cd packages/email
-nr dev:email              # React Email preview server (port 3001)
-nr build                  # Build email templates
-nr export                 # Export email templates
+bun run dev:email              # React Email preview server (port 3001)
+bun run build                  # Build email templates
+bun run export                 # Export email templates
 ```
 
 ## 🏃‍♂️ Sports Groups & Departments

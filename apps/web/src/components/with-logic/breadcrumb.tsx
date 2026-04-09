@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { type ComponentPropsWithoutRef, Fragment } from 'react';
+import { Fragment } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
 import { capitalizeWords } from '@/utils/typography';
 
@@ -15,11 +16,13 @@ import {
 	Breadcrumb as ShadcnBreadcrumb,
 } from '../ui/breadcrumb';
 
+const LAST_INDEX = -1;
+
 function getBreadcrumbItemsPaths(pathname: string) {
 	const breadcrumbItems = pathname.split('/').slice(1);
 
 	let breadcrumbItemsPathsLast = '';
-	const breadcrumbItemsPaths = breadcrumbItems.slice(0, -1).map((item) => {
+	const breadcrumbItemsPaths = breadcrumbItems.slice(0, LAST_INDEX).map((item) => {
 		const path = `${breadcrumbItemsPathsLast}/${item}`;
 		breadcrumbItemsPathsLast = `/${item}`;
 		return { path, title: capitalizeWords(item) };
@@ -59,7 +62,9 @@ export default function Breadcrumb({ currentPage, ...props }: Readonly<Breadcrum
 				<BreadcrumbSeparator />
 
 				<BreadcrumbItem>
-					<BreadcrumbPage>{currentPage ?? breadcrumbItemsPaths.at(-1)?.title}</BreadcrumbPage>
+					<BreadcrumbPage>
+						{currentPage ?? breadcrumbItemsPaths.at(LAST_INDEX)?.title}
+					</BreadcrumbPage>
 				</BreadcrumbItem>
 			</BreadcrumbList>
 		</ShadcnBreadcrumb>

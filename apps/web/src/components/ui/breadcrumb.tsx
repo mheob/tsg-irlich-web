@@ -1,13 +1,16 @@
+// oxlint-disable no-inline-comments
+//
 import { Slot } from '@radix-ui/react-slot';
-import { cn } from '@tsgi-web/shared';
 import { ChevronsRight, Ellipsis } from 'lucide-react';
 import type { ComponentProps } from 'react';
 
-export function Breadcrumb({ ...props }: ComponentProps<'nav'>) {
+import { cn } from '@tsgi-web/shared';
+
+function Breadcrumb({ ...props }: ComponentProps<'nav'>) {
 	return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
 }
 
-export function BreadcrumbList({ className, ...props }: ComponentProps<'ol'>) {
+function BreadcrumbList({ className, ...props }: ComponentProps<'ol'>) {
 	return (
 		<ol
 			className={cn(
@@ -20,7 +23,7 @@ export function BreadcrumbList({ className, ...props }: ComponentProps<'ol'>) {
 	);
 }
 
-export function BreadcrumbItem({ className, ...props }: ComponentProps<'li'>) {
+function BreadcrumbItem({ className, ...props }: ComponentProps<'li'>) {
 	return (
 		<li
 			className={cn('inline-flex items-center gap-1.5', className)}
@@ -30,7 +33,7 @@ export function BreadcrumbItem({ className, ...props }: ComponentProps<'li'>) {
 	);
 }
 
-export function BreadcrumbLink({
+function BreadcrumbLink({
 	asChild,
 	className,
 	...props
@@ -41,14 +44,14 @@ export function BreadcrumbLink({
 
 	return (
 		<Comp
-			className={cn('hover:text-secondary underline transition-colors', className)}
+			className={cn('underline transition-colors hover:text-secondary', className)}
 			data-slot="breadcrumb-link"
 			{...props}
 		/>
 	);
 }
 
-export function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {
+function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {
 	return (
 		<span // NOSONAR
 			aria-current="page"
@@ -61,7 +64,7 @@ export function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) 
 	);
 }
 
-export function BreadcrumbSeparator({ children, className, ...props }: ComponentProps<'li'>) {
+function BreadcrumbSeparator({ children, className, ...props }: ComponentProps<'li'>) {
 	return (
 		<li // NOSONAR
 			aria-hidden="true"
@@ -75,7 +78,7 @@ export function BreadcrumbSeparator({ children, className, ...props }: Component
 	);
 }
 
-export function BreadcrumbEllipsis({ className, ...props }: ComponentProps<'span'>) {
+function BreadcrumbEllipsis({ className, ...props }: ComponentProps<'span'>) {
 	return (
 		<span // NOSONAR
 			aria-hidden="true"
@@ -89,3 +92,13 @@ export function BreadcrumbEllipsis({ className, ...props }: ComponentProps<'span
 		</span>
 	);
 }
+
+export {
+	Breadcrumb,
+	BreadcrumbList,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+	BreadcrumbEllipsis,
+};

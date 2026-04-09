@@ -2,23 +2,23 @@ import { RiChatQuoteLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
 const blockquote = defineField({
-	title: 'Zitat-Block',
-	name: 'blockquote',
-	type: 'object',
 	description: 'A blockquote component with the quote and author',
-	icon: RiChatQuoteLine,
 	fields: [
 		defineField({
-			title: 'Zitat',
 			name: 'quote',
+			title: 'Zitat',
 			type: 'text',
 		}),
 		defineField({
-			title: 'Autor',
 			name: 'author',
+			title: 'Autor',
 			type: 'string',
 		}),
 	],
+	icon: RiChatQuoteLine,
+	name: 'blockquote',
+	title: 'Zitat-Block',
+	type: 'object',
 });
 
 export default blockquote;

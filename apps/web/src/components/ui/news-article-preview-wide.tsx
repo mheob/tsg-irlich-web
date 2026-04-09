@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { NewsArticlesQueryResult } from '@/types/sanity.types';
 
+const FEATURED_IMAGE_SIZE = { height: 450, width: 800 };
+const AUTHOR_IMAGE_SIZE = 56;
+
 type NewsArticlePreviewWideProps = NewsArticlesQueryResult[number];
 
 export function NewsArticlePreviewWide({
@@ -14,14 +17,18 @@ export function NewsArticlePreviewWide({
 	slug,
 	title,
 }: Readonly<NewsArticlePreviewWideProps>) {
-	const featuredImageSource = urlForImage(featuredImage, 450, 800);
-	const authorImageSource = urlForImage(author.image, 56);
+	const featuredImageSource = urlForImage(
+		featuredImage,
+		FEATURED_IMAGE_SIZE.height,
+		FEATURED_IMAGE_SIZE.width,
+	);
+	const authorImageSource = urlForImage(author.image, AUTHOR_IMAGE_SIZE);
 
 	return (
-		<article className="group bg-background rounded-xl text-black md:grid md:grid-cols-[50%_50%]">
+		<article className="group rounded-xl bg-background text-black md:grid md:grid-cols-[50%_50%]">
 			{featuredImageSource && (
 				<Link
-					className="relative block aspect-[2.5/1] w-full overflow-hidden rounded-t-xl md:aspect-auto md:rounded-t-none md:rounded-l-xl"
+					className="relative block aspect-2.5/1 w-full overflow-hidden rounded-t-xl md:aspect-auto md:rounded-t-none md:rounded-l-xl"
 					href={`/news/${categories[0].slug}/${slug}`}
 				>
 					<Image

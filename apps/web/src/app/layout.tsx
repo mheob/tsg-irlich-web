@@ -1,7 +1,8 @@
-import { cn } from '@tsgi-web/shared';
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { Anton, Bebas_Neue, Inter } from 'next/font/google';
+
+import { EMPTY_ARRAY, cn } from '@tsgi-web/shared';
 
 import Footer from '@/components/layout/footer';
 import { Navigation } from '@/components/with-logic/navigation';
@@ -10,6 +11,7 @@ import { mainNavigationQuery } from '@/lib/sanity/queries/main-navigation';
 import type { MainNavigationQueryResult } from '@/types/sanity.types.generated';
 import { getBaseUrl } from '@/utils/url';
 
+// oxlint-disable-next-line import/no-unassigned-import
 import './globals.css';
 
 const anton = Anton({
@@ -33,7 +35,8 @@ const inter = Inter({
 	weight: ['400', '700'],
 });
 
-const NAVIGATION_REVALIDATE_SECONDS = 60 * 60 * 12; /* 12 hours */
+// oxlint-disable-next-line no-magic-numbers
+const NAVIGATION_REVALIDATE_SECONDS = 60 * 60 * 12;
 
 export const metadata: Metadata = {
 	alternates: { types: { 'application/rss+xml': '/feed.xml' } },
@@ -56,7 +59,7 @@ export default async function RootLayout({
 		)
 		.catch(() => null);
 
-	const navItems = mainNavigationQueryResults?.mainNavigation ?? [];
+	const navItems = mainNavigationQueryResults?.mainNavigation ?? EMPTY_ARRAY;
 
 	if (navItems.length === 0) {
 		console.warn('No navigation items loaded from Sanity');

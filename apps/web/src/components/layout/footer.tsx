@@ -1,6 +1,7 @@
-import { TSGLogo } from '@tsgi-web/shared';
 import { ArrowUp, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
+
+import { TSGLogo } from '@tsgi-web/shared';
 
 import { GoToGoogleMaps } from '@/components/section/go-to-google-maps';
 import { client } from '@/lib/sanity/client';
@@ -40,7 +41,7 @@ export default async function Footer() {
 	const simplifiedAddress = `${contact.address.street} ${contact.address.houseNumber}, ${contact.address.zipCode} ${contact.address.city}`;
 
 	return (
-		<footer className="bg-primary w-full text-white">
+		<footer className="w-full bg-primary text-white">
 			<div className="container pt-16 pb-4 md:pt-40">
 				<div className="md:flex md:justify-between">
 					<section className="flex flex-col items-center gap-5">
@@ -68,9 +69,9 @@ export default async function Footer() {
 						<section className="flex flex-col items-center gap-12 sm:w-auto sm:flex-row sm:gap-48">
 							<GoToGoogleMaps
 								address={contact.address}
-								className="hover:text-secondary group flex cursor-pointer items-center gap-4 transition-colors sm:flex-col"
+								className="group flex cursor-pointer items-center gap-4 transition-colors hover:text-secondary sm:flex-col"
 							>
-								<span className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2">
+								<span className="rounded-full border border-white p-3 transition-colors group-hover:border-secondary md:border-2">
 									<MapPin
 										aria-label={`Besuche uns im Pappelstadion: ${simplifiedAddress}`}
 										className="size-6 md:size-12"
@@ -81,10 +82,10 @@ export default async function Footer() {
 							</GoToGoogleMaps>
 
 							<ContactLink
-								className="hover:text-secondary group flex items-center gap-4 transition-colors sm:flex-col"
+								className="group flex items-center gap-4 transition-colors hover:text-secondary sm:flex-col"
 								href={`mailto:${contact.email}`}
 							>
-								<span className="group-hover:border-secondary rounded-full border border-white p-3 transition-colors md:border-2">
+								<span className="rounded-full border border-white p-3 transition-colors group-hover:border-secondary md:border-2">
 									<Mail
 										aria-label={`Schreibe uns eine E-Mail: ${contact.email}`}
 										className="size-6 md:size-12"
@@ -100,12 +101,12 @@ export default async function Footer() {
 				<section className="mt-12 flex flex-col-reverse items-center gap-4 md:flex-row md:justify-between">
 					<div className="mt-4 md:mt-0">
 						©{currentYear} TSG Irlich. Alle Rechte vorbehalten. |{' '}
-						<Link className="text-secondary font-bold hover:text-white" href="/kontakt/feedback">
+						<Link className="font-bold text-secondary hover:text-white" href="/kontakt/feedback">
 							Feedback geben
 						</Link>
 					</div>
 					<nav className="flex items-center gap-4">
-						<div className="sm:flex sm:items-center gap-2 sm:gap-4">
+						<div className="gap-2 sm:flex sm:items-center sm:gap-4">
 							<Link className="hover:text-secondary" href={imprint?.href}>
 								{imprint?.label}
 							</Link>{' '}
@@ -120,10 +121,10 @@ export default async function Footer() {
 						</div>
 						<a
 							aria-label="zum Seitenanfang springen"
-							className="bg-secondary hover:bg-secondary/80 ml-4 rounded-full p-1.5"
+							className="ml-4 rounded-full bg-secondary p-1.5 hover:bg-secondary/80"
 							href="#top"
 						>
-							<ArrowUp className="text-primary bg-transparent" size="32" strokeWidth="2" />
+							<ArrowUp className="bg-transparent text-primary" size="32" strokeWidth="2" />
 						</a>
 					</nav>
 				</section>

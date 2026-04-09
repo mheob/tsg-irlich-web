@@ -1,11 +1,5 @@
-import {
-	Calendar,
-	CircleHelp,
-	Dumbbell,
-	GraduationCap,
-	House,
-	type LucideProps,
-} from 'lucide-react';
+import { Calendar, CircleHelp, Dumbbell, GraduationCap, House } from 'lucide-react';
+import type { LucideProps } from 'lucide-react';
 import type { HTMLAttributes } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,7 +32,7 @@ interface FeatureCardProps extends HTMLAttributes<HTMLDivElement> {
 
 export function FeatureCard({ icon, intro, title }: Readonly<FeatureCardProps>) {
 	return (
-		<Card className="hover:bg-primary hover:text-primary-foreground transition-colors">
+		<Card className="transition-colors hover:bg-primary hover:text-primary-foreground">
 			<FeatureIcon aria-hidden="true" icon={icon} size={60} strokeWidth={1} />
 			<CardHeader>
 				<CardTitle className="mt-4 text-xl uppercase md:text-3xl">{title}</CardTitle>

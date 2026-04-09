@@ -1,10 +1,15 @@
-import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
+import { cn } from '@tsgi-web/shared';
+
+import { PortableText } from '@/components/ui/portable-text';
+import type { PortableTextValue } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
 import type { GroupDance, SimpleBlockContent } from '@/types/sanity.types';
 import { getImageItems } from '@/utils/image';
 
 import styles from './main.module.css';
+
+const IMAGE_SIZE = { height: 700, width: 1244 };
 
 interface MainProps {
 	description: SimpleBlockContent;
@@ -13,11 +18,11 @@ interface MainProps {
 }
 
 export function Main({ description, gallery, title }: Readonly<MainProps>) {
-	const items = getImageItems(gallery, 700, 1244);
+	const items = getImageItems(gallery, IMAGE_SIZE.height, IMAGE_SIZE.width);
 	const imagesCount = items.length;
 
 	return (
-		<section className={`${styles.bg} relative z-0`}>
+		<section className={cn(styles.bg, 'relative z-0')}>
 			<div className="container py-10 md:py-32">
 				<SectionHeader
 					className="mb-10 [&>p]:mt-6"

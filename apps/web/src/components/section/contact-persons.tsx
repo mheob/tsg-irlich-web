@@ -18,7 +18,7 @@ export function ContactPersons({
 	title,
 }: Readonly<ContactPersonsProps>) {
 	return (
-		<section className={cn(styles.bg, 'bg-primary text-primary-foreground relative z-0')}>
+		<section className={cn(styles.bg, 'relative z-0 bg-primary text-primary-foreground')}>
 			<div className="container pt-10 pb-24 md:pt-28 md:pb-40">
 				<SectionHeader
 					descriptionClassName="text-primary-foreground"
@@ -31,7 +31,7 @@ export function ContactPersons({
 				</SectionHeader>
 
 				<div className="mt-10 flex justify-center md:mt-32 md:gap-12">
-					<ContactPersonGroup contactPersons={contactPersons ?? []} />
+					<ContactPersonGroup contactPersons={contactPersons} />
 				</div>
 			</div>
 		</section>

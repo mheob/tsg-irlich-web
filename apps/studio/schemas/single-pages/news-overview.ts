@@ -7,36 +7,36 @@ import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 
 const newsOverviewPage = defineType({
-	title: 'News Übersicht',
-	name: 'newsOverview',
-	type: 'document',
-	icon: RiBookletLine,
-	groups: [general, meta, content],
 	fields: [
 		// (hidden)
 		getHiddenSlugField('news'),
 
-		// general
+		// General
 		...defaultHeroFields,
 
-		// meta
+		// Meta
 		metaField,
 
-		// content
+		// Content
 		defineField({
-			title: 'Inhalte',
-			name: 'content',
-			type: 'object',
-			icon: RiLinksLine,
-			group: 'content',
-			groups: [{ title: 'Ansprechpartner', name: 'contactPersons' }],
 			fields: [contactPersonsSectionField],
+			group: 'content',
+			groups: [{ name: 'contactPersons', title: 'Ansprechpartner' }],
+			icon: RiLinksLine,
+			name: 'content',
+			title: 'Inhalte',
+			type: 'object',
 			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
+	groups: [general, meta, content],
+	icon: RiBookletLine,
+	name: 'newsOverview',
 	preview: {
 		prepare: () => ({ title: 'News Übersicht' }),
 	},
+	title: 'News Übersicht',
+	type: 'document',
 });
 
 export default newsOverviewPage;

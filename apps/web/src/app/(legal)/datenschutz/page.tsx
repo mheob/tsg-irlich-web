@@ -1,20 +1,29 @@
-import { cn } from '@tsgi-web/shared';
 import type { Metadata } from 'next';
+
+import { cn } from '@tsgi-web/shared';
 
 import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { Hero } from '@/components/section/hero';
-import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
+import { PortableText } from '@/components/ui/portable-text';
+import type { PortableTextValue } from '@/components/ui/portable-text';
 import { client } from '@/lib/sanity/client';
 import { privacyPageQuery } from '@/lib/sanity/queries/pages/privacy';
+import type { PrivacyPageQueryResult } from '@/types/sanity.types.generated';
 
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
-import type { PrivacyPageQueryResult } from '@/types/sanity.types.generated';
+
+const HERO_IMAGE = {
+	alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
+	src: heroImage,
+};
 
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<PrivacyPageQueryResult>(privacyPageQuery);
 
-	if (!page) return {};
+	if (!page) {
+		return {};
+	}
 
 	const description = page.meta?.metaDescription ?? '';
 	const image = page.meta?.openGraphImage;
@@ -39,14 +48,7 @@ export default async function PrivacyPage() {
 
 	return (
 		<>
-			<Hero
-				image={{
-					alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
-					src: heroImage,
-				}}
-				subTitle={page.subtitle}
-				title={page.title}
-			/>
+			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
 
 			<section className="container py-10 md:grid md:grid-cols-8 md:gap-12 md:py-32">
 				<div className="md:col-span-1" />

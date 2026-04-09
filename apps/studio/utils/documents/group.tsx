@@ -1,6 +1,9 @@
-import { DOSB_ICONS } from '@tsgi-web/shared';
+// oxlint-disable no-magic-numbers
+
 import type { IconType } from 'react-icons/lib';
 import { defineField, defineType } from 'sanity';
+
+import { DOSB_ICONS } from '@tsgi-web/shared';
 
 import { emailField } from '@/shared/fields/contact';
 import { slugField } from '@/shared/fields/general';
@@ -25,12 +28,13 @@ interface GroupDocumentProps {
  * @param props.title - The title of the document type.
  * @returns The Sanity document type definition.
  */
-export function getGroupDocument({ icon, isSportGroup = true, name, title }: GroupDocumentProps) {
+export function getGroupDocument({
+	icon,
+	isSportGroup = true,
+	name,
+	title,
+}: GroupDocumentProps): ReturnType<typeof defineType> {
 	return defineType({
-		title,
-		name,
-		type: 'document',
-		icon,
 		fields: [
 			defineField({
 				name: 'title',
@@ -51,11 +55,11 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 			defineField({
 				description: 'Optional, Fallback: Name. Wird für die Gruppen-Übersicht verwendet.',
 				name: 'overviewTitle',
-				title: 'Übersichts-Titel',
+				title: 'Übersichtstitel',
 				type: 'string',
 				validation: (Rule) => [
-					Rule.min(2).warning('Übersichts-Titel muss mindestens 2 Zeichen lang sein'),
-					Rule.max(64).warning('Übersichts-Titel sollte nicht länger als 64 Zeichen sein'),
+					Rule.min(2).warning('Übersichtstitel muss mindestens 2 Zeichen lang sein'),
+					Rule.max(64).warning('Übersichtstitel sollte nicht länger als 64 Zeichen sein'),
 				],
 			}),
 
@@ -91,33 +95,33 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 						hinzufügen kann.
 					</>
 				),
+				hidden: !isSportGroup,
 				name: 'icon',
 				options: {
-					list: DOSB_ICONS.map((icon) => ({ title: icon, value: icon })),
+					list: DOSB_ICONS.map((dosbIcon) => ({ title: dosbIcon, value: dosbIcon })),
 				},
 				title: 'Icon',
 				type: 'string',
-				hidden: !isSportGroup,
 				validation: (Rule) => [Rule.required().error('Icon ist erforderlich')],
 			}),
 
 			defineField({
 				description:
 					'Das Hintergrundbild wird z.B. auf der Gruppen-Übersicht angezeigt, wenn man über eine Gruppe hovered.',
+				hidden: !isSportGroup,
 				name: 'featuredImage',
 				title: 'Hintergrundbild',
 				type: 'extendedImage',
-				hidden: !isSportGroup,
 				validation: (Rule) => [Rule.required().error('Bild ist erforderlich')],
 			}),
 
 			defineField({
 				description: 'Es können bis zu drei Bilder ausgewählt werden.',
+				hidden: !isSportGroup,
 				name: 'images',
 				of: [{ type: 'extendedImage' }],
 				title: 'Bildergalerie',
 				type: 'array',
-				hidden: !isSportGroup,
 				validation: (Rule) => [
 					Rule.max(3).error('Es dürfen maximal drei Bilder ausgewählt werden.'),
 				],
@@ -125,9 +129,6 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 
 			defineField({
 				description: 'Beschreibung zu den Trainingszeiten und -orten.',
-				name: 'training',
-				title: 'Trainingszeiten und -orte',
-				type: 'object',
 				fields: [
 					defineField({
 						name: 'trainingDescription',
@@ -143,6 +144,9 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				],
 				hidden: ({ document }) =>
 					(document?.title as string)?.toLowerCase() === 'schiedsrichter' || !isSportGroup,
+				name: 'training',
+				title: 'Trainingszeiten und -orte',
+				type: 'object',
 				validation: (Rule) => [
 					Rule.custom((value, context) => {
 						if (
@@ -159,26 +163,16 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 
 			defineField({
 				description: 'Ist diese Gruppe eine Sportgruppe?',
+				hidden: true,
 				initialValue: isSportGroup,
 				name: 'isSportGroup',
 				title: 'Ist Sportgruppe',
 				type: 'boolean',
-				hidden: true,
 				validation: (Rule) => [Rule.required().error('"Ist Sportgruppe" ist erforderlich')],
 			}),
 		],
-
-		preview: {
-			prepare: ({ sortOrder, title }) => ({
-				subtitle: `Sortierreihenfolge: ${sortOrder}`,
-				title,
-			}),
-			select: {
-				sortOrder: 'sortOrder',
-				title: 'title',
-			},
-		},
-
+		icon,
+		name,
 		orderings: [
 			{
 				by: [{ direction: 'asc', field: 'title' }],
@@ -201,6 +195,21 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 				title: 'nach Sortierreihenfolge - absteigend',
 			},
 		],
+		preview: {
+			// oxlint-disable-next-line no-shadow
+			prepare: ({ sortOrder, title }) => ({
+				subtitle: `Sortierreihenfolge: ${sortOrder}`,
+				title,
+			}),
+			select: {
+				sortOrder: 'sortOrder',
+				title: 'title',
+			},
+		},
+
+		title,
+
+		type: 'document',
 		validation: (Rule) => [Rule.required().error('Gruppe ist erforderlich')],
 	});
 }

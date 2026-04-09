@@ -7,7 +7,7 @@ import { contactPersons } from '@/lib/sanity/queries';
  *
  * @returns The home page
  */
-export const homePageQuery = defineQuery(`
+const homePageQuery = defineQuery(`
 	*[_type == 'home'][0] {
 		...,
 		content {
@@ -27,7 +27,7 @@ export const homePageQuery = defineQuery(`
  *
  * @returns The testimonials for the home page
  */
-export const homePageTestimonialsQuery = defineQuery(`
+const homePageTestimonialsQuery = defineQuery(`
 	*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {
 		_id,
 		firstName,
@@ -37,3 +37,5 @@ export const homePageTestimonialsQuery = defineQuery(`
 		role,
 	}
 `);
+
+export { homePageQuery, homePageTestimonialsQuery };

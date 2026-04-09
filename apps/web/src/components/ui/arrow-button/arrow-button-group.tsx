@@ -1,7 +1,8 @@
 import { Slot } from '@radix-ui/react-slot';
-import { cn } from '@tsgi-web/shared';
 import type { LinkProps as NextLinkProps } from 'next/link';
 import type { ComponentProps, ComponentPropsWithoutRef } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import { ArrowButton, ArrowElement, ArrowLink } from './arrow-button';
 

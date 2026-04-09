@@ -1,3 +1,5 @@
+// oxlint-disable node/no-process-env
+
 import { defineCliConfig } from 'sanity/cli';
 
 export default defineCliConfig({

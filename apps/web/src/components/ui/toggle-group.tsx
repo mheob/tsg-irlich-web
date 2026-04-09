@@ -1,9 +1,12 @@
+// oxlint-disable import/no-namespace
 'use client';
 
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
-import { cn } from '@tsgi-web/shared';
 import type { VariantProps } from 'class-variance-authority';
-import { type ComponentProps, createContext, use, useMemo } from 'react';
+import { createContext, use, useMemo } from 'react';
+import type { ComponentProps } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import { toggleVariants } from '@/components/ui/toggle';
 
@@ -12,7 +15,7 @@ const ToggleGroupContext = createContext<VariantProps<typeof toggleVariants>>({
 	variant: 'default',
 });
 
-export function ToggleGroup({
+function ToggleGroup({
 	children,
 	className,
 	size,
@@ -31,7 +34,7 @@ export function ToggleGroup({
 	);
 }
 
-export function ToggleGroupItem({
+function ToggleGroupItem({
 	children,
 	className,
 	size,
@@ -55,3 +58,5 @@ export function ToggleGroupItem({
 		</ToggleGroupPrimitive.Item>
 	);
 }
+
+export { ToggleGroup, ToggleGroupItem };

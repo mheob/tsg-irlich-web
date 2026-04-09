@@ -2,16 +2,11 @@ import { LinkIcon } from '@sanity/icons';
 import { defineField } from 'sanity';
 
 const internalLink = defineField({
-	title: 'Internal Link',
-	name: 'internalLink',
-	type: 'object',
-	icon: LinkIcon,
 	fields: [
 		{
-			title: 'Link',
-			name: 'link',
-			type: 'reference',
 			description: 'Internen Link hinzufügen',
+			name: 'link',
+			title: 'Link',
 			to: [
 				{ type: 'home' },
 				{ type: 'aboutUs' },
@@ -30,9 +25,14 @@ const internalLink = defineField({
 				{ type: 'privacy' },
 				{ type: 'imprint' },
 			],
+			type: 'reference',
 			validation: (Rule) => Rule.required().error('Der Link ist erforderlich'),
 		},
 	],
+	icon: LinkIcon,
+	name: 'internalLink',
+	title: 'Internal Link',
+	type: 'object',
 });
 
 export default internalLink;

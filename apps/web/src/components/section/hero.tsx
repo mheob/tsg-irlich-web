@@ -1,6 +1,8 @@
-import { cn } from '@tsgi-web/shared';
-import Image, { type ImageProps } from 'next/image';
+import Image from 'next/image';
+import type { ImageProps } from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
+
+import { cn } from '@tsgi-web/shared';
 
 import { SectionHeader } from '../ui/section-header';
 import Breadcrumb from '../with-logic/breadcrumb';
@@ -15,8 +17,8 @@ export function Hero({ children, image, subTitle, title, ...props }: Readonly<He
 	return (
 		<section
 			className={cn(
-				'relative h-[360px] md:h-[600px]',
-				'from-primary/70 to-primary/30 bg-linear-to-r text-white',
+				'relative h-90 md:h-150',
+				'bg-linear-to-r from-primary/70 to-primary/30 text-white',
 			)}
 			{...props}
 		>

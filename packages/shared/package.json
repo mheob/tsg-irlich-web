@@ -5,26 +5,28 @@
 	"keywords": [],
 	"license": "ISC",
 	"author": "",
+	"type": "module",
 	"exports": {
 		".": "./src/index.ts",
 		"./*": "./src/*.ts"
 	},
 	"scripts": {
-		"format": "bun --bun biome format --write",
-		"lint": "bun --bun biome lint --write",
-		"typecheck": "bun --bun tsc --noEmit"
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"lint:github": "oxlint --format=github",
+		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"clsx": "2.1.1",
-		"react": "19.2.4",
-		"react-dom": "19.2.4",
-		"tailwind-merge": "3.5.0"
+		"clsx": "^2.1.1",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"tailwind-merge": "^3.5.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.6",
-		"@mheob/tsconfig": "2.2.1",
-		"@types/react": "19.2.14",
-		"@types/react-dom": "19.2.3",
-		"typescript": "5.9.3"
+		"@mheob/tsconfig": "^2.2.1",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"oxlint": "^1.59.0",
+		"typescript": "^5.9.3"
 	}
 }

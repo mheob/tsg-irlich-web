@@ -1,8 +1,12 @@
-import { cn } from '@tsgi-web/shared';
+// oxlint-disable react/no-unescaped-entities
+//
 import type { Metadata } from 'next';
 
+import { cn } from '@tsgi-web/shared';
+
 import { Hero } from '@/components/section/hero';
-import { PortableText, type PortableTextValue } from '@/components/ui/portable-text';
+import { PortableText } from '@/components/ui/portable-text';
+import type { PortableTextValue } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
 import { client } from '@/lib/sanity/client';
@@ -26,6 +30,12 @@ import { Categories } from './_sections/categories';
 import { SocialMedia } from './_sections/social-media';
 import { Sponsors } from './_sections/sponsors';
 
+const IMAGE_SIZE = { height: 600, width: 1920 };
+const ZOOMABLE_IMAGE_SIZE = {
+	large: { height: 1440, width: 2560 },
+	small: { height: 450, width: 800 },
+};
+
 export async function generateMetadata({
 	params,
 }: Readonly<PageProps<'/news/[category]/[slug]'>>): Promise<Metadata> {
@@ -35,7 +45,9 @@ export async function generateMetadata({
 		slug,
 	});
 
-	if (!article) return {};
+	if (!article) {
+		return {};
+	}
 
 	const description = article.meta?.metaDescription ?? article.excerpt ?? '';
 	const image = article.meta?.openGraphImage ?? article.featuredImage;
@@ -67,18 +79,23 @@ export default async function NewsArticlePage({
 		return null;
 	}
 
-	const imageSource = urlForImage(article.featuredImage, 600, 1920);
+	const imageSource = urlForImage(article.featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
 
 	return (
 		<>
 			<Hero
-				image={{ alt: article.featuredImage?.alt ?? '', src: imageSource ?? '' }}
+				image={
+					article.featuredImage?.alt && imageSource
+						? // oxlint-disable-next-line react_perf/jsx-no-new-object-as-prop
+							{ alt: article.featuredImage.alt, src: imageSource }
+						: undefined
+				}
 				subTitle={hero.subtitle}
 				title={hero.title}
 			/>
 
 			<div className="container my-10 justify-center divide-y lg:my-32 lg:flex lg:divide-x lg:divide-y-0">
-				<article className="prose lg:prose-xl pb-10 lg:pr-10">
+				<article className="prose pb-10 lg:prose-xl lg:pr-10">
 					<h1 className="text-4xl leading-tight! font-bold hyphens-auto md:text-6xl">
 						{article.title}
 					</h1>
@@ -92,7 +109,7 @@ export default async function NewsArticlePage({
 								return (
 									<blockquote key={block._key}>
 										"{block.quote}"
-										<cite className="text-muted-foreground block text-right not-italic">
+										<cite className="block text-right text-muted-foreground not-italic">
 											{block.author}
 										</cite>
 									</blockquote>
@@ -125,8 +142,20 @@ export default async function NewsArticlePage({
 														<ZoomableImage
 															alt={item.alt}
 															height={450}
-															src={urlForImage(item, 450, 800) ?? ''}
-															srcFull={urlForImage(item, 1440, 2560) ?? ''}
+															src={
+																urlForImage(
+																	item,
+																	ZOOMABLE_IMAGE_SIZE.small.height,
+																	ZOOMABLE_IMAGE_SIZE.small.width,
+																) ?? ''
+															}
+															srcFull={
+																urlForImage(
+																	item,
+																	ZOOMABLE_IMAGE_SIZE.large.height,
+																	ZOOMABLE_IMAGE_SIZE.large.width,
+																) ?? ''
+															}
 															width={800}
 														/>
 														{item.description && (
@@ -148,8 +177,20 @@ export default async function NewsArticlePage({
 										<ZoomableImage
 											alt={block.alt}
 											height={450}
-											src={urlForImage(block, 450, 800) ?? ''}
-											srcFull={urlForImage(block, 1440, 2560) ?? ''}
+											src={
+												urlForImage(
+													block,
+													ZOOMABLE_IMAGE_SIZE.small.height,
+													ZOOMABLE_IMAGE_SIZE.small.width,
+												) ?? ''
+											}
+											srcFull={
+												urlForImage(
+													block,
+													ZOOMABLE_IMAGE_SIZE.large.height,
+													ZOOMABLE_IMAGE_SIZE.large.width,
+												) ?? ''
+											}
 											width={800}
 										/>
 										{block.description && (
