@@ -24,6 +24,7 @@ const METADATA_LABELS: [keyof FeedbackFormValues, string][] = [
 	['operationSystem', 'Operation System'],
 	['device', 'Device'],
 	['email', 'Reporter Email'],
+	['privacy', 'Privacy checked'],
 ];
 
 function buildMetadataLines(data: FeedbackFormValues): string[] {
