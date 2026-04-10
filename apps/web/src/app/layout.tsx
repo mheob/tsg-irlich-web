@@ -66,7 +66,7 @@ export default async function RootLayout({
 	}
 
 	return (
-		<html lang="de">
+		<html lang="de" data-scroll-behavior="smooth">
 			<body
 				className={cn(
 					`${anton.variable} ${bebasNeue.variable} ${inter.variable} antialiased`,

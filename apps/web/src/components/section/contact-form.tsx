@@ -21,6 +21,8 @@ import { contactFormSchema } from '@/lib/validations/contact-form';
 import type { ContactFormData } from '@/lib/validations/contact-form';
 import type { ContactNameMail } from '@/types/sanity.types';
 
+import { PrivacyField } from '../with-logic/form/privacy-field';
+
 function mapSelectItems(receiver?: ContactNameMail[]): { label: string; value: string }[] {
 	return (
 		receiver?.map(({ email, name }) => ({
@@ -47,6 +49,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 			email: '',
 			message: '',
 			name: '',
+			privacy: undefined,
 			receiver: undefined,
 		},
 		resolver: zodResolver(contactFormSchema),
@@ -61,6 +64,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 				email: values.email,
 				message: values.message,
 				name: values.name,
+				privacy: values.privacy,
 				receiver: values.receiver ?? undefined,
 			});
 
@@ -197,6 +201,8 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 											control={form.control}
 											name="message"
 										/>
+
+										<PrivacyField form={form} />
 
 										{submitResult?.error && <ErrorAlert error={submitResult.error} />}
 

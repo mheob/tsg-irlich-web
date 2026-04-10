@@ -39,12 +39,12 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 		() =>
 			navItems
 				.filter((item) => item.slug !== '#!')
-				.map((item) =>
-					Object.assign(item, {
-						isActive: isActivePage(pathname, item.slug),
-						slug: getHref(item.slug),
-					}),
-				),
+				// oxlint-disable-next-line oxc/no-map-spread
+				.map((item) => ({
+					...item,
+					isActive: isActivePage(pathname, item.slug),
+					slug: getHref(item.slug),
+				})),
 		[navItems, pathname],
 	);
 
@@ -118,7 +118,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					<div className="flex items-center gap-2 lg:hidden">
 						<button
 							aria-label="Toggle menu"
-							className="inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-gray-100 dark:hover:bg-gray-900"
+							className="my-2 inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-gray-100"
 							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onClick={() => setIsMobileOpen(!isMobileOpen)}
 							type="button"

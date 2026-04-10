@@ -16,6 +16,7 @@ import { DeviceField } from './device-field';
 import { EmailField } from './email-field';
 import { FeedbackTypeField } from './feedback-type';
 import { OperationSystemField } from './operation-system-field';
+import { PrivacyField } from './privacy-field';
 import { ScreenshotsField } from './screenshots-field';
 import { Submit } from './submit';
 import { SuccessAlert } from './success-alert';
@@ -37,9 +38,10 @@ export function FeedbackForm() {
 			device: undefined,
 			email: '',
 			operationSystem: undefined,
+			privacy: undefined,
 			screenshotUrls: [],
 			title: '',
-			type: undefined,
+			type: 'bug',
 		},
 		resolver: zodResolver(feedbackFormSchema),
 	});
@@ -57,6 +59,7 @@ export function FeedbackForm() {
 				device: values.device,
 				email: values.email,
 				operationSystem: values.operationSystem,
+				privacy: values.privacy,
 				screenshotUrls: screenshotUrls.length > 0 ? screenshotUrls : undefined,
 				title: values.title,
 				type: values.type,
@@ -120,6 +123,7 @@ export function FeedbackForm() {
 									setScreenshotUrls={setScreenshotUrls}
 								/>
 								<EmailField form={form} />
+								<PrivacyField form={form} />
 								{submitResult?.error && <ErrorAlert error={submitResult.error} />}
 								<Submit isSubmitting={isSubmitting} />
 							</form>

@@ -15,2279 +15,2387 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ../studio/schema.json
-export interface PersonReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'person';
-}
-
-export interface ContactPersonsSection {
-	title: string;
-	subtitle: string;
-	intro?: string;
-	contactPersons: ({
-			_key: string;
-		} & PersonReference)[];
-}
-
-export interface SingleGroupPage {
-	_id: string;
-	_type: 'singleGroupPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-	content: {
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		trainingSection: {
-			title: string;
-		};
-	};
-}
-
-export interface NewsOverviewCategory {
-	_id: string;
-	_type: 'newsOverviewCategory';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-	content: {
-		contactPersonsSection: ContactPersonsSection;
-	};
-}
-
-export interface NewsArticlePage {
-	_id: string;
-	_type: 'news-article-page';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-}
-
-export interface GroupsPage {
-	_id: string;
-	_type: 'groupsPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-	metaDescription?: string;
-	content: {
-		groupsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		stats: ({
-				_key: string;
-			} & Stats)[];
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-	};
-}
-
-export interface DepartmentsPage {
-	_id: string;
-	_type: 'departmentsPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		departmentsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		stats: ({
-				_key: string;
-			} & Stats)[];
-		contactPersonsSection: ContactPersonsSection;
-	};
-}
-
-export interface Slug {
-	_type: 'slug';
-	current: string;
-	source?: string;
-}
-
-export interface Spacer {
-	_type: 'spacer';
-	variant?: 'default';
-}
-
-export interface SanityImageAssetReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-}
-
-export interface MainImage {
-	_type: 'mainImage';
-	asset?: SanityImageAssetReference;
-	media?: unknown;
-	hotspot?: SanityImageHotspot;
-	crop?: SanityImageCrop;
-	alt: string;
-	description?: string;
-}
-
-export interface Grid {
-	_type: 'grid';
-	title?: string;
-	columns: Columns;
-	items?: (| ({
-				_key: string;
-		  } & MainImage)
-		| ({
-				_key: string;
-		  } & BlockContent))[];
-}
-
-export interface Blockquote {
-	_type: 'blockquote';
-	quote?: string;
-	author?: string;
-}
-
-export interface HomeReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'home';
-}
-
-export interface AboutUsReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'aboutUs';
-}
-
-export interface ContactReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'contact';
-}
-
-export interface GroupAdminReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'group.admin';
-}
-
-export interface GroupChildrenGymnasticsReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'group.children-gymnastics';
-}
-
-export interface GroupCoursesReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'group.courses';
-}
-
-export interface GroupDanceReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'group.dance';
-}
-
-export interface GroupOtherSportsReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'group.other-sports';
-}
-
-export interface GroupSoccerReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'group.soccer';
-}
-
-export interface GroupTaekwondoReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'group.taekwondo';
-}
-
-export interface MembershipReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'membership';
-}
-
-export interface NewsArticleReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'news.article';
-}
-
-export interface NewsOverviewReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'newsOverview';
-}
-
-export interface AccessibilityReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'accessibility';
-}
-
-export interface PrivacyReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'privacy';
-}
-
-export interface ImprintReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'imprint';
-}
-
-export interface BlockContent {
-	_type: 'blockContent';
-	text?: {
-		children?: {
-			marks?: string[];
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}[];
-		style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-		listItem?: 'bullet' | 'number';
-		markDefs?: (| {
-					link:
-						| HomeReference
-						| AboutUsReference
-						| ContactReference
-						| GroupAdminReference
-						| GroupChildrenGymnasticsReference
-						| GroupCoursesReference
-						| GroupDanceReference
-						| GroupOtherSportsReference
-						| GroupSoccerReference
-						| GroupTaekwondoReference
-						| MembershipReference
-						| NewsArticleReference
-						| NewsOverviewReference
-						| AccessibilityReference
-						| PrivacyReference
-						| ImprintReference;
-					_type: 'internalLink';
-					_key: string;
-			  }
-			| {
-					href?: string;
-					_type: 'externalLink';
-					_key: string;
-			  })[];
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}[];
-}
-
-export interface VenueReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'venue';
-}
-
-export interface TrainingTime {
-	_type: 'trainingTime';
-	season: 'yearly' | 'summer' | 'winter';
-	weekday: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
-	startTime: string;
-	endTime: string;
-	venue: VenueReference;
-	note?: string;
-}
-
-export interface Stats {
-	_type: 'stats';
-	title: string;
-	prefix?: string;
-	value: number;
-	suffix?: string;
-}
-
-export interface SocialFields {
-	_type: 'socialFields';
-	whatsapp?: string;
-	facebook?: string;
-	instagram?: string;
-	youtube?: string;
-}
-
-export interface SimpleBlockContent {
-	_type: 'simpleBlockContent';
-	text?: {
-		children?: {
-			marks?: string[];
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}[];
-		style?: 'normal';
-		listItem?: 'bullet' | 'number';
-		markDefs?: {
-			href?: string;
-			_type: 'link';
-			_key: string;
-		}[];
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}[];
-}
-
-export interface MetaFields {
-	_type: 'metaFields';
-	metaTitle?: string;
-	metaDescription?: string;
-	openGraphImage?: {
-		asset?: SanityImageAssetReference;
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt?: string;
-		_type: 'image';
-	};
-}
-
-export interface InternalLink {
-	_type: 'internalLink';
-	link:
-		| HomeReference
-		| AboutUsReference
-		| ContactReference
-		| GroupAdminReference
-		| GroupChildrenGymnasticsReference
-		| GroupCoursesReference
-		| GroupDanceReference
-		| GroupOtherSportsReference
-		| GroupSoccerReference
-		| GroupTaekwondoReference
-		| MembershipReference
-		| NewsArticleReference
-		| NewsOverviewReference
-		| AccessibilityReference
-		| PrivacyReference
-		| ImprintReference;
-}
-
-export interface ImageCard {
-	_type: 'imageCard';
-	title: string;
-	excerpt: string;
-	description: BlockContent;
-	image: ExtendedImage;
-}
-
-export interface ExternalLink {
-	_type: 'externalLink';
-	href?: string;
-}
-
-export interface ExtendedImage {
-	_type: 'extendedImage';
-	asset?: SanityImageAssetReference;
-	media?: unknown;
-	hotspot?: SanityImageHotspot;
-	crop?: SanityImageCrop;
-	alt: string;
-	description?: string;
-}
-
-export interface SanityFileAssetReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'sanity.fileAsset';
-}
-
-export interface DocumentDownload {
-	_type: 'documentDownload';
-	title: string;
-	document: {
-		asset?: SanityFileAssetReference;
-		media?: unknown;
-		_type: 'file';
-	};
-}
-
-export interface ContactNameMail {
-	_type: 'contactNameMail';
-	name: string;
-	email: string;
-}
-
-export interface Columns {
-	_type: 'columns';
-	small?: '1' | '2' | '3' | '4';
-	medium?: '1' | '2' | '3' | '4';
-	large?: '1' | '2' | '3' | '4';
-}
-
-export interface SiteSettings {
-	_id: string;
-	_type: 'site-settings';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	meta?: MetaFields;
-	metadataBase?: string;
-	contact?: {
-		address: string;
-		phone: string;
-		email: string;
-	};
-	newsletter?: {
-		title: string;
-		cta: string;
-	};
-	mainNavigation: (| ({
-				_key: string;
-		  } & InternalLink)
-		| ({
-				_key: string;
-		  } & ExternalLink))[];
-	legalNavigation?: ({
-			_key: string;
-		} & InternalLink)[];
-	socialFields?: SocialFields;
-}
-
-export interface Venue {
-	_id: string;
-	_type: 'venue';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	description: SimpleBlockContent;
-	type: 'hall-1' | 'hall-2' | 'hall-3' | 'cinder' | 'hybrid' | 'artificial-turf' | 'grass';
-	mainImage?: {
-		asset?: SanityImageAssetReference;
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		alt: string;
-		description?: string;
-		_type: 'image';
-	};
-	location?: {
-		name: string;
-		street: string;
-		houseNumber: string;
-		zipCode?: string;
-		city: string;
-	};
-}
-
-export interface SanityImageCrop {
-	_type: 'sanity.imageCrop';
-	top: number;
-	bottom: number;
-	left: number;
-	right: number;
-}
-
-export interface SanityImageHotspot {
-	_type: 'sanity.imageHotspot';
-	x: number;
-	y: number;
-	height: number;
-	width: number;
-}
-
-export interface Testimonial {
-	_id: string;
-	_type: 'testimonial';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	firstName: string;
-	lastName: string;
-	image: ExtendedImage;
-	role: string;
-	quote: string;
-}
-
-export interface Sponsors {
-	_id: string;
-	_type: 'sponsors';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	name: string;
-	website: string;
-	logo: {
-		asset?: SanityImageAssetReference;
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		_type: 'image';
-	};
-}
-
-export interface HonoraryMember {
-	_id: string;
-	_type: 'honoraryMember';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	firstName: string;
-	lastName: string;
-	image: ExtendedImage;
-	memberSince: string;
-}
-
-export interface RoleReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'role';
-}
-
-export interface Person {
-	_id: string;
-	_type: 'person';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	firstName: string;
-	lastName: string;
-	image: ExtendedImage;
-	phone?: string;
-	contactAs: 'email' | 'phone' | 'whatsapp' | 'both';
-	affiliations?: {
-		department:
-			| 'admin'
-			| 'children-gymnastics'
-			| 'courses'
-			| 'dance'
-			| 'other-sports'
-			| 'soccer'
-			| 'taekwondo';
-		team:
-			| GroupAdminReference
-			| GroupChildrenGymnasticsReference
-			| GroupCoursesReference
-			| GroupDanceReference
-			| GroupOtherSportsReference
-			| GroupSoccerReference
-			| GroupTaekwondoReference;
-		role: RoleReference;
-		taskDescription: string;
-		sortOrder?: number;
-		_type: 'affiliation';
-		_key: string;
-	}[];
-}
-
-export interface Role {
-	_id: string;
-	_type: 'role';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	email?: string;
-}
-
-export interface NewsCategory {
-	_id: string;
-	_type: 'news.category';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	slug: Slug;
-	meta?: MetaFields;
-}
-
-export interface NewsCategoryReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'news.category';
-}
-
-export interface AuthorReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'author';
-}
-
-export interface NewsArticle {
-	_id: string;
-	_type: 'news.article';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	publishedAt: string;
-	title: string;
-	slug: Slug;
-	categories: ({
-			_key: string;
-		} & NewsCategoryReference)[];
-	author: AuthorReference;
-	meta?: MetaFields;
-	featuredImage: MainImage;
-	excerpt: string;
-	body?: (| ({
-				_key: string;
-		  } & BlockContent)
-		| ({
-				_key: string;
-		  } & Blockquote)
-		| ({
-				_key: string;
-		  } & Grid)
-		| ({
-				_key: string;
-		  } & MainImage)
-		| ({
-				_key: string;
-		  } & Spacer))[];
-}
-
-export interface AboutUs {
-	_id: string;
-	_type: 'aboutUs';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		introSection?: {
-			title: string;
-			subtitle: string;
-			intro: BlockContent;
-			images: ({
-					_key: string;
-				} & ExtendedImage)[];
-		};
-		chronicleSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			chronicleCategories: ({
-					_key: string;
-				} & ImageCard)[];
-		};
-		visionSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			ctaLongVision: string;
-			longVisionTitle: string;
-			longVision: BlockContent;
-		};
-		stats: ({
-				_key: string;
-			} & Stats)[];
-		contactPersonsSection: ContactPersonsSection;
-	};
-}
-
-export interface Membership {
-	_id: string;
-	_type: 'membership';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	intro: BlockContent;
-	downloadsSection: {
-		title: string;
-		subtitle: string;
-		intro?: string;
-		downloads: ({
-				_key: string;
-			} & DocumentDownload)[];
-	};
-	contactPersonsSection: {
-		title: string;
-		subtitle: string;
-		intro?: string;
-		contactPersons: ({
-				_key: string;
-			} & PersonReference)[];
-	};
-}
-
-export interface Accessibility {
-	_id: string;
-	_type: 'accessibility';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: BlockContent;
-}
-
-export interface Privacy {
-	_id: string;
-	_type: 'privacy';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	introText: BlockContent;
-	address: string;
-	phone?: string;
-	email: string;
-	content: BlockContent;
-}
-
-export interface Imprint {
-	_id: string;
-	_type: 'imprint';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	intro?: SimpleBlockContent;
-	address: SimpleBlockContent;
-	registerCourt: string;
-	registerNo: string;
-	represented: SimpleBlockContent;
-	email: string;
-	contactForm: InternalLink;
-	responsible: string;
-	consumerDisputeResolution: string;
-	technicalQuestionsName: string;
-	technicalQuestionsEmail: string;
-	support: SimpleBlockContent;
-	credits: SimpleBlockContent;
-}
-
-export interface NewsOverview {
-	_id: string;
-	_type: 'newsOverview';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		contactPersonsSection: ContactPersonsSection;
-	};
-}
-
-export interface GroupTaekwondo {
-	_id: string;
-	_type: 'group.taekwondo';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	slug: Slug;
-	email: string;
-	meta?: MetaFields;
-	overviewTitle?: string;
-	sortOrder: number;
-	description: SimpleBlockContent;
-	icon:
-		| 'Badminton'
-		| 'Bodenturnen'
-		| 'Cheerleading'
-		| 'Fitness'
-		| 'Fussball'
-		| 'Gymnastik'
-		| 'Jujutsu'
-		| 'Pilates'
-		| 'RopeSkipping'
-		| 'SportInGebaeuden'
-		| 'Sportakrobatik'
-		| 'StepAerobic'
-		| 'Taekwondo'
-		| 'Tanzen'
-		| 'Turnen'
-		| 'Wandern'
-		| 'Yoga';
-	featuredImage: ExtendedImage;
-	images?: ({
-			_key: string;
-		} & ExtendedImage)[];
-	training?: {
-		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: ({
-				_key: string;
-			} & TrainingTime)[];
-	};
-	isSportGroup: boolean;
-}
-
-export interface GroupSoccer {
-	_id: string;
-	_type: 'group.soccer';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	slug: Slug;
-	email: string;
-	meta?: MetaFields;
-	overviewTitle?: string;
-	sortOrder: number;
-	description: SimpleBlockContent;
-	icon:
-		| 'Badminton'
-		| 'Bodenturnen'
-		| 'Cheerleading'
-		| 'Fitness'
-		| 'Fussball'
-		| 'Gymnastik'
-		| 'Jujutsu'
-		| 'Pilates'
-		| 'RopeSkipping'
-		| 'SportInGebaeuden'
-		| 'Sportakrobatik'
-		| 'StepAerobic'
-		| 'Taekwondo'
-		| 'Tanzen'
-		| 'Turnen'
-		| 'Wandern'
-		| 'Yoga';
-	featuredImage: ExtendedImage;
-	images?: ({
-			_key: string;
-		} & ExtendedImage)[];
-	training?: {
-		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: ({
-				_key: string;
-			} & TrainingTime)[];
-	};
-	isSportGroup: boolean;
-}
-
-export interface GroupOtherSports {
-	_id: string;
-	_type: 'group.other-sports';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	slug: Slug;
-	email: string;
-	meta?: MetaFields;
-	overviewTitle?: string;
-	sortOrder: number;
-	description: SimpleBlockContent;
-	icon:
-		| 'Badminton'
-		| 'Bodenturnen'
-		| 'Cheerleading'
-		| 'Fitness'
-		| 'Fussball'
-		| 'Gymnastik'
-		| 'Jujutsu'
-		| 'Pilates'
-		| 'RopeSkipping'
-		| 'SportInGebaeuden'
-		| 'Sportakrobatik'
-		| 'StepAerobic'
-		| 'Taekwondo'
-		| 'Tanzen'
-		| 'Turnen'
-		| 'Wandern'
-		| 'Yoga';
-	featuredImage: ExtendedImage;
-	images?: ({
-			_key: string;
-		} & ExtendedImage)[];
-	training?: {
-		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: ({
-				_key: string;
-			} & TrainingTime)[];
-	};
-	isSportGroup: boolean;
-}
-
-export interface GroupDance {
-	_id: string;
-	_type: 'group.dance';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	slug: Slug;
-	email: string;
-	meta?: MetaFields;
-	overviewTitle?: string;
-	sortOrder: number;
-	description: SimpleBlockContent;
-	icon:
-		| 'Badminton'
-		| 'Bodenturnen'
-		| 'Cheerleading'
-		| 'Fitness'
-		| 'Fussball'
-		| 'Gymnastik'
-		| 'Jujutsu'
-		| 'Pilates'
-		| 'RopeSkipping'
-		| 'SportInGebaeuden'
-		| 'Sportakrobatik'
-		| 'StepAerobic'
-		| 'Taekwondo'
-		| 'Tanzen'
-		| 'Turnen'
-		| 'Wandern'
-		| 'Yoga';
-	featuredImage: ExtendedImage;
-	images?: ({
-			_key: string;
-		} & ExtendedImage)[];
-	training?: {
-		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: ({
-				_key: string;
-			} & TrainingTime)[];
-	};
-	isSportGroup: boolean;
-}
-
-export interface GroupCourses {
-	_id: string;
-	_type: 'group.courses';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	slug: Slug;
-	email: string;
-	meta?: MetaFields;
-	overviewTitle?: string;
-	sortOrder: number;
-	description: SimpleBlockContent;
-	icon:
-		| 'Badminton'
-		| 'Bodenturnen'
-		| 'Cheerleading'
-		| 'Fitness'
-		| 'Fussball'
-		| 'Gymnastik'
-		| 'Jujutsu'
-		| 'Pilates'
-		| 'RopeSkipping'
-		| 'SportInGebaeuden'
-		| 'Sportakrobatik'
-		| 'StepAerobic'
-		| 'Taekwondo'
-		| 'Tanzen'
-		| 'Turnen'
-		| 'Wandern'
-		| 'Yoga';
-	featuredImage: ExtendedImage;
-	images?: ({
-			_key: string;
-		} & ExtendedImage)[];
-	training?: {
-		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: ({
-				_key: string;
-			} & TrainingTime)[];
-	};
-	isSportGroup: boolean;
-}
-
-export interface GroupChildrenGymnastics {
-	_id: string;
-	_type: 'group.children-gymnastics';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	slug: Slug;
-	email: string;
-	meta?: MetaFields;
-	overviewTitle?: string;
-	sortOrder: number;
-	description: SimpleBlockContent;
-	icon:
-		| 'Badminton'
-		| 'Bodenturnen'
-		| 'Cheerleading'
-		| 'Fitness'
-		| 'Fussball'
-		| 'Gymnastik'
-		| 'Jujutsu'
-		| 'Pilates'
-		| 'RopeSkipping'
-		| 'SportInGebaeuden'
-		| 'Sportakrobatik'
-		| 'StepAerobic'
-		| 'Taekwondo'
-		| 'Tanzen'
-		| 'Turnen'
-		| 'Wandern'
-		| 'Yoga';
-	featuredImage: ExtendedImage;
-	images?: ({
-			_key: string;
-		} & ExtendedImage)[];
-	training?: {
-		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: ({
-				_key: string;
-			} & TrainingTime)[];
-	};
-	isSportGroup: boolean;
-}
-
-export interface GroupAdmin {
-	_id: string;
-	_type: 'group.admin';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	slug: Slug;
-	email: string;
-	meta?: MetaFields;
-	overviewTitle?: string;
-	sortOrder: number;
-	description: SimpleBlockContent;
-	icon:
-		| 'Badminton'
-		| 'Bodenturnen'
-		| 'Cheerleading'
-		| 'Fitness'
-		| 'Fussball'
-		| 'Gymnastik'
-		| 'Jujutsu'
-		| 'Pilates'
-		| 'RopeSkipping'
-		| 'SportInGebaeuden'
-		| 'Sportakrobatik'
-		| 'StepAerobic'
-		| 'Taekwondo'
-		| 'Tanzen'
-		| 'Turnen'
-		| 'Wandern'
-		| 'Yoga';
-	featuredImage: ExtendedImage;
-	images?: ({
-			_key: string;
-		} & ExtendedImage)[];
-	training?: {
-		trainingDescription?: SimpleBlockContent;
-		trainingTimes?: ({
-				_key: string;
-			} & TrainingTime)[];
-	};
-	isSportGroup: boolean;
-}
-
-export interface Contact {
-	_id: string;
-	_type: 'contact';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		receiver: ({
-				_key: string;
-			} & ContactNameMail)[];
-		contactPersonsSection: ContactPersonsSection;
-	};
-}
-
-export interface TestimonialReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'testimonial';
-}
-
-export interface Home {
-	_id: string;
-	_type: 'home';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	intro?: string;
-	meta?: MetaFields;
-	content: {
-		featureSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			features?: {
-				title: string;
-				intro: string;
-				icon: string;
-				_type: 'feature';
-				_key: string;
-			}[];
-		};
-		visionSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			cta: string;
-		};
-		groupsSection: {
-			title: string;
-			subtitle: string;
-		};
-		stats: ({
-				_key: string;
-			} & Stats)[];
-		pricingSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			pricingYouth: {
-				title: string;
-				subtitle: string;
-				intro?: string;
-				price: number;
-				benefitsTitle: string;
-				benefits: string[];
-				cta: string;
-			};
-			pricingFamily: {
-				title: string;
-				subtitle: string;
-				intro?: string;
-				price: number;
-				benefitsTitle: string;
-				benefits: string[];
-				cta: string;
-			};
-			pricingAdult: {
-				title: string;
-				subtitle: string;
-				intro?: string;
-				price: number;
-				benefitsTitle: string;
-				benefits: string[];
-				cta: string;
-			};
-		};
-		testimonialSection: {
-			title: string;
-			subtitle: string;
-			testimonials?: ({
-					_key: string;
-				} & TestimonialReference)[];
-		};
-		contactPersonsSection: ContactPersonsSection;
-		newsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-	};
-}
-
-export interface Author {
-	_id: string;
-	_type: 'author';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	firstName: string;
-	lastName: string;
-	image: ExtendedImage;
-	email: string;
-	jobTitle: string;
-}
-
-export interface SanityAssistInstructionTask {
-	_type: 'sanity.assist.instructionTask';
-	path?: string;
-	instructionKey?: string;
-	started?: string;
-	updated?: string;
-	info?: string;
-}
-
-export interface SanityAssistTaskStatus {
-	_type: 'sanity.assist.task.status';
-	tasks?: ({
-			_key: string;
-		} & SanityAssistInstructionTask)[];
-}
-
-export interface SanityAssistSchemaTypeAnnotations {
-	_type: 'sanity.assist.schemaType.annotations';
-	title?: string;
-	fields?: ({
-			_key: string;
-		} & SanityAssistSchemaTypeField)[];
-}
-
-export interface SanityAssistOutputType {
-	_type: 'sanity.assist.output.type';
-	type?: string;
-}
-
-export interface SanityAssistOutputField {
-	_type: 'sanity.assist.output.field';
-	path?: string;
-}
-
-export interface AssistInstructionContextReference {
-	_ref: string;
-	_type: 'reference';
-	_weak?: boolean;
-	[internalGroqTypeReferenceTo]?: 'assist.instruction.context';
-}
-
-export interface SanityAssistInstructionContext {
-	_type: 'sanity.assist.instruction.context';
-	reference: AssistInstructionContextReference;
-}
-
-export interface AssistInstructionContext {
-	_id: string;
-	_type: 'assist.instruction.context';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title?: string;
-	context?: {
-		children?: {
-			marks?: string[];
-			text?: string;
-			_type: 'span';
-			_key: string;
-		}[];
-		style?: 'normal';
-		listItem?: never;
-		markDefs?: null;
-		level?: number;
-		_type: 'block';
-		_key: string;
-	}[];
-}
-
-export interface SanityAssistInstructionUserInput {
-	_type: 'sanity.assist.instruction.userInput';
-	message: string;
-	description?: string;
-}
-
-export type SanityAssistInstructionPrompt = {
-	children?: (| {
-				marks?: string[];
-				text?: string;
-				_type: 'span';
-				_key: string;
-		  }
-		| ({
-				_key: string;
-		  } & SanityAssistInstructionFieldRef)
-		| ({
-				_key: string;
-		  } & SanityAssistInstructionContext)
-		| ({
-				_key: string;
-		  } & SanityAssistInstructionUserInput))[];
-	style?: 'normal';
-	listItem?: never;
-	markDefs?: null;
-	level?: number;
-	_type: 'block';
-	_key: string;
-}[];
-
-export interface SanityAssistInstructionFieldRef {
-	_type: 'sanity.assist.instruction.fieldRef';
-	path?: string;
-}
-
-export interface SanityAssistInstruction {
-	_type: 'sanity.assist.instruction';
-	prompt?: SanityAssistInstructionPrompt;
-	icon?: string;
-	title?: string;
-	userId?: string;
-	createdById?: string;
-	output?: (| ({
-				_key: string;
-		  } & SanityAssistOutputField)
-		| ({
-				_key: string;
-		  } & SanityAssistOutputType))[];
-}
-
-export interface SanityAssistSchemaTypeField {
-	_type: 'sanity.assist.schemaType.field';
-	path?: string;
-	instructions?: ({
-			_key: string;
-		} & SanityAssistInstruction)[];
-}
-
-export interface MediaTag {
-	_id: string;
-	_type: 'media.tag';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	name?: Slug;
-}
-
-export interface SanityImagePaletteSwatch {
-	_type: 'sanity.imagePaletteSwatch';
-	background?: string;
-	foreground?: string;
-	population?: number;
-	title?: string;
-}
-
-export interface SanityImagePalette {
-	_type: 'sanity.imagePalette';
-	darkMuted?: SanityImagePaletteSwatch;
-	lightVibrant?: SanityImagePaletteSwatch;
-	darkVibrant?: SanityImagePaletteSwatch;
-	vibrant?: SanityImagePaletteSwatch;
-	dominant?: SanityImagePaletteSwatch;
-	lightMuted?: SanityImagePaletteSwatch;
-	muted?: SanityImagePaletteSwatch;
-}
-
-export interface SanityImageDimensions {
-	_type: 'sanity.imageDimensions';
-	height: number;
-	width: number;
-	aspectRatio: number;
-}
-
-export interface SanityImageMetadata {
-	_type: 'sanity.imageMetadata';
-	location?: Geopoint;
-	dimensions?: SanityImageDimensions;
-	palette?: SanityImagePalette;
-	lqip?: string;
-	blurHash?: string;
-	thumbHash?: string;
-	hasAlpha?: boolean;
-	isOpaque?: boolean;
-}
-
-export interface SanityFileAsset {
-	_id: string;
-	_type: 'sanity.fileAsset';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	originalFilename?: string;
-	label?: string;
-	title?: string;
-	description?: string;
-	altText?: string;
-	sha1hash: string;
-	extension: string;
-	mimeType: string;
-	size: number;
-	assetId: string;
-	uploadId?: string;
-	path: string;
-	url: string;
-	source?: SanityAssetSourceData;
-}
-
-export interface SanityAssetSourceData {
-	_type: 'sanity.assetSourceData';
-	name?: string;
-	id?: string;
-	url?: string;
-}
-
-export interface SanityImageAsset {
-	_id: string;
-	_type: 'sanity.imageAsset';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	originalFilename?: string;
-	label?: string;
-	title?: string;
-	description?: string;
-	altText?: string;
-	sha1hash: string;
-	extension: string;
-	mimeType: string;
-	size: number;
-	assetId: string;
-	uploadId?: string;
-	path: string;
-	url: string;
-	metadata?: SanityImageMetadata;
-	source?: SanityAssetSourceData;
-}
-
-export interface Geopoint {
-	_type: 'geopoint';
-	lat?: number;
-	lng?: number;
-	alt?: number;
-}
+export type PersonReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "person";
+};
+
+export type ContactPersonsSection = {
+  title: string;
+  subtitle: string;
+  intro?: string;
+  contactPersons: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
+};
+
+export type SingleGroupPage = {
+  _id: string;
+  _type: "singleGroupPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle: string;
+  content: {
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+    trainingSection: {
+      title: string;
+    };
+  };
+};
+
+export type NewsOverviewCategory = {
+  _id: string;
+  _type: "newsOverviewCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle: string;
+  content: {
+    contactPersonsSection: ContactPersonsSection;
+  };
+};
+
+export type NewsArticlePage = {
+  _id: string;
+  _type: "news-article-page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle: string;
+};
+
+export type GroupsPage = {
+  _id: string;
+  _type: "groupsPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle: string;
+  metaDescription?: string;
+  content: {
+    groupsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+    stats: Array<
+      {
+        _key: string;
+      } & Stats
+    >;
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+  };
+};
+
+export type DepartmentsPage = {
+  _id: string;
+  _type: "departmentsPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: {
+    departmentsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+    stats: Array<
+      {
+        _key: string;
+      } & Stats
+    >;
+    contactPersonsSection: ContactPersonsSection;
+  };
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
+export type Spacer = {
+  _type: "spacer";
+  variant?: "default";
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type MainImage = {
+  _type: "mainImage";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt: string;
+  description?: string;
+};
+
+export type Grid = {
+  _type: "grid";
+  title?: string;
+  columns: Columns;
+  items?: Array<
+    | ({
+        _key: string;
+      } & MainImage)
+    | ({
+        _key: string;
+      } & BlockContent)
+  >;
+};
+
+export type Blockquote = {
+  _type: "blockquote";
+  quote?: string;
+  author?: string;
+};
+
+export type HomeReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "home";
+};
+
+export type AboutUsReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "aboutUs";
+};
+
+export type ContactReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "contact";
+};
+
+export type GroupAdminReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "group.admin";
+};
+
+export type GroupChildrenGymnasticsReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "group.children-gymnastics";
+};
+
+export type GroupCoursesReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "group.courses";
+};
+
+export type GroupDanceReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "group.dance";
+};
+
+export type GroupOtherSportsReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "group.other-sports";
+};
+
+export type GroupSoccerReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "group.soccer";
+};
+
+export type GroupTaekwondoReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "group.taekwondo";
+};
+
+export type MembershipReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "membership";
+};
+
+export type NewsArticleReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "news.article";
+};
+
+export type NewsOverviewReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "newsOverview";
+};
+
+export type AccessibilityReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "accessibility";
+};
+
+export type PrivacyReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "privacy";
+};
+
+export type ImprintReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "imprint";
+};
+
+export type BlockContent = {
+  _type: "blockContent";
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2" | "h3" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<
+      | {
+          link:
+            | HomeReference
+            | AboutUsReference
+            | ContactReference
+            | GroupAdminReference
+            | GroupChildrenGymnasticsReference
+            | GroupCoursesReference
+            | GroupDanceReference
+            | GroupOtherSportsReference
+            | GroupSoccerReference
+            | GroupTaekwondoReference
+            | MembershipReference
+            | NewsArticleReference
+            | NewsOverviewReference
+            | AccessibilityReference
+            | PrivacyReference
+            | ImprintReference;
+          _type: "internalLink";
+          _key: string;
+        }
+      | {
+          href?: string;
+          _type: "externalLink";
+          _key: string;
+        }
+    >;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type VenueReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "venue";
+};
+
+export type TrainingTime = {
+  _type: "trainingTime";
+  season: "yearly" | "summer" | "winter";
+  weekday:
+    | "monday"
+    | "tuesday"
+    | "wednesday"
+    | "thursday"
+    | "friday"
+    | "saturday"
+    | "sunday";
+  startTime: string;
+  endTime: string;
+  venue: VenueReference;
+  note?: string;
+};
+
+export type Stats = {
+  _type: "stats";
+  title: string;
+  prefix?: string;
+  value: number;
+  suffix?: string;
+};
+
+export type SocialFields = {
+  _type: "socialFields";
+  whatsapp?: string;
+  facebook?: string;
+  instagram?: string;
+  youtube?: string;
+};
+
+export type SimpleBlockContent = {
+  _type: "simpleBlockContent";
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type MetaFields = {
+  _type: "metaFields";
+  metaTitle?: string;
+  metaDescription?: string;
+  openGraphImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
+export type InternalLink = {
+  _type: "internalLink";
+  link:
+    | HomeReference
+    | AboutUsReference
+    | ContactReference
+    | GroupAdminReference
+    | GroupChildrenGymnasticsReference
+    | GroupCoursesReference
+    | GroupDanceReference
+    | GroupOtherSportsReference
+    | GroupSoccerReference
+    | GroupTaekwondoReference
+    | MembershipReference
+    | NewsArticleReference
+    | NewsOverviewReference
+    | AccessibilityReference
+    | PrivacyReference
+    | ImprintReference;
+};
+
+export type ImageCard = {
+  _type: "imageCard";
+  title: string;
+  excerpt: string;
+  description: BlockContent;
+  image: ExtendedImage;
+};
+
+export type ExternalLink = {
+  _type: "externalLink";
+  href?: string;
+};
+
+export type ExtendedImage = {
+  _type: "extendedImage";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt: string;
+  description?: string;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type DocumentDownload = {
+  _type: "documentDownload";
+  title: string;
+  document: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+};
+
+export type ContactNameMail = {
+  _type: "contactNameMail";
+  name: string;
+  email: string;
+};
+
+export type Columns = {
+  _type: "columns";
+  small?: "1" | "2" | "3" | "4";
+  medium?: "1" | "2" | "3" | "4";
+  large?: "1" | "2" | "3" | "4";
+};
+
+export type SiteSettings = {
+  _id: string;
+  _type: "site-settings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  meta?: MetaFields;
+  metadataBase?: string;
+  contact?: {
+    address: string;
+    phone: string;
+    email: string;
+  };
+  newsletter?: {
+    title: string;
+    cta: string;
+  };
+  mainNavigation: Array<
+    | ({
+        _key: string;
+      } & InternalLink)
+    | ({
+        _key: string;
+      } & ExternalLink)
+  >;
+  legalNavigation?: Array<
+    {
+      _key: string;
+    } & InternalLink
+  >;
+  socialFields?: SocialFields;
+};
+
+export type Venue = {
+  _id: string;
+  _type: "venue";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  description: SimpleBlockContent;
+  type:
+    | "hall-1"
+    | "hall-2"
+    | "hall-3"
+    | "cinder"
+    | "hybrid"
+    | "artificial-turf"
+    | "grass";
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    description?: string;
+    _type: "image";
+  };
+  location?: {
+    name: string;
+    street: string;
+    houseNumber: string;
+    zipCode?: string;
+    city: string;
+  };
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type Testimonial = {
+  _id: string;
+  _type: "testimonial";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  firstName: string;
+  lastName: string;
+  image: ExtendedImage;
+  role: string;
+  quote: string;
+};
+
+export type Sponsors = {
+  _id: string;
+  _type: "sponsors";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  website: string;
+  logo: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type HonoraryMember = {
+  _id: string;
+  _type: "honoraryMember";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  firstName: string;
+  lastName: string;
+  image: ExtendedImage;
+  memberSince: string;
+};
+
+export type RoleReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "role";
+};
+
+export type Person = {
+  _id: string;
+  _type: "person";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  firstName: string;
+  lastName: string;
+  image: ExtendedImage;
+  phone?: string;
+  contactAs: "email" | "phone" | "whatsapp" | "both";
+  affiliations?: Array<{
+    department:
+      | "admin"
+      | "children-gymnastics"
+      | "courses"
+      | "dance"
+      | "other-sports"
+      | "soccer"
+      | "taekwondo";
+    team:
+      | GroupAdminReference
+      | GroupChildrenGymnasticsReference
+      | GroupCoursesReference
+      | GroupDanceReference
+      | GroupOtherSportsReference
+      | GroupSoccerReference
+      | GroupTaekwondoReference;
+    role: RoleReference;
+    taskDescription: string;
+    sortOrder?: number;
+    _type: "affiliation";
+    _key: string;
+  }>;
+};
+
+export type Role = {
+  _id: string;
+  _type: "role";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  email?: string;
+};
+
+export type NewsCategory = {
+  _id: string;
+  _type: "news.category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  meta?: MetaFields;
+};
+
+export type NewsCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "news.category";
+};
+
+export type AuthorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "author";
+};
+
+export type NewsArticle = {
+  _id: string;
+  _type: "news.article";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  publishedAt: string;
+  title: string;
+  slug: Slug;
+  categories: Array<
+    {
+      _key: string;
+    } & NewsCategoryReference
+  >;
+  author: AuthorReference;
+  meta?: MetaFields;
+  featuredImage: MainImage;
+  excerpt: string;
+  body?: Array<
+    | ({
+        _key: string;
+      } & BlockContent)
+    | ({
+        _key: string;
+      } & Blockquote)
+    | ({
+        _key: string;
+      } & Grid)
+    | ({
+        _key: string;
+      } & MainImage)
+    | ({
+        _key: string;
+      } & Spacer)
+  >;
+};
+
+export type AboutUs = {
+  _id: string;
+  _type: "aboutUs";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: {
+    introSection?: {
+      title: string;
+      subtitle: string;
+      intro: BlockContent;
+      images: Array<
+        {
+          _key: string;
+        } & ExtendedImage
+      >;
+    };
+    chronicleSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      chronicleCategories: Array<
+        {
+          _key: string;
+        } & ImageCard
+      >;
+    };
+    visionSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      ctaLongVision: string;
+      longVisionTitle: string;
+      longVision: BlockContent;
+    };
+    stats: Array<
+      {
+        _key: string;
+      } & Stats
+    >;
+    contactPersonsSection: ContactPersonsSection;
+  };
+};
+
+export type Membership = {
+  _id: string;
+  _type: "membership";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  intro: BlockContent;
+  downloadsSection: {
+    title: string;
+    subtitle: string;
+    intro?: string;
+    downloads: Array<
+      {
+        _key: string;
+      } & DocumentDownload
+    >;
+  };
+  contactPersonsSection: {
+    title: string;
+    subtitle: string;
+    intro?: string;
+    contactPersons: Array<
+      {
+        _key: string;
+      } & PersonReference
+    >;
+  };
+};
+
+export type Accessibility = {
+  _id: string;
+  _type: "accessibility";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: BlockContent;
+};
+
+export type Privacy = {
+  _id: string;
+  _type: "privacy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  introText: BlockContent;
+  address: string;
+  phone?: string;
+  email: string;
+  content: BlockContent;
+};
+
+export type Imprint = {
+  _id: string;
+  _type: "imprint";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  intro?: SimpleBlockContent;
+  address: SimpleBlockContent;
+  registerCourt: string;
+  registerNo: string;
+  represented: SimpleBlockContent;
+  email: string;
+  contactForm: InternalLink;
+  responsible: string;
+  consumerDisputeResolution: string;
+  technicalQuestionsName: string;
+  technicalQuestionsEmail: string;
+  support: SimpleBlockContent;
+  credits: SimpleBlockContent;
+};
+
+export type NewsOverview = {
+  _id: string;
+  _type: "newsOverview";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: {
+    contactPersonsSection: ContactPersonsSection;
+  };
+};
+
+export type GroupTaekwondo = {
+  _id: string;
+  _type: "group.taekwondo";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  email: string;
+  meta?: MetaFields;
+  overviewTitle?: string;
+  sortOrder: number;
+  description: SimpleBlockContent;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "Fitness"
+    | "Fussball"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Pilates"
+    | "RopeSkipping"
+    | "SportInGebaeuden"
+    | "Sportakrobatik"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+  featuredImage: ExtendedImage;
+  images?: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  training?: {
+    trainingDescription?: SimpleBlockContent;
+    trainingTimes?: Array<
+      {
+        _key: string;
+      } & TrainingTime
+    >;
+  };
+  isSportGroup: boolean;
+};
+
+export type GroupSoccer = {
+  _id: string;
+  _type: "group.soccer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  email: string;
+  meta?: MetaFields;
+  overviewTitle?: string;
+  sortOrder: number;
+  description: SimpleBlockContent;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "Fitness"
+    | "Fussball"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Pilates"
+    | "RopeSkipping"
+    | "SportInGebaeuden"
+    | "Sportakrobatik"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+  featuredImage: ExtendedImage;
+  images?: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  training?: {
+    trainingDescription?: SimpleBlockContent;
+    trainingTimes?: Array<
+      {
+        _key: string;
+      } & TrainingTime
+    >;
+  };
+  isSportGroup: boolean;
+};
+
+export type GroupOtherSports = {
+  _id: string;
+  _type: "group.other-sports";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  email: string;
+  meta?: MetaFields;
+  overviewTitle?: string;
+  sortOrder: number;
+  description: SimpleBlockContent;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "Fitness"
+    | "Fussball"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Pilates"
+    | "RopeSkipping"
+    | "SportInGebaeuden"
+    | "Sportakrobatik"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+  featuredImage: ExtendedImage;
+  images?: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  training?: {
+    trainingDescription?: SimpleBlockContent;
+    trainingTimes?: Array<
+      {
+        _key: string;
+      } & TrainingTime
+    >;
+  };
+  isSportGroup: boolean;
+};
+
+export type GroupDance = {
+  _id: string;
+  _type: "group.dance";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  email: string;
+  meta?: MetaFields;
+  overviewTitle?: string;
+  sortOrder: number;
+  description: SimpleBlockContent;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "Fitness"
+    | "Fussball"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Pilates"
+    | "RopeSkipping"
+    | "SportInGebaeuden"
+    | "Sportakrobatik"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+  featuredImage: ExtendedImage;
+  images?: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  training?: {
+    trainingDescription?: SimpleBlockContent;
+    trainingTimes?: Array<
+      {
+        _key: string;
+      } & TrainingTime
+    >;
+  };
+  isSportGroup: boolean;
+};
+
+export type GroupCourses = {
+  _id: string;
+  _type: "group.courses";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  email: string;
+  meta?: MetaFields;
+  overviewTitle?: string;
+  sortOrder: number;
+  description: SimpleBlockContent;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "Fitness"
+    | "Fussball"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Pilates"
+    | "RopeSkipping"
+    | "SportInGebaeuden"
+    | "Sportakrobatik"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+  featuredImage: ExtendedImage;
+  images?: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  training?: {
+    trainingDescription?: SimpleBlockContent;
+    trainingTimes?: Array<
+      {
+        _key: string;
+      } & TrainingTime
+    >;
+  };
+  isSportGroup: boolean;
+};
+
+export type GroupChildrenGymnastics = {
+  _id: string;
+  _type: "group.children-gymnastics";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  email: string;
+  meta?: MetaFields;
+  overviewTitle?: string;
+  sortOrder: number;
+  description: SimpleBlockContent;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "Fitness"
+    | "Fussball"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Pilates"
+    | "RopeSkipping"
+    | "SportInGebaeuden"
+    | "Sportakrobatik"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+  featuredImage: ExtendedImage;
+  images?: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  training?: {
+    trainingDescription?: SimpleBlockContent;
+    trainingTimes?: Array<
+      {
+        _key: string;
+      } & TrainingTime
+    >;
+  };
+  isSportGroup: boolean;
+};
+
+export type GroupAdmin = {
+  _id: string;
+  _type: "group.admin";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  email: string;
+  meta?: MetaFields;
+  overviewTitle?: string;
+  sortOrder: number;
+  description: SimpleBlockContent;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "Fitness"
+    | "Fussball"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Pilates"
+    | "RopeSkipping"
+    | "SportInGebaeuden"
+    | "Sportakrobatik"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+  featuredImage: ExtendedImage;
+  images?: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  training?: {
+    trainingDescription?: SimpleBlockContent;
+    trainingTimes?: Array<
+      {
+        _key: string;
+      } & TrainingTime
+    >;
+  };
+  isSportGroup: boolean;
+};
+
+export type Contact = {
+  _id: string;
+  _type: "contact";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: {
+    receiver: Array<
+      {
+        _key: string;
+      } & ContactNameMail
+    >;
+    contactPersonsSection: ContactPersonsSection;
+  };
+};
+
+export type TestimonialReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "testimonial";
+};
+
+export type Home = {
+  _id: string;
+  _type: "home";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  intro?: string;
+  meta?: MetaFields;
+  content: {
+    featureSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      features?: Array<{
+        title: string;
+        intro: string;
+        icon: string;
+        _type: "feature";
+        _key: string;
+      }>;
+    };
+    visionSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      cta: string;
+    };
+    groupsSection: {
+      title: string;
+      subtitle: string;
+    };
+    stats: Array<
+      {
+        _key: string;
+      } & Stats
+    >;
+    pricingSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      pricingYouth: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        price: number;
+        benefitsTitle: string;
+        benefits: Array<string>;
+        cta: string;
+      };
+      pricingFamily: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        price: number;
+        benefitsTitle: string;
+        benefits: Array<string>;
+        cta: string;
+      };
+      pricingAdult: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        price: number;
+        benefitsTitle: string;
+        benefits: Array<string>;
+        cta: string;
+      };
+    };
+    testimonialSection: {
+      title: string;
+      subtitle: string;
+      testimonials?: Array<
+        {
+          _key: string;
+        } & TestimonialReference
+      >;
+    };
+    contactPersonsSection: ContactPersonsSection;
+    newsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+  };
+};
+
+export type Author = {
+  _id: string;
+  _type: "author";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  firstName: string;
+  lastName: string;
+  image: ExtendedImage;
+  email: string;
+  jobTitle: string;
+};
+
+export type SanityAssistInstructionTask = {
+  _type: "sanity.assist.instructionTask";
+  path?: string;
+  instructionKey?: string;
+  started?: string;
+  updated?: string;
+  info?: string;
+};
+
+export type SanityAssistTaskStatus = {
+  _type: "sanity.assist.task.status";
+  tasks?: Array<
+    {
+      _key: string;
+    } & SanityAssistInstructionTask
+  >;
+};
+
+export type SanityAssistSchemaTypeAnnotations = {
+  _type: "sanity.assist.schemaType.annotations";
+  title?: string;
+  fields?: Array<
+    {
+      _key: string;
+    } & SanityAssistSchemaTypeField
+  >;
+};
+
+export type SanityAssistOutputType = {
+  _type: "sanity.assist.output.type";
+  type?: string;
+};
+
+export type SanityAssistOutputField = {
+  _type: "sanity.assist.output.field";
+  path?: string;
+};
+
+export type AssistInstructionContextReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "assist.instruction.context";
+};
+
+export type SanityAssistInstructionContext = {
+  _type: "sanity.assist.instruction.context";
+  reference: AssistInstructionContextReference;
+};
+
+export type AssistInstructionContext = {
+  _id: string;
+  _type: "assist.instruction.context";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  context?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type SanityAssistInstructionUserInput = {
+  _type: "sanity.assist.instruction.userInput";
+  message: string;
+  description?: string;
+};
+
+export type SanityAssistInstructionPrompt = Array<{
+  children?: Array<
+    | {
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & SanityAssistInstructionFieldRef)
+    | ({
+        _key: string;
+      } & SanityAssistInstructionContext)
+    | ({
+        _key: string;
+      } & SanityAssistInstructionUserInput)
+  >;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: null;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type SanityAssistInstructionFieldRef = {
+  _type: "sanity.assist.instruction.fieldRef";
+  path?: string;
+};
+
+export type SanityAssistInstruction = {
+  _type: "sanity.assist.instruction";
+  prompt?: SanityAssistInstructionPrompt;
+  icon?: string;
+  title?: string;
+  userId?: string;
+  createdById?: string;
+  output?: Array<
+    | ({
+        _key: string;
+      } & SanityAssistOutputField)
+    | ({
+        _key: string;
+      } & SanityAssistOutputType)
+  >;
+};
+
+export type SanityAssistSchemaTypeField = {
+  _type: "sanity.assist.schemaType.field";
+  path?: string;
+  instructions?: Array<
+    {
+      _key: string;
+    } & SanityAssistInstruction
+  >;
+};
+
+export type MediaTag = {
+  _id: string;
+  _type: "media.tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
+};
+
+export type SanityImagePaletteSwatch = {
+  _type: "sanity.imagePaletteSwatch";
+  background?: string;
+  foreground?: string;
+  population?: number;
+  title?: string;
+};
+
+export type SanityImagePalette = {
+  _type: "sanity.imagePalette";
+  darkMuted?: SanityImagePaletteSwatch;
+  lightVibrant?: SanityImagePaletteSwatch;
+  darkVibrant?: SanityImagePaletteSwatch;
+  vibrant?: SanityImagePaletteSwatch;
+  dominant?: SanityImagePaletteSwatch;
+  lightMuted?: SanityImagePaletteSwatch;
+  muted?: SanityImagePaletteSwatch;
+};
+
+export type SanityImageDimensions = {
+  _type: "sanity.imageDimensions";
+  height: number;
+  width: number;
+  aspectRatio: number;
+};
+
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  thumbHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
+};
+
+export type SanityFileAsset = {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
+  uploadId?: string;
+  path: string;
+  url: string;
+  source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
+};
+
+export type SanityImageAsset = {
+  _id: string;
+  _type: "sanity.imageAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
+  uploadId?: string;
+  path: string;
+  url: string;
+  metadata?: SanityImageMetadata;
+  source?: SanityAssetSourceData;
+};
+
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
+};
 
 export type AllSanitySchemaTypes =
-	| PersonReference
-	| ContactPersonsSection
-	| SingleGroupPage
-	| NewsOverviewCategory
-	| NewsArticlePage
-	| GroupsPage
-	| DepartmentsPage
-	| Slug
-	| Spacer
-	| SanityImageAssetReference
-	| MainImage
-	| Grid
-	| Blockquote
-	| HomeReference
-	| AboutUsReference
-	| ContactReference
-	| GroupAdminReference
-	| GroupChildrenGymnasticsReference
-	| GroupCoursesReference
-	| GroupDanceReference
-	| GroupOtherSportsReference
-	| GroupSoccerReference
-	| GroupTaekwondoReference
-	| MembershipReference
-	| NewsArticleReference
-	| NewsOverviewReference
-	| AccessibilityReference
-	| PrivacyReference
-	| ImprintReference
-	| BlockContent
-	| VenueReference
-	| TrainingTime
-	| Stats
-	| SocialFields
-	| SimpleBlockContent
-	| MetaFields
-	| InternalLink
-	| ImageCard
-	| ExternalLink
-	| ExtendedImage
-	| SanityFileAssetReference
-	| DocumentDownload
-	| ContactNameMail
-	| Columns
-	| SiteSettings
-	| Venue
-	| SanityImageCrop
-	| SanityImageHotspot
-	| Testimonial
-	| Sponsors
-	| HonoraryMember
-	| RoleReference
-	| Person
-	| Role
-	| NewsCategory
-	| NewsCategoryReference
-	| AuthorReference
-	| NewsArticle
-	| AboutUs
-	| Membership
-	| Accessibility
-	| Privacy
-	| Imprint
-	| NewsOverview
-	| GroupTaekwondo
-	| GroupSoccer
-	| GroupOtherSports
-	| GroupDance
-	| GroupCourses
-	| GroupChildrenGymnastics
-	| GroupAdmin
-	| Contact
-	| TestimonialReference
-	| Home
-	| Author
-	| SanityAssistInstructionTask
-	| SanityAssistTaskStatus
-	| SanityAssistSchemaTypeAnnotations
-	| SanityAssistOutputType
-	| SanityAssistOutputField
-	| AssistInstructionContextReference
-	| SanityAssistInstructionContext
-	| AssistInstructionContext
-	| SanityAssistInstructionUserInput
-	| SanityAssistInstructionPrompt
-	| SanityAssistInstructionFieldRef
-	| SanityAssistInstruction
-	| SanityAssistSchemaTypeField
-	| MediaTag
-	| SanityImagePaletteSwatch
-	| SanityImagePalette
-	| SanityImageDimensions
-	| SanityImageMetadata
-	| SanityFileAsset
-	| SanityAssetSourceData
-	| SanityImageAsset
-	| Geopoint;
+  | PersonReference
+  | ContactPersonsSection
+  | SingleGroupPage
+  | NewsOverviewCategory
+  | NewsArticlePage
+  | GroupsPage
+  | DepartmentsPage
+  | Slug
+  | Spacer
+  | SanityImageAssetReference
+  | MainImage
+  | Grid
+  | Blockquote
+  | HomeReference
+  | AboutUsReference
+  | ContactReference
+  | GroupAdminReference
+  | GroupChildrenGymnasticsReference
+  | GroupCoursesReference
+  | GroupDanceReference
+  | GroupOtherSportsReference
+  | GroupSoccerReference
+  | GroupTaekwondoReference
+  | MembershipReference
+  | NewsArticleReference
+  | NewsOverviewReference
+  | AccessibilityReference
+  | PrivacyReference
+  | ImprintReference
+  | BlockContent
+  | VenueReference
+  | TrainingTime
+  | Stats
+  | SocialFields
+  | SimpleBlockContent
+  | MetaFields
+  | InternalLink
+  | ImageCard
+  | ExternalLink
+  | ExtendedImage
+  | SanityFileAssetReference
+  | DocumentDownload
+  | ContactNameMail
+  | Columns
+  | SiteSettings
+  | Venue
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Testimonial
+  | Sponsors
+  | HonoraryMember
+  | RoleReference
+  | Person
+  | Role
+  | NewsCategory
+  | NewsCategoryReference
+  | AuthorReference
+  | NewsArticle
+  | AboutUs
+  | Membership
+  | Accessibility
+  | Privacy
+  | Imprint
+  | NewsOverview
+  | GroupTaekwondo
+  | GroupSoccer
+  | GroupOtherSports
+  | GroupDance
+  | GroupCourses
+  | GroupChildrenGymnastics
+  | GroupAdmin
+  | Contact
+  | TestimonialReference
+  | Home
+  | Author
+  | SanityAssistInstructionTask
+  | SanityAssistTaskStatus
+  | SanityAssistSchemaTypeAnnotations
+  | SanityAssistOutputType
+  | SanityAssistOutputField
+  | AssistInstructionContextReference
+  | SanityAssistInstructionContext
+  | AssistInstructionContext
+  | SanityAssistInstructionUserInput
+  | SanityAssistInstructionPrompt
+  | SanityAssistInstructionFieldRef
+  | SanityAssistInstruction
+  | SanityAssistSchemaTypeField
+  | MediaTag
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
 
 // Source: src/lib/sanity/queries/main-navigation.ts
 // Variable: mainNavigationQuery
 // Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"slug": coalesce(link->slug.current, '#!'),			title		}	}
 export type MainNavigationQueryResult = {
-	mainNavigation: (| {
-				_key: string;
-				slug: string | '#!';
-				title: null;
-		  }
-		| {
-				_key: string;
-				slug: '#!';
-				title: null;
-		  })[];
+  mainNavigation: Array<
+    | {
+        _key: string;
+        slug: string | "#!";
+        title: null;
+      }
+    | {
+        _key: string;
+        slug: "#!";
+        title: null;
+      }
+  >;
 } | null;
 
 // Source: src/lib/sanity/queries/pages/about-us.ts
 // Variable: aboutUsPageQuery
 // Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type AboutUsPageQueryResult = {
-	_id: string;
-	_type: 'aboutUs';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		introSection?: {
-			title: string;
-			subtitle: string;
-			intro: BlockContent;
-			images: ({
-					_key: string;
-				} & ExtendedImage)[];
-		};
-		chronicleSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			chronicleCategories: ({
-					_key: string;
-				} & ImageCard)[];
-		};
-		visionSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			ctaLongVision: string;
-			longVisionTitle: string;
-			longVision: BlockContent;
-		};
-		stats: ({
-				_key: string;
-			} & Stats)[];
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: {
-				firstName: string;
-				lastName: string;
-				phone: string | null;
-				image: ExtendedImage;
-				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-				email: string | null;
-				role: string | null;
-				taskDescription: string | null;
-			}[];
-		};
-	};
+  _id: string;
+  _type: "aboutUs";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: {
+    introSection?: {
+      title: string;
+      subtitle: string;
+      intro: BlockContent;
+      images: Array<
+        {
+          _key: string;
+        } & ExtendedImage
+      >;
+    };
+    chronicleSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      chronicleCategories: Array<
+        {
+          _key: string;
+        } & ImageCard
+      >;
+    };
+    visionSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      ctaLongVision: string;
+      longVisionTitle: string;
+      longVision: BlockContent;
+    };
+    stats: Array<
+      {
+        _key: string;
+      } & Stats
+    >;
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      contactPersons: Array<{
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        image: ExtendedImage;
+        contactAs: "both" | "email" | "phone" | "whatsapp";
+        email: string | null;
+        role: string | null;
+        taskDescription: string | null;
+      }>;
+    };
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/pages/accessibility.ts
 // Variable: accessibilityPageQuery
 // Query: *[_type == 'accessibility'][0] {		...,		content {			...,			text[] {				...,				markDefs[] {					...,					_type == "internalLink" => {						"link": link-> {							_type,							"slug": slug.current						}					}				}			}		}	}
 export type AccessibilityPageQueryResult = {
-	_id: string;
-	_type: 'accessibility';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		_type: 'blockContent';
-		text: {
-			children?: {
-				marks?: string[];
-				text?: string;
-				_type: 'span';
-				_key: string;
-			}[];
-			style?: 'blockquote' | 'h2' | 'h3' | 'normal';
-			listItem?: 'bullet' | 'number';
-			markDefs: (| {
-						href?: string;
-						_type: 'externalLink';
-						_key: string;
-				  }
-				| {
-						link:
-							| {
-									_type: 'aboutUs';
-									slug: string | null;
-							  }
-							| {
-									_type: 'accessibility';
-									slug: string | null;
-							  }
-							| {
-									_type: 'contact';
-									slug: string | null;
-							  }
-							| {
-									_type: 'group.admin';
-									slug: string;
-							  }
-							| {
-									_type: 'group.children-gymnastics';
-									slug: string;
-							  }
-							| {
-									_type: 'group.courses';
-									slug: string;
-							  }
-							| {
-									_type: 'group.dance';
-									slug: string;
-							  }
-							| {
-									_type: 'group.other-sports';
-									slug: string;
-							  }
-							| {
-									_type: 'group.soccer';
-									slug: string;
-							  }
-							| {
-									_type: 'group.taekwondo';
-									slug: string;
-							  }
-							| {
-									_type: 'home';
-									slug: string | null;
-							  }
-							| {
-									_type: 'imprint';
-									slug: string | null;
-							  }
-							| {
-									_type: 'membership';
-									slug: string | null;
-							  }
-							| {
-									_type: 'news.article';
-									slug: string;
-							  }
-							| {
-									_type: 'newsOverview';
-									slug: string | null;
-							  }
-							| {
-									_type: 'privacy';
-									slug: string | null;
-							  };
-						_type: 'internalLink';
-						_key: string;
-				  })[] | null;
-			level?: number;
-			_type: 'block';
-			_key: string;
-		}[] | null;
-	};
+  _id: string;
+  _type: "accessibility";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: {
+    _type: "blockContent";
+    text: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h2" | "h3" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs: Array<
+        | {
+            href?: string;
+            _type: "externalLink";
+            _key: string;
+          }
+        | {
+            link:
+              | {
+                  _type: "aboutUs";
+                  slug: string | null;
+                }
+              | {
+                  _type: "accessibility";
+                  slug: string | null;
+                }
+              | {
+                  _type: "contact";
+                  slug: string | null;
+                }
+              | {
+                  _type: "group.admin";
+                  slug: string;
+                }
+              | {
+                  _type: "group.children-gymnastics";
+                  slug: string;
+                }
+              | {
+                  _type: "group.courses";
+                  slug: string;
+                }
+              | {
+                  _type: "group.dance";
+                  slug: string;
+                }
+              | {
+                  _type: "group.other-sports";
+                  slug: string;
+                }
+              | {
+                  _type: "group.soccer";
+                  slug: string;
+                }
+              | {
+                  _type: "group.taekwondo";
+                  slug: string;
+                }
+              | {
+                  _type: "home";
+                  slug: string | null;
+                }
+              | {
+                  _type: "imprint";
+                  slug: string | null;
+                }
+              | {
+                  _type: "membership";
+                  slug: string | null;
+                }
+              | {
+                  _type: "news.article";
+                  slug: string;
+                }
+              | {
+                  _type: "newsOverview";
+                  slug: string | null;
+                }
+              | {
+                  _type: "privacy";
+                  slug: string | null;
+                };
+            _type: "internalLink";
+            _key: string;
+          }
+      > | null;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/pages/contact.ts
 // Variable: contactPageQuery
 // Query: *[_type == 'contact'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type ContactPageQueryResult = {
-	_id: string;
-	_type: 'contact';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		receiver: ({
-				_key: string;
-			} & ContactNameMail)[];
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: {
-				firstName: string;
-				lastName: string;
-				phone: string | null;
-				image: ExtendedImage;
-				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-				email: string | null;
-				role: string | null;
-				taskDescription: string | null;
-			}[];
-		};
-	};
+  _id: string;
+  _type: "contact";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: {
+    receiver: Array<
+      {
+        _key: string;
+      } & ContactNameMail
+    >;
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      contactPersons: Array<{
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        image: ExtendedImage;
+        contactAs: "both" | "email" | "phone" | "whatsapp";
+        email: string | null;
+        role: string | null;
+        taskDescription: string | null;
+      }>;
+    };
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/pages/home.ts
 // Variable: homePageQuery
 // Query: *[_type == 'home'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type HomePageQueryResult = {
-	_id: string;
-	_type: 'home';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	intro?: string;
-	meta?: MetaFields;
-	content: {
-		featureSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			features?: {
-				title: string;
-				intro: string;
-				icon: string;
-				_type: 'feature';
-				_key: string;
-			}[];
-		};
-		visionSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			cta: string;
-		};
-		groupsSection: {
-			title: string;
-			subtitle: string;
-		};
-		stats: ({
-				_key: string;
-			} & Stats)[];
-		pricingSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			pricingYouth: {
-				title: string;
-				subtitle: string;
-				intro?: string;
-				price: number;
-				benefitsTitle: string;
-				benefits: string[];
-				cta: string;
-			};
-			pricingFamily: {
-				title: string;
-				subtitle: string;
-				intro?: string;
-				price: number;
-				benefitsTitle: string;
-				benefits: string[];
-				cta: string;
-			};
-			pricingAdult: {
-				title: string;
-				subtitle: string;
-				intro?: string;
-				price: number;
-				benefitsTitle: string;
-				benefits: string[];
-				cta: string;
-			};
-		};
-		testimonialSection: {
-			title: string;
-			subtitle: string;
-			testimonials?: ({
-					_key: string;
-				} & TestimonialReference)[];
-		};
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: {
-				firstName: string;
-				lastName: string;
-				phone: string | null;
-				image: ExtendedImage;
-				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-				email: string | null;
-				role: string | null;
-				taskDescription: string | null;
-			}[];
-		};
-		newsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-	};
+  _id: string;
+  _type: "home";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  intro?: string;
+  meta?: MetaFields;
+  content: {
+    featureSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      features?: Array<{
+        title: string;
+        intro: string;
+        icon: string;
+        _type: "feature";
+        _key: string;
+      }>;
+    };
+    visionSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      cta: string;
+    };
+    groupsSection: {
+      title: string;
+      subtitle: string;
+    };
+    stats: Array<
+      {
+        _key: string;
+      } & Stats
+    >;
+    pricingSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      pricingYouth: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        price: number;
+        benefitsTitle: string;
+        benefits: Array<string>;
+        cta: string;
+      };
+      pricingFamily: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        price: number;
+        benefitsTitle: string;
+        benefits: Array<string>;
+        cta: string;
+      };
+      pricingAdult: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        price: number;
+        benefitsTitle: string;
+        benefits: Array<string>;
+        cta: string;
+      };
+    };
+    testimonialSection: {
+      title: string;
+      subtitle: string;
+      testimonials?: Array<
+        {
+          _key: string;
+        } & TestimonialReference
+      >;
+    };
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      contactPersons: Array<{
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        image: ExtendedImage;
+        contactAs: "both" | "email" | "phone" | "whatsapp";
+        email: string | null;
+        role: string | null;
+        taskDescription: string | null;
+      }>;
+    };
+    newsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/pages/home.ts
 // Variable: homePageTestimonialsQuery
 // Query: *[_type == 'home'][0].content.testimonialSection.testimonials[]-> {		_id,		firstName,		lastName,		image,		quote,		role,	}
-export type HomePageTestimonialsQueryResult = {
-	_id: string;
-	firstName: string;
-	lastName: string;
-	image: ExtendedImage;
-	quote: string;
-	role: string;
-}[] | null;
+export type HomePageTestimonialsQueryResult = Array<{
+  _id: string;
+  firstName: string;
+  lastName: string;
+  image: ExtendedImage;
+  quote: string;
+  role: string;
+}> | null;
 
 // Source: src/lib/sanity/queries/pages/imprint.ts
 // Variable: imprintPageQuery
 // Query: *[_type == 'imprint'][0] {		...,		"contactForm": contactForm {			"title": link->title,			"slug": link->slug.current		}	}
 export type ImprintPageQueryResult = {
-	_id: string;
-	_type: 'imprint';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	intro?: SimpleBlockContent;
-	address: SimpleBlockContent;
-	registerCourt: string;
-	registerNo: string;
-	represented: SimpleBlockContent;
-	email: string;
-	contactForm: {
-		title: string;
-		slug: string | null;
-	};
-	responsible: string;
-	consumerDisputeResolution: string;
-	technicalQuestionsName: string;
-	technicalQuestionsEmail: string;
-	support: SimpleBlockContent;
-	credits: SimpleBlockContent;
+  _id: string;
+  _type: "imprint";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  intro?: SimpleBlockContent;
+  address: SimpleBlockContent;
+  registerCourt: string;
+  registerNo: string;
+  represented: SimpleBlockContent;
+  email: string;
+  contactForm: {
+    title: string;
+    slug: string | null;
+  };
+  responsible: string;
+  consumerDisputeResolution: string;
+  technicalQuestionsName: string;
+  technicalQuestionsEmail: string;
+  support: SimpleBlockContent;
+  credits: SimpleBlockContent;
 } | null;
 
 // Source: src/lib/sanity/queries/pages/membership.ts
 // Variable: membershipPageQuery
 // Query: {		"membership": *[_type == 'membership'][0] {			...,			downloadsSection {				...,				downloads[] {					...,					document {						...,						asset->					}				}			},			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		},		"pricingSection": *[_type == 'home'][0].content.pricingSection	}
-export interface MembershipPageQueryResult {
-	membership: {
-		_id: string;
-		_type: 'membership';
-		_createdAt: string;
-		_updatedAt: string;
-		_rev: string;
-		slug?: Slug;
-		title: string;
-		subtitle: string;
-		meta?: MetaFields;
-		intro: BlockContent;
-		downloadsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			downloads: {
-				_key: string;
-				_type: 'documentDownload';
-				title: string;
-				document: {
-					asset: {
-						_id: string;
-						_type: 'sanity.fileAsset';
-						_createdAt: string;
-						_updatedAt: string;
-						_rev: string;
-						originalFilename?: string;
-						label?: string;
-						title?: string;
-						description?: string;
-						altText?: string;
-						sha1hash: string;
-						extension: string;
-						mimeType: string;
-						size: number;
-						assetId: string;
-						uploadId?: string;
-						path: string;
-						url: string;
-						source?: SanityAssetSourceData;
-					} | null;
-					media?: unknown;
-					_type: 'file';
-				};
-			}[];
-		};
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: {
-				firstName: string;
-				lastName: string;
-				phone: string | null;
-				image: ExtendedImage;
-				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-				email: string | null;
-				role: string | null;
-				taskDescription: string | null;
-			}[];
-		};
-	} | null;
-	pricingSection: {
-		title: string;
-		subtitle: string;
-		intro?: string;
-		pricingYouth: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			price: number;
-			benefitsTitle: string;
-			benefits: string[];
-			cta: string;
-		};
-		pricingFamily: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			price: number;
-			benefitsTitle: string;
-			benefits: string[];
-			cta: string;
-		};
-		pricingAdult: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			price: number;
-			benefitsTitle: string;
-			benefits: string[];
-			cta: string;
-		};
-	} | null;
-}
+export type MembershipPageQueryResult = {
+  membership: {
+    _id: string;
+    _type: "membership";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    slug?: Slug;
+    title: string;
+    subtitle: string;
+    meta?: MetaFields;
+    intro: BlockContent;
+    downloadsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      downloads: Array<{
+        _key: string;
+        _type: "documentDownload";
+        title: string;
+        document: {
+          asset: {
+            _id: string;
+            _type: "sanity.fileAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash: string;
+            extension: string;
+            mimeType: string;
+            size: number;
+            assetId: string;
+            uploadId?: string;
+            path: string;
+            url: string;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          _type: "file";
+        };
+      }>;
+    };
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      contactPersons: Array<{
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        image: ExtendedImage;
+        contactAs: "both" | "email" | "phone" | "whatsapp";
+        email: string | null;
+        role: string | null;
+        taskDescription: string | null;
+      }>;
+    };
+  } | null;
+  pricingSection: {
+    title: string;
+    subtitle: string;
+    intro?: string;
+    pricingYouth: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      price: number;
+      benefitsTitle: string;
+      benefits: Array<string>;
+      cta: string;
+    };
+    pricingFamily: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      price: number;
+      benefitsTitle: string;
+      benefits: Array<string>;
+      cta: string;
+    };
+    pricingAdult: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      price: number;
+      benefitsTitle: string;
+      benefits: Array<string>;
+      cta: string;
+    };
+  } | null;
+};
 
 // Source: src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleHeroQuery
 // Query: *[_type == 'news-article-page'][0] {		title,		subtitle,	}
 export type NewsArticleHeroQueryResult = {
-	title: string;
-	subtitle: string;
+  title: string;
+  subtitle: string;
 } | null;
 
 // Source: src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleContentQuery
 // Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[] {			...,			text[] {				...,				markDefs[] {					...,					_type == "internalLink" => {						"link": link-> {							_type,							"slug": slug.current						}					}				}			}		},		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		meta { metaTitle, metaDescription, openGraphImage},		publishedAt,		"slug": slug.current,		title,	}
 export type NewsArticleContentQueryResult = {
-	author: {
-		email: string;
-		firstName: string;
-		image: ExtendedImage;
-		lastName: string;
-		jobTitle: string;
-	};
-	body: (| {
-				_key: string;
-				_type: 'blockContent';
-				text: {
-					children?: {
-						marks?: string[];
-						text?: string;
-						_type: 'span';
-						_key: string;
-					}[];
-					style?: 'blockquote' | 'h2' | 'h3' | 'normal';
-					listItem?: 'bullet' | 'number';
-					markDefs: (| {
-								href?: string;
-								_type: 'externalLink';
-								_key: string;
-						  }
-						| {
-								link:
-									| {
-											_type: 'aboutUs';
-											slug: string | null;
-									  }
-									| {
-											_type: 'accessibility';
-											slug: string | null;
-									  }
-									| {
-											_type: 'contact';
-											slug: string | null;
-									  }
-									| {
-											_type: 'group.admin';
-											slug: string;
-									  }
-									| {
-											_type: 'group.children-gymnastics';
-											slug: string;
-									  }
-									| {
-											_type: 'group.courses';
-											slug: string;
-									  }
-									| {
-											_type: 'group.dance';
-											slug: string;
-									  }
-									| {
-											_type: 'group.other-sports';
-											slug: string;
-									  }
-									| {
-											_type: 'group.soccer';
-											slug: string;
-									  }
-									| {
-											_type: 'group.taekwondo';
-											slug: string;
-									  }
-									| {
-											_type: 'home';
-											slug: string | null;
-									  }
-									| {
-											_type: 'imprint';
-											slug: string | null;
-									  }
-									| {
-											_type: 'membership';
-											slug: string | null;
-									  }
-									| {
-											_type: 'news.article';
-											slug: string;
-									  }
-									| {
-											_type: 'newsOverview';
-											slug: string | null;
-									  }
-									| {
-											_type: 'privacy';
-											slug: string | null;
-									  };
-								_type: 'internalLink';
-								_key: string;
-						  })[] | null;
-					level?: number;
-					_type: 'block';
-					_key: string;
-				}[] | null;
-		  }
-		| {
-				_key: string;
-				_type: 'blockquote';
-				quote?: string;
-				author?: string;
-				text: null;
-		  }
-		| {
-				_key: string;
-				_type: 'grid';
-				title?: string;
-				columns: Columns;
-				items?: (| ({
-							_key: string;
-					  } & BlockContent)
-					| ({
-							_key: string;
-					  } & MainImage))[];
-				text: null;
-		  }
-		| {
-				_key: string;
-				_type: 'mainImage';
-				asset?: SanityImageAssetReference;
-				media?: unknown;
-				hotspot?: SanityImageHotspot;
-				crop?: SanityImageCrop;
-				alt: string;
-				description?: string;
-				text: null;
-		  }
-		| {
-				_key: string;
-				_type: 'spacer';
-				variant?: 'default';
-				text: null;
-		  })[] | null;
-	categories: {
-		slug: string;
-		title: string;
-	}[];
-	excerpt: string;
-	featuredImage: MainImage;
-	meta: {
-		metaTitle: string | null;
-		metaDescription: string | null;
-		openGraphImage: {
-			asset?: SanityImageAssetReference;
-			media?: unknown;
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt?: string;
-			_type: 'image';
-		} | null;
-	} | null;
-	publishedAt: string;
-	slug: string;
-	title: string;
+  author: {
+    email: string;
+    firstName: string;
+    image: ExtendedImage;
+    lastName: string;
+    jobTitle: string;
+  };
+  body: Array<
+    | {
+        _key: string;
+        _type: "blockContent";
+        text: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "blockquote" | "h2" | "h3" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs: Array<
+            | {
+                href?: string;
+                _type: "externalLink";
+                _key: string;
+              }
+            | {
+                link:
+                  | {
+                      _type: "aboutUs";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "accessibility";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "contact";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "group.admin";
+                      slug: string;
+                    }
+                  | {
+                      _type: "group.children-gymnastics";
+                      slug: string;
+                    }
+                  | {
+                      _type: "group.courses";
+                      slug: string;
+                    }
+                  | {
+                      _type: "group.dance";
+                      slug: string;
+                    }
+                  | {
+                      _type: "group.other-sports";
+                      slug: string;
+                    }
+                  | {
+                      _type: "group.soccer";
+                      slug: string;
+                    }
+                  | {
+                      _type: "group.taekwondo";
+                      slug: string;
+                    }
+                  | {
+                      _type: "home";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "imprint";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "membership";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "news.article";
+                      slug: string;
+                    }
+                  | {
+                      _type: "newsOverview";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "privacy";
+                      slug: string | null;
+                    };
+                _type: "internalLink";
+                _key: string;
+              }
+          > | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "blockquote";
+        quote?: string;
+        author?: string;
+        text: null;
+      }
+    | {
+        _key: string;
+        _type: "grid";
+        title?: string;
+        columns: Columns;
+        items?: Array<
+          | ({
+              _key: string;
+            } & BlockContent)
+          | ({
+              _key: string;
+            } & MainImage)
+        >;
+        text: null;
+      }
+    | {
+        _key: string;
+        _type: "mainImage";
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        description?: string;
+        text: null;
+      }
+    | {
+        _key: string;
+        _type: "spacer";
+        variant?: "default";
+        text: null;
+      }
+  > | null;
+  categories: Array<{
+    slug: string;
+    title: string;
+  }>;
+  excerpt: string;
+  featuredImage: MainImage;
+  meta: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    openGraphImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+  publishedAt: string;
+  slug: string;
+  title: string;
 } | null;
 
 // Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsOverviewCategoryPageQuery
 // Query: *[_type == 'newsOverviewCategory'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type NewsOverviewCategoryPageQueryResult = {
-	_id: string;
-	_type: 'newsOverviewCategory';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-	content: {
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: {
-				firstName: string;
-				lastName: string;
-				phone: string | null;
-				image: ExtendedImage;
-				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-				email: string | null;
-				role: string | null;
-				taskDescription: string | null;
-			}[];
-		};
-	};
+  _id: string;
+  _type: "newsOverviewCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle: string;
+  content: {
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      contactPersons: Array<{
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        image: ExtendedImage;
+        contactAs: "both" | "email" | "phone" | "whatsapp";
+        email: string | null;
+        role: string | null;
+        taskDescription: string | null;
+      }>;
+    };
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsArticlesPaginatedForCategoryQuery
 // Query: *[_type == 'news.article' && $category in categories[]->slug.current]	| order(publishedAt desc) [$start..$end] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
-export type NewsArticlesPaginatedForCategoryQueryResult = {
-	_id: string;
-	publishedAt: string;
-	author: {
-		firstName: string;
-		lastName: string;
-		image: ExtendedImage;
-	};
-	categories: {
-		title: string;
-		slug: string;
-	}[];
-	excerpt: string;
-	meta: {
-		metaTitle: string | null;
-		metaDescription: string | null;
-		openGraphImage: {
-			asset?: SanityImageAssetReference;
-			media?: unknown;
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt?: string;
-			_type: 'image';
-		} | null;
-	} | null;
-	featuredImage: MainImage;
-	slug: string;
-	title: string;
-}[];
+export type NewsArticlesPaginatedForCategoryQueryResult = Array<{
+  _id: string;
+  publishedAt: string;
+  author: {
+    firstName: string;
+    lastName: string;
+    image: ExtendedImage;
+  };
+  categories: Array<{
+    title: string;
+    slug: string;
+  }>;
+  excerpt: string;
+  meta: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    openGraphImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+  featuredImage: MainImage;
+  slug: string;
+  title: string;
+}>;
 
 // Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsArticlesTotalForCategoryQuery
@@ -2298,619 +2406,629 @@ export type NewsArticlesTotalForCategoryQueryResult = number;
 // Variable: newsOverviewPageQuery
 // Query: *[_type == 'newsOverview'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type NewsOverviewPageQueryResult = {
-	_id: string;
-	_type: 'newsOverview';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: {
-				firstName: string;
-				lastName: string;
-				phone: string | null;
-				image: ExtendedImage;
-				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-				email: string | null;
-				role: string | null;
-				taskDescription: string | null;
-			}[];
-		};
-	};
+  _id: string;
+  _type: "newsOverview";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: {
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      contactPersons: Array<{
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        image: ExtendedImage;
+        contactAs: "both" | "email" | "phone" | "whatsapp";
+        email: string | null;
+        role: string | null;
+        taskDescription: string | null;
+      }>;
+    };
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/pages/offer-groups-group.ts
 // Variable: offerGroupsGroupPageQuery
 // Query: *[_type == 'singleGroupPage'][0]
 export type OfferGroupsGroupPageQueryResult = {
-	_id: string;
-	_type: 'singleGroupPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-	content: {
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		trainingSection: {
-			title: string;
-		};
-	};
+  _id: string;
+  _type: "singleGroupPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle: string;
+  content: {
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+    trainingSection: {
+      title: string;
+    };
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/pages/offer-groups-group.ts
 // Variable: offerGroupsGroupPageGroupsQuery
 // Query: *[_type == $groupType && slug.current == $slug][0] {		description,		featuredImage,		images,		meta { metaTitle, metaDescription, openGraphImage},		title,		training {			trainingDescription,			trainingTimes[] {				...,				venue->			}		}	}
 export type OfferGroupsGroupPageGroupsQueryResult =
-	| {
-			description: SimpleBlockContent;
-			featuredImage: ExtendedImage;
-			images: ({
-					_key: string;
-				} & ExtendedImage)[] | null;
-			meta: {
-				metaTitle: string | null;
-				metaDescription: string | null;
-				openGraphImage: {
-					asset?: SanityImageAssetReference;
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt?: string;
-					_type: 'image';
-				} | null;
-			} | null;
-			title: string;
-			training: {
-				trainingDescription: SimpleBlockContent | null;
-				trainingTimes: {
-					_key: string;
-					_type: 'trainingTime';
-					season: 'summer' | 'winter' | 'yearly';
-					weekday:
-						| 'friday'
-						| 'monday'
-						| 'saturday'
-						| 'sunday'
-						| 'thursday'
-						| 'tuesday'
-						| 'wednesday';
-					startTime: string;
-					endTime: string;
-					venue: {
-						_id: string;
-						_type: 'venue';
-						_createdAt: string;
-						_updatedAt: string;
-						_rev: string;
-						title: string;
-						description: SimpleBlockContent;
-						type:
-							| 'artificial-turf'
-							| 'cinder'
-							| 'grass'
-							| 'hall-1'
-							| 'hall-2'
-							| 'hall-3'
-							| 'hybrid';
-						mainImage?: {
-							asset?: SanityImageAssetReference;
-							media?: unknown;
-							hotspot?: SanityImageHotspot;
-							crop?: SanityImageCrop;
-							alt: string;
-							description?: string;
-							_type: 'image';
-						};
-						location?: {
-							name: string;
-							street: string;
-							houseNumber: string;
-							zipCode?: string;
-							city: string;
-						};
-					};
-					note?: string;
-				}[] | null;
-			} | null;
-	  }
-	| {
-			description: SimpleBlockContent;
-			featuredImage: null;
-			images: null;
-			meta: null;
-			title: string;
-			training: null;
-	  }
-	| {
-			description: null;
-			featuredImage: MainImage;
-			images: null;
-			meta: {
-				metaTitle: string | null;
-				metaDescription: string | null;
-				openGraphImage: {
-					asset?: SanityImageAssetReference;
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt?: string;
-					_type: 'image';
-				} | null;
-			} | null;
-			title: string;
-			training: null;
-	  }
-	| {
-			description: null;
-			featuredImage: null;
-			images: null;
-			meta: null;
-			title: null;
-			training: null;
-	  }
-	| {
-			description: null;
-			featuredImage: null;
-			images: null;
-			meta: null;
-			title: string;
-			training: null;
-	  }
-	| {
-			description: null;
-			featuredImage: null;
-			images: null;
-			meta: null;
-			title: string | null;
-			training: null;
-	  }
-	| {
-			description: null;
-			featuredImage: null;
-			images: null;
-			meta: {
-				metaTitle: string | null;
-				metaDescription: string | null;
-				openGraphImage: {
-					asset?: SanityImageAssetReference;
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt?: string;
-					_type: 'image';
-				} | null;
-			} | null;
-			title: null;
-			training: null;
-	  }
-	| {
-			description: null;
-			featuredImage: null;
-			images: null;
-			meta: {
-				metaTitle: string | null;
-				metaDescription: string | null;
-				openGraphImage: {
-					asset?: SanityImageAssetReference;
-					media?: unknown;
-					hotspot?: SanityImageHotspot;
-					crop?: SanityImageCrop;
-					alt?: string;
-					_type: 'image';
-				} | null;
-			} | null;
-			title: string;
-			training: null;
-	  }
-	| {
-			description: string | null;
-			featuredImage: null;
-			images: null;
-			meta: null;
-			title: string | null;
-			training: null;
-	  }
-	| null;
+  | {
+      description: SimpleBlockContent;
+      featuredImage: ExtendedImage;
+      images: Array<
+        {
+          _key: string;
+        } & ExtendedImage
+      > | null;
+      meta: {
+        metaTitle: string | null;
+        metaDescription: string | null;
+        openGraphImage: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+      } | null;
+      title: string;
+      training: {
+        trainingDescription: SimpleBlockContent | null;
+        trainingTimes: Array<{
+          _key: string;
+          _type: "trainingTime";
+          season: "summer" | "winter" | "yearly";
+          weekday:
+            | "friday"
+            | "monday"
+            | "saturday"
+            | "sunday"
+            | "thursday"
+            | "tuesday"
+            | "wednesday";
+          startTime: string;
+          endTime: string;
+          venue: {
+            _id: string;
+            _type: "venue";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            title: string;
+            description: SimpleBlockContent;
+            type:
+              | "artificial-turf"
+              | "cinder"
+              | "grass"
+              | "hall-1"
+              | "hall-2"
+              | "hall-3"
+              | "hybrid";
+            mainImage?: {
+              asset?: SanityImageAssetReference;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt: string;
+              description?: string;
+              _type: "image";
+            };
+            location?: {
+              name: string;
+              street: string;
+              houseNumber: string;
+              zipCode?: string;
+              city: string;
+            };
+          };
+          note?: string;
+        }> | null;
+      } | null;
+    }
+  | {
+      description: SimpleBlockContent;
+      featuredImage: null;
+      images: null;
+      meta: null;
+      title: string;
+      training: null;
+    }
+  | {
+      description: null;
+      featuredImage: MainImage;
+      images: null;
+      meta: {
+        metaTitle: string | null;
+        metaDescription: string | null;
+        openGraphImage: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+      } | null;
+      title: string;
+      training: null;
+    }
+  | {
+      description: null;
+      featuredImage: null;
+      images: null;
+      meta: null;
+      title: null;
+      training: null;
+    }
+  | {
+      description: null;
+      featuredImage: null;
+      images: null;
+      meta: null;
+      title: string;
+      training: null;
+    }
+  | {
+      description: null;
+      featuredImage: null;
+      images: null;
+      meta: null;
+      title: string | null;
+      training: null;
+    }
+  | {
+      description: null;
+      featuredImage: null;
+      images: null;
+      meta: {
+        metaTitle: string | null;
+        metaDescription: string | null;
+        openGraphImage: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+      } | null;
+      title: null;
+      training: null;
+    }
+  | {
+      description: null;
+      featuredImage: null;
+      images: null;
+      meta: {
+        metaTitle: string | null;
+        metaDescription: string | null;
+        openGraphImage: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+      } | null;
+      title: string;
+      training: null;
+    }
+  | {
+      description: string | null;
+      featuredImage: null;
+      images: null;
+      meta: null;
+      title: string | null;
+      training: null;
+    }
+  | null;
 
 // Source: src/lib/sanity/queries/pages/offer-groups-group.ts
 // Variable: offerGroupsGroupPageContactPersonsQuery
 // Query: *[		_type == 'person' &&		defined(affiliations[team->slug.current == $slug][0])	]|order(lastName asc) {		_id,		firstName,		lastName,		phone,		image,		contactAs,		"email": affiliations[team->slug.current == $slug][0].team->email,		"role":  affiliations[team->slug.current == $slug][0].role->title,		"team":  affiliations[team->slug.current == $slug][0].team->title,		"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,	}
-export type OfferGroupsGroupPageContactPersonsQueryResult = {
-	_id: string;
-	firstName: string;
-	lastName: string;
-	phone: string | null;
-	image: ExtendedImage;
-	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-	email: string | null;
-	role: string | null;
-	team: string | null;
-	taskDescription: string | null;
-}[];
+export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
+  _id: string;
+  firstName: string;
+  lastName: string;
+  phone: string | null;
+  image: ExtendedImage;
+  contactAs: "both" | "email" | "phone" | "whatsapp";
+  email: string | null;
+  role: string | null;
+  team: string | null;
+  taskDescription: string | null;
+}>;
 
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageQuery
 // Query: *[_type == 'groupsPage'][0]
 export type OfferGroupsPageQueryResult = {
-	_id: string;
-	_type: 'groupsPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	title: string;
-	subtitle: string;
-	metaDescription?: string;
-	content: {
-		groupsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		stats: ({
-				_key: string;
-			} & Stats)[];
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-	};
+  _id: string;
+  _type: "groupsPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle: string;
+  metaDescription?: string;
+  content: {
+    groupsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+    stats: Array<
+      {
+        _key: string;
+      } & Stats
+    >;
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageGroupsQuery
 // Query: *[_type == $groupType][] | order(sortOrder asc) {		icon,		featuredImage,		overviewTitle,		'slug': slug.current,		title,	}
-export type OfferGroupsPageGroupsQueryResult = (| {
-			icon:
-				| 'Badminton'
-				| 'Bodenturnen'
-				| 'Cheerleading'
-				| 'Fitness'
-				| 'Fussball'
-				| 'Gymnastik'
-				| 'Jujutsu'
-				| 'Pilates'
-				| 'RopeSkipping'
-				| 'Sportakrobatik'
-				| 'SportInGebaeuden'
-				| 'StepAerobic'
-				| 'Taekwondo'
-				| 'Tanzen'
-				| 'Turnen'
-				| 'Wandern'
-				| 'Yoga';
-			featuredImage: ExtendedImage;
-			overviewTitle: string | null;
-			slug: string;
-			title: string;
-	  }
-	| {
-			icon: null;
-			featuredImage: MainImage;
-			overviewTitle: null;
-			slug: string;
-			title: string;
-	  }
-	| {
-			icon: null;
-			featuredImage: null;
-			overviewTitle: null;
-			slug: null;
-			title: null;
-	  }
-	| {
-			icon: null;
-			featuredImage: null;
-			overviewTitle: null;
-			slug: null;
-			title: string;
-	  }
-	| {
-			icon: null;
-			featuredImage: null;
-			overviewTitle: null;
-			slug: null;
-			title: string | null;
-	  }
-	| {
-			icon: null;
-			featuredImage: null;
-			overviewTitle: null;
-			slug: string;
-			title: string;
-	  }
-	| {
-			icon: null;
-			featuredImage: null;
-			overviewTitle: null;
-			slug: string | null;
-			title: string;
-	  })[];
+export type OfferGroupsPageGroupsQueryResult = Array<
+  | {
+      icon:
+        | "Badminton"
+        | "Bodenturnen"
+        | "Cheerleading"
+        | "Fitness"
+        | "Fussball"
+        | "Gymnastik"
+        | "Jujutsu"
+        | "Pilates"
+        | "RopeSkipping"
+        | "Sportakrobatik"
+        | "SportInGebaeuden"
+        | "StepAerobic"
+        | "Taekwondo"
+        | "Tanzen"
+        | "Turnen"
+        | "Wandern"
+        | "Yoga";
+      featuredImage: ExtendedImage;
+      overviewTitle: string | null;
+      slug: string;
+      title: string;
+    }
+  | {
+      icon: null;
+      featuredImage: MainImage;
+      overviewTitle: null;
+      slug: string;
+      title: string;
+    }
+  | {
+      icon: null;
+      featuredImage: null;
+      overviewTitle: null;
+      slug: null;
+      title: null;
+    }
+  | {
+      icon: null;
+      featuredImage: null;
+      overviewTitle: null;
+      slug: null;
+      title: string;
+    }
+  | {
+      icon: null;
+      featuredImage: null;
+      overviewTitle: null;
+      slug: null;
+      title: string | null;
+    }
+  | {
+      icon: null;
+      featuredImage: null;
+      overviewTitle: null;
+      slug: string;
+      title: string;
+    }
+  | {
+      icon: null;
+      featuredImage: null;
+      overviewTitle: null;
+      slug: string | null;
+      title: string;
+    }
+>;
 
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageContactPersonsQuery
 // Query: *[_type == 'person'][affiliations[0].role->email == $email] {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
-export type OfferGroupsPageContactPersonsQueryResult = {
-	firstName: string;
-	lastName: string;
-	phone: string | null;
-	image: ExtendedImage;
-	contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-	email: string | null;
-	role: string | null;
-	taskDescription: string | null;
-}[];
+export type OfferGroupsPageContactPersonsQueryResult = Array<{
+  firstName: string;
+  lastName: string;
+  phone: string | null;
+  image: ExtendedImage;
+  contactAs: "both" | "email" | "phone" | "whatsapp";
+  email: string | null;
+  role: string | null;
+  taskDescription: string | null;
+}>;
 
 // Source: src/lib/sanity/queries/pages/offer.ts
 // Variable: offerPageQuery
 // Query: *[_type == 'departmentsPage'][0] {	...,	content {		...,		contactPersonsSection {			...,			contactPersons[]-> {				  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,			}		}	}}
 export type OfferPageQueryResult = {
-	_id: string;
-	_type: 'departmentsPage';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	content: {
-		departmentsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-		};
-		stats: ({
-				_key: string;
-			} & Stats)[];
-		contactPersonsSection: {
-			title: string;
-			subtitle: string;
-			intro?: string;
-			contactPersons: {
-				firstName: string;
-				lastName: string;
-				phone: string | null;
-				image: ExtendedImage;
-				contactAs: 'both' | 'email' | 'phone' | 'whatsapp';
-				email: string | null;
-				role: string | null;
-				taskDescription: string | null;
-			}[];
-		};
-	};
+  _id: string;
+  _type: "departmentsPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  content: {
+    departmentsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+    stats: Array<
+      {
+        _key: string;
+      } & Stats
+    >;
+    contactPersonsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      contactPersons: Array<{
+        firstName: string;
+        lastName: string;
+        phone: string | null;
+        image: ExtendedImage;
+        contactAs: "both" | "email" | "phone" | "whatsapp";
+        email: string | null;
+        role: string | null;
+        taskDescription: string | null;
+      }>;
+    };
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/pages/privacy.ts
 // Variable: privacyPageQuery
 // Query: *[_type == 'privacy'][0] {		...,		content {			...,			text[] {				...,				markDefs[] {					...,					_type == "internalLink" => {						"link": link-> {							_type,							"slug": slug.current						}					}				}			}		}	}
 export type PrivacyPageQueryResult = {
-	_id: string;
-	_type: 'privacy';
-	_createdAt: string;
-	_updatedAt: string;
-	_rev: string;
-	slug?: Slug;
-	title: string;
-	subtitle: string;
-	meta?: MetaFields;
-	introText: BlockContent;
-	address: string;
-	phone?: string;
-	email: string;
-	content: {
-		_type: 'blockContent';
-		text: {
-			children?: {
-				marks?: string[];
-				text?: string;
-				_type: 'span';
-				_key: string;
-			}[];
-			style?: 'blockquote' | 'h2' | 'h3' | 'normal';
-			listItem?: 'bullet' | 'number';
-			markDefs: (| {
-						href?: string;
-						_type: 'externalLink';
-						_key: string;
-				  }
-				| {
-						link:
-							| {
-									_type: 'aboutUs';
-									slug: string | null;
-							  }
-							| {
-									_type: 'accessibility';
-									slug: string | null;
-							  }
-							| {
-									_type: 'contact';
-									slug: string | null;
-							  }
-							| {
-									_type: 'group.admin';
-									slug: string;
-							  }
-							| {
-									_type: 'group.children-gymnastics';
-									slug: string;
-							  }
-							| {
-									_type: 'group.courses';
-									slug: string;
-							  }
-							| {
-									_type: 'group.dance';
-									slug: string;
-							  }
-							| {
-									_type: 'group.other-sports';
-									slug: string;
-							  }
-							| {
-									_type: 'group.soccer';
-									slug: string;
-							  }
-							| {
-									_type: 'group.taekwondo';
-									slug: string;
-							  }
-							| {
-									_type: 'home';
-									slug: string | null;
-							  }
-							| {
-									_type: 'imprint';
-									slug: string | null;
-							  }
-							| {
-									_type: 'membership';
-									slug: string | null;
-							  }
-							| {
-									_type: 'news.article';
-									slug: string;
-							  }
-							| {
-									_type: 'newsOverview';
-									slug: string | null;
-							  }
-							| {
-									_type: 'privacy';
-									slug: string | null;
-							  };
-						_type: 'internalLink';
-						_key: string;
-				  })[] | null;
-			level?: number;
-			_type: 'block';
-			_key: string;
-		}[] | null;
-	};
+  _id: string;
+  _type: "privacy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  meta?: MetaFields;
+  introText: BlockContent;
+  address: string;
+  phone?: string;
+  email: string;
+  content: {
+    _type: "blockContent";
+    text: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h2" | "h3" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs: Array<
+        | {
+            href?: string;
+            _type: "externalLink";
+            _key: string;
+          }
+        | {
+            link:
+              | {
+                  _type: "aboutUs";
+                  slug: string | null;
+                }
+              | {
+                  _type: "accessibility";
+                  slug: string | null;
+                }
+              | {
+                  _type: "contact";
+                  slug: string | null;
+                }
+              | {
+                  _type: "group.admin";
+                  slug: string;
+                }
+              | {
+                  _type: "group.children-gymnastics";
+                  slug: string;
+                }
+              | {
+                  _type: "group.courses";
+                  slug: string;
+                }
+              | {
+                  _type: "group.dance";
+                  slug: string;
+                }
+              | {
+                  _type: "group.other-sports";
+                  slug: string;
+                }
+              | {
+                  _type: "group.soccer";
+                  slug: string;
+                }
+              | {
+                  _type: "group.taekwondo";
+                  slug: string;
+                }
+              | {
+                  _type: "home";
+                  slug: string | null;
+                }
+              | {
+                  _type: "imprint";
+                  slug: string | null;
+                }
+              | {
+                  _type: "membership";
+                  slug: string | null;
+                }
+              | {
+                  _type: "news.article";
+                  slug: string;
+                }
+              | {
+                  _type: "newsOverview";
+                  slug: string | null;
+                }
+              | {
+                  _type: "privacy";
+                  slug: string | null;
+                };
+            _type: "internalLink";
+            _key: string;
+          }
+      > | null;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+  };
 } | null;
 
 // Source: src/lib/sanity/queries/rss.ts
 // Variable: rssNewsArticlesQuery
 // Query: *[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..49] {		title,		excerpt,		"slug": slug.current,		"category": categories[0]->slug.current,		"categoryTitle": categories[0]->title,		"author": author->{ firstName, lastName, email },		publishedAt,		_updatedAt	}
-export type RssNewsArticlesQueryResult = {
-	title: string;
-	excerpt: string;
-	slug: string;
-	category: string | null;
-	categoryTitle: string | null;
-	author: {
-		firstName: string;
-		lastName: string;
-		email: string;
-	};
-	publishedAt: string;
-	_updatedAt: string;
-}[];
+export type RssNewsArticlesQueryResult = Array<{
+  title: string;
+  excerpt: string;
+  slug: string;
+  category: string | null;
+  categoryTitle: string | null;
+  author: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  publishedAt: string;
+  _updatedAt: string;
+}>;
 
 // Source: src/lib/sanity/queries/shared/groups.ts
 // Variable: groupsQuery
 // Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_id,		title,		icon,	}
-export type GroupsQueryResult = {
-	_id: string;
-	title: string;
-	icon:
-		| 'Badminton'
-		| 'Bodenturnen'
-		| 'Cheerleading'
-		| 'Fitness'
-		| 'Fussball'
-		| 'Gymnastik'
-		| 'Jujutsu'
-		| 'Pilates'
-		| 'RopeSkipping'
-		| 'Sportakrobatik'
-		| 'SportInGebaeuden'
-		| 'StepAerobic'
-		| 'Taekwondo'
-		| 'Tanzen'
-		| 'Turnen'
-		| 'Wandern'
-		| 'Yoga';
-}[];
+export type GroupsQueryResult = Array<{
+  _id: string;
+  title: string;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "Fitness"
+    | "Fussball"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Pilates"
+    | "RopeSkipping"
+    | "Sportakrobatik"
+    | "SportInGebaeuden"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+}>;
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesQuery
 // Query: *[_type == 'news.article'] | order(publishedAt desc) [0..2] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
-export type NewsArticlesQueryResult = {
-	_id: string;
-	publishedAt: string;
-	author: {
-		firstName: string;
-		lastName: string;
-		image: ExtendedImage;
-	};
-	categories: {
-		title: string;
-		slug: string;
-	}[];
-	excerpt: string;
-	meta: {
-		metaTitle: string | null;
-		metaDescription: string | null;
-		openGraphImage: {
-			asset?: SanityImageAssetReference;
-			media?: unknown;
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt?: string;
-			_type: 'image';
-		} | null;
-	} | null;
-	featuredImage: MainImage;
-	slug: string;
-	title: string;
-}[];
+export type NewsArticlesQueryResult = Array<{
+  _id: string;
+  publishedAt: string;
+  author: {
+    firstName: string;
+    lastName: string;
+    image: ExtendedImage;
+  };
+  categories: Array<{
+    title: string;
+    slug: string;
+  }>;
+  excerpt: string;
+  meta: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    openGraphImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+  featuredImage: MainImage;
+  slug: string;
+  title: string;
+}>;
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesPaginatedQuery
 // Query: *[_type == 'news.article'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
-export type NewsArticlesPaginatedQueryResult = {
-	_id: string;
-	publishedAt: string;
-	author: {
-		firstName: string;
-		lastName: string;
-		image: ExtendedImage;
-	};
-	categories: {
-		title: string;
-		slug: string;
-	}[];
-	excerpt: string;
-	meta: {
-		metaTitle: string | null;
-		metaDescription: string | null;
-		openGraphImage: {
-			asset?: SanityImageAssetReference;
-			media?: unknown;
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt?: string;
-			_type: 'image';
-		} | null;
-	} | null;
-	featuredImage: MainImage;
-	slug: string;
-	title: string;
-}[];
+export type NewsArticlesPaginatedQueryResult = Array<{
+  _id: string;
+  publishedAt: string;
+  author: {
+    firstName: string;
+    lastName: string;
+    image: ExtendedImage;
+  };
+  categories: Array<{
+    title: string;
+    slug: string;
+  }>;
+  excerpt: string;
+  meta: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    openGraphImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+  featuredImage: MainImage;
+  slug: string;
+  title: string;
+}>;
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesTotalQuery
@@ -2921,20 +3039,20 @@ export type NewsArticlesTotalQueryResult = number;
 // Variable: newsCategoryQuery
 // Query: *[_type == 'news.category' && slug.current == $slug][0] {		"slug": slug.current,		title,		meta { metaTitle, metaDescription, openGraphImage}	}
 export type NewsCategoryQueryResult = {
-	slug: string;
-	title: string;
-	meta: {
-		metaTitle: string | null;
-		metaDescription: string | null;
-		openGraphImage: {
-			asset?: SanityImageAssetReference;
-			media?: unknown;
-			hotspot?: SanityImageHotspot;
-			crop?: SanityImageCrop;
-			alt?: string;
-			_type: 'image';
-		} | null;
-	} | null;
+  slug: string;
+  title: string;
+  meta: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    openGraphImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
 } | null;
 
 // Source: src/lib/sanity/queries/shared/social-media.ts
@@ -2945,105 +3063,107 @@ export type SocialMediaQueryResult = SocialFields | null;
 // Source: src/lib/sanity/queries/shared/sponsors.ts
 // Variable: sponsorsQuery
 // Query: *[_type == 'sponsors'] {		_id,		name,		logo,	} | order(name asc)
-export type SponsorsQueryResult = {
-	_id: string;
-	name: string;
-	logo: {
-		asset?: SanityImageAssetReference;
-		media?: unknown;
-		hotspot?: SanityImageHotspot;
-		crop?: SanityImageCrop;
-		_type: 'image';
-	};
-}[];
+export type SponsorsQueryResult = Array<{
+  _id: string;
+  name: string;
+  logo: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+}>;
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapNewsArticlesQuery
 // Query: *[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {		"slug": slug.current,		"category": categories[0]->slug.current,		"lastModified": _updatedAt	}
-export type SitemapNewsArticlesQueryResult = {
-	slug: string;
-	category: string | null;
-	lastModified: string;
-}[];
+export type SitemapNewsArticlesQueryResult = Array<{
+  slug: string;
+  category: string | null;
+  lastModified: string;
+}>;
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapNewsCategoriesQuery
 // Query: *[_type == 'news.category'] {		"slug": slug.current,		"lastModified": _updatedAt	}
-export type SitemapNewsCategoriesQueryResult = {
-	slug: string;
-	lastModified: string;
-}[];
+export type SitemapNewsCategoriesQueryResult = Array<{
+  slug: string;
+  lastModified: string;
+}>;
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapGroupsQuery
 // Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_type,		"slug": slug.current,		"lastModified": _updatedAt	}
-export type SitemapGroupsQueryResult = (| {
-			_type: 'group.children-gymnastics';
-			slug: string;
-			lastModified: string;
-	  }
-	| {
-			_type: 'group.courses';
-			slug: string;
-			lastModified: string;
-	  }
-	| {
-			_type: 'group.dance';
-			slug: string;
-			lastModified: string;
-	  }
-	| {
-			_type: 'group.other-sports';
-			slug: string;
-			lastModified: string;
-	  }
-	| {
-			_type: 'group.soccer';
-			slug: string;
-			lastModified: string;
-	  }
-	| {
-			_type: 'group.taekwondo';
-			slug: string;
-			lastModified: string;
-	  })[];
+export type SitemapGroupsQueryResult = Array<
+  | {
+      _type: "group.children-gymnastics";
+      slug: string;
+      lastModified: string;
+    }
+  | {
+      _type: "group.courses";
+      slug: string;
+      lastModified: string;
+    }
+  | {
+      _type: "group.dance";
+      slug: string;
+      lastModified: string;
+    }
+  | {
+      _type: "group.other-sports";
+      slug: string;
+      lastModified: string;
+    }
+  | {
+      _type: "group.soccer";
+      slug: string;
+      lastModified: string;
+    }
+  | {
+      _type: "group.taekwondo";
+      slug: string;
+      lastModified: string;
+    }
+>;
 
 // Query TypeMap
-import '@sanity/client';
-declare module '@sanity/client' {
-	interface SanityQueries {
-		"\n\t*[_type == 'site-settings'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t\"slug\": coalesce(link->slug.current, '#!'),\n\t\t\ttitle\n\t\t}\n\t}\n": MainNavigationQueryResult;
-		'\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
-		'\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AccessibilityPageQueryResult;
-		'\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
-		'\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
-		"\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t}\n": HomePageTestimonialsQueryResult;
-		'\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\t"title": link->title,\n\t\t\t"slug": link->slug.current\n\t\t}\n\t}\n': ImprintPageQueryResult;
-		'\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
-		"\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
-		'\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
-		'\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
-		'\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
-		'\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
-		'\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
-		"*[_type == 'singleGroupPage'][0]": OfferGroupsGroupPageQueryResult;
-		'\n\t*[_type == $groupType && slug.current == $slug][0] {\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n': OfferGroupsGroupPageGroupsQueryResult;
-		'\n\t*[\n\t\t_type == \'person\' &&\n\t\tdefined(affiliations[team->slug.current == $slug][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t"email": affiliations[team->slug.current == $slug][0].team->email,\n\t\t"role":  affiliations[team->slug.current == $slug][0].role->title,\n\t\t"team":  affiliations[team->slug.current == $slug][0].team->title,\n\t\t"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,\n\t}\n': OfferGroupsGroupPageContactPersonsQueryResult;
-		"*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
-		"\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\tfeaturedImage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
-		'\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
-		'\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
-		'\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': PrivacyPageQueryResult;
-		'\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName, email },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
-		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
-		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
-		'\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
-		'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
-		'\n\t*[_type == \'news.category\' && slug.current == $slug][0] {\n\t\t"slug": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n': NewsCategoryQueryResult;
-		"*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
-		"\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
-		'\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
-		'\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
-		"\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
-	}
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "\n\t*[_type == 'site-settings'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t\"slug\": coalesce(link->slug.current, '#!'),\n\t\t\ttitle\n\t\t}\n\t}\n": MainNavigationQueryResult;
+    '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
+    '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AccessibilityPageQueryResult;
+    '\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
+    '\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
+    "\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t}\n": HomePageTestimonialsQueryResult;
+    '\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\t"title": link->title,\n\t\t\t"slug": link->slug.current\n\t\t}\n\t}\n': ImprintPageQueryResult;
+    '\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
+    "\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
+    '\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
+    '\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
+    '\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
+    '\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
+    '\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
+    "*[_type == 'singleGroupPage'][0]": OfferGroupsGroupPageQueryResult;
+    "\n\t*[_type == $groupType && slug.current == $slug][0] {\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n": OfferGroupsGroupPageGroupsQueryResult;
+    '\n\t*[\n\t\t_type == \'person\' &&\n\t\tdefined(affiliations[team->slug.current == $slug][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t"email": affiliations[team->slug.current == $slug][0].team->email,\n\t\t"role":  affiliations[team->slug.current == $slug][0].role->title,\n\t\t"team":  affiliations[team->slug.current == $slug][0].team->title,\n\t\t"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,\n\t}\n': OfferGroupsGroupPageContactPersonsQueryResult;
+    "*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
+    "\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\tfeaturedImage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
+    '\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
+    '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
+    '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': PrivacyPageQueryResult;
+    '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName, email },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
+    "\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
+    '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
+    '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
+    'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
+    "\n\t*[_type == 'news.category' && slug.current == $slug][0] {\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n": NewsCategoryQueryResult;
+    "*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
+    "\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
+    '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
+    '\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
+    "\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
+  }
 }
