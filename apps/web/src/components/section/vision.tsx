@@ -38,6 +38,7 @@ export function Vision(props: Readonly<VisionProps>) {
 							alt="Scheck-Übergabe: TSG Irlich überreicht 250 Euro Spende zum Wiederaufbau des Engerser Lockschuppens."
 							className="rounded-full"
 							src={visionImage1}
+							sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, (max-width: 768px) 256px, 320px"
 							fill
 						/>
 					</div>
@@ -55,6 +56,7 @@ export function Vision(props: Readonly<VisionProps>) {
 							alt="Tanzgruppe 'Funky Diamonds' der TSG Irlich präsentiert eine Choreografie in rot-weißen Kostümen auf der Bühne"
 							className="rounded-full"
 							src={visionImage2}
+							sizes="(max-width: 640px) 128px, (max-width: 768px) 116px, (max-width: 768px) 192px, 256px"
 							fill
 						/>
 					</div>
@@ -72,6 +74,7 @@ export function Vision(props: Readonly<VisionProps>) {
 							alt="Jugend-Fußballmannschaft der TSG Irlich in gelb-blauen Trikots steht Arm in Arm auf dem Sportplatz"
 							className="rounded-full"
 							src={visionImage3}
+							sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
 							fill
 						/>
 					</div>
