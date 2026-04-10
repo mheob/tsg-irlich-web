@@ -17,6 +17,14 @@
 		"VERCEL_PROJECT_PRODUCTION_URL"
 	],
 	"tasks": {
+		"@tsgi-web/email#build": {
+			"env": [
+				"CLEVERREACH_CLIENT_ID",
+				"CLEVERREACH_CLIENT_SECRET",
+				"CLEVERREACH_FORM_ID",
+				"CLEVERREACH_LIST_ID"
+			]
+		},
 		"build": {
 			"dependsOn": ["^build"]
 		},
@@ -52,6 +60,12 @@
 			"dependsOn": ["studio#extract-types"]
 		},
 		"web#build": {
+			"env": [
+				"CLEVERREACH_CLIENT_ID",
+				"CLEVERREACH_CLIENT_SECRET",
+				"CLEVERREACH_FORM_ID",
+				"CLEVERREACH_LIST_ID"
+			],
 			"dependsOn": ["^build"],
 			"outputs": [".next/**", "!.next/cache/**"]
 		}

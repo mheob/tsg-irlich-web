@@ -8,7 +8,6 @@ export default defineConfig({
 		{
 			files: ['**/*.tsx'],
 			plugins: ['react', 'nextjs'],
-			// oxlint-disable-next-line sort-keys
 			rules: {
 				'nextjs/google-font-display': 'warn',
 				'nextjs/google-font-preconnect': 'warn',
@@ -39,42 +38,7 @@ export default defineConfig({
 					'warn',
 					{ allowExportNames: ['generateMetadata', 'metadata'] },
 				],
-
-				// TODO: remove after `@mheob/oxlint-config` is updated
-				'eslint/max-lines-per-function': 'off',
-				'eslint/max-statements': 'off',
-				'react/jsx-filename-extension': ['warn', { extensions: ['jsx', 'tsx'] }],
-				'react/jsx-max-depth': ['warn', { max: 10 }],
-				'react/jsx-props-no-spreading': 'off',
-				'react/no-multi-comp': 'off',
-				'react/react-in-jsx-scope': 'off',
-				'typescript/explicit-module-boundary-types': 'off',
 			},
 		},
 	],
-	// TODO: remove after `@mheob/oxlint-config` is updated
-	rules: {
-		'eslint/capitalized-comments': 'off',
-		'eslint/curly': 'warn',
-		'eslint/id-length': 'off',
-		'eslint/no-magic-numbers': [
-			'warn',
-			{
-				ignore: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-				ignoreArrayIndexes: true,
-				ignoreDefaultValues: true,
-				ignoreEnums: true,
-				ignoreTypeIndexes: true,
-			},
-		],
-		'eslint/no-plusplus': 'off',
-		'eslint/no-undef': 'off',
-		'eslint/no-undefined': 'off',
-		'import/max-dependencies': ['warn', { max: 20 }],
-		'import/no-relative-parent-imports': 'off',
-		'import/unambiguous': 'off',
-		'oxc/no-async-await': 'off',
-		'oxc/no-optional-chaining': 'off',
-		'unicorn/no-null': 'off',
-	},
 });
