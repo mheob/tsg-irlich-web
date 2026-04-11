@@ -6,11 +6,19 @@ allowed-tools: Bash(gh*), Bash(git*), Bash(bun run*)
 agent: git-versioning
 ---
 
-Create a Pull Request based on all commits in the current branch that differ from `develop`.
+Create a Pull Request based on all commits in the current branch that differ from `next`.
 
-- the title is written as conventional commit with a max length of 50 characters
-- the description is organized in "Summary", "Changes", "Motivation" and if useful any additional context
-- set one or more labels
+1. Ensure all changes are committed
+2. Push the branch to the remote
+3. Use `gh` (GitHub CLI) to create the PR with:
+   - A clear, descriptive title following conventional commit style with a max length of 50 characters
+   - A thorough description that includes:
+     - **Summary**: Summary of changes
+     - **Changes**: Motivation and context
+     - **Motivation**: Brief technical approach (if non-obvious)
+     - **Testing**: How changes were verified
+     - **Breaking Changes**: If any
+   - Set one or more labels
 
 Make sure the description is clear and concise, and that it provides enough information for reviewers to understand the purpose
 and impact of the changes.

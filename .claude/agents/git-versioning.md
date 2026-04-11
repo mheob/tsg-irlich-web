@@ -73,8 +73,6 @@ Determine the scope from the files changed. For this project, common scopes incl
 
 ### Creating a Pull Request:
 
-Use Azure DevOps as remote.
-
 1. Ensure all changes are committed
 2. Push the branch to the remote
 3. Use `gh` (GitHub CLI) to create the PR with:
