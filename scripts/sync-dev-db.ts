@@ -10,8 +10,9 @@ async function run(cmd: string, errorMessage = 'An error occurred') {
 		for await (const line of lines) {
 			console.log(line);
 		}
-	} catch {
-		console.log(errorMessage);
+	} catch (error) {
+		console.error(errorMessage);
+		throw error;
 	}
 }
 
