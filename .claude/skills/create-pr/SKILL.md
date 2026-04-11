@@ -8,10 +8,9 @@ agent: git-versioning
 
 Create a Pull Request based on all commits in the current branch that differ from `develop`.
 
-Check for an available changeset.
-
 - the title is written as conventional commit with a max length of 50 characters
 - the description is organized in "Summary", "Changes", "Motivation" and if useful any additional context
+- set one or more labels
 
 Make sure the description is clear and concise, and that it provides enough information for reviewers to understand the purpose
 and impact of the changes.

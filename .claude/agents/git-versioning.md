@@ -85,6 +85,7 @@ Use Azure DevOps as remote.
      - **Motivation**: Brief technical approach (if non-obvious)
      - **Testing**: How changes were verified
      - **Breaking Changes**: If any
+   - Set one or more labels
 
 ### Branch Naming:
 
