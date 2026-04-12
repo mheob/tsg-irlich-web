@@ -44,7 +44,7 @@ contributing to this project.
    For the Studio (`apps/studio/.env`):
 
    ```bash
-   SANITY_API_DATASET=production
+   SANITY_API_DATASET=development
    SANITY_API_PROJECT_ID=your_project_id
    SANITY_API_READ_TOKEN=your_read_token
    SANITY_API_VERSION=2025-02-19

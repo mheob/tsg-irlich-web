@@ -71,9 +71,11 @@ Determine the scope from the files changed. For this project, common scopes incl
 2. Create the commit with a conventional commit message using `git commit -m`
 3. Verify the commit was created successfully with `git log --oneline -1`
 
-### Creating a Pull Request:
+Do not use the `--no-verify` if not really need.
 
-Use Azure DevOps as remote.
+Do not mention an co-author or generator.
+
+### Creating a Pull Request:
 
 1. Ensure all changes are committed
 2. Push the branch to the remote
@@ -81,11 +83,13 @@ Use Azure DevOps as remote.
    - A clear, descriptive title following conventional commit style
    - A thorough description that includes:
      - **Summary**: Summary of changes
-     - **Changes**: Motivation and context
-     - **Motivation**: Brief technical approach (if non-obvious)
+     - **Changes**: Key technical changes made
+     - **Motivation**: Why this change is needed (context/problem)
+     - **Technical Approach**: Brief implementation details (if non-obvious)
      - **Testing**: How changes were verified
-     - **Breaking Changes**: If any
    - Set one or more labels
+
+Do not mention an co-author or generator.
 
 ### Branch Naming:
 

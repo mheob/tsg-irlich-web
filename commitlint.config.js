@@ -1,10 +1,9 @@
 import { existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import defaultConfig from '@mheob/commitlint-config';
 
-const currentPath = path.dirname(fileURLToPath(import.meta.url));
+const currentPath = import.meta.dirname;
 
 function getScopes() {
 	const defaultScopes = ['deps', 'release', 'repo'];
@@ -18,7 +17,6 @@ function getScopes() {
 	return [...defaultScopes, ...apps, ...packages];
 }
 
-// eslint-disable-next-line jsdoc/check-tag-names
 /** @type {import('@mheob/commitlint-config').UserConfig} */
 const config = {
 	...defaultConfig,
