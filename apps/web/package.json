@@ -58,6 +58,6 @@
 		"oxlint": "^1.59.0",
 		"postcss": "^8.5.9",
 		"postcss-load-config": "^6.0.1",
-		"typescript": "^5.9.3"
+		"typescript": "^6.0.0"
 	}
 }
