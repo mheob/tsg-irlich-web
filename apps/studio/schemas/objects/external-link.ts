@@ -1,4 +1,4 @@
-import { EarthGlobeIcon } from '@sanity/icons';
+import { EarthGlobeIcon } from '@sanity/icons/EarthGlobe';
 import { defineField } from 'sanity';
 
 const externalLink = defineField({

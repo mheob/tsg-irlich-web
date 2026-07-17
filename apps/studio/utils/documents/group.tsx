@@ -28,12 +28,7 @@ interface GroupDocumentProps {
  * @param props.title - The title of the document type.
  * @returns The Sanity document type definition.
  */
-export function getGroupDocument({
-	icon,
-	isSportGroup = true,
-	name,
-	title,
-}: GroupDocumentProps): ReturnType<typeof defineType> {
+export function getGroupDocument({ icon, isSportGroup = true, name, title }: GroupDocumentProps) {
 	return defineType({
 		fields: [
 			defineField({

@@ -1,6 +1,8 @@
 // oxlint-disable max-lines, no-magic-numbers, no-inline-comments
 
-import { ImageIcon, SearchIcon, UploadIcon } from '@sanity/icons';
+import { ImageIcon } from '@sanity/icons/Image';
+import { SearchIcon } from '@sanity/icons/Search';
+import { UploadIcon } from '@sanity/icons/Upload';
 import { Box, Button, Card, Dialog, Flex, Spinner, Stack, Text, TextInput } from '@sanity/ui';
 import { useCallback, useId, useRef, useState } from 'react';
 import type { ChangeEvent, DragEvent, JSX, KeyboardEvent } from 'react';
