@@ -17,26 +17,26 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@sanity/assist": "^6.0.4",
-		"@sanity/icons": "^3.7.4",
-		"@sanity/locale-de-de": "^1.1.31",
-		"@sanity/ui": "^3.1.14",
-		"@sanity/vision": "^5.20.0",
+		"@sanity/assist": "^6.1.14",
+		"@sanity/icons": "^5.1.0",
+		"@sanity/locale-de-de": "^1.1.33",
+		"@sanity/ui": "^3.3.5",
+		"@sanity/vision": "^6.5.0",
 		"@tsgi-web/shared": "workspace:*",
-		"dotenv": "^17.4.1",
-		"react": "^19.2.4",
-		"react-dom": "^19.2.4",
-		"react-icons": "^5.6.0",
-		"sanity": "^5.20.0",
-		"sanity-plugin-media": "^4.1.1",
+		"dotenv": "^17.4.2",
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7",
+		"react-icons": "^5.7.0",
+		"sanity": "^6.5.0",
+		"sanity-plugin-media": "^6.0.3",
 		"slugify": "^1.6.9",
-		"styled-components": "^6.3.12",
-		"zod": "^4.3.6"
+		"styled-components": "^6.4.3",
+		"zod": "^4.4.3"
 	},
 	"devDependencies": {
-		"@types/react": "^19.2.14",
+		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
-		"oxlint": "^1.59.0",
-		"typescript": "^5.9.3"
+		"oxlint": "^1.74.0",
+		"typescript": "^7.0.2"
 	}
 }

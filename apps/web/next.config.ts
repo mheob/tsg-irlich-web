@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
 		serverActions: {
 			bodySizeLimit: '10mb',
 		},
+		useTypeScriptCli: true,
 	},
 	images: {
 		remotePatterns: [
