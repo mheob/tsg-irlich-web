@@ -16,7 +16,7 @@ import {
 import { tailwindConfig } from '../tailwind-config';
 
 function linkWithoutProtocol(url: string) {
-	return url.replace(/^https?:\/\//, '');
+	return url.replace(/^https?:\/\//u, '');
 }
 
 interface ContactForwardEmailProps {

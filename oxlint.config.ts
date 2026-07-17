@@ -34,6 +34,8 @@ export default defineConfig({
 				'react-perf/jsx-no-new-array-as-prop': 'off',
 				'react-perf/jsx-no-new-function-as-prop': 'off',
 				'react-perf/jsx-no-new-object-as-prop': 'off',
+				'react/forbid-component-props': 'off',
+				'react/jsx-no-literals': 'off',
 				'react/only-export-components': [
 					'warn',
 					{ allowExportNames: ['generateMetadata', 'metadata'] },
@@ -41,4 +43,7 @@ export default defineConfig({
 			},
 		},
 	],
+	rules: {
+		'no-underscore-dangle': 'off',
+	},
 });

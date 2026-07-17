@@ -31,7 +31,7 @@ function createContactLink({ header, href }: Pick<ContactLinkProps, 'header' | '
 	}
 
 	if (href.startsWith('tel:')) {
-		return href.replaceAll(/\s/g, '');
+		return href.replaceAll(/\s/gu, '');
 	}
 
 	return href;

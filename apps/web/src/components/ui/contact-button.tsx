@@ -55,7 +55,7 @@ export function ContactButton({ email, phone, whatsapp, ...props }: ContactButto
 			<ContactLink
 				aria-label="Whatsapp"
 				className="text-primary hover:text-secondary"
-				href={`https://wa.me/${whatsapp.replace(/^\+/, '').replaceAll(' ', '')}`}
+				href={`https://wa.me/${whatsapp.replace(/^\+/u, '').replaceAll(' ', '')}`}
 				{...props}
 			>
 				<SiWhatsapp aria-hidden="true" />

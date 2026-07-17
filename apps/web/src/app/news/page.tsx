@@ -53,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NewsOverviewPage({ searchParams }: Readonly<PageProps<'/news'>>) {
 	const { seite } = await searchParams;
 	const pageString = Array.isArray(seite) ? seite[0] : seite;
-	const currentPage = Number.parseInt(pageString ?? '1', 10);
+	const currentPage = Math.trunc(Number(pageString ?? '1'));
 
 	const [page, totalArticles, articles, paginatedArticles] = await Promise.all([
 		client.fetch<NewsOverviewPageQueryResult>(newsOverviewPageQuery),

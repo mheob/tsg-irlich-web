@@ -1,4 +1,4 @@
-// oxlint-disable no-magic-numbers
+// oxlint-disable no-magic-numbers no-underscore-dangle
 
 import { RiShareLine } from 'react-icons/ri';
 import { defineField } from 'sanity';

@@ -1,4 +1,4 @@
-// oxlint-disable no-magic-numbers
+// oxlint-disable no-magic-numbers unicorn/max-nested-calls
 
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
