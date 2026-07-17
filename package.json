@@ -21,7 +21,7 @@
 		"lint:github": "turbo lint:github",
 		"lint:root": "oxlint",
 		"lint:root:fix": "oxlint --fix",
-		"prepare": "husky",
+		"prepare": "lefthook install",
 		"typecheck": "turbo typecheck",
 		"typegen:routes": "turbo typegen:routes",
 		"typegen:sanity": "turbo typegen:sanity"
@@ -35,8 +35,7 @@
 		"@types/node": "^24.12.2",
 		"czg": "^1.12.0",
 		"eslint-plugin-better-tailwindcss": "^4.4.0",
-		"husky": "^9.1.7",
-		"lint-staged": "^16.4.0",
+		"lefthook": "^2.1.10",
 		"oxfmt": "^0.44.0",
 		"oxlint": "^1.59.0",
 		"sanity": "^5.20.0",
@@ -50,12 +49,6 @@
 		"minimatch": ">=10.2.1",
 		"prismjs": ">=1.30.0",
 		"undici": ">=7.10.0 <8.0.0"
-	},
-	"lint-staged": {
-		"*": [
-			"oxfmt --no-error-on-unmatched-pattern",
-			"oxlint --fix"
-		]
 	},
 	"engines": {
 		"bun": "^1.3.11",

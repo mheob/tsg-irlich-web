@@ -166,7 +166,7 @@ bun run extract-types && bun run typegen:sanity
 
 - **ESLint** with @mheob/eslint-config
 - **Prettier** with @mheob/prettier-config
-- **Husky** + **lint-staged** for pre-commit hooks
+- **Lefthook** for pre-commit hooks
 - **Commitizen** with czg for conventional commits
 
 ### Performance & Best Practices
