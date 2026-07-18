@@ -13,3 +13,9 @@ pre-commit:
       glob: "*"
       run: bunx oxlint --fix --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
+
+pre-push:
+  commands:
+    cve-lite:
+      run: bunx cve-lite . --cache-dir .cache/cve-lite
+      timeout: "120s"
