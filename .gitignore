@@ -23,8 +23,11 @@ node_modules/
 # AI
 .claude/settings.local.json
 
+# CVE
+.cache/cve-lite
+
 # Testing
-coverage/
+coverage
 
 # Vercel
 .turbo
