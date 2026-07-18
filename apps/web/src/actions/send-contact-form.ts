@@ -15,7 +15,7 @@ export const sendContactForm = actionClient
 
 		const to =
 			env('NODE_ENV') === 'production'
-				? (receiver?.email ?? 'it@tsg-irlich.de')
+				? receiver?.email || 'info@tsg-irlich.de'
 				: 'it@tsg-irlich.de';
 
 		const { error } = await resend.emails.send({
