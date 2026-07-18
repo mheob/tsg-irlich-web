@@ -1,9 +1,22 @@
 // oxlint-disable no-magic-numbers unicorn/max-nested-calls
 
+import { Text } from '@sanity/ui';
 import { RiLinksLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
+import { withRichDescription } from '@/components/rich-field-description';
 import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
+
+const iconFieldDescription = withRichDescription(
+	<Text muted size={1}>
+		Name des Icons aus{' '}
+		<a href="https://lucide.dev/icons/" rel="noreferrer noopener" target="_blank">
+			lucide.dev/icons
+		</a>
+		.<br />
+		In <kbd>CamelCase</kbd> geschrieben (z.B. <kbd>one-icon</kbd> --&gt; <kbd>OneIcon</kbd>).
+	</Text>,
+);
 
 export const featuresField = defineField({
 	fields: [
@@ -40,17 +53,7 @@ export const featuresField = defineField({
 						}),
 
 						defineField({
-							description: (
-								<>
-									Name des Icons aus{' '}
-									<a href="https://lucide.dev/icons/" rel="noreferrer noopener" target="_blank">
-										lucide.dev/icons
-									</a>
-									.<br />
-									In <kbd>CamelCase</kbd> geschrieben (z.B. <kbd>one-icon</kbd> --&gt;{' '}
-									<kbd>OneIcon</kbd>).
-								</>
-							),
+							components: { field: iconFieldDescription },
 							name: 'icon',
 							title: 'Icon',
 							type: 'string',

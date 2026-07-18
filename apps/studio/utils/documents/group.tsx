@@ -1,10 +1,12 @@
 // oxlint-disable no-magic-numbers
 
+import { Text } from '@sanity/ui';
 import type { IconType } from 'react-icons/lib';
 import { defineField, defineType } from 'sanity';
 
 import { DOSB_ICONS } from '@tsgi-web/shared';
 
+import { withRichDescription } from '@/components/rich-field-description';
 import { emailField } from '@/shared/fields/contact';
 import { slugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
@@ -17,6 +19,21 @@ interface GroupDocumentProps {
 	name: string;
 	title: string;
 }
+
+const iconFieldDescription = withRichDescription(
+	<Text muted size={1}>
+		Wir nutzen die{' '}
+		<a
+			href="https://www.dosb.de/service/piktogramme/piktogramme-downloads"
+			rel="noreferrer noopener"
+			target="_blank"
+		>
+			Sportdeutschland-Piktogramme
+		</a>
+		. Sollte ein Icon in der Liste fehlen, kontaktiere bitte den Webmaster, damit er es hinzufügen
+		kann.
+	</Text>,
+);
 
 /**
  * Creates a Sanity document type for a group.
@@ -75,21 +92,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 			}),
 
 			defineField({
-				description: (
-					<>
-						Wir nutzen die{' '}
-						<a
-							href="https://www.dosb.de/service/piktogramme/piktogramme-downloads"
-							rel="noreferrer noopener"
-							target="_blank"
-						>
-							Sportdeutschland-Piktogramme
-						</a>
-						.<br />
-						Sollte ein Icon in der Liste fehlen, kontaktiere bitte den Webmaster, damit er es
-						hinzufügen kann.
-					</>
-				),
+				components: { field: iconFieldDescription },
 				hidden: !isSportGroup,
 				name: 'icon',
 				options: {
