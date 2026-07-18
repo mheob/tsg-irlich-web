@@ -88,7 +88,7 @@ const venue = defineType({
 					title: 'Postleitzahl',
 					type: 'string',
 					validation: (Rule) => [
-						Rule.regex(/^\d{5}$/).error('Die Postleitzahl muss aus genau 5 Zahlen bestehen'),
+						Rule.regex(/^\d{5}$/u).error('Die Postleitzahl muss aus genau 5 Zahlen bestehen'),
 					],
 				}),
 

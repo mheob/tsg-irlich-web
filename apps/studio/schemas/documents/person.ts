@@ -1,4 +1,4 @@
-// oxlint-disable no-magic-numbers
+// oxlint-disable no-magic-numbers max-nested-calls
 
 import { RiUserSmileLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';

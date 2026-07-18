@@ -11,12 +11,12 @@ import {
 	Section,
 	Tailwind,
 	Text,
-} from '@react-email/components';
+} from 'react-email';
 
 import { tailwindConfig } from '../tailwind-config';
 
 function linkWithoutProtocol(url: string) {
-	return url.replace(/^https?:\/\//, '');
+	return url.replace(/^https?:\/\//u, '');
 }
 
 interface ContactForwardEmailProps {

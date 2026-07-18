@@ -42,7 +42,7 @@ export function slugify(input: string): string {
 	return slugifyFn(input, {
 		locale: 'de',
 		lower: true,
-		remove: /[^a-z0-9\s]/gi,
+		remove: /[^a-z0-9\s]/giu,
 		trim: true,
 	})
 		.split('-')

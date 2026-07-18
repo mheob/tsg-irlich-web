@@ -100,6 +100,7 @@ async function addReceiver(
 		body: JSON.stringify({
 			activated: 0,
 			email,
+			// oxlint-disable-next-line unicorn/max-nested-calls
 			registered: Math.floor(Date.now() / UNIX_TIMESTAMP_DIVISOR),
 			source: 'Next.js Website',
 		}),

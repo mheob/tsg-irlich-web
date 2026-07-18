@@ -1,6 +1,8 @@
-// oxlint-disable max-lines, no-magic-numbers, no-inline-comments
+// oxlint-disable max-lines no-magic-numbers no-inline-comments prefer-named-capture-group
 
-import { ImageIcon, SearchIcon, UploadIcon } from '@sanity/icons';
+import { ImageIcon } from '@sanity/icons/Image';
+import { SearchIcon } from '@sanity/icons/Search';
+import { UploadIcon } from '@sanity/icons/Upload';
 import { Box, Button, Card, Dialog, Flex, Spinner, Stack, Text, TextInput } from '@sanity/ui';
 import { useCallback, useId, useRef, useState } from 'react';
 import type { ChangeEvent, DragEvent, JSX, KeyboardEvent } from 'react';
@@ -26,7 +28,7 @@ const styleDragOver = (isDragOver: boolean) => ({
 const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'] as const;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const GENERIC_FILENAME_PATTERN =
-	/^(?:IMG[-_]|DSC[-_]|SCR[-_]|Screenshot|Bildschirmfoto|\d{8}[-_])/i;
+	/^(?:IMG[-_]|DSC[-_]|SCR[-_]|Screenshot|Bildschirmfoto|\d{8}[-_])/iu;
 
 const validateFile = (file: File): null | string => {
 	if (!file.type.startsWith('image/')) {
@@ -52,8 +54,8 @@ const sanitizeFilename = (name: string): string =>
 	name
 		.trim()
 		.replaceAll(/[^\p{L}\p{N}-]/gu, '-') // \p{L} = letters, \p{N} = numbers
-		.replaceAll(/(-)+/g, '-') // Collapse multiple dashes
-		.replaceAll(/(^-|-$)/g, '');
+		.replaceAll(/(-)+/gu, '-') // Collapse multiple dashes
+		.replaceAll(/(^-|-$)/gu, '');
 
 type NamedImageInputProps = ObjectInputProps<ImageValue, ObjectSchemaType>;
 
@@ -82,7 +84,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 			}
 			setUploadError(null);
 			setPendingFile(file);
-			const nameWithoutExtension = file.name.replace(/\.[^/.]+$/, '');
+			const nameWithoutExtension = file.name.replace(/\.[^/.]+$/u, '');
 			setFilename(nameWithoutExtension);
 		}
 		// Reset so that the same file can be selected again
@@ -192,7 +194,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 			}
 			setUploadError(null);
 			setPendingFile(file);
-			const nameWithoutExtension = file.name.replace(/\.[^/.]+$/, '');
+			const nameWithoutExtension = file.name.replace(/\.[^/.]+$/u, '');
 			setFilename(nameWithoutExtension);
 		}
 	}, []);

@@ -36,7 +36,7 @@ function getCurrentPage(page?: string | string[]): {
 	start: number;
 } {
 	const pageString = Array.isArray(page) ? page[0] : page;
-	const parsed = Number.parseInt(pageString ?? '1', 10);
+	const parsed = Math.trunc(Number(pageString ?? '1'));
 	const currentPage = Number.isFinite(parsed) && parsed >= 1 ? Math.floor(parsed) : 1;
 	const start = (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX;
 	const end = start + (ITEMS_PER_PAGE - 1);

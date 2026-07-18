@@ -1,11 +1,25 @@
 // oxlint-disable no-magic-numbers
 
+import { Text } from '@sanity/ui';
 import { RiLinksLine, RiSettings5Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
+import { withRichDescription } from '@/components/rich-field-description';
 import { phoneFieldRegex } from '@/constants/regex';
 import { meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/fields/meta';
+
+const metadataBaseFieldDescription = withRichDescription(
+	<Text muted size={1}>
+		<a
+			href="https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase"
+			rel="noreferrer noopener"
+			target="_blank"
+		>
+			Mehr Informationen
+		</a>
+	</Text>,
+);
 
 const siteSettings = defineType({
 	fields: [
@@ -13,15 +27,7 @@ const siteSettings = defineType({
 		metaField,
 
 		defineField({
-			description: (
-				<a
-					href="https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase"
-					rel="noreferrer noopener"
-					target="_blank"
-				>
-					Mehr Informationen
-				</a>
-			),
+			components: { field: metadataBaseFieldDescription },
 			group: 'meta',
 			name: 'metadataBase',
 			title: 'Metadata Base',

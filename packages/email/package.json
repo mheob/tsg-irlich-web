@@ -15,16 +15,15 @@
 		"lint:github": "oxlint --format=github"
 	},
 	"dependencies": {
-		"@react-email/components": "^1.0.11",
+		"@react-email/ui": "^6.9.0",
 		"@tsgi-web/shared": "workspace:*",
-		"react": "^19.2.4",
-		"react-dom": "^19.2.4"
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7",
+		"react-email": "^6.9.0"
 	},
 	"devDependencies": {
-		"@react-email/preview-server": "^5.2.10",
-		"@types/react": "^19.2.14",
+		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
-		"oxlint": "^1.59.0",
-		"react-email": "^5.2.10"
+		"oxlint": "^1.74.0"
 	}
 }

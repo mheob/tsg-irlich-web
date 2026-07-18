@@ -50,6 +50,7 @@
 				{ "language_server": { "name": "oxfmt" } },
 				{ "code_action": "source.fixAll.oxc" }
 			],
+			"language_servers": ["typescript-ls", "!vtsls"],
 			"prettier": { "allowed": false }
 		},
 		"TypeScript": {
@@ -58,6 +59,7 @@
 				{ "language_server": { "name": "oxfmt" } },
 				{ "code_action": "source.fixAll.oxc" }
 			],
+			"language_servers": ["typescript-ls", "!vtsls"],
 			"prettier": { "allowed": false }
 		},
 		"YAML": {
@@ -92,6 +94,5 @@
 				}
 			}
 		}
-	},
-	"project_name": "TSG Web"
+	}
 }

@@ -101,7 +101,7 @@ const Link: PortableTextMarkComponent = ({ children, value }) => {
 	}
 
 	// Regex finds starting with `/` or `https://` or `http://`, an optional subdomain and then `tsg-irlich.de`
-	const internalLinkRegex = /^(?:\/|https?:\/\/(?:[a-z0-9-]+\.)?tsg-irlich\.de(?:\/|$))/i;
+	const internalLinkRegex = /^(?:\/|https?:\/\/(?:[a-z0-9-]+\.)?tsg-irlich\.de(?:\/|$))/iu;
 
 	if (internalLinkRegex.test(href)) {
 		return <NextLink href={href}>{children}</NextLink>;

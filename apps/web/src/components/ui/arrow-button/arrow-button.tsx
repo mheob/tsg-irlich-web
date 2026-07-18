@@ -1,3 +1,5 @@
+// oxlint-disable react/react-compiler
+
 import type { VariantProps } from 'class-variance-authority';
 import {
 	ArrowDown,
@@ -26,7 +28,7 @@ interface ArrowProps {
 		| 'up'
 		| 'up-left'
 		| 'up-right';
-	size?: ComponentProps<'svg'>['className'];
+	size: ComponentProps<'svg'>['className'];
 }
 
 interface ArrowElementProps
