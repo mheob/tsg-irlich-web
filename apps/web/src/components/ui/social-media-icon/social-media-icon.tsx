@@ -15,10 +15,6 @@ export function SocialMediaIcon({
 	label,
 	...props
 }: Readonly<SocialMediaIconProps>) {
-	if (label === '_type') {
-		return null;
-	}
-
 	return (
 		<ContactLink
 			aria-label={label}
