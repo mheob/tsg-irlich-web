@@ -31,7 +31,9 @@ export function PrivacyField({ form }: Readonly<PrivacyFieldProps>) {
 						<span
 							className="cursor-pointer"
 							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
-							onClick={() => field.onChange(!field.value)}
+							onClick={() => {
+								field.onChange(!field.value);
+							}}
 						>
 							Ich akzeptiere die Datenschutzbestimmungen. Meine Daten werden nur für die Zwecke
 							verwendet, für die sie erhoben wurden.

@@ -1,4 +1,4 @@
-// oxlint-disable max-lines no-magic-numbers no-inline-comments prefer-named-capture-group
+// oxlint-disable no-magic-numbers prefer-named-capture-group
 
 import { ImageIcon } from '@sanity/icons/Image';
 import { SearchIcon } from '@sanity/icons/Search';
@@ -7,7 +7,7 @@ import { Box, Button, Card, Dialog, Flex, Spinner, Stack, Text, TextInput } from
 import { useCallback, useId, useRef, useState } from 'react';
 import type { ChangeEvent, DragEvent, JSX, KeyboardEvent } from 'react';
 import { set, setIfMissing, useClient } from 'sanity';
-import type { AssetFromSource, ImageValue, ObjectInputProps, ObjectSchemaType } from 'sanity';
+import type { AssetFromSource, ImageValue, ObjectInputProps } from 'sanity';
 import { mediaAssetSource } from 'sanity-plugin-media';
 
 import { EMPTY_ARRAY } from '@tsgi-web/shared';
@@ -57,7 +57,7 @@ const sanitizeFilename = (name: string): string =>
 		.replaceAll(/(-)+/gu, '-') // Collapse multiple dashes
 		.replaceAll(/(^-|-$)/gu, '');
 
-type NamedImageInputProps = ObjectInputProps<ImageValue, ObjectSchemaType>;
+type NamedImageInputProps = ObjectInputProps<ImageValue>;
 
 export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Element {
 	const { onChange, renderDefault, schemaType, value } = props;
@@ -72,7 +72,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 	const [isMediaLibraryOpen, setIsMediaLibraryOpen] = useState(false);
 	const [uploadError, setUploadError] = useState<null | string>(null);
 
-	const hasImage = Boolean((value as ImageValue)?.asset);
+	const hasImage = Boolean(value?.asset);
 
 	const handleFileInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -186,17 +186,15 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 		setIsDragOver(false);
 
 		const file = event.dataTransfer.files[0];
-		if (file) {
-			const error = validateFile(file);
-			if (error) {
-				setUploadError(error);
-				return;
-			}
-			setUploadError(null);
-			setPendingFile(file);
-			const nameWithoutExtension = file.name.replace(/\.[^/.]+$/u, '');
-			setFilename(nameWithoutExtension);
+		const error = validateFile(file);
+		if (error) {
+			setUploadError(error);
+			return;
 		}
+		setUploadError(null);
+		setPendingFile(file);
+		const nameWithoutExtension = file.name.replace(/\.[^/.]+$/u, '');
+		setFilename(nameWithoutExtension);
 	}, []);
 
 	const handleFilenameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -214,7 +212,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 	const handleMediaSelect = useCallback(
 		(assets: AssetFromSource[]) => {
 			const selectedAsset = assets[0];
-			if (selectedAsset?.kind === 'assetDocumentId' && typeof selectedAsset.value === 'string') {
+			if (selectedAsset.kind === 'assetDocumentId' && typeof selectedAsset.value === 'string') {
 				onChange([
 					setIfMissing({ _type: 'image' }),
 					set({ _ref: selectedAsset.value, _type: 'reference' }, ['asset']),
@@ -260,7 +258,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 				shadow={1}
 				tone={isDragOver ? 'primary' : 'default'}
 			>
-				<Stack space={4}>
+				<Stack gap={4}>
 					{/* Icon and text */}
 					<Flex align="center" direction="column" gap={3} justify="center" padding={3}>
 						<Text size={4} muted>
@@ -306,8 +304,8 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 					width={1}
 				>
 					<Box padding={4}>
-						<Stack space={4}>
-							<Stack space={2}>
+						<Stack gap={4}>
+							<Stack gap={2}>
 								<Text size={1} muted>
 									Originaler Dateiname: {pendingFile.name}
 								</Text>
@@ -340,6 +338,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 								<Button
 									disabled={!filename.trim() || isUploading}
 									icon={isUploading ? Spinner : undefined}
+									// oxlint-disable-next-line typescript/no-misused-promises typescript/strict-void-return
 									onClick={handleConfirmUpload}
 									role="button"
 									text={isUploading ? 'Wird hochgeladen...' : 'Hochladen'}

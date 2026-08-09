@@ -22,7 +22,8 @@ const documentDownloadField = defineField({
 						return true;
 					}
 
-					const asset = file.asset as { mimeType?: string };
+					// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+					const asset = file.asset as { mimeType?: string } | undefined;
 					return asset?.mimeType && asset.mimeType !== 'application/pdf'
 						? 'Nur PDF-Dateien sind erlaubt'
 						: true;

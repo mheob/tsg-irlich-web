@@ -8,7 +8,7 @@ export const contactFormSchema = z.object({
 	name: z.string().min(2, { message: 'Der Name muss mindestens 2 Zeichen lang sein.' }),
 	privacy: z
 		.boolean({ message: 'Bitte akzeptiere die Datenschutzbestimmungen' })
-		.refine((value) => value === true),
+		.refine((value) => value),
 	receiver: z.object(
 		{
 			email: z.email({ message: 'Kein Empfänger ausgewählt.' }),

@@ -20,6 +20,9 @@ export function DescriptionField({ form }: Readonly<DescriptionFieldProps>) {
 			case 'feature': {
 				return 'Beschreibe deine Idee...';
 			}
+			case 'question': {
+				return 'Wie können wir dir helfen?';
+			}
 			default: {
 				return 'Wie können wir dir helfen?';
 			}

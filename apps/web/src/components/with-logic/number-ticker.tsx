@@ -40,7 +40,8 @@ export function NumberTicker({
 	});
 	const isInView = useInView(reference, { margin: '0px', once: true });
 
-	useEffect(() => {
+	// oxlint-disable-next-line typescript/no-invalid-void-type
+	useEffect((): (() => void) | void => {
 		if (isInView) {
 			const timer = setTimeout(
 				() => {
@@ -48,7 +49,9 @@ export function NumberTicker({
 				},
 				delay * timeSpanInMilliSeconds('second'),
 			);
-			return () => clearTimeout(timer);
+			return () => {
+				clearTimeout(timer);
+			};
 		}
 	}, [motionValue, isInView, delay, value, direction, startValue]);
 

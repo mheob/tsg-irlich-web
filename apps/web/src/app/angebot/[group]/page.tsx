@@ -13,7 +13,6 @@ import {
 	offerGroupsPageGroupsQuery,
 	offerGroupsPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups';
-import type { Groups as GroupsType } from '@/types/sanity.types';
 import type {
 	OfferGroupsPageContactPersonsQueryResult,
 	OfferGroupsPageGroupsQueryResult,
@@ -86,7 +85,7 @@ export default async function GroupsPage({ params }: PageProps<'/angebot/[group]
 			<Groups
 				{...page.content.groupsSection}
 				currentDepartment={currentDepartment}
-				groups={groups as GroupsType['groups']}
+				groups={groups}
 			/>
 			<Stats stats={page.content.stats} />
 			<ContactPersons

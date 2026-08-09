@@ -39,6 +39,7 @@ export function useMediaQuery(query: string): boolean {
 
 		mediaQuery.addEventListener('change', handleChange);
 
+		// oxlint-disable-next-line typescript/consistent-return
 		return () => {
 			mediaQuery.removeEventListener('change', handleChange);
 		};

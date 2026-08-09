@@ -16,7 +16,7 @@ const feedbackFormSchema = z.object({
 	operationSystem: z.enum(['windows', 'macos', 'linux', 'ios', 'android', 'other']).optional(),
 	privacy: z
 		.boolean({ message: 'Bitte akzeptiere die Datenschutzbestimmungen' })
-		.refine((value) => value === true),
+		.refine((value) => value),
 	screenshotUrls: z.array(z.string()).optional(),
 	title: z
 		.string()

@@ -1,3 +1,4 @@
+// oxlint-disable react/function-component-definition
 /**
  * This component uses Portable Text to render a post body.
  *
@@ -77,7 +78,9 @@ const ListItem: PortableTextListItemComponent = ({ children }) => (
 
 const ExternalLink: PortableTextMarkComponent = ({ children, value }) => (
 	<a
-		aria-label={`${children?.toString() || 'Link'} (öffnet in neuem Tab)`}
+		// oxlint-disable-next-line typescript/no-base-to-string
+		aria-label={`${children?.toString() ?? 'Link'} (öffnet in neuem Tab)`}
+		// oxlint-disable-next-line typescript/no-unsafe-member-access typescript/no-unsafe-assignment
 		href={value?.href}
 		rel="noopener noreferrer"
 		target="_blank"
@@ -86,7 +89,8 @@ const ExternalLink: PortableTextMarkComponent = ({ children, value }) => (
 	</a>
 );
 
-const InternalLink: PortableTextMarkComponent = ({ children, value }) => {
+const InternalLink: PortableTextMarkComponent = async ({ children, value }) => {
+	// oxlint-disable-next-line typescript/no-unsafe-assignment typescript/no-unsafe-member-access
 	const slug = value?.link && typeof value.link.slug === 'string' ? value.link.slug : undefined;
 	if (!slug) {
 		return children;
@@ -94,8 +98,9 @@ const InternalLink: PortableTextMarkComponent = ({ children, value }) => {
 	return <NextLink href={`/${slug}`}>{children}</NextLink>;
 };
 
-const Link: PortableTextMarkComponent = ({ children, value }) => {
-	const href = value?.href || value?.url;
+const Link: PortableTextMarkComponent = async ({ children, value }) => {
+	// oxlint-disable-next-line typescript/no-unsafe-assignment typescript/no-unsafe-member-access
+	const href = value?.href ?? value?.url;
 	if (!href || typeof href !== 'string') {
 		return children;
 	}
@@ -109,7 +114,8 @@ const Link: PortableTextMarkComponent = ({ children, value }) => {
 
 	return (
 		<a
-			aria-label={`${children?.toString() || 'Link'} (öffnet in neuem Tab)`}
+			// oxlint-disable-next-line typescript/no-base-to-string
+			aria-label={`${children?.toString() ?? 'Link'} (öffnet in neuem Tab)`}
 			href={href}
 			rel="noopener noreferrer"
 			target="_blank"

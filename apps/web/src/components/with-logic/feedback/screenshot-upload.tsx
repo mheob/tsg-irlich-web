@@ -77,7 +77,7 @@ export function ScreenshotUpload({
 					setUploadingFiles((previous) =>
 						previous.map((f) =>
 							f.id === id
-								? { ...f, error: result?.serverError || 'Upload failed', progress: 'error' }
+								? { ...f, error: result?.serverError ?? 'Upload failed', progress: 'error' }
 								: f,
 						),
 					);
@@ -104,7 +104,8 @@ export function ScreenshotUpload({
 
 			const files = [...event.dataTransfer.files];
 			for (const file of files.slice(0, maxFiles - value.length)) {
-				processFile(file);
+				// oxlint-disable-next-line no-void
+				void processFile(file);
 			}
 		},
 		[disabled, maxFiles, processFile, value.length],
@@ -122,9 +123,10 @@ export function ScreenshotUpload({
 
 	const handleFileInput = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
-			const files = [...(event.target.files || [])];
+			const files = [...(event.target.files ?? [])];
 			for (const file of files.slice(0, maxFiles - value.length)) {
-				processFile(file);
+				// oxlint-disable-next-line no-void
+				void processFile(file);
 			}
 			event.target.value = '';
 		},
@@ -158,14 +160,17 @@ export function ScreenshotUpload({
 				if (item.type.startsWith('image/')) {
 					const file = item.getAsFile();
 					if (file) {
-						processFile(file);
+						// oxlint-disable-next-line no-void
+						void processFile(file);
 					}
 				}
 			}
 		};
 
 		document.addEventListener('paste', handlePaste);
-		return () => document.removeEventListener('paste', handlePaste);
+		return () => {
+			document.removeEventListener('paste', handlePaste);
+		};
 	}, [disabled, canAddMore, processFile]);
 
 	const removeUrl = (urlToRemove: string) => {
@@ -236,7 +241,9 @@ export function ScreenshotUpload({
 								aria-label={`Remove screenshot ${index + 1}`}
 								className="absolute top-1 right-1 rounded-full bg-destructive p-1 text-destructive-foreground opacity-0 transition-opacity group-hover:opacity-100"
 								// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
-								onClick={() => removeUrl(url)}
+								onClick={() => {
+									removeUrl(url);
+								}}
 								type="button"
 							>
 								<X className="size-6" />
@@ -266,7 +273,9 @@ export function ScreenshotUpload({
 								<button
 									className="absolute top-1 right-1 rounded-full bg-destructive p-1 text-destructive-foreground"
 									// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
-									onClick={() => removeUploading(file.id)}
+									onClick={() => {
+										removeUploading(file.id);
+									}}
 									type="button"
 								>
 									<X className="size-6" />

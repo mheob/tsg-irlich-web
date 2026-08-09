@@ -38,12 +38,14 @@ const blockContent = defineField({
 	preview: {
 		// oxlint-disable-next-line typescript/no-explicit-any
 		prepare(value: Record<string, any>) {
+			// oxlint-disable-next-line typescript/no-unsafe-assignment typescript/no-unsafe-call typescript/no-unsafe-member-access
 			const block: PortableTextTextBlock<PortableTextSpan> | undefined = value.blocks.find(
 				(currentBlock: PortableTextTextBlock<PortableTextSpan>) => currentBlock._type === 'block',
 			);
 			return {
 				title: block
 					? `Text: ${block.children
+							// oxlint-disable-next-line typescript/no-unnecessary-condition
 							.filter((child) => child._type === 'span')
 							.map((span) => span.text)
 							.join('')}`
