@@ -1,6 +1,7 @@
 // oxlint-disable no-magic-numbers max-nested-calls
 
 import { RiUserSmileLine } from 'react-icons/ri';
+import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
 import TextInput from '@/components/text-input';
@@ -49,8 +50,10 @@ const person = defineType({
 							description: 'Die Gruppe oder das Team der Person.',
 							name: 'team',
 							options: {
+								// oxlint-disable-next-line max-statements
 								filter: ({ parent }) => {
-									const type = (parent as { department?: string })?.department;
+									// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+									const type = (parent as { department?: string } | undefined)?.department;
 
 									switch (type) {
 										case 'admin': {
@@ -76,6 +79,9 @@ const person = defineType({
 										}
 										case 'taekwondo': {
 											return { filter: '_type == $type', params: { type: 'group.taekwondo' } };
+										}
+										case undefined: {
+											return {};
 										}
 										default: {
 											return {};
@@ -138,7 +144,7 @@ const person = defineType({
 					],
 					name: 'affiliation',
 					preview: {
-						prepare: ({ team, role }) => ({
+						prepare: ({ team, role }: { team?: string; role?: string }) => ({
 							title: `Gruppe: ${team} - Rolle: ${role}`,
 						}),
 						select: {
@@ -158,7 +164,25 @@ const person = defineType({
 	icon: RiUserSmileLine,
 	name: 'person',
 	preview: {
-		prepare: ({ firstName, lastName, media, team1, team2, team3, team4, team5 }) => {
+		prepare: ({
+			firstName,
+			lastName,
+			media,
+			team1,
+			team2,
+			team3,
+			team4,
+			team5,
+		}: {
+			firstName?: string;
+			lastName?: string;
+			media?: PreviewValue['media'];
+			team1?: string;
+			team2?: string;
+			team3?: string;
+			team4?: string;
+			team5?: string;
+		}) => {
 			const teamNames = [team1, team2, team3, team4, team5].filter(Boolean);
 			const subtitle = teamNames.length > 0 ? teamNames.join(', ') : '';
 

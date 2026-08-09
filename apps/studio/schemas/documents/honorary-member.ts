@@ -1,6 +1,7 @@
 // oxlint-disable no-magic-numbers
 
 import { RiUserSmileLine } from 'react-icons/ri';
+import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
@@ -28,7 +29,15 @@ const honoraryMember = defineType({
 	icon: RiUserSmileLine,
 	name: 'honoraryMember',
 	preview: {
-		prepare: ({ media, firstName, lastName }) => ({ media, title: `${lastName}, ${firstName}` }),
+		prepare: ({
+			media,
+			firstName,
+			lastName,
+		}: {
+			media?: PreviewValue['media'];
+			firstName?: string;
+			lastName?: string;
+		}) => ({ media, title: `${lastName}, ${firstName}` }),
 		select: {
 			firstName: 'firstName',
 			lastName: 'lastName',

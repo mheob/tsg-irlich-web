@@ -1,6 +1,7 @@
 // oxlint-disable no-magic-numbers
 
 import { RiChatQuoteLine } from 'react-icons/ri';
+import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
 import { personal } from '@/shared/field-groups';
@@ -41,7 +42,17 @@ const testimonial = defineType({
 	icon: RiChatQuoteLine,
 	name: 'testimonial',
 	preview: {
-		prepare: ({ media, firstName, lastName, role }) => ({
+		prepare: ({
+			media,
+			firstName,
+			lastName,
+			role,
+		}: {
+			media?: PreviewValue['media'];
+			firstName?: string;
+			lastName?: string;
+			role?: string;
+		}) => ({
 			media,
 			title: `${lastName}, ${firstName} - ${role}`,
 		}),

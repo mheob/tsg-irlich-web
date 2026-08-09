@@ -1,6 +1,7 @@
 // oxlint-disable no-magic-numbers
 
 import { RiParentLine } from 'react-icons/ri';
+import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
@@ -34,7 +35,15 @@ const author = defineType({
 	icon: RiParentLine,
 	name: 'author',
 	preview: {
-		prepare: ({ firstName, lastName, media }) => ({ media, title: `${lastName}, ${firstName}` }),
+		prepare: ({
+			firstName,
+			lastName,
+			media,
+		}: {
+			firstName?: string;
+			lastName?: string;
+			media?: PreviewValue['media'];
+		}) => ({ media, title: `${lastName}, ${firstName}` }),
 		select: {
 			firstName: 'firstName',
 			lastName: 'lastName',

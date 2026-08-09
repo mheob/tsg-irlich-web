@@ -1,4 +1,5 @@
 import { RiArticleLine } from 'react-icons/ri';
+import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
 import { content, excerpt, general, meta } from '@/shared/field-groups';
@@ -69,9 +70,17 @@ const newsArticle = defineType({
 		},
 	],
 	preview: {
-		prepare: ({ media, title, publishedAt }) => ({
+		prepare: ({
 			media,
-			title: `${formatDate(publishedAt)} - ${title}`,
+			title,
+			publishedAt,
+		}: {
+			media?: PreviewValue['media'];
+			title?: string;
+			publishedAt?: string;
+		}) => ({
+			media,
+			title: publishedAt ? `${formatDate(publishedAt)} - ${title}` : title,
 		}),
 		select: {
 			media: 'featuredImage.asset',
