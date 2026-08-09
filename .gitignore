@@ -16,6 +16,9 @@ node_modules/
 /logs
 *.log
 
+# Backup
+scripts/production-backup.tar.gz
+
 # Misc
 .DS_Store
 *.pem
