@@ -3,7 +3,8 @@
 	"version": "0.1.0",
 	"type": "module",
 	"exports": {
-		".": "./emails/index.ts"
+		".": "./emails/index.ts",
+		"./newsletter": "./lib/render-newsletter.ts"
 	},
 	"scripts": {
 		"build": "tsc --noEmit",
