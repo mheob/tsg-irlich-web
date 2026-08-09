@@ -1,7 +1,6 @@
 import { cn } from '@tsgi-web/shared';
 
 import { PortableText } from '@/components/ui/portable-text';
-import type { PortableTextValue } from '@/components/ui/portable-text';
 import type { BlockContent } from '@/types/sanity.types.generated';
 
 interface IntroProps {
@@ -20,7 +19,7 @@ export function Intro({ text }: Readonly<IntroProps>) {
 				'[&_li]:pl-2 [&_li]:text-muted-foreground [&>ul]:mb-4 [&>ul]:list-disc [&>ul]:pl-4',
 			)}
 		>
-			<PortableText value={text.text as PortableTextValue} />
+			<PortableText value={text.text} />
 		</section>
 	);
 }

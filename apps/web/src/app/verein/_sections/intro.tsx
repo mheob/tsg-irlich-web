@@ -1,5 +1,4 @@
 import { PortableText } from '@/components/ui/portable-text';
-import type { PortableTextValue } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
 import type { AboutUs } from '@/types/sanity.types';
@@ -51,7 +50,7 @@ export function Intro({ content }: Readonly<IntroProps>) {
 						title={content.title}
 						isCentered
 					>
-						<PortableText value={content.intro.text as PortableTextValue} />
+						<PortableText value={content.intro.text} />
 					</SectionHeader>
 
 					<div className="relative mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-8 lg:mt-0">

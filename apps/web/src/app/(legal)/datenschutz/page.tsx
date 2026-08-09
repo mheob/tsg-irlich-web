@@ -5,7 +5,6 @@ import { cn } from '@tsgi-web/shared';
 import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { Hero } from '@/components/section/hero';
 import { PortableText } from '@/components/ui/portable-text';
-import type { PortableTextValue } from '@/components/ui/portable-text';
 import { client } from '@/lib/sanity/client';
 import { privacyPageQuery } from '@/lib/sanity/queries/pages/privacy';
 import type { PrivacyPageQueryResult } from '@/types/sanity.types.generated';
@@ -53,11 +52,11 @@ export default async function PrivacyPage() {
 			<section className="container py-10 md:grid md:grid-cols-8 md:gap-12 md:py-32">
 				<div className="md:col-span-1" />
 				<aside className={cn('md:col-span-2', textClassName)}>
-					<PortableText value={page.introText.text as PortableTextValue} />
+					<PortableText value={page.introText.text} />
 				</aside>
 
 				<article className={cn('md:col-span-5 md:max-w-[65ch]', textClassName)}>
-					<PortableText value={page.content.text as PortableTextValue} />
+					<PortableText value={page.content.text} />
 				</article>
 			</section>
 		</>

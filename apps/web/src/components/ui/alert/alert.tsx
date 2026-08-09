@@ -30,7 +30,7 @@ function AlertTitle({ className, ...props }: ComponentProps<'h5'>) {
 			data-slot="alert-title"
 			{...props}
 		>
-			{props.children || 'MISSING TITLE'}
+			{props.children ?? 'MISSING TITLE'}
 		</h5>
 	);
 }

@@ -1,5 +1,4 @@
 import { createImageUrlBuilder } from '@sanity/image-url';
-import type { Image } from 'sanity';
 
 import type { SanityFileAsset, SanityImage, SanityImageReference } from '@/types/sanity.types';
 
@@ -78,8 +77,8 @@ const urlForImage = (
 	height?: number,
 	width?: number,
 ): string | undefined => {
-	if (!image?.asset?._ref || !imageBuilder) {
-		return;
+	if (!image?.asset?._ref) {
+		return undefined;
 	}
 	return height
 		? imageBuilder
@@ -92,39 +91,4 @@ const urlForImage = (
 		: imageBuilder.image(image).auto('format').fit('max').format('webp').url();
 };
 
-/**
- * Resolves an OpenGraph image from a Sanity image asset.
- *
- * @param image - The Sanity image object to generate OpenGraph metadata for
- * @param width - The width of the OpenGraph image in pixels (default: 1200)
- * @param height - The height of the OpenGraph image in pixels (default: 627)
- * @returns An object containing the image URL, dimensions and alt text, or undefined if invalid
- *
- * @example
- * ```ts
- * // Get default OpenGraph image metadata
- * const ogImage = resolveOpenGraphImage(sanityImage);
- *
- * // Get custom sized OpenGraph image metadata
- * const customOgImage = resolveOpenGraphImage(sanityImage, 800, 600);
- * ```
- */
-function resolveOpenGraphImage(
-	image: Image,
-	width = 1200,
-	height = 627,
-): undefined | { alt: string; height: number; url: string; width: number } {
-	if (!image || !imageBuilder) {
-		return;
-	}
-	const url = imageBuilder
-		.image(image)
-		.width(width)
-		.height(height)
-		.fit('crop')
-		.format('webp')
-		.url();
-	return { alt: image.alt as string, height, url, width };
-}
-
-export { getDownloadFileUrl, getFileSize, urlForImage, resolveOpenGraphImage };
+export { getDownloadFileUrl, getFileSize, urlForImage };

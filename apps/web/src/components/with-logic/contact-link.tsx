@@ -3,8 +3,12 @@
 import type { AnchorHTMLAttributes, CSSProperties, MouseEvent } from 'react';
 import { useMemo, useState } from 'react';
 
+// Segments by grapheme cluster so multi-code-point characters survive the reversal
+const graphemeSegmenter = new Intl.Segmenter('de', { granularity: 'grapheme' });
+
 function reverse(stringToReverse: string): string {
-	return [...stringToReverse]
+	return [...graphemeSegmenter.segment(stringToReverse)]
+		.map(({ segment }) => segment)
 		.toReversed()
 		.map((char) => {
 			if (char === '(') {
@@ -19,12 +23,11 @@ function reverse(stringToReverse: string): string {
 }
 
 function createContactLink({ header, href }: Pick<ContactLinkProps, 'header' | 'href'>): string {
-	const combinedHeader =
-		(header &&
-			Object.keys(header)
+	const combinedHeader = header
+		? Object.keys(header)
 				.map((key) => `${key}=${encodeURIComponent(header[key] ?? '')}`)
-				.join('&')) ||
-		'';
+				.join('&')
+		: '';
 
 	if (href.startsWith('https://wa.me/') || href.startsWith('mailto:')) {
 		return header ? `${href}?${combinedHeader}` : href;
@@ -59,7 +62,9 @@ export function ContactLink({
 	const [hasInteracted, setHasInteracted] = useState(false);
 	const hrefText = href.slice(Math.max(0, href.indexOf(':') + 1));
 
-	const handleInteraction = () => setHasInteracted(true);
+	const handleInteraction = () => {
+		setHasInteracted(true);
+	};
 
 	const directionStyle: CSSProperties = useMemo(
 		() => ({
@@ -95,5 +100,5 @@ export function ContactLink({
 		style: directionStyle,
 	};
 
-	return <a {...renderProps}>{children || (hasInteracted ? hrefText : reverse(hrefText))}</a>;
+	return <a {...renderProps}>{children ?? (hasInteracted ? hrefText : reverse(hrefText))}</a>;
 }

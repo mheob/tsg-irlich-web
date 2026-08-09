@@ -5,7 +5,6 @@ import { cn } from '@tsgi-web/shared';
 import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { Hero } from '@/components/section/hero';
 import { PortableText } from '@/components/ui/portable-text';
-import type { PortableTextValue } from '@/components/ui/portable-text';
 import { client } from '@/lib/sanity/client';
 import { accessibilityPageQuery } from '@/lib/sanity/queries/pages/accessibility';
 import type { AccessibilityPageQueryResult } from '@/types/sanity.types.generated';
@@ -52,7 +51,7 @@ export default async function AccessibilityPage() {
 
 			<section className="container md:mx-auto md:py-32">
 				<article className={cn('mx-auto max-w-[65ch]', textClassName)}>
-					<PortableText value={page.content.text as PortableTextValue} />
+					<PortableText value={page.content.text} />
 				</article>
 			</section>
 		</>
