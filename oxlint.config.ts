@@ -40,10 +40,15 @@ export default defineConfig({
 					'warn',
 					{ allowExportNames: ['generateMetadata', 'metadata'] },
 				],
+				'typescript/no-misused-promises': 'off',
+				'typescript/no-unnecessary-condition': 'off',
+				'typescript/strict-void-return': 'off',
 			},
 		},
 	],
 	rules: {
 		'no-underscore-dangle': 'off',
+		'typescript/prefer-readonly-parameter-types': 'off',
+		'typescript/strict-boolean-expressions': 'off',
 	},
 });

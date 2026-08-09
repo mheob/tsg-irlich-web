@@ -44,13 +44,21 @@
 			],
 			"prettier": { "allowed": false }
 		},
+		"TOML": {
+			"format_on_save": "on",
+			"formatter": [
+				{ "language_server": { "name": "oxfmt" } },
+				{ "code_action": "source.fixAll.oxc" }
+			],
+			"prettier": { "allowed": false }
+		},
 		"TSX": {
 			"format_on_save": "on",
 			"formatter": [
 				{ "language_server": { "name": "oxfmt" } },
 				{ "code_action": "source.fixAll.oxc" }
 			],
-			"language_servers": ["typescript-ls", "!vtsls"],
+			"language_servers": ["typescript-ls", "!vtsls", "!typescript-language-server", "..."],
 			"prettier": { "allowed": false }
 		},
 		"TypeScript": {
@@ -59,7 +67,7 @@
 				{ "language_server": { "name": "oxfmt" } },
 				{ "code_action": "source.fixAll.oxc" }
 			],
-			"language_servers": ["typescript-ls", "!vtsls"],
+			"language_servers": ["typescript-ls", "!vtsls", "!typescript-language-server", "..."],
 			"prettier": { "allowed": false }
 		},
 		"YAML": {
