@@ -1,7 +1,6 @@
 # TSG Irlich Website
 
-Next.js 16 frontend application for TSG Irlich, a German sports club. Built with TypeScript, Tailwind CSS, Shadcn UI, and Sanity
-CMS.
+Next.js 16 frontend application for TSG Irlich, a German sports club. Built with TypeScript, Tailwind CSS, Shadcn UI, and Sanity CMS.
 
 ## Overview
 

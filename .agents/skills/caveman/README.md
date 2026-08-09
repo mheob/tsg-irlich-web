@@ -4,9 +4,7 @@ Talk like smart caveman. Same brain, fewer tokens.
 
 ## What it does
 
-Compress every model response to caveman-style prose. Drops articles, filler, pleasantries, and hedging. Keeps every technical
-detail, code block, error string, and symbol exact. Cuts 65% of output tokens (measured) with full accuracy preserved. Mode
-persists for the whole session until changed or stopped.
+Compress every model response to caveman-style prose. Drops articles, filler, pleasantries, and hedging. Keeps every technical detail, code block, error string, and symbol exact. Cuts 65% of output tokens (measured) with full accuracy preserved. Mode persists for the whole session until changed or stopped.
 
 Six intensity levels:
 
@@ -19,8 +17,7 @@ Six intensity levels:
 | `wenyan-full`  | Maximum 文言文. 80-90% character reduction.                         |
 | `wenyan-ultra` | Extreme classical compression.                                      |
 
-Auto-clarity rule: caveman drops to normal prose for security warnings, irreversible-action confirmations, multi-step sequences
-where fragment ambiguity risks misread, and when user repeats a question. Resumes after the clear part.
+Auto-clarity rule: caveman drops to normal prose for security warnings, irreversible-action confirmations, multi-step sequences where fragment ambiguity risks misread, and when user repeats a question. Resumes after the clear part.
 
 ## How to invoke
 

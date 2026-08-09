@@ -1,17 +1,14 @@
 ---
 name: caveman-compress
 description: >
-  Compress natural language memory files (CLAUDE.md, todos, preferences) into caveman format to save input tokens. Preserves all
-  technical substance, code, URLs, and structure. Compressed version overwrites the original file. Human-readable backup saved as
-  FILE.original.md. Trigger: /caveman-compress FILEPATH or "compress memory file"
+  Compress natural language memory files (CLAUDE.md, todos, preferences) into caveman format to save input tokens. Preserves all technical substance, code, URLs, and structure. Compressed version overwrites the original file. Human-readable backup saved as FILE.original.md. Trigger: /caveman-compress FILEPATH or "compress memory file"
 ---
 
 # Caveman Compress
 
 ## Purpose
 
-Compress natural language files (CLAUDE.md, todos, preferences) into caveman-speak to reduce input tokens. Compressed version
-overwrites original. Human-readable backup saved as `<filename>.original.md`.
+Compress natural language files (CLAUDE.md, todos, preferences) into caveman-speak to reduce input tokens. Compressed version overwrites original. Human-readable backup saved as `<filename>.original.md`.
 
 ## Trigger
 
@@ -19,8 +16,7 @@ overwrites original. Human-readable backup saved as `<filename>.original.md`.
 
 ## Process
 
-1. The compression scripts live in `scripts/` (adjacent to this SKILL.md). If the path is not immediately available, search for
-   `scripts/__main__.py` next to this SKILL.md.
+1. The compression scripts live in `scripts/` (adjacent to this SKILL.md). If the path is not immediately available, search for `scripts/__main__.py` next to this SKILL.md.
 
 2. From the directory containing this SKILL.md, run:
 
@@ -96,8 +92,7 @@ If file contains code blocks:
 
 Original:
 
-> You should always make sure to run the test suite before pushing any changes to the main branch. This is important because it
-> helps catch bugs early and prevents broken builds from being deployed to production.
+> You should always make sure to run the test suite before pushing any changes to the main branch. This is important because it helps catch bugs early and prevents broken builds from being deployed to production.
 
 Compressed:
 
@@ -105,8 +100,7 @@ Compressed:
 
 Original:
 
-> The application uses a microservices architecture with the following components. The API gateway handles all incoming requests
-> and routes them to the appropriate service. The authentication service is responsible for managing user sessions and JWT tokens.
+> The application uses a microservices architecture with the following components. The API gateway handles all incoming requests and routes them to the appropriate service. The authentication service is responsible for managing user sessions and JWT tokens.
 
 Compressed:
 

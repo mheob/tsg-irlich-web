@@ -9,5 +9,4 @@ type: project
 - **Commit tool**: Commitizen (`bun run commit`) with czg; conventional commits enforced by commitlint
 - **Common scopes**: `deps`, `release`, `repo`, `ai`, `manual`, `self-service`, `training`, `zis`, `web`, `scripts`
 - **Pre-commit hooks**: Lefthook (`lefthook.yml`) runs `oxfmt` and `oxlint --fix` on staged files
-- **PR labels (exact names with emoji)**: `enhancement ✨`, `tools 🔧`, `bug 🐛`, `documentation 📝`, `deps 📦`, `studio 🗃️`,
-  `frontend 🖥️`, `chore` (no emoji)
+- **PR labels (exact names with emoji)**: `enhancement ✨`, `tools 🔧`, `bug 🐛`, `documentation 📝`, `deps 📦`, `studio 🗃️`, `frontend 🖥️`, `chore` (no emoji)

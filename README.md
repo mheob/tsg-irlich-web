@@ -1,7 +1,6 @@
 # TSG Irlich Website 2026
 
-A modern, full-stack website for TSG Irlich 1882, a German sports club (Turn- und Sportgemeinde) located in Neuwied/Irlich. This
-project features a Next.js frontend with Sanity CMS for content management, built as a monorepo using modern web technologies.
+A modern, full-stack website for TSG Irlich 1882, a German sports club (Turn- und Sportgemeinde) located in Neuwied/Irlich. This project features a Next.js frontend with Sanity CMS for content management, built as a monorepo using modern web technologies.
 
 ## Table of Contents
 
@@ -269,8 +268,7 @@ The project is configured for deployment on:
 
 ## 🤝 Contributing
 
-Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull
-requests.
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## 📄 License
 
@@ -278,5 +276,4 @@ This project is private and proprietary to TSG Irlich 1882.
 
 ## 📞 Contact
 
-For questions about this project, please contact the development team or visit our
-[contact page](https://www.tsg-irlich.de/kontakt).
+For questions about this project, please contact the development team or visit our [contact page](https://www.tsg-irlich.de/kontakt).

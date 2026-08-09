@@ -1,7 +1,6 @@
 # Sanity Webhook Setup for On-Demand Revalidation
 
-This guide describes how to set up Sanity Webhooks so that changes are immediately available in the production Next.js app on
-Vercel.
+This guide describes how to set up Sanity Webhooks so that changes are immediately available in the production Next.js app on Vercel.
 
 ## 1. Generate Revalidation Secret
 
