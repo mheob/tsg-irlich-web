@@ -25,6 +25,14 @@ jobs:
       - name: Install Dependencies
         run: bun install --frozen-lockfile
 
+      # The type-aware lint rules need the types Next.js generates (route types and
+      # the module declarations for image imports), which are not checked in.
+      - name: Generate Route Types
+        run: bun run typegen:routes
+        env:
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+
       - name: Lint files
         run: bun run lint:affected:github
 
