@@ -14,6 +14,8 @@ const FIVE_MINUTES = timeSpanInMilliSeconds('minute') * 5;
 // Token cache to avoid unnecessary authentication requests
 let tokenCache: null | { expiresAt: number; token: string } = null;
 
+const accessTokenSchema = z.object({ access_token: z.string(), expires_in: z.number() });
+
 /**
  * Retrieves a CleverReach API access token using client credentials grant.
  *
@@ -51,7 +53,8 @@ async function getAccessToken(): Promise<string> {
 		throw new Error(`CleverReach authentication failed: ${error}`);
 	}
 
-	const data: { access_token: string; expires_in: number } = await response.json();
+	const payload: unknown = await response.json();
+	const data = accessTokenSchema.parse(payload);
 
 	// Store token and expiry for future requests (expires_in is seconds from now)
 	tokenCache = {
@@ -91,6 +94,13 @@ interface DoiMetadata {
 
 type AddReceiverResult = { code?: string; error: string; success: false } | { success: true };
 
+const subscriberErrorDetailsSchema = z.object({
+	code: z.union([z.number(), z.string()]).optional(),
+	message: z.string().optional(),
+});
+
+const subscriberErrorSchema = z.object({ error: subscriberErrorDetailsSchema.optional() });
+
 async function addReceiver(
 	email: string,
 	token: string,
@@ -115,7 +125,8 @@ async function addReceiver(
 		return { success: true };
 	}
 
-	const errorData = await response.json().catch(() => ({}));
+	const errorPayload: unknown = await response.json().catch(() => ({}));
+	const errorData = subscriberErrorSchema.safeParse(errorPayload);
 
 	if (response.status === HTTP_CONFLICT) {
 		return {
@@ -125,9 +136,11 @@ async function addReceiver(
 		};
 	}
 
+	const errorDetails = errorData.success ? errorData.data.error : undefined;
+
 	return {
-		code: errorData.error?.code?.toString(),
-		error: errorData.error?.message ?? 'Failed to add subscriber',
+		code: errorDetails?.code?.toString(),
+		error: errorDetails?.message ?? 'Failed to add subscriber',
 		success: false,
 	};
 }
@@ -220,7 +233,7 @@ async function subscribe(
 	if (!validation.success) {
 		return {
 			code: 'VALIDATION_ERROR',
-			error: validation.error.message ?? 'Validation failed',
+			error: validation.error.message,
 			success: false,
 		};
 	}

@@ -55,7 +55,9 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 		};
 
 		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
 	}, []);
 
 	return (
@@ -120,7 +122,9 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 							aria-label="Toggle menu"
 							className="my-2 inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-gray-100"
 							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
-							onClick={() => setIsMobileOpen(!isMobileOpen)}
+							onClick={() => {
+								setIsMobileOpen(!isMobileOpen);
+							}}
 							type="button"
 						>
 							{isMobileOpen ? <X className="size-6" /> : <Menu className="size-6" />}
@@ -147,7 +151,9 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 							href={item.slug}
 							key={item._key}
 							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
-							onClick={() => setIsMobileOpen(false)}
+							onClick={() => {
+								setIsMobileOpen(false);
+							}}
 						>
 							{item.title}
 						</Link>
@@ -157,7 +163,9 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 						<Button
 							className="uppercase"
 							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
-							onClick={() => setIsMobileOpen(false)}
+							onClick={() => {
+								setIsMobileOpen(false);
+							}}
 							variant="secondary"
 							asChild
 							fullWidth

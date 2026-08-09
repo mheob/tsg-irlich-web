@@ -7,7 +7,7 @@ import { GoToGoogleMaps } from '@/components/section/go-to-google-maps';
 import { client } from '@/lib/sanity/client';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import type { SocialMediaQueryResult } from '@/types/sanity.types';
-import { getSocialMediaIcon } from '@/utils/icon';
+import { getSocialMediaEntries } from '@/utils/icon';
 import type { printGoogleMapsLink } from '@/utils/url';
 
 import { SocialMediaIcon } from '../ui/social-media-icon';
@@ -52,16 +52,15 @@ export default async function Footer() {
 						<h2 className="mt-7 text-xl md:text-4xl">Folge uns</h2>
 
 						<div className="flex gap-8 md:gap-4">
-							{socialMedia &&
-								Object.entries(socialMedia).map(([name, url]) => (
-									<SocialMediaIcon
-										className="size-6 md:size-8"
-										href={url}
-										icon={getSocialMediaIcon(name)}
-										key={url}
-										label={name}
-									/>
-								))}
+							{getSocialMediaEntries(socialMedia).map(({ icon, name, url }) => (
+								<SocialMediaIcon
+									className="size-6 md:size-8"
+									href={url}
+									icon={icon}
+									key={name}
+									label={name}
+								/>
+							))}
 						</div>
 					</section>
 

@@ -18,7 +18,7 @@ const newsCategory = defineType({
 	icon: RiBookletLine,
 	name: 'news.category',
 	preview: {
-		prepare: ({ title }) => ({ title }),
+		prepare: ({ title }: { title?: string }) => ({ title }),
 		select: {
 			publishedAt: 'publishedAt',
 			title: 'title',

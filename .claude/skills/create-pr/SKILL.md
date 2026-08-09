@@ -20,8 +20,7 @@ Create a Pull Request based on all commits in the current branch that differ fro
      - **Testing**: How changes were verified
    - Set one or more labels
 
-Make sure the description is clear and concise, and that it provides enough information for reviewers to understand the purpose
-and impact of the changes.
+Make sure the description is clear and concise, and that it provides enough information for reviewers to understand the purpose and impact of the changes.
 
 Do not use the `--no-verify` if not really need.
 

@@ -42,18 +42,29 @@ const FILE_UPLOAD_MUTATION = `
   }
 `;
 
-interface UploadFileHeader {
-	key: string;
-	value: string;
-}
+const uploadFileHeaderSchema = z.object({ key: z.string(), value: z.string() });
 
-interface UploadFile {
-	assetUrl: string;
-	headers: UploadFileHeader[];
-	uploadUrl: string;
-}
+const uploadFileSchema = z.object({
+	assetUrl: z.string(),
+	headers: z.array(uploadFileHeaderSchema),
+	uploadUrl: z.string(),
+});
 
-function fetchUploadUrl(apiKey: string, file: File): Promise<Response> {
+const fileUploadSchema = z.object({ uploadFile: uploadFileSchema.nullish() });
+
+const uploadDataSchema = z.object({ fileUpload: fileUploadSchema.nullish() });
+
+const uploadErrorSchema = z.object({ message: z.string() });
+
+const uploadResponseSchema = z.object({
+	data: uploadDataSchema.nullish(),
+	errors: z.array(uploadErrorSchema).optional(),
+});
+
+type UploadFileHeader = z.infer<typeof uploadFileHeaderSchema>;
+type UploadFile = z.infer<typeof uploadFileSchema>;
+
+async function fetchUploadUrl(apiKey: string, file: File): Promise<Response> {
 	return fetch(LINEAR_API_URL, {
 		body: JSON.stringify({
 			query: FILE_UPLOAD_MUTATION,
@@ -67,18 +78,15 @@ function fetchUploadUrl(apiKey: string, file: File): Promise<Response> {
 	});
 }
 
-function extractUploadFile(result: Record<string, unknown>, status: number): UploadFile {
-	if (result.errors || !(result.data as Record<string, unknown>)?.fileUpload) {
+function extractUploadFile(
+	result: z.infer<typeof uploadResponseSchema>,
+	status: number,
+): UploadFile {
+	const uploadFile = result.data?.fileUpload?.uploadFile;
+
+	if (result.errors || !uploadFile) {
 		console.error('Linear fileUpload error:', result.errors);
 		throw new Error(`Failed to get upload URL: ${status} - ${JSON.stringify(result)}`);
-	}
-
-	const uploadFile = (
-		(result.data as Record<string, unknown>).fileUpload as Record<string, unknown>
-	).uploadFile as UploadFile;
-
-	if (!uploadFile?.uploadUrl || !uploadFile?.assetUrl) {
-		throw new Error('Failed to get upload URL');
 	}
 
 	return uploadFile;
@@ -86,7 +94,8 @@ function extractUploadFile(result: Record<string, unknown>, status: number): Upl
 
 async function requestUploadUrl(apiKey: string, file: File): Promise<UploadFile> {
 	const response = await fetchUploadUrl(apiKey, file);
-	const result = await response.json();
+	const payload: unknown = await response.json();
+	const result = uploadResponseSchema.parse(payload);
 
 	return extractUploadFile(result, response.status);
 }

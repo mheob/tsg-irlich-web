@@ -5,7 +5,7 @@ export default function TextInput(props: Readonly<TextInputProps>) {
 	const { renderDefault, value } = props;
 
 	return (
-		<Stack space={3}>
+		<Stack gap={3}>
 			{renderDefault(props)}
 			<Text align="right" size={1}>
 				Anzahl Zeichen: {value?.length ?? 0}

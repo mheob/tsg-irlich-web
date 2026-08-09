@@ -14,19 +14,33 @@ interface WebhookBody {
 type RevalidateHandler = (slug?: string) => void;
 
 const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
-	aboutUs: () => revalidatePath('/verein'),
-	contact: () => revalidatePath('/kontakt'),
-	departmentsPage: () => revalidatePath('/angebot'),
+	aboutUs: () => {
+		revalidatePath('/verein');
+	},
+	contact: () => {
+		revalidatePath('/kontakt');
+	},
+	departmentsPage: () => {
+		revalidatePath('/angebot');
+	},
 	group: (slug) => {
 		revalidatePath('/angebot');
 		if (slug) {
 			revalidatePath(`/angebot/${slug}`);
 		}
 	},
-	home: () => revalidatePath('/'),
-	imprint: () => revalidatePath('/impressum'),
-	membership: () => revalidatePath('/mitgliedschaft'),
-	navigation: () => revalidatePath('/', 'layout'),
+	home: () => {
+		revalidatePath('/');
+	},
+	imprint: () => {
+		revalidatePath('/impressum');
+	},
+	membership: () => {
+		revalidatePath('/mitgliedschaft');
+	},
+	navigation: () => {
+		revalidatePath('/', 'layout');
+	},
 	'news.article': (slug) => {
 		revalidatePath('/news');
 		if (slug) {
@@ -39,7 +53,9 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 			revalidatePath(`/news/${slug}`);
 		}
 	},
-	newsOverview: () => revalidatePath('/news'),
+	newsOverview: () => {
+		revalidatePath('/news');
+	},
 	person: () => {
 		revalidatePath('/');
 		revalidatePath('/angebot', 'layout');
@@ -48,9 +64,15 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 		revalidatePath('/mitgliedschaft');
 		revalidatePath('/verein');
 	},
-	privacy: () => revalidatePath('/datenschutz'),
-	settings: () => revalidatePath('/', 'layout'),
-	testimonial: () => revalidatePath('/'),
+	privacy: () => {
+		revalidatePath('/datenschutz');
+	},
+	settings: () => {
+		revalidatePath('/', 'layout');
+	},
+	testimonial: () => {
+		revalidatePath('/');
+	},
 	venue: (slug) => {
 		revalidatePath('/angebot');
 		if (slug) {
@@ -59,28 +81,17 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	},
 };
 
-function parseWebhook(request: NextRequest): Promise<ParsedBody<WebhookBody>> {
+async function parseWebhook(request: NextRequest): Promise<ParsedBody<WebhookBody>> {
 	return parseBody<WebhookBody>(request, env('SANITY_REVALIDATE_SECRET'));
-}
-
-function validateWebhook(
-	body: WebhookBody | null,
-	isValidSignature: boolean | null,
-): Response | null {
-	if (!isValidSignature) {
-		return Response.json({ body, isValidSignature, message: 'Invalid signature' }, { status: 401 });
-	}
-
-	if (!body?._type) {
-		return Response.json({ body, message: 'Bad Request' }, { status: 400 });
-	}
-
-	return null;
 }
 
 function revalidateByType(body: WebhookBody): void {
 	const slug = body.slug?.current;
-	const handler = REVALIDATION_MAP[body._type] ?? (() => revalidatePath('/'));
+	const handler =
+		REVALIDATION_MAP[body._type] ??
+		(() => {
+			revalidatePath('/');
+		});
 	handler(slug);
 	revalidateTag(body._type, 'max');
 }
@@ -89,12 +100,18 @@ export async function POST(request: NextRequest): Promise<NextResponse | Respons
 	try {
 		const { body, isValidSignature } = await parseWebhook(request);
 
-		const errorResponse = validateWebhook(body, isValidSignature);
-		if (errorResponse) {
-			return errorResponse;
+		if (!isValidSignature) {
+			return Response.json(
+				{ body, isValidSignature, message: 'Invalid signature' },
+				{ status: 401 },
+			);
 		}
 
-		revalidateByType(body as WebhookBody);
+		if (!body?._type) {
+			return Response.json({ body, message: 'Bad Request' }, { status: 400 });
+		}
+
+		revalidateByType(body);
 
 		return NextResponse.json({ body, now: Date.now(), revalidated: true, status: 200 });
 	} catch (error: unknown) {

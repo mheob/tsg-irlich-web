@@ -6,7 +6,6 @@ import { cn } from '@tsgi-web/shared';
 
 import { Hero } from '@/components/section/hero';
 import { PortableText } from '@/components/ui/portable-text';
-import type { PortableTextValue } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
 import { client } from '@/lib/sanity/client';
@@ -103,7 +102,7 @@ export default async function NewsArticlePage({
 					{article.body?.map((block) => {
 						switch (block._type) {
 							case 'blockContent': {
-								return <PortableText key={block._key} value={block.text as PortableTextValue} />;
+								return <PortableText key={block._key} value={block.text} />;
 							}
 							case 'blockquote': {
 								return (

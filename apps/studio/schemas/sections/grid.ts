@@ -39,7 +39,7 @@ const grid = defineField({
 	icon: RiLayoutGridLine,
 	name: 'grid',
 	preview: {
-		prepare: ({ title }) => ({ title }),
+		prepare: ({ title }: { title?: string }) => ({ title }),
 		select: {
 			title: 'title',
 		},

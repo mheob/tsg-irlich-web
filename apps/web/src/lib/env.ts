@@ -28,7 +28,7 @@ type EnvKey = keyof typeof schemas;
 type EnvValue<K extends EnvKey> = z.infer<(typeof schemas)[K]>;
 
 // Cache for validated values
-const cache = new Map<EnvKey, unknown>();
+const cache = new Map<EnvKey, EnvValue<EnvKey>>();
 
 /**
  * Validates and returns a single environment variable.
@@ -39,18 +39,21 @@ const cache = new Map<EnvKey, unknown>();
  * @returns The validated environment variable value
  * @throws {Error} If the environment variable is missing or invalid
  */
-export function env<K extends EnvKey>(key: K): EnvValue<K> {
-	if (cache.has(key)) {
-		return cache.get(key) as EnvValue<K>;
+export function env<K extends EnvKey>(key: K): EnvValue<K>;
+// Implementation signature: indexing `schemas` with a non-generic key keeps `safeParse`
+// from distributing over every schema, so no type assertion is needed to bridge the two
+export function env(key: EnvKey): EnvValue<EnvKey> {
+	const cached = cache.get(key);
+	if (cached !== undefined) {
+		return cached;
 	}
 
-	const schema = schemas[key];
-	const result = schema.safeParse(process.env[key]);
+	const result = schemas[key].safeParse(process.env[key]);
 
 	if (!result.success) {
 		throw new Error(`Invalid environment variable ${key}: ${z.prettifyError(result.error)}`);
 	}
 
 	cache.set(key, result.data);
-	return result.data as EnvValue<K>;
+	return result.data;
 }

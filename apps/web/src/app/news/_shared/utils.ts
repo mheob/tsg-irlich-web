@@ -10,13 +10,13 @@ const DEFAULT_OG_IMAGE_SIZE = { height: 630, width: 1200 };
 
 export function getOpenGraphImageOptions(image?: AnyImage, title?: string): OGImage {
 	if (!image) {
-		return;
+		return undefined;
 	}
 
 	const imageUrl = urlForImage(image, DEFAULT_OG_IMAGE_SIZE.height, DEFAULT_OG_IMAGE_SIZE.width);
 
 	if (!imageUrl) {
-		return;
+		return undefined;
 	}
 
 	return {

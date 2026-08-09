@@ -20,10 +20,10 @@ function linkWithoutProtocol(url: string) {
 }
 
 interface ContactForwardEmailProps {
-	baseUrl: string;
-	contactEmail: string;
-	contactMessage: string;
-	contactName: string;
+	baseUrl?: string;
+	contactEmail?: string;
+	contactMessage?: string;
+	contactName?: string;
 	receiver?: string;
 }
 

@@ -1,7 +1,6 @@
 # TSG Irlich Sanity Studio
 
-Sanity Studio CMS for managing content for the TSG Irlich website. This is the content management interface where editors can
-create and manage sports groups, news articles, people, testimonials, and other content.
+Sanity Studio CMS for managing content for the TSG Irlich website. This is the content management interface where editors can create and manage sports groups, news articles, people, testimonials, and other content.
 
 ## Overview
 
@@ -157,8 +156,7 @@ export const mySchemaType = defineType({
 
 ### Field Groups
 
-Use field groups to organize complex schemas. Field groups are defined in `shared/field-groups.ts` and can be reused across
-schemas.
+Use field groups to organize complex schemas. Field groups are defined in `shared/field-groups.ts` and can be reused across schemas.
 
 ## Type Generation
 

@@ -32,7 +32,9 @@ const phoneField = defineField({
 
 const contactAsField = defineField({
 	group: 'contact',
+	// oxlint-disable-next-line typescript/no-unsafe-member-access
 	hidden: ({ parent }) => !parent?.phone,
+	// oxlint-disable-next-line typescript/no-unsafe-member-access
 	initialValue: ({ parent }) => (parent?.phone ? 'both' : 'email'),
 	name: 'contactAs',
 	options: {

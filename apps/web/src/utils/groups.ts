@@ -99,7 +99,7 @@ function getOGImage(group: string): OpenGraph['images'] {
 	const imageURL = groupSection ? `/og/angebot/groups/${group}.webp` : `/og/angebot.webp`;
 
 	return {
-		alt: groupSection?.image?.alt ?? fallbackImage.alt,
+		alt: groupSection?.image.alt ?? fallbackImage.alt,
 		height: 630,
 		url: `${getBaseUrl()}${imageURL}`,
 		width: 1200,

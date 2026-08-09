@@ -106,8 +106,9 @@ export default async function SingleGroupsPage({
 			/>
 			<Main
 				description={
+					// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 					(groupData.description as SimpleBlockContent) ??
-					// oxlint-disable-next-line react_perf/jsx-no-new-object-as-prop
+					// oxlint-disable-next-line typescript/no-unsafe-type-assertion react-perf/jsx-no-new-object-as-prop
 					({ text: [] } as unknown as SimpleBlockContent)
 				}
 				// oxlint-disable-next-line react_perf/jsx-no-new-array-as-prop

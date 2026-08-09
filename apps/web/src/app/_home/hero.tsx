@@ -7,7 +7,7 @@ import { SectionHeader } from '@/components/ui/section-header';
 import { SocialMediaIcon } from '@/components/ui/social-media-icon';
 import ArrowCta from '@/icons/design/arrow-cta';
 import type { Home, SocialMediaQueryResult } from '@/types/sanity.types';
-import { getSocialMediaIcon } from '@/utils/icon';
+import { getSocialMediaEntries } from '@/utils/icon';
 
 import styles from './hero.module.css';
 
@@ -44,15 +44,9 @@ export function Hero({ intro, socialMedia, subtitle, title }: Readonly<HeroProps
 							'lg:flex-col lg:justify-center lg:gap-10',
 						)}
 					>
-						{socialMedia &&
-							Object.entries(socialMedia).map(([name, url]) => (
-								<SocialMediaIcon
-									href={url}
-									icon={getSocialMediaIcon(name)}
-									key={url}
-									label={name}
-								/>
-							))}
+						{getSocialMediaEntries(socialMedia).map(({ icon, name, url }) => (
+							<SocialMediaIcon href={url} icon={icon} key={name} label={name} />
+						))}
 					</nav>
 				</div>
 			</div>

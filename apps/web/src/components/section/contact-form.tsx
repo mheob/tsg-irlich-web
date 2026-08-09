@@ -75,7 +75,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 				form.reset();
 			} else {
 				setSubmitResult({
-					error: result?.serverError || 'Ein Fehler ist aufgetreten',
+					error: result?.serverError ?? 'Ein Fehler ist aufgetreten',
 					success: false,
 				});
 			}

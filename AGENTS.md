@@ -4,8 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-TSG Irlich website - a Next.js application with Sanity CMS for a German sports club. This is a monorepo built with Turbo
-containing:
+TSG Irlich website - a Next.js application with Sanity CMS for a German sports club. This is a monorepo built with Turbo containing:
 
 - **apps/web**: Next.js 16 frontend with App Router, TypeScript, Tailwind CSS, Shadcn UI
 - **apps/studio**: Sanity Studio CMS for content management

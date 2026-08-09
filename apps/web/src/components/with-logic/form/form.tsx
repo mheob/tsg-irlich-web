@@ -16,12 +16,10 @@ import { Label } from '@/components/ui/label';
 import { FormFieldContext, FormItemContext } from './form-context';
 import { useFormField } from './use-form-field';
 
-const FormField = <
+function FormField<
 	TFieldValues extends FieldValues = FieldValues,
 	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
-	...props
-}: ControllerProps<TFieldValues, TName>) => {
+>({ ...props }: ControllerProps<TFieldValues, TName>) {
 	const value = useMemo(() => ({ name: props.name }), [props.name]);
 
 	return (
@@ -29,7 +27,7 @@ const FormField = <
 			<Controller {...props} />
 		</FormFieldContext>
 	);
-};
+}
 
 function FormItem({ className, ...props }: ComponentProps<'div'>) {
 	const id = useId();
@@ -85,7 +83,7 @@ function FormDescription({ className, ...props }: ComponentProps<'p'>) {
 
 function FormMessage({ className, ...props }: ComponentProps<'p'>) {
 	const { error, formMessageId } = useFormField();
-	const body = error ? String(error?.message ?? '') : props.children;
+	const body = error ? (error?.message ?? '') : props.children;
 	if (!body) {
 		return null;
 	}

@@ -20,20 +20,17 @@ agent: git-versioning
 
 ## Structure
 
-Use the format: `<type>: <short summary>` (e.g., `feat: add user login flow`) Keep the subject line under 50 characters Add a
-blank line between the subject and body if you need more detail Wrap body text at 72 characters
+Use the format: `<type>: <short summary>` (e.g., `feat: add user login flow`) Keep the subject line under 50 characters Add a blank line between the subject and body if you need more detail Wrap body text at 72 characters
 
 ## Writing style
 
-Use the imperative mood: "add feature" not "added feature" or "adds feature" Don't end the subject line with a period Be specific
-— "fix null pointer in auth middleware" beats "fix bug"
+Use the imperative mood: "add feature" not "added feature" or "adds feature" Don't end the subject line with a period Be specific — "fix null pointer in auth middleware" beats "fix bug"
 
 ### Conventional Commits (which fits well with your toolchain)
 
 Common prefixes:
 
-`feat`: — new feature `fix`: — bug fix `chore`: — maintenance, deps, config `docs`: — documentation only `refactor`: — no behavior
-change `test`: — adding/updating tests `ci`: — CI/CD changes
+`feat`: — new feature `fix`: — bug fix `chore`: — maintenance, deps, config `docs`: — documentation only `refactor`: — no behavior change `test`: — adding/updating tests `ci`: — CI/CD changes
 
 Breaking changes get a `!` suffix: `feat!: redesign auth API`
 
@@ -58,13 +55,11 @@ Describe the area of the codebase affected by the change, e.g. `feat(auth): add 
 
 ### The body (when needed)
 
-Explain why, not what — the diff already shows what changed. Answer: what problem does this solve? Are there side effects or
-caveats?
+Explain why, not what — the diff already shows what changed. Answer: what problem does this solve? Are there side effects or caveats?
 
 ## Practical tips
 
-Each commit should represent one logical change — avoid "fix stuff and also update deps" If you need "and" in the subject, it's
-probably two commits Reference issues where relevant: **fix(oxlint): add abc rule**
+Each commit should represent one logical change — avoid "fix stuff and also update deps" If you need "and" in the subject, it's probably two commits Reference issues where relevant: **fix(oxlint): add abc rule**
 
 Do not use the `--no-verify` if not really need.
 

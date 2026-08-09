@@ -11,12 +11,7 @@ const RSS_RESPONSE_HEADERS = {
 };
 
 function buildAuthor(article: RssArticle): string {
-	const email = article.author?.email ?? 'info@tsg-irlich.de';
-	const name = article.author
-		? `${article.author.firstName} ${article.author.lastName}`
-		: 'TSG Irlich';
-
-	return `${email} (${name})`;
+	return `${article.author.email} (${article.author.firstName} ${article.author.lastName})`;
 }
 
 function buildRssItem(article: RssArticle, baseUrl: string): string {
@@ -32,7 +27,7 @@ function buildRssItem(article: RssArticle, baseUrl: string): string {
 		<title><![CDATA[${article.title}]]></title>
 		<link>${articleUrl}</link>
 		<guid isPermaLink="true">${articleUrl}</guid>
-		<description><![CDATA[${article.excerpt ?? ''}]]></description>
+		<description><![CDATA[${article.excerpt}]]></description>
 		<pubDate>${pubDate}</pubDate>
 		<author>${author}</author>
 		${category}
@@ -63,7 +58,7 @@ export async function GET(): Promise<Response> {
 	const baseUrl = getBaseUrl();
 	const articles = await client.fetch<RssNewsArticlesQueryResult>(rssNewsArticlesQuery);
 
-	const rssItems = (articles ?? [])
+	const rssItems = articles
 		.filter((article) => article.slug && article.category)
 		.map((article) => buildRssItem(article, baseUrl))
 		.join('');

@@ -1,5 +1,7 @@
 'use server';
 
+import { z } from 'zod';
+
 import { actionClient } from '@/lib/actions/safe-action';
 import { env } from '@/lib/env';
 import { feedbackFormSchema } from '@/lib/validations/feedback';
@@ -33,7 +35,7 @@ function buildMetadataLines(data: FeedbackFormValues): string[] {
 	for (const [key, label] of METADATA_LABELS) {
 		const value = data[key];
 		if (value) {
-			lines.push(`**${label}:** ${value}`);
+			lines.push(`**${label}:** ${String(value)}`);
 		}
 	}
 
@@ -57,10 +59,26 @@ function buildDescription(data: FeedbackFormValues): string {
 	return parts.join('\n');
 }
 
+const linearIssueSchema = z.object({ id: z.string(), identifier: z.string() });
+
+const linearIssueCreateSchema = z.object({
+	issue: linearIssueSchema.nullish(),
+	success: z.boolean(),
+});
+
+const linearDataSchema = z.object({ issueCreate: linearIssueCreateSchema });
+
+const linearErrorSchema = z.object({ message: z.string() });
+
+const linearResponseSchema = z.object({
+	data: linearDataSchema.nullish(),
+	errors: z.array(linearErrorSchema).optional(),
+});
+
 async function postLinearMutation(
 	apiKey: string,
 	variables: Record<string, unknown>,
-): Promise<Record<string, unknown>> {
+): Promise<z.infer<typeof linearResponseSchema>> {
 	const response = await fetch(LINEAR_API_URL, {
 		body: JSON.stringify({ query: CREATE_ISSUE_MUTATION, variables }),
 		headers: {
@@ -74,7 +92,8 @@ async function postLinearMutation(
 		throw new Error(`HTTP error: ${response.status}`);
 	}
 
-	const result = await response.json();
+	const payload: unknown = await response.json();
+	const result = linearResponseSchema.parse(payload);
 
 	if (result.errors) {
 		console.error('Linear API errors:', result.errors);
@@ -84,23 +103,19 @@ async function postLinearMutation(
 	return result;
 }
 
-function extractIssueResult(result: Record<string, unknown>): {
+function extractIssueResult(result: z.infer<typeof linearResponseSchema>): {
 	issueId: string;
 	issueIdentifier: string;
 } {
-	const issueData = (result.data as Record<string, unknown>)?.issueCreate as
-		| Record<string, unknown>
-		| undefined;
+	const issueData = result.data?.issueCreate;
 
-	if (!issueData?.success) {
+	if (!issueData?.success || !issueData.issue) {
 		throw new Error('Issue creation failed');
 	}
 
-	const issue = issueData.issue as Record<string, string>;
-
 	return {
-		issueId: issue.id,
-		issueIdentifier: issue.identifier,
+		issueId: issueData.issue.id,
+		issueIdentifier: issueData.issue.identifier,
 	};
 }
 

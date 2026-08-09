@@ -6,7 +6,6 @@ import { cn } from '@tsgi-web/shared';
 import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { Hero } from '@/components/section/hero';
 import { PortableText } from '@/components/ui/portable-text';
-import type { PortableTextValue } from '@/components/ui/portable-text';
 import { ContactLink } from '@/components/with-logic/contact-link';
 import { client } from '@/lib/sanity/client';
 import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
@@ -57,7 +56,7 @@ export default async function ImprintPage() {
 					<h2 className="text-3xl font-bold">Impressum</h2>
 
 					<address>
-						<PortableText value={page.address.text as PortableTextValue} />
+						<PortableText value={page.address.text} />
 					</address>
 
 					<p>
@@ -69,7 +68,7 @@ export default async function ImprintPage() {
 					<p>
 						<strong>Vertreten durch:</strong>
 					</p>
-					<PortableText value={page.represented.text as PortableTextValue} />
+					<PortableText value={page.represented.text} />
 
 					<h3>Kontakt</h3>
 					<p>
@@ -93,10 +92,10 @@ export default async function ImprintPage() {
 					</p>
 
 					<h3>Freundliche Unterstützung durch</h3>
-					<PortableText value={page.support.text as PortableTextValue} />
+					<PortableText value={page.support.text} />
 
 					<h3>Bildnachweise</h3>
-					<PortableText value={page.credits.text as PortableTextValue} />
+					<PortableText value={page.credits.text} />
 				</article>
 			</section>
 		</>

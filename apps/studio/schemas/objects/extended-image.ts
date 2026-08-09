@@ -29,6 +29,7 @@ const extendedImage = defineField({
 		hotspot: true,
 	},
 	preview: {
+		// oxlint-disable-next-line typescript/no-unsafe-assignment
 		prepare: ({ media, title }) => ({ media, title }),
 		select: {
 			media: 'asset',

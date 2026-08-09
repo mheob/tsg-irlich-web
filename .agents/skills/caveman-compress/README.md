@@ -10,8 +10,7 @@
 
 ---
 
-A Claude Code skill that compresses your project memory files (`CLAUDE.md`, todos, preferences) into caveman format — so every
-session loads fewer tokens automatically.
+A Claude Code skill that compresses your project memory files (`CLAUDE.md`, todos, preferences) into caveman format — so every session loads fewer tokens automatically.
 
 Claude read `CLAUDE.md` on every session start. If file big, cost big. Caveman make file small. Cost go down forever.
 
@@ -51,9 +50,7 @@ All validations passed ✅ — headings, code blocks, URLs, file paths preserved
 
 ### 📄 Original (706 tokens)
 
-> "I strongly prefer TypeScript with strict mode enabled for all new code. Please don't use `any` type unless there's genuinely no
-> way around it, and if you do, leave a comment explaining the reasoning. I find that taking the time to properly type things
-> catches a lot of bugs before they ever make it to runtime."
+> "I strongly prefer TypeScript with strict mode enabled for all new code. Please don't use `any` type unless there's genuinely no way around it, and if you do, leave a comment explaining the reasoning. I find that taking the time to properly type things catches a lot of bugs before they ever make it to runtime."
 
 </td>
 <td width="50%">
@@ -70,8 +67,7 @@ All validations passed ✅ — headings, code blocks, URLs, file paths preserved
 
 ## Security
 
-`caveman-compress` is flagged as Snyk High Risk due to subprocess and file I/O patterns detected by static analysis. This is a
-false positive — see [SECURITY.md](./SECURITY.md) for a full explanation of what the skill does and does not do.
+`caveman-compress` is flagged as Snyk High Risk due to subprocess and file I/O patterns detected by static analysis. This is a false positive — see [SECURITY.md](./SECURITY.md) for a full explanation of what the skill does and does not do.
 
 ## Install
 
@@ -147,8 +143,7 @@ Caveman compress natural language. It never touch:
 
 ## Why This Matter
 
-`CLAUDE.md` loads on **every session start**. A 1000-token project memory file costs tokens every single time you open a project.
-Over 100 sessions that's 100,000 tokens of overhead — just for context you already wrote.
+`CLAUDE.md` loads on **every session start**. A 1000-token project memory file costs tokens every single time you open a project. Over 100 sessions that's 100,000 tokens of overhead — just for context you already wrote.
 
 Caveman cut that by ~46% on average. Same instructions. Same accuracy. Less waste.
 
@@ -163,8 +158,7 @@ Caveman cut that by ~46% on average. Same instructions. Same accuracy. Less wast
 
 ## Part of Caveman
 
-This skill is part of the [caveman](https://github.com/JuliusBrussee/caveman) toolkit — making Claude use fewer tokens without
-losing accuracy.
+This skill is part of the [caveman](https://github.com/JuliusBrussee/caveman) toolkit — making Claude use fewer tokens without losing accuracy.
 
 - **caveman** — make Claude _speak_ like caveman (cuts response tokens ~65%)
 - **caveman-compress** — make Claude _read_ less (cuts context tokens ~46%)

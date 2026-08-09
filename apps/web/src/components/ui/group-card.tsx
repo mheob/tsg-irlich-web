@@ -32,6 +32,11 @@ export function GroupCard({
 	slug,
 	title,
 }: Readonly<GroupCardProps>) {
+	// Sanity may return groups without a slug or title, which cannot be rendered as a card
+	if (!slug || !title) {
+		return null;
+	}
+
 	return (
 		<article className="relative aspect-video shadow-lg transition-transform duration-200 hover:scale-105">
 			<div className="absolute inset-0 z-[-1] rounded-xl bg-black/50" />

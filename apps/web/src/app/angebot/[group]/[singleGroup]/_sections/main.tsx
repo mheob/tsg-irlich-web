@@ -1,7 +1,6 @@
 import { cn } from '@tsgi-web/shared';
 
 import { PortableText } from '@/components/ui/portable-text';
-import type { PortableTextValue } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
 import type { GroupDance, SimpleBlockContent } from '@/types/sanity.types';
@@ -31,7 +30,7 @@ export function Main({ description, gallery, title }: Readonly<MainProps>) {
 					isCentered
 					isCenteredOnDesktop
 				>
-					<PortableText value={description.text as PortableTextValue} />
+					<PortableText value={description.text} />
 				</SectionHeader>
 
 				{imagesCount === 1 && (

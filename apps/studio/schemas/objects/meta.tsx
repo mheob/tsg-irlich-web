@@ -1,4 +1,4 @@
-// oxlint-disable no-magic-numbers no-underscore-dangle
+// oxlint-disable no-magic-numbers
 
 import { RiShareLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
@@ -37,7 +37,8 @@ const meta = defineField({
 					type: 'string',
 					validation: (Rule) =>
 						Rule.custom((alt, context) => {
-							const parent = context.parent as { asset?: { _ref?: string } };
+							// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+							const parent = context.parent as { asset?: { _ref?: string } } | undefined;
 							if (parent?.asset?._ref && !alt) {
 								return 'Alt-Text ist erforderlich wenn ein Bild ausgewählt wurde';
 							}

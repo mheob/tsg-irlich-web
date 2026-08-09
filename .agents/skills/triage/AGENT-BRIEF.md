@@ -1,18 +1,14 @@
 # Writing Agent Briefs
 
-An agent brief is a structured comment posted on a GitHub issue or PR when it moves to `ready-for-agent`. It is the authoritative
-specification that an AFK agent will work from. The original body and discussion are context — the agent brief is the contract.
+An agent brief is a structured comment posted on a GitHub issue or PR when it moves to `ready-for-agent`. It is the authoritative specification that an AFK agent will work from. The original body and discussion are context — the agent brief is the contract.
 
-The brief states **what the agent should do**, which stretches to both surfaces: for an issue, that's building the change from
-nothing; for a PR, it's what's left to do _to the existing diff_ — finish it, close gaps, address review points. Same principles
-either way; the PR example below shows the difference.
+The brief states **what the agent should do**, which stretches to both surfaces: for an issue, that's building the change from nothing; for a PR, it's what's left to do _to the existing diff_ — finish it, close gaps, address review points. Same principles either way; the PR example below shows the difference.
 
 ## Principles
 
 ### Durability over precision
 
-The issue may sit in `ready-for-agent` for days or weeks. The codebase will change in the meantime. Write the brief so it stays
-useful even as files are renamed, moved, or refactored.
+The issue may sit in `ready-for-agent` for days or weeks. The codebase will change in the meantime. Write the brief so it stays useful even as files are renamed, moved, or refactored.
 
 - **Do** describe interfaces, types, and behavioral contracts
 - **Do** name specific types, function signatures, or config shapes that the agent should look for or modify
@@ -22,8 +18,7 @@ useful even as files are renamed, moved, or refactored.
 
 ### Behavioral, not procedural
 
-Describe **what** the system should do, not **how** to implement it. The agent will explore the codebase fresh and make its own
-implementation decisions.
+Describe **what** the system should do, not **how** to implement it. The agent will explore the codebase fresh and make its own implementation decisions.
 
 - **Good:** "The `SkillConfig` type should accept an optional `schedule` field of type `CronExpression`"
 - **Bad:** "Open src/types/skill.ts and add a schedule field on line 42"
@@ -32,8 +27,7 @@ implementation decisions.
 
 ### Complete acceptance criteria
 
-The agent needs to know when it's done. Every agent brief must have concrete, testable acceptance criteria. Each criterion should
-be independently verifiable.
+The agent needs to know when it's done. Every agent brief must have concrete, testable acceptance criteria. Each criterion should be independently verifiable.
 
 - **Good:** "Running `gh issue list --label needs-triage` returns issues that have been through initial classification"
 - **Bad:** "Triage should work correctly"
@@ -49,11 +43,9 @@ State what is out of scope. This prevents the agent from gold-plating or making 
 
 **Category:** bug / enhancement **Summary:** one-line description of what needs to happen
 
-**Current behavior:** Describe what happens now. For bugs, this is the broken behavior. For enhancements, this is the status quo
-the feature builds on.
+**Current behavior:** Describe what happens now. For bugs, this is the broken behavior. For enhancements, this is the status quo the feature builds on.
 
-**Desired behavior:** Describe what should happen after the agent's work is complete. Be specific about edge cases and error
-conditions.
+**Desired behavior:** Describe what should happen after the agent's work is complete. Be specific about edge cases and error conditions.
 
 **Key interfaces:**
 
@@ -82,16 +74,13 @@ conditions.
 
 **Category:** bug **Summary:** Skill description truncation drops mid-word, producing broken output
 
-**Current behavior:** When a skill description exceeds 1024 characters, it is truncated at exactly 1024 characters regardless of
-word boundaries. This produces descriptions that end mid-word (e.g. "Use when the user wants to confi").
+**Current behavior:** When a skill description exceeds 1024 characters, it is truncated at exactly 1024 characters regardless of word boundaries. This produces descriptions that end mid-word (e.g. "Use when the user wants to confi").
 
-**Desired behavior:** Truncation should break at the last word boundary before 1024 characters and append "..." to indicate
-truncation.
+**Desired behavior:** Truncation should break at the last word boundary before 1024 characters and append "..." to indicate truncation.
 
 **Key interfaces:**
 
-- The `SkillMetadata` type's `description` field — no type change needed, but the validation/processing logic that populates it
-  needs to respect word boundaries
+- The `SkillMetadata` type's `description` field — no type change needed, but the validation/processing logic that populates it needs to respect word boundaries
 - Any function that reads SKILL.md frontmatter and extracts the description
 
 **Acceptance criteria:**
@@ -114,27 +103,20 @@ truncation.
 
 **Category:** enhancement **Summary:** Add `.out-of-scope/` directory support for tracking rejected feature requests
 
-**Current behavior:** When a feature request is rejected, the issue is closed with a `wontfix` label and a comment. There is no
-persistent record of the decision or reasoning. Future similar requests require the maintainer to recall or search for the prior
-discussion.
+**Current behavior:** When a feature request is rejected, the issue is closed with a `wontfix` label and a comment. There is no persistent record of the decision or reasoning. Future similar requests require the maintainer to recall or search for the prior discussion.
 
-**Desired behavior:** Rejected feature requests should be documented in `.out-of-scope/<concept>.md` files that capture the
-decision, reasoning, and links to all issues that requested the feature. When triaging new issues, these files should be checked
-for matches.
+**Desired behavior:** Rejected feature requests should be documented in `.out-of-scope/<concept>.md` files that capture the decision, reasoning, and links to all issues that requested the feature. When triaging new issues, these files should be checked for matches.
 
 **Key interfaces:**
 
-- Markdown file format in `.out-of-scope/` — each file should have a `# Concept Name` heading, a `**Decision:**` line, a
-  `**Reason:**` line, and a `**Prior requests:**` list with issue links
-- The triage workflow should read all `.out-of-scope/*.md` files early and match incoming issues against them by concept
-  similarity
+- Markdown file format in `.out-of-scope/` — each file should have a `# Concept Name` heading, a `**Decision:**` line, a `**Reason:**` line, and a `**Prior requests:**` list with issue links
+- The triage workflow should read all `.out-of-scope/*.md` files early and match incoming issues against them by concept similarity
 
 **Acceptance criteria:**
 
 - [ ] Closing a feature as wontfix creates/updates a file in `.out-of-scope/`
 - [ ] The file includes the decision, reasoning, and link to the closed issue
-- [ ] If a matching `.out-of-scope/` file already exists, the new issue is appended to its "Prior requests" list rather than
-      creating a duplicate
+- [ ] If a matching `.out-of-scope/` file already exists, the new issue is appended to its "Prior requests" list rather than creating a duplicate
 - [ ] During triage, existing `.out-of-scope/` files are checked and surfaced when a new issue matches a prior rejection
 
 **Out of scope:**
@@ -146,20 +128,16 @@ for matches.
 
 ### Good agent brief (PR)
 
-For a PR, "Current behavior" describes the state of the diff, and the brief asks the agent to finish or fix it rather than build
-from scratch.
+For a PR, "Current behavior" describes the state of the diff, and the brief asks the agent to finish or fix it rather than build from scratch.
 
 ```markdown
 ## Agent Brief
 
 **Category:** enhancement **Summary:** Finish the contributor's `--json` output flag for `triage list`
 
-**Current behavior:** The PR adds a `--json` flag that serializes the issue list to JSON. The happy path works and the diff
-matches the project's command structure. Two gaps remain: errors are still printed as human text (not JSON), and the new flag has
-no test coverage.
+**Current behavior:** The PR adds a `--json` flag that serializes the issue list to JSON. The happy path works and the diff matches the project's command structure. Two gaps remain: errors are still printed as human text (not JSON), and the new flag has no test coverage.
 
-**Desired behavior:** With `--json`, all output — including errors — is well-formed JSON on stdout, and the command's exit codes
-are unchanged. The existing human-readable output is untouched when the flag is absent.
+**Desired behavior:** With `--json`, all output — including errors — is well-formed JSON on stdout, and the command's exit codes are unchanged. The existing human-readable output is untouched when the flag is absent.
 
 **Key interfaces:**
 

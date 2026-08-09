@@ -1,0 +1,10 @@
+{
+	"extends": "@mheob/tsconfig/base",
+	"compilerOptions": {
+		"types": ["node"],
+		"allowJs": true,
+		"checkJs": true,
+		"noEmit": true
+	},
+	"include": ["*.config.js", "*.config.ts", "*.config.mjs"]
+}

@@ -9,7 +9,6 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog';
 import { PortableText } from '@/components/ui/portable-text';
-import type { PortableTextValue } from '@/components/ui/portable-text';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { ImageCard } from '@/types/sanity.types';
@@ -60,7 +59,7 @@ export function ChronicleCard({
 							>
 								<div>
 									{/* oxlint-disable-next-line react/jsx-max-depth*/}
-									<PortableText value={description.text as PortableTextValue} />
+									<PortableText value={description.text} />
 								</div>
 							</DialogDescription>
 						</ScrollArea>

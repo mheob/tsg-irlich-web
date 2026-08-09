@@ -22,7 +22,6 @@ import { Submit } from './submit';
 import { SuccessAlert } from './success-alert';
 import { TitleField } from './title-field';
 
-// oxlint-disable-next-line react/react-compiler
 export function FeedbackForm() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [screenshotUrls, setScreenshotUrls] = useState<string[]>([]);
@@ -75,7 +74,7 @@ export function FeedbackForm() {
 				setScreenshotUrls([]);
 			} else {
 				setSubmitResult({
-					error: result?.serverError || 'Ein Fehler ist aufgetreten',
+					error: result?.serverError ?? 'Ein Fehler ist aufgetreten',
 					success: false,
 				});
 			}

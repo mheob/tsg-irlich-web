@@ -97,8 +97,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	}));
 
 	// Individual group pages (e.g., /angebot/fussball/herren-1)
-	const groupPages: MetadataRoute.Sitemap = (groups ?? [])
-		.filter((group) => group.slug && group._type && groupTypeToSlug[group._type])
+	const groupPages: MetadataRoute.Sitemap = groups
+		.filter((group) => group.slug && groupTypeToSlug[group._type])
 		.map((group) => ({
 			changeFrequency: 'monthly' as const,
 			lastModified: group.lastModified ? new Date(group.lastModified) : undefined,
@@ -107,7 +107,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		}));
 
 	// News category pages (e.g., /news/vereinsleben)
-	const newsCategoryPages: MetadataRoute.Sitemap = (newsCategories ?? [])
+	const newsCategoryPages: MetadataRoute.Sitemap = newsCategories
 		.filter((category) => category.slug)
 		.map((category) => ({
 			changeFrequency: 'weekly' as const,
@@ -117,7 +117,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		}));
 
 	// News article pages (e.g., /news/vereinsleben/artikel-slug)
-	const newsArticlePages: MetadataRoute.Sitemap = (newsArticles ?? [])
+	const newsArticlePages: MetadataRoute.Sitemap = newsArticles
 		.filter((article) => article.slug && article.category)
 		.map((article) => ({
 			changeFrequency: 'monthly' as const,

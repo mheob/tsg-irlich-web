@@ -141,7 +141,9 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 					}),
 				],
 				hidden: ({ document }) =>
-					(document?.title as string)?.toLowerCase() === 'schiedsrichter' || !isSportGroup,
+					// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+					(document?.title as string | undefined)?.toLowerCase() === 'schiedsrichter' ||
+					!isSportGroup,
 				name: 'training',
 				title: 'Trainingszeiten und -orte',
 				type: 'object',
@@ -149,7 +151,8 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 					Rule.custom((value, context) => {
 						if (
 							isSportGroup &&
-							(context.document?.title as string)?.toLowerCase() !== 'schiedsrichter' &&
+							// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+							(context.document?.title as string | undefined)?.toLowerCase() !== 'schiedsrichter' &&
 							!value
 						) {
 							return 'Trainingszeiten und -orte sind erforderlich';
@@ -195,7 +198,7 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 		],
 		preview: {
 			// oxlint-disable-next-line no-shadow
-			prepare: ({ sortOrder, title }) => ({
+			prepare: ({ sortOrder, title }: { sortOrder?: number; title?: string }) => ({
 				subtitle: `Sortierreihenfolge: ${sortOrder}`,
 				title,
 			}),

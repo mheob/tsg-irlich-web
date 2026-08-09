@@ -20,8 +20,7 @@ This package is automatically available to other packages in the monorepo via wo
 
 #### `cn(...inputs: ClassValue[]): string`
 
-Combines multiple class names into a single string, merging Tailwind CSS classes efficiently. Uses `clsx` for conditional class
-names and `tailwind-merge` to handle Tailwind class conflicts.
+Combines multiple class names into a single string, merging Tailwind CSS classes efficiently. Uses `clsx` for conditional class names and `tailwind-merge` to handle Tailwind class conflicts.
 
 ```tsx
 import { cn } from '@tsgi-web/shared';

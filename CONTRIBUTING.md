@@ -1,7 +1,6 @@
 # Contributing to TSG Irlich Website
 
-Thank you for your interest in contributing to the TSG Irlich website! This document provides guidelines and instructions for
-contributing to this project.
+Thank you for your interest in contributing to the TSG Irlich website! This document provides guidelines and instructions for contributing to this project.
 
 ## Table of Contents
 

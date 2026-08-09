@@ -3,8 +3,7 @@
 import type { SVGProps } from 'react';
 
 import { cn } from '../utils';
-import { DOSB_ICONS_SET } from './dosb.types';
-import type { DosbIconName } from './dosb.types';
+import { isDosbIconName } from './dosb.types';
 
 function Badminton() {
 	return (
@@ -372,11 +371,15 @@ function Yoga() {
 }
 
 interface DOSBProps extends SVGProps<SVGSVGElement> {
-	icon: DosbIconName;
+	/**
+	 * A known DOSB icon name, or any other string, which is rendered as plain text
+	 * (used for single-letter fallbacks when a group has no icon assigned).
+	 */
+	icon: string;
 }
 
 function DOSBIcon({ className, icon, ...props }: Readonly<DOSBProps>) {
-	if (DOSB_ICONS_SET.has(icon)) {
+	if (isDosbIconName(icon)) {
 		return (
 			<svg
 				className={cn('h-12 w-auto text-current md:h-16', className)}

@@ -1,12 +1,9 @@
 import { Box, TextInput } from '@sanity/ui';
 import { useCallback } from 'react';
-import type { StringInputProps, StringSchemaType } from 'sanity';
+import type { StringInputProps } from 'sanity';
 import { set, unset } from 'sanity';
 
-export default function TimePicker({
-	onChange,
-	value,
-}: Readonly<StringInputProps<StringSchemaType>>) {
+export default function TimePicker({ onChange, value }: Readonly<StringInputProps>) {
 	const handleChange = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			const inputValue = event.target.value;
