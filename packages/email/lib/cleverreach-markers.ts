@@ -7,7 +7,11 @@
 //
 // See https://eddytor.cleverreach.com/assets/docs/howto-templates.htm
 
-const MARKER_PATTERN = /@@CR\|(?<body>[^@]+)@@/gu;
+const MARKER_PREFIX = '@@CR|';
+const MARKER_SUFFIX = '@@';
+// Matched without a capture group: the web app type-checks this package with
+// `target: ES2017`, which rejects named groups, and unnamed groups are linted against.
+const MARKER_PATTERN = /@@CR\|[^@]+@@/gu;
 // React inserts these between adjacent text and element children.
 const REACT_TEXT_SEPARATOR_PATTERN = /<!-- -->/gu;
 
@@ -31,14 +35,16 @@ export function marker(tag: string, attributes: Attributes = {}): string {
 		.map(([key, value]) => `|${key}=${value}`)
 		.join('');
 
-	return `@@CR|${tag}${parts}@@`;
+	return `${MARKER_PREFIX}${tag}${parts}${MARKER_SUFFIX}`;
 }
 
 // Turns the markers of a rendered e-mail into CleverReach template comments.
 export function toCleverReachTemplate(html: string): string {
 	return html
 		.replaceAll(REACT_TEXT_SEPARATOR_PATTERN, '')
-		.replaceAll(MARKER_PATTERN, (_match, body: string) => toComment(body));
+		.replaceAll(MARKER_PATTERN, (match) =>
+			toComment(match.slice(MARKER_PREFIX.length, -MARKER_SUFFIX.length)),
+		);
 }
 
 // Removes all markers, for HTML that is sent as-is instead of imported as a template.
