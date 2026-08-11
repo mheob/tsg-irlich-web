@@ -10,14 +10,7 @@ import { UpcomingEvents } from '../components/newsletter/upcoming-events';
 import { CrHtml, TemplateModeProvider } from '../lib/cleverreach-tags';
 import { tailwindConfig } from '../tailwind-config';
 
-/**
- * CleverReach personalisation placeholder with a neutral fallback for recipients
- * without a stored salutation.
- *
- * @see https://eddytor.cleverreach.com/assets/docs/howto-templates.htm
- */
-const SALUTATION_PLACEHOLDER =
-	'{SALUTATION[salutation:custom|Hallo Frau |Hallo Herr |Hallo TSG-Familie]}';
+const SALUTATION = 'Hallo TSG-Familie!';
 
 const BASE_URL = 'https://www.tsg-irlich.de';
 
@@ -47,10 +40,15 @@ const defaultCta = {
 	title: 'Werde Teil der TSG',
 };
 
+// The template ships a single event; the CleverReach editor duplicates it as needed.
 const defaultEvents = [
-	{ day: '12', meta: 'Pappelstadion · 14:00 Uhr', month: 'Aug', title: 'Sommerfest der TSG' },
-	{ day: '24', meta: 'Sporthalle Irlich · 19:30 Uhr', month: 'Aug', title: 'Saisonstart Handball' },
-	{ day: '07', meta: 'Vereinsheim · 18:00 Uhr', month: 'Sep', title: 'Mitgliederversammlung' },
+	{
+		day: '12',
+		meta: 'Pappelstadion · 14:00 Uhr',
+		month: 'Aug',
+		title: 'Sommerfest der TSG',
+		weekday: 'Mi',
+	},
 ];
 
 const defaultLeadStory = {
@@ -62,6 +60,7 @@ const defaultLeadStory = {
 	title: 'Aufstieg perfekt gemacht',
 };
 
+// One row of two cards is the duplicatable news element, so the template ships exactly that.
 const defaultNews = [
 	{
 		category: 'Fußball',
@@ -76,34 +75,6 @@ const defaultNews = [
 		imageUrl: placeholderImage('256x144', 'News+2'),
 		teaser: 'Unsere Damenmannschaft verstärkt sich für die kommende Spielzeit.',
 		title: 'Zwei Neuzugänge für die Damen',
-	},
-	{
-		category: 'Turnen',
-		href: `${BASE_URL}/news`,
-		imageUrl: placeholderImage('256x144', 'News+3'),
-		teaser: 'Beim Kreisturnfest räumten unsere Kinder mehrere Podestplätze ab.',
-		title: 'Erfolgreiches Kreisturnfest',
-	},
-	{
-		category: 'Jugend',
-		href: `${BASE_URL}/news`,
-		imageUrl: placeholderImage('256x144', 'News+4'),
-		teaser: 'Eine Woche Sport, Spiel und Verpflegung – die Anmeldung ist offen.',
-		title: 'Ferienfreizeit mit freien Plätzen',
-	},
-	{
-		category: 'Verein',
-		href: `${BASE_URL}/news`,
-		imageUrl: placeholderImage('256x144', 'News+5'),
-		teaser: 'Der neue Kunstrasen ist verlegt und ab September bespielbar.',
-		title: 'Sportplatz wird fertig',
-	},
-	{
-		category: 'Ehrenamt',
-		href: `${BASE_URL}/news`,
-		imageUrl: placeholderImage('256x144', 'News+6'),
-		teaser: 'Für Betreuung und Organisation suchen wir weitere helfende Hände.',
-		title: 'Wir suchen Unterstützung',
 	},
 ];
 
@@ -139,7 +110,7 @@ export function NewsletterEmail({
 	baseUrl = BASE_URL,
 	cta = defaultCta,
 	events = defaultEvents,
-	intro = 'hier kommen die wichtigsten Neuigkeiten aus dem Verein, die nächsten Termine und ein Blick auf das, was uns in den kommenden Wochen erwartet.',
+	intro = 'Hier kommen die wichtigsten Neuigkeiten aus dem Verein, die nächsten Termine und ein Blick auf das, was uns in den kommenden Wochen erwartet.',
 	isTemplate = false,
 	issueLabel = 'Newsletter · Juli 2026',
 	leadStory = defaultLeadStory,
@@ -166,9 +137,9 @@ export function NewsletterEmail({
 							<NewsletterHeader baseUrl={baseUrl} issueLabel={issueLabel} />
 
 							<Section className="px-[32px] pt-[32px]">
-								<CrHtml mode="textonly">
+								<CrHtml>
 									<Text className="m-0 font-sans text-[15px] leading-[24px] text-foreground">
-										{SALUTATION_PLACEHOLDER},
+										{SALUTATION}
 									</Text>
 								</CrHtml>
 								<CrHtml>

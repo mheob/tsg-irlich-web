@@ -8,12 +8,6 @@ const UNSUBSCRIBE_PLACEHOLDER = '{UNSUBSCRIBE}';
 
 const dividerStyle = { fontSize: '1px', height: '4px', lineHeight: '4px' };
 
-const legalLinks: { href: string; label: string }[] = [
-	{ href: '/impressum', label: 'Impressum' },
-	{ href: '/datenschutz', label: 'Datenschutz' },
-	{ href: '/barrierefreiheit', label: 'Barrierefreiheit' },
-];
-
 interface NewsletterFooterProps {
 	baseUrl: string;
 	socials: { href: string; label: string }[];
@@ -61,18 +55,7 @@ export function NewsletterFooter({ baseUrl, socials }: Readonly<NewsletterFooter
 					</Text>
 				)}
 
-				<Text className="m-0 mt-[20px] font-sans text-[12px] leading-[20px] text-primary-foreground">
-					{legalLinks.map((link, index) => (
-						<Fragment key={link.href}>
-							{index > 0 && ' · '}
-							<Link className="text-primary-foreground" href={`${baseUrl}${link.href}`}>
-								{link.label}
-							</Link>
-						</Fragment>
-					))}
-				</Text>
-
-				<Text className="m-0 mt-[16px] font-sans text-[12px] leading-[18px] text-background-high-contrast">
+				<Text className="m-0 mt-[20px] font-sans text-[12px] leading-[18px] text-background-high-contrast">
 					©{currentYear} TSG Irlich. Alle Rechte vorbehalten.
 				</Text>
 
