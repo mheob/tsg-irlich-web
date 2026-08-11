@@ -24,11 +24,17 @@ export function SponsorCard({ sponsor }: Readonly<SponsorCardProps>) {
 							</Text>
 						</CrHtml>
 
+						{/*
+							160 × 60 is the maximum box, not the rendered size: sponsor logos come in
+							any aspect ratio and fixed attributes would squash them. The `width`
+							attribute stays as a floor for Outlook, which ignores `max-width` and
+							would otherwise render the logo at its natural size; without a `height`
+							attribute it scales the height proportionally.
+						*/}
 						<CrImage>
 							<Img
 								alt={sponsor.name}
-								className="mx-auto mt-[16px]"
-								height="60"
+								className="mx-auto mt-[16px] h-auto max-h-[60px] w-auto max-w-[160px]"
 								src={sponsor.logoUrl}
 								width="160"
 							/>
