@@ -1,11 +1,7 @@
 import { CrHtml } from '../../lib/cleverreach-tags';
+import type { NewsletterEvent } from './newsletter-event';
 
-interface EventDateBadgeProps {
-	day: string;
-	month: string;
-	/** Short weekday, e.g. `Mo` or `Sa`. */
-	weekday: string;
-}
+type EventDateBadgeProps = Pick<NewsletterEvent, 'day' | 'month' | 'weekday'>;
 
 // Yellow date tile in front of an event, 56 × 68 as a table so Outlook keeps its size.
 export function EventDateBadge({ day, month, weekday }: Readonly<EventDateBadgeProps>) {

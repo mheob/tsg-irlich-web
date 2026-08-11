@@ -2,16 +2,11 @@ import { Column, Hr, Row, Section, Text } from 'react-email';
 
 import { CrHtml, CrLoop, CrLoopItem } from '../../lib/cleverreach-tags';
 import { EventDateBadge } from './event-date-badge';
+import type { NewsletterEvent } from './newsletter-event';
 import { SectionKicker } from './section-kicker';
 
 interface UpcomingEventsProps {
-	events: {
-		day: string;
-		meta: string;
-		month: string;
-		title: string;
-		weekday: string;
-	}[];
+	events: NewsletterEvent[];
 }
 
 export function UpcomingEvents({ events }: Readonly<UpcomingEventsProps>) {

@@ -3,6 +3,7 @@ import { Body, Container, Head, Html, Preview, Section, Tailwind, Text } from 'r
 import { CtaBand } from '../components/newsletter/cta-band';
 import { LeadStory } from '../components/newsletter/lead-story';
 import { NewsGrid } from '../components/newsletter/news-grid';
+import type { NewsletterEvent } from '../components/newsletter/newsletter-event';
 import { NewsletterFooter } from '../components/newsletter/newsletter-footer';
 import { NewsletterHeader } from '../components/newsletter/newsletter-header';
 import { SponsorCard } from '../components/newsletter/sponsor-card';
@@ -41,7 +42,7 @@ const defaultCta = {
 };
 
 // The template ships a single event; the CleverReach editor duplicates it as needed.
-const defaultEvents = [
+const defaultEvents: NewsletterEvent[] = [
 	{
 		day: '12',
 		meta: 'Pappelstadion · 14:00 Uhr',
@@ -94,7 +95,7 @@ const defaultSponsor = {
 interface NewsletterEmailProps {
 	baseUrl?: string;
 	cta?: typeof defaultCta;
-	events?: typeof defaultEvents;
+	events?: NewsletterEvent[];
 	intro?: string;
 	/** Adds the CleverReach editor markup. Use `renderNewsletterTemplate` instead of setting it by hand. */
 	isTemplate?: boolean;
