@@ -4,7 +4,7 @@ Datum: 2026-07-29 Status: umgesetzt (Design + CleverReach-Editable-Tags) Scope: 
 
 ## Ziel
 
-Eine React-Email-Vorlage im Corporate Design der TSG-Irlich-Webseite, die als HTML nach CleverReach übertragen wird. Die Vorlage enthält Header, Titelstory, „Blick voraus", 4–6 Newsartikel, einen Sponsor, einen CTA-Block auf eine Zielseite (z.B. Mitgliedschaft) und einen Footer.
+Eine React-Email-Vorlage im Corporate Design der TSG-Irlich-Webseite, die als HTML nach CleverReach übertragen wird. Die Vorlage enthält Header, Titelstory, „Blick voraus", News, einen Sponsor, einen CTA-Block auf eine Zielseite (z.B. Mitgliedschaft) und einen Footer.
 
 ## Entschiedene Optionen
 
@@ -19,9 +19,10 @@ Eine React-Email-Vorlage im Corporate Design der TSG-Irlich-Webseite, die als HT
 | Blick voraus | Termin-Zeilen mit gelbem Datums-Badge |
 | CTA | Indigo Band mit gelbem Button |
 | Social Media | Gelbe Textlinks (keine Icon-Assets) |
-| Anrede | CleverReach-`{SALUTATION}` mit Fallback |
+| Anrede | Feste Textzeile „Hallo TSG-Familie!" |
 | Platzhalter-Bilder | `placehold.co` in TSG-Farben |
 | Editable-Tags | Umgesetzt, ein loopitem = eine News-Zeile mit zwei Karten |
+| Template-Umfang | Pro Loop genau ein Element (Termin, News-Zeile, Sponsor); der Editor dupliziert |
 
 ## Design-Tokens
 
@@ -57,6 +58,7 @@ packages/email/components/newsletter/
   lead-story.tsx                                  Titelstory
   upcoming-events.tsx                             „Blick voraus" als Loop
   event-date-badge.tsx                            Gelbes Datums-Kästchen eines Termins
+  newsletter-event.ts                             Geteilter `NewsletterEvent`-Typ
   news-grid.tsx                                   Reihen-Aufteilung der News
   news-card.tsx                                   Einzelne News-Karte
   sponsor-card.tsx                                Sponsor-Block
@@ -68,7 +70,7 @@ packages/email/lib/
   cleverreach-tags.tsx                            CrHtml, CrImage, CrLoop, CrLoopItem, TemplateModeProvider
   render-newsletter.ts                            renderNewsletterHtml und renderNewsletterTemplate
 packages/email/scripts/build-cleverreach-template.ts   Schreibt die Template-Datei nach dist/
-packages/email/emails/index.ts                    Export von NewsletterEmail ergänzen
+packages/email/emails/index.ts                    Nur ContactForwardEmail; Newsletter über `@tsgi-web/email/newsletter`
 packages/email/tailwind-config.ts                 Tokens auf Hex umstellen und ergänzen
 ```
 
@@ -80,21 +82,23 @@ Konventionen laut `AGENTS.md`: kebab-case Dateinamen, Funktionsdeklarationen sta
 
 1. **Preheader** — `Preview`-Komponente mit `previewText`-Prop.
 2. **Header** — Vollbreites Band `#332C61`, Logo zentriert (Höhe 120px), darunter `issueLabel` in `#FFD404`, 11px, uppercase, `letter-spacing: 2px`.
-3. **Anrede + Intro** — Anrede über CleverReach-Platzhalter `{SALUTATION[salutation:custom|Hallo Frau |Hallo Herr |Hallo TSG-Familie]}`, darunter 2–3 Sätze aus `intro`.
+3. **Anrede + Intro** — Anrede als normaler Text `Hallo TSG-Familie!`, darunter 2–3 Sätze aus `intro`. Kein `{SALUTATION}`-Platzhalter, damit kein Client-seitiger Fallback greifen muss.
 4. **Titelstory** — Bild volle Breite 600×315 (`imageUrl`, Alt-Text = Titel), darunter Kicker, Headline 32px, Teaser, gelber Button „Ganze Story lesen".
-5. **Blick voraus** — Kicker `BLICK VORAUS`, danach pro Termin eine Zeile: links gelbes 56×56-Badge mit Tag (20px bold) und Monat (10px uppercase), rechts Titel 16px bold und Meta-Zeile (Ort · Zeit) 13px in `#424853`. Trennlinien `#B4B4B4` zwischen Terminen.
+5. **Blick voraus** — Kicker `BLICK VORAUS`, danach pro Termin eine Zeile: links gelbes 56×68-Badge mit Wochentag (10px uppercase), Tag (20px bold) und Monat (10px uppercase), rechts Titel 16px bold und Meta-Zeile (Ort · Zeit) 13px in `#424853`. Trennlinien `#B4B4B4` zwischen Terminen.
 6. **News** — Kicker `AUS DEM VEREIN`, 2-Spalten-Karten. Pro Karte: Bild 256×144 (16:9), Kategorie-Label 11px uppercase `letter-spacing: 1.5px` in `#332C61` (gelber Text auf weiß wäre zu kontrastarm), Titel 18px, Teaser gekürzt, Link „Weiterlesen →". Bei ungerader Anzahl steht die letzte Karte links, die rechte Zelle bleibt leer.
 7. **Sponsor** — Karte `#F2F2F2` mit 1px Rahmen `#B4B4B4`, Radius 12px. Kicker `SPONSOR DIESER AUSGABE` in `#424853`, Sponsor-Logo max. 160×60 zentriert, 1–2 Sätze Text, Textlink auf die Sponsorseite.
 8. **CTA-Band** — Vollbreites Band `#332C61`: Headline in `#FCFCFC`, ein Satz Nutzen, gelber Button mit `cta.buttonLabel` auf `cta.href`.
-9. **Footer** — 4px gelbe Trennlinie oberhalb, damit CTA-Band und Footer trotz gleicher Farbe als zwei Blöcke lesbar bleiben. Darunter Band `#332C61` mit: kleinem Logo, Adresse `Gotenstraße 20 · 56567 Neuwied`, `info@tsg-irlich.de`, Social-Media als gelbe Textlinks, Rechtslinks `Impressum · Datenschutz · Barrierefreiheit`, ©-Zeile mit Jahr, sowie `{ONLINE_VERSION}` („Im Browser ansehen") und `{UNSUBSCRIBE}` („Newsletter abbestellen").
+9. **Footer** — 4px gelbe Trennlinie oberhalb, damit CTA-Band und Footer trotz gleicher Farbe als zwei Blöcke lesbar bleiben. Darunter Band `#332C61` mit: kleinem Logo, Adresse `Gotenstraße 20 · 56567 Neuwied`, `info@tsg-irlich.de`, Social-Media als gelbe Textlinks, ©-Zeile mit Jahr, sowie `{ONLINE_VERSION}` („Im Browser ansehen") und `{UNSUBSCRIBE}` („Newsletter abbestellen").
 
 ## Props-API
+
+Die Termin-Form liegt als `NewsletterEvent` in `components/newsletter/newsletter-event.ts` und wird von den Props, `upcoming-events.tsx` und `event-date-badge.tsx` (per `Pick`) geteilt.
 
 ```ts
 interface NewsletterEmailProps {
 	baseUrl: string;
 	cta: { buttonLabel: string; href: string; text: string; title: string };
-	events: { day: string; meta: string; month: string; title: string }[];
+	events: NewsletterEvent[]; // { day, meta, month, title, weekday }
 	intro: string;
 	issueLabel: string;
 	leadStory: { href: string; imageUrl: string; kicker: string; teaser: string; title: string };
@@ -105,13 +109,12 @@ interface NewsletterEmailProps {
 }
 ```
 
-Alle Props haben Dummy-Defaults mit realistischen deutschen Vereinsinhalten, damit der Preview-Server (`bun run dev:email`, Port 3001) sofort ein vollständiges Bild zeigt. Platzhalter-Bilder von `placehold.co` in `#332C61`/`#FFD404`. `news` wird auf 4–6 Einträge ausgelegt; die Komponente rendert beliebig viele in Zweierreihen, die Dummy-Daten enthalten 6.
+Alle Props haben Dummy-Defaults mit realistischen deutschen Vereinsinhalten, damit der Preview-Server (`bun run dev:email`, Port 3001) sofort ein vollständiges Bild zeigt. Platzhalter-Bilder von `placehold.co` in `#332C61`/`#FFD404`. Die Komponente rendert beliebig viele News in Zweierreihen; die Dummy-Daten enthalten genau eine Zeile aus zwei Karten und `events` genau einen Termin, weil die Vorlage pro Loop nur ein Element mitbringt.
 
 ## CleverReach-Platzhalter (fest verdrahtet)
 
 | Zweck | Syntax |
 | --- | --- |
-| Anrede mit Fallback | `{SALUTATION[salutation:custom\|Hallo Frau \|Hallo Herr \|Hallo TSG-Familie]}` |
 | Abmeldelink | `{UNSUBSCRIBE}` |
 | Browser-/Onlineversion | `{ONLINE_VERSION}` |
 
@@ -126,24 +129,25 @@ Die Vorlage rendert in zwei Modi. `renderNewsletterHtml()` liefert fertiges Mail
 | Bereich                     | Tag                                     | Modus      |
 | --------------------------- | --------------------------------------- | ---------- |
 | Ausgabezeile im Header      | `html`                                  | `textonly` |
-| Anrede                      | `html`                                  | `textonly` |
+| Anrede                      | `html`                                  | `default`  |
 | Intro und Einleitungssätze  | `html`                                  | `default`  |
 | Alle Kicker                 | `html`                                  | `textonly` |
 | Titelstory-Bild             | `image`                                 | —          |
 | Titelstory-Headline/-Teaser | `html`                                  | `default`  |
 | Buttons (Titelstory, CTA)   | `html` um den `<a>`                     | `default`  |
 | Termine                     | `loop` mit `loopitem name="Termin"`     | —          |
-| Termin-Tag/-Monat           | `html`                                  | `textonly` |
+| Termin-Wochentag/-Tag/-Monat | `html`                                 | `textonly` |
 | Termin-Titel/-Meta          | `html`                                  | `default`  |
 | News                        | `loop` mit `loopitem name="News-Zeile"` | —          |
 | News-Bild                   | `image`                                 | —          |
 | News-Kategorie              | `html`                                  | `textonly` |
 | News-Titel/-Teaser/-Link    | `html`                                  | `default`  |
+| Sponsor                     | `loop` mit `loopitem name="Sponsor"`    | —          |
 | Sponsor-Logo                | `image`                                 | —          |
 | Sponsor-Text/-Link          | `html`                                  | `default`  |
 | CTA-Headline/-Text          | `html`                                  | `default`  |
 
-Bewusst **nicht** ausgezeichnet: Header-Logo und der komplette Footer. Damit kann die Redaktion Marke, Impressumslinks und Abmeldelink nicht zerstören.
+Bewusst **nicht** ausgezeichnet: Header-Logo und der komplette Footer. Damit kann die Redaktion Marke und Abmeldelink nicht zerstören.
 
 ### Warum ein loopitem eine ganze News-Zeile ist
 
@@ -174,6 +178,8 @@ Die Trennlinie der Termine sitzt jetzt **über** jedem Termin statt zwischen ihn
 - **`Tailwind` umschließt `Head`.** Ohne das kann die Komponente ihre nicht inlinebaren Regeln nicht in den `<head>` schreiben.
 - **Interfaces stehen über der Komponente**, nicht am Dateiende: `oxlint`s `import/exports-last` verlangt, dass alle Nicht-Export-Statements vor den Exports stehen. Entspricht auch `contact-forward.tsx`.
 - **Bildmaße der News-Karten kommen als Props** aus `news-grid.tsx` (`CARD_WIDTH`, `CARD_IMAGE_HEIGHT`), damit keine Magic Numbers in der Karte stehen.
+- **Der Newsletter liegt nicht im Haupt-Entry des Pakets.** `lib/cleverreach-tags.tsx` nutzt `createContext`; Next.js bricht den Build ab, sobald so ein Modul über `emails/index.ts` in den Server-Component-Graph der Webseite gerät (die Kontaktformular-Action importiert dieses Entry). Der Newsletter wird deshalb nur über `@tsgi-web/email/newsletter` exportiert.
+- **Das Marker-Regex hat keine Capture-Group.** Die Webseite typecheckt das Paket mit `target: ES2017`, das keine benannten Gruppen erlaubt (TS1503), und `oxlint` verlangt für unbenannte Gruppen einen Namen. `toCleverReachTemplate()` schneidet Prefix und Suffix daher per `slice`.
 - **`tailwind-config.ts` hat zusätzlich** `background` (war zuvor als `bg-background` in `contact-forward.tsx` genutzt, ohne dass das Token existierte) und `secondary-dark`.
 
 ## Abnahmekriterien (Stand der Umsetzung)
@@ -184,7 +190,7 @@ Die Trennlinie der Termine sitzt jetzt **über** jedem Termin statt zwischen ihn
 - Das gerenderte HTML enthält die drei CleverReach-Platzhalter unverändert. ✔ geprüft
 - Bei 5 Artikeln bleibt das Raster intakt: sechs Zellen à 256px, die letzte leer. ✔ geprüft (Chromium-Messung)
 - Unter 620px stapeln die Karten und die Bilder skalieren mit. ✔ geprüft (Chromium-Screenshot bei 500px)
-- Die Template-Variante enthält 53 `html`-, 8 `image`-, 2 `loop`- und 6 `loopitem`-Regionen, keine übrig gebliebenen Marker und keinen Loop zwischen `<table>` und `<tr>`. ✔ geprüft
+- Die Template-Variante enthält 30 `html`-, 4 `image`-, 3 `loop`- und 3 `loopitem`-Regionen (`Termin`, `News-Zeile`, `Sponsor`), keine übrig gebliebenen Marker und keinen Loop zwischen `<table>` und `<tr>`. ✔ geprüft
 - Template-HTML ohne seine Kommentare ist zeichengleich mit dem normalen Render — die Tags ändern das Markup nicht. ✔ geprüft
 - Preview-Server und `renderNewsletterHtml()` enthalten keine Marker und keine CleverReach-Kommentare. ✔ geprüft
 
@@ -194,4 +200,4 @@ Die Trennlinie der Termine sitzt jetzt **über** jedem Termin statt zwischen ihn
 - Automatisierter Übertrag nach CleverReach (API, Mailing-Erstellung).
 - Einzelne News-Karten als loopitem (bräuchte ein `inline-block`-Raster mit MSO-Ghost-Tables).
 - `class="editable"` für Stil-Bearbeitung innerhalb der Loops.
-- Plaintext-Variante. |||||||
+- Plaintext-Variante.
