@@ -64,13 +64,13 @@ export function NewsGrid({ news }: Readonly<NewsGridProps>) {
 
 							<Column className="stack stack-gap" valign="top" width={CARD_WIDTH}>
 								{row[1] ? (
-									<span>&nbsp;</span>
-								) : (
 									<NewsCard
 										article={row[1]}
 										imageHeight={CARD_IMAGE_HEIGHT}
 										imageWidth={CARD_WIDTH}
 									/>
+								) : (
+									<span>&nbsp;</span>
 								)}
 							</Column>
 						</Row>
