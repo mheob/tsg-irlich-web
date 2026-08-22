@@ -4,6 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
+import { settle } from '@tsgi-web/shared';
+
 import { createLinearIssue } from '@/actions/create-linear-issue';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { feedbackFormSchema } from '@/lib/validations/feedback';
@@ -54,8 +56,8 @@ export function FeedbackForm() {
 		setIsSubmitting(true);
 		setSubmitResult(null);
 
-		try {
-			const result = await createLinearIssue({
+		const outcome = await settle(
+			createLinearIssue({
 				browser: values.browser,
 				description: values.description,
 				device: values.device,
@@ -65,29 +67,35 @@ export function FeedbackForm() {
 				screenshotUrls: screenshotUrls.length > 0 ? screenshotUrls : undefined,
 				title: values.title,
 				type: values.type,
-			});
+			}),
+		);
 
-			if (result?.data) {
-				setSubmitResult({
-					identifier: result.data.issueIdentifier,
-					success: true,
-				});
-				form.reset();
-				setScreenshotUrls([]);
-			} else {
-				setSubmitResult({
-					error: result?.serverError ?? 'Ein Fehler ist aufgetreten',
-					success: false,
-				});
-			}
-		} catch {
+		setIsSubmitting(false);
+
+		if (!outcome.ok) {
 			setSubmitResult({
 				error: 'Verbindungsfehler. Bitte versuche es später erneut.',
 				success: false,
 			});
-		} finally {
-			setIsSubmitting(false);
+			return;
 		}
+
+		const result = outcome.value;
+
+		if (!result?.data) {
+			setSubmitResult({
+				error: result?.serverError ?? 'Ein Fehler ist aufgetreten',
+				success: false,
+			});
+			return;
+		}
+
+		setSubmitResult({
+			identifier: result.data.issueIdentifier,
+			success: true,
+		});
+		form.reset();
+		setScreenshotUrls([]);
 	}
 
 	return (

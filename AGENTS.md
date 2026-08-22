@@ -176,3 +176,4 @@ pnpm run extract-types && pnpm run typegen:sanity
 - **Error boundaries** with error.tsx files
 - **Type-safe server actions** with next-safe-action
 - **Form validation** with react-hook-form + Zod
+- **No `try`/`catch`/`finally` in components or hooks** - the React Compiler bails out on a `finally` block. Await with `settle()` from `@tsgi-web/shared` and branch on `outcome.ok` instead.
