@@ -31,8 +31,8 @@ export function PrivacyField({ form }: Readonly<PrivacyFieldProps>) {
 								/>
 							</FormControl>
 							<span>
-								Ich akzeptiere die Datenschutzbestimmungen. Meine Daten werden nur für die
-								Zwecke verwendet, für die sie erhoben wurden.
+								Ich akzeptiere die Datenschutzbestimmungen. Meine Daten werden nur für die Zwecke
+								verwendet, für die sie erhoben wurden.
 							</span>
 						</label>
 					</FormDescription>
