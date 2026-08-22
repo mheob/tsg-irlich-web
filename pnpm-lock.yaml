@@ -19,17 +19,17 @@ importers:
         specifier: ^21.2.2
         version: 21.2.2(@types/node@24.13.3)(conventional-commits-parser@7.1.2)(typescript@7.0.2)
       '@mheob/commitlint-config':
-        specifier: ^2.0.5
-        version: 2.0.5(@commitlint/cli@21.2.2(@types/node@24.13.3)(conventional-commits-parser@7.1.2)(typescript@7.0.2))(czg@1.13.2)
+        specifier: ^2.0.6
+        version: 2.0.6(@commitlint/cli@21.2.2(@types/node@24.13.3)(conventional-commits-parser@7.1.2)(typescript@7.0.2))(czg@1.13.2)
       '@mheob/oxfmt-config':
-        specifier: ^1.3.1
-        version: 1.3.1(oxfmt@0.64.0)
+        specifier: ^1.3.2
+        version: 1.3.2(oxfmt@0.64.0)
       '@mheob/oxlint-config':
-        specifier: ^3.0.0
-        version: 3.0.0(eslint-plugin-better-tailwindcss@4.7.0(oxlint@1.79.0(oxlint-tsgolint@7.0.2001))(tailwindcss@4.3.3)(typescript@7.0.2))(oxlint-tsgolint@7.0.2001)(oxlint@1.79.0(oxlint-tsgolint@7.0.2001))
-      '@mheob/tsconfig':
         specifier: ^3.0.1
-        version: 3.0.1
+        version: 3.0.1(eslint-plugin-better-tailwindcss@4.7.0(oxlint@1.79.0(oxlint-tsgolint@7.0.2001))(tailwindcss@4.3.3)(typescript@7.0.2))(oxlint-tsgolint@7.0.2001)(oxlint@1.79.0(oxlint-tsgolint@7.0.2001))
+      '@mheob/tsconfig':
+        specifier: ^3.0.2
+        version: 3.0.2
       '@types/node':
         specifier: ^24.13.3
         version: 24.13.3
@@ -2136,26 +2136,26 @@ packages:
       markdown-it:
         optional: true
 
-  '@mheob/commitlint-config@2.0.5':
-    resolution: {integrity: sha512-GiBGm1QiAKTUclu4L0hA3+59L4e7wixXdeGcTurW8SJkYtuAIQ063me2k0RExNKKVbPSzVead7XLEnBJGDoaUQ==}
+  '@mheob/commitlint-config@2.0.6':
+    resolution: {integrity: sha512-P3C9/MmX1klkZb8EdSbbUg+k3yD1YidDfDVnxegt5JoHnTdKCHmVri7Qac3EesQP1U98Un1bMgLl5gkjMpc/gA==}
     engines: {node: '>=24'}
     peerDependencies:
       '@commitlint/cli': ^21.2.1
-      czg: ^1.12.0
+      czg: ^1.13.1
 
-  '@mheob/oxfmt-config@1.3.1':
-    resolution: {integrity: sha512-zGWStLg4JCQdm/bGYLPXtQHm6bNaw2LfGYaszW8RcWDhW9bcVAmAwDjdyZqjsUPcmq6/+3/M7cjlF7wNRy7bjg==}
+  '@mheob/oxfmt-config@1.3.2':
+    resolution: {integrity: sha512-YVrjUHjRSHX9F986QS9q8CWYJlFOg9xGuG10BxoqeUwleQzY1Miv5FhLNwbDWbGFXnAkp5QmACPwkLTuXxpsuw==}
     engines: {node: '>=24'}
     peerDependencies:
       oxfmt: '>=0.62.0 <1.0.0'
 
-  '@mheob/oxlint-config@3.0.0':
-    resolution: {integrity: sha512-TEMQ/5cHUsBmMcrIvM/KqVAxB8UerXW6QKeydaYq30LWzR+BgIIgfJxrT0MJI1JhiQzn3CnzDZi/Fci/VlAxQA==}
+  '@mheob/oxlint-config@3.0.1':
+    resolution: {integrity: sha512-kSppF752AiLq2Hg+i8OvPkwGCXEuCdT8S+n7zIhtqNPMl2+njTI/42ZeHq1Fa7c4b5Z4cGFJ1POeZiKctWREhA==}
     engines: {node: '>=24'}
     peerDependencies:
-      eslint-plugin-better-tailwindcss: ^4.3.2
+      eslint-plugin-better-tailwindcss: ^4.7.0
       eslint-plugin-jsonc: ^3.4.1
-      eslint-plugin-regexp: ^3.1.0
+      eslint-plugin-regexp: ^3.1.1
       eslint-plugin-storybook: ^10.5.6
       eslint-plugin-yml: ^3.8.1
       oxlint: ^1.77.0
@@ -2174,6 +2174,9 @@ packages:
 
   '@mheob/tsconfig@3.0.1':
     resolution: {integrity: sha512-8+uh6RQuCG5y4m0JwIMxDtcag5ChYUqMhqhI6uJnmPAo/VCLEqU9Ha1p/stXgcSc2xO+Xjj4qBL3M335BKJ9bQ==}
+
+  '@mheob/tsconfig@3.0.2':
+    resolution: {integrity: sha512-5gTzW+6Ua7441jSp8KKVxWuLim8djwBvWxWWkBO0G2xvT+cuh/GjGGv4T4SULIaSxHR8iPIS3zfbO7gYBTHzwg==}
 
   '@module-federation/dts-plugin@2.8.2':
     resolution: {integrity: sha512-pwZFW8b2LZTymMMC+o2M9xMXDIQKAHGtCRqj/IkOp0jHRYrKjK9cma9xoUNst8/R3sEn878/i9wgv/43BnCEyg==}
@@ -2412,8 +2415,8 @@ packages:
     resolution: {integrity: sha512-+eaY7G2VVpSf2pc5Gn1+mph837V/d/TYTJAgWL9Tb0ogGYcpN3IlAVFgjL+Vv93F/sevrxkvsYCedtpLdcFLzA==}
     engines: {node: '>= 20'}
 
-  '@octokit/request@10.0.14':
-    resolution: {integrity: sha512-bgWgiSfFS689/AxQDarU+b3Qu1FYewfVr5vI/jhV84s7GQ3C2OsdRxukGGYKB37MCgwcS50UrfBLlHzhiG13sw==}
+  '@octokit/request@10.0.15':
+    resolution: {integrity: sha512-3CBg9aJ0hO9Pjyij8LbK/xYtEaPws9SW7xKz67daPNxQB1q5Y9OMA7DDOG0A6Hwf9ygGu3tvzusg0LXQ8/wAjA==}
     engines: {node: '>= 20'}
 
   '@octokit/types@16.0.0':
@@ -3599,8 +3602,8 @@ packages:
       prismjs:
         optional: true
 
-  '@sanity/runtime-cli@17.8.0':
-    resolution: {integrity: sha512-qF+LydVkw+bhRrL1AIUoxRiuXaTznq0WqVjDjfN6Y55PHHNCBAw+DV/NbIeDZ2Zaz208JMuN/l/GQfKlTOnumQ==}
+  '@sanity/runtime-cli@17.9.0':
+    resolution: {integrity: sha512-qlTj33ec5/6Cf/AK59oGKaBUk/Iuw9h1fZWjk2WEQo3lmV9/JQ/7kwUNbCPRYqI3rMzqQwLi6KgQFhuDM+q4Mw==}
     engines: {node: '>=22.12'}
     hasBin: true
 
@@ -3643,6 +3646,14 @@ packages:
 
   '@sanity/ui@4.0.5':
     resolution: {integrity: sha512-6hbcwLRdsKxr0U1fK6IKvyQ33ymR0SEi9mmNbCtrKZAnnx1FpecMFFeXKtwEvmbECzUGoh01ErwPgJux9gPG5A==}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      react: ^19.2
+      react-dom: ^19.2
+      styled-components: ^6.1
+
+  '@sanity/ui@4.0.6':
+    resolution: {integrity: sha512-iPtHRtnwcwq2ePHVrXsmTCFLNkEYfXL0kSavY4gnfkrbCPOmMD4iMe5MKcRtQ2YrJug6K70c6JQRCB+gN8kNaA==}
     engines: {node: '>=22.12'}
     peerDependencies:
       react: ^19.2
@@ -4632,9 +4643,9 @@ packages:
   console-table-printer@2.16.1:
     resolution: {integrity: sha512-Sc9FRJ4O9xKGNrvulNdPfK5SyBcZ6lcaRnDE4AQ/uw6IDtjHhsqyzzqcnMikjyGaiOOF2tNOKoBhbVjRvFy9Lw==}
 
-  content-type@2.1.0:
-    resolution: {integrity: sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==}
-    engines: {node: '>=18'}
+  content-type@3.0.0:
+    resolution: {integrity: sha512-AIi5H6p0xk5uknXcN3/rmhP8jgp69OfSe/JuKiQAFprJ7UGw7mwj7m4XcmDzlrnJDG+cGpphAINGdU3g3g7kDw==}
+    engines: {node: '>=22'}
 
   conventional-changelog-angular@9.4.0:
     resolution: {integrity: sha512-HdxRxuS8bBXVIuo4V82gvSwAXT0vYQUizrjs/izmPg5JdDstr8v8I5hduGL3iQbG+o310dUDxC4+LetuS5hu9w==}
@@ -7487,7 +7498,7 @@ snapshots:
       '@octokit/core': 7.0.7
       '@octokit/plugin-paginate-rest': 14.0.0(@octokit/core@7.0.7)
       '@octokit/plugin-rest-endpoint-methods': 17.0.0(@octokit/core@7.0.7)
-      '@octokit/request': 10.0.14
+      '@octokit/request': 10.0.15
       '@octokit/request-error': 7.1.1
       undici: 7.29.0
 
@@ -9263,16 +9274,16 @@ snapshots:
     optionalDependencies:
       markdown-it: 14.3.0
 
-  '@mheob/commitlint-config@2.0.5(@commitlint/cli@21.2.2(@types/node@24.13.3)(conventional-commits-parser@7.1.2)(typescript@7.0.2))(czg@1.13.2)':
+  '@mheob/commitlint-config@2.0.6(@commitlint/cli@21.2.2(@types/node@24.13.3)(conventional-commits-parser@7.1.2)(typescript@7.0.2))(czg@1.13.2)':
     dependencies:
       '@commitlint/cli': 21.2.2(@types/node@24.13.3)(conventional-commits-parser@7.1.2)(typescript@7.0.2)
       czg: 1.13.2
 
-  '@mheob/oxfmt-config@1.3.1(oxfmt@0.64.0)':
+  '@mheob/oxfmt-config@1.3.2(oxfmt@0.64.0)':
     dependencies:
       oxfmt: 0.64.0
 
-  '@mheob/oxlint-config@3.0.0(eslint-plugin-better-tailwindcss@4.7.0(oxlint@1.79.0(oxlint-tsgolint@7.0.2001))(tailwindcss@4.3.3)(typescript@7.0.2))(oxlint-tsgolint@7.0.2001)(oxlint@1.79.0(oxlint-tsgolint@7.0.2001))':
+  '@mheob/oxlint-config@3.0.1(eslint-plugin-better-tailwindcss@4.7.0(oxlint@1.79.0(oxlint-tsgolint@7.0.2001))(tailwindcss@4.3.3)(typescript@7.0.2))(oxlint-tsgolint@7.0.2001)(oxlint@1.79.0(oxlint-tsgolint@7.0.2001))':
     dependencies:
       oxlint: 1.79.0(oxlint-tsgolint@7.0.2001)
       oxlint-tsgolint: 7.0.2001
@@ -9280,6 +9291,8 @@ snapshots:
       eslint-plugin-better-tailwindcss: 4.7.0(oxlint@1.79.0(oxlint-tsgolint@7.0.2001))(tailwindcss@4.3.3)(typescript@7.0.2)
 
   '@mheob/tsconfig@3.0.1': {}
+
+  '@mheob/tsconfig@3.0.2': {}
 
   '@module-federation/dts-plugin@2.8.2(typescript@7.0.2)':
     dependencies:
@@ -9475,7 +9488,7 @@ snapshots:
     dependencies:
       '@octokit/auth-token': 6.0.0
       '@octokit/graphql': 9.0.4
-      '@octokit/request': 10.0.14
+      '@octokit/request': 10.0.15
       '@octokit/request-error': 7.1.1
       '@octokit/types': 17.0.0
       before-after-hook: 4.0.0
@@ -9488,7 +9501,7 @@ snapshots:
 
   '@octokit/graphql@9.0.4':
     dependencies:
-      '@octokit/request': 10.0.14
+      '@octokit/request': 10.0.15
       '@octokit/types': 17.0.0
       universal-user-agent: 7.0.3
 
@@ -9510,12 +9523,12 @@ snapshots:
     dependencies:
       '@octokit/types': 17.0.0
 
-  '@octokit/request@10.0.14':
+  '@octokit/request@10.0.15':
     dependencies:
       '@octokit/endpoint': 11.0.4
       '@octokit/request-error': 7.1.1
       '@octokit/types': 17.0.0
-      content-type: 2.1.0
+      content-type: 3.0.0
       json-with-bigint: 3.5.12
       universal-user-agent: 7.0.3
 
@@ -10295,7 +10308,7 @@ snapshots:
     dependencies:
       '@sanity/client': 7.26.2
       '@sanity/icons': 5.2.1(react@19.2.8)
-      '@sanity/ui': 4.0.5(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
+      '@sanity/ui': 4.0.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
       react: 19.2.8
     transitivePeerDependencies:
       - react-dom
@@ -10440,7 +10453,7 @@ snapshots:
       '@sanity/id-utils': 1.0.0
       '@sanity/import': 6.0.4(@sanity/client@8.2.0)(@types/react@19.2.18)(supports-color@8.1.1)
       '@sanity/migrate': 8.0.2(@types/react@19.2.18)(supports-color@8.1.1)(xstate@5.32.5)
-      '@sanity/runtime-cli': 17.8.0(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.3.0)(@types/node@24.13.3)(@types/react@19.2.18)(esbuild@0.28.2)(rolldown@1.2.5)(tsx@4.23.12)(typescript@7.0.2)(yaml@2.9.0)
+      '@sanity/runtime-cli': 17.9.0(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.3.0)(@types/node@24.13.3)(@types/react@19.2.18)(esbuild@0.28.2)(rolldown@1.2.5)(tsx@4.23.12)(typescript@7.0.2)(yaml@2.9.0)
       '@sanity/schema': 6.10.1(@types/react@19.2.18)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
       '@sanity/template-validator': 3.1.0
@@ -10748,7 +10761,7 @@ snapshots:
     optionalDependencies:
       prismjs: 1.30.0
 
-  '@sanity/runtime-cli@17.8.0(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.3.0)(@types/node@24.13.3)(@types/react@19.2.18)(esbuild@0.28.2)(rolldown@1.2.5)(tsx@4.23.12)(typescript@7.0.2)(yaml@2.9.0)':
+  '@sanity/runtime-cli@17.9.0(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.3.0)(@types/node@24.13.3)(@types/react@19.2.18)(esbuild@0.28.2)(rolldown@1.2.5)(tsx@4.23.12)(typescript@7.0.2)(yaml@2.9.0)':
     dependencies:
       '@architect/hydrate': 6.0.2
       '@architect/inventory': 6.1.0
@@ -10918,6 +10931,20 @@ snapshots:
       '@types/react': 19.2.18
 
   '@sanity/ui@4.0.5(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))':
+    dependencies:
+      '@floating-ui/react-dom': 2.1.9(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@sanity/color': 3.0.8
+      '@sanity/icons': 5.2.1(react@19.2.8)
+      csstype: 3.2.3
+      motion: 13.1.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
+      react-is: 19.2.8
+      react-refractor: 4.0.0(react@19.2.8)
+      styled-components: 6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      use-effect-event: 2.0.3(react@19.2.8)
+
+  '@sanity/ui@4.0.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))':
     dependencies:
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@sanity/color': 3.0.8
@@ -11857,7 +11884,7 @@ snapshots:
     dependencies:
       simple-wcswidth: 1.1.2
 
-  content-type@2.1.0: {}
+  content-type@3.0.0: {}
 
   conventional-changelog-angular@9.4.0:
     dependencies:
@@ -13957,7 +13984,7 @@ snapshots:
       '@sanity/sdk-react': 2.19.0(@types/react@19.2.18)(immer@11.1.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(use-sync-external-store@1.6.0(react@19.2.8))(xstate@5.32.5)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
       '@sanity/types': 6.10.1(@types/react@19.2.18)
-      '@sanity/ui': 4.0.5(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
+      '@sanity/ui': 4.0.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
       '@sanity/util': 6.10.1(@types/react@19.2.18)
       '@sanity/uuid': 3.0.3
       '@sanity/workbench': 0.1.0-alpha.42(@sanity/sdk@3.0.0-rc.1(@types/react@19.2.18)(immer@11.1.18)(react@19.2.8)(use-sync-external-store@1.6.0(react@19.2.8))(xstate@5.32.5))(react@19.2.8)(xstate@5.32.5)
