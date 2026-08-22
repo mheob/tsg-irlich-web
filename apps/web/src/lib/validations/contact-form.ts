@@ -2,6 +2,14 @@
 
 import { z } from 'zod';
 
+const receiverSchema = z.object(
+	{
+		email: z.email({ message: 'Kein Empfänger ausgewählt.' }),
+		label: z.string({ message: 'Kein Empfänger ausgewählt.' }),
+	},
+	{ error: 'Kein Empfänger ausgewählt.' },
+);
+
 export const contactFormSchema = z.object({
 	email: z.email({ message: 'Die E-Mail Adresse ist ungültig.' }),
 	message: z.string().min(32, { message: 'Die Nachricht muss mindestens 32 Zeichen lang sein.' }),
@@ -9,13 +17,12 @@ export const contactFormSchema = z.object({
 	privacy: z
 		.boolean({ message: 'Bitte akzeptiere die Datenschutzbestimmungen' })
 		.refine((value) => value),
-	receiver: z.object(
-		{
-			email: z.email({ message: 'Kein Empfänger ausgewählt.' }),
-			label: z.string({ message: 'Kein Empfänger ausgewählt.' }),
-		},
-		{ error: 'Kein Empfänger ausgewählt.' },
-	),
+	receiver: receiverSchema.optional(),
+});
+
+/** Used where the form offers a receiver select, so picking one stays mandatory there. */
+export const contactFormWithReceiverSchema = contactFormSchema.extend({
+	receiver: receiverSchema,
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;

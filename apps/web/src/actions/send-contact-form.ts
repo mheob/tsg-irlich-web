@@ -15,7 +15,7 @@ export const sendContactForm = actionClient
 
 		const to =
 			env('NODE_ENV') === 'production'
-				? receiver.email || 'info@tsg-irlich.de'
+				? (receiver?.email ?? 'info@tsg-irlich.de')
 				: 'it@tsg-irlich.de';
 
 		const { error } = await resend.emails.send({
@@ -26,7 +26,7 @@ export const sendContactForm = actionClient
 				contactEmail: email,
 				contactMessage: message,
 				contactName: name,
-				receiver: receiver.label,
+				receiver: receiver?.label,
 			}),
 			replyTo: email,
 			subject: `Webseiten-Kontaktformular: Neue Nachricht von ${name}`,
