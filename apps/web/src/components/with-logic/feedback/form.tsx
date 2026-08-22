@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 import { createLinearIssue } from '@/actions/create-linear-issue';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -46,7 +46,9 @@ export function FeedbackForm() {
 		resolver: zodResolver(feedbackFormSchema),
 	});
 
-	const selectedType = form.watch('type');
+	// `useWatch` instead of `form.watch()` — the latter returns a function the React Compiler
+	// cannot memoize safely.
+	const selectedType = useWatch({ control: form.control, name: 'type' });
 
 	async function onSubmit(values: FeedbackFormValues) {
 		setIsSubmitting(true);

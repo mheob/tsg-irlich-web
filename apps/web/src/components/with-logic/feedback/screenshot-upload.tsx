@@ -3,7 +3,7 @@
 import { AlertCircle, ImagePlus, Loader2, X } from 'lucide-react';
 import Image from 'next/image';
 import type { ChangeEvent, DragEvent } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
@@ -36,6 +36,10 @@ export function ScreenshotUpload({
 }: Readonly<ScreenshotUploadProps>) {
 	const [isDragging, setIsDragging] = useState(false);
 	const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
+	// Linear asset URLs require an API key, so the optimizer cannot fetch them (401).
+	// Keep the local object URL of each upload around and show that as the preview instead.
+	const [previews, setPreviews] = useState<Record<string, string>>({});
+	const objectUrlsRef = useRef<Set<string>>(new Set());
 
 	const canAddMore = value.length + uploadingFiles.length < maxFiles;
 
@@ -58,6 +62,7 @@ export function ScreenshotUpload({
 
 			const id = crypto.randomUUID();
 			const preview = URL.createObjectURL(file);
+			objectUrlsRef.current.add(preview);
 
 			// Add to uploading state
 			setUploadingFiles((previous) => [
@@ -69,9 +74,11 @@ export function ScreenshotUpload({
 				const result = await uploadToLinear({ file });
 
 				if (result?.data?.assetUrl) {
-					// Remove from uploading, add to value
+					// Remove from uploading, add to value — the object URL stays alive as preview
+					const { assetUrl } = result.data;
 					setUploadingFiles((previous) => previous.filter((f) => f.id !== id));
-					onChange([...value, result.data.assetUrl]);
+					setPreviews((previous) => ({ ...previous, [assetUrl]: preview }));
+					onChange([...value, assetUrl]);
 				} else {
 					// Mark as error
 					setUploadingFiles((previous) =>
@@ -133,16 +140,15 @@ export function ScreenshotUpload({
 		[maxFiles, processFile, value.length],
 	);
 
-	useEffect(
-		() => () => {
-			for (const file of uploadingFiles) {
-				if (file.preview) {
-					URL.revokeObjectURL(file.preview);
-				}
+	useEffect(() => {
+		const objectUrls = objectUrlsRef.current;
+		return () => {
+			for (const url of objectUrls) {
+				URL.revokeObjectURL(url);
 			}
-		},
-		[uploadingFiles],
-	);
+			objectUrls.clear();
+		};
+	}, []);
 
 	// Handle paste from clipboard
 	useEffect(() => {
@@ -174,6 +180,14 @@ export function ScreenshotUpload({
 	}, [disabled, canAddMore, processFile]);
 
 	const removeUrl = (urlToRemove: string) => {
+		const preview = previews[urlToRemove];
+		if (preview) {
+			URL.revokeObjectURL(preview);
+			objectUrlsRef.current.delete(preview);
+		}
+		setPreviews((previous) =>
+			Object.fromEntries(Object.entries(previous).filter(([key]) => key !== urlToRemove)),
+		);
 		onChange(value.filter((url) => url !== urlToRemove));
 	};
 
@@ -182,6 +196,7 @@ export function ScreenshotUpload({
 			const file = previous.find((f) => f.id === id);
 			if (file?.preview) {
 				URL.revokeObjectURL(file.preview);
+				objectUrlsRef.current.delete(file.preview);
 			}
 			return previous.filter((f) => f.id !== id);
 		});
@@ -234,8 +249,9 @@ export function ScreenshotUpload({
 						>
 							<Image
 								alt={`Screenshot ${index + 1}`}
-								className="absolute inset-0 size-full object-cover"
-								src={url}
+								className="object-cover"
+								src={previews[url] ?? url}
+								fill
 							/>
 							<button
 								aria-label={`Remove screenshot ${index + 1}`}
