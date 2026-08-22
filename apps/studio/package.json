@@ -17,26 +17,26 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@sanity/assist": "^6.1.17",
-		"@sanity/icons": "^5.1.0",
-		"@sanity/locale-de-de": "^1.1.33",
-		"@sanity/ui": "^3.5.1",
-		"@sanity/vision": "^6.8.0",
+		"@sanity/assist": "^6.1.21",
+		"@sanity/icons": "^5.2.1",
+		"@sanity/locale-de-de": "^1.1.36",
+		"@sanity/ui": "^4.0.4",
+		"@sanity/vision": "^6.10.1",
 		"@tsgi-web/shared": "workspace:*",
 		"dotenv": "^17.4.2",
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",
 		"react-icons": "^5.7.0",
-		"sanity": "^6.8.0",
-		"sanity-plugin-media": "^6.1.1",
+		"sanity": "^6.10.1",
+		"sanity-plugin-media": "^6.1.6",
 		"slugify": "^1.6.9",
-		"styled-components": "^6.5.0",
+		"styled-components": "^6.5.3",
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.4",
-		"oxlint": "^1.77.0",
+		"oxlint": "^1.79.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"typescript": "^7.0.2"
 	}

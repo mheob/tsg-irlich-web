@@ -2,7 +2,7 @@
 name: create-pr
 description: Create a Pull Request
 user-invocable: true
-allowed-tools: Bash(gh*), Bash(git*), Bash(bun run*)
+allowed-tools: Bash(gh*), Bash(git*), Bash(pnpm run*)
 agent: git-versioning
 ---
 

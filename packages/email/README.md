@@ -7,7 +7,7 @@ Email templates for TSG Irlich using [React Email](https://react.email).
 Run the development server with live preview:
 
 ```sh
-bun run dev:email
+pnpm run dev:email
 ```
 
 Open [localhost:3001](http://localhost:3001) to preview email templates in your browser.

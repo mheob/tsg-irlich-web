@@ -2,7 +2,7 @@
 name: update-md-data
 description: Update all .md files with current project data (versions, tool names, etc.)
 user-invocable: true
-allowed-tools: Bash(cat*), Bash(find*), Bash(grep*), Bash(node*), Bash(bun*), Read(*), Edit(*)
+allowed-tools: Bash(cat*), Bash(find*), Bash(grep*), Bash(node*), Bash(pnpm*), Read(*), Edit(*)
 ---
 
 ## Context
@@ -22,7 +22,7 @@ For every `.md` file found above, scan the content and replace any outdated proj
 
 | Data point | Source |
 | --- | --- |
-| `bun` version (package manager) | `packageManager` field in root `package.json` (strip the `bun@` prefix) |
+| `pnpm` version (package manager) | `packageManager` field in root `package.json` (strip the `pnpm@` prefix) |
 | Node.js version requirement | `engines.node` in root `package.json` |
 | Next.js major version (e.g. "Next.js 16") | `dependencies.next` in `apps/web/package.json` |
 | React major version (e.g. "React 19") | `dependencies.react` in `apps/web/package.json` |
@@ -33,8 +33,8 @@ For every `.md` file found above, scan the content and replace any outdated proj
 
 ### Rules
 
-- Update **version numbers** wherever they appear in prose, headings, badges, code blocks, or inline text (e.g. `bun 1.3.5` → `bun 1.3.11`, `Node.js ^24.12.0` → `Node.js ^24.14.1`).
-- Preserve the formatting style already used in each file — if it says `bun 1.3.5`, keep the same style; if it says `**bun** 1.3.5`, keep the bold.
+- Update **version numbers** wherever they appear in prose, headings, badges, code blocks, or inline text (e.g. `pnpm 11.20.0` → `pnpm 11.22.0`, `Node.js ^24.12.0` → `Node.js ^24.19.0`).
+- Preserve the formatting style already used in each file — if it says `pnpm 11.20.0`, keep the same style; if it says `**pnpm** 11.20.0`, keep the bold.
 - Do **not** change placeholder values like `your_project_id`, `your_read_token`, etc.
 - Do **not** modify code logic, comments, or anything that is not a version/tool reference.
 - Skip files that contain no references to any of the tracked data points.

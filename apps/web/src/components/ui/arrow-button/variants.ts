@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 
-export const ArrowButtonVariants = cva('i-btn', {
+export const arrowButtonVariants = cva('i-btn', {
 	defaultVariants: {
 		variant: 'primary',
 	},

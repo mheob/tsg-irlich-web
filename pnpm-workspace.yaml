@@ -1,0 +1,23 @@
+packages:
+  - apps/*
+  - packages/*
+
+# better-sqlite3 (native binding for cve-lite-cli), esbuild (platform binary) and lefthook
+# (git hook binary) are unusable without their install scripts.
+allowBuilds:
+  better-sqlite3: true
+  esbuild: true
+  lefthook: true
+
+# Exclude trusted packages from the age gate
+minimumReleaseAgeExclude:
+  - "@mheob/*"
+
+overrides:
+  # 2.20.0 ships untranspiled JSX in dist; 2.20.1 fixes it but is still inside the age gate
+  "@sanity/sdk-react": 2.19.0
+  js-yaml: ">=4.3.1"
+  smol-toml: ">=1.6.1"
+  # Bounded to v7: jsdom (via the Sanity CLI) deep-imports undici v7 internals that v8 removed
+  undici: "^7.29.0"
+  uuid: ">=11.1.1"

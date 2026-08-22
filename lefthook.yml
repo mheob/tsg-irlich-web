@@ -1,21 +1,21 @@
 commit-msg:
   jobs:
     - name: commitlint
-      run: bunx commitlint --edit {1}
+      run: pnpm exec commitlint --edit {1}
 
 pre-commit:
   jobs:
     - name: format
       glob: "*"
-      run: bunx oxfmt --no-error-on-unmatched-pattern {staged_files}
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
     - name: lint
       glob: "*"
-      run: bunx oxlint --fix --no-error-on-unmatched-pattern {staged_files}
+      run: pnpm exec oxlint --fix --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 
 pre-push:
   commands:
     cve-lite:
-      run: bunx cve-lite . --cache-dir .cache/cve-lite
+      run: pnpm exec cve-lite . --cache-dir .cache/cve-lite
       timeout: "120s"

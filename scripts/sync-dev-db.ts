@@ -1,29 +1,41 @@
-// This script is executed directly by Bun (`bun scripts/sync-dev-db.ts`) and is never
-// loaded through `require(esm)`, so top-level await is safe here.
+// This script is executed directly by Node (`node scripts/sync-dev-db.ts`), which strips the
+// type annotations on the fly, and is never loaded through `require(esm)`, so top-level await
+// is safe here.
 // oxlint-disable node/no-top-level-await
 
-import { rm } from 'node:fs/promises';
+import { spawn } from 'node:child_process';
+import { rm, stat } from 'node:fs/promises';
+import { text } from 'node:stream/consumers';
 
-import { spawn } from 'bun';
-
-const BACKUP_FILE = `${import.meta.dir}/production-backup.tar.gz`;
+const BACKUP_FILE = `${import.meta.dirname}/production-backup.tar.gz`;
 // The Sanity CLI resolves the project ID from the studio config, so it has to run there
-const STUDIO_DIR = `${import.meta.dir}/../apps/studio`;
+const STUDIO_DIR = `${import.meta.dirname}/../apps/studio`;
 const SOURCE_DATASET = 'production';
 const TARGET_DATASET = 'development';
+
+// `pnpm exec` picks up the Sanity CLI from the studio workspace, whose node_modules is the
+// only place it is installed.
+function spawnSanity(args: string[], stdout: 'inherit' | 'pipe') {
+	return spawn('pnpm', ['exec', 'sanity', 'datasets', ...args], {
+		cwd: STUDIO_DIR,
+		stdio: ['inherit', stdout, 'inherit'],
+	});
+}
+
+async function waitForExit(child: ReturnType<typeof spawnSanity>): Promise<number> {
+	return new Promise((resolve, reject) => {
+		child.on('error', reject);
+		child.on('close', (code) => {
+			resolve(code ?? 1);
+		});
+	});
+}
 
 // The streams are inherited so the CLI writes straight to this terminal: it reports
 // progress on stderr and redraws it without newlines, which a piped reader only
 // surfaces once the command has finished.
 async function run(args: string[], errorMessage = 'An error occurred') {
-	const child = spawn(['bun', 'sanity', 'datasets', ...args], {
-		cwd: STUDIO_DIR,
-		stderr: 'inherit',
-		stdin: 'inherit',
-		stdout: 'inherit',
-	});
-
-	const exitCode = await child.exited;
+	const exitCode = await waitForExit(spawnSanity(args, 'inherit'));
 
 	if (exitCode !== 0) {
 		console.error(errorMessage);
@@ -34,14 +46,13 @@ async function run(args: string[], errorMessage = 'An error occurred') {
 // Reads the dataset names so a missing target is not treated as a failure. This is the
 // one command whose output is parsed rather than shown.
 async function listDatasets(): Promise<string[]> {
-	const child = spawn(['bun', 'sanity', 'datasets', 'list'], {
-		cwd: STUDIO_DIR,
-		stderr: 'inherit',
-		stdout: 'pipe',
-	});
+	const child = spawnSanity(['list'], 'pipe');
 
-	const output = await new Response(child.stdout).text();
-	const exitCode = await child.exited;
+	if (!child.stdout) {
+		throw new Error('"sanity datasets list" was spawned without a readable stdout');
+	}
+
+	const [output, exitCode] = await Promise.all([text(child.stdout), waitForExit(child)]);
 
 	if (exitCode !== 0) {
 		throw new Error(`"sanity datasets list" exited with code ${exitCode}`);
@@ -54,10 +65,14 @@ async function listDatasets(): Promise<string[]> {
 }
 
 async function cleanup() {
-	if (await Bun.file(BACKUP_FILE).exists()) {
-		await rm(BACKUP_FILE, { force: true });
-		console.log('Cleaned up backup file.');
+	try {
+		await stat(BACKUP_FILE);
+	} catch {
+		return;
 	}
+
+	await rm(BACKUP_FILE, { force: true });
+	console.log('Cleaned up backup file.');
 }
 
 async function exportSourceDataset() {

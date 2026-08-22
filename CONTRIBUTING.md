@@ -20,7 +20,7 @@ Thank you for your interest in contributing to the TSG Irlich website! This docu
 ### Prerequisites
 
 - **Node.js** ^24.14.1
-- **bun** 1.3.11 (package manager)
+- **pnpm** 11.22.0 (package manager)
 - **Git** for version control
 
 ### Development Setup
@@ -35,7 +35,7 @@ Thank you for your interest in contributing to the TSG Irlich website! This docu
 2. **Install dependencies**
 
    ```bash
-   bun install
+   pnpm install
    ```
 
 3. **Set up environment variables**
@@ -69,7 +69,7 @@ Thank you for your interest in contributing to the TSG Irlich website! This docu
 4. **Start development servers**
 
    ```bash
-   bun run dev
+   pnpm run dev
    ```
 
 ## Code Standards
@@ -182,7 +182,7 @@ After making any changes to Sanity schemas, always run:
 
 ```bash
 # From root:
-bun run extract-types && bun run typegen:sanity
+pnpm run extract-types && pnpm run typegen:sanity
 ```
 
 ## Commit Guidelines
@@ -246,9 +246,9 @@ chore(deps): update all non-major dependencies
 3. **Run quality checks**
 
    ```bash
-   bun run lint              # Run linting
-   bun run typecheck         # Run type checking
-   bun run build             # Ensure build succeeds
+   pnpm run lint              # Run linting
+   pnpm run typecheck         # Run type checking
+   pnpm run build             # Ensure build succeeds
    ```
 
 4. **Push your branch**
@@ -273,7 +273,7 @@ chore(deps): update all non-major dependencies
 - [ ] Code follows project conventions
 - [ ] Commits follow conventional commit format
 - [ ] All linting checks pass
-- [ ] Type checking passes (`bun run typecheck`)
+- [ ] Type checking passes (`pnpm run typecheck`)
 - [ ] Build succeeds without errors
 - [ ] Types are generated if Sanity schemas changed
 - [ ] Documentation updated if needed
@@ -307,11 +307,11 @@ web/
 
 ```bash
 # Run all tests
-bun run test
+pnpm run test
 
 # Run tests for specific app
 cd apps/web
-bun run test
+pnpm run test
 ```
 
 ### Writing Tests
@@ -337,16 +337,16 @@ bun run test
 2. Use `defineType()` and `defineField()`
 3. Add German titles/descriptions
 4. Include appropriate icon
-5. Run type generation: `bun run extract-types && bun run typegen:sanity`
+5. Run type generation: `pnpm run extract-types && pnpm run typegen:sanity`
 
 ### Updating Dependencies
 
 ```bash
 # Update all dependencies
-bun update -ir
+pnpm update -ir
 
 # Check for outdated packages
-bun outdated
+pnpm outdated
 ```
 
 ## Getting Help

@@ -20,7 +20,7 @@ This is the main web application for the TSG Irlich website, featuring:
 ### Prerequisites
 
 - **Node.js** ^24.14.1
-- **bun** 1.3.11 (package manager)
+- **pnpm** 11.22.0 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation
@@ -28,7 +28,7 @@ This is the main web application for the TSG Irlich website, featuring:
 From the monorepo root:
 
 ```bash
-bun install
+pnpm install
 ```
 
 ### Development
@@ -37,11 +37,11 @@ Start the development server:
 
 ```bash
 # From monorepo root (recommended)
-bun run dev
+pnpm run dev
 
 # Or from this directory
 cd apps/web
-bun run dev
+pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
@@ -159,15 +159,15 @@ After making changes to Sanity schemas, generate TypeScript types:
 turbo extract-types && turbo typegen:sanity
 
 # Or manually
-cd apps/studio && bun run extract-types
-cd apps/web && bun run typegen:sanity
+cd apps/studio && pnpm run extract-types
+cd apps/web && pnpm run typegen:sanity
 ```
 
 Generate Next.js route types:
 
 ```bash
 cd apps/web
-bun run typegen:routes
+pnpm run typegen:routes
 ```
 
 ## Code Conventions
@@ -208,10 +208,10 @@ interface MyComponentProps {
 
 ```bash
 # Build the application
-bun run build
+pnpm run build
 
 # Start production server
-bun run start
+pnpm run start
 ```
 
 ## Deployment
@@ -227,11 +227,11 @@ See [SANITY_WEBHOOK_SETUP.md](../../docs/SANITY_WEBHOOK_SETUP.md) for webhook co
 ## Development Workflow
 
 1. **Make changes** to code or Sanity schemas
-2. **Generate types** if schemas changed (`bun run typegen:sanity`)
-3. **Run linting** (`bun run lint`)
-4. **Type check** (`bun run typecheck`)
-5. **Test locally** (`bun run dev`)
-6. **Build** to verify (`bun run build`)
+2. **Generate types** if schemas changed (`pnpm run typegen:sanity`)
+3. **Run linting** (`pnpm run lint`)
+4. **Type check** (`pnpm run typecheck`)
+5. **Test locally** (`pnpm run dev`)
+6. **Build** to verify (`pnpm run build`)
 
 ## Related Documentation
 

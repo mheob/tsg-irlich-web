@@ -16,7 +16,7 @@ import type { ComponentProps, ComponentPropsWithRef } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
-import { ArrowButtonVariants } from './variants';
+import { arrowButtonVariants } from './variants';
 
 interface ArrowProps {
 	direction?:
@@ -32,16 +32,16 @@ interface ArrowProps {
 }
 
 interface ArrowElementProps
-	extends ComponentPropsWithRef<'div'>, VariantProps<typeof ArrowButtonVariants>, ArrowProps {}
+	extends ComponentPropsWithRef<'div'>, VariantProps<typeof arrowButtonVariants>, ArrowProps {}
 
 interface ArrowAnchorProps
 	extends
 		ComponentPropsWithRef<typeof Link>,
-		VariantProps<typeof ArrowButtonVariants>,
+		VariantProps<typeof arrowButtonVariants>,
 		ArrowProps {}
 
 interface ArrowButtonProps
-	extends ComponentPropsWithRef<'button'>, VariantProps<typeof ArrowButtonVariants>, ArrowProps {}
+	extends ComponentPropsWithRef<'button'>, VariantProps<typeof arrowButtonVariants>, ArrowProps {}
 
 function Arrow({
 	className = 'size-8 md:size-12',
@@ -82,7 +82,7 @@ function ArrowButton({
 	...props
 }: Readonly<ArrowButtonProps>) {
 	return (
-		<button className={ArrowButtonVariants({ className, variant })} type="button" {...props}>
+		<button className={arrowButtonVariants({ className, variant })} type="button" {...props}>
 			<Arrow className={size} direction={direction} />
 		</button>
 	);
@@ -92,7 +92,7 @@ function ArrowElement({ className, direction, size, variant, ...props }: ArrowEl
 	return (
 		<div
 			className={cn(
-				ArrowButtonVariants({ className, variant }),
+				arrowButtonVariants({ className, variant }),
 				'data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-70 data-[disabled=true]:hover:bg-secondary',
 			)}
 			{...props}
@@ -104,7 +104,7 @@ function ArrowElement({ className, direction, size, variant, ...props }: ArrowEl
 
 function ArrowLink({ className, direction, size, variant, ...props }: ArrowAnchorProps) {
 	return (
-		<Link className={ArrowButtonVariants({ className, variant })} {...props}>
+		<Link className={arrowButtonVariants({ className, variant })} {...props}>
 			<Arrow className={size} direction={direction} />
 		</Link>
 	);
