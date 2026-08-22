@@ -1,66 +1,67 @@
 ---
 name: create-commit
-description: Create a git commit
+description: Create a standardized Conventional Commits git commit from the current diff. Use when the user asks to commit, create a commit, or invokes /create-commit.
 user-invocable: true
-allowed-tools: Bash(cat*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git status:*)
+allowed-tools: Bash
 agent: git-versioning
 ---
 
-## Context
+## Overview
 
-- Current git status: !`git status`
-- Current git diff (staged and unstaged changes): !`git diff HEAD`
-- Current branch: !`git branch --show-current`
-- Recent commits: !`git log --oneline -10`
+Create standardized, semantic git commits using the Conventional Commits specification. Analyze the actual diff to determine appropriate type, scope, and message.
 
-## Your tasks
+## Conventional Commit Format
 
-- make a feature branch is active
-- create a single git commit or multiple commits if it makes more sense based on the above changes
+```
+<type>[optional scope]: <description>
 
-## Structure
+[optional body]
 
-Use the format: `<type>: <short summary>` (e.g., `feat: add user login flow`) Keep the subject line under 50 characters Add a blank line between the subject and body if you need more detail Wrap body text at 72 characters
+[optional footer(s)]
+```
 
-## Writing style
+## Commit Types
 
-Use the imperative mood: "add feature" not "added feature" or "adds feature" Don't end the subject line with a period Be specific — "fix null pointer in auth middleware" beats "fix bug"
+| Type       | Purpose                        |
+| ---------- | ------------------------------ |
+| `feat`     | New feature                    |
+| `fix`      | Bug fix                        |
+| `docs`     | Documentation only             |
+| `style`    | Formatting/style (no logic)    |
+| `refactor` | Code refactor (no feature/fix) |
+| `perf`     | Performance improvement        |
+| `test`     | Add/update tests               |
+| `build`    | Build system/dependencies      |
+| `ci`       | CI/config changes              |
+| `chore`    | Maintenance/misc               |
+| `revert`   | Revert commit                  |
 
-### Conventional Commits (which fits well with your toolchain)
+## Breaking Changes
 
-Common prefixes:
+```
+# Exclamation mark after type/scope
+feat!: remove deprecated endpoint
 
-`feat`: — new feature `fix`: — bug fix `chore`: — maintenance, deps, config `docs`: — documentation only `refactor`: — no behavior change `test`: — adding/updating tests `ci`: — CI/CD changes
+# BREAKING CHANGE footer
+feat: allow config to extend other configs
 
-Breaking changes get a `!` suffix: `feat!: redesign auth API`
+BREAKING CHANGE: `extends` key behavior changed
+```
 
-### Scopes (optional)
+## Workflow
 
-Describe the area of the codebase affected by the change, e.g. `feat(auth): add login flow`
+Use the `gitbutler` SKILL to create commits.
 
-**Package scopes** (one per package):
+## Best Practices
 
-- `oxfmt` — `@mheob/oxfmt-config`
-- `oxlint` — `@mheob/oxlint-config`
-- `internal` — `@mheob/internal`
-- `tsconfig` — `@mheob/tsconfig`
+- One logical change per commit
+- Description: imperative mood, lowercase first letter, no period at end, max 50 characters
+- Body: explain **what** and **why**, not **how**. Wrap at 72 characters.
+- Reference issues: `Closes #123`, `Refs #456`
 
-**Cross-cutting scopes** (already used in git log):
+## Git Safety Protocol
 
-- `repo` — monorepo-wide changes (tooling, structure)
-- `deps` — dependency updates
-- `release` — version bumps and publishing
-- `vscode` / `zed` — editor config changes
-- `scripts` — build/release scripts
-
-### The body (when needed)
-
-Explain why, not what — the diff already shows what changed. Answer: what problem does this solve? Are there side effects or caveats?
-
-## Practical tips
-
-Each commit should represent one logical change — avoid "fix stuff and also update deps" If you need "and" in the subject, it's probably two commits Reference issues where relevant: **fix(oxlint): add abc rule**
-
-Do not use the `--no-verify` if not really need.
-
-Do not mention a co-author or generator.
+- NEVER update git config
+- NEVER run destructive commands (--force, hard reset) without explicit request
+- NEVER skip hooks (--no-verify) unless user asks
+- NEVER force push to main/master/develop

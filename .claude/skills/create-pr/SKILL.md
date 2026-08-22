@@ -1,27 +1,28 @@
 ---
 name: create-pr
-description: Create a Pull Request
+description: Create a pull request against main on GitHub. Use when the user asks to create a PR, open a pull request, or ship the current branch.
 user-invocable: true
-allowed-tools: Bash(gh*), Bash(git*), Bash(pnpm run*)
+allowed-tools: Bash
 agent: git-versioning
 ---
 
-Create a Pull Request based on all commits in the current branch that differ from `next`.
+Create a Pull Request based on all commits in the current branch that differ from `main`.
+
+Check for an available changeset.
 
 1. Ensure all changes are committed
 2. Push the branch to the remote
-3. Use `gh` (GitHub CLI) to create the PR with:
-   - A clear, descriptive title following conventional commit style with a max length of 50 characters
-   - A thorough description that includes:
-     - **Summary**: Summary of changes
-     - **Changes**: Key technical changes made
-     - **Motivation**: Why this change is needed (context/problem)
-     - **Technical Approach**: Brief implementation details (if non-obvious)
-     - **Testing**: How changes were verified
-   - Set one or more labels
+3. Use the `gitbutler` SKILL to create the PR:
+   1. Set the target branch to `main`
+   2. Write a clear, descriptive title following conventional commit style
+   3. Include sections: **Summary**, **Changes**, **Motivation**, **Testing**, **Breaking Changes**
+4. If the `gitbutler` command fails, try `gh`
 
-Make sure the description is clear and concise, and that it provides enough information for reviewers to understand the purpose and impact of the changes.
+Do not mention a co-author or generator.
 
-Do not use the `--no-verify` if not really need.
+## Git Safety Protocol
 
-Do not mention an co-author or generator.
+- NEVER update git config
+- NEVER run destructive commands (--force, hard reset) without explicit request
+- NEVER skip hooks (--no-verify) unless user asks
+- NEVER force push to main/master/develop
