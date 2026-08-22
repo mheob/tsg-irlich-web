@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { ContactForm } from '@/components/section/contact-form';
 import { ContactPersons } from '@/components/section/contact-persons';
@@ -39,9 +40,7 @@ export default async function ContactPage() {
 	const page = await client.fetch<ContactPageQueryResult>(contactPageQuery);
 
 	if (!page) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	return (

@@ -10,7 +10,7 @@ import { set, setIfMissing, useClient } from 'sanity';
 import type { AssetFromSource, ImageValue, ObjectInputProps } from 'sanity';
 import { mediaAssetSource } from 'sanity-plugin-media';
 
-import { EMPTY_ARRAY } from '@tsgi-web/shared';
+import { EMPTY_ARRAY, settle } from '@tsgi-web/shared';
 
 import { apiVersion } from '@/env';
 
@@ -112,37 +112,31 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 			return;
 		}
 
+		const extension = pendingFile.name.split('.').pop()?.toLowerCase();
+		if (!extension || !(ALLOWED_EXTENSIONS as readonly string[]).includes(extension)) {
+			setUploadError('Nicht unterstütztes Dateiformat');
+			return;
+		}
+
 		setIsUploading(true);
 		setUploadError(null);
 
-		try {
-			const extension = pendingFile.name.split('.').pop()?.toLowerCase();
-			if (!extension || !(ALLOWED_EXTENSIONS as readonly string[]).includes(extension)) {
-				setUploadError('Nicht unterstütztes Dateiformat');
-				return;
-			}
-			const newFilename = `${sanitizeFilename(filename)}.${extension}`;
+		const newFilename = `${sanitizeFilename(filename)}.${extension}`;
 
-			// Create a new file with the custom user-specified name
-			const renamedFile = new File([pendingFile], newFilename, {
-				type: pendingFile.type,
-			});
+		// Create a new file with the custom user-specified name
+		const renamedFile = new File([pendingFile], newFilename, {
+			type: pendingFile.type,
+		});
 
-			// Upload via Sanity Client
-			const asset = await client.assets.upload('image', renamedFile, {
-				filename: newFilename,
-			});
+		// Upload via Sanity Client
+		const outcome = await settle(
+			client.assets.upload('image', renamedFile, { filename: newFilename }),
+		);
 
-			// Set the reference to the field
-			onChange([
-				setIfMissing({ _type: 'image' }),
-				set({ _ref: asset._id, _type: 'reference' }, ['asset']),
-			]);
+		setIsUploading(false);
 
-			setPendingFile(null);
-			setFilename('');
-			setUploadError(null); // Clear previous errors
-		} catch (error) {
+		if (!outcome.ok) {
+			const { error } = outcome;
 			console.error('Upload failed:', error);
 			if (error instanceof Error) {
 				if (error.name === 'FileSizeError' || error.message.includes('size')) {
@@ -153,9 +147,18 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 					setUploadError('Upload fehlgeschlagen. Bitte versuche es erneut.');
 				}
 			}
-		} finally {
-			setIsUploading(false);
+			return;
 		}
+
+		// Set the reference to the field
+		onChange([
+			setIfMissing({ _type: 'image' }),
+			set({ _ref: outcome.value._id, _type: 'reference' }, ['asset']),
+		]);
+
+		setPendingFile(null);
+		setFilename('');
+		setUploadError(null); // Clear previous errors
 	}, [pendingFile, filename, client, onChange]);
 
 	const handleKeyDown = useCallback(

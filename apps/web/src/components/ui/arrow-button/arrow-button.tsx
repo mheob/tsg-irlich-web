@@ -1,5 +1,3 @@
-// oxlint-disable react/react-compiler
-
 import type { VariantProps } from 'class-variance-authority';
 import {
 	ArrowDown,

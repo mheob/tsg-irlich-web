@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { settle } from '@tsgi-web/shared';
+
 import { sendContactForm } from '@/actions/send-contact-form';
 import { Button } from '@/components/ui/button';
 import { InputWithLabel } from '@/components/ui/input';
@@ -17,7 +19,7 @@ import { ErrorAlert, Form, FormField, SuccessAlert } from '@/components/with-log
 import contactImage1 from '@/images/contact/contact-1.webp';
 import contactImage2 from '@/images/contact/contact-2.webp';
 import contactImage3 from '@/images/contact/contact-3.webp';
-import { contactFormSchema } from '@/lib/validations/contact-form';
+import { contactFormSchema, contactFormWithReceiverSchema } from '@/lib/validations/contact-form';
 import type { ContactFormData } from '@/lib/validations/contact-form';
 import type { ContactNameMail } from '@/types/sanity.types';
 
@@ -43,6 +45,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 	const [submitResult, setSubmitResult] = useState<SubmitResult>(null);
 
 	const selectItems = mapSelectItems(receiver);
+	const hasReceiverSelect = selectItems.length > 0;
 
 	const form = useForm<ContactFormData>({
 		defaultValues: {
@@ -52,41 +55,45 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 			privacy: undefined,
 			receiver: undefined,
 		},
-		resolver: zodResolver(contactFormSchema),
+		resolver: zodResolver(hasReceiverSelect ? contactFormWithReceiverSchema : contactFormSchema),
 	});
 
 	const onSubmit = async (values: ContactFormData) => {
 		setIsSubmitting(true);
 		setSubmitResult(null);
 
-		try {
-			const result = await sendContactForm({
+		const outcome = await settle(
+			sendContactForm({
 				email: values.email,
 				message: values.message,
 				name: values.name,
 				privacy: values.privacy,
 				receiver: values.receiver ?? undefined,
-			});
+			}),
+		);
 
-			if (!result?.serverError && !result?.validationErrors) {
-				setSubmitResult({
-					success: true,
-				});
-				form.reset();
-			} else {
-				setSubmitResult({
-					error: result?.serverError ?? 'Ein Fehler ist aufgetreten',
-					success: false,
-				});
-			}
-		} catch {
+		setIsSubmitting(false);
+
+		if (!outcome.ok) {
 			setSubmitResult({
 				error: 'Verbindungsfehler. Bitte versuche es später erneut.',
 				success: false,
 			});
-		} finally {
-			setIsSubmitting(false);
+			return;
 		}
+
+		const result = outcome.value;
+
+		if (result?.serverError || result?.validationErrors) {
+			setSubmitResult({
+				error: result.serverError ?? 'Ein Fehler ist aufgetreten',
+				success: false,
+			});
+			return;
+		}
+
+		setSubmitResult({ success: true });
+		form.reset();
 	};
 
 	const onReset = () => {
@@ -167,7 +174,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 											name="email"
 										/>
 
-										{receiver && (
+										{hasReceiverSelect && (
 											<FormField
 												render={({ field }) => (
 													<SelectWithLabel

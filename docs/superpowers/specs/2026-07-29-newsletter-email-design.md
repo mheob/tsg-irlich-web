@@ -113,9 +113,9 @@ Alle Props haben Dummy-Defaults mit realistischen deutschen Vereinsinhalten, dam
 
 ## CleverReach-Platzhalter (fest verdrahtet)
 
-| Zweck | Syntax |
-| --- | --- |
-| Abmeldelink | `{UNSUBSCRIBE}` |
+| Zweck                  | Syntax             |
+| ---------------------- | ------------------ |
+| Abmeldelink            | `{UNSUBSCRIBE}`    |
 | Browser-/Onlineversion | `{ONLINE_VERSION}` |
 
 Platzhalter müssen in Großbuchstaben und geschweiften Klammern stehen. Quellen: [CleverReach Template Tags](https://eddytor.cleverreach.com/assets/docs/howto-templates.htm), [Personalisierung mit Platzhaltern](https://support.cleverreach.com/hc/de/articles/15790515075602-Newsletter-Personalisierung-mit-Platzhaltern).
@@ -126,26 +126,26 @@ Die Vorlage rendert in zwei Modi. `renderNewsletterHtml()` liefert fertiges Mail
 
 `bun run build:cleverreach` schreibt die Template-Variante nach `packages/email/dist/newsletter.cleverreach.html` (`dist` ist gitignored).
 
-| Bereich                     | Tag                                     | Modus      |
-| --------------------------- | --------------------------------------- | ---------- |
-| Ausgabezeile im Header      | `html`                                  | `textonly` |
-| Anrede                      | `html`                                  | `default`  |
-| Intro und Einleitungssätze  | `html`                                  | `default`  |
-| Alle Kicker                 | `html`                                  | `textonly` |
-| Titelstory-Bild             | `image`                                 | —          |
-| Titelstory-Headline/-Teaser | `html`                                  | `default`  |
-| Buttons (Titelstory, CTA)   | `html` um den `<a>`                     | `default`  |
-| Termine                     | `loop` mit `loopitem name="Termin"`     | —          |
-| Termin-Wochentag/-Tag/-Monat | `html`                                 | `textonly` |
-| Termin-Titel/-Meta          | `html`                                  | `default`  |
-| News                        | `loop` mit `loopitem name="News-Zeile"` | —          |
-| News-Bild                   | `image`                                 | —          |
-| News-Kategorie              | `html`                                  | `textonly` |
-| News-Titel/-Teaser/-Link    | `html`                                  | `default`  |
-| Sponsor                     | `loop` mit `loopitem name="Sponsor"`    | —          |
-| Sponsor-Logo                | `image`                                 | —          |
-| Sponsor-Text/-Link          | `html`                                  | `default`  |
-| CTA-Headline/-Text          | `html`                                  | `default`  |
+| Bereich                      | Tag                                     | Modus      |
+| ---------------------------- | --------------------------------------- | ---------- |
+| Ausgabezeile im Header       | `html`                                  | `textonly` |
+| Anrede                       | `html`                                  | `default`  |
+| Intro und Einleitungssätze   | `html`                                  | `default`  |
+| Alle Kicker                  | `html`                                  | `textonly` |
+| Titelstory-Bild              | `image`                                 | —          |
+| Titelstory-Headline/-Teaser  | `html`                                  | `default`  |
+| Buttons (Titelstory, CTA)    | `html` um den `<a>`                     | `default`  |
+| Termine                      | `loop` mit `loopitem name="Termin"`     | —          |
+| Termin-Wochentag/-Tag/-Monat | `html`                                  | `textonly` |
+| Termin-Titel/-Meta           | `html`                                  | `default`  |
+| News                         | `loop` mit `loopitem name="News-Zeile"` | —          |
+| News-Bild                    | `image`                                 | —          |
+| News-Kategorie               | `html`                                  | `textonly` |
+| News-Titel/-Teaser/-Link     | `html`                                  | `default`  |
+| Sponsor                      | `loop` mit `loopitem name="Sponsor"`    | —          |
+| Sponsor-Logo                 | `image`                                 | —          |
+| Sponsor-Text/-Link           | `html`                                  | `default`  |
+| CTA-Headline/-Text           | `html`                                  | `default`  |
 
 Bewusst **nicht** ausgezeichnet: Header-Logo und der komplette Footer. Damit kann die Redaktion Marke und Abmeldelink nicht zerstören.
 

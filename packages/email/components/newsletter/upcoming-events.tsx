@@ -31,11 +31,7 @@ export function UpcomingEvents({ events }: Readonly<UpcomingEventsProps>) {
 
 							<Row>
 								<Column valign="top" width="56">
-									<EventDateBadge
-										day={event.day}
-										month={event.month}
-										weekday={event.weekday}
-									/>
+									<EventDateBadge day={event.day} month={event.month} weekday={event.weekday} />
 								</Column>
 
 								<Column className="pl-[16px]" valign="middle">
