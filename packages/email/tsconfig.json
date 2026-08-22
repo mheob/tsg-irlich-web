@@ -8,7 +8,7 @@
 		"strict": true,
 		"strictNullChecks": true,
 		"skipLibCheck": true,
-		"types": ["bun"]
+		"types": ["node"]
 	},
 	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": ["node_modules", ".react-email"]

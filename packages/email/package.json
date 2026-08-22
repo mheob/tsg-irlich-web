@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"build": "tsc --noEmit",
-		"build:cleverreach": "bun scripts/build-cleverreach-template.ts",
+		"build:cleverreach": "tsx scripts/build-cleverreach-template.ts",
 		"build:preview": "email build",
 		"dev:email": "email dev --port 3001",
 		"export": "email export",
@@ -17,17 +17,19 @@
 		"lint:github": "oxlint --format=github"
 	},
 	"dependencies": {
-		"@react-email/ui": "^6.9.1",
+		"@react-email/ui": "^6.9.2",
 		"@tsgi-web/shared": "workspace:*",
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",
-		"react-email": "^6.9.1"
+		"react-email": "^6.9.2"
 	},
 	"devDependencies": {
+		"@types/node": "^24.13.3",
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.4",
-		"oxlint": "^1.77.0",
+		"oxlint": "^1.79.0",
 		"oxlint-tsgolint": "^7.0.2001",
+		"tsx": "^4.21.0",
 		"typescript": "^7.0.2"
 	}
 }

@@ -17,22 +17,22 @@ TSG Irlich website - a Next.js application with Sanity CMS for a German sports c
 
 ```bash
 # Development
-bun run dev                         # Start all apps in development mode
-bun run dev:email                   # Start React Email preview server
+pnpm run dev                         # Start all apps in development mode
+pnpm run dev:email                   # Start React Email preview server
 
 # Building
-bun run build                       # Build all apps
-bun run build:affected              # Build only affected packages
+pnpm run build                       # Build all apps
+pnpm run build:affected              # Build only affected packages
 
 # Linting & Code Quality
-bun run lint                        # Lint all apps
-bun run lint:affected               # Lint only affected packages
-bun run lint:root                   # Lint root directory files
+pnpm run lint                        # Lint all apps
+pnpm run lint:affected               # Lint only affected packages
+pnpm run lint:root                   # Lint root directory files
 
 # Type Checking & Generation
-bun run typecheck                   # Type check all apps
-bun run typegen:sanity              # Generate Sanity types for web app
-bun run typegen:routes              # Generate Next.js route types
+pnpm run typecheck                   # Type check all apps
+pnpm run typegen:sanity              # Generate Sanity types for web app
+pnpm run typegen:routes              # Generate Next.js route types
 ```
 
 ### Individual App Commands
@@ -40,27 +40,27 @@ bun run typegen:routes              # Generate Next.js route types
 ```bash
 # Web app (apps/web)
 cd apps/web
-bun run dev                         # Next.js dev server
-bun run build                       # Production build
-bun run start                       # Start production server
-bun run lint                        # ESLint with auto-fix
-bun run typecheck                   # Type check with TypeScript
-bun run typegen:sanity              # Generate Sanity types
-bun run typegen:routes              # Generate Next.js route types
+pnpm run dev                         # Next.js dev server
+pnpm run build                       # Production build
+pnpm run start                       # Start production server
+pnpm run lint                        # ESLint with auto-fix
+pnpm run typecheck                   # Type check with TypeScript
+pnpm run typegen:sanity              # Generate Sanity types
+pnpm run typegen:routes              # Generate Next.js route types
 
 # Studio app (apps/studio)
 cd apps/studio
-bun run dev                         # Sanity Studio development
-bun run build                       # Build Sanity Studio
-bun run deploy                      # Deploy studio to Sanity
-bun run extract-types               # Extract schema types for typegen
-bun run typecheck                   # Type check with TypeScript
+pnpm run dev                         # Sanity Studio development
+pnpm run build                       # Build Sanity Studio
+pnpm run deploy                      # Deploy studio to Sanity
+pnpm run extract-types               # Extract schema types for typegen
+pnpm run typecheck                   # Type check with TypeScript
 
 # Email package (packages/email)
 cd packages/email
-bun run dev:email                   # React Email preview server (port 3001)
-bun run build                       # Build email templates
-bun run export                      # Export email templates
+pnpm run dev:email                   # React Email preview server (port 3001)
+pnpm run build                       # Build email templates
+pnpm run export                      # Export email templates
 ```
 
 ## Architecture & Code Organization
@@ -68,9 +68,9 @@ bun run export                      # Export email templates
 ### Monorepo Structure
 
 - Built with **Turbo** for build orchestration and caching
-- **bun** as package manager with workspace support
+- **pnpm** as package manager with workspace support
 - Shared dependencies managed with explicit pinned versions
-- Node.js ^24.14.1 and Bun 1.3.11 required
+- Node.js ^24.19.0 and pnpm 11.22.0 required
 
 ### Web App (Next.js)
 
@@ -132,7 +132,7 @@ bun run export                      # Export email templates
 
 ```bash
 # After schema changes, always run from root:
-bun run extract-types && bun run typegen:sanity
+pnpm run extract-types && pnpm run typegen:sanity
 ```
 
 ## Environment & Configuration

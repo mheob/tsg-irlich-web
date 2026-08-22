@@ -20,7 +20,7 @@ A modern, full-stack website for TSG Irlich 1882, a German sports club (Turn- un
 
 ## 🏗️ Project Architecture
 
-This is a **monorepo** built with **Turbo** and **bun** containing:
+This is a **monorepo** built with **Turbo** and **pnpm** containing:
 
 - **`apps/web`** - Next.js 16 frontend application with App Router
 - **`apps/studio`** - Sanity Studio CMS for content management
@@ -55,7 +55,7 @@ This is a **monorepo** built with **Turbo** and **bun** containing:
 ### Development Tools
 
 - **Turbo** for build orchestration and caching
-- **bun** for package management with workspace support
+- **pnpm** for package management with workspace support
 - **ESLint** with custom configuration
 - **Prettier** with Tailwind CSS plugin
 - **Commitlint** for conventional commits
@@ -125,7 +125,7 @@ tsg-web/
 ### Prerequisites
 
 - **Node.js** ^24.14.1
-- **bun** 1.3.11 package manager
+- **pnpm** 11.22.0 package manager
 - **Git** for version control
 
 ### Installation
@@ -140,7 +140,7 @@ tsg-web/
 2. **Install dependencies**
 
    ```bash
-   bun install
+   pnpm install
    ```
 
 3. **Set up environment variables**
@@ -174,7 +174,7 @@ tsg-web/
 4. **Start development servers**
 
    ```bash
-   bun run dev
+   pnpm run dev
    ```
 
 ## 📜 Available Scripts
@@ -182,15 +182,15 @@ tsg-web/
 ### Root Commands
 
 ```bash
-bun run dev                    # Start all apps in development mode
-bun run dev:email              # Start React Email preview server
-bun run build                  # Build all apps for production
-bun run build:affected         # Build only affected packages
-bun run lint                   # Lint all apps
-bun run lint:affected          # Lint only affected packages
-bun run typecheck              # Type check all apps
-bun run typegen:sanity         # Generate Sanity types for web app
-bun run typegen:routes         # Generate Next.js route types
+pnpm run dev                    # Start all apps in development mode
+pnpm run dev:email              # Start React Email preview server
+pnpm run build                  # Build all apps for production
+pnpm run build:affected         # Build only affected packages
+pnpm run lint                   # Lint all apps
+pnpm run lint:affected          # Lint only affected packages
+pnpm run typecheck              # Type check all apps
+pnpm run typegen:sanity         # Generate Sanity types for web app
+pnpm run typegen:routes         # Generate Next.js route types
 ```
 
 ### Individual App Commands
@@ -199,32 +199,32 @@ bun run typegen:routes         # Generate Next.js route types
 
 ```bash
 cd apps/web
-bun run dev                    # Next.js dev server
-bun run build                  # Production build
-bun run start                  # Start production server
-bun run typecheck              # Type check with TypeScript
-bun run typegen:sanity         # Generate Sanity types
-bun run typegen:routes         # Generate Next.js route types
+pnpm run dev                    # Next.js dev server
+pnpm run build                  # Production build
+pnpm run start                  # Start production server
+pnpm run typecheck              # Type check with TypeScript
+pnpm run typegen:sanity         # Generate Sanity types
+pnpm run typegen:routes         # Generate Next.js route types
 ```
 
 #### Studio App (apps/studio)
 
 ```bash
 cd apps/studio
-bun run dev                    # Sanity Studio development
-bun run build                  # Build Sanity Studio
-bun run deploy                 # Deploy studio to Sanity
-bun run extract-types          # Extract schema types for typegen
-bun run typecheck              # Type check with TypeScript
+pnpm run dev                    # Sanity Studio development
+pnpm run build                  # Build Sanity Studio
+pnpm run deploy                 # Deploy studio to Sanity
+pnpm run extract-types          # Extract schema types for typegen
+pnpm run typecheck              # Type check with TypeScript
 ```
 
 #### Email Package (packages/email)
 
 ```bash
 cd packages/email
-bun run dev:email              # React Email preview server (port 3001)
-bun run build                  # Build email templates
-bun run export                 # Export email templates
+pnpm run dev:email              # React Email preview server (port 3001)
+pnpm run build                  # Build email templates
+pnpm run export                 # Export email templates
 ```
 
 ## 🏃‍♂️ Sports Groups & Departments

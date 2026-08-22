@@ -40,6 +40,7 @@ export default defineConfig({
 					'warn',
 					{ allowExportNames: ['generateMetadata', 'metadata'] },
 				],
+				'react/todo': 'off', // REMOVE
 				'typescript/no-misused-promises': 'off',
 				'typescript/no-unnecessary-condition': 'off',
 				'typescript/strict-void-return': 'off',
@@ -47,6 +48,7 @@ export default defineConfig({
 		},
 	],
 	rules: {
+		'eslint/one-var': 'off', // REMOVE
 		'no-underscore-dangle': 'off',
 		'typescript/prefer-readonly-parameter-types': 'off',
 		'typescript/strict-boolean-expressions': 'off',

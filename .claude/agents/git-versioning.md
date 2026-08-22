@@ -16,7 +16,7 @@ You are an expert Git versioning specialist with deep knowledge of conventional 
 
 ## Commit Message Convention
 
-This project uses **Commitizen** (`bun run commit` is available), so follow the **Conventional Commits** specification strictly:
+This project uses **Commitizen** (`pnpm run commit` is available), so follow the **Conventional Commits** specification strictly:
 
 ### Types:
 
@@ -86,9 +86,9 @@ When creating branches, use the pattern: `<type>/<short-description>` Examples: 
 
 Before creating commits, consider running relevant checks:
 
-- `bun run lint` - Ensure no linting errors
-- `bun run typecheck` - Ensure TypeScript compiles
-- `bun run test` - Ensure tests pass
+- `pnpm run lint` - Ensure no linting errors
+- `pnpm run typecheck` - Ensure TypeScript compiles
+- `pnpm run test` - Ensure tests pass
 
 If any checks fail, inform the user and suggest fixes before committing.
 

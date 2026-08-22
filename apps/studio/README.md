@@ -18,7 +18,7 @@ This Sanity Studio instance provides a custom content editing environment for th
 ### Prerequisites
 
 - **Node.js** ^24.14.1
-- **bun** 1.3.11 (package manager)
+- **pnpm** 11.22.0 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation
@@ -26,7 +26,7 @@ This Sanity Studio instance provides a custom content editing environment for th
 From the monorepo root:
 
 ```bash
-bun install
+pnpm install
 ```
 
 ### Development
@@ -35,11 +35,11 @@ Start the Sanity Studio development server:
 
 ```bash
 # From monorepo root (recommended)
-bun run dev
+pnpm run dev
 
 # Or from this directory
 cd apps/studio
-bun run dev
+pnpm run dev
 ```
 
 Open [http://localhost:3333](http://localhost:3333) to access the Studio interface.
@@ -167,8 +167,8 @@ After making changes to Sanity schemas, extract types for use in the web app:
 turbo extract-types && turbo typegen:sanity
 
 # Or manually
-cd apps/studio && bun run extract-types
-cd apps/web && bun run typegen:sanity
+cd apps/studio && pnpm run extract-types
+cd apps/web && pnpm run typegen:sanity
 ```
 
 The `extract-types` script:
@@ -199,7 +199,7 @@ These are loaded via `env.ts` and used in `sanity.config.ts`.
 Deploy the Studio to Sanity's hosting:
 
 ```bash
-bun run deploy
+pnpm run deploy
 ```
 
 This builds and deploys the Studio to `https://your-project.sanity.studio`.
@@ -209,7 +209,7 @@ This builds and deploys the Studio to `https://your-project.sanity.studio`.
 Deploy the GraphQL API schema:
 
 ```bash
-bun run deploy:graphql
+pnpm run deploy:graphql
 ```
 
 ### Deploy Schema Definitions
@@ -217,7 +217,7 @@ bun run deploy:graphql
 Deploy schema definitions separately:
 
 ```bash
-bun run deploy:schema
+pnpm run deploy:schema
 ```
 
 ## Plugins
@@ -274,12 +274,12 @@ The Studio is configured in `sanity.config.ts`:
 ## Development Workflow
 
 1. **Make schema changes** in `schemas/`
-2. **Test locally** with `bun run dev`
-3. **Extract types** with `bun run extract-types`
-4. **Generate web types** (from web app): `bun run typegen:sanity`
-5. **Run linting** (`bun run lint`)
-6. **Type check** (`bun run typecheck`)
-7. **Deploy** when ready (`bun run deploy`)
+2. **Test locally** with `pnpm run dev`
+3. **Extract types** with `pnpm run extract-types`
+4. **Generate web types** (from web app): `pnpm run typegen:sanity`
+5. **Run linting** (`pnpm run lint`)
+6. **Type check** (`pnpm run typecheck`)
+7. **Deploy** when ready (`pnpm run deploy`)
 
 ## Related Documentation
 
