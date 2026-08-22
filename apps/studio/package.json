@@ -20,7 +20,7 @@
 		"@sanity/assist": "^6.1.17",
 		"@sanity/icons": "^5.1.0",
 		"@sanity/locale-de-de": "^1.1.33",
-		"@sanity/ui": "^3.5.1",
+		"@sanity/ui": "^4.0.0",
 		"@sanity/vision": "^6.8.0",
 		"@tsgi-web/shared": "workspace:*",
 		"dotenv": "^17.4.2",
