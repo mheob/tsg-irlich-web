@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { cn } from '@tsgi-web/shared';
 
@@ -40,9 +41,7 @@ export default async function PrivacyPage() {
 	const page = await client.fetch<PrivacyPageQueryResult>(privacyPageQuery);
 
 	if (!page) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	return (

@@ -1,6 +1,7 @@
 // oxlint-disable react/no-unescaped-entities
 //
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { cn } from '@tsgi-web/shared';
 
@@ -73,9 +74,7 @@ export default async function NewsArticlePage({
 	]);
 
 	if (!article || !hero) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	const imageSource = urlForImage(article.featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);

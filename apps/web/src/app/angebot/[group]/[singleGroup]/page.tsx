@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { ContactPersons } from '@/components/section/contact-persons';
@@ -67,9 +68,7 @@ export default async function SingleGroupsPage({
 	const currentDepartment = getCurrentDepartment(group);
 
 	if (!currentDepartment) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	const [page, groupData, coaches] = await Promise.all([
@@ -85,9 +84,7 @@ export default async function SingleGroupsPage({
 	]);
 
 	if (!page || !groupData) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	const imageSource = urlForImage(groupData.featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);

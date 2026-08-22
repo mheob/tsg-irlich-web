@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { cn } from '@tsgi-web/shared';
 
@@ -42,9 +43,7 @@ export default async function ImprintPage() {
 	const page = await client.fetch<ImprintPageQueryResult>(imprintPageQuery);
 
 	if (!page) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	return (

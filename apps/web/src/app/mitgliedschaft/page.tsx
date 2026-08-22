@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
@@ -41,9 +42,7 @@ export default async function ContactPage() {
 	const page = await client.fetch<MembershipPageQueryResult>(membershipPageQuery);
 
 	if (!page.membership || !page.pricingSection) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	return (

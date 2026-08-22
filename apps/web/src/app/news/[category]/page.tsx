@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
@@ -93,9 +94,7 @@ export default async function NewsCategoryPage({
 	]);
 
 	if (!page || !category) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	return (

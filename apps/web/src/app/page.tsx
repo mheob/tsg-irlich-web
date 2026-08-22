@@ -1,6 +1,7 @@
 // oxlint-disable import/max-dependencies
 
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { EMPTY_ARRAY, shuffleArray } from '@tsgi-web/shared';
 
@@ -67,9 +68,7 @@ export default async function HomePage() {
 	]);
 
 	if (!page) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	const shuffledTestimonials =

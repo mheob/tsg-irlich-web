@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { EMPTY_ARRAY } from '@tsgi-web/shared';
 
@@ -54,9 +55,7 @@ export default async function GroupsPage({ params }: PageProps<'/angebot/[group]
 	const currentDepartment = getCurrentDepartment(group);
 
 	if (!currentDepartment) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	const [page, groups, offerPersons] = await Promise.all([
@@ -70,9 +69,7 @@ export default async function GroupsPage({ params }: PageProps<'/angebot/[group]
 	]);
 
 	if (!page) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	return (

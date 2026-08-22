@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
@@ -42,9 +43,7 @@ export default async function VereinPage() {
 	const page = await client.fetch<AboutUsPageQueryResult>(aboutUsPageQuery);
 
 	if (!page?.content.introSection) {
-		const { notFound } = await import('next/navigation');
 		notFound();
-		return null;
 	}
 
 	return (
