@@ -1,12 +1,16 @@
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
+import { VisualEditing } from 'next-sanity/visual-editing';
 import { Anton, Bebas_Neue, Inter } from 'next/font/google';
+import { draftMode } from 'next/headers';
 
 import { EMPTY_ARRAY, cn } from '@tsgi-web/shared';
 
 import Footer from '@/components/layout/footer';
+import { DisableDraftMode } from '@/components/with-logic/disable-draft-mode';
 import { Navigation } from '@/components/with-logic/navigation';
 import { client } from '@/lib/sanity/client';
+import { SanityLive } from '@/lib/sanity/live';
 import { mainNavigationQuery } from '@/lib/sanity/queries/main-navigation';
 import type { MainNavigationQueryResult } from '@/types/sanity.types.generated';
 import { getBaseUrl } from '@/utils/url';
@@ -51,6 +55,8 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const { isEnabled: isDraftMode } = await draftMode();
+
 	const mainNavigationQueryResults = await client
 		.fetch<MainNavigationQueryResult>(
 			mainNavigationQuery,
@@ -77,6 +83,13 @@ export default async function RootLayout({
 				<main className="grid flex-1">{children}</main>
 				<Footer />
 				<Analytics />
+				<SanityLive />
+				{isDraftMode && (
+					<>
+						<VisualEditing />
+						<DisableDraftMode />
+					</>
+				)}
 			</body>
 		</html>
 	);

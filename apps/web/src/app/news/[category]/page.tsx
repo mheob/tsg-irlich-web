@@ -1,23 +1,18 @@
 import type { Metadata } from 'next';
+import { stegaClean } from 'next-sanity';
 import { notFound } from 'next/navigation';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { SectionHeader } from '@/components/ui/section-header';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import {
 	newsArticlesPaginatedForCategoryQuery,
 	newsArticlesTotalForCategoryQuery,
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
 import { newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
-import type {
-	NewsArticlesPaginatedForCategoryQueryResult,
-	NewsArticlesTotalForCategoryQueryResult,
-	NewsCategoryQueryResult,
-	NewsOverviewCategoryPageQueryResult,
-} from '@/types/sanity.types.generated';
 
 import newsOverviewImage from '../_assets/news-overview.webp';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
@@ -49,8 +44,10 @@ export async function generateMetadata({
 }: Readonly<PageProps<'/news/[category]'>>): Promise<Metadata> {
 	const { category: categoryParameter } = await params;
 
-	const category = await client.fetch<NewsCategoryQueryResult>(newsCategoryQuery, {
-		slug: categoryParameter,
+	const { data: category } = await sanityFetch({
+		params: { slug: categoryParameter },
+		query: newsCategoryQuery,
+		stega: false,
 	});
 	if (!category) {
 		return {};
@@ -77,21 +74,19 @@ export default async function NewsCategoryPage({
 
 	const { currentPage, end, start } = getCurrentPage(seite);
 
-	const [page, totalArticles, category, paginatedArticles] = await Promise.all([
-		client.fetch<NewsOverviewCategoryPageQueryResult>(newsOverviewCategoryPageQuery),
-		client.fetch<NewsArticlesTotalForCategoryQueryResult>(newsArticlesTotalForCategoryQuery, {
-			category: categoryParameter,
-		}),
-		client.fetch<NewsCategoryQueryResult>(newsCategoryQuery, { slug: categoryParameter }),
-		client.fetch<NewsArticlesPaginatedForCategoryQueryResult>(
-			newsArticlesPaginatedForCategoryQuery,
-			{
-				category: categoryParameter,
-				end,
-				start,
-			},
-		),
-	]);
+	const [{ data: page }, { data: totalArticles }, { data: category }, { data: paginatedArticles }] =
+		await Promise.all([
+			sanityFetch({ query: newsOverviewCategoryPageQuery }),
+			sanityFetch({
+				params: { category: categoryParameter },
+				query: newsArticlesTotalForCategoryQuery,
+			}),
+			sanityFetch({ params: { slug: categoryParameter }, query: newsCategoryQuery }),
+			sanityFetch({
+				params: { category: categoryParameter, end, start },
+				query: newsArticlesPaginatedForCategoryQuery,
+			}),
+		]);
 
 	if (!page || !category) {
 		notFound();
@@ -128,7 +123,7 @@ export default async function NewsCategoryPage({
 				)}
 			</section>
 
-			<ContactPersons {...page.content.contactPersonsSection} />
+			<ContactPersons {...stegaClean(page.content.contactPersonsSection)} />
 
 			<Newsletter />
 		</>

@@ -1,22 +1,17 @@
 import type { Metadata } from 'next';
+import { stegaClean } from 'next-sanity';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { SectionHeader } from '@/components/ui/section-header';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import { newsOverviewPageQuery } from '@/lib/sanity/queries/pages/news-overview';
 import {
 	newsArticlesPaginatedQuery,
 	newsArticlesQuery,
 	newsArticlesTotalQuery,
 } from '@/lib/sanity/queries/shared/news';
-import type {
-	NewsArticlesPaginatedQueryResult,
-	NewsArticlesQueryResult,
-	NewsArticlesTotalQueryResult,
-	NewsOverviewPageQueryResult,
-} from '@/types/sanity.types.generated';
 
 import newsOverviewImage from './_assets/news-overview.webp';
 import { LatestNews } from './_sections/latest-news';
@@ -32,7 +27,7 @@ const HERO_IMAGE = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-	const page = await client.fetch<NewsOverviewPageQueryResult>(newsOverviewPageQuery);
+	const { data: page } = await sanityFetch({ query: newsOverviewPageQuery, stega: false });
 
 	if (!page) {
 		return {};
@@ -55,15 +50,19 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 	const pageString = Array.isArray(seite) ? seite[0] : seite;
 	const currentPage = Math.trunc(Number(pageString ?? '1'));
 
-	const [page, totalArticles, articles, paginatedArticles] = await Promise.all([
-		client.fetch<NewsOverviewPageQueryResult>(newsOverviewPageQuery),
-		client.fetch<NewsArticlesTotalQueryResult>(newsArticlesTotalQuery),
-		client.fetch<NewsArticlesQueryResult>(newsArticlesQuery),
-		client.fetch<NewsArticlesPaginatedQueryResult>(newsArticlesPaginatedQuery, {
-			end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
-			start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
-		}),
-	]);
+	const [{ data: page }, { data: totalArticles }, { data: articles }, { data: paginatedArticles }] =
+		await Promise.all([
+			sanityFetch({ query: newsOverviewPageQuery }),
+			sanityFetch({ query: newsArticlesTotalQuery }),
+			sanityFetch({ query: newsArticlesQuery }),
+			sanityFetch({
+				params: {
+					end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
+					start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
+				},
+				query: newsArticlesPaginatedQuery,
+			}),
+		]);
 
 	if (!page) {
 		return null;
@@ -89,7 +88,7 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 				</section>
 			</section>
 
-			<ContactPersons {...page.content.contactPersonsSection} />
+			<ContactPersons {...stegaClean(page.content.contactPersonsSection)} />
 
 			<Newsletter />
 		</>
