@@ -1,6 +1,9 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to coding agents (Claude Code and others) when working in this repository. Each app carries its own guide with the details that only apply there:
+
+- [`apps/web/AGENTS.md`](apps/web/AGENTS.md) — routes, data fetching, preview, forms
+- [`apps/studio/AGENTS.md`](apps/studio/AGENTS.md) — schemas, desk structure, presentation tool
 
 ## Project Overview
 
@@ -13,7 +16,7 @@ TSG Irlich website - a Next.js application with Sanity CMS for a German sports c
 
 ## Development Commands
 
-### Root Commands (use these for most tasks)
+Run these from the repository root; they fan out to the workspaces through Turbo. The per-app commands are listed in the app's own `AGENTS.md`.
 
 ```bash
 # Development
@@ -24,43 +27,21 @@ pnpm run dev:email                   # Start React Email preview server
 pnpm run build                       # Build all apps
 pnpm run build:affected              # Build only affected packages
 
-# Linting & Code Quality
-pnpm run lint                        # Lint all apps
+# Linting & Formatting
+pnpm run lint                        # Lint all apps plus the root files
+pnpm run lint:fix                    # Lint and autofix
 pnpm run lint:affected               # Lint only affected packages
 pnpm run lint:root                   # Lint root directory files
+pnpm run format                      # Format with oxfmt (format:check to only verify)
 
 # Type Checking & Generation
 pnpm run typecheck                   # Type check all apps
+pnpm run extract-types               # Extract the Sanity schema from the studio
 pnpm run typegen:sanity              # Generate Sanity types for web app
 pnpm run typegen:routes              # Generate Next.js route types
-```
 
-### Individual App Commands
-
-```bash
-# Web app (apps/web)
-cd apps/web
-pnpm run dev                         # Next.js dev server
-pnpm run build                       # Production build
-pnpm run start                       # Start production server
-pnpm run lint                        # ESLint with auto-fix
-pnpm run typecheck                   # Type check with TypeScript
-pnpm run typegen:sanity              # Generate Sanity types
-pnpm run typegen:routes              # Generate Next.js route types
-
-# Studio app (apps/studio)
-cd apps/studio
-pnpm run dev                         # Sanity Studio development
-pnpm run build                       # Build Sanity Studio
-pnpm run deploy                      # Deploy studio to Sanity
-pnpm run extract-types               # Extract schema types for typegen
-pnpm run typecheck                   # Type check with TypeScript
-
-# Email package (packages/email)
-cd packages/email
-pnpm run dev:email                   # React Email preview server (port 3001)
-pnpm run build                       # Build email templates
-pnpm run export                      # Export email templates
+# Security
+pnpm run cve                         # Audit the dependencies with cve-lite
 ```
 
 ## Architecture & Code Organization
@@ -94,6 +75,7 @@ pnpm run export                      # Export email templates
 - **GROQ queries** in `src/lib/sanity/queries/`
 - **Type generation** from Sanity schema to TypeScript
 - **Image optimization** with next/image and Sanity image URLs
+- **Preview**: the news routes are previewable through draft mode and the studio's presentation tool — see the two app guides before touching that wiring
 
 ## File & Naming Conventions
 
@@ -116,17 +98,16 @@ pnpm run export                      # Export email templates
 
 - Always use `defineField()` for every field and `defineType()` for types
 - Import `defineField`, `defineType`, `defineArrayMember` from 'sanity'
-- Include icons from lucide-react or sanity/icons
+- Include icons from `react-icons/ri` or `@sanity/icons`
 - German titles and descriptions for content editors
 - Follow the established schema folder structure
 
 ### GROQ Queries
 
-- Import `defineQuery` and `groq` from 'next-sanity'
-- Export queries as constants using `defineQuery`
-- **Do not expand images** in GROQ unless explicitly needed
-- Use reusable fragments with underscore prefix (`_richText`, `_buttons`)
+- Import `defineQuery` from 'next-sanity' and export every query as a constant
 - camelCase naming with "Query" suffix
+- **Do not expand images** in GROQ unless explicitly needed
+- Reusable fragments are plain `/* groq */` template strings in `apps/web/src/lib/sanity/queries/index.ts` and get interpolated into the queries
 
 ### Type Generation Workflow
 
@@ -146,6 +127,7 @@ pnpm run extract-types && pnpm run typegen:sanity
 - `SANITY_API_READ_TOKEN`
 - `SANITY_API_VERSION`
 - `SANITY_API_WRITE_TOKEN`
+- `SANITY_STUDIO_PREVIEW_URL` (website shown in the presentation tool, defaults to `http://localhost:3000`)
 
 **Web (.env.local)**:
 
@@ -161,10 +143,12 @@ pnpm run extract-types && pnpm run typegen:sanity
 - `VERCEL_OIDC_TOKEN`
 - `VERCEL_PROJECT_PRODUCTION_URL`
 
+A new variable also has to be registered in the root `turbo.json` (`globalEnv` or the matching task), otherwise Turbo hides it from the build.
+
 ### Code Quality Tools
 
-- **ESLint** with @mheob/eslint-config
-- **Prettier** with @mheob/prettier-config
+- **oxlint** with @mheob/oxlint-config (plus oxlint-tsgolint for type-aware rules)
+- **oxfmt** with @mheob/oxfmt-config
 - **Lefthook** for pre-commit hooks
 - **Commitizen** with czg for conventional commits
 
@@ -173,7 +157,6 @@ pnpm run extract-types && pnpm run typegen:sanity
 - **Server Components** by default, minimal client components
 - **Responsive design** with mobile-first Tailwind approach
 - **Image optimization** using next/image with WebP format
-- **Error boundaries** with error.tsx files
 - **Type-safe server actions** with next-safe-action
 - **Form validation** with react-hook-form + Zod
 - **No `try`/`catch`/`finally` in components or hooks** - the React Compiler bails out on a `finally` block. Await with `settle()` from `@tsgi-web/shared` and branch on `outcome.ok` instead.
