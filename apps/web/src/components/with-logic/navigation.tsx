@@ -120,7 +120,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					<div className="flex items-center gap-2 lg:hidden">
 						<button
 							aria-label="Toggle menu"
-							className="my-2 inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-gray-100"
+							className="my-2 inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-muted/40"
 							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onClick={() => {
 								setIsMobileOpen(!isMobileOpen);
@@ -145,7 +145,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					{navItemsWithActive.map((item) => (
 						<Link
 							className={cn(
-								'block rounded-md px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-gray-100 dark:hover:bg-gray-900',
+								'block rounded-md px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted/40',
 								{ 'bg-secondary/40': item.isActive },
 							)}
 							href={item.slug}
