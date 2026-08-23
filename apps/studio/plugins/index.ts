@@ -22,6 +22,7 @@ import singleGroupPage from '@/schemas/single-pages/single-group';
 import siteSettings from '@/schemas/singletons/site-settings';
 
 import { assistWithPresets } from './assist';
+import { presentationWithPreview } from './presentation';
 import { pageStructure, singletonPlugin } from './singleton';
 
 /**
@@ -32,6 +33,7 @@ import { pageStructure, singletonPlugin } from './singleton';
 export function getPlugins(): PluginOptions[] {
 	const plugins: PluginOptions[] = [
 		deDELocale(),
+		presentationWithPreview(),
 		structureTool({
 			structure: pageStructure([
 				homePage,

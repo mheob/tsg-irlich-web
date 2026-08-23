@@ -50,4 +50,11 @@ const projectId = assertValue(
  */
 const apiVersion = process.env.SANITY_STUDIO_VERSION ?? '2025-09-05';
 
-export { apiVersion, dataset, projectId };
+/**
+ * The URL of the website that is rendered inside the presentation tool.
+ * This is loaded from the `SANITY_STUDIO_PREVIEW_URL` environment variable,
+ * or defaults to 'http://localhost:3000' if the environment variable is missing.
+ */
+const previewUrl = process.env.SANITY_STUDIO_PREVIEW_URL ?? 'http://localhost:3000';
+
+export { apiVersion, dataset, previewUrl, projectId };
