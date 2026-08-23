@@ -18,7 +18,12 @@ const schemas = {
 	NEXT_PUBLIC_SANITY_STUDIO_URL: z.url().optional(),
 	NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 	RESEND_API_KEY: z.string().min(1, 'Missing RESEND_API_KEY'),
-	SANITY_API_READ_TOKEN: z.string().min(1, 'Missing SANITY_API_READ_TOKEN'),
+	// Only needed to read drafts in the preview. Without it the site still builds and serves
+	// published content, the draft mode just stays unavailable.
+	SANITY_API_READ_TOKEN: z.preprocess(
+		(value) => (value === '' ? undefined : value),
+		z.string().min(1, 'Missing SANITY_API_READ_TOKEN').optional(),
+	),
 	SANITY_REVALIDATE_SECRET: z.string().min(1, 'Missing SANITY_REVALIDATE_SECRET'),
 	VERCEL_OIDC_TOKEN: z.string().optional(),
 	VERCEL_PROJECT_PRODUCTION_URL: z.string().optional(),

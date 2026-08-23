@@ -1,6 +1,7 @@
 // oxlint-disable react/no-unescaped-entities
 //
 import type { Metadata } from 'next';
+import { stegaClean } from 'next-sanity';
 import { notFound } from 'next/navigation';
 
 import { cn } from '@tsgi-web/shared';
@@ -9,7 +10,7 @@ import { Hero } from '@/components/section/hero';
 import { PortableText } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
-import { client } from '@/lib/sanity/client';
+import { sanityFetch } from '@/lib/sanity/live';
 import {
 	newsArticleContentQuery,
 	newsArticleHeroQuery,
@@ -17,12 +18,6 @@ import {
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import { urlForImage } from '@/lib/sanity/utils';
-import type {
-	NewsArticleContentQueryResult,
-	NewsArticleHeroQueryResult,
-	SocialMediaQueryResult,
-	SponsorsQueryResult,
-} from '@/types/sanity.types';
 
 import { getOpenGraphImageOptions } from '../../_shared/utils';
 import { Author } from './_sections/author';
@@ -41,8 +36,10 @@ export async function generateMetadata({
 }: Readonly<PageProps<'/news/[category]/[slug]'>>): Promise<Metadata> {
 	const { slug } = await params;
 
-	const article = await client.fetch<NewsArticleContentQueryResult>(newsArticleContentQuery, {
-		slug,
+	const { data: article } = await sanityFetch({
+		params: { slug },
+		query: newsArticleContentQuery,
+		stega: false,
 	});
 
 	if (!article) {
@@ -66,12 +63,13 @@ export default async function NewsArticlePage({
 }: Readonly<PageProps<'/news/[category]/[slug]'>>) {
 	const { slug } = await params;
 
-	const [hero, article, socialMedia, sponsors] = await Promise.all([
-		client.fetch<NewsArticleHeroQueryResult>(newsArticleHeroQuery),
-		client.fetch<NewsArticleContentQueryResult>(newsArticleContentQuery, { slug }),
-		client.fetch<SocialMediaQueryResult>(socialMediaQuery),
-		client.fetch<SponsorsQueryResult>(sponsorsQuery),
-	]);
+	const [{ data: hero }, { data: article }, { data: socialMedia }, { data: sponsors }] =
+		await Promise.all([
+			sanityFetch({ query: newsArticleHeroQuery }),
+			sanityFetch({ params: { slug }, query: newsArticleContentQuery }),
+			sanityFetch({ query: socialMediaQuery }),
+			sanityFetch({ query: sponsorsQuery }),
+		]);
 
 	if (!article || !hero) {
 		notFound();
@@ -114,22 +112,26 @@ export default async function NewsArticlePage({
 								);
 							}
 							case 'grid': {
+								// The column counts are compared against string literals, so the stega
+								// encoding has to be removed before they can be used
+								const columns = stegaClean(block.columns);
+
 								return (
 									<div
 										className={cn(
 											'grid gap-4',
-											{ 'grid-cols-1': block.columns.small === '1' },
-											{ 'grid-cols-2': block.columns.small === '2' },
-											{ 'grid-cols-3': block.columns.small === '3' },
-											{ 'grid-cols-4': block.columns.small === '4' },
-											{ 'sm:grid-cols-1': block.columns.medium === '1' },
-											{ 'sm:grid-cols-2': block.columns.medium === '2' },
-											{ 'sm:grid-cols-3': block.columns.medium === '3' },
-											{ 'sm:grid-cols-4': block.columns.medium === '4' },
-											{ 'md:grid-cols-1': block.columns.large === '1' },
-											{ 'md:grid-cols-2': block.columns.large === '2' },
-											{ 'md:grid-cols-3': block.columns.large === '3' },
-											{ 'md:grid-cols-4': block.columns.large === '4' },
+											{ 'grid-cols-1': columns.small === '1' },
+											{ 'grid-cols-2': columns.small === '2' },
+											{ 'grid-cols-3': columns.small === '3' },
+											{ 'grid-cols-4': columns.small === '4' },
+											{ 'sm:grid-cols-1': columns.medium === '1' },
+											{ 'sm:grid-cols-2': columns.medium === '2' },
+											{ 'sm:grid-cols-3': columns.medium === '3' },
+											{ 'sm:grid-cols-4': columns.medium === '4' },
+											{ 'md:grid-cols-1': columns.large === '1' },
+											{ 'md:grid-cols-2': columns.large === '2' },
+											{ 'md:grid-cols-3': columns.large === '3' },
+											{ 'md:grid-cols-4': columns.large === '4' },
 										)}
 										key={block._key}
 									>

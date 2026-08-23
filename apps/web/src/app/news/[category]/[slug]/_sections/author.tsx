@@ -10,7 +10,7 @@ import { getLocaleDate } from '@/utils/time';
 const AUTHOR_IMAGE_SIZE = 64;
 
 interface AuthorProps extends ComponentPropsWithoutRef<'section'> {
-	article: NonNullable<NewsArticleContentQueryResult>;
+	article: Pick<NonNullable<NewsArticleContentQueryResult>, 'author' | 'publishedAt'>;
 }
 
 export function Author({ article, ...props }: Readonly<AuthorProps>) {

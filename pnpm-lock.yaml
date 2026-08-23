@@ -7,6 +7,7 @@ settings:
 overrides:
   '@sanity/sdk-react': 2.19.0
   js-yaml: '>=4.3.1'
+  postcss-selector-parser: ^6.1.3
   smol-toml: '>=1.6.1'
   undici: ^7.29.0
   uuid: '>=11.1.1'
@@ -6310,8 +6311,8 @@ packages:
       yaml:
         optional: true
 
-  postcss-selector-parser@6.0.10:
-    resolution: {integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==}
+  postcss-selector-parser@6.1.4:
+    resolution: {integrity: sha512-bIoJLOmjCO1S9XdY/DcnR5hJxvrDir1PbGChrzXG3vw0/FOliy/fA3dmdhQ441kah4gKv+TwckGzex6wNS5cnQ==}
     engines: {node: '>=4'}
 
   postcss@8.5.23:
@@ -11270,7 +11271,7 @@ snapshots:
 
   '@tailwindcss/typography@0.5.20(tailwindcss@4.3.3)':
     dependencies:
-      postcss-selector-parser: 6.0.10
+      postcss-selector-parser: 6.1.4
       tailwindcss: 4.3.3
 
   '@tanem/react-nprogress@5.0.63(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
@@ -13459,7 +13460,7 @@ snapshots:
       tsx: 4.23.12
       yaml: 2.9.0
 
-  postcss-selector-parser@6.0.10:
+  postcss-selector-parser@6.1.4:
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2

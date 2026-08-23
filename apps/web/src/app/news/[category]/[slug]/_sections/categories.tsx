@@ -5,7 +5,7 @@ import { badgeVariants } from '@/components/ui/badge';
 import type { NewsArticleContentQueryResult } from '@/types/sanity.types';
 
 interface CategoriesProps extends ComponentPropsWithoutRef<'section'> {
-	article: NonNullable<NewsArticleContentQueryResult>;
+	article: Pick<NonNullable<NewsArticleContentQueryResult>, 'categories'>;
 }
 
 export function Categories({ article, ...props }: Readonly<CategoriesProps>) {
