@@ -1,5 +1,6 @@
 import type { PluginOptions } from 'sanity';
-import { defineDocuments, defineLocations, presentationTool } from 'sanity/presentation';
+import type { DocumentLocationResolver } from 'sanity/presentation';
+import { defineDocuments, presentationTool } from 'sanity/presentation';
 
 import { previewUrl } from '@/env';
 
@@ -16,54 +17,64 @@ const mainDocuments = defineDocuments([
 ]);
 
 /**
- * Narrows a selected document field to a non-empty string.
- *
- * @param value - The selected field, which is untyped in a location resolver.
- * @returns The value if it is a non-empty string, otherwise `undefined`.
+ * Queries that resolve the pages a document appears on. They project the location state directly,
+ * because the `select` of `defineLocations` only understands plain field paths and chokes on the
+ * dereference that is needed to read the slug of a referenced category.
  */
-function getString(value: unknown): string | undefined {
-	return typeof value === 'string' && value.length > 0 ? value : undefined;
-}
-
-/**
- * Maps the documents to the pages of the website they appear on. This powers
- * the "Verwendet auf" links in the studio.
- */
-const locations = {
-	'news.article': defineLocations({
-		resolve: (document) => {
-			const category = getString(document?.category);
-			const slug = getString(document?.slug);
-			const title = getString(document?.title) ?? 'Ohne Titel';
-
-			return {
-				locations: [
-					...(category && slug ? [{ href: `/news/${category}/${slug}`, title }] : []),
-					{ href: '/news', title: 'Alle News' },
-				],
-			};
-		},
-		select: { category: 'categories[0]->slug.current', slug: 'slug.current', title: 'title' },
-	}),
-	'news.category': defineLocations({
-		resolve: (document) => {
-			const slug = getString(document?.slug);
-			const title = getString(document?.title) ?? 'Ohne Titel';
-
-			return {
-				locations: [
-					...(slug ? [{ href: `/news/${slug}`, title }] : []),
-					{ href: '/news', title: 'Alle News' },
-				],
-			};
-		},
-		select: { slug: 'slug.current', title: 'title' },
-	}),
+const LOCATION_QUERIES: Record<string, string> = {
+	'news.article': `*[_id == $id][0] {
+		"locations": array::compact([
+			select(
+				defined(slug.current) && defined(categories[0]->slug.current) => {
+					"href": "/news/" + categories[0]->slug.current + "/" + slug.current,
+					"title": coalesce(title, "Ohne Titel")
+				}
+			),
+			{ "href": "/news", "title": "Alle News" }
+		])
+	}`,
+	'news.category': `*[_id == $id][0] {
+		"locations": array::compact([
+			select(
+				defined(slug.current) => {
+					"href": "/news/" + slug.current,
+					"title": coalesce(title, "Ohne Titel")
+				}
+			),
+			{ "href": "/news", "title": "Alle News" }
+		])
+	}`,
 };
 
 /**
- * The presentation tool, which renders the website in an iframe next to the
- * document editor and lets the editors preview their drafts.
+ * Resolves the pages a document appears on for the "Verwendet auf" panel.
+ *
+ * @param params - The document that is currently open, plus the active perspective.
+ * @param context - The studio context, used to subscribe to the location query.
+ * @returns The document locations, or `null` for documents without their own page.
+ */
+const locations: DocumentLocationResolver = (params, context) => {
+	const { id, perspectiveStack, type, variant } = params;
+	const query = LOCATION_QUERIES[type];
+
+	if (!query) {
+		return null;
+	}
+
+	return context.documentStore.listenQuery(
+		query,
+		{ id },
+		{
+			perspective: perspectiveStack.length > 0 ? perspectiveStack : 'drafts',
+			tag: 'presentation.locations',
+			variant,
+		},
+	);
+};
+
+/**
+ * The presentation tool, which renders the website in an iframe next to the document editor and
+ * lets the editors preview their drafts.
  *
  * @returns The configured presentation tool.
  */
