@@ -33,7 +33,6 @@ import { pageStructure, singletonPlugin } from './singleton';
 export function getPlugins(): PluginOptions[] {
 	const plugins: PluginOptions[] = [
 		deDELocale(),
-		presentationWithPreview(),
 		structureTool({
 			structure: pageStructure([
 				homePage,
@@ -70,6 +69,9 @@ export function getPlugins(): PluginOptions[] {
 			siteSettings.name,
 		]),
 		media(),
+		// The order of the tools above defines the order of the studio's top navigation:
+		// Structure, Media, Presentation, Vision (development only) and the built-in Releases
+		presentationWithPreview(),
 		assistWithPresets(),
 	];
 
