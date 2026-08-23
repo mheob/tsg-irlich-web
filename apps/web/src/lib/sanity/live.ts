@@ -14,6 +14,9 @@ const readToken = env('SANITY_API_READ_TOKEN');
  * - `SanityLive` subscribes to content changes and revalidates the affected
  *   pages. It has to be rendered once in the root layout.
  *
+ * Without a read token the site only serves published content — the draft mode then cannot be
+ * enabled, which keeps builds without the secret (for example in CI) working.
+ *
  * @see https://www.sanity.io/docs/visual-editing/visual-editing-with-next-js-app-router
  */
 export const { sanityFetch, SanityLive } = defineLive({
