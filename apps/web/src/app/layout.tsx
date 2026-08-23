@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { VisualEditing } from 'next-sanity/visual-editing';
-import { Anton, Bebas_Neue, Inter } from 'next/font/google';
+import { Bebas_Neue, Inter, Oswald } from 'next/font/google';
 import { draftMode } from 'next/headers';
 
 import { EMPTY_ARRAY, cn } from '@tsgi-web/shared';
@@ -18,11 +18,11 @@ import { getBaseUrl } from '@/utils/url';
 // oxlint-disable-next-line import/no-unassigned-import
 import './globals.css';
 
-const anton = Anton({
+const oswald = Oswald({
 	display: 'swap',
 	subsets: ['latin'],
 	variable: '--font-sans-serif',
-	weight: ['400'],
+	weight: ['400', '700'],
 });
 
 const bebasNeue = Bebas_Neue({
@@ -75,7 +75,7 @@ export default async function RootLayout({
 		<html lang="de" data-scroll-behavior="smooth">
 			<body
 				className={cn(
-					`${anton.variable} ${bebasNeue.variable} ${inter.variable} antialiased`,
+					`${oswald.variable} ${bebasNeue.variable} ${inter.variable} antialiased`,
 					'flex h-screen flex-col',
 				)}
 			>
