@@ -12,17 +12,8 @@ import type {
 	SitemapNewsCategoriesQueryResult,
 } from '@/types/sanity.types';
 import { groupSections } from '@/utils/groups';
+import { getInternalHref } from '@/utils/links';
 import { getBaseUrl } from '@/utils/url';
-
-/** Map from Sanity group type to URL segment */
-const groupTypeToSlug: Record<string, string> = {
-	'group.children-gymnastics': 'kinderturnen',
-	'group.courses': 'kurse',
-	'group.dance': 'tanzen',
-	'group.other-sports': 'weitere-sportarten',
-	'group.soccer': 'fussball',
-	'group.taekwondo': 'taekwondo',
-};
 
 // oxlint-disable-next-line max-lines-per-function
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -97,14 +88,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	}));
 
 	// Individual group pages (e.g., /angebot/fussball/herren-1)
-	const groupPages: MetadataRoute.Sitemap = groups
-		.filter((group) => group.slug && groupTypeToSlug[group._type])
-		.map((group) => ({
-			changeFrequency: 'monthly' as const,
-			lastModified: group.lastModified ? new Date(group.lastModified) : undefined,
-			priority: 0.6,
-			url: `${baseUrl}/angebot/${groupTypeToSlug[group._type]}/${group.slug}`,
-		}));
+	const groupPages: MetadataRoute.Sitemap = groups.flatMap((group) => {
+		const href = getInternalHref(group);
+		if (!href) {
+			return [];
+		}
+
+		return [
+			{
+				changeFrequency: 'monthly' as const,
+				lastModified: group.lastModified ? new Date(group.lastModified) : undefined,
+				priority: 0.6,
+				url: `${baseUrl}${href}`,
+			},
+		];
+	});
 
 	// News category pages (e.g., /news/vereinsleben)
 	const newsCategoryPages: MetadataRoute.Sitemap = newsCategories
