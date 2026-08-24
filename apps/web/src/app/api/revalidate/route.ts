@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 import { env } from '@/lib/env';
+import { groupSections } from '@/utils/groups';
 
 interface WebhookBody {
 	_type: string;
@@ -13,7 +14,25 @@ interface WebhookBody {
 
 type RevalidateHandler = (slug?: string) => void;
 
+/**
+ * One handler per group document type, because the department segment of the URL is derived from
+ * the type and not from the slug of the group.
+ */
+const GROUP_REVALIDATION_MAP: Record<string, RevalidateHandler> = Object.fromEntries(
+	groupSections.map((section) => [
+		section._type,
+		(slug?: string) => {
+			revalidatePath('/angebot');
+			revalidatePath(section.slug);
+			if (slug) {
+				revalidatePath(`${section.slug}/${slug}`);
+			}
+		},
+	]),
+);
+
 const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
+	...GROUP_REVALIDATION_MAP,
 	aboutUs: () => {
 		revalidatePath('/verein');
 	},
@@ -22,12 +41,6 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	},
 	departmentsPage: () => {
 		revalidatePath('/angebot');
-	},
-	group: (slug) => {
-		revalidatePath('/angebot');
-		if (slug) {
-			revalidatePath(`/angebot/${slug}`);
-		}
 	},
 	home: () => {
 		revalidatePath('/');
@@ -41,14 +54,15 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	navigation: () => {
 		revalidatePath('/', 'layout');
 	},
-	'news.article': (slug) => {
+	// An article lives below its category, which the webhook payload does not carry, so the whole
+	// route has to be revalidated.
+	'news.article': () => {
 		revalidatePath('/news');
-		if (slug) {
-			revalidatePath(`/news/${slug}`);
-		}
+		revalidatePath('/news/[category]/[slug]', 'page');
 	},
 	'news.category': (slug) => {
 		revalidatePath('/news');
+		revalidatePath('/news/[category]/[slug]', 'page');
 		if (slug) {
 			revalidatePath(`/news/${slug}`);
 		}
@@ -73,11 +87,10 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	testimonial: () => {
 		revalidatePath('/');
 	},
-	venue: (slug) => {
+	// A venue is referenced by the training times of a group, and its slug is no part of any URL.
+	venue: () => {
 		revalidatePath('/angebot');
-		if (slug) {
-			revalidatePath(`/angebot/${slug}`);
-		}
+		revalidatePath('/angebot/[group]/[singleGroup]', 'page');
 	},
 };
 
