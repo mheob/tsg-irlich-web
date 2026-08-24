@@ -21,6 +21,8 @@ import type {
 import { PortableText as PortableTextPrimitive } from 'next-sanity';
 import NextLink from 'next/link';
 
+import { getInternalHref } from '@/utils/links';
+
 const Blockquote: PortableTextComponent<PortableTextBlock> = ({ children }) => (
 	<blockquote className="border-l-4 border-gray-300 pl-4">{children}</blockquote>
 );
@@ -89,13 +91,22 @@ const ExternalLink: PortableTextMarkComponent = ({ children, value }) => (
 	</a>
 );
 
-const InternalLink: PortableTextMarkComponent = async ({ children, value }) => {
-	// oxlint-disable-next-line typescript/no-unsafe-assignment typescript/no-unsafe-member-access
-	const slug = value?.link && typeof value.link.slug === 'string' ? value.link.slug : undefined;
-	if (!slug) {
+// oxlint-disable-next-line typescript/promise-function-async
+const InternalLink: PortableTextMarkComponent = ({ children, value }) => {
+	// The `target` is added to the mark by the `markDefsWithLinks` GROQ fragment.
+	// oxlint-disable-next-line typescript/no-unsafe-argument typescript/no-unsafe-member-access
+	const href = getInternalHref(value?.target);
+
+	if (!href) {
+		// `NODE_ENV` is set by Next.js itself and therefore not part of the validated env schema.
+		// oxlint-disable-next-line node/no-process-env
+		if (process.env.NODE_ENV === 'development') {
+			console.warn('Internal link without a resolvable target:', value);
+		}
 		return children;
 	}
-	return <NextLink href={`/${slug}`}>{children}</NextLink>;
+
+	return <NextLink href={href}>{children}</NextLink>;
 };
 
 const Link: PortableTextMarkComponent = async ({ children, value }) => {

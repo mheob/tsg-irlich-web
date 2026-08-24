@@ -1,5 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
+import { blockContent } from '@/lib/sanity/queries';
+
 /**
  * Query to get the privacy page
  *
@@ -8,20 +10,7 @@ import { defineQuery } from 'next-sanity';
 export const privacyPageQuery = defineQuery(`
 	*[_type == 'privacy'][0] {
 		...,
-		content {
-			...,
-			text[] {
-				...,
-				markDefs[] {
-					...,
-					_type == "internalLink" => {
-						"link": link-> {
-							_type,
-							"slug": slug.current
-						}
-					}
-				}
-			}
-		}
+		introText { ${blockContent} },
+		content { ${blockContent} }
 	}
 `);

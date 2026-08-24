@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { contactPersons } from '@/lib/sanity/queries';
+import { blockContent, contactPersons } from '@/lib/sanity/queries';
 
 /**
  * Query to get the membership page
@@ -11,6 +11,7 @@ export const membershipPageQuery = defineQuery(`
 	{
 		"membership": *[_type == 'membership'][0] {
 			...,
+			intro { ${blockContent} },
 			downloadsSection {
 				...,
 				downloads[] {

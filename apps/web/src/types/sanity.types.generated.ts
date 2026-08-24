@@ -104,37 +104,6 @@ export type GroupsPage = {
   };
 };
 
-export type DepartmentsPage = {
-  _id: string;
-  _type: "departmentsPage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  slug?: Slug;
-  title: string;
-  subtitle: string;
-  meta?: MetaFields;
-  content: {
-    departmentsSection: {
-      title: string;
-      subtitle: string;
-      intro?: string;
-    };
-    stats: Array<
-      {
-        _key: string;
-      } & Stats
-    >;
-    contactPersonsSection: ContactPersonsSection;
-  };
-};
-
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
 export type Spacer = {
   _type: "spacer";
   variant?: "default";
@@ -198,11 +167,11 @@ export type ContactReference = {
   [internalGroqTypeReferenceTo]?: "contact";
 };
 
-export type GroupAdminReference = {
+export type DepartmentsPageReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "group.admin";
+  [internalGroqTypeReferenceTo]?: "departmentsPage";
 };
 
 export type GroupChildrenGymnasticsReference = {
@@ -261,6 +230,13 @@ export type NewsArticleReference = {
   [internalGroqTypeReferenceTo]?: "news.article";
 };
 
+export type NewsCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "news.category";
+};
+
 export type NewsOverviewReference = {
   _ref: string;
   _type: "reference";
@@ -306,7 +282,7 @@ export type BlockContent = {
             | HomeReference
             | AboutUsReference
             | ContactReference
-            | GroupAdminReference
+            | DepartmentsPageReference
             | GroupChildrenGymnasticsReference
             | GroupCoursesReference
             | GroupDanceReference
@@ -315,6 +291,7 @@ export type BlockContent = {
             | GroupTaekwondoReference
             | MembershipReference
             | NewsArticleReference
+            | NewsCategoryReference
             | NewsOverviewReference
             | AccessibilityReference
             | PrivacyReference
@@ -416,7 +393,7 @@ export type InternalLink = {
     | HomeReference
     | AboutUsReference
     | ContactReference
-    | GroupAdminReference
+    | DepartmentsPageReference
     | GroupChildrenGymnasticsReference
     | GroupCoursesReference
     | GroupDanceReference
@@ -425,6 +402,7 @@ export type InternalLink = {
     | GroupTaekwondoReference
     | MembershipReference
     | NewsArticleReference
+    | NewsCategoryReference
     | NewsOverviewReference
     | AccessibilityReference
     | PrivacyReference
@@ -609,6 +587,13 @@ export type HonoraryMember = {
   memberSince: string;
 };
 
+export type GroupAdminReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "group.admin";
+};
+
 export type RoleReference = {
   _ref: string;
   _type: "reference";
@@ -662,22 +647,58 @@ export type Role = {
   email?: string;
 };
 
-export type NewsCategory = {
+export type GroupAdmin = {
   _id: string;
-  _type: "news.category";
+  _type: "group.admin";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title: string;
   slug: Slug;
+  email: string;
   meta?: MetaFields;
+  overviewTitle?: string;
+  sortOrder: number;
+  description: SimpleBlockContent;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "Fitness"
+    | "Fussball"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Pilates"
+    | "RopeSkipping"
+    | "SportInGebaeuden"
+    | "Sportakrobatik"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+  featuredImage: ExtendedImage;
+  images?: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  training?: {
+    trainingDescription?: SimpleBlockContent;
+    trainingTimes?: Array<
+      {
+        _key: string;
+      } & TrainingTime
+    >;
+  };
+  isSportGroup: boolean;
 };
 
-export type NewsCategoryReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "news.category";
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
 };
 
 export type AuthorReference = {
@@ -873,6 +894,17 @@ export type NewsOverview = {
   content: {
     contactPersonsSection: ContactPersonsSection;
   };
+};
+
+export type NewsCategory = {
+  _id: string;
+  _type: "news.category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  meta?: MetaFields;
 };
 
 export type GroupTaekwondo = {
@@ -1163,52 +1195,29 @@ export type GroupChildrenGymnastics = {
   isSportGroup: boolean;
 };
 
-export type GroupAdmin = {
+export type DepartmentsPage = {
   _id: string;
-  _type: "group.admin";
+  _type: "departmentsPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  slug?: Slug;
   title: string;
-  slug: Slug;
-  email: string;
+  subtitle: string;
   meta?: MetaFields;
-  overviewTitle?: string;
-  sortOrder: number;
-  description: SimpleBlockContent;
-  icon:
-    | "Badminton"
-    | "Bodenturnen"
-    | "Cheerleading"
-    | "Fitness"
-    | "Fussball"
-    | "Gymnastik"
-    | "Jujutsu"
-    | "Pilates"
-    | "RopeSkipping"
-    | "SportInGebaeuden"
-    | "Sportakrobatik"
-    | "StepAerobic"
-    | "Taekwondo"
-    | "Tanzen"
-    | "Turnen"
-    | "Wandern"
-    | "Yoga";
-  featuredImage: ExtendedImage;
-  images?: Array<
-    {
-      _key: string;
-    } & ExtendedImage
-  >;
-  training?: {
-    trainingDescription?: SimpleBlockContent;
-    trainingTimes?: Array<
+  content: {
+    departmentsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+    stats: Array<
       {
         _key: string;
-      } & TrainingTime
+      } & Stats
     >;
+    contactPersonsSection: ContactPersonsSection;
   };
-  isSportGroup: boolean;
 };
 
 export type Contact = {
@@ -1477,6 +1486,23 @@ export type SanityAssistSchemaTypeField = {
   >;
 };
 
+export type MediaFolderReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "media.folder";
+};
+
+export type MediaFolder = {
+  _id: string;
+  _type: "media.folder";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  parent?: MediaFolderReference;
+};
+
 export type MediaTag = {
   _id: string;
   _type: "media.tag";
@@ -1590,8 +1616,6 @@ export type AllSanitySchemaTypes =
   | NewsOverviewCategory
   | NewsArticlePage
   | GroupsPage
-  | DepartmentsPage
-  | Slug
   | Spacer
   | SanityImageAssetReference
   | MainImage
@@ -1600,7 +1624,7 @@ export type AllSanitySchemaTypes =
   | HomeReference
   | AboutUsReference
   | ContactReference
-  | GroupAdminReference
+  | DepartmentsPageReference
   | GroupChildrenGymnasticsReference
   | GroupCoursesReference
   | GroupDanceReference
@@ -1609,6 +1633,7 @@ export type AllSanitySchemaTypes =
   | GroupTaekwondoReference
   | MembershipReference
   | NewsArticleReference
+  | NewsCategoryReference
   | NewsOverviewReference
   | AccessibilityReference
   | PrivacyReference
@@ -1635,11 +1660,12 @@ export type AllSanitySchemaTypes =
   | Testimonial
   | Sponsors
   | HonoraryMember
+  | GroupAdminReference
   | RoleReference
   | Person
   | Role
-  | NewsCategory
-  | NewsCategoryReference
+  | GroupAdmin
+  | Slug
   | AuthorReference
   | NewsArticle
   | AboutUs
@@ -1648,13 +1674,14 @@ export type AllSanitySchemaTypes =
   | Privacy
   | Imprint
   | NewsOverview
+  | NewsCategory
   | GroupTaekwondo
   | GroupSoccer
   | GroupOtherSports
   | GroupDance
   | GroupCourses
   | GroupChildrenGymnastics
-  | GroupAdmin
+  | DepartmentsPage
   | Contact
   | TestimonialReference
   | Home
@@ -1672,6 +1699,8 @@ export type AllSanitySchemaTypes =
   | SanityAssistInstructionFieldRef
   | SanityAssistInstruction
   | SanityAssistSchemaTypeField
+  | MediaFolderReference
+  | MediaFolder
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -1684,17 +1713,102 @@ export type AllSanitySchemaTypes =
 
 // Source: src/lib/sanity/queries/main-navigation.ts
 // Variable: mainNavigationQuery
-// Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"slug": coalesce(link->slug.current, '#!'),			title		}	}
+// Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"link": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current },			title		}	}
 export type MainNavigationQueryResult = {
   mainNavigation: Array<
     | {
         _key: string;
-        slug: string | "#!";
+        link: null;
         title: null;
       }
     | {
         _key: string;
-        slug: "#!";
+        link:
+          | {
+              _type: "aboutUs";
+              slug: string | null;
+              category: null;
+            }
+          | {
+              _type: "accessibility";
+              slug: string | null;
+              category: null;
+            }
+          | {
+              _type: "contact";
+              slug: string | null;
+              category: null;
+            }
+          | {
+              _type: "departmentsPage";
+              slug: string | null;
+              category: null;
+            }
+          | {
+              _type: "group.children-gymnastics";
+              slug: string;
+              category: null;
+            }
+          | {
+              _type: "group.courses";
+              slug: string;
+              category: null;
+            }
+          | {
+              _type: "group.dance";
+              slug: string;
+              category: null;
+            }
+          | {
+              _type: "group.other-sports";
+              slug: string;
+              category: null;
+            }
+          | {
+              _type: "group.soccer";
+              slug: string;
+              category: null;
+            }
+          | {
+              _type: "group.taekwondo";
+              slug: string;
+              category: null;
+            }
+          | {
+              _type: "home";
+              slug: string | null;
+              category: null;
+            }
+          | {
+              _type: "imprint";
+              slug: string | null;
+              category: null;
+            }
+          | {
+              _type: "membership";
+              slug: string | null;
+              category: null;
+            }
+          | {
+              _type: "news.article";
+              slug: string;
+              category: string | null;
+            }
+          | {
+              _type: "news.category";
+              slug: string;
+              category: null;
+            }
+          | {
+              _type: "newsOverview";
+              slug: string | null;
+              category: null;
+            }
+          | {
+              _type: "privacy";
+              slug: string | null;
+              category: null;
+            };
         title: null;
       }
   >;
@@ -1702,7 +1816,7 @@ export type MainNavigationQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/about-us.ts
 // Variable: aboutUsPageQuery
-// Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
+// Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			introSection {				...,				intro {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }			},			chronicleSection {				...,				chronicleCategories[] {					...,					description {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }				}			},			visionSection {				...,				longVision {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }			},			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type AboutUsPageQueryResult = {
   _id: string;
   _type: "aboutUs";
@@ -1714,25 +1828,296 @@ export type AboutUsPageQueryResult = {
   subtitle: string;
   meta?: MetaFields;
   content: {
-    introSection?: {
+    introSection: {
       title: string;
       subtitle: string;
-      intro: BlockContent;
+      intro: {
+        _type: "blockContent";
+        text:
+          | Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "blockquote" | "h2" | "h3" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs:
+                | Array<never>
+                | Array<
+                    | {
+                        href?: string;
+                        _type: "externalLink";
+                        _key: string;
+                      }
+                    | {
+                        link:
+                          | AboutUsReference
+                          | AccessibilityReference
+                          | ContactReference
+                          | DepartmentsPageReference
+                          | GroupChildrenGymnasticsReference
+                          | GroupCoursesReference
+                          | GroupDanceReference
+                          | GroupOtherSportsReference
+                          | GroupSoccerReference
+                          | GroupTaekwondoReference
+                          | HomeReference
+                          | ImprintReference
+                          | MembershipReference
+                          | NewsArticleReference
+                          | NewsCategoryReference
+                          | NewsOverviewReference
+                          | PrivacyReference;
+                        _type: "internalLink";
+                        _key: string;
+                        target:
+                          | {
+                              _type: "aboutUs";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "accessibility";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "contact";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "departmentsPage";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.children-gymnastics";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.courses";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.dance";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.other-sports";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.soccer";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.taekwondo";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "home";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "imprint";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "membership";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "news.article";
+                              slug: string;
+                              category: string | null;
+                            }
+                          | {
+                              _type: "news.category";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "newsOverview";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "privacy";
+                              slug: string | null;
+                              category: null;
+                            };
+                      }
+                  >;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }>
+          | Array<never>;
+      };
       images: Array<
         {
           _key: string;
         } & ExtendedImage
       >;
-    };
+    } | null;
     chronicleSection: {
       title: string;
       subtitle: string;
       intro?: string;
-      chronicleCategories: Array<
-        {
-          _key: string;
-        } & ImageCard
-      >;
+      chronicleCategories: Array<{
+        _key: string;
+        _type: "imageCard";
+        title: string;
+        excerpt: string;
+        description: {
+          _type: "blockContent";
+          text:
+            | Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "blockquote" | "h2" | "h3" | "normal";
+                listItem?: "bullet" | "number";
+                markDefs:
+                  | Array<never>
+                  | Array<
+                      | {
+                          href?: string;
+                          _type: "externalLink";
+                          _key: string;
+                        }
+                      | {
+                          link:
+                            | AboutUsReference
+                            | AccessibilityReference
+                            | ContactReference
+                            | DepartmentsPageReference
+                            | GroupChildrenGymnasticsReference
+                            | GroupCoursesReference
+                            | GroupDanceReference
+                            | GroupOtherSportsReference
+                            | GroupSoccerReference
+                            | GroupTaekwondoReference
+                            | HomeReference
+                            | ImprintReference
+                            | MembershipReference
+                            | NewsArticleReference
+                            | NewsCategoryReference
+                            | NewsOverviewReference
+                            | PrivacyReference;
+                          _type: "internalLink";
+                          _key: string;
+                          target:
+                            | {
+                                _type: "aboutUs";
+                                slug: string | null;
+                                category: null;
+                              }
+                            | {
+                                _type: "accessibility";
+                                slug: string | null;
+                                category: null;
+                              }
+                            | {
+                                _type: "contact";
+                                slug: string | null;
+                                category: null;
+                              }
+                            | {
+                                _type: "departmentsPage";
+                                slug: string | null;
+                                category: null;
+                              }
+                            | {
+                                _type: "group.children-gymnastics";
+                                slug: string;
+                                category: null;
+                              }
+                            | {
+                                _type: "group.courses";
+                                slug: string;
+                                category: null;
+                              }
+                            | {
+                                _type: "group.dance";
+                                slug: string;
+                                category: null;
+                              }
+                            | {
+                                _type: "group.other-sports";
+                                slug: string;
+                                category: null;
+                              }
+                            | {
+                                _type: "group.soccer";
+                                slug: string;
+                                category: null;
+                              }
+                            | {
+                                _type: "group.taekwondo";
+                                slug: string;
+                                category: null;
+                              }
+                            | {
+                                _type: "home";
+                                slug: string | null;
+                                category: null;
+                              }
+                            | {
+                                _type: "imprint";
+                                slug: string | null;
+                                category: null;
+                              }
+                            | {
+                                _type: "membership";
+                                slug: string | null;
+                                category: null;
+                              }
+                            | {
+                                _type: "news.article";
+                                slug: string;
+                                category: string | null;
+                              }
+                            | {
+                                _type: "news.category";
+                                slug: string;
+                                category: null;
+                              }
+                            | {
+                                _type: "newsOverview";
+                                slug: string | null;
+                                category: null;
+                              }
+                            | {
+                                _type: "privacy";
+                                slug: string | null;
+                                category: null;
+                              };
+                        }
+                    >;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }>
+            | Array<never>;
+        };
+        image: ExtendedImage;
+      }>;
     };
     visionSection: {
       title: string;
@@ -1740,7 +2125,141 @@ export type AboutUsPageQueryResult = {
       intro?: string;
       ctaLongVision: string;
       longVisionTitle: string;
-      longVision: BlockContent;
+      longVision: {
+        _type: "blockContent";
+        text:
+          | Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "blockquote" | "h2" | "h3" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs:
+                | Array<never>
+                | Array<
+                    | {
+                        href?: string;
+                        _type: "externalLink";
+                        _key: string;
+                      }
+                    | {
+                        link:
+                          | AboutUsReference
+                          | AccessibilityReference
+                          | ContactReference
+                          | DepartmentsPageReference
+                          | GroupChildrenGymnasticsReference
+                          | GroupCoursesReference
+                          | GroupDanceReference
+                          | GroupOtherSportsReference
+                          | GroupSoccerReference
+                          | GroupTaekwondoReference
+                          | HomeReference
+                          | ImprintReference
+                          | MembershipReference
+                          | NewsArticleReference
+                          | NewsCategoryReference
+                          | NewsOverviewReference
+                          | PrivacyReference;
+                        _type: "internalLink";
+                        _key: string;
+                        target:
+                          | {
+                              _type: "aboutUs";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "accessibility";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "contact";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "departmentsPage";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.children-gymnastics";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.courses";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.dance";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.other-sports";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.soccer";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.taekwondo";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "home";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "imprint";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "membership";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "news.article";
+                              slug: string;
+                              category: string | null;
+                            }
+                          | {
+                              _type: "news.category";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "newsOverview";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "privacy";
+                              slug: string | null;
+                              category: null;
+                            };
+                      }
+                  >;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }>
+          | Array<never>;
+      };
     };
     stats: Array<
       {
@@ -1767,7 +2286,7 @@ export type AboutUsPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/accessibility.ts
 // Variable: accessibilityPageQuery
-// Query: *[_type == 'accessibility'][0] {		...,		content {			...,			text[] {				...,				markDefs[] {					...,					_type == "internalLink" => {						"link": link-> {							_type,							"slug": slug.current						}					}				}			}		}	}
+// Query: *[_type == 'accessibility'][0] {		...,		content {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }	}
 export type AccessibilityPageQueryResult = {
   _id: string;
   _type: "accessibility";
@@ -1780,95 +2299,138 @@ export type AccessibilityPageQueryResult = {
   meta?: MetaFields;
   content: {
     _type: "blockContent";
-    text: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h2" | "h3" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs: Array<
-        | {
-            href?: string;
-            _type: "externalLink";
+    text:
+      | Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
             _key: string;
-          }
-        | {
-            link:
-              | {
-                  _type: "aboutUs";
-                  slug: string | null;
-                }
-              | {
-                  _type: "accessibility";
-                  slug: string | null;
-                }
-              | {
-                  _type: "contact";
-                  slug: string | null;
-                }
-              | {
-                  _type: "group.admin";
-                  slug: string;
-                }
-              | {
-                  _type: "group.children-gymnastics";
-                  slug: string;
-                }
-              | {
-                  _type: "group.courses";
-                  slug: string;
-                }
-              | {
-                  _type: "group.dance";
-                  slug: string;
-                }
-              | {
-                  _type: "group.other-sports";
-                  slug: string;
-                }
-              | {
-                  _type: "group.soccer";
-                  slug: string;
-                }
-              | {
-                  _type: "group.taekwondo";
-                  slug: string;
-                }
-              | {
-                  _type: "home";
-                  slug: string | null;
-                }
-              | {
-                  _type: "imprint";
-                  slug: string | null;
-                }
-              | {
-                  _type: "membership";
-                  slug: string | null;
-                }
-              | {
-                  _type: "news.article";
-                  slug: string;
-                }
-              | {
-                  _type: "newsOverview";
-                  slug: string | null;
-                }
-              | {
-                  _type: "privacy";
-                  slug: string | null;
-                };
-            _type: "internalLink";
-            _key: string;
-          }
-      > | null;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
+          }>;
+          style?: "blockquote" | "h2" | "h3" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs:
+            | Array<never>
+            | Array<
+                | {
+                    href?: string;
+                    _type: "externalLink";
+                    _key: string;
+                  }
+                | {
+                    link:
+                      | AboutUsReference
+                      | AccessibilityReference
+                      | ContactReference
+                      | DepartmentsPageReference
+                      | GroupChildrenGymnasticsReference
+                      | GroupCoursesReference
+                      | GroupDanceReference
+                      | GroupOtherSportsReference
+                      | GroupSoccerReference
+                      | GroupTaekwondoReference
+                      | HomeReference
+                      | ImprintReference
+                      | MembershipReference
+                      | NewsArticleReference
+                      | NewsCategoryReference
+                      | NewsOverviewReference
+                      | PrivacyReference;
+                    _type: "internalLink";
+                    _key: string;
+                    target:
+                      | {
+                          _type: "aboutUs";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "accessibility";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "contact";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "departmentsPage";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.children-gymnastics";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.courses";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.dance";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.other-sports";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.soccer";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.taekwondo";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "home";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "imprint";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "membership";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "news.article";
+                          slug: string;
+                          category: string | null;
+                        }
+                      | {
+                          _type: "news.category";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "newsOverview";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                        };
+                  }
+              >;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }>
+      | Array<never>;
   };
 } | null;
 
@@ -2029,7 +2591,7 @@ export type HomePageTestimonialsQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/pages/imprint.ts
 // Variable: imprintPageQuery
-// Query: *[_type == 'imprint'][0] {		...,		"contactForm": contactForm {			"title": link->title,			"slug": link->slug.current		}	}
+// Query: *[_type == 'imprint'][0] {		...,		"contactForm": contactForm {			"title": link->title,			"link": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current }		}	}
 export type ImprintPageQueryResult = {
   _id: string;
   _type: "imprint";
@@ -2048,7 +2610,92 @@ export type ImprintPageQueryResult = {
   email: string;
   contactForm: {
     title: string;
-    slug: string | null;
+    link:
+      | {
+          _type: "aboutUs";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "accessibility";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "contact";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "departmentsPage";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "group.children-gymnastics";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.courses";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.dance";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.other-sports";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.soccer";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.taekwondo";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "home";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "imprint";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "membership";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "news.article";
+          slug: string;
+          category: string | null;
+        }
+      | {
+          _type: "news.category";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "newsOverview";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "privacy";
+          slug: string | null;
+          category: null;
+        };
   };
   responsible: string;
   consumerDisputeResolution: string;
@@ -2060,7 +2707,7 @@ export type ImprintPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/membership.ts
 // Variable: membershipPageQuery
-// Query: {		"membership": *[_type == 'membership'][0] {			...,			downloadsSection {				...,				downloads[] {					...,					document {						...,						asset->					}				}			},			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		},		"pricingSection": *[_type == 'home'][0].content.pricingSection	}
+// Query: {		"membership": *[_type == 'membership'][0] {			...,			intro {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) },			downloadsSection {				...,				downloads[] {					...,					document {						...,						asset->					}				}			},			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		},		"pricingSection": *[_type == 'home'][0].content.pricingSection	}
 export type MembershipPageQueryResult = {
   membership: {
     _id: string;
@@ -2072,7 +2719,141 @@ export type MembershipPageQueryResult = {
     title: string;
     subtitle: string;
     meta?: MetaFields;
-    intro: BlockContent;
+    intro: {
+      _type: "blockContent";
+      text:
+        | Array<{
+            children?: Array<{
+              marks?: Array<string>;
+              text?: string;
+              _type: "span";
+              _key: string;
+            }>;
+            style?: "blockquote" | "h2" | "h3" | "normal";
+            listItem?: "bullet" | "number";
+            markDefs:
+              | Array<never>
+              | Array<
+                  | {
+                      href?: string;
+                      _type: "externalLink";
+                      _key: string;
+                    }
+                  | {
+                      link:
+                        | AboutUsReference
+                        | AccessibilityReference
+                        | ContactReference
+                        | DepartmentsPageReference
+                        | GroupChildrenGymnasticsReference
+                        | GroupCoursesReference
+                        | GroupDanceReference
+                        | GroupOtherSportsReference
+                        | GroupSoccerReference
+                        | GroupTaekwondoReference
+                        | HomeReference
+                        | ImprintReference
+                        | MembershipReference
+                        | NewsArticleReference
+                        | NewsCategoryReference
+                        | NewsOverviewReference
+                        | PrivacyReference;
+                      _type: "internalLink";
+                      _key: string;
+                      target:
+                        | {
+                            _type: "aboutUs";
+                            slug: string | null;
+                            category: null;
+                          }
+                        | {
+                            _type: "accessibility";
+                            slug: string | null;
+                            category: null;
+                          }
+                        | {
+                            _type: "contact";
+                            slug: string | null;
+                            category: null;
+                          }
+                        | {
+                            _type: "departmentsPage";
+                            slug: string | null;
+                            category: null;
+                          }
+                        | {
+                            _type: "group.children-gymnastics";
+                            slug: string;
+                            category: null;
+                          }
+                        | {
+                            _type: "group.courses";
+                            slug: string;
+                            category: null;
+                          }
+                        | {
+                            _type: "group.dance";
+                            slug: string;
+                            category: null;
+                          }
+                        | {
+                            _type: "group.other-sports";
+                            slug: string;
+                            category: null;
+                          }
+                        | {
+                            _type: "group.soccer";
+                            slug: string;
+                            category: null;
+                          }
+                        | {
+                            _type: "group.taekwondo";
+                            slug: string;
+                            category: null;
+                          }
+                        | {
+                            _type: "home";
+                            slug: string | null;
+                            category: null;
+                          }
+                        | {
+                            _type: "imprint";
+                            slug: string | null;
+                            category: null;
+                          }
+                        | {
+                            _type: "membership";
+                            slug: string | null;
+                            category: null;
+                          }
+                        | {
+                            _type: "news.article";
+                            slug: string;
+                            category: string | null;
+                          }
+                        | {
+                            _type: "news.category";
+                            slug: string;
+                            category: null;
+                          }
+                        | {
+                            _type: "newsOverview";
+                            slug: string | null;
+                            category: null;
+                          }
+                        | {
+                            _type: "privacy";
+                            slug: string | null;
+                            category: null;
+                          };
+                    }
+                >;
+            level?: number;
+            _type: "block";
+            _key: string;
+          }>
+        | Array<never>;
+    };
     downloadsSection: {
       title: string;
       subtitle: string;
@@ -2168,7 +2949,7 @@ export type NewsArticleHeroQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleContentQuery
-// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[] {			...,			text[] {				...,				markDefs[] {					...,					_type == "internalLink" => {						"link": link-> {							_type,							"slug": slug.current						}					}				}			}		},		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		meta { metaTitle, metaDescription, openGraphImage},		publishedAt,		"slug": slug.current,		title,	}
+// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[] {			...,			_type == "blockContent" => {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) },			_type == "grid" => {				items[] {					...,					_type == "blockContent" => {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }				}			}		},		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		meta { metaTitle, metaDescription, openGraphImage},		publishedAt,		"slug": slug.current,		title,	}
 export type NewsArticleContentQueryResult = {
   author: {
     email: string;
@@ -2181,117 +2962,298 @@ export type NewsArticleContentQueryResult = {
     | {
         _key: string;
         _type: "blockContent";
-        text: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "blockquote" | "h2" | "h3" | "normal";
-          listItem?: "bullet" | "number";
-          markDefs: Array<
-            | {
-                href?: string;
-                _type: "externalLink";
+        text:
+          | Array<{
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
                 _key: string;
-              }
-            | {
-                link:
-                  | {
-                      _type: "aboutUs";
-                      slug: string | null;
-                    }
-                  | {
-                      _type: "accessibility";
-                      slug: string | null;
-                    }
-                  | {
-                      _type: "contact";
-                      slug: string | null;
-                    }
-                  | {
-                      _type: "group.admin";
-                      slug: string;
-                    }
-                  | {
-                      _type: "group.children-gymnastics";
-                      slug: string;
-                    }
-                  | {
-                      _type: "group.courses";
-                      slug: string;
-                    }
-                  | {
-                      _type: "group.dance";
-                      slug: string;
-                    }
-                  | {
-                      _type: "group.other-sports";
-                      slug: string;
-                    }
-                  | {
-                      _type: "group.soccer";
-                      slug: string;
-                    }
-                  | {
-                      _type: "group.taekwondo";
-                      slug: string;
-                    }
-                  | {
-                      _type: "home";
-                      slug: string | null;
-                    }
-                  | {
-                      _type: "imprint";
-                      slug: string | null;
-                    }
-                  | {
-                      _type: "membership";
-                      slug: string | null;
-                    }
-                  | {
-                      _type: "news.article";
-                      slug: string;
-                    }
-                  | {
-                      _type: "newsOverview";
-                      slug: string | null;
-                    }
-                  | {
-                      _type: "privacy";
-                      slug: string | null;
-                    };
-                _type: "internalLink";
-                _key: string;
-              }
-          > | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
+              }>;
+              style?: "blockquote" | "h2" | "h3" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs:
+                | Array<never>
+                | Array<
+                    | {
+                        href?: string;
+                        _type: "externalLink";
+                        _key: string;
+                      }
+                    | {
+                        link:
+                          | AboutUsReference
+                          | AccessibilityReference
+                          | ContactReference
+                          | DepartmentsPageReference
+                          | GroupChildrenGymnasticsReference
+                          | GroupCoursesReference
+                          | GroupDanceReference
+                          | GroupOtherSportsReference
+                          | GroupSoccerReference
+                          | GroupTaekwondoReference
+                          | HomeReference
+                          | ImprintReference
+                          | MembershipReference
+                          | NewsArticleReference
+                          | NewsCategoryReference
+                          | NewsOverviewReference
+                          | PrivacyReference;
+                        _type: "internalLink";
+                        _key: string;
+                        target:
+                          | {
+                              _type: "aboutUs";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "accessibility";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "contact";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "departmentsPage";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.children-gymnastics";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.courses";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.dance";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.other-sports";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.soccer";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "group.taekwondo";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "home";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "imprint";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "membership";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "news.article";
+                              slug: string;
+                              category: string | null;
+                            }
+                          | {
+                              _type: "news.category";
+                              slug: string;
+                              category: null;
+                            }
+                          | {
+                              _type: "newsOverview";
+                              slug: string | null;
+                              category: null;
+                            }
+                          | {
+                              _type: "privacy";
+                              slug: string | null;
+                              category: null;
+                            };
+                      }
+                  >;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }>
+          | Array<never>;
       }
     | {
         _key: string;
         _type: "blockquote";
         quote?: string;
         author?: string;
-        text: null;
       }
     | {
         _key: string;
         _type: "grid";
         title?: string;
         columns: Columns;
-        items?: Array<
-          | ({
+        items: Array<
+          | {
               _key: string;
-            } & BlockContent)
-          | ({
+              _type: "blockContent";
+              text:
+                | Array<{
+                    children?: Array<{
+                      marks?: Array<string>;
+                      text?: string;
+                      _type: "span";
+                      _key: string;
+                    }>;
+                    style?: "blockquote" | "h2" | "h3" | "normal";
+                    listItem?: "bullet" | "number";
+                    markDefs:
+                      | Array<never>
+                      | Array<
+                          | {
+                              href?: string;
+                              _type: "externalLink";
+                              _key: string;
+                            }
+                          | {
+                              link:
+                                | AboutUsReference
+                                | AccessibilityReference
+                                | ContactReference
+                                | DepartmentsPageReference
+                                | GroupChildrenGymnasticsReference
+                                | GroupCoursesReference
+                                | GroupDanceReference
+                                | GroupOtherSportsReference
+                                | GroupSoccerReference
+                                | GroupTaekwondoReference
+                                | HomeReference
+                                | ImprintReference
+                                | MembershipReference
+                                | NewsArticleReference
+                                | NewsCategoryReference
+                                | NewsOverviewReference
+                                | PrivacyReference;
+                              _type: "internalLink";
+                              _key: string;
+                              target:
+                                | {
+                                    _type: "aboutUs";
+                                    slug: string | null;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "accessibility";
+                                    slug: string | null;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "contact";
+                                    slug: string | null;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "departmentsPage";
+                                    slug: string | null;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "group.children-gymnastics";
+                                    slug: string;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "group.courses";
+                                    slug: string;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "group.dance";
+                                    slug: string;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "group.other-sports";
+                                    slug: string;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "group.soccer";
+                                    slug: string;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "group.taekwondo";
+                                    slug: string;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "home";
+                                    slug: string | null;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "imprint";
+                                    slug: string | null;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "membership";
+                                    slug: string | null;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "news.article";
+                                    slug: string;
+                                    category: string | null;
+                                  }
+                                | {
+                                    _type: "news.category";
+                                    slug: string;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "newsOverview";
+                                    slug: string | null;
+                                    category: null;
+                                  }
+                                | {
+                                    _type: "privacy";
+                                    slug: string | null;
+                                    category: null;
+                                  };
+                            }
+                        >;
+                    level?: number;
+                    _type: "block";
+                    _key: string;
+                  }>
+                | Array<never>;
+            }
+          | {
               _key: string;
-            } & MainImage)
-        >;
-        text: null;
+              _type: "mainImage";
+              asset?: SanityImageAssetReference;
+              media?: unknown;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt: string;
+              description?: string;
+            }
+        > | null;
       }
     | {
         _key: string;
@@ -2302,13 +3264,11 @@ export type NewsArticleContentQueryResult = {
         crop?: SanityImageCrop;
         alt: string;
         description?: string;
-        text: null;
       }
     | {
         _key: string;
         _type: "spacer";
         variant?: "default";
-        text: null;
       }
   > | null;
   categories: Array<{
@@ -2811,7 +3771,7 @@ export type OfferPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/privacy.ts
 // Variable: privacyPageQuery
-// Query: *[_type == 'privacy'][0] {		...,		content {			...,			text[] {				...,				markDefs[] {					...,					_type == "internalLink" => {						"link": link-> {							_type,							"slug": slug.current						}					}				}			}		}	}
+// Query: *[_type == 'privacy'][0] {		...,		introText {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) },		content {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }	}
 export type PrivacyPageQueryResult = {
   _id: string;
   _type: "privacy";
@@ -2822,101 +3782,278 @@ export type PrivacyPageQueryResult = {
   title: string;
   subtitle: string;
   meta?: MetaFields;
-  introText: BlockContent;
+  introText: {
+    _type: "blockContent";
+    text:
+      | Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "blockquote" | "h2" | "h3" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs:
+            | Array<never>
+            | Array<
+                | {
+                    href?: string;
+                    _type: "externalLink";
+                    _key: string;
+                  }
+                | {
+                    link:
+                      | AboutUsReference
+                      | AccessibilityReference
+                      | ContactReference
+                      | DepartmentsPageReference
+                      | GroupChildrenGymnasticsReference
+                      | GroupCoursesReference
+                      | GroupDanceReference
+                      | GroupOtherSportsReference
+                      | GroupSoccerReference
+                      | GroupTaekwondoReference
+                      | HomeReference
+                      | ImprintReference
+                      | MembershipReference
+                      | NewsArticleReference
+                      | NewsCategoryReference
+                      | NewsOverviewReference
+                      | PrivacyReference;
+                    _type: "internalLink";
+                    _key: string;
+                    target:
+                      | {
+                          _type: "aboutUs";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "accessibility";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "contact";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "departmentsPage";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.children-gymnastics";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.courses";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.dance";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.other-sports";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.soccer";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.taekwondo";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "home";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "imprint";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "membership";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "news.article";
+                          slug: string;
+                          category: string | null;
+                        }
+                      | {
+                          _type: "news.category";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "newsOverview";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                        };
+                  }
+              >;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }>
+      | Array<never>;
+  };
   address: string;
   phone?: string;
   email: string;
   content: {
     _type: "blockContent";
-    text: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h2" | "h3" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs: Array<
-        | {
-            href?: string;
-            _type: "externalLink";
+    text:
+      | Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
             _key: string;
-          }
-        | {
-            link:
-              | {
-                  _type: "aboutUs";
-                  slug: string | null;
-                }
-              | {
-                  _type: "accessibility";
-                  slug: string | null;
-                }
-              | {
-                  _type: "contact";
-                  slug: string | null;
-                }
-              | {
-                  _type: "group.admin";
-                  slug: string;
-                }
-              | {
-                  _type: "group.children-gymnastics";
-                  slug: string;
-                }
-              | {
-                  _type: "group.courses";
-                  slug: string;
-                }
-              | {
-                  _type: "group.dance";
-                  slug: string;
-                }
-              | {
-                  _type: "group.other-sports";
-                  slug: string;
-                }
-              | {
-                  _type: "group.soccer";
-                  slug: string;
-                }
-              | {
-                  _type: "group.taekwondo";
-                  slug: string;
-                }
-              | {
-                  _type: "home";
-                  slug: string | null;
-                }
-              | {
-                  _type: "imprint";
-                  slug: string | null;
-                }
-              | {
-                  _type: "membership";
-                  slug: string | null;
-                }
-              | {
-                  _type: "news.article";
-                  slug: string;
-                }
-              | {
-                  _type: "newsOverview";
-                  slug: string | null;
-                }
-              | {
-                  _type: "privacy";
-                  slug: string | null;
-                };
-            _type: "internalLink";
-            _key: string;
-          }
-      > | null;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
+          }>;
+          style?: "blockquote" | "h2" | "h3" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs:
+            | Array<never>
+            | Array<
+                | {
+                    href?: string;
+                    _type: "externalLink";
+                    _key: string;
+                  }
+                | {
+                    link:
+                      | AboutUsReference
+                      | AccessibilityReference
+                      | ContactReference
+                      | DepartmentsPageReference
+                      | GroupChildrenGymnasticsReference
+                      | GroupCoursesReference
+                      | GroupDanceReference
+                      | GroupOtherSportsReference
+                      | GroupSoccerReference
+                      | GroupTaekwondoReference
+                      | HomeReference
+                      | ImprintReference
+                      | MembershipReference
+                      | NewsArticleReference
+                      | NewsCategoryReference
+                      | NewsOverviewReference
+                      | PrivacyReference;
+                    _type: "internalLink";
+                    _key: string;
+                    target:
+                      | {
+                          _type: "aboutUs";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "accessibility";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "contact";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "departmentsPage";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.children-gymnastics";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.courses";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.dance";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.other-sports";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.soccer";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "group.taekwondo";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "home";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "imprint";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "membership";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "news.article";
+                          slug: string;
+                          category: string | null;
+                        }
+                      | {
+                          _type: "news.category";
+                          slug: string;
+                          category: null;
+                        }
+                      | {
+                          _type: "newsOverview";
+                          slug: string | null;
+                          category: null;
+                        }
+                      | {
+                          _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                        };
+                  }
+              >;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }>
+      | Array<never>;
   };
 } | null;
 
@@ -3132,16 +4269,16 @@ export type SitemapGroupsQueryResult = Array<
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n\t*[_type == 'site-settings'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t\"slug\": coalesce(link->slug.current, '#!'),\n\t\t\ttitle\n\t\t}\n\t}\n": MainNavigationQueryResult;
-    '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
-    '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AccessibilityPageQueryResult;
+    '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n },\n\t\t\ttitle\n\t\t}\n\t}\n': MainNavigationQueryResult;
+    '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
+    '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': AccessibilityPageQueryResult;
     '\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
     '\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
     "\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t}\n": HomePageTestimonialsQueryResult;
-    '\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\t"title": link->title,\n\t\t\t"slug": link->slug.current\n\t\t}\n\t}\n': ImprintPageQueryResult;
-    '\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
+    '\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\t"title": link->title,\n\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n }\n\t\t}\n\t}\n': ImprintPageQueryResult;
+    '\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
     "\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
-    '\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
+    '\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == "blockContent" => { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == "grid" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "blockContent" => { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
     '\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
     '\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
     '\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
@@ -3153,7 +4290,7 @@ declare module "@sanity/client" {
     "\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\tfeaturedImage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
     '\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
     '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
-    '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\ttext[] {\n\t\t\t\t...,\n\t\t\t\tmarkDefs[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "internalLink" => {\n\t\t\t\t\t\t"link": link-> {\n\t\t\t\t\t\t\t_type,\n\t\t\t\t\t\t\t"slug": slug.current\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': PrivacyPageQueryResult;
+    '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tintroText { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': PrivacyPageQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName, email },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
     "\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
     '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;

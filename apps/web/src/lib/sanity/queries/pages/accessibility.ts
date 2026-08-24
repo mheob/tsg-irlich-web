@@ -1,5 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
+import { blockContent } from '@/lib/sanity/queries';
+
 /**
  * Query to get the accessibility page
  *
@@ -8,20 +10,6 @@ import { defineQuery } from 'next-sanity';
 export const accessibilityPageQuery = defineQuery(`
 	*[_type == 'accessibility'][0] {
 		...,
-		content {
-			...,
-			text[] {
-				...,
-				markDefs[] {
-					...,
-					_type == "internalLink" => {
-						"link": link-> {
-							_type,
-							"slug": slug.current
-						}
-					}
-				}
-			}
-		}
+		content { ${blockContent} }
 	}
 `);
