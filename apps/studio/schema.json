@@ -456,172 +456,6 @@
 		}
 	},
 	{
-		"name": "departmentsPage",
-		"type": "document",
-		"attributes": {
-			"_id": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_type": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string",
-					"value": "departmentsPage"
-				}
-			},
-			"_createdAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_updatedAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_rev": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"slug": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "slug"
-				},
-				"optional": true
-			},
-			"title": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"subtitle": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"meta": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "metaFields"
-				},
-				"optional": true
-			},
-			"content": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "object",
-					"attributes": {
-						"departmentsSection": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "object",
-								"attributes": {
-									"title": {
-										"type": "objectAttribute",
-										"value": {
-											"type": "string"
-										},
-										"optional": false
-									},
-									"subtitle": {
-										"type": "objectAttribute",
-										"value": {
-											"type": "string"
-										},
-										"optional": false
-									},
-									"intro": {
-										"type": "objectAttribute",
-										"value": {
-											"type": "string"
-										},
-										"optional": true
-									}
-								}
-							},
-							"optional": false
-						},
-						"stats": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "array",
-								"of": {
-									"type": "object",
-									"attributes": {
-										"_key": {
-											"type": "objectAttribute",
-											"value": {
-												"type": "string"
-											}
-										}
-									},
-									"rest": {
-										"type": "inline",
-										"name": "stats"
-									}
-								}
-							},
-							"optional": false
-						},
-						"contactPersonsSection": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "inline",
-								"name": "contactPersonsSection"
-							},
-							"optional": false
-						}
-					}
-				},
-				"optional": false
-			}
-		}
-	},
-	{
-		"name": "slug",
-		"type": "type",
-		"value": {
-			"type": "object",
-			"attributes": {
-				"_type": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string",
-						"value": "slug"
-					}
-				},
-				"current": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					},
-					"optional": false
-				},
-				"source": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					},
-					"optional": true
-				}
-			}
-		}
-	},
-	{
 		"name": "spacer",
 		"type": "type",
 		"value": {
@@ -936,7 +770,7 @@
 	},
 	{
 		"type": "type",
-		"name": "group.admin.reference",
+		"name": "departmentsPage.reference",
 		"value": {
 			"type": "object",
 			"attributes": {
@@ -961,7 +795,7 @@
 					"optional": true
 				}
 			},
-			"dereferencesTo": "group.admin"
+			"dereferencesTo": "departmentsPage"
 		}
 	},
 	{
@@ -1202,6 +1036,36 @@
 				}
 			},
 			"dereferencesTo": "news.article"
+		}
+	},
+	{
+		"type": "type",
+		"name": "news.category.reference",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_ref": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					}
+				},
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "reference"
+					}
+				},
+				"_weak": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			},
+			"dereferencesTo": "news.category"
 		}
 	},
 	{
@@ -1462,7 +1326,7 @@
 																	},
 																	{
 																		"type": "inline",
-																		"name": "group.admin.reference"
+																		"name": "departmentsPage.reference"
 																	},
 																	{
 																		"type": "inline",
@@ -1495,6 +1359,10 @@
 																	{
 																		"type": "inline",
 																		"name": "news.article.reference"
+																	},
+																	{
+																		"type": "inline",
+																		"name": "news.category.reference"
 																	},
 																	{
 																		"type": "inline",
@@ -2108,7 +1976,7 @@
 							},
 							{
 								"type": "inline",
-								"name": "group.admin.reference"
+								"name": "departmentsPage.reference"
 							},
 							{
 								"type": "inline",
@@ -2141,6 +2009,10 @@
 							{
 								"type": "inline",
 								"name": "news.article.reference"
+							},
+							{
+								"type": "inline",
+								"name": "news.category.reference"
 							},
 							{
 								"type": "inline",
@@ -3198,6 +3070,36 @@
 	},
 	{
 		"type": "type",
+		"name": "group.admin.reference",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_ref": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					}
+				},
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "reference"
+					}
+				},
+				"_weak": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			},
+			"dereferencesTo": "group.admin"
+		}
+	},
+	{
+		"type": "type",
 		"name": "role.reference",
 		"value": {
 			"type": "object",
@@ -3495,7 +3397,7 @@
 		}
 	},
 	{
-		"name": "news.category",
+		"name": "group.admin",
 		"type": "document",
 		"attributes": {
 			"_id": {
@@ -3508,7 +3410,7 @@
 				"type": "objectAttribute",
 				"value": {
 					"type": "string",
-					"value": "news.category"
+					"value": "group.admin"
 				}
 			},
 			"_createdAt": {
@@ -3544,6 +3446,13 @@
 				},
 				"optional": false
 			},
+			"email": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
 			"meta": {
 				"type": "objectAttribute",
 				"value": {
@@ -3551,37 +3460,212 @@
 					"name": "metaFields"
 				},
 				"optional": true
+			},
+			"overviewTitle": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"sortOrder": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "number"
+				},
+				"optional": false
+			},
+			"description": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "simpleBlockContent"
+				},
+				"optional": false
+			},
+			"icon": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "union",
+					"of": [
+						{
+							"type": "string",
+							"value": "Badminton"
+						},
+						{
+							"type": "string",
+							"value": "Bodenturnen"
+						},
+						{
+							"type": "string",
+							"value": "Cheerleading"
+						},
+						{
+							"type": "string",
+							"value": "Fitness"
+						},
+						{
+							"type": "string",
+							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gymnastik"
+						},
+						{
+							"type": "string",
+							"value": "Jujutsu"
+						},
+						{
+							"type": "string",
+							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "RopeSkipping"
+						},
+						{
+							"type": "string",
+							"value": "SportInGebaeuden"
+						},
+						{
+							"type": "string",
+							"value": "Sportakrobatik"
+						},
+						{
+							"type": "string",
+							"value": "StepAerobic"
+						},
+						{
+							"type": "string",
+							"value": "Taekwondo"
+						},
+						{
+							"type": "string",
+							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Turnen"
+						},
+						{
+							"type": "string",
+							"value": "Wandern"
+						},
+						{
+							"type": "string",
+							"value": "Yoga"
+						}
+					]
+				},
+				"optional": false
+			},
+			"featuredImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
+			},
+			"images": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"_key": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								}
+							}
+						},
+						"rest": {
+							"type": "inline",
+							"name": "extendedImage"
+						}
+					}
+				},
+				"optional": true
+			},
+			"training": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "object",
+					"attributes": {
+						"trainingDescription": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "inline",
+								"name": "simpleBlockContent"
+							},
+							"optional": true
+						},
+						"trainingTimes": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "array",
+								"of": {
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "trainingTime"
+									}
+								}
+							},
+							"optional": true
+						}
+					}
+				},
+				"optional": true
+			},
+			"isSportGroup": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "boolean"
+				},
+				"optional": false
 			}
 		}
 	},
 	{
+		"name": "slug",
 		"type": "type",
-		"name": "news.category.reference",
 		"value": {
 			"type": "object",
 			"attributes": {
-				"_ref": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					}
-				},
 				"_type": {
 					"type": "objectAttribute",
 					"value": {
 						"type": "string",
-						"value": "reference"
+						"value": "slug"
 					}
 				},
-				"_weak": {
+				"current": {
 					"type": "objectAttribute",
 					"value": {
-						"type": "boolean"
+						"type": "string"
+					},
+					"optional": false
+				},
+				"source": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
 					},
 					"optional": true
 				}
-			},
-			"dereferencesTo": "news.category"
+			}
 		}
 	},
 	{
@@ -4679,6 +4763,66 @@
 					}
 				},
 				"optional": false
+			}
+		}
+	},
+	{
+		"name": "news.category",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "news.category"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"title": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"slug": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "slug"
+				},
+				"optional": false
+			},
+			"meta": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "metaFields"
+				},
+				"optional": true
 			}
 		}
 	},
@@ -6135,7 +6279,7 @@
 		}
 	},
 	{
-		"name": "group.admin",
+		"name": "departmentsPage",
 		"type": "document",
 		"attributes": {
 			"_id": {
@@ -6148,7 +6292,7 @@
 				"type": "objectAttribute",
 				"value": {
 					"type": "string",
-					"value": "group.admin"
+					"value": "departmentsPage"
 				}
 			},
 			"_createdAt": {
@@ -6169,6 +6313,14 @@
 					"type": "string"
 				}
 			},
+			"slug": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "slug"
+				},
+				"optional": true
+			},
 			"title": {
 				"type": "objectAttribute",
 				"value": {
@@ -6176,15 +6328,7 @@
 				},
 				"optional": false
 			},
-			"slug": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "slug"
-				},
-				"optional": false
-			},
-			"email": {
+			"subtitle": {
 				"type": "objectAttribute",
 				"value": {
 					"type": "string"
@@ -6199,149 +6343,42 @@
 				},
 				"optional": true
 			},
-			"overviewTitle": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": true
-			},
-			"sortOrder": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "number"
-				},
-				"optional": false
-			},
-			"description": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "simpleBlockContent"
-				},
-				"optional": false
-			},
-			"icon": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "union",
-					"of": [
-						{
-							"type": "string",
-							"value": "Badminton"
-						},
-						{
-							"type": "string",
-							"value": "Bodenturnen"
-						},
-						{
-							"type": "string",
-							"value": "Cheerleading"
-						},
-						{
-							"type": "string",
-							"value": "Fitness"
-						},
-						{
-							"type": "string",
-							"value": "Fussball"
-						},
-						{
-							"type": "string",
-							"value": "Gymnastik"
-						},
-						{
-							"type": "string",
-							"value": "Jujutsu"
-						},
-						{
-							"type": "string",
-							"value": "Pilates"
-						},
-						{
-							"type": "string",
-							"value": "RopeSkipping"
-						},
-						{
-							"type": "string",
-							"value": "SportInGebaeuden"
-						},
-						{
-							"type": "string",
-							"value": "Sportakrobatik"
-						},
-						{
-							"type": "string",
-							"value": "StepAerobic"
-						},
-						{
-							"type": "string",
-							"value": "Taekwondo"
-						},
-						{
-							"type": "string",
-							"value": "Tanzen"
-						},
-						{
-							"type": "string",
-							"value": "Turnen"
-						},
-						{
-							"type": "string",
-							"value": "Wandern"
-						},
-						{
-							"type": "string",
-							"value": "Yoga"
-						}
-					]
-				},
-				"optional": false
-			},
-			"featuredImage": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "extendedImage"
-				},
-				"optional": false
-			},
-			"images": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "array",
-					"of": {
-						"type": "object",
-						"attributes": {
-							"_key": {
-								"type": "objectAttribute",
-								"value": {
-									"type": "string"
-								}
-							}
-						},
-						"rest": {
-							"type": "inline",
-							"name": "extendedImage"
-						}
-					}
-				},
-				"optional": true
-			},
-			"training": {
+			"content": {
 				"type": "objectAttribute",
 				"value": {
 					"type": "object",
 					"attributes": {
-						"trainingDescription": {
+						"departmentsSection": {
 							"type": "objectAttribute",
 							"value": {
-								"type": "inline",
-								"name": "simpleBlockContent"
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									}
+								}
 							},
-							"optional": true
+							"optional": false
 						},
-						"trainingTimes": {
+						"stats": {
 							"type": "objectAttribute",
 							"value": {
 								"type": "array",
@@ -6357,20 +6394,21 @@
 									},
 									"rest": {
 										"type": "inline",
-										"name": "trainingTime"
+										"name": "stats"
 									}
 								}
 							},
-							"optional": true
+							"optional": false
+						},
+						"contactPersonsSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "inline",
+								"name": "contactPersonsSection"
+							},
+							"optional": false
 						}
 					}
-				},
-				"optional": true
-			},
-			"isSportGroup": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "boolean"
 				},
 				"optional": false
 			}
@@ -7868,6 +7906,88 @@
 					},
 					"optional": true
 				}
+			}
+		}
+	},
+	{
+		"type": "type",
+		"name": "media.folder.reference",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_ref": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					}
+				},
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "reference"
+					}
+				},
+				"_weak": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			},
+			"dereferencesTo": "media.folder"
+		}
+	},
+	{
+		"name": "media.folder",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "media.folder"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"name": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"parent": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "media.folder.reference"
+				},
+				"optional": true
 			}
 		}
 	},
