@@ -9,20 +9,17 @@ import { cn, TSGLogo } from '@tsgi-web/shared';
 
 import { Button } from '@/components/ui/button';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
+import { getInternalHref } from '@/utils/links';
 
-function getHref(slug: string) {
-	return slug === 'home' ? '/' : `/${slug}`;
-}
-
-function isActivePage(pathname: string, slug: string) {
-	return pathname === getHref(slug) || (pathname.startsWith(`/${slug}`) && slug !== 'home');
+function isActivePage(pathname: string, href: string) {
+	return pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
 }
 
 type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
 
-interface NavItemWithActive extends Omit<NavItem, 'slug'> {
+interface NavItemWithActive extends Omit<NavItem, 'link'> {
+	href: string;
 	isActive: boolean;
-	slug: string;
 }
 
 interface NavigationProps {
@@ -38,13 +35,12 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 	const navItemsWithActive: NavItemWithActive[] = useMemo(
 		() =>
 			navItems
-				.filter((item) => item.slug !== '#!')
 				// oxlint-disable-next-line oxc/no-map-spread
-				.map((item) => ({
-					...item,
-					isActive: isActivePage(pathname, item.slug),
-					slug: getHref(item.slug),
-				})),
+				.map(({ link, ...item }) => {
+					const href = getInternalHref(link);
+					return href ? { ...item, href, isActive: isActivePage(pathname, href) } : undefined;
+				})
+				.filter((item): item is NavItemWithActive => item !== undefined),
 		[navItems, pathname],
 	);
 
@@ -96,7 +92,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 									'flex h-16 items-center px-3 py-2 font-bold text-primary uppercase transition-colors hover:bg-secondary/40',
 									{ 'border-b-2 border-secondary': item.isActive },
 								)}
-								href={item.slug}
+								href={item.href}
 								key={item._key}
 							>
 								{item.title}
@@ -148,7 +144,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 								'block rounded-md px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted/40',
 								{ 'bg-secondary/40': item.isActive },
 							)}
-							href={item.slug}
+							href={item.href}
 							key={item._key}
 							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onClick={() => {

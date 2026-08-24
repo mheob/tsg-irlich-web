@@ -1,5 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
+import { internalLinkTarget } from '@/lib/sanity/queries';
+
 /**
  * Query to get the imprint page
  *
@@ -10,7 +12,7 @@ export const imprintPageQuery = defineQuery(`
 		...,
 		"contactForm": contactForm {
 			"title": link->title,
-			"slug": link->slug.current
+			"link": link-> { ${internalLinkTarget} }
 		}
 	}
 `);

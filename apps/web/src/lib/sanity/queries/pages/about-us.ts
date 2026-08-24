@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { contactPersons } from '@/lib/sanity/queries';
+import { blockContent, contactPersons } from '@/lib/sanity/queries';
 
 /**
  * Query to get the about us page
@@ -12,6 +12,21 @@ export const aboutUsPageQuery = defineQuery(`
 		...,
 		content {
 			...,
+			introSection {
+				...,
+				intro { ${blockContent} }
+			},
+			chronicleSection {
+				...,
+				chronicleCategories[] {
+					...,
+					description { ${blockContent} }
+				}
+			},
+			visionSection {
+				...,
+				longVision { ${blockContent} }
+			},
 			contactPersonsSection {
 				...,
 				contactPersons[]-> {

@@ -9,7 +9,7 @@
 		"deploy:graphql": "sanity graphql deploy",
 		"deploy:schema": "sanity schema deploy",
 		"dev": "sanity dev",
-		"extract-types": "sanity schema extract --enforce-required-fields",
+		"extract-types": "sanity schema extract --enforce-required-fields --force",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"lint:github": "oxlint --format=github",

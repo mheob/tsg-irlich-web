@@ -11,6 +11,7 @@ import { ContactLink } from '@/components/with-logic/contact-link';
 import { client } from '@/lib/sanity/client';
 import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
 import type { ImprintPageQueryResult } from '@/types/sanity.types.generated';
+import { getInternalHref } from '@/utils/links';
 
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
@@ -46,6 +47,8 @@ export default async function ImprintPage() {
 		notFound();
 	}
 
+	const contactFormHref = getInternalHref(page.contactForm.link);
+
 	return (
 		<>
 			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
@@ -74,7 +77,11 @@ export default async function ImprintPage() {
 						E-Mail: <ContactLink href={`mailto:${page.email}`} />
 						<br />
 						Kontaktformular:{' '}
-						<Link href={page.contactForm.slug ?? '/kontakt'}>{page.contactForm.title}</Link>
+						{contactFormHref ? (
+							<Link href={contactFormHref}>{page.contactForm.title}</Link>
+						) : (
+							page.contactForm.title
+						)}
 					</p>
 
 					<h3>Redaktionell verantwortlich</h3>

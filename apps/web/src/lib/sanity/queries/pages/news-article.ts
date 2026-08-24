@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { featuredImage, meta } from '@/lib/sanity/queries';
+import { blockContent, featuredImage, meta } from '@/lib/sanity/queries';
 
 /**
  * Query to get the news article hero
@@ -31,16 +31,11 @@ const newsArticleContentQuery = defineQuery(`
 		},
 		body[] {
 			...,
-			text[] {
-				...,
-				markDefs[] {
+			_type == "blockContent" => { ${blockContent} },
+			_type == "grid" => {
+				items[] {
 					...,
-					_type == "internalLink" => {
-						"link": link-> {
-							_type,
-							"slug": slug.current
-						}
-					}
+					_type == "blockContent" => { ${blockContent} }
 				}
 			}
 		},
