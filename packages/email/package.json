@@ -14,7 +14,10 @@
 		"export": "email export",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
-		"lint:github": "oxlint --format=github"
+		"lint:github": "oxlint --format=github",
+		"test": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:watch": "vitest"
 	},
 	"dependencies": {
 		"@react-email/ui": "^6.9.2",
@@ -24,12 +27,16 @@
 		"react-email": "^6.9.2"
 	},
 	"devDependencies": {
+		"@react-email/render": "^2.1.0",
 		"@types/node": "^24.13.3",
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.4",
+		"@vitejs/plugin-react": "^6.1.0",
+		"@vitest/coverage-v8": "^4.1.11",
 		"oxlint": "^1.79.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"tsx": "^4.21.0",
-		"typescript": "^7.0.2"
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.11"
 	}
 }
