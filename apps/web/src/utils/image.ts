@@ -1,5 +1,5 @@
-import { urlForImage } from '@/lib/sanity/utils';
-import type { GroupDance } from '@/types/sanity.types';
+import { urlForImage, urlForImageMax } from '@/lib/sanity/utils';
+import type { SanityImageReference } from '@/types/sanity.types';
 
 /**
  * Generates initials from a person's first and last name.
@@ -27,48 +27,74 @@ function getInitials(firstName: string, lastName: string): string {
 }
 
 /**
- * Represents an item with image and corresponding URLs used for display and full-resolution.
+ * Width the full screen version of a gallery image is scaled down to.
+ *
+ * The image keeps its original aspect ratio, so this is an upper bound and not a crop.
  */
-interface ImageItem {
-	/** The image object from the Sanity GroupDance images array. */
-	image: NonNullable<GroupDance['images']>[number];
-	/** The URL for the display-optimized version of the image. */
-	src: string;
-	/** The URL for the full-resolution version of the image. */
-	srcFull: string;
-}
+const FULL_IMAGE_WIDTH = 2560;
 
 /**
- * Generates an array of image items containing image references and their URLs for display and full screen.
+ * Builds the image data a gallery and its lightbox need.
  *
- * @param images - The array of images from a GroupDance item (may be undefined or empty)
- * @param height - Optional desired height for the display image URL
- * @param width - Optional desired width for the display image URL
- * @returns An array of ImageItem objects, or an empty array if images are missing/empty
+ * @param images - The array of images from a Sanity document (may be undefined or empty)
+ * @param height - Optional height for the thumbnail URL
+ * @param width - Optional width for the thumbnail URL. Falls back to the height
+ * @returns An array of GalleryImage objects, or an empty array if images are missing/empty
  *
  * @example
  * ```ts
- * const items = getImageItems(gallery, 700, 1244);
- * // items[0].src is a display-size image, items[0].srcFull is a full-res image
+ * const images = getGalleryImages(gallery, 700, 1244);
+ * // images[0].src is the thumbnail, images[0].srcFull the uncropped full screen version
  * ```
  */
-function getImageItems(images: GroupDance['images'], height?: number, width?: number): ImageItem[] {
-	const FULL_IMAGE_SIZE = { height: 1440, width: 2560 };
-
+function getGalleryImages(
+	images: GalleryImageSource[] | null | undefined,
+	height?: number,
+	width?: number,
+): GalleryImage[] {
 	if (!images || images.length === 0) {
 		return [];
 	}
 
-	const items = [];
+	const galleryImages: GalleryImage[] = [];
+
 	for (const image of images) {
-		const source = urlForImage(image, height, width);
-		const sourceFull = urlForImage(image, FULL_IMAGE_SIZE.height, FULL_IMAGE_SIZE.width);
-		if (source && sourceFull) {
-			items.push({ image, src: source, srcFull: sourceFull });
+		const src = urlForImage(image, height, width);
+		const srcFull = urlForImageMax(image, FULL_IMAGE_WIDTH);
+
+		if (src && srcFull) {
+			galleryImages.push({
+				alt: image.alt,
+				caption: image.description,
+				key: image._key,
+				src,
+				srcFull,
+			});
 		}
 	}
 
-	return items;
+	return galleryImages;
 }
 
-export { getInitials, getImageItems };
+/** An image of a Sanity document that can be shown in a gallery. */
+type GalleryImageSource = SanityImageReference & {
+	_key: string;
+	description?: string;
+};
+
+/** An image prepared for the gallery grid and the lightbox. */
+interface GalleryImage {
+	/** Alternative text of the image. */
+	alt: string;
+	/** Optional caption, shown below the image in the lightbox. */
+	caption?: string;
+	/** Stable key of the image. */
+	key: string;
+	/** URL of the thumbnail shown in the grid. */
+	src: string;
+	/** URL of the full screen version shown in the lightbox. */
+	srcFull: string;
+}
+
+export { getInitials, getGalleryImages };
+export type { GalleryImage, GalleryImageSource };

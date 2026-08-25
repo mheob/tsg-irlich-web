@@ -53,7 +53,19 @@ function getFileSize(sanitySize?: number): string {
 const imageBuilder = createImageUrlBuilder(client);
 
 /**
+ * Quality of the images requested from Sanity.
+ *
+ * Sanity only delivers the source image for the Next.js image optimizer, which re-encodes it to
+ * AVIF or WebP afterwards. A quality above Sanity's default of 75 keeps that second encoding from
+ * compounding compression artifacts.
+ */
+const SOURCE_QUALITY = 90;
+
+/**
  * Generates a URL for a Sanity image with optional dimensions.
+ *
+ * The format is intentionally left to Sanity (and therefore matches the source asset), because the
+ * Next.js image optimizer converts the image to AVIF or WebP before it reaches the browser.
  *
  * @param image - The Sanity image object to generate a URL for
  * @param height - Optional height to resize the image to
@@ -68,7 +80,7 @@ const imageBuilder = createImageUrlBuilder(client);
  * // Get URL with square dimensions
  * const squareUrl = urlForImage(sanityImage, 300);
  *
- * // Get URL with auto formatting
+ * // Get URL scaled to fit the original aspect ratio
  * const autoUrl = urlForImage(sanityImage);
  * ```
  */
@@ -86,9 +98,34 @@ const urlForImage = (
 				.width(width ?? height)
 				.height(height)
 				.fit('crop')
-				.format('webp')
+				.quality(SOURCE_QUALITY)
 				.url()
-		: imageBuilder.image(image).auto('format').fit('max').format('webp').url();
+		: imageBuilder.image(image).fit('max').quality(SOURCE_QUALITY).url();
 };
 
-export { getDownloadFileUrl, getFileSize, urlForImage };
+/**
+ * Generates a URL for a Sanity image that is scaled down to fit a maximum width.
+ *
+ * Unlike {@link urlForImage} this never crops: the original aspect ratio is preserved, which makes
+ * it the right choice for full screen views like the lightbox.
+ *
+ * @param image - The Sanity image object to generate a URL for
+ * @param maxWidth - The width the image is scaled down to, if it is larger
+ * @returns A URL string for the processed image, or undefined if image is invalid
+ *
+ * @example
+ * ```ts
+ * const fullSizeUrl = urlForImageMax(sanityImage, 2560);
+ * ```
+ */
+const urlForImageMax = (
+	image: null | SanityImage | SanityImageReference | undefined,
+	maxWidth: number,
+): string | undefined => {
+	if (!image?.asset?._ref) {
+		return undefined;
+	}
+	return imageBuilder.image(image).width(maxWidth).fit('max').quality(SOURCE_QUALITY).url();
+};
+
+export { getDownloadFileUrl, getFileSize, urlForImage, urlForImageMax };

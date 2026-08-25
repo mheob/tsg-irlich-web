@@ -1,12 +1,16 @@
 // oxlint-disable react/no-unescaped-entities
+// oxlint-disable import/max-dependencies
 //
 import type { Metadata } from 'next';
 import { stegaClean } from 'next-sanity';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import { cn } from '@tsgi-web/shared';
 
 import { Hero } from '@/components/section/hero';
+import { Gallery } from '@/components/ui/gallery';
+import { LightboxGallery, LightboxTrigger } from '@/components/ui/lightbox';
 import { PortableText } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
 import { ZoomableImage } from '@/components/ui/zoomable-image';
@@ -18,6 +22,7 @@ import {
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import { urlForImage } from '@/lib/sanity/utils';
+import { getGalleryImages } from '@/utils/image';
 
 import { getOpenGraphImageOptions } from '../../_shared/utils';
 import { Author } from './_sections/author';
@@ -26,10 +31,7 @@ import { SocialMedia } from './_sections/social-media';
 import { Sponsors } from './_sections/sponsors';
 
 const IMAGE_SIZE = { height: 600, width: 1920 };
-const ZOOMABLE_IMAGE_SIZE = {
-	large: { height: 1440, width: 2560 },
-	small: { height: 450, width: 800 },
-};
+const CONTENT_IMAGE_SIZE = { height: 450, width: 800 };
 
 export async function generateMetadata({
 	params,
@@ -111,90 +113,90 @@ export default async function NewsArticlePage({
 									</blockquote>
 								);
 							}
+							case 'gallery': {
+								return (
+									<Gallery
+										className="not-prose my-10"
+										images={getGalleryImages(
+											block.images,
+											CONTENT_IMAGE_SIZE.height,
+											CONTENT_IMAGE_SIZE.width,
+										)}
+										key={block._key}
+										title={block.title}
+									/>
+								);
+							}
 							case 'grid': {
 								// The column counts are compared against string literals, so the stega
 								// encoding has to be removed before they can be used
 								const columns = stegaClean(block.columns);
+								const gridImages = getGalleryImages(
+									block.items?.filter((item) => item._type === 'mainImage'),
+									CONTENT_IMAGE_SIZE.height,
+									CONTENT_IMAGE_SIZE.width,
+								);
 
 								return (
-									<div
-										className={cn(
-											'grid gap-4',
-											{ 'grid-cols-1': columns.small === '1' },
-											{ 'grid-cols-2': columns.small === '2' },
-											{ 'grid-cols-3': columns.small === '3' },
-											{ 'grid-cols-4': columns.small === '4' },
-											{ 'sm:grid-cols-1': columns.medium === '1' },
-											{ 'sm:grid-cols-2': columns.medium === '2' },
-											{ 'sm:grid-cols-3': columns.medium === '3' },
-											{ 'sm:grid-cols-4': columns.medium === '4' },
-											{ 'md:grid-cols-1': columns.large === '1' },
-											{ 'md:grid-cols-2': columns.large === '2' },
-											{ 'md:grid-cols-3': columns.large === '3' },
-											{ 'md:grid-cols-4': columns.large === '4' },
-										)}
-										key={block._key}
-									>
-										{block.items?.map((item) => {
-											if (item._type === 'mainImage') {
-												return (
-													<figure key={item._key}>
-														<ZoomableImage
-															alt={item.alt}
-															height={450}
-															src={
-																urlForImage(
-																	item,
-																	ZOOMABLE_IMAGE_SIZE.small.height,
-																	ZOOMABLE_IMAGE_SIZE.small.width,
-																) ?? ''
-															}
-															srcFull={
-																urlForImage(
-																	item,
-																	ZOOMABLE_IMAGE_SIZE.large.height,
-																	ZOOMABLE_IMAGE_SIZE.large.width,
-																) ?? ''
-															}
-															width={800}
+									<LightboxGallery images={gridImages} key={block._key}>
+										<div
+											className={cn(
+												'grid gap-4',
+												{ 'grid-cols-1': columns.small === '1' },
+												{ 'grid-cols-2': columns.small === '2' },
+												{ 'grid-cols-3': columns.small === '3' },
+												{ 'grid-cols-4': columns.small === '4' },
+												{ 'sm:grid-cols-1': columns.medium === '1' },
+												{ 'sm:grid-cols-2': columns.medium === '2' },
+												{ 'sm:grid-cols-3': columns.medium === '3' },
+												{ 'sm:grid-cols-4': columns.medium === '4' },
+												{ 'md:grid-cols-1': columns.large === '1' },
+												{ 'md:grid-cols-2': columns.large === '2' },
+												{ 'md:grid-cols-3': columns.large === '3' },
+												{ 'md:grid-cols-4': columns.large === '4' },
+											)}
+										>
+											{gridImages.map((image, index) => (
+												<figure key={image.key}>
+													<LightboxTrigger index={index}>
+														<Image
+															alt={image.alt}
+															height={CONTENT_IMAGE_SIZE.height}
+															sizes="(min-width: 768px) 50vw, 100vw"
+															src={image.src}
+															width={CONTENT_IMAGE_SIZE.width}
 														/>
-														{item.description && (
-															<figcaption className="text-center italic">
-																{item.description}
-															</figcaption>
-														)}
-													</figure>
-												);
-											}
-											return null;
-										})}
-									</div>
+													</LightboxTrigger>
+													{image.caption && (
+														<figcaption className="text-center italic">{image.caption}</figcaption>
+													)}
+												</figure>
+											))}
+										</div>
+									</LightboxGallery>
 								);
 							}
 							case 'mainImage': {
+								const [image] = getGalleryImages(
+									[block],
+									CONTENT_IMAGE_SIZE.height,
+									CONTENT_IMAGE_SIZE.width,
+								);
+
+								if (!image) {
+									return null;
+								}
+
 								return (
 									<figure key={block._key}>
 										<ZoomableImage
-											alt={block.alt}
-											height={450}
-											src={
-												urlForImage(
-													block,
-													ZOOMABLE_IMAGE_SIZE.small.height,
-													ZOOMABLE_IMAGE_SIZE.small.width,
-												) ?? ''
-											}
-											srcFull={
-												urlForImage(
-													block,
-													ZOOMABLE_IMAGE_SIZE.large.height,
-													ZOOMABLE_IMAGE_SIZE.large.width,
-												) ?? ''
-											}
-											width={800}
+											height={CONTENT_IMAGE_SIZE.height}
+											image={image}
+											sizes="(min-width: 1024px) 50vw, 100vw"
+											width={CONTENT_IMAGE_SIZE.width}
 										/>
-										{block.description && (
-											<figcaption className="text-center italic">{block.description}</figcaption>
+										{image.caption && (
+											<figcaption className="text-center italic">{image.caption}</figcaption>
 										)}
 									</figure>
 								);

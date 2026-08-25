@@ -48,6 +48,7 @@ const newsArticle = defineType({
 			of: [
 				{ type: 'blockContent' },
 				{ type: 'blockquote' },
+				{ type: 'gallery' },
 				{ type: 'grid' },
 				{ type: 'mainImage' },
 				{ type: 'spacer' },
