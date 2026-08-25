@@ -62,6 +62,10 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 
 The order of the plugins in `plugins/index.ts` is the order of the studio's top navigation (Structure, Media, Presentation, Vision in development, then the built-in Releases).
 
+## Testing
+
+A single `vitest.config.ts` (jsdom, `**/*.test.{ts,tsx}`) covers the whole app — no project split like `apps/web`. The current suite only tests a plain utility (`utils/time.test.ts`); no schema yet has a dedicated test. When adding one, call `preview.prepare` or a field's `validation` function directly on the exported definition object — schema definitions are plain objects, so no Sanity runtime is needed.
+
 ## Environment variables
 
 `env.ts` reads the `SANITY_STUDIO_*` variables and fails fast when a required one is missing; `sanity.cli.ts` reads the `SANITY_API_*` variables. Add new studio variables to `env.ts`, to the `studio#build` task in the root `turbo.json`, and to the list in the root `AGENTS.md`.
