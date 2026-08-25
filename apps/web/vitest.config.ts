@@ -1,3 +1,4 @@
+import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig, type Plugin } from 'vitest/config';
 
@@ -39,6 +40,16 @@ export default defineConfig({
 					exclude: ['src/components/**', 'src/hooks/**', 'node_modules/**'],
 					include: ['src/**/*.test.{ts,tsx}'],
 					name: { color: 'green', label: 'node' },
+				},
+			},
+			{
+				extends: true,
+				plugins: [react()],
+				test: {
+					environment: 'jsdom',
+					include: ['src/{components,hooks}/**/*.test.{ts,tsx}'],
+					name: { color: 'magenta', label: 'dom' },
+					setupFiles: ['./test-utils/setup-dom.ts'],
 				},
 			},
 		],
