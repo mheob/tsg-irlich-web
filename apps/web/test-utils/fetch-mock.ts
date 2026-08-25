@@ -36,6 +36,10 @@ function resolveUrl(input: RequestInfo | URL): string {
  * Responses are handed out in the order they were enqueued, which keeps the tests of the multi
  * request flows (token, then receiver, then DOI mail) readable.
  *
+ * Recorded `headers` are normalized through the `Headers` constructor, same as the real `fetch`
+ * does, which lowercases every header name — assert against lowercase keys (`authorization`,
+ * `content-type`), not the casing the code under test sent them with.
+ *
  * @returns The recorded calls plus controls to enqueue responses and restore the real `fetch`.
  */
 function createFetchMock(): {

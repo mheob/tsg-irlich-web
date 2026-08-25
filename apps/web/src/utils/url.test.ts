@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { GOOGLE_MAPS_URL } from '@/constants/urls';
 import type * as urlModule from '@/utils/url';
 
 import { loadWithEnv } from '../../test-utils/env';
 
 type UrlModule = typeof urlModule;
+
+const GOOGLE_MAPS_PREFIX = 'https://www.google.com/maps/search/?api=1&query=';
 
 const VENUE = {
 	city: 'Neuwied',
@@ -49,7 +50,7 @@ describe('google maps link', () => {
 		const { printGoogleMapsLink } = await loadWithEnv<UrlModule>('@/utils/url', {});
 
 		expect(printGoogleMapsLink(VENUE)).toBe(
-			`${GOOGLE_MAPS_URL}${encodeURIComponent('Sporthalle Irlich, Pappelweg 12, 56567 Neuwied')}`,
+			`${GOOGLE_MAPS_PREFIX}${encodeURIComponent('Sporthalle Irlich, Pappelweg 12, 56567 Neuwied')}`,
 		);
 	});
 
@@ -57,7 +58,7 @@ describe('google maps link', () => {
 		const { printGoogleMapsLink } = await loadWithEnv<UrlModule>('@/utils/url', {});
 
 		expect(printGoogleMapsLink({ ...VENUE, name: '' })).toBe(
-			`${GOOGLE_MAPS_URL}${encodeURIComponent('Pappelweg 12, 56567 Neuwied')}`,
+			`${GOOGLE_MAPS_PREFIX}${encodeURIComponent('Pappelweg 12, 56567 Neuwied')}`,
 		);
 	});
 
@@ -65,7 +66,7 @@ describe('google maps link', () => {
 		const { printGoogleMapsLink } = await loadWithEnv<UrlModule>('@/utils/url', {});
 
 		expect(printGoogleMapsLink({ ...VENUE, zipCode: '' })).toBe(
-			`${GOOGLE_MAPS_URL}${encodeURIComponent('Sporthalle Irlich, Pappelweg 12, Neuwied')}`,
+			`${GOOGLE_MAPS_PREFIX}${encodeURIComponent('Sporthalle Irlich, Pappelweg 12, Neuwied')}`,
 		);
 	});
 });
