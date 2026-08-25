@@ -35,9 +35,9 @@ pnpm run lint:root                   # Lint root directory files
 pnpm run format                      # Format with oxfmt (format:check to only verify)
 
 # Testing
-pnpm run test                         # Run every unit test suite
-pnpm run test:affected                # Only the affected packages
-pnpm run test:coverage                # Run with coverage (lcov per workspace)
+pnpm run test                        # Run every unit test suite
+pnpm run test:affected               # Only the affected packages
+pnpm run test:coverage               # Run with coverage (lcov per workspace)
 
 # Type Checking & Generation
 pnpm run typecheck                   # Type check all apps
@@ -159,7 +159,7 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`); tests live next to their source (`foo.ts` → `foo.test.ts`)
 - Import `describe`/`it`/`expect`/`vi` explicitly from `vitest` — `globals` stays off
 - `apps/web` splits into a `node` and a `dom` (jsdom) project; component and hook tests land in `dom` — see `apps/web/AGENTS.md`
-- oxlint's vitest plugin requires a lowercase `describe` title that never repeats an imported identifier, and `beforeEach`/`afterEach`/`beforeAll`/`afterAll` inside a `describe` block
+- oxlint's vitest plugin warns (`pnpm run lint` still exits 0) when a `describe` title isn't lowercase or repeats an imported identifier, or a hook sits outside a `describe` block — the convention is kept repo-wide regardless
 - Test files, `test-utils/**` and `vitest.config.ts` are exempt from `sort-keys`, `no-magic-numbers`, `max-lines`, `max-lines-per-function` and `typescript/no-unsafe-type-assertion` in `oxlint.config.ts` — widen a single rule inline, never the override itself
 - External services are mocked at the `fetch` boundary, not the module boundary; Resend is the one SDK mock
 - `pnpm run test:coverage` writes `coverage/lcov.info` per workspace for CI/SonarQube; no minimum coverage threshold yet

@@ -84,7 +84,7 @@ Static image imports (`.webp` and friends) are resolved by the `assetStub` Vite 
 Three helpers live in `test-utils/`:
 
 - `setup-dom.ts` — stubs `matchMedia`, `ResizeObserver` and `IntersectionObserver`; wired as the `dom` project's `setupFiles`.
-- `env.ts` — `loadWithEnv` resets the module registry and stubs environment variables before importing the module under test. `src/lib/env.ts` caches every validated value in a module-level `Map`, so a test must not hold a value import of that module or the reset is defeated.
+- `env.ts` — `loadWithEnv` resets the module registry and stubs the environment, because `src/lib/env.ts` caches validated values in a module-level `Map`. A test using it must import the module under test only as `import type` and get its runtime binding from `loadWithEnv`'s return value — see `src/utils/url.test.ts`.
 - `fetch-mock.ts` — `createFetchMock` replaces `fetch` with a queue of canned responses and records every call. Recorded headers are normalized through `Headers`, same as the real `fetch`, so they come back lowercased — assert against lowercase header names.
 
 ## Gotchas
