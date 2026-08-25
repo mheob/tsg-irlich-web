@@ -10,6 +10,9 @@
 		"lint:fix": "oxlint --fix",
 		"lint:github": "oxlint --format=github",
 		"start": "next start",
+		"test": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:watch": "vitest",
 		"typecheck": "tsc --noEmit",
 		"typegen:routes": "next typegen && tsc --noEmit",
 		"typegen:sanity": "sanity typegen generate"
@@ -55,10 +58,13 @@
 		"@types/node": "^24.13.3",
 		"@types/react": "19.2.18",
 		"@types/react-dom": "19.2.4",
+		"@vitest/coverage-v8": "^4.1.11",
 		"oxlint": "^1.79.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"postcss": "^8.5.26",
 		"postcss-load-config": "^6.0.1",
-		"typescript": "^7.0.2"
+		"typescript": "^7.0.2",
+		"vite-tsconfig-paths": "^6.1.1",
+		"vitest": "^4.1.11"
 	}
 }
