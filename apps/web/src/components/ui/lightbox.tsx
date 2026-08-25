@@ -248,7 +248,7 @@ function LightboxGallery({ children, images }: Readonly<LightboxGalleryProps>) {
 												sizes={FULL_SCREEN_SIZES}
 												src={activeImage.srcFull}
 												fill
-												priority
+												preload
 											/>
 										</motion.div>
 									</AnimatePresence>

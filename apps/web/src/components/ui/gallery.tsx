@@ -21,7 +21,7 @@ function GalleryThumbnail({
 	hasRoundedCorners,
 	image,
 	index,
-	isPriority = false,
+	isPreloaded = false,
 	sizes,
 }: Readonly<GalleryThumbnailProps>) {
 	return (
@@ -35,7 +35,7 @@ function GalleryThumbnail({
 				sizes={sizes}
 				src={image.src}
 				fill
-				priority={isPriority}
+				preload={isPreloaded}
 			/>
 		</LightboxTrigger>
 	);
@@ -68,7 +68,7 @@ function Gallery({ className, hasRoundedCorners = true, images, title }: Readonl
 								image={images[0]}
 								index={0}
 								sizes={SIZES.full}
-								isPriority
+								isPreloaded
 							/>
 						</div>
 					)}
@@ -81,7 +81,7 @@ function Gallery({ className, hasRoundedCorners = true, images, title }: Readonl
 										hasRoundedCorners={hasRoundedCorners}
 										image={image}
 										index={index}
-										isPriority={index === 0}
+										isPreloaded={index === 0}
 										sizes={SIZES.half}
 									/>
 								</div>
@@ -97,7 +97,7 @@ function Gallery({ className, hasRoundedCorners = true, images, title }: Readonl
 									image={images[0]}
 									index={0}
 									sizes={SIZES.hero}
-									isPriority
+									isPreloaded
 								/>
 							</div>
 
@@ -122,7 +122,7 @@ function Gallery({ className, hasRoundedCorners = true, images, title }: Readonl
 										hasRoundedCorners={hasRoundedCorners}
 										image={image}
 										index={index}
-										isPriority={index === 0}
+										isPreloaded={index === 0}
 										sizes={SIZES.third}
 									/>
 								</div>
@@ -147,7 +147,7 @@ interface GalleryThumbnailProps {
 	hasRoundedCorners: boolean;
 	image: GalleryImage;
 	index: number;
-	isPriority?: boolean;
+	isPreloaded?: boolean;
 	sizes: string;
 }
 
