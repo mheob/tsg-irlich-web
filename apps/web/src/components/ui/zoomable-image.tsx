@@ -1,39 +1,29 @@
 import Image from 'next/image';
 import type { ComponentProps } from 'react';
 
-import {
-	ImageDialog,
-	ImageDialogContent,
-	ImageDialogTitle,
-	ImageDialogTrigger,
-} from './image-dialog';
+import type { GalleryImage } from '@/utils/image';
 
-interface ZoomableImageProps extends ComponentProps<typeof Image> {
-	srcFull: string;
-}
+import { LightboxGallery, LightboxTrigger } from './lightbox';
 
-export function ZoomableImage({ alt, src, srcFull, ...props }: Readonly<ZoomableImageProps>) {
-	if (!src || !srcFull) {
-		return null;
-	}
+// A single image that opens in the lightbox.
+//
+// Use `Gallery` or `LightboxGallery` directly whenever several images belong together and should be
+// pageable.
+function ZoomableImage({ className, image, ...props }: Readonly<ZoomableImageProps>) {
+	// oxlint-disable-next-line react_perf/jsx-no-new-array-as-prop
+	const images = [image];
 
 	return (
-		<ImageDialog>
-			<ImageDialogTrigger className="cursor-zoom-in" asChild>
-				<Image alt={alt || ''} src={src} {...props} />
-			</ImageDialogTrigger>
-			<ImageDialogContent className="max-w-screen border-0 bg-transparent p-0 shadow-none">
-				<ImageDialogTitle className="sr-only">{alt || ''}</ImageDialogTitle>
-				<div className="relative h-[calc(100vh-250px)] w-full">
-					<Image
-						alt={alt || ''}
-						className="size-full object-contain"
-						loading="lazy"
-						src={srcFull}
-						fill
-					/>
-				</div>
-			</ImageDialogContent>
-		</ImageDialog>
+		<LightboxGallery images={images}>
+			<LightboxTrigger index={0}>
+				<Image alt={image.alt} className={className} src={image.src} {...props} />
+			</LightboxTrigger>
+		</LightboxGallery>
 	);
 }
+
+interface ZoomableImageProps extends Omit<ComponentProps<typeof Image>, 'alt' | 'src'> {
+	image: GalleryImage;
+}
+
+export { ZoomableImage };

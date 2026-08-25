@@ -140,6 +140,16 @@ export type Grid = {
   >;
 };
 
+export type Gallery = {
+  _type: "gallery";
+  title?: string;
+  images: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+};
+
 export type Blockquote = {
   _type: "blockquote";
   quote?: string;
@@ -733,6 +743,9 @@ export type NewsArticle = {
     | ({
         _key: string;
       } & Blockquote)
+    | ({
+        _key: string;
+      } & Gallery)
     | ({
         _key: string;
       } & Grid)
@@ -1620,6 +1633,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | MainImage
   | Grid
+  | Gallery
   | Blockquote
   | HomeReference
   | AboutUsReference
@@ -3100,6 +3114,16 @@ export type NewsArticleContentQueryResult = {
         _type: "blockquote";
         quote?: string;
         author?: string;
+      }
+    | {
+        _key: string;
+        _type: "gallery";
+        title?: string;
+        images: Array<
+          {
+            _key: string;
+          } & ExtendedImage
+        >;
       }
     | {
         _key: string;

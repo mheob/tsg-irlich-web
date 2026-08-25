@@ -30,6 +30,7 @@ import stats from './objects/stats';
 import trainingTime from './objects/training-time';
 import blockContent from './sections/block-content';
 import blockquote from './sections/blockquote';
+import gallery from './sections/gallery';
 import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
@@ -88,6 +89,7 @@ export const schemaTypes = [
 	// Sections
 	blockContent,
 	blockquote,
+	gallery,
 	grid,
 	mainImage,
 	spacer,

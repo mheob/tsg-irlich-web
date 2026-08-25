@@ -649,6 +649,51 @@
 		}
 	},
 	{
+		"name": "gallery",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "gallery"
+					}
+				},
+				"title": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"images": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "array",
+						"of": {
+							"type": "object",
+							"attributes": {
+								"_key": {
+									"type": "objectAttribute",
+									"value": {
+										"type": "string"
+									}
+								}
+							},
+							"rest": {
+								"type": "inline",
+								"name": "extendedImage"
+							}
+						}
+					},
+					"optional": false
+				}
+			}
+		}
+	},
+	{
 		"name": "blockquote",
 		"type": "type",
 		"value": {
@@ -3843,6 +3888,21 @@
 								"rest": {
 									"type": "inline",
 									"name": "blockquote"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "gallery"
 								}
 							},
 							{
