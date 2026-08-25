@@ -4,6 +4,9 @@ on:
   pull_request:
   push:
 
+permissions:
+  contents: read
+
 jobs:
   check:
     name: Check
@@ -34,6 +37,12 @@ jobs:
 
       - name: Lint files
         run: pnpm run lint:affected:github
+
+      - name: Run tests
+        run: pnpm run test:affected
+        env:
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
 
       - name: Build files
         run: pnpm run build:affected
