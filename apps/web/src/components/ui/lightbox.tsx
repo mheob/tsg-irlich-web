@@ -48,6 +48,16 @@ const INSTANT_TRANSITION: Transition = { duration: 0 };
 const DRAG_CONSTRAINTS = { left: 0, right: 0 };
 const SLIDE_VISIBLE = { opacity: 1, x: 0 };
 
+/**
+ * Sizes of the full screen image, always the full viewport width.
+ *
+ * The media query resolves to `100vw` in every browser, but keeps the string from being the literal
+ * `100vw` that `next/image` warns about: it measures the rendered width with
+ * `getBoundingClientRect()`, which still carries the scale of the morph animation while the image
+ * loads, and therefore mistakes the full screen image for a narrow one.
+ */
+const FULL_SCREEN_SIZES = '(min-width: 0px) 100vw';
+
 const LightboxContext = createContext<LightboxContextValue | undefined>(undefined);
 
 // Gives access to the lightbox of the surrounding `LightboxGallery`.
@@ -235,7 +245,7 @@ function LightboxGallery({ children, images }: Readonly<LightboxGalleryProps>) {
 												alt={activeImage.alt}
 												className="object-contain select-none"
 												draggable={false}
-												sizes="100vw"
+												sizes={FULL_SCREEN_SIZES}
 												src={activeImage.srcFull}
 												fill
 												priority
