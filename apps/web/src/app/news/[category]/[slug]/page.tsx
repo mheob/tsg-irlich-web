@@ -116,7 +116,8 @@ export default async function NewsArticlePage({
 							case 'gallery': {
 								return (
 									<Gallery
-										className="not-prose my-10"
+										className="my-10"
+										hasRoundedCorners={false}
 										images={getGalleryImages(
 											block.images,
 											CONTENT_IMAGE_SIZE.height,
