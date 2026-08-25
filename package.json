@@ -22,6 +22,9 @@
 		"lint:github": "turbo lint:github",
 		"lint:root": "oxlint --ignore-pattern packages",
 		"prepare": "lefthook install",
+		"test": "turbo test",
+		"test:affected": "turbo test --affected",
+		"test:coverage": "turbo test:coverage",
 		"typecheck": "turbo typecheck",
 		"typegen:routes": "turbo typegen:routes",
 		"typegen:sanity": "turbo typegen:sanity"

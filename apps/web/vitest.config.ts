@@ -30,7 +30,10 @@ export default defineConfig({
 	plugins: [assetStub(), tsconfigPaths()],
 	test: {
 		coverage: {
+			exclude: ['**/*.test.{ts,tsx}', '**/test-utils/**', '**/*.config.ts', '**/*.generated.ts'],
+			provider: 'v8',
 			reporter: ['text', 'html', 'lcov'],
+			reportsDirectory: './coverage',
 		},
 		projects: [
 			{
