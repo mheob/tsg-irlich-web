@@ -14,6 +14,9 @@
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"lint:github": "oxlint --format=github",
+		"test": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:watch": "vitest",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
@@ -26,8 +29,11 @@
 		"@mheob/tsconfig": "^3.0.1",
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.4",
+		"@vitest/coverage-v8": "^4.1.11",
 		"oxlint": "^1.79.0",
 		"oxlint-tsgolint": "^7.0.2001",
-		"typescript": "^7.0.2"
+		"typescript": "^7.0.2",
+		"vite-tsconfig-paths": "^6.1.1",
+		"vitest": "^4.1.11"
 	}
 }

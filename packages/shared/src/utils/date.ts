@@ -4,8 +4,8 @@ const MS_PER_SECOND = 1000;
 const TIME_SPAN_IN_SECONDS = {
 	second: 1,
 	minute: 60,
-	hour: 360,
-	day: 8640,
+	hour: 3600,
+	day: 86_400,
 	week: 604_800,
 	month: 2_592_000,
 	year: 31_536_000,

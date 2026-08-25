@@ -33,6 +33,7 @@
 		"@mheob/oxlint-config": "^3.0.1",
 		"@mheob/tsconfig": "^3.0.2",
 		"@types/node": "^24.13.3",
+		"@vitest/coverage-v8": "^4.1.11",
 		"cve-lite-cli": "^1.30.0",
 		"czg": "^1.14.0",
 		"eslint-plugin-better-tailwindcss": "^4.7.0",
@@ -43,7 +44,8 @@
 		"sanity": "^6.10.1",
 		"tailwindcss": "^4.3.3",
 		"turbo": "^2.10.11",
-		"typescript": "^7.0.2"
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.11"
 	},
 	"engines": {
 		"node": "^24.19.0",

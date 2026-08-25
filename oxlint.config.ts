@@ -6,6 +6,15 @@ export default defineConfig({
 	ignorePatterns: ['**/*.generated.ts', '**/*generated*.ts'],
 	overrides: [
 		{
+			files: ['**/*.test.ts', '**/*.test.tsx', '**/test-utils/**', '**/vitest.config.ts'],
+			rules: {
+				'max-lines': 'off',
+				'max-lines-per-function': 'off',
+				'no-magic-numbers': 'off',
+				'sort-keys': 'off',
+			},
+		},
+		{
 			files: ['**/*.tsx'],
 			plugins: ['react', 'nextjs'],
 			rules: {
