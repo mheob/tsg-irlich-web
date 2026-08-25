@@ -2,6 +2,11 @@ import { vi } from 'vitest';
 
 type MediaQueryListener = (event: MediaQueryListEvent) => void;
 
+interface MutableMediaQueryList {
+	listeners: Set<MediaQueryListener>;
+	matches: boolean;
+}
+
 /**
  * Builds a `matchMedia` implementation whose `matches` value is fixed and whose listeners can be
  * triggered from a test through `dispatchMediaQueryChange`.
@@ -10,7 +15,7 @@ type MediaQueryListener = (event: MediaQueryListEvent) => void;
  * own list via `window.matchMedia(query)` and a test that fetches a list for the same query share
  * one listener set.
  *
- * @param matches - The fixed `matches` value every list produced by the stub reports.
+ * @param matches - The initial `matches` value the list reports before any dispatched change.
  * @returns A `matchMedia` implementation to install with `vi.stubGlobal`.
  */
 function createMatchMediaStub(matches: boolean): (query: string) => MediaQueryList {
@@ -24,7 +29,6 @@ function createMatchMediaStub(matches: boolean): (query: string) => MediaQueryLi
 
 		const listeners = new Set<MediaQueryListener>();
 
-		// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 		const list = {
 			addEventListener: (_type: string, listener: MediaQueryListener) => {
 				listeners.add(listener);
@@ -45,16 +49,17 @@ function createMatchMediaStub(matches: boolean): (query: string) => MediaQueryLi
 }
 
 /**
- * Fires a `change` event on every listener registered for the given media query list.
+ * Fires a `change` event on every listener registered for the given media query list, after
+ * updating the list's own `matches` property so the stub and the dispatched event agree.
  *
  * @param list - The `MediaQueryList` (created by {@link createMatchMediaStub}) to dispatch on.
- * @param matches - The `matches` value to report on the dispatched event.
+ * @param matches - The `matches` value to set on the list and to report on the dispatched event.
  */
 function dispatchMediaQueryChange(list: MediaQueryList, matches: boolean): void {
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
-	const { listeners } = list as unknown as { listeners: Set<MediaQueryListener> };
-	for (const listener of listeners) {
-		// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+	const mutableList = list as unknown as MutableMediaQueryList;
+	mutableList.matches = matches;
+
+	for (const listener of mutableList.listeners) {
 		listener({ matches } as MediaQueryListEvent);
 	}
 }

@@ -12,6 +12,7 @@ export default defineConfig({
 				'max-lines-per-function': 'off',
 				'no-magic-numbers': 'off',
 				'sort-keys': 'off',
+				'typescript/no-unsafe-type-assertion': 'off',
 			},
 		},
 		{

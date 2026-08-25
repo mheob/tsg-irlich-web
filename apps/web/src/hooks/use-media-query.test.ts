@@ -38,11 +38,22 @@ describe('media query hook', () => {
 	it('removes its listener on unmount', () => {
 		const { unmount } = renderHook(() => useMediaQuery(QUERY));
 		const list = window.matchMedia(QUERY);
-		// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 		const { listeners } = list as unknown as { listeners: Set<unknown> };
 
 		unmount();
 
 		expect(listeners.size).toBe(0);
+	});
+
+	it('keeps the media query list in sync with the dispatched change', () => {
+		const { result } = renderHook(() => useMediaQuery(QUERY));
+		const list = window.matchMedia(QUERY);
+
+		act(() => {
+			dispatchMediaQueryChange(list, true);
+		});
+
+		expect(result.current).toBe(true);
+		expect(list.matches).toBe(true);
 	});
 });
