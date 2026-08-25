@@ -112,7 +112,7 @@ Die Actions sind in `next-safe-action` gewickelt. Die Tests rufen die exportiert
 Getestet werden nur Komponenten mit eigener Logik. Server Actions werden auf Modulpfad-Ebene gemockt, hier läuft kein `fetch`.
 
 - `ui/lightbox.tsx` — Öffnen an einem gegebenen Index, Blättern vor und zurück, Verhalten an beiden Enden, `Escape` schließt, Pfeiltasten blättern, Klick auf das Backdrop schließt, Klick auf den Inhalt nicht, Caption nur wenn vorhanden, Einzelbild-Fall ohne Pager.
-- `ui/gallery.tsx` — ein Tile pro Bild, Klick auf Tile *n* öffnet die Lightbox bei *n*, Flag für die abgerundeten Ecken, nur das erste Bild ist `preload`.
+- `ui/gallery.tsx` — ein Tile pro Bild, Klick auf Tile _n_ öffnet die Lightbox bei _n_, Flag für die abgerundeten Ecken, nur das erste Bild ist `preload`.
 - `with-logic/feedback/screenshot-upload.tsx` — akzeptiert ein Bild, lehnt falschen Typ und zu große Datei mit der jeweiligen Meldung ab, zeigt den Pending-Zustand, Entfernen löscht den Eintrag, Fehler der Upload-Action erscheint und lässt die Dateiliste konsistent.
 - `section/contact-form.tsx` und `with-logic/feedback/form.tsx` — leeres Absenden zeigt die Zod-Meldungen, gültiges Absenden ruft die Action genau einmal mit den geparsten Werten, `serverError` rendert den Fehler-Alert, Erfolg rendert die Bestätigung und setzt das Formular zurück, Submit ist während des Pendings deaktiviert.
 - `with-logic/navigation.tsx` — Mobile- vs. Desktop-Zweig über das gestubbte `matchMedia`, aktiver Eintrag aus `usePathname`, Öffnen und Schließen des Mobile-Menüs.

@@ -9,7 +9,7 @@ const DAYS_PER_WEEK = 7;
 const DAYS_PER_MONTH = 30;
 const DAYS_PER_YEAR = 365;
 
-describe('TIME_SPAN_IN_SECONDS', () => {
+describe('time span constants', () => {
 	it('holds one second', () => {
 		expect(TIME_SPAN_IN_SECONDS.second).toBe(1);
 	});
@@ -39,12 +39,16 @@ describe('TIME_SPAN_IN_SECONDS', () => {
 	});
 });
 
-describe('timeSpanInMilliSeconds', () => {
+describe('time span conversion', () => {
 	it('converts a span to milliseconds', () => {
-		expect(timeSpanInMilliSeconds('minute')).toBe(SECONDS_PER_MINUTE * MS_PER_SECOND);
+		expect(timeSpanInMilliSeconds('minute')).toBe(60_000);
 	});
 
 	it('converts the smallest span', () => {
-		expect(timeSpanInMilliSeconds('second')).toBe(MS_PER_SECOND);
+		expect(timeSpanInMilliSeconds('second')).toBe(1000);
+	});
+
+	it('exports one second in milliseconds', () => {
+		expect(MS_PER_SECOND).toBe(1000);
 	});
 });

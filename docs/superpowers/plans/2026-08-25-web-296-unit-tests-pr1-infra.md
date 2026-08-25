@@ -33,16 +33,17 @@
 ### Task 1: Branch and land the spec
 
 **Files:**
+
 - Commit (already written): `docs/superpowers/specs/2026-08-25-web-296-unit-tests-design.md`
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces: branch `test/web-296-unit-tests` holding every later commit of this plan.
 
 - [ ] **Step 1: Check the workspace state**
 
-Run: `but status`
-Expected: the spec file and this plan file show as uncommitted changes.
+Run: `but status` Expected: the spec file and this plan file show as uncommitted changes.
 
 - [ ] **Step 2: Commit spec and plan onto a new branch**
 
@@ -55,8 +56,7 @@ but commit -b test/web-296-unit-tests \
 
 - [ ] **Step 3: Verify the branch exists and holds one commit**
 
-Run: `but branch show test/web-296-unit-tests`
-Expected: one commit, the two docs files.
+Run: `but branch show test/web-296-unit-tests` Expected: one commit, the two docs files.
 
 ---
 
@@ -65,6 +65,7 @@ Expected: one commit, the two docs files.
 The smallest workspace goes first: it proves the runner, the coverage provider and the lint override before any framework glue is involved. The `date.ts` bug is fixed here because its test is the regression guard.
 
 **Files:**
+
 - Modify: `package.json` (root devDependencies)
 - Modify: `oxlint.config.ts` (test-file override)
 - Create: `packages/shared/vitest.config.ts`
@@ -73,6 +74,7 @@ The smallest workspace goes first: it proves the runner, the coverage provider a
 - Modify: `packages/shared/src/utils/date.ts:6-7`
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces: the pattern every other workspace config copies — `defineConfig` from `vitest/config`, `tsconfigPaths()` plugin, `include: ['**/*.test.{ts,tsx}']`, workspace scripts `test`, `test:watch`, `test:coverage`.
 
@@ -191,8 +193,7 @@ describe('timeSpanInMilliSeconds', () => {
 
 - [ ] **Step 6: Run it and watch the two wrong constants fail**
 
-Run: `pnpm --filter @tsgi-web/shared test`
-Expected: FAIL — `hour` expected `3600` received `360`, `day` expected `86400` received `8640`, plus the `week`/`month`/`year` cases that are derived from `day`. Every other case passes.
+Run: `pnpm --filter @tsgi-web/shared test` Expected: FAIL — `hour` expected `3600` received `360`, `day` expected `86400` received `8640`, plus the `week`/`month`/`year` cases that are derived from `day`. Every other case passes.
 
 - [ ] **Step 7: Fix the constants**
 
@@ -207,18 +208,15 @@ Leave `week: 604_800`, `month: 2_592_000` and `year: 31_536_000` untouched — t
 
 - [ ] **Step 8: Run the test again**
 
-Run: `pnpm --filter @tsgi-web/shared test`
-Expected: PASS, 9 tests.
+Run: `pnpm --filter @tsgi-web/shared test` Expected: PASS, 9 tests.
 
 - [ ] **Step 9: Verify coverage works**
 
-Run: `pnpm --filter @tsgi-web/shared test:coverage`
-Expected: PASS plus a coverage table, and `packages/shared/coverage/lcov.info` exists.
+Run: `pnpm --filter @tsgi-web/shared test:coverage` Expected: PASS plus a coverage table, and `packages/shared/coverage/lcov.info` exists.
 
 - [ ] **Step 10: Verify nothing else broke**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck`
-Expected: all clean. `date.ts` is consumed only by `number-ticker.tsx` (`second`) and `cleverreach.ts` (`minute`), so the corrected values change no behavior.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck` Expected: all clean. `date.ts` is consumed only by `number-ticker.tsx` (`second`) and `cleverreach.ts` (`minute`), so the corrected values change no behavior.
 
 - [ ] **Step 11: Commit**
 
@@ -233,11 +231,13 @@ but commit -b test/web-296-unit-tests \
 ### Task 3: The `node` project in `apps/web`
 
 **Files:**
+
 - Create: `apps/web/vitest.config.ts`
 - Modify: `apps/web/package.json` (devDependencies, scripts)
 - Create: `apps/web/src/utils/typography.test.ts`
 
 **Interfaces:**
+
 - Consumes: the config pattern from Task 2.
 - Produces: `apps/web/vitest.config.ts` with an `assetStub` plugin and a `node` project; Task 4 adds the `dom` project to the same file.
 
@@ -362,13 +362,11 @@ describe('capitalizeWords', () => {
 
 - [ ] **Step 5: Run it**
 
-Run: `pnpm --filter web test`
-Expected: PASS, 10 tests, reported under the `node` project label. If it fails to resolve `./typography`, the `tsconfigPaths()` plugin is missing from the config.
+Run: `pnpm --filter web test` Expected: PASS, 10 tests, reported under the `node` project label. If it fails to resolve `./typography`, the `tsconfigPaths()` plugin is missing from the config.
 
 - [ ] **Step 6: Prove the asset stub works**
 
-Run: `pnpm --filter web exec vitest run --project node src/utils/typography.test.ts`
-Expected: PASS. Then, as a throwaway check that image imports load, run:
+Run: `pnpm --filter web exec vitest run --project node src/utils/typography.test.ts` Expected: PASS. Then, as a throwaway check that image imports load, run:
 
 ```bash
 pnpm --filter web exec vitest run --project node --reporter=dot \
@@ -379,8 +377,7 @@ Expected: no test matches, but **no import error** — which is the point: `grou
 
 - [ ] **Step 7: Lint, format, typecheck**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck`
-Expected: clean.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck` Expected: clean.
 
 - [ ] **Step 8: Commit**
 
@@ -394,12 +391,14 @@ but commit -b test/web-296-unit-tests \
 ### Task 4: The `dom` project in `apps/web`
 
 **Files:**
+
 - Modify: `apps/web/vitest.config.ts` (second project)
 - Create: `apps/web/test-utils/setup-dom.ts`
 - Modify: `apps/web/package.json` (devDependencies)
 - Create: `apps/web/src/hooks/use-media-query.test.ts`
 
 **Interfaces:**
+
 - Consumes: `apps/web/vitest.config.ts` from Task 3.
 - Produces: `apps/web/test-utils/setup-dom.ts`, which exports `createMatchMediaStub(matches: boolean): (query: string) => MediaQueryList` and registers `window.matchMedia`, `ResizeObserver` and `IntersectionObserver`. PR 4's component tests rely on both.
 
@@ -551,13 +550,11 @@ Note on the third and fourth case: the hook registers its listener on the `Media
 
 - [ ] **Step 5: Run it**
 
-Run: `pnpm --filter web test`
-Expected: 10 node tests plus 4 dom tests PASS. `matchMedia is not a function` means `setupFiles` is not wired; `document is not defined` means the file was matched by the `node` project instead — check the `exclude` in Task 3 Step 2.
+Run: `pnpm --filter web test` Expected: 10 node tests plus 4 dom tests PASS. `matchMedia is not a function` means `setupFiles` is not wired; `document is not defined` means the file was matched by the `node` project instead — check the `exclude` in Task 3 Step 2.
 
 - [ ] **Step 6: Lint, format, typecheck**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck`
-Expected: clean.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck` Expected: clean.
 
 - [ ] **Step 7: Commit**
 
@@ -571,11 +568,13 @@ but commit -b test/web-296-unit-tests \
 ### Task 5: Test helpers for env and fetch
 
 **Files:**
+
 - Create: `apps/web/test-utils/env.ts`
 - Create: `apps/web/test-utils/fetch-mock.ts`
 - Create: `apps/web/src/utils/url.test.ts`
 
 **Interfaces:**
+
 - Consumes: the `node` project from Task 3.
 - Produces:
   - `loadWithEnv<T>(specifier: string, vars: Record<string, string | undefined>): Promise<T>` — resets the module registry, stubs the given variables, then imports the module fresh. Needed because `src/lib/env.ts` caches validated values in a module-level `Map`.
@@ -762,18 +761,15 @@ Before running, open `apps/web/src/constants/urls.ts` and confirm `GOOGLE_MAPS_U
 
 - [ ] **Step 4: Run it**
 
-Run: `pnpm --filter web test src/utils/url.test.ts`
-Expected: PASS, 6 tests. A thrown `Invalid environment variable …` means `loadWithEnv` was called without the variable that branch needs.
+Run: `pnpm --filter web test src/utils/url.test.ts` Expected: PASS, 6 tests. A thrown `Invalid environment variable …` means `loadWithEnv` was called without the variable that branch needs.
 
 - [ ] **Step 5: Prove the fetch helper compiles and behaves**
 
-Run: `pnpm run typecheck`
-Expected: clean — this is the only check the fetch helper gets in this PR; PR 3 is its first consumer.
+Run: `pnpm run typecheck` Expected: clean — this is the only check the fetch helper gets in this PR; PR 3 is its first consumer.
 
 - [ ] **Step 6: Lint and format**
 
-Run: `pnpm run lint && pnpm run format:check`
-Expected: clean.
+Run: `pnpm run lint && pnpm run format:check` Expected: clean.
 
 - [ ] **Step 7: Commit**
 
@@ -787,11 +783,13 @@ but commit -b test/web-296-unit-tests \
 ### Task 6: Vitest in `apps/studio`
 
 **Files:**
+
 - Create: `apps/studio/vitest.config.ts`
 - Modify: `apps/studio/package.json` (devDependencies, scripts)
 - Create: `apps/studio/utils/time.test.ts`
 
 **Interfaces:**
+
 - Consumes: the config pattern from Task 2.
 - Produces: a jsdom-based studio project; PR 5 adds schema and plugin tests to it.
 
@@ -870,13 +868,11 @@ describe('formatDate', () => {
 
 - [ ] **Step 5: Run it**
 
-Run: `pnpm --filter studio test`
-Expected: PASS, 4 tests. If the last case reports `26-08-26`, the process timezone is not UTC — set it in the config instead (`test.env: { TZ: 'UTC' }`) and drop the `stubEnv` calls, because `vi.stubEnv('TZ', …)` does not re-initialize Node's already-resolved timezone.
+Run: `pnpm --filter studio test` Expected: PASS, 4 tests. If the last case reports `26-08-26`, the process timezone is not UTC — set it in the config instead (`test.env: { TZ: 'UTC' }`) and drop the `stubEnv` calls, because `vi.stubEnv('TZ', …)` does not re-initialize Node's already-resolved timezone.
 
 - [ ] **Step 6: Lint, format, typecheck**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck`
-Expected: clean.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck` Expected: clean.
 
 - [ ] **Step 7: Commit**
 
@@ -890,11 +886,13 @@ but commit -b test/web-296-unit-tests \
 ### Task 7: Vitest in `packages/email`
 
 **Files:**
+
 - Create: `packages/email/vitest.config.ts`
 - Modify: `packages/email/package.json` (devDependencies, scripts)
 - Create: `packages/email/lib/cleverreach-markers.test.ts`
 
 **Interfaces:**
+
 - Consumes: the config pattern from Task 2.
 - Produces: an email project whose `exclude` keeps the generated `.react-email` specs out; PR 5 adds the template tests to it.
 
@@ -1000,18 +998,15 @@ describe('stripCleverReachMarkers', () => {
 
 - [ ] **Step 5: Run it**
 
-Run: `pnpm --filter @tsgi-web/email test`
-Expected: PASS, 11 tests.
+Run: `pnpm --filter @tsgi-web/email test` Expected: PASS, 11 tests.
 
 - [ ] **Step 6: Confirm the generated specs stayed out**
 
-Run: `pnpm --filter @tsgi-web/email test --reporter=verbose`
-Expected: only `lib/cleverreach-markers.test.ts` in the file list. Any `.react-email/...spec.ts` entry means the `exclude` is wrong.
+Run: `pnpm --filter @tsgi-web/email test --reporter=verbose` Expected: only `lib/cleverreach-markers.test.ts` in the file list. Any `.react-email/...spec.ts` entry means the `exclude` is wrong.
 
 - [ ] **Step 7: Lint, format, typecheck**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck`
-Expected: clean. `packages/email`'s `build` script is `tsc --noEmit`, so the new test file is type-checked by it too.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck` Expected: clean. `packages/email`'s `build` script is `tsc --noEmit`, so the new test file is type-checked by it too.
 
 - [ ] **Step 8: Commit**
 
@@ -1025,16 +1020,17 @@ but commit -b test/web-296-unit-tests \
 ### Task 8: Fix the newsletter error copy
 
 **Files:**
+
 - Modify: `apps/web/src/actions/subscribe-to-newsletter.ts:82`
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces: a single German copy string that PR 3's action test asserts.
 
 - [ ] **Step 1: Find both spellings**
 
-Run: `grep -rn "überprüf" apps/web/src`
-Expected: two hits — `ERROR_MESSAGES.VALIDATION_ERROR` with `'Bitte überprüfe Deine Eingaben.'` and the validation branch of `subscribeToNewsletter` with `'Bitte überprüfen Deine Eingaben.'`.
+Run: `grep -rn "überprüf" apps/web/src` Expected: two hits — `ERROR_MESSAGES.VALIDATION_ERROR` with `'Bitte überprüfe Deine Eingaben.'` and the validation branch of `subscribeToNewsletter` with `'Bitte überprüfen Deine Eingaben.'`.
 
 - [ ] **Step 2: Fix the wrong one**
 
@@ -1052,13 +1048,11 @@ to:
 
 - [ ] **Step 3: Verify only one spelling remains**
 
-Run: `grep -rn "überprüfen Deine" apps/web/src`
-Expected: no output.
+Run: `grep -rn "überprüfen Deine" apps/web/src` Expected: no output.
 
 - [ ] **Step 4: Lint, format, typecheck**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck`
-Expected: clean.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck` Expected: clean.
 
 - [ ] **Step 5: Commit**
 
@@ -1072,12 +1066,14 @@ but commit -b test/web-296-unit-tests \
 ### Task 9: Turbo tasks, root scripts and coverage output
 
 **Files:**
+
 - Modify: `turbo.json` (tasks)
 - Modify: `package.json` (root scripts)
 - Modify: `.gitignore`
 - Modify: `packages/shared/vitest.config.ts`, `apps/web/vitest.config.ts`, `apps/studio/vitest.config.ts`, `packages/email/vitest.config.ts` (coverage block)
 
 **Interfaces:**
+
 - Consumes: the four workspace configs and their `test` scripts.
 - Produces: `pnpm run test`, `pnpm run test:affected`, `pnpm run test:coverage` at the root, and one `coverage/lcov.info` per workspace.
 
@@ -1128,13 +1124,11 @@ coverage
 
 - [ ] **Step 5: Run the whole suite through Turbo**
 
-Run: `pnpm run test`
-Expected: four successful tasks (`web`, `studio`, `@tsgi-web/shared`, `@tsgi-web/email`), 44 tests total (10 typography + 4 media query + 6 url + 9 date + 4 formatDate + 11 markers). Confirm the number against the actual output and use it in the PR description.
+Run: `pnpm run test` Expected: four successful tasks (`web`, `studio`, `@tsgi-web/shared`, `@tsgi-web/email`), 44 tests total (10 typography + 4 media query + 6 url + 9 date + 4 formatDate + 11 markers). Confirm the number against the actual output and use it in the PR description.
 
 - [ ] **Step 6: Run coverage through Turbo**
 
-Run: `pnpm run test:coverage`
-Expected: four `coverage/lcov.info` files exist:
+Run: `pnpm run test:coverage` Expected: four `coverage/lcov.info` files exist:
 
 ```bash
 ls apps/web/coverage/lcov.info apps/studio/coverage/lcov.info \
@@ -1143,18 +1137,15 @@ ls apps/web/coverage/lcov.info apps/studio/coverage/lcov.info \
 
 - [ ] **Step 7: Confirm caching works**
 
-Run: `pnpm run test` twice in a row.
-Expected: the second run reports `FULL TURBO`.
+Run: `pnpm run test` twice in a row. Expected: the second run reports `FULL TURBO`.
 
 - [ ] **Step 8: Confirm coverage is not committed**
 
-Run: `but status`
-Expected: no `coverage/` entries.
+Run: `but status` Expected: no `coverage/` entries.
 
 - [ ] **Step 9: Lint, format**
 
-Run: `pnpm run lint && pnpm run format:check`
-Expected: clean.
+Run: `pnpm run lint && pnpm run format:check` Expected: clean.
 
 - [ ] **Step 10: Commit**
 
@@ -1168,9 +1159,11 @@ but commit -b test/web-296-unit-tests \
 ### Task 10: Run the tests in CI
 
 **Files:**
+
 - Modify: `.github/workflows/check.yml`
 
 **Interfaces:**
+
 - Consumes: the root `test` script from Task 9.
 - Produces: a PR-blocking test step.
 
@@ -1179,24 +1172,22 @@ but commit -b test/web-296-unit-tests \
 In `.github/workflows/check.yml`, insert between the `Lint files` and `Build files` steps:
 
 ```yaml
-      - name: Run tests
-        run: pnpm run test:affected
-        env:
-          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+- name: Run tests
+  run: pnpm run test:affected
+  env:
+    NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+    NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
 ```
 
 `test:affected` mirrors the existing `lint:affected` / `build:affected` steps. The two Sanity variables are needed because `src/lib/sanity/client.ts` reads them at module load, and the web tests import modules that pull it in.
 
 - [ ] **Step 2: Verify the file parses**
 
-Run: `pnpm exec oxlint .github/workflows/check.yml --no-error-on-unmatched-pattern; python3 -c "import sys,yaml;yaml.safe_load(open('.github/workflows/check.yml'))" && echo "yaml ok"`
-Expected: `yaml ok`.
+Run: `pnpm exec oxlint .github/workflows/check.yml --no-error-on-unmatched-pattern; python3 -c "import sys,yaml;yaml.safe_load(open('.github/workflows/check.yml'))" && echo "yaml ok"` Expected: `yaml ok`.
 
 - [ ] **Step 3: Reproduce the CI command locally**
 
-Run: `pnpm run test:affected`
-Expected: PASS. If the web tests fail with `Invalid environment variable NEXT_PUBLIC_SANITY_…`, note the failing module in the PR description — the fix belongs here, either by adding the variable to the CI env block or by adding a `test.env` default to `apps/web/vitest.config.ts`.
+Run: `pnpm run test:affected` Expected: PASS. If the web tests fail with `Invalid environment variable NEXT_PUBLIC_SANITY_…`, note the failing module in the PR description — the fix belongs here, either by adding the variable to the CI env block or by adding a `test.env` default to `apps/web/vitest.config.ts`.
 
 - [ ] **Step 4: Commit**
 
@@ -1210,10 +1201,12 @@ but commit -b test/web-296-unit-tests \
 ### Task 11: Report coverage to SonarQube
 
 **Files:**
+
 - Modify: `sonar-project.properties`
 - Modify: `.github/workflows/sonar.yml`
 
 **Interfaces:**
+
 - Consumes: the four `coverage/lcov.info` files from Task 9.
 - Produces: coverage visible in SonarQube, with no minimum threshold.
 
@@ -1235,36 +1228,34 @@ Keep the existing `sonar.exclusions=**/sanity.types.generated.ts` line as it is.
 In `.github/workflows/sonar.yml`, insert these steps between the `checkout` step and the `SonarQube Scan` step:
 
 ```yaml
-      - name: Setup pnpm
-        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+- name: Setup pnpm
+  uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
 
-      - name: Setup Node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          cache: pnpm
-          node-version-file: .nvmrc
+- name: Setup Node
+  uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+  with:
+    cache: pnpm
+    node-version-file: .nvmrc
 
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile --ignore-scripts
+- name: Install Dependencies
+  run: pnpm install --frozen-lockfile --ignore-scripts
 
-      - name: Collect Coverage
-        run: pnpm run test:coverage
-        env:
-          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+- name: Collect Coverage
+  run: pnpm run test:coverage
+  env:
+    NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+    NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
 ```
 
 Reuse the exact pinned action SHAs from `check.yml` (copied above) so both workflows stay on one version.
 
 - [ ] **Step 3: Verify the YAML parses**
 
-Run: `python3 -c "import yaml;yaml.safe_load(open('.github/workflows/sonar.yml'))" && echo "yaml ok"`
-Expected: `yaml ok`.
+Run: `python3 -c "import yaml;yaml.safe_load(open('.github/workflows/sonar.yml'))" && echo "yaml ok"` Expected: `yaml ok`.
 
 - [ ] **Step 4: Verify the lcov paths exist**
 
-Run: `pnpm run test:coverage && wc -l apps/web/coverage/lcov.info apps/studio/coverage/lcov.info packages/shared/coverage/lcov.info packages/email/coverage/lcov.info`
-Expected: four non-empty files, matching the paths in `sonar-project.properties` exactly.
+Run: `pnpm run test:coverage && wc -l apps/web/coverage/lcov.info apps/studio/coverage/lcov.info packages/shared/coverage/lcov.info packages/email/coverage/lcov.info` Expected: four non-empty files, matching the paths in `sonar-project.properties` exactly.
 
 - [ ] **Step 5: Commit**
 
@@ -1278,18 +1269,19 @@ but commit -b test/web-296-unit-tests \
 ### Task 12: Document the setup
 
 **Files:**
+
 - Modify: `AGENTS.md` (Development Commands, Code Quality Tools)
 - Modify: `apps/web/AGENTS.md`
 - Modify: `apps/studio/AGENTS.md`
 
 **Interfaces:**
+
 - Consumes: every script added in this PR.
 - Produces: the conventions later PRs and other agents follow.
 
 - [ ] **Step 1: Read the two app guides first**
 
-Run: `sed -n 1,60p apps/web/AGENTS.md; sed -n 1,60p apps/studio/AGENTS.md`
-Match their existing heading style and tone when adding to them.
+Run: `sed -n 1,60p apps/web/AGENTS.md; sed -n 1,60p apps/studio/AGENTS.md` Match their existing heading style and tone when adding to them.
 
 - [ ] **Step 2: Add a Testing block to the root guide**
 
@@ -1319,8 +1311,7 @@ In `apps/web/AGENTS.md`, add a `## Testing` section describing the two projects,
 
 - [ ] **Step 4: Verify the documented commands actually run**
 
-Run: `pnpm run test && pnpm run test:affected && pnpm run test:coverage`
-Expected: all three succeed exactly as documented.
+Run: `pnpm run test && pnpm run test:affected && pnpm run test:coverage` Expected: all three succeed exactly as documented.
 
 - [ ] **Step 5: Format and commit**
 
@@ -1337,18 +1328,17 @@ but commit -b test/web-296-unit-tests \
 **Files:** none.
 
 **Interfaces:**
+
 - Consumes: every commit on `test/web-296-unit-tests`.
 - Produces: a PR that closes the infra part of WEB-296.
 
 - [ ] **Step 1: Final full verification**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test && pnpm run build`
-Expected: everything green. Record the real test count from the output.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test && pnpm run build` Expected: everything green. Record the real test count from the output.
 
 - [ ] **Step 2: Review the branch**
 
-Run: `but branch show test/web-296-unit-tests`
-Expected: twelve commits (docs, shared, web node, web dom, helpers, studio, email, copy fix, turbo, ci, sonar, docs — count from the actual output).
+Run: `but branch show test/web-296-unit-tests` Expected: twelve commits (docs, shared, web node, web dom, helpers, studio, email, copy fix, turbo, ci, sonar, docs — count from the actual output).
 
 - [ ] **Step 3: Push and open the PR**
 
