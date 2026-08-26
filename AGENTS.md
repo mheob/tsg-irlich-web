@@ -161,7 +161,7 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - `apps/web` splits into a `node` and a `dom` (jsdom) project; component and hook tests land in `dom` — see `apps/web/AGENTS.md`
 - oxlint's vitest plugin warns (`pnpm run lint` still exits 0) when a `describe` title isn't lowercase or repeats an imported identifier, or a hook sits outside a `describe` block — the convention is kept repo-wide regardless
 - Test files, `test-utils/**` and `vitest.config.ts` are exempt from `sort-keys`, `no-magic-numbers`, `max-lines`, `max-lines-per-function` and `typescript/no-unsafe-type-assertion` in `oxlint.config.ts` — widen a single rule inline, never the override itself
-- External services are mocked at the `fetch` boundary, not the module boundary; Resend is the one SDK mock
+- Mock external services at the `fetch` boundary, not the module boundary; Resend is planned as the one exception, mocked at the SDK level
 - `pnpm run test:coverage` writes `coverage/lcov.info` per workspace for CI/SonarQube; no minimum coverage threshold yet
 
 ### Performance & Best Practices

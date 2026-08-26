@@ -40,30 +40,42 @@ function resolveUrl(input: RequestInfo | URL): string {
  * does, which lowercases every header name — assert against lowercase keys (`authorization`,
  * `content-type`), not the casing the code under test sent them with.
  *
- * @returns The recorded calls plus controls to enqueue responses and restore the real `fetch`.
+ * A request made once the queue is empty still throws, so a missing `enqueue` fails fast when
+ * nothing under test swallows the error. It is also recorded on `unqueued` before the throw, so a
+ * test whose subject catches its own errors (for example a `try`/`catch` that returns an error
+ * result) can tell a short queue apart from a genuine failure by asserting
+ * `expect(mock.unqueued).toEqual([])`.
+ *
+ * @returns The recorded calls, the calls that ran out of queued responses, plus controls to
+ * enqueue responses and restore the real `fetch`.
  */
 function createFetchMock(): {
 	calls: FetchCall[];
 	enqueue: (response: MockResponse) => void;
 	enqueueJson: (body: unknown, init?: { status?: number }) => void;
 	restore: () => void;
+	unqueued: FetchCall[];
 } {
 	const calls: FetchCall[] = [];
+	const unqueued: FetchCall[] = [];
 	const queue: MockResponse[] = [];
 
 	const fetchMock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
 		const url = resolveUrl(input);
 
-		calls.push({
+		const call = {
 			body: typeof init?.body === 'string' ? init.body : undefined,
 			headers: Object.fromEntries(new Headers(init?.headers).entries()),
 			method: init?.method ?? 'GET',
 			url,
-		});
+		};
+
+		calls.push(call);
 
 		const next = queue.shift();
 
 		if (!next) {
+			unqueued.push(call);
 			throw new Error(`No mock response queued for ${url}`);
 		}
 
@@ -85,6 +97,7 @@ function createFetchMock(): {
 		restore: () => {
 			vi.unstubAllGlobals();
 		},
+		unqueued,
 	};
 }
 

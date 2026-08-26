@@ -1,15 +1,10 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { formatDate } from './time';
 
 describe('date formatting', () => {
-	beforeAll(() => {
-		vi.stubEnv('TZ', 'UTC');
-	});
-
-	afterAll(() => {
-		vi.unstubAllEnvs();
-	});
+	// `formatDate` calls `toISOString()`, which always renders UTC by specification, so it is
+	// timezone-independent — no TZ stubbing is needed for these fixtures.
 
 	it('formats a Date as a two digit year date', () => {
 		expect(formatDate(new Date('2026-08-25T10:00:00.000Z'))).toBe('26-08-25');

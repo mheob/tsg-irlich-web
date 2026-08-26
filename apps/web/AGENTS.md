@@ -77,7 +77,7 @@ Forms use react-hook-form with a Zod schema from `src/lib/validations`. The matc
 
 ## Testing
 
-Vitest splits this app into two projects, defined in `vitest.config.ts`: `node` (the default — everything under `src/**` except `src/components/**` and `src/hooks/**`) and `dom` (jsdom, exactly `src/{components,hooks}/**`). Component and hook tests belong in `dom`.
+Vitest splits this app into two projects, defined in `vitest.config.ts`, by file extension: `.test.tsx` anywhere under `src/` runs in the `dom` project (jsdom); `.test.ts` runs in `node`, except under `src/components/**` and `src/hooks/**`, which also run in `dom`.
 
 Static image imports (`.webp` and friends) are resolved by the `assetStub` Vite plugin in `vitest.config.ts` — without it, any module that imports an image fails to load in a test run.
 

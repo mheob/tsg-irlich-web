@@ -82,4 +82,18 @@ vi.stubGlobal('matchMedia', createMatchMediaStub(false));
 vi.stubGlobal('ResizeObserver', ObserverStub);
 vi.stubGlobal('IntersectionObserver', ObserverStub);
 
+// jsdom implements neither the pointer-capture API nor `scrollIntoView`, both of which Radix's
+// primitives (Select, Dialog, the vaul drawer) touch on mount — stub them so a test fails on the
+// component under test, not on an unrelated jsdom gap.
+Element.prototype.hasPointerCapture = () => false;
+Element.prototype.setPointerCapture = () => {
+	// no-op
+};
+Element.prototype.releasePointerCapture = () => {
+	// no-op
+};
+Element.prototype.scrollIntoView = () => {
+	// no-op
+};
+
 export { createMatchMediaStub, dispatchMediaQueryChange };

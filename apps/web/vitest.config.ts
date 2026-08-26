@@ -40,8 +40,8 @@ export default defineConfig({
 				extends: true,
 				test: {
 					environment: 'node',
-					exclude: ['src/components/**', 'src/hooks/**', 'node_modules/**'],
-					include: ['src/**/*.test.{ts,tsx}'],
+					exclude: ['src/{components,hooks}/**', 'node_modules/**'],
+					include: ['src/**/*.test.ts'],
 					name: { color: 'green', label: 'node' },
 				},
 			},
@@ -50,7 +50,7 @@ export default defineConfig({
 				plugins: [react()],
 				test: {
 					environment: 'jsdom',
-					include: ['src/{components,hooks}/**/*.test.{ts,tsx}'],
+					include: ['src/**/*.test.tsx', 'src/{components,hooks}/**/*.test.ts'],
 					name: { color: 'magenta', label: 'dom' },
 					setupFiles: ['./test-utils/setup-dom.ts'],
 				},

@@ -6,6 +6,10 @@ import { vi } from 'vitest';
  * `src/lib/env.ts` caches every validated value in a module level `Map`, so a test that needs a
  * different value has to reset the registry before importing the consumer.
  *
+ * The caller must import the module under test as `import type` only — a value import binds a
+ * live reference that survives `vi.resetModules()` and silently defeats this helper. See
+ * `src/utils/url.test.ts` for the pattern.
+ *
  * @param specifier - The module specifier to import, resolved the same way a static `import`
  * would resolve it (a `@/`-aliased path works, a path relative to this file does not).
  * @param vars - The environment variables to stub before importing, keyed by name.
