@@ -81,13 +81,23 @@ Vitest splits this app into two projects, defined in `vitest.config.ts`, by file
 
 Static image imports (`.webp` and friends) are resolved by the `assetStub` Vite plugin in `vitest.config.ts` — without it, any module that imports an image fails to load in a test run.
 
-Three helpers live in `test-utils/`:
+`renderWithUser` (`test-utils/render.tsx`) is the entry point for a `.test.tsx` case — it wraps Testing Library's `render` and returns the usual result plus a `user` (`@testing-library/user-event`) already set up against the same document.
 
-- `setup-dom.ts` — stubs `matchMedia`, `ResizeObserver` and `IntersectionObserver`; wired as the `dom` project's `setupFiles`.
+Three more helpers live in `test-utils/`:
+
+- `setup-dom.ts` — stubs `matchMedia`, `ResizeObserver` and `IntersectionObserver`, mocks `next/image`, `next/navigation` and `motion/react`, and registers one central `afterEach` (DOM cleanup plus every mock's state reset) as the `dom` project's `setupFiles` — a test needs neither itself. A consumer's own `afterEach` should still nest inside a `describe` rather than sit at the file's root, matching the existing `vi.fn()`-reset pattern (see `form.test.tsx`).
 - `env.ts` — `loadWithEnv` resets the module registry and stubs the environment, because `src/lib/env.ts` caches validated values in a module-level `Map`. A test using it must import the module under test only as `import type` and get its runtime binding from `loadWithEnv`'s return value — see `src/utils/url.test.ts`.
 - `fetch-mock.ts` — `createFetchMock` replaces `fetch` with a queue of canned responses and records every call. Recorded headers are normalized through `Headers`, same as the real `fetch`, so they come back lowercased — assert against lowercase header names.
 
 A `vi.fn()` created inside a `vi.mock(import('…'), factory)` is not reset by `vi.resetModules()` or `vi.restoreAllMocks()` — call it explicitly in an `afterEach` (`mockedFn.mockReset()`), or its call history accumulates across cases. See `src/actions/send-contact-form.test.ts` for the pattern.
+
+`@testing-library/jest-dom` is not installed — there is no `toBeInTheDocument()`/`toHaveAttribute()`; use `.toBeNull()`/`.not.toBeNull()` and plain attribute checks instead (see `badge.test.tsx`).
+
+No animation prop (`initial`, `animate`, `transition`, `layoutId`, …) is ever observable through the `motion/react` mock, regardless of what a hook like `useReducedMotion` returns; `next/image`'s Next-only props (`fill`, `preload`, `sizes`, `loader`, `placeholder`, `blurDataURL`) are silently dropped rather than forwarded. Both are real, harness-imposed coverage gaps, not something to work around.
+
+Assert what a user can observe — role, label, text, accessible name, href — never a class name and never a test-only `data-testid`.
+
+A test that pins a known production defect rather than the intended behaviour carries a short comment directly above that `it` explaining the defect (see `src/actions/subscribe-to-newsletter.test.ts`).
 
 ## Gotchas
 
