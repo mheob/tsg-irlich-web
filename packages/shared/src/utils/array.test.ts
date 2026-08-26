@@ -1,17 +1,27 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { shuffleArray } from './array';
 
 describe('shuffling an array', () => {
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
 	it('returns a new array', () => {
 		const input = [1, 2, 3];
-		expect(shuffleArray(input)).not.toBe(input);
+		const result = shuffleArray(input);
+		expect(result).not.toBe(input);
+		expect(result).toHaveLength(3);
 	});
 
 	it('leaves the input untouched', () => {
-		const input = [1, 2, 3];
+		// Stubbed so a bug that mutates the input in place would show a deterministic,
+		// non-identity permutation here rather than passing by luck. A five-element input also
+		// means a single self-swap cannot mask the mutation the way it could with three.
+		vi.spyOn(Math, 'random').mockReturnValue(0);
+		const input = [1, 2, 3, 4, 5];
 		shuffleArray(input);
-		expect(input).toStrictEqual([1, 2, 3]);
+		expect(input).toStrictEqual([1, 2, 3, 4, 5]);
 	});
 
 	it('keeps every member', () => {
@@ -33,7 +43,6 @@ describe('shuffling an array', () => {
 		//   i=2: swap(2, 0) on [1, 2, 3] -> [3, 2, 1]
 		//   i=1: swap(1, 0) on [3, 2, 1] -> [2, 3, 1]
 		expect(shuffleArray([1, 2, 3])).toStrictEqual([2, 3, 1]);
-		vi.restoreAllMocks();
 	});
 
 	it('is deterministic when Math.random is fixed just under 1', () => {
@@ -43,6 +52,5 @@ describe('shuffling an array', () => {
 		// and the array comes back unchanged. A version that multiplied by `i` instead of
 		// `i + 1` would produce [3, 1, 2] here instead.
 		expect(shuffleArray([1, 2, 3])).toStrictEqual([1, 2, 3]);
-		vi.restoreAllMocks();
 	});
 });
