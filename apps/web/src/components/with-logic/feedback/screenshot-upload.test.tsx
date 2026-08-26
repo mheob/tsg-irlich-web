@@ -76,6 +76,11 @@ describe('the screenshot upload', () => {
 	// masking the component's own `allowedTypes.includes(file.type)` guard. `applyAccept: false`
 	// bypasses that so this test actually exercises the guard, the same way a user bypassing the
 	// native file picker (drag-and-drop, paste) would.
+	//
+	// Regression case: `processFile` in `screenshot-upload.tsx` returns bare from this guard, with
+	// no toast, no tile and no other feedback of any kind. The assertions below pin that silence
+	// accurately, but it is a known defect being documented, not the intended UX — a user who picks
+	// a PDF here gets no indication their file was rejected.
 	it('rejects a file of the wrong type without calling the upload action or changing the list', async () => {
 		const { getByLabelText, queryAllByRole } = render(<ControlledScreenshotUpload />);
 		const user = userEvent.setup({ applyAccept: false });
@@ -87,6 +92,10 @@ describe('the screenshot upload', () => {
 		expect(queryAllByRole('img')).toHaveLength(0);
 	});
 
+	// Regression case: `processFile`'s size guard also returns bare, with no toast, no tile and no
+	// other feedback of any kind. The assertions below pin that silence accurately, but it is a known
+	// defect being documented, not the intended UX — a user who picks a 20 MB image here gets no
+	// indication their file was rejected.
 	it('rejects an oversized file without calling the upload action or changing the list', async () => {
 		const { getByLabelText, queryAllByRole, user } = renderUpload();
 
