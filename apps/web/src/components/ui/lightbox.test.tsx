@@ -1,6 +1,6 @@
-import { cleanup, within } from '@testing-library/react';
+import { within } from '@testing-library/react';
 import Image from 'next/image';
-import { afterEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { renderWithUser } from '../../../test-utils/render';
 import { LightboxGallery, LightboxTrigger } from './lightbox';
@@ -37,14 +37,6 @@ function renderGallery(images: LightboxImage[]) {
 }
 
 describe('lightbox gallery', () => {
-	// `renderWithUser` mounts straight into `document.body` and nothing in this file imports the
-	// vitest globals, so Testing Library's own auto-cleanup (which only registers itself when it
-	// finds a global `afterEach`) never runs — without this, the second test in the file would find
-	// its trigger buttons duplicated by the first test's still-mounted tree.
-	afterEach(() => {
-		cleanup();
-	});
-
 	it('opens on the image belonging to the clicked trigger', async () => {
 		const { findByRole, getByRole, user } = renderGallery(THREE_IMAGES);
 

@@ -1,6 +1,7 @@
+import { cleanup } from '@testing-library/react';
 import { createElement, Fragment, useRef } from 'react';
 import type { ReactElement, ReactNode } from 'react';
-import { vi } from 'vitest';
+import { afterEach, vi } from 'vitest';
 
 type MediaQueryListener = (event: MediaQueryListEvent) => void;
 
@@ -153,9 +154,9 @@ let currentPathname = '/';
 
 /**
  * Escape hatch for a test that needs `usePathname()` to resolve to a specific route. Call before
- * rendering. `currentPathname` is module state shared by every test in the run, so a test that
- * changes it must set it back (for example to `'/'`) in an `afterEach`, or a later test silently
- * inherits it.
+ * rendering. `currentPathname` is module state shared by every test in the run — a case may set it
+ * freely, the central `afterEach` below resets it back to `'/'` after every test, so it never leaks
+ * into the next one.
  *
  * @param pathname - The value `usePathname()` resolves to from now on.
  */
@@ -171,8 +172,8 @@ function setPathname(pathname: string): void {
  * These `vi.fn()`s are not created inside the `vi.mock(...)` factory below, but the same rule from
  * `apps/web/AGENTS.md` still applies to them: neither `vi.resetModules()` nor `vi.restoreAllMocks()`
  * clears a plain `vi.fn()`'s call history or implementation — only `vi.spyOn` registrations are.
- * Call `.mockReset()` on whichever of `push`/`replace`/`back`/`prefetch` a test used, in that
- * test's `afterEach`.
+ * The central `afterEach` below calls `.mockReset()` on all four, so a case may configure or assert
+ * on `push`/`replace`/`back`/`prefetch` freely without resetting them itself.
  */
 const routerMock = {
 	back: vi.fn(),
@@ -275,6 +276,11 @@ function getMotionComponent(tag: string): (props: Record<string, unknown>) => Re
  * Stands in for `motion`: `motion.div`, `motion.button`, any tag, all resolve to the plain DOM tag
  * via {@link getMotionComponent}. Escape hatch: like `next/image`, a test file that needs different
  * `motion` behaviour re-mocks the module itself; nothing here carries state to reset.
+ *
+ * No animation prop of any kind — `initial`, `animate`, `exit`, `transition`, `layoutId`, … — ever
+ * reaches the rendered tag, regardless of what `useReducedMotion` returns: {@link MOTION_ONLY_PROPS}
+ * strips them all unconditionally, so pinning `useReducedMotion` to `true` below does not skip an
+ * otherwise-observable branch — there is no animation to observe through this mock either way.
  */
 const motionMock = new Proxy(
 	{},
@@ -297,7 +303,8 @@ let reducedMotion = true;
 
 /**
  * Escape hatch for a test that needs the non-reduced-motion branch. Shared module state like
- * `currentPathname` above — reset it (back to `true`) in an `afterEach` once a test changes it.
+ * `currentPathname` above — the central `afterEach` below resets it back to `true` after every
+ * test, so a case may change it freely.
  *
  * @param value - The value `useReducedMotion()` resolves to from now on.
  */
@@ -309,8 +316,8 @@ let inView = true;
 
 /**
  * Escape hatch for a test that needs `useInView` to report an element as not yet visible (for
- * example, to assert a `NumberTicker` has not started counting). Shared module state — reset it
- * (back to `true`) in an `afterEach` once a test changes it.
+ * example, to assert a `NumberTicker` has not started counting). Shared module state — the central
+ * `afterEach` below resets it back to `true` after every test, so a case may change it freely.
  *
  * @param value - The value `useInView()` resolves to from now on.
  */
@@ -391,6 +398,24 @@ vi.mock('motion/react', () => ({
 	useReducedMotion: () => reducedMotion,
 	useSpring: useSpringMock,
 }));
+
+// Testing Library's own auto-cleanup only registers itself when it finds a global `afterEach`
+// (i.e. when Vitest's `globals: true` is on), which this repo deliberately keeps off — so without
+// this, every element `renderWithUser` mounts into `document.body` stays there for the rest of the
+// file, and a later case can find (and interact with) an earlier case's still-mounted tree. This is
+// the one `afterEach` every `dom` test in this project gets for free; it also resets the mock state
+// above (`routerMock`'s call history, `currentPathname`, `reducedMotion`, `inView`) so a case that
+// used one of the setters or asserted on `routerMock` never leaks into the next test.
+afterEach(() => {
+	cleanup();
+	routerMock.back.mockReset();
+	routerMock.prefetch.mockReset();
+	routerMock.push.mockReset();
+	routerMock.replace.mockReset();
+	currentPathname = '/';
+	reducedMotion = true;
+	inView = true;
+});
 
 export {
 	createMatchMediaStub,
