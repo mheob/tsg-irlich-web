@@ -42,13 +42,13 @@
 **Files:** commit this plan.
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces: branch `test/web-296-unit-tests-pure-logic`, stacked on `test/web-296-unit-tests`.
 
 - [ ] **Step 1: Confirm the base**
 
-Run: `but status`
-Expected: `test/web-296-unit-tests` applied, working tree clean.
+Run: `but status` Expected: `test/web-296-unit-tests` applied, working tree clean.
 
 - [ ] **Step 2: Create the stacked branch and commit the plan**
 
@@ -60,19 +60,20 @@ but commit -b test/web-296-unit-tests-pure-logic \
 
 - [ ] **Step 3: Verify the stack**
 
-Run: `but status`
-Expected: the new branch sits above `test/web-296-unit-tests`, holding one commit.
+Run: `but status` Expected: the new branch sits above `test/web-296-unit-tests`, holding one commit.
 
 ---
 
 ### Task 2: `packages/shared` — array, cn, promise
 
 **Files:**
+
 - Create: `packages/shared/src/utils/array.test.ts`
 - Create: `packages/shared/src/utils/cn.test.ts`
 - Create: `packages/shared/src/utils/promise.test.ts`
 
 **Interfaces:**
+
 - Consumes: PR 1's `packages/shared/vitest.config.ts` (node environment).
 - Produces: nothing other tasks depend on.
 
@@ -130,8 +131,7 @@ Before committing, verify that last expectation by hand against the loop in `arr
 
 - [ ] **Step 4: Run the workspace suite**
 
-Run: `pnpm --filter @tsgi-web/shared test`
-Expected: the three new files green alongside the existing `date.test.ts`.
+Run: `pnpm --filter @tsgi-web/shared test` Expected: the three new files green alongside the existing `date.test.ts`.
 
 - [ ] **Step 5: Gates and commit**
 
@@ -145,9 +145,11 @@ but commit -b test/web-296-unit-tests-pure-logic -m "test(shared): cover the arr
 ### Task 3: `apps/web/src/utils/links.ts`
 
 **Files:**
+
 - Create: `apps/web/src/utils/links.test.ts`
 
 **Interfaces:**
+
 - Consumes: `getInternalHref(target: InternalLinkTarget | null | undefined): string | undefined`.
 - Produces: nothing.
 
@@ -160,6 +162,7 @@ Read `apps/web/src/utils/links.ts` and `apps/web/src/utils/groups.ts`. Note that
 - [ ] **Step 2: Write the test**
 
 Cases, each asserting the exact string:
+
 - `{ _type: 'home', slug: 'home' }` → `'/'`
 - `{ _type: 'news.article', slug: 'sommerfest', category: 'verein' }` → `'/news/verein/sommerfest'`
 - `{ _type: 'news.article', slug: 'sommerfest' }` (no category) → `undefined`
@@ -184,10 +187,12 @@ but commit -b test/web-296-unit-tests-pure-logic -m "test(web): cover the intern
 ### Task 4: `apps/web/src/utils/groups.ts` and `icon.ts`
 
 **Files:**
+
 - Create: `apps/web/src/utils/groups.test.ts`
 - Create: `apps/web/src/utils/icon.test.ts`
 
 **Interfaces:**
+
 - Consumes: `getOGImage`, `getGroupImage`, `getCurrentDepartment`, `groupSections`, `fallbackImage`; `getSocialMediaEntries`.
 - Produces: nothing.
 
@@ -219,9 +224,11 @@ but commit -b test/web-296-unit-tests-pure-logic -m "test(web): cover the group 
 ### Task 5: `apps/web/src/lib/sanity/utils.ts`
 
 **Files:**
+
 - Create: `apps/web/src/lib/sanity/utils.test.ts`
 
 **Interfaces:**
+
 - Consumes: `getDownloadFileUrl`, `getFileSize`, `urlForImage`, `urlForImageMax`.
 - Produces: the image-URL expectations Task 6 relies on — `getGalleryImages` mocks these two builders, so the real behavior is pinned here.
 
@@ -236,6 +243,7 @@ The module builds a Sanity image URL builder from `client`, which reads `NEXT_PU
 - [ ] **Step 2: Write the image-URL cases**
 
 Assert on the query string, not on a whole URL string built the way the implementation builds it:
+
 - `urlForImage(undefined)` and an image without `asset._ref` → `undefined`.
 - height only → the URL carries `w` and `h` equal to that height, `fit=crop`, `q=90`.
 - width and height → `w` and `h` as given, `fit=crop`.
@@ -256,9 +264,11 @@ but commit -b test/web-296-unit-tests-pure-logic -m "test(web): cover the sanity
 ### Task 6: `apps/web/src/utils/image.ts`
 
 **Files:**
+
 - Create: `apps/web/src/utils/image.test.ts`
 
 **Interfaces:**
+
 - Consumes: `getInitials`, `getGalleryImages`; mocks `@/lib/sanity/utils` (pinned for real in Task 5).
 - Produces: nothing.
 
@@ -269,6 +279,7 @@ but commit -b test/web-296-unit-tests-pure-logic -m "test(web): cover the sanity
 - [ ] **Step 2: Write `getGalleryImages` cases**
 
 Mock `@/lib/sanity/utils` with `vi.mock`, so `urlForImage` and `urlForImageMax` return predictable strings:
+
 - `undefined` and `[]` → `[]`.
 - one image → one entry carrying `alt`, `caption` from `description`, `key` from `_key`, `src` from `urlForImage` and `srcFull` from `urlForImageMax`.
 - an image whose `urlForImage` returns `undefined` is dropped; likewise for `urlForImageMax`; a mixed list keeps only the resolvable entries and preserves their order.
@@ -289,16 +300,19 @@ but commit -b test/web-296-unit-tests-pure-logic -m "test(web): cover the initia
 ### Task 7: `apps/web/src/utils/time.ts` and `apps/web/src/lib/env.ts`
 
 **Files:**
+
 - Create: `apps/web/src/utils/time.test.ts`
 - Create: `apps/web/src/lib/env.test.ts`
 
 **Interfaces:**
+
 - Consumes: `getLocaleDate`; `env`. Uses `loadWithEnv` from `apps/web/test-utils/env.ts`.
 - Produces: nothing.
 
 - [ ] **Step 1: Write `time.test.ts`**
 
 `getLocaleDate(date, variant = 'long', locale = DEFAULT_LOCALE)` formats through `Intl.DateTimeFormat`.
+
 - a `Date` in the default `'long'` variant → `'1. Januar 2024'` for `new Date('2024-01-01T12:00:00Z')`
 - the same date in `'short'` → `'01.01.2024'`
 - an ISO string input gives the same result as the equivalent `Date`
@@ -310,6 +324,7 @@ ICU output can contain narrow no-break spaces. Normalize both sides with `.repla
 - [ ] **Step 2: Write `env.test.ts`**
 
 `env(key)` validates one variable at a time through Zod and caches the result in a module-level `Map`. Every case loads the module through `loadWithEnv` so the cache starts empty.
+
 - a valid value comes back unchanged
 - a missing required variable throws, and the message contains the key name
 - a value failing its schema (e.g. `NEXT_PUBLIC_SANITY_STUDIO_URL` set to `'not-a-url'`) throws
@@ -331,10 +346,12 @@ but commit -b test/web-296-unit-tests-pure-logic -m "test(web): cover the date f
 ### Task 8: Zod validations
 
 **Files:**
+
 - Create: `apps/web/src/lib/validations/contact-form.test.ts`
 - Create: `apps/web/src/lib/validations/feedback.test.ts`
 
 **Interfaces:**
+
 - Consumes: `contactFormSchema`, `contactFormWithReceiverSchema`, `feedbackFormSchema`.
 - Produces: nothing.
 
@@ -376,13 +393,11 @@ but commit -b test/web-296-unit-tests-pure-logic -m "test(web): cover the contac
 
 - [ ] **Step 1: Full verification**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test && pnpm run build`
-Expected: all green. Record the new test total.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test && pnpm run build` Expected: all green. Record the new test total.
 
 - [ ] **Step 2: Coverage snapshot**
 
-Run: `pnpm run test:coverage`
-Expected: green. Note the line coverage for `packages/shared/src/utils` and `apps/web/src/utils` — the PR description quotes it, and it is the number the eventual coverage-threshold ticket will start from.
+Run: `pnpm run test:coverage` Expected: green. Note the line coverage for `packages/shared/src/utils` and `apps/web/src/utils` — the PR description quotes it, and it is the number the eventual coverage-threshold ticket will start from.
 
 - [ ] **Step 3: Report**
 
