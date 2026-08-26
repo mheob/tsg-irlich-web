@@ -11,12 +11,14 @@ const FALLBACK_ALT =
 
 describe('looking up the current department', () => {
 	it('returns the department whose slug matches the given group', async () => {
-		const { getCurrentDepartment } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
+		const { getCurrentDepartment, groupSections } = await loadWithEnv<GroupsModule>(
+			'@/utils/groups',
+			{},
+		);
 
-		const department = getCurrentDepartment('fussball');
+		const soccerSection = groupSections[0];
 
-		expect(department?.slug).toBe('/angebot/fussball');
-		expect(department?._type).toBe('group.soccer');
+		expect(getCurrentDepartment('fussball')).toBe(soccerSection);
 	});
 
 	it('returns undefined for a group without a department page', async () => {
@@ -27,16 +29,26 @@ describe('looking up the current department', () => {
 });
 
 describe('resolving a group image', () => {
-	it('returns the matching image using the default path', async () => {
-		const { getGroupImage } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
+	it('returns the matching image object using the default path', async () => {
+		const { getGroupImage, groupSections } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
 
-		expect(getGroupImage('/angebot/fussball').alt).toBe('Fußball');
+		const soccerSection = groupSections[0];
+
+		expect(getGroupImage('/angebot/fussball')).toBe(soccerSection.image);
 	});
 
-	it('returns the matching image using an explicit path', async () => {
-		const { getGroupImage } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
+	it('returns the matching image object using the path production actually passes', async () => {
+		const { getGroupImage, groupSections } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
 
-		expect(getGroupImage('fussball', '/angebot/').alt).toBe('Fußball');
+		const soccerSection = groupSections[0];
+
+		expect(getGroupImage('fussball', '/angebot/')).toBe(soccerSection.image);
+	});
+
+	it('does not match when the path is missing its trailing separator', async () => {
+		const { fallbackImage, getGroupImage } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
+
+		expect(getGroupImage('fussball', '/angebot')).toBe(fallbackImage);
 	});
 
 	it('falls back to the fallback image for an unknown group', async () => {

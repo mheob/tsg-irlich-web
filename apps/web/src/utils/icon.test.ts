@@ -1,6 +1,6 @@
+import { SiFacebook, SiWhatsapp, SiYoutube } from '@icons-pack/react-simple-icons';
 import { describe, expect, it } from 'vitest';
 
-import { socialMediaMap } from '@/components/ui/social-media-icon';
 import { getSocialMediaEntries } from '@/utils/icon';
 
 describe('turning sanity social fields into renderable entries', () => {
@@ -22,7 +22,7 @@ describe('turning sanity social fields into renderable entries', () => {
 		const entries = getSocialMediaEntries({ facebook: 'https://facebook.com/tsg-irlich' });
 
 		expect(entries).toStrictEqual([
-			{ icon: socialMediaMap.facebook, name: 'facebook', url: 'https://facebook.com/tsg-irlich' },
+			{ icon: SiFacebook, name: 'facebook', url: 'https://facebook.com/tsg-irlich' },
 		]);
 	});
 
@@ -49,8 +49,8 @@ describe('turning sanity social fields into renderable entries', () => {
 		});
 
 		expect(entries).toStrictEqual([
-			{ icon: socialMediaMap.whatsapp, name: 'whatsapp', url: 'https://wa.me/1234567' },
-			{ icon: socialMediaMap.youtube, name: 'youtube', url: 'https://youtube.com/tsg-irlich' },
+			{ icon: SiWhatsapp, name: 'whatsapp', url: 'https://wa.me/1234567' },
+			{ icon: SiYoutube, name: 'youtube', url: 'https://youtube.com/tsg-irlich' },
 		]);
 	});
 });
