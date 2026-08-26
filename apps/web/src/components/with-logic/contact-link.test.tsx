@@ -66,6 +66,33 @@ describe('the contact link', () => {
 		);
 	});
 
+	// With no `children`, the rendered text falls back to `reverse(hrefText)` before interaction.
+	// A plain ASCII href has no grapheme clusters spanning more than one UTF-16 code unit and no
+	// parentheses, so this pins the baseline: every character reversed in place, nothing else.
+	it('renders the reversed href text before any interaction', () => {
+		const { getByRole } = renderWithUser(<ContactLink href="tel:+49 176 1234567" />);
+
+		expect(getByRole('button').textContent).toBe('7654321 671 94+');
+	});
+
+	// The 😀 emoji is a surrogate pair (two UTF-16 code units). Reversing by code unit instead of by
+	// grapheme cluster splits the pair apart and reassembles it in the wrong order, producing two lone
+	// surrogates instead of the original emoji. `reverse()` segments with `Intl.Segmenter` precisely to
+	// keep this cluster intact, so this is the case that actually pins grapheme-awareness.
+	it('keeps a multi-code-unit grapheme cluster intact when reversing, rather than reversing UTF-16 code units', () => {
+		const { getByRole } = renderWithUser(<ContactLink href="tel:+49 176 😀 1234567" />);
+
+		expect(getByRole('button').textContent).toBe('7654321 😀 671 94+');
+	});
+
+	// `reverse()` also swaps `(` for `)` (and vice versa) as it reverses, so a parenthesised area code
+	// still opens and closes the right way round instead of ending up back to front.
+	it('swaps parentheses so they still point the right way once the text is reversed', () => {
+		const { getByRole } = renderWithUser(<ContactLink href="tel:+49 (0)176 1234567" />);
+
+		expect(getByRole('button').textContent).toBe('7654321 671(0) 94+');
+	});
+
 	// `contact-link.tsx`'s `renderProps` spreads `...props` and only THEN sets `'aria-label'`, so a
 	// caller-supplied label always loses — before interaction it is forced to the generic string
 	// above regardless of what the caller passed, after interaction it is discarded outright. This is
