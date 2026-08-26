@@ -166,6 +166,7 @@ describe('completing an upload to linear', () => {
 			method: 'POST',
 			url: LINEAR_API_URL,
 		});
+		expect(mock.unqueued).toStrictEqual([]);
 	});
 
 	it('puts the file bytes to the returned upload url, merging linear headers over content-type', async () => {

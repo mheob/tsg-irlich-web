@@ -33,6 +33,12 @@ vi.mock(import('@tsgi-web/email'), () => ({ ContactForwardEmail: vi.fn() }));
 
 const mockedContactForwardEmail = vi.mocked(ContactForwardEmail);
 
+// A stand-in for whatever `ContactForwardEmail(...)` returns, so the full-payload assertion below
+// can compare `react` against a known value instead of describing a rendered element tree.
+const CONTACT_FORWARD_EMAIL_STUB = 'contact-forward-email-stub' as unknown as ReturnType<
+	typeof ContactForwardEmail
+>;
+
 // `next-safe-action`'s default `handleServerError` (see `create-linear-issue.test.ts` for the full
 // citation) masks every thrown `Error` behind this fixed message in the envelope, logging the real
 // message first via `console.error('Action error:', e.message)`.
@@ -119,6 +125,7 @@ describe('building the resend request', () => {
 
 	it('sets bcc to it@tsg-irlich.de, replyTo to the sender and the exact subject', async () => {
 		mockSendSuccess();
+		mockedContactForwardEmail.mockReturnValue(CONTACT_FORWARD_EMAIL_STUB);
 		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
 			'@/actions/send-contact-form',
 			{ NODE_ENV: 'development' },
@@ -129,14 +136,19 @@ describe('building the resend request', () => {
 		);
 
 		const [sendArgs] = mockedSend.mock.calls[0];
-		expect({
-			bcc: sendArgs.bcc,
-			replyTo: sendArgs.replyTo,
-			subject: sendArgs.subject,
-		}).toStrictEqual({
+		// The full argument object, not a picked subset — this is the one case in the file that
+		// guards `from` (and any unexpected extra field), so a regression that corrupts, drops or
+		// hardcodes the wrong sender address would otherwise be invisible to this suite. `from` is
+		// hard-coded from `send-contact-form.ts` rather than imported. `react` is matched against
+		// the mocked `ContactForwardEmail`'s stubbed return value, since the mock's actual props are
+		// covered by the dedicated test below.
+		expect(sendArgs).toStrictEqual({
 			bcc: ['it@tsg-irlich.de'],
+			from: 'TSG Irlich - Benachrichtigungen <webseite@notifications.tsg-irlich.de>',
+			react: CONTACT_FORWARD_EMAIL_STUB,
 			replyTo: 'sender@example.com',
 			subject: 'Webseiten-Kontaktformular: Neue Nachricht von Erika Musterfrau',
+			to: 'it@tsg-irlich.de',
 		});
 	});
 
