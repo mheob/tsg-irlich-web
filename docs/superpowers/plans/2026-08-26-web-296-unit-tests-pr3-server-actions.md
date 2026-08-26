@@ -28,7 +28,7 @@
 
 ## Infrastructure this PR consumes (all from PR 1)
 
-- `apps/web/test-utils/fetch-mock.ts` — `createFetchMock()` returns `{ calls, enqueue, enqueueJson, restore, unqueued }`. Responses are handed out FIFO in enqueue order, not routed by URL. `calls` records `{ body, headers, method, url }` for every request; **recorded header names are lowercased**, because the mock normalizes through `Headers` as real `fetch` does — assert `authorization`, not `Authorization`.
+- `apps/web/test-utils/fetch-mock.ts` — `createFetchMock()` returns `{ calls, enqueue, enqueueJson, restore, unqueued }`. Responses are handed out FIFO in enqueue order, not routed by URL. `calls` records `{ body, bodyBytes, headers, method, url }` for every request; **recorded header names are lowercased**, because the mock normalizes through `Headers` as real `fetch` does — assert `authorization`, not `Authorization`. `body` captures a `string` request body as-is and a `URLSearchParams` body (the CleverReach token request) through `String(...)`; `bodyBytes` captures an `ArrayBuffer`/`ArrayBufferView` body (the Linear upload's file bytes) as a `Uint8Array` instead, leaving `body` `undefined`. Any other body type — a `Blob`, a `FormData`, a stream — leaves both fields `undefined`.
 - `unqueued` exists for this PR specifically: `subscribe()` in `cleverreach.ts` wraps its flow in a `try`/`catch` that returns `INTERNAL_ERROR`, so a short mock queue looks exactly like a genuine failure. **Every test whose subject swallows errors must assert `expect(mock.unqueued).toEqual([])`.**
 - `apps/web/test-utils/env.ts` — `loadWithEnv(specifier, vars)` resets the module registry and stubs env vars. Required here for two reasons: these modules read env at call time, and `cleverreach.ts` holds a module-level `tokenCache` that must not leak between cases. Import the module under test as `import type` only.
 
@@ -39,13 +39,13 @@
 **Files:** commit this plan.
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces: branch `test/web-296-unit-tests-server-actions` off `next`.
 
 - [ ] **Step 1: Confirm the base**
 
-Run: `git log --oneline -1 origin/next` and `but status`
-Expected: `next` contains PR 1's merge commit; the working tree is clean.
+Run: `git log --oneline -1 origin/next` and `but status` Expected: `next` contains PR 1's merge commit; the working tree is clean.
 
 - [ ] **Step 2: Create the branch and commit the plan**
 
@@ -60,17 +60,18 @@ but commit -b test/web-296-unit-tests-server-actions \
 
 - [ ] **Step 3: Verify**
 
-Run: `but status` and `git log --oneline origin/next..test/web-296-unit-tests-server-actions`
-Expected: exactly one commit, carrying only the plan file.
+Run: `but status` and `git log --oneline origin/next..test/web-296-unit-tests-server-actions` Expected: exactly one commit, carrying only the plan file.
 
 ---
 
 ### Task 2: `lib/cleverreach.ts` — the access token
 
 **Files:**
+
 - Create: `apps/web/src/lib/cleverreach.test.ts`
 
 **Interfaces:**
+
 - Consumes: `createFetchMock`, `loadWithEnv`.
 - Produces: the file Task 3 extends. Task 3 appends `describe` blocks to it rather than creating a second file.
 
@@ -104,9 +105,11 @@ but commit -b test/web-296-unit-tests-server-actions \
 ### Task 3: `lib/cleverreach.ts` — subscription flow
 
 **Files:**
+
 - Modify: `apps/web/src/lib/cleverreach.test.ts`
 
 **Interfaces:**
+
 - Consumes: the file and its helpers from Task 2.
 - Produces: nothing.
 
@@ -146,9 +149,11 @@ but commit -b test/web-296-unit-tests-server-actions \
 ### Task 4: `actions/subscribe-to-newsletter.ts`
 
 **Files:**
+
 - Create: `apps/web/src/actions/subscribe-to-newsletter.test.ts`
 
 **Interfaces:**
+
 - Consumes: `createFetchMock`, `loadWithEnv`, and a mock of `next/headers`.
 - Produces: the `next/headers` mocking pattern the later action tests reuse.
 
@@ -179,9 +184,11 @@ but commit -b test/web-296-unit-tests-server-actions \
 ### Task 5: `actions/create-linear-issue.ts`
 
 **Files:**
+
 - Create: `apps/web/src/actions/create-linear-issue.test.ts`
 
 **Interfaces:**
+
 - Consumes: `createFetchMock`, `loadWithEnv`.
 - Produces: the `next-safe-action` envelope assertions Task 6 and Task 7 reuse.
 
@@ -190,6 +197,7 @@ Wrapped by `next-safe-action`, so the result is an envelope. Determine the real 
 - [ ] **Step 1: `buildDescription` cases (through the action)**
 
 Assert on the GraphQL request body:
+
 - The screenshot block appears only when `screenshotUrls` is non-empty, and renders one markdown image per URL.
 - Metadata lines skip falsy fields, and `privacy: true` renders.
 - The `Source` line is always last.
@@ -223,9 +231,11 @@ but commit -b test/web-296-unit-tests-server-actions \
 ### Task 6: `actions/upload-to-linear.ts`
 
 **Files:**
+
 - Create: `apps/web/src/actions/upload-to-linear.test.ts`
 
 **Interfaces:**
+
 - Consumes: `createFetchMock`, `loadWithEnv`, the envelope shape from Task 5.
 - Produces: nothing.
 
@@ -260,9 +270,11 @@ but commit -b test/web-296-unit-tests-server-actions \
 ### Task 7: `actions/send-contact-form.ts`
 
 **Files:**
+
 - Create: `apps/web/src/actions/send-contact-form.test.ts`
 
 **Interfaces:**
+
 - Consumes: `loadWithEnv`, a mock of `@/lib/resend`, the envelope shape from Task 5.
 - Produces: nothing.
 
@@ -296,13 +308,11 @@ but commit -b test/web-296-unit-tests-server-actions \
 
 - [ ] **Step 1: Full verification**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test && pnpm run build`
-Expected: all green. Record the new test total and the per-workspace split.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test && pnpm run build` Expected: all green. Record the new test total and the per-workspace split.
 
 - [ ] **Step 2: Coverage**
 
-Run: `pnpm run test:coverage`
-Note the line coverage for `apps/web/src/actions` and `apps/web/src/lib/cleverreach.ts`.
+Run: `pnpm run test:coverage` Note the line coverage for `apps/web/src/actions` and `apps/web/src/lib/cleverreach.ts`.
 
 - [ ] **Step 3: Report**
 

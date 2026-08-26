@@ -49,14 +49,14 @@ describe('requesting the cleverreach access token', () => {
 		expect(tokenCall.url).toBe('https://rest.cleverreach.com/oauth/token.php');
 		expect(tokenCall.method).toBe('POST');
 		expect(tokenCall.headers['content-type']).toBe('application/x-www-form-urlencoded');
-		// `cleverreach.ts` sends `body: new URLSearchParams({...})`, not a string. `createFetchMock`
-		// only records a call's body when `typeof init.body === 'string'` (see
-		// `apps/web/test-utils/fetch-mock.ts`), so `tokenCall.body` is `undefined` here even though
-		// a real `fetch` would serialize the `URLSearchParams` to
-		// `client_id=...&client_secret=...&grant_type=client_credentials`. The request content
-		// itself cannot be asserted through this mock's public `calls` interface for this call; see
-		// the task report for this finding.
-		expect(tokenCall.body).toBeUndefined();
+		// `tokenCall.body` is the `URLSearchParams`, serialized to text by the fetch mock (see
+		// `resolveBody` in `apps/web/test-utils/fetch-mock.ts`); parse it back to assert every field
+		// in one call rather than three separate `toContain` checks.
+		expect(Object.fromEntries(new URLSearchParams(tokenCall.body))).toStrictEqual({
+			client_id: 'test-client-id',
+			client_secret: 'test-client-secret',
+			grant_type: 'client_credentials',
+		});
 		expect(mock.unqueued).toStrictEqual([]);
 	});
 
