@@ -30,10 +30,21 @@ describe('news article preview', () => {
 		expect(result).toStrictEqual({ media, title: '26-08-25 - Sommerfest 2026' });
 	});
 
-	it('leaves the title unprefixed when there is no publish date', () => {
-		const result = prepareNewsArticle({ title: 'Entwurf' });
+	it('leaves the title unprefixed when there is no publish date, even with media set', () => {
+		const media = 'media-asset-abc';
 
-		expect(result).toStrictEqual({ media: undefined, title: 'Entwurf' });
+		const result = prepareNewsArticle({ media, title: 'Entwurf' });
+
+		expect(result).toStrictEqual({ media, title: 'Entwurf' });
+	});
+
+	it('passes an absent media selection through as undefined when a publish date is set', () => {
+		const result = prepareNewsArticle({
+			publishedAt: '2026-01-01T00:00:00.000Z',
+			title: 'Neujahr',
+		});
+
+		expect(result).toStrictEqual({ media: undefined, title: '26-01-01 - Neujahr' });
 	});
 
 	it('passes the selected media through unchanged', () => {
