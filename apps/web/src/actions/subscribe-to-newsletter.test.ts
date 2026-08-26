@@ -55,6 +55,7 @@ describe('validating the submitted email before contacting cleverreach', () => {
 	afterEach(() => {
 		mock?.restore();
 		vi.restoreAllMocks();
+		mockedHeaders.mockReset();
 	});
 
 	// `subscriberSchema` in `src/lib/cleverreach.ts` defines the field as
@@ -129,6 +130,7 @@ describe('resolving the request metadata for the DOI email', () => {
 	afterEach(() => {
 		mock?.restore();
 		vi.restoreAllMocks();
+		mockedHeaders.mockReset();
 	});
 
 	it('takes the first ip from a multi-value x-forwarded-for header, trimmed', async () => {
@@ -197,6 +199,7 @@ describe('mapping a cleverreach failure to its german message', () => {
 		mock?.restore();
 		vi.doUnmock('@/lib/cleverreach');
 		vi.restoreAllMocks();
+		mockedHeaders.mockReset();
 	});
 
 	it('maps ALREADY_SUBSCRIBED to its german message', async () => {
@@ -319,6 +322,7 @@ describe('completing the subscription', () => {
 	afterEach(() => {
 		mock?.restore();
 		vi.restoreAllMocks();
+		mockedHeaders.mockReset();
 	});
 
 	it('returns the success title and message', async () => {

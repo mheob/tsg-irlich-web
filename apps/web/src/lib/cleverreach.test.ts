@@ -150,6 +150,40 @@ describe('requesting the cleverreach access token', () => {
 		expect(mock.unqueued).toStrictEqual([]);
 	});
 
+	it('refetches the token exactly at the five-minute expiry boundary', async () => {
+		vi.useFakeTimers();
+		const start = new Date('2026-01-01T00:00:00.000Z');
+		vi.setSystemTime(start);
+
+		mock = createFetchMock();
+		const { subscribe } = await loadWithEnv<CleverreachModule>(
+			'@/lib/cleverreach',
+			CLEVERREACH_ENV,
+		);
+
+		mock.enqueueJson({ access_token: 'token-1', expires_in: 3600 });
+		mock.enqueueJson({});
+		mock.enqueueJson({});
+		await subscribe(SUBSCRIBER_INPUT);
+
+		// Advance to the exact instant where `now + FIVE_MINUTES === expiresAt`
+		// (expiresAt = start + 3_600_000ms). `cleverreach.ts`'s cache check is
+		// `tokenCache.expiresAt > Date.now() + FIVE_MINUTES`, a strict `>`, so at this exact boundary
+		// the comparison is false and the cache is treated as stale — a mutation to `>=` would keep the
+		// cached token here instead, dropping the second token call below to one.
+		vi.setSystemTime(new Date(start.getTime() + 3_600_000 - FIVE_MINUTE_BUFFER_MS));
+
+		mock.enqueueJson({ access_token: 'token-2', expires_in: 3600 });
+		mock.enqueueJson({});
+		mock.enqueueJson({});
+		await subscribe(SUBSCRIBER_INPUT);
+
+		const tokenCalls = mock.calls.filter((call) => call.url.endsWith('oauth/token.php'));
+
+		expect(tokenCalls).toHaveLength(2);
+		expect(mock.unqueued).toStrictEqual([]);
+	});
+
 	it('returns INTERNAL_ERROR and logs the failure when the token response is not ok', async () => {
 		const errorSpy = vi.spyOn(console, 'error').mockReturnValue();
 		mock = createFetchMock();

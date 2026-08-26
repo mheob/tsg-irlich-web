@@ -170,13 +170,19 @@ describe('building the resend request', () => {
 
 		const [props] = mockedContactForwardEmail.mock.calls[0];
 		expect(mockedContactForwardEmail).toHaveBeenCalledOnce();
-		expect(props).toMatchObject({
+		// The whole prop object, not a subset — `baseUrl` is pinned to a literal rather than merely
+		// typed. `getBaseUrl()` (`src/utils/url.ts`) checks `VERCEL_PROJECT_PRODUCTION_URL` first, which
+		// is left unstubbed by the `{ NODE_ENV: 'development' }` env below and is unset in this test
+		// run, then `NODE_ENV`, which is `'development'` here — so it falls through to the localhost
+		// default. Hard-coded here rather than imported, per the "never derive an expected value from a
+		// constant the implementation also imports" rule.
+		expect(props).toStrictEqual({
+			baseUrl: 'http://localhost:3000',
 			contactEmail: 'sender@example.com',
 			contactMessage: MESSAGE,
 			contactName: 'Erika Musterfrau',
 			receiver: 'Trainerteam Fußball',
 		});
-		expect(props.baseUrl).toBeTypeOf('string');
 	});
 });
 

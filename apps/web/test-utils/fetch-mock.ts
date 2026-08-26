@@ -1,7 +1,17 @@
 import { vi } from 'vitest';
 
 interface FetchCall {
+	/**
+	 * The call's `body` as text — populated for a `string` body (e.g. a `JSON.stringify(...)`
+	 * payload) and a `URLSearchParams` body; `undefined` for every other body type, including when
+	 * `bodyBytes` is populated. See `resolveBody` for the full mapping.
+	 */
 	body: string | undefined;
+	/**
+	 * The call's `body` as raw bytes — populated for an `ArrayBuffer` or `ArrayBufferView` body
+	 * (e.g. a file upload); `undefined` for every other body type, including when `body` is
+	 * populated. See `resolveBody` for the full mapping.
+	 */
 	bodyBytes: Uint8Array | undefined;
 	headers: Record<string, string>;
 	method: string;

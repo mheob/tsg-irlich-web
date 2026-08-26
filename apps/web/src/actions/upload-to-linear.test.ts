@@ -23,10 +23,17 @@ const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
 // message first via `console.error('Action error:', e.message)`.
 const GENERIC_SERVER_ERROR = 'Something went wrong while executing the operation.';
 
-/** A `File` whose `size` getter is overridden, so a >10MB fixture never allocates real bytes. */
-class OversizedFile extends File {
+/** A `File` whose `size` getter is overridden to a fixed value, so a large fixture never allocates real bytes. */
+class SizedFile extends File {
+	readonly #fixedSize: number;
+
+	public constructor(filename: string, type: string, fixedSize: number) {
+		super([], filename, { type });
+		this.#fixedSize = fixedSize;
+	}
+
 	public override get size(): number {
-		return MAX_FILE_SIZE_BYTES + 1;
+		return this.#fixedSize;
 	}
 }
 
@@ -81,7 +88,7 @@ describe('validating the uploaded file', () => {
 			LINEAR_ENV,
 		);
 
-		const file = new OversizedFile([], 'huge.png', { type: 'image/png' });
+		const file = new SizedFile('huge.png', 'image/png', MAX_FILE_SIZE_BYTES + 1);
 		const result = await uploadToLinear({ file });
 
 		expect(result).toStrictEqual({
@@ -90,6 +97,33 @@ describe('validating the uploaded file', () => {
 			},
 		});
 		expect(mock.calls).toStrictEqual([]);
+	});
+
+	it('accepts a file exactly at the 10MB limit, reaching the linear api', async () => {
+		mock = createFetchMock();
+		const { uploadToLinear } = await loadWithEnv<UploadToLinearModule>(
+			'@/actions/upload-to-linear',
+			LINEAR_ENV,
+		);
+		mock.enqueueJson({
+			data: {
+				fileUpload: {
+					success: true,
+					uploadFile: {
+						assetUrl: 'https://uploads.linear.app/asset-1',
+						headers: [],
+						uploadUrl: 'https://uploads.linear.app/put-url',
+					},
+				},
+			},
+		});
+		mock.enqueue({ body: '', status: 200 });
+
+		const file = new SizedFile('limit.png', 'image/png', MAX_FILE_SIZE_BYTES);
+		const result = await uploadToLinear({ file });
+
+		expect(result).toStrictEqual({ data: { assetUrl: 'https://uploads.linear.app/asset-1' } });
+		expect(mock.unqueued).toStrictEqual([]);
 	});
 
 	it.each(ALLOWED_TYPES)('accepts a %s file, reaching the linear api', async (type) => {
@@ -114,7 +148,7 @@ describe('validating the uploaded file', () => {
 
 		const result = await uploadToLinear({ file: imageFile([1, 2, 3], type) });
 
-		expect(result.validationErrors).toBeUndefined();
+		expect(result).toStrictEqual({ data: { assetUrl: 'https://uploads.linear.app/asset-1' } });
 		expect(mock.unqueued).toStrictEqual([]);
 	});
 });
