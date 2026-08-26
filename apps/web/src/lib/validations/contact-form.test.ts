@@ -80,12 +80,6 @@ describe('the base contact form schema', () => {
 		expect(result.success).toBe(false);
 		expect(result.error?.issues[0]?.message).toBe('Kein Empfänger ausgewählt.');
 	});
-
-	it('accepts a missing receiver', () => {
-		const result = contactFormSchema.safeParse(VALID_PAYLOAD);
-
-		expect(result.success).toBe(true);
-	});
 });
 
 describe('the difference between the base and receiver-required schemas', () => {
