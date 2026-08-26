@@ -79,6 +79,15 @@ describe('gallery', () => {
 		expect(within(dialog).getByRole('img', { name: 'Bild 4' })).not.toBeNull();
 	});
 
+	it('renders the thumbnails in the same order as the input images, in the grid layout for more than three images', () => {
+		const images = buildImages(5);
+		const { getAllByRole } = renderGallery(images);
+
+		const names = getAllByRole('img').map((image) => image.getAttribute('alt'));
+
+		expect(names).toStrictEqual(['Bild 1', 'Bild 2', 'Bild 3', 'Bild 4', 'Bild 5']);
+	});
+
 	it('renders nothing for an empty image list', () => {
 		const images = buildImages(0);
 		const { container } = render(<Gallery images={images} />);
