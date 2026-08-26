@@ -43,8 +43,7 @@ The field and section definition literals (`shared/fields/*`, `shared/sections/*
 
 - [ ] **Step 1: Confirm the base**
 
-Run: `git fetch origin && git log --oneline -1 origin/next` and `but status`
-Expected: `next` contains #474's merge commit; the working tree is clean.
+Run: `git fetch origin && git log --oneline -1 origin/next` and `but status` Expected: `next` contains #474's merge commit; the working tree is clean.
 
 - [ ] **Step 2: Create the branch, then commit**
 
@@ -59,18 +58,19 @@ but commit -b test/web-296-unit-tests-studio-email \
 
 - [ ] **Step 3: Verify**
 
-Run: `git log --oneline origin/next..test/web-296-unit-tests-studio-email`
-Expected: exactly one commit, carrying only the plan file.
+Run: `git log --oneline origin/next..test/web-296-unit-tests-studio-email` Expected: exactly one commit, carrying only the plan file.
 
 ---
 
 ### Task 2: Studio utilities
 
 **Files:**
+
 - Create: `apps/studio/utils/strings.test.ts`
 - Create: `apps/studio/utils/fields.test.ts`
 
 **Interfaces:**
+
 - Consumes: the studio's existing jsdom Vitest config.
 - Produces: nothing.
 
@@ -97,10 +97,12 @@ but commit -b test/web-296-unit-tests-studio-email \
 ### Task 3: Studio structure and the singleton plugin
 
 **Files:**
+
 - Create: `apps/studio/structure/index.test.ts`
 - Create: `apps/studio/plugins/singleton.test.ts`
 
 **Interfaces:**
+
 - Consumes: nothing from earlier tasks.
 - Produces: nothing.
 
@@ -111,9 +113,9 @@ Read `structure/index.ts` and test what it actually exports — the spec names `
 - [ ] **Step 2: `plugins/singleton.test.ts`**
 
 `singletonPlugin` is a `definePlugin` factory taking a list of type names. Reach its behaviour through the returned plugin object's `document.actions` and `document.newDocumentOptions`:
+
 - `actions` strips the `duplicate` action for a listed type and leaves the list untouched for an unlisted one. Build the `previous` array as plain objects with an `action` property — read the code to see what shape it expects.
-- `newDocumentOptions` filters listed template items when `creationContext.type` is `'global'`, and returns the list unchanged for any other context.
-Assert the returned arrays, not the plugin's internals.
+- `newDocumentOptions` filters listed template items when `creationContext.type` is `'global'`, and returns the list unchanged for any other context. Assert the returned arrays, not the plugin's internals.
 
 - [ ] **Step 3: Gates and commit**
 
@@ -130,9 +132,11 @@ but commit -b test/web-296-unit-tests-studio-email \
 ### Task 4: Schema preview and validation functions
 
 **Files:**
+
 - Create one `*.test.ts` beside each schema you cover, under `apps/studio/schemas/`.
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces: nothing.
 
@@ -165,11 +169,13 @@ but commit -b test/web-296-unit-tests-studio-email \
 ### Task 5: E-mail templates
 
 **Files:**
+
 - Create: `packages/email/lib/render-newsletter.test.ts`
 - Create: `*.test.tsx` beside the newsletter components you cover
 - Create: `packages/email/emails/contact-forward.test.tsx`
 
 **Interfaces:**
+
 - Consumes: `packages/email`'s node-environment config with the React plugin.
 - Produces: nothing.
 
@@ -206,11 +212,13 @@ but commit -b test/web-296-unit-tests-studio-email \
 ### Task 6: Close PR 1's deferred gap — `packages/shared`'s components
 
 **Files:**
+
 - Modify: `packages/shared/vitest.config.ts`
 - Create: `packages/shared/src/icons/dosb.test.tsx`
 - Create: `packages/shared/src/logos/tsg-logo.test.tsx`
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces: the jsdom project that workspace has been missing since PR 1.
 
@@ -245,8 +253,7 @@ but commit -b test/web-296-unit-tests-studio-email \
 
 - [ ] **Step 1: Full verification**
 
-Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test && pnpm run build`
-Record the test total and the per-workspace split.
+Run: `pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test && pnpm run build` Record the test total and the per-workspace split.
 
 - [ ] **Step 2: Coverage across all five PRs**
 
