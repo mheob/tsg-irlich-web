@@ -50,6 +50,10 @@ describe('document download file type validation', () => {
 		expect(validate({ asset: { mimeType: 'image/png' } })).toBe('Nur PDF-Dateien sind erlaubt');
 	});
 
+	// This custom rule only rejects a wrong MIME type; presence is `Rule.required()`'s job, which
+	// the builder chain declares separately and which these two cases therefore do not cover. Both
+	// pinned deliberately: a rule that threw or rejected on a half-uploaded asset would block the
+	// editor mid-upload, so passing here is the intended behaviour, not a hole in the predicate.
 	it('passes when no file has been uploaded yet', () => {
 		const validate = getDocumentValidator();
 

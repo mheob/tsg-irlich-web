@@ -111,6 +111,14 @@ describe('person affiliation preview', () => {
 		expect(result).toStrictEqual({ title: 'Gruppe: Fußball - Rolle: Vorstand Finanzen' });
 	});
 
+	// Regression case: `prepare` interpolates the two selected reference titles straight into a
+	// template literal, so an unset or unresolved reference renders as the literal string
+	// "undefined" in the array item's preview. Both `team` and `role` carry `Rule.required()`, but
+	// Sanity validation gates publishing, not autosave — a freshly added affiliation item shows
+	// "Gruppe: undefined - Rolle: undefined" until both references are picked. Lower severity than
+	// the `spacer`/`group` defects: this one heals as soon as the references are set, whereas those
+	// two leave pre-existing documents permanently stuck. Pinned rather than fixed, since
+	// production code is out of scope here.
 	it('stringifies a missing team as the literal word "undefined"', () => {
 		const result = prepareAffiliation({ role: 'Vorstand Finanzen' });
 

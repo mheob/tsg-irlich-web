@@ -35,6 +35,22 @@ describe('newsletter html rendering', () => {
 		// flag is the only source of divergence.
 		expect(withoutHtmlComments(template)).toBe(withoutHtmlComments(html));
 	});
+
+	// Regression case: `<Html lang="de">` in newsletter.tsx is correct, but `<Body>` is rendered
+	// without a `lang` prop, and react-email's `Body` defaults it to `lang="en"` on both the
+	// `<body>` element and the inner `<td>` it wraps the content in (`react-email`'s
+	// `components/body/body.tsx`: `lang={props.lang ?? 'en'}`). The document therefore claims
+	// German at the top and English for everything inside it — a WCAG 3.1.2 (Language of Parts)
+	// defect that is worse than a plain wrong `lang`, because the inner claim silently overrides
+	// the right one for every string this German newsletter renders. `emails/contact-forward.tsx`
+	// has the same react-email default biting it one level up, on `<Html>`. Fixing production code
+	// is out of scope here, so this pins the current, wrong value rather than the intended one.
+	it('renders a body that overrides the document language, a known defect', async () => {
+		const html = await renderNewsletterHtml();
+
+		expect(html).toContain('<html dir="ltr" lang="de">');
+		expect(html).toContain('<body dir="ltr" lang="en"');
+	});
 });
 
 describe('newsletter snapshots', () => {
