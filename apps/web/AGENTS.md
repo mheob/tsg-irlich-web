@@ -75,6 +75,18 @@ Read them through `env('KEY')` from `@/lib/env` — never `process.env` directly
 
 Forms use react-hook-form with a Zod schema from `src/lib/validations`. The matching server action lives in `src/actions`, is built with `actionClient` from `@/lib/actions/safe-action` (next-safe-action) and validates the same schema via `.inputSchema()`.
 
+## Testing
+
+Vitest splits this app into two projects, defined in `vitest.config.ts`, by file extension: `.test.tsx` anywhere under `src/` runs in the `dom` project (jsdom); `.test.ts` runs in `node`, except under `src/components/**` and `src/hooks/**`, which also run in `dom`.
+
+Static image imports (`.webp` and friends) are resolved by the `assetStub` Vite plugin in `vitest.config.ts` — without it, any module that imports an image fails to load in a test run.
+
+Three helpers live in `test-utils/`:
+
+- `setup-dom.ts` — stubs `matchMedia`, `ResizeObserver` and `IntersectionObserver`; wired as the `dom` project's `setupFiles`.
+- `env.ts` — `loadWithEnv` resets the module registry and stubs the environment, because `src/lib/env.ts` caches validated values in a module-level `Map`. A test using it must import the module under test only as `import type` and get its runtime binding from `loadWithEnv`'s return value — see `src/utils/url.test.ts`.
+- `fetch-mock.ts` — `createFetchMock` replaces `fetch` with a queue of canned responses and records every call. Recorded headers are normalized through `Headers`, same as the real `fetch`, so they come back lowercased — assert against lowercase header names.
+
 ## Gotchas
 
 - No `try`/`catch`/`finally` in components or hooks — the React Compiler bails out on `finally`. Await with `settle()` from `@tsgi-web/shared` and branch on `outcome.ok`.

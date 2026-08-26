@@ -55,6 +55,10 @@
 			],
 			"outputs": ["dist/**"]
 		},
+		"test": {},
+		"test:coverage": {
+			"outputs": ["coverage/**"]
+		},
 		"typecheck": {},
 		"typegen:routes": {},
 		"typegen:sanity": {

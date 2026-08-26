@@ -79,7 +79,7 @@ export async function subscribeToNewsletter(
 	if ('error' in validated) {
 		return {
 			error: validated.error,
-			message: 'Bitte überprüfen Deine Eingaben.',
+			message: 'Bitte überprüfe Deine Eingaben.',
 			success: false,
 			title: 'Fehler',
 		};
