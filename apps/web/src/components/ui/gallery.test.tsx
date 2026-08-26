@@ -59,6 +59,26 @@ describe('gallery', () => {
 		expect(within(dialog).getByRole('img', { name: 'Bild 2' })).not.toBeNull();
 	});
 
+	it('opens the lightbox on the only image in the single-image layout', async () => {
+		const images = buildImages(1);
+		const { findByRole, getByRole, user } = renderGallery(images);
+
+		await user.click(getByRole('button', { name: 'Bild 1 vergrößern' }));
+
+		const dialog = await findByRole('dialog', { name: 'Bild 1' });
+		expect(within(dialog).getByRole('img', { name: 'Bild 1' })).not.toBeNull();
+	});
+
+	it('opens the lightbox on the image belonging to the clicked thumbnail in the grid layout for more than three images', async () => {
+		const images = buildImages(5);
+		const { findByRole, getByRole, user } = renderGallery(images);
+
+		await user.click(getByRole('button', { name: 'Bild 4 vergrößern' }));
+
+		const dialog = await findByRole('dialog', { name: 'Bild 4' });
+		expect(within(dialog).getByRole('img', { name: 'Bild 4' })).not.toBeNull();
+	});
+
 	it('renders nothing for an empty image list', () => {
 		const images = buildImages(0);
 		const { container } = render(<Gallery images={images} />);
