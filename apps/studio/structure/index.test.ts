@@ -63,6 +63,20 @@ describe('desk group resolution', () => {
 		expect(documentTypes).toStrictEqual(['news.article', 'news.category']);
 	});
 
+	it('resolves the settings group when called directly with a known group name', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		getGroup(structureBuilder, 'settings');
+
+		const documentTypes = calls
+			.filter((call) => call.method === 'documentTypeListItem')
+			.map((call) => call.args[0]);
+		const ids = calls.filter((call) => call.method === 'id').map((call) => call.args[0]);
+
+		expect(documentTypes).toStrictEqual(['assist.instruction.context']);
+		expect(ids).toStrictEqual(['site-settings']);
+	});
+
 	it('falls back to the settings group for an unknown group name', () => {
 		const { calls, structureBuilder } = createRecordingStructureBuilder();
 

@@ -43,7 +43,7 @@ describe('singleton plugin document actions', () => {
 
 		const result = actions(previous, { schemaType: 'news.article' });
 
-		expect(result).toStrictEqual(previous);
+		expect(result).toBe(previous);
 	});
 });
 
@@ -75,6 +75,6 @@ describe('singleton plugin new document options', () => {
 			creationContext: { type: 'structure' },
 		});
 
-		expect(result).toStrictEqual(previous);
+		expect(result).toBe(previous);
 	});
 });
