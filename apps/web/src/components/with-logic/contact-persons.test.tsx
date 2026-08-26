@@ -1,29 +1,24 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
+import type { SanityImage, SanityImageReference } from '@/types/image.types';
 import type { ContactPerson } from '@/types/sanity.types';
 
-import { loadWithEnv } from '../../../test-utils/env';
 import { renderWithUser } from '../../../test-utils/render';
-import type * as ContactPersonsModule from './contact-persons';
+import { ContactPersons } from './contact-persons';
 
-// `contact-persons.tsx` imports `urlForImage` from `@/lib/sanity/utils`, which imports the Sanity
-// `client` (`@/lib/sanity/client` → `@/lib/sanity/api`), and `api.ts` reads
-// `NEXT_PUBLIC_SANITY_DATASET`/`NEXT_PUBLIC_SANITY_PROJECT_ID` from `process.env` at module top
-// level, throwing immediately if either is missing — before any test in this file even runs a
-// component. `loadWithEnv` (`test-utils/env.ts`) stubs both and re-imports the module fresh, the
-// same pattern `src/utils/url.test.ts` uses for `@/lib/env.ts`'s module-level caching; the values
-// themselves are arbitrary, since no test here asserts on the built image URL.
-const SANITY_ENV = {
-	NEXT_PUBLIC_SANITY_DATASET: 'test-dataset',
-	NEXT_PUBLIC_SANITY_PROJECT_ID: 'test-project',
-};
-
-async function loadContactPersons() {
-	return loadWithEnv<typeof ContactPersonsModule>(
-		'@/components/with-logic/contact-persons',
-		SANITY_ENV,
-	);
-}
+// `contact-persons.tsx` reaches `urlForImage` (`@/lib/sanity/utils`), which imports the real Sanity
+// client chain (`@/lib/sanity/client` → `@/lib/sanity/api`), and `api.ts` throws at module load if
+// `NEXT_PUBLIC_SANITY_DATASET`/`NEXT_PUBLIC_SANITY_PROJECT_ID` are missing. The component's own
+// logic under test here (the initials fallback, the empty list) needs none of that — it only cares
+// whether `urlForImage` returns a truthy URL or `undefined`. An earlier version of this file went
+// through `loadWithEnv` to satisfy the real chain, which pulls in `@sanity/image-url` and resets the
+// whole module registry; that measured at ~3s for a fallback check that should be near-instant.
+// Mocking the module boundary the component actually reaches — rather than loading it for real —
+// avoids that entirely and lets `ContactPersons` be imported normally, like any other component.
+vi.mock(import('@/lib/sanity/utils'), () => ({
+	urlForImage: (image: null | SanityImage | SanityImageReference | undefined) =>
+		image?.asset?._ref ? `https://cdn.example.test/${image.asset._ref}.jpg` : undefined,
+}));
 
 const BASE_PERSON: ContactPerson = {
 	contactAs: 'both',
@@ -54,8 +49,7 @@ const WITH_IMAGE_LIST: ContactPerson[] = [PERSON_WITH_IMAGE];
 const EMPTY_LIST: ContactPerson[] = [];
 
 describe('the contact persons list', () => {
-	it('falls back to the initials when a person has no image', async () => {
-		const { ContactPersons } = await loadContactPersons();
+	it('falls back to the initials when a person has no image', () => {
 		const { container, getByText } = renderWithUser(
 			<ContactPersons contactPersons={NO_IMAGE_LIST} />,
 		);
@@ -64,8 +58,7 @@ describe('the contact persons list', () => {
 		expect(container.querySelector('img')).toBeNull();
 	});
 
-	it('renders an image instead of initials once a person has one', async () => {
-		const { ContactPersons } = await loadContactPersons();
+	it('renders an image instead of initials once a person has one', () => {
 		const { container, getByRole, queryByText } = renderWithUser(
 			<ContactPersons contactPersons={WITH_IMAGE_LIST} />,
 		);
@@ -75,8 +68,7 @@ describe('the contact persons list', () => {
 		expect(container.querySelectorAll('article')).toHaveLength(1);
 	});
 
-	it('renders nothing when the list is empty', async () => {
-		const { ContactPersons } = await loadContactPersons();
+	it('renders nothing when the list is empty', () => {
 		const { container } = renderWithUser(<ContactPersons contactPersons={EMPTY_LIST} />);
 
 		expect(container.querySelectorAll('article')).toHaveLength(0);
