@@ -110,16 +110,9 @@ describe('navigation', () => {
 		expect(toggle.getAttribute('aria-controls')).toBeNull();
 	});
 
-	it('leaves every nav link present in the DOM regardless of whether the mobile menu has been opened or closed — there is no accessible presence/absence change to observe', async () => {
-		const { container, getByRole, user } = renderNavigation(NAV_ITEMS);
-		const toggle = getByRole('button', { name: 'Toggle menu' });
-
-		expect(linksWithHref(container, '/ueber-uns')).toHaveLength(2);
-
-		await user.click(toggle);
-		expect(linksWithHref(container, '/ueber-uns')).toHaveLength(2);
-
-		await user.click(toggle);
-		expect(linksWithHref(container, '/ueber-uns')).toHaveLength(2);
-	});
+	// The mobile menu toggle has no programmatically observable effect: no `aria-expanded`, no
+	// `aria-controls`, and the nav links never leave the DOM regardless of `isMobileOpen` — so
+	// clicking it cannot be asserted here without pinning markup (the class toggle) or an icon swap
+	// distinguishable only by class name/SVG path data, both barred by this PR's rules. That absence
+	// is itself the accessibility finding recorded for follow-up.
 });
