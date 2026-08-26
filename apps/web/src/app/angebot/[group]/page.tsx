@@ -75,7 +75,7 @@ export default async function GroupsPage({ params }: PageProps<'/angebot/[group]
 	return (
 		<>
 			<Hero
-				image={getGroupImage(group, '/angebot')}
+				image={getGroupImage(group, '/angebot/')}
 				subTitle={page.subtitle}
 				title={`${page.title} ${currentDepartment?.title ?? ''}`.trim()}
 			/>
