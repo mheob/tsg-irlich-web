@@ -9,6 +9,10 @@ import { createFetchMock, type FetchCall } from '../../test-utils/fetch-mock';
 
 type SubscribeToNewsletterModule = typeof subscribeToNewsletterModule;
 type CleverreachModule = typeof cleverreachModule;
+type NewsletterErrorState = Extract<
+	subscribeToNewsletterModule.NewsletterFormState,
+	{ success: false }
+>;
 
 // `getRequestMetadata` in `subscribe-to-newsletter.ts` reads the referer, user agent and
 // `x-forwarded-for` headers through `await headers()`, so `next/headers` has to be mocked. The
@@ -53,6 +57,13 @@ describe('validating the submitted email before contacting cleverreach', () => {
 		vi.restoreAllMocks();
 	});
 
+	// `subscriberSchema` in `src/lib/cleverreach.ts` defines the field as
+	// `z.email('Invalid email address')`, so this is the exact message `treeifyError` puts under
+	// `properties.email.errors[0]` for both a missing and a malformed email. Hard-coded here rather
+	// than imported, per the "never derive an expected value from a constant the implementation also
+	// imports" rule.
+	const EXPECTED_FIELD_ERROR = 'Invalid email address';
+
 	it('returns the validation error state when the email field is missing, without any fetch', async () => {
 		mock = createFetchMock();
 		const { subscribeToNewsletter } = await loadWithEnv<SubscribeToNewsletterModule>(
@@ -63,7 +74,7 @@ describe('validating the submitted email before contacting cleverreach', () => {
 		const result = await subscribeToNewsletter(null, new FormData());
 
 		expect(result).toStrictEqual({
-			error: undefined,
+			error: EXPECTED_FIELD_ERROR,
 			message: 'Bitte überprüfe Deine Eingaben.',
 			success: false,
 			title: 'Fehler',
@@ -81,12 +92,34 @@ describe('validating the submitted email before contacting cleverreach', () => {
 		const result = await subscribeToNewsletter(null, emailFormData('not-an-email'));
 
 		expect(result).toStrictEqual({
-			error: undefined,
+			error: EXPECTED_FIELD_ERROR,
 			message: 'Bitte überprüfe Deine Eingaben.',
 			success: false,
 			title: 'Fehler',
 		});
 		expect(mock.calls).toStrictEqual([]);
+	});
+
+	// Regression case: `validateEmail` previously read `treeifyError(...).errors[0]` — the
+	// object-level issues array, which zod 4 leaves empty for a per-field issue like this one — so
+	// `error` was always `undefined`. An exact-message assertion alone would not have caught that
+	// (a `toStrictEqual` with `error: undefined` passes just as well as one with the real string), so
+	// this asserts the shape of the defect directly: a non-empty string, regardless of its content.
+	it('returns a non-empty error string for an invalid email address', async () => {
+		mock = createFetchMock();
+		const { subscribeToNewsletter } = await loadWithEnv<SubscribeToNewsletterModule>(
+			'@/actions/subscribe-to-newsletter',
+			CLEVERREACH_ENV,
+		);
+
+		const result = await subscribeToNewsletter(null, emailFormData('not-an-email'));
+		// `result.success` is `false` for this input, established by the exact-message test above;
+		// narrowing to the error branch here (rather than a conditional) keeps `.error` typed as
+		// `string` for the two assertions below.
+		const errorState = result as NewsletterErrorState;
+
+		expect(errorState.error).toBeTypeOf('string');
+		expect(errorState.error.length).toBeGreaterThan(0);
 	});
 });
 

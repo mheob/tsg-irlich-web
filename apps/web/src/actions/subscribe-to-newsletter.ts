@@ -18,7 +18,7 @@ function validateEmail(formData: FormData): { error: string } | { email: string 
 
 	if (!validation.success) {
 		const fieldErrors = treeifyError(validation.error);
-		return { error: fieldErrors.errors[0] };
+		return { error: fieldErrors.properties?.email?.errors[0] ?? 'Invalid email address' };
 	}
 
 	return { email: validation.data.email };

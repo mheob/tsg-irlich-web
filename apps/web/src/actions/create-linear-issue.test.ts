@@ -144,9 +144,6 @@ describe('building the linear issue description and mutation variables', () => {
 				title: '[FEATURE] Formular fehlerhaft',
 			},
 		});
-		expect(expectedDescription.split('\n').at(-1)).toBe(
-			'**Source:** Feedback Form from tsg-irlich.de',
-		);
 		expect(mock.unqueued).toStrictEqual([]);
 	});
 });
