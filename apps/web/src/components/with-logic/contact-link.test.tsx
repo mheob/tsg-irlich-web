@@ -3,15 +3,6 @@ import { describe, expect, it } from 'vitest';
 import { renderWithUser } from '../../../test-utils/render';
 import { ContactLink } from './contact-link';
 
-// Accessibility observation, not a bug fixed here: `ContactLink` spreads `...props` and only then
-// sets `'aria-label'` (`contact-link.tsx`'s `renderProps`), so it always wins over anything a
-// caller passes — before interaction it is forced to the generic string below regardless of
-// whether the link is an email, a phone number or a WhatsApp link, and after interaction it is
-// removed outright. `ui/contact-button.tsx` passes a purpose-specific `aria-label` ("E-Mail",
-// "Telefon", "Whatsapp") together with an `aria-hidden` icon as the only child — once a user
-// interacts with that button once (even just by focusing or hovering it), `ContactLink` both
-// overwrites/removes that label AND the visible content is `aria-hidden`, so the button is left
-// with no accessible name at all. The last two tests below pin this against `ContactLink` directly.
 // Declared once at module scope rather than as an inline object literal in the JSX below, per the
 // `react-perf/jsx-no-new-object-as-prop` rule (still active for `.test.tsx` files despite the
 // `**/*.tsx` override in `oxlint.config.ts`).
@@ -55,6 +46,16 @@ describe('the contact link', () => {
 		expect(getByRole('link').getAttribute('href')).toBe('tel:+491761234567');
 	});
 
+	it('resolves to the exact wa.me href, unchanged, once interacted with', async () => {
+		const { getByRole, user } = renderWithUser(
+			<ContactLink href="https://wa.me/491761234567">+49 176 1234567</ContactLink>,
+		);
+
+		await user.click(getByRole('button'));
+
+		expect(getByRole('link').getAttribute('href')).toBe('https://wa.me/491761234567');
+	});
+
 	it('exposes only a generic aria-label before interaction, not identifying whether this is an email, phone or WhatsApp link', () => {
 		const { getByRole } = renderWithUser(
 			<ContactLink href="mailto:info@tsg-irlich.de">info@tsg-irlich.de</ContactLink>,
@@ -65,6 +66,33 @@ describe('the contact link', () => {
 		);
 	});
 
+	// `contact-link.tsx`'s `renderProps` spreads `...props` and only THEN sets `'aria-label'`, so a
+	// caller-supplied label always loses — before interaction it is forced to the generic string
+	// above regardless of what the caller passed, after interaction it is discarded outright. This is
+	// the mechanism the next test (no accessible name at all) rests on: a component "fixed" to defer
+	// to a caller's label when one is supplied would still pass every other case in this file
+	// unchanged, so this is the one that actually pins it.
+	it('overrides a caller-supplied aria-label with its own generic one before interaction, and discards it entirely after interaction', async () => {
+		const { getByRole, user } = renderWithUser(
+			<ContactLink aria-label="E-Mail" href="mailto:info@tsg-irlich.de">
+				info@tsg-irlich.de
+			</ContactLink>,
+		);
+
+		expect(getByRole('button').getAttribute('aria-label')).toBe(
+			'Kontaktlink - tippen zum Anzeigen',
+		);
+
+		await user.click(getByRole('button'));
+
+		expect(getByRole('link').getAttribute('aria-label')).toBeNull();
+	});
+
+	// `ui/contact-button.tsx` passes a purpose-specific `aria-label` ("E-Mail", "Telefon", "Whatsapp")
+	// together with an `aria-hidden` icon as the only child. Once a user interacts with such a button
+	// even once — including just hovering or focusing it, since `onMouseOver`/`onFocus` also call
+	// `handleInteraction` — `ContactLink` discards that label (pinned above) and the only remaining
+	// content is `aria-hidden`, leaving the button with no accessible name at all.
 	it('is left with no accessible name at all once interacted with, when its content is hidden from assistive technology (as ui/contact-button.tsx renders it)', async () => {
 		const { getByRole, user } = renderWithUser(
 			<ContactLink href="mailto:info@tsg-irlich.de">
