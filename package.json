@@ -10,6 +10,7 @@
 		"build": "turbo build",
 		"build:affected": "turbo build --affected",
 		"cve": "cve-lite . --fail-on high --verbose --cache-dir .cache/cve-lite",
+		"db:sync": "node scripts/sync-dev-db.ts",
 		"dev": "turbo dev",
 		"dev:email": "turbo dev:email",
 		"extract-types": "turbo extract-types",
