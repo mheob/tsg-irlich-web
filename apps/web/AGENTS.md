@@ -87,6 +87,8 @@ Three helpers live in `test-utils/`:
 - `env.ts` — `loadWithEnv` resets the module registry and stubs the environment, because `src/lib/env.ts` caches validated values in a module-level `Map`. A test using it must import the module under test only as `import type` and get its runtime binding from `loadWithEnv`'s return value — see `src/utils/url.test.ts`.
 - `fetch-mock.ts` — `createFetchMock` replaces `fetch` with a queue of canned responses and records every call. Recorded headers are normalized through `Headers`, same as the real `fetch`, so they come back lowercased — assert against lowercase header names.
 
+A `vi.fn()` created inside a `vi.mock(import('…'), factory)` is not reset by `vi.resetModules()` or `vi.restoreAllMocks()` — call it explicitly in an `afterEach` (`mockedFn.mockReset()`), or its call history accumulates across cases. See `src/actions/send-contact-form.test.ts` for the pattern.
+
 ## Gotchas
 
 - No `try`/`catch`/`finally` in components or hooks — the React Compiler bails out on `finally`. Await with `settle()` from `@tsgi-web/shared` and branch on `outcome.ok`.
