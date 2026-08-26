@@ -47,4 +47,17 @@ describe('contact forward email', () => {
 		expect(html).toContain('Zeile eins<br/>');
 		expect(html).toContain('Zeile zwei');
 	});
+
+	// Regression case: `<Html>` in contact-forward.tsx sets neither `lang` nor `dir`, so it falls
+	// back to react-email's default of `lang="en"` — even though every string this template
+	// renders is German. That is a real WCAG 3.1.1 (Language of Page) defect: a screen reader
+	// applies English pronunciation rules to German content. `dir` is not affected, since German
+	// is left-to-right exactly like English. `emails/newsletter.tsx` sets `lang="de"` explicitly,
+	// which is what this template should do too — but fixing production code is out of scope
+	// here, so this pins the current, wrong value rather than asserting the intended one.
+	it('renders with the wrong language attribute, a known defect', async () => {
+		const html = await render(ContactForwardEmail({}));
+
+		expect(html).toContain('<html dir="ltr" lang="en">');
+	});
 });
