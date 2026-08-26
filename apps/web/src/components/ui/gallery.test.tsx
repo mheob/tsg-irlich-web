@@ -88,6 +88,18 @@ describe('gallery', () => {
 		expect(names).toStrictEqual(['Bild 1', 'Bild 2', 'Bild 3', 'Bild 4', 'Bild 5']);
 	});
 
+	it('gives each trigger in the grid layout for more than three images the accessible name of the image nested inside it', () => {
+		const images = buildImages(5);
+		const { getAllByRole } = renderGallery(images);
+
+		const triggers = getAllByRole('button', { name: /vergrößern$/u });
+
+		for (const trigger of triggers) {
+			const alt = within(trigger).getByRole('img').getAttribute('alt');
+			expect(trigger.getAttribute('aria-label')).toBe(`${alt} vergrößern`);
+		}
+	});
+
 	it('renders nothing for an empty image list', () => {
 		const images = buildImages(0);
 		const { container } = render(<Gallery images={images} />);
