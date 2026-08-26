@@ -193,8 +193,8 @@ importers:
         specifier: ^1.1.19
         version: 1.1.19(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@sanity/client':
-        specifier: ^8.2.0
-        version: 8.2.0(vitest@4.1.11)
+        specifier: ^7.26.2
+        version: 7.26.2
       '@sanity/image-url':
         specifier: ^2.1.1
         version: 2.1.1
@@ -230,7 +230,7 @@ importers:
         version: 8.6.1(next@16.3.2(@babel/core@7.29.7(supports-color@8.1.1))(@types/node@24.13.3)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       next-sanity:
         specifier: ^13.3.3
-        version: 13.3.3(6a18327cd7a19db48a37e7fe1c1c69f5)
+        version: 13.3.3(1aa4ab3b08366b3f2c4cfb7882defe56)
       react:
         specifier: 19.2.8
         version: 19.2.8
@@ -11090,9 +11090,9 @@ snapshots:
     transitivePeerDependencies:
       - '@sanity/types'
 
-  '@sanity/preview-url-secret@4.1.4(@sanity/client@8.2.0(vitest@4.1.11))':
+  '@sanity/preview-url-secret@4.1.4(@sanity/client@7.26.2)':
     dependencies:
-      '@sanity/client': 8.2.0(vitest@4.1.11)
+      '@sanity/client': 7.26.2
       '@sanity/uuid': 3.0.3
 
   '@sanity/preview-url-secret@4.1.5(@sanity/client@7.26.2)':
@@ -11364,18 +11364,18 @@ snapshots:
       - react-dom
       - styled-components
 
-  '@sanity/visual-editing-csm@3.0.16(@sanity/client@8.2.0(vitest@4.1.11))(@sanity/types@6.10.1(@types/react@19.2.18))(typescript@7.0.2)':
+  '@sanity/visual-editing-csm@3.0.16(@sanity/client@7.26.2)(@sanity/types@6.10.1(@types/react@19.2.18))(typescript@7.0.2)':
     dependencies:
-      '@sanity/client': 8.2.0(vitest@4.1.11)
-      '@sanity/visual-editing-types': 2.1.0(@sanity/client@8.2.0(vitest@4.1.11))(@sanity/types@6.10.1(@types/react@19.2.18))
+      '@sanity/client': 7.26.2
+      '@sanity/visual-editing-types': 2.1.0(@sanity/client@7.26.2)(@sanity/types@6.10.1(@types/react@19.2.18))
       valibot: 1.4.2(typescript@7.0.2)
     transitivePeerDependencies:
       - '@sanity/types'
       - typescript
 
-  '@sanity/visual-editing-types@2.1.0(@sanity/client@8.2.0(vitest@4.1.11))(@sanity/types@6.10.1(@types/react@19.2.18))':
+  '@sanity/visual-editing-types@2.1.0(@sanity/client@7.26.2)(@sanity/types@6.10.1(@types/react@19.2.18))':
     dependencies:
-      '@sanity/client': 8.2.0(vitest@4.1.11)
+      '@sanity/client': 7.26.2
     optionalDependencies:
       '@sanity/types': 6.10.1(@types/react@19.2.18)
 
@@ -11385,17 +11385,17 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 6.10.1(@types/react@19.2.18)
 
-  '@sanity/visual-editing@6.1.0(@sanity/client@8.2.0(vitest@4.1.11))(@types/react@19.2.18)(next@16.3.2(@babel/core@7.29.7(supports-color@8.1.1))(@types/node@24.13.3)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@7.0.2)':
+  '@sanity/visual-editing@6.1.0(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.2(@babel/core@7.29.7(supports-color@8.1.1))(@types/node@24.13.3)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@7.0.2)':
     dependencies:
       '@sanity/comlink': 4.0.3
       '@sanity/icons': 5.2.1(react@19.2.8)
       '@sanity/mutate': 0.18.1(xstate@5.32.5)
       '@sanity/presentation-comlink': 2.2.3(@sanity/types@6.10.1(@types/react@19.2.18))
-      '@sanity/preview-url-secret': 4.1.4(@sanity/client@8.2.0(vitest@4.1.11))
+      '@sanity/preview-url-secret': 4.1.4(@sanity/client@7.26.2)
       '@sanity/types': 6.10.1(@types/react@19.2.18)
       '@sanity/ui': 4.0.5(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
-      '@sanity/visual-editing-csm': 3.0.16(@sanity/client@8.2.0(vitest@4.1.11))(@sanity/types@6.10.1(@types/react@19.2.18))(typescript@7.0.2)
-      '@sanity/visual-editing-types': 2.1.0(@sanity/client@8.2.0(vitest@4.1.11))(@sanity/types@6.10.1(@types/react@19.2.18))
+      '@sanity/visual-editing-csm': 3.0.16(@sanity/client@7.26.2)(@sanity/types@6.10.1(@types/react@19.2.18))(typescript@7.0.2)
+      '@sanity/visual-editing-types': 2.1.0(@sanity/client@7.26.2)(@sanity/types@6.10.1(@types/react@19.2.18))
       '@vercel/stega': 1.1.0
       dequal: 2.0.3
       lodash-es: 4.18.1
@@ -11407,7 +11407,7 @@ snapshots:
       styled-components: 6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       xstate: 5.32.5
     optionalDependencies:
-      '@sanity/client': 8.2.0(vitest@4.1.11)
+      '@sanity/client': 7.26.2
       next: 16.3.2(@babel/core@7.29.7(supports-color@8.1.1))(@types/node@24.13.3)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
     transitivePeerDependencies:
       - '@types/react'
@@ -13657,13 +13657,13 @@ snapshots:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
 
-  next-sanity@13.3.3(6a18327cd7a19db48a37e7fe1c1c69f5):
+  next-sanity@13.3.3(1aa4ab3b08366b3f2c4cfb7882defe56):
     dependencies:
       '@portabletext/react': 7.0.1(react@19.2.8)
-      '@sanity/client': 8.2.0(vitest@4.1.11)
+      '@sanity/client': 7.26.2
       '@sanity/generate-help-url': 4.0.0
-      '@sanity/preview-url-secret': 4.1.4(@sanity/client@8.2.0(vitest@4.1.11))
-      '@sanity/visual-editing': 6.1.0(@sanity/client@8.2.0(vitest@4.1.11))(@types/react@19.2.18)(next@16.3.2(@babel/core@7.29.7(supports-color@8.1.1))(@types/node@24.13.3)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@7.0.2)
+      '@sanity/preview-url-secret': 4.1.4(@sanity/client@7.26.2)
+      '@sanity/visual-editing': 6.1.0(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.2(@babel/core@7.29.7(supports-color@8.1.1))(@types/node@24.13.3)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(styled-components@6.5.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@7.0.2)
       '@sanity/webhook': 4.0.4
       groq: 6.10.1
       history: 5.3.0

@@ -1,5 +1,4 @@
-import type { SanityClient } from 'next-sanity';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import type * as utilsModule from '@/lib/sanity/utils';
 import type { SanityFileAsset, SanityImage } from '@/types/sanity.types';
@@ -7,21 +6,6 @@ import type { SanityFileAsset, SanityImage } from '@/types/sanity.types';
 import { loadWithEnv } from '../../../test-utils/env';
 
 type UtilsModule = typeof utilsModule;
-
-// `next-sanity`'s ESM entry statically imports `unstable__adapter`/`unstable__environment` from
-// `@sanity/client`, which this workspace pins to a version that no longer exports them (a
-// pre-existing dependency mismatch between `next-sanity@13.3.3`, which peer-requires
-// `@sanity/client@^7.26.2`, and the `^8.2.0` actually installed). Importing the real
-// `next-sanity` package throws `SyntaxError: The requested module '@sanity/client' does not
-// provide an export named 'unstable__adapter'` before any test in this file can even run, so
-// `createClient` is replaced with an identity function: `./client` passes it a plain config
-// object built from real, env-driven `projectId`/`dataset`, and `@sanity/image-url`'s builder
-// accepts that object as-is when it has no `config()`/`clientConfig` shape (see
-// `getOptions` in `@sanity/image-url`'s `builder.ts`). This keeps `urlForImage` and
-// `urlForImageMax` exercising their real, unmodified implementation end to end.
-vi.mock(import('next-sanity'), () => ({
-	createClient: (config: unknown) => config as SanityClient,
-}));
 
 const SANITY_ENV = {
 	NEXT_PUBLIC_SANITY_DATASET: 'test-dataset',
