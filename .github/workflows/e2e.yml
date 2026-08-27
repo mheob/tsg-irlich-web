@@ -44,7 +44,7 @@ jobs:
           path: ~/.cache/ms-playwright
 
       - name: Install Playwright Browsers
-        run: pnpm --filter web exec playwright install --with-deps chromium webkit
+        run: pnpm --filter web run e2e:browsers
 
       # Every outbound request is served by the mocks in `apps/web/e2e/mocks/preload.ts`, so this
       # job needs no secret of any kind — `apps/web/.env.e2e` carries the dummy values.

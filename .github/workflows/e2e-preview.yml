@@ -38,7 +38,7 @@ jobs:
           path: ~/.cache/ms-playwright
 
       - name: Install Playwright Browsers
-        run: pnpm --filter web exec playwright install --with-deps chromium
+        run: pnpm --filter web run e2e:browsers
 
       - name: Run Preview Smoke Tests
         run: pnpm --filter web run test:e2e:preview

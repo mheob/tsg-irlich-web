@@ -6,6 +6,7 @@
 	"scripts": {
 		"build": "next build",
 		"dev": "next dev",
+		"e2e:browsers": "playwright install --with-deps chromium webkit",
 		"e2e:record": "E2E_RECORD=1 playwright test --project=chromium",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
