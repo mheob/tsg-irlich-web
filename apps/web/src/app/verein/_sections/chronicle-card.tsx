@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
-	DialogContent,
+	DialogPopup,
 	DialogDescription,
 	DialogTitle,
 	DialogTrigger,
@@ -47,23 +47,19 @@ export function ChronicleCard({
 
 			<div className="place-content-end p-4 md:p-8">
 				<Dialog>
-					<DialogTrigger asChild>
-						<Button variant="link">Mehr erfahren &raquo;</Button>
-					</DialogTrigger>
-					<DialogContent className="max-w-2xl">
+					<DialogTrigger render={<Button variant="link" />}>Mehr erfahren &raquo;</DialogTrigger>
+					<DialogPopup className="max-w-2xl">
 						<DialogTitle className="text-lg tracking-normal md:text-2xl">{title}</DialogTitle>
 						<ScrollArea className="max-h-[calc(100vh-200px)]">
 							<DialogDescription
 								className="prose-sm mt-10 text-base tracking-normal md:text-lg lg:prose"
-								asChild
+								render={<div />}
 							>
-								<div>
-									{/* oxlint-disable-next-line react/jsx-max-depth*/}
-									<PortableText value={description.text} />
-								</div>
+								{/* oxlint-disable-next-line react/jsx-max-depth*/}
+								<PortableText value={description.text} />
 							</DialogDescription>
 						</ScrollArea>
-					</DialogContent>
+					</DialogPopup>
 				</Dialog>
 			</div>
 		</article>

@@ -1,60 +1,43 @@
-// oxlint-disable import/no-namespace
-
-import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { X } from 'lucide-react';
-import type { ComponentPropsWithoutRef, ComponentRef, HTMLAttributes, RefObject } from 'react';
+import type { ComponentProps, HTMLAttributes } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
-const Dialog = DialogPrimitive.Root;
-const DialogTrigger = DialogPrimitive.Trigger;
-const DialogPortal = DialogPrimitive.Portal;
-const DialogClose = DialogPrimitive.Close;
+const Dialog = BaseDialog.Root;
+const DialogTrigger = BaseDialog.Trigger;
+const DialogPortal = BaseDialog.Portal;
+const DialogClose = BaseDialog.Close;
 
-function DialogOverlay({
-	className,
-	ref,
-	...props
-}: ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> & {
-	ref?: RefObject<ComponentRef<typeof DialogPrimitive.Overlay> | null>;
-}) {
+function DialogBackdrop({ className, ...props }: ComponentProps<typeof BaseDialog.Backdrop>) {
 	return (
-		<DialogPrimitive.Overlay
+		<BaseDialog.Backdrop
 			className={cn(
-				'fixed inset-0 z-50 bg-black/80 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0',
+				'fixed inset-0 z-50 bg-black/80 transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0',
 				className,
 			)}
-			ref={ref}
 			{...props}
 		/>
 	);
 }
 
-function DialogContent({
-	children,
-	className,
-	ref,
-	...props
-}: ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
-	ref?: RefObject<ComponentRef<typeof DialogPrimitive.Content> | null>;
-}) {
+function DialogPopup({ children, className, ...props }: ComponentProps<typeof BaseDialog.Popup>) {
 	return (
 		<DialogPortal>
-			<DialogOverlay />
-			<DialogPrimitive.Content
+			<DialogBackdrop />
+			<BaseDialog.Popup
 				className={cn(
-					'fixed top-[50%] left-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] data-[state=open]:zoom-in-95 sm:rounded-lg',
+					'fixed top-1/2 left-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 border bg-background p-6 shadow-lg transition-[opacity,scale] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 sm:rounded-lg',
 					className,
 				)}
-				ref={ref}
 				{...props}
 			>
 				{children}
-				<DialogPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+				<BaseDialog.Close className="absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none disabled:pointer-events-none data-open:bg-accent data-open:text-muted-foreground">
 					<X className="size-8 text-primary" />
 					<span className="sr-only">Schließen</span>
-				</DialogPrimitive.Close>
-			</DialogPrimitive.Content>
+				</BaseDialog.Close>
+			</BaseDialog.Popup>
 		</DialogPortal>
 	);
 }
@@ -77,45 +60,30 @@ function DialogFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
 	);
 }
 
-function DialogTitle({
-	className,
-	ref,
-	...props
-}: ComponentPropsWithoutRef<typeof DialogPrimitive.Title> & {
-	ref?: RefObject<ComponentRef<typeof DialogPrimitive.Title> | null>;
-}) {
+function DialogTitle({ className, ...props }: ComponentProps<typeof BaseDialog.Title>) {
 	return (
-		<DialogPrimitive.Title
+		<BaseDialog.Title
 			className={cn('text-lg leading-none font-semibold tracking-tight', className)}
-			ref={ref}
 			{...props}
 		/>
 	);
 }
 
-function DialogDescription({
-	className,
-	ref,
-	...props
-}: ComponentPropsWithoutRef<typeof DialogPrimitive.Description> & {
-	ref?: RefObject<ComponentRef<typeof DialogPrimitive.Description> | null>;
-}) {
+function DialogDescription({ className, ...props }: ComponentProps<typeof BaseDialog.Description>) {
 	return (
-		<DialogPrimitive.Description
-			className={cn('text-sm text-muted-foreground', className)}
-			ref={ref}
-			{...props}
-		/>
+		<BaseDialog.Description className={cn('text-sm text-muted-foreground', className)} {...props} />
 	);
 }
+
+export type DialogActions = BaseDialog.Root.Actions;
 
 export {
 	Dialog,
 	DialogTrigger,
 	DialogPortal,
 	DialogClose,
-	DialogOverlay,
-	DialogContent,
+	DialogBackdrop,
+	DialogPopup,
 	DialogHeader,
 	DialogFooter,
 	DialogTitle,
