@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import { expect, test } from '@playwright/test';
 
 /**
@@ -19,6 +21,13 @@ const ROUTES = [
 ];
 
 test.describe('preview smoke', () => {
+	// Preview deployments are behind Vercel's SSO. Without the automation bypass token every request
+	// would be answered by Vercel's login page, so the suite reports nothing instead of nonsense.
+	test.skip(
+		!process.env.VERCEL_AUTOMATION_BYPASS_SECRET,
+		'VERCEL_AUTOMATION_BYPASS_SECRET is not configured',
+	);
+
 	for (const route of ROUTES) {
 		test(`renders ${route}`, async ({ page }) => {
 			const errors: string[] = [];

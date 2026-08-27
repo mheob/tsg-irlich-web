@@ -44,6 +44,9 @@ jobs:
         run: pnpm --filter web run test:e2e:preview
         env:
           PLAYWRIGHT_BASE_URL: ${{ github.event.deployment_status.environment_url }}
+          # Preview deployments are behind Vercel's SSO. The token comes from the project's
+          # "Protection Bypass for Automation"; without it the suite skips itself.
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
       - name: Upload Report
         if: ${{ !cancelled() }}

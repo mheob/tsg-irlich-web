@@ -125,6 +125,8 @@ The pages render on the server, so `page.route` cannot see the requests that mat
 - Only the browser-side requests are handled in `e2e/support/test.ts`: the `<SanityLive />` event stream and the analytics beacons. That file also turns off `scroll-behavior: smooth`, which otherwise moves elements out from under the pointer mid-click in WebKit.
 - `.env.e2e` is committed. Every credential in it is a dummy, because everything it names is intercepted; only the two public Sanity values are real, since the fixtures are keyed by the URLs they appear in.
 
+The preview suite additionally needs `VERCEL_AUTOMATION_BYPASS_SECRET` (Vercel → project → Deployment Protection → "Protection Bypass for Automation", mirrored into a GitHub Actions secret). Preview deployments sit behind Vercel's SSO, so without the token every request is answered by a login page; the suite skips itself when the variable is unset.
+
 ### Fixtures
 
 `pnpm run e2e:record` runs the suite against the real dataset with a real read token from `.env.local` and writes every Sanity response to `e2e/fixtures/sanity/<hash>.json`, keyed by request path plus query string. Assertions may fail during a recording run — the fixtures are still written. Re-record after changing a GROQ query or adding a route, and commit the result.
