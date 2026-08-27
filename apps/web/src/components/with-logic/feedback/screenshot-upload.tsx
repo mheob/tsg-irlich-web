@@ -16,6 +16,7 @@ const TEN_MB = 10 * BYTES_PER_KB * BYTES_PER_KB;
 interface ScreenshotUploadProps {
 	onChange: (urls: string[]) => void;
 	disabled?: boolean;
+	inputId?: string;
 	maxFiles?: number;
 	value: string[];
 }
@@ -30,6 +31,7 @@ interface UploadingFile {
 
 export function ScreenshotUpload({
 	disabled = false,
+	inputId,
 	maxFiles = 5,
 	onChange,
 	value,
@@ -232,6 +234,7 @@ export function ScreenshotUpload({
 					accept="image/png,image/jpeg,image/gif,image/webp"
 					className="hidden"
 					disabled={disabled || !canAddMore}
+					id={inputId}
 					onChange={handleFileInput}
 					type="file"
 					multiple
