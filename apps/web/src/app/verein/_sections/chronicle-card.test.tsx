@@ -20,7 +20,6 @@ const CHRONICLE_IMAGE = { alt: 'Die Gründer', asset: { _ref: ASSET_REF } };
 
 function buildCategory(image: unknown = CHRONICLE_IMAGE): ImageCard {
 	// The generated type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		_key: 'gruendung',
 		description: {

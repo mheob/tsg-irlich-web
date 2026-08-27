@@ -22,7 +22,6 @@ const PORTRAIT = { alt: 'Ada Lovelace', asset: { _ref: ASSET_REF } };
 
 function buildArticle(image: unknown = PORTRAIT): ArticleAuthor {
 	// The generated result type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		author: {
 			email: 'ada@tsg-irlich.de',

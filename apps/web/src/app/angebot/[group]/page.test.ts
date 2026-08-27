@@ -17,7 +17,6 @@ import { clientFetchMock } from '../../../../test-utils/sanity-client-mock';
 import { Groups } from './_sections/groups';
 
 vi.mock(import('@/lib/sanity/client'), () => ({
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	client: {
 		config: () => ({ dataset: 'test-dataset', projectId: 'test-project' }),
 		fetch: vi.fn(),
@@ -61,7 +60,6 @@ function mockSanity({ contactPersons = [], groups = [], page = PAGE }: GroupResu
 
 function routeProps(group = 'fussball'): PageProps<'/angebot/[group]'> {
 	// `PageProps<'/angebot/[group]'>` types the params as a promise.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return { params: Promise.resolve({ group }) } as unknown as PageProps<'/angebot/[group]'>;
 }
 

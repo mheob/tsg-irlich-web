@@ -7,7 +7,6 @@ import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
 import Footer from './footer';
 
 vi.mock(import('@/lib/sanity/client'), () => ({
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	client: { fetch: vi.fn() } as unknown as typeof client,
 }));
 

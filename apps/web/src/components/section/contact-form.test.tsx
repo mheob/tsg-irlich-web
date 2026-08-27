@@ -12,7 +12,6 @@ vi.mock(import('@/actions/send-contact-form'), () => ({ sendContactForm: vi.fn()
 
 // `vi.mocked` only needs the reference to the mock function object; it is never invoked as a bare,
 // unbound `this`-dependent call.
-// oxlint-disable-next-line typescript/unbound-method
 const mockedSendContactForm = vi.mocked(sendContactForm);
 
 const VALID_MESSAGE = 'Dies ist eine ausführliche Testnachricht für das Kontaktformular.';

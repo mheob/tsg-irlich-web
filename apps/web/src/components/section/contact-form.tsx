@@ -1,4 +1,3 @@
-// oxlint-disable react_perf/jsx-no-new-function-as-prop
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -182,7 +181,6 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 															const selected = selectItems.find((item) => item.value === value);
 															field?.onChange({ email: value, label: selected?.label ?? '' });
 														}}
-														// oxlint-disable-next-line react_perf/jsx-no-new-object-as-prop
 														field={{ ...field, value: field.value?.email ?? '' }}
 														placeholder="Wähle eine Empfängergruppe"
 														selectItems={selectItems}

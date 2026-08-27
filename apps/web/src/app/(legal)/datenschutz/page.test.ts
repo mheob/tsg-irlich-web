@@ -12,7 +12,6 @@ import { clientFetchMock } from '../../../../test-utils/sanity-client-mock';
 // The real client validates `NEXT_PUBLIC_SANITY_*` at import time and would talk to the content
 // lake; `config()` is what `@sanity/image-url` reads to build the open graph image URL.
 vi.mock(import('@/lib/sanity/client'), () => ({
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	client: {
 		config: () => ({ dataset: 'test-dataset', projectId: 'test-project' }),
 		fetch: vi.fn(),

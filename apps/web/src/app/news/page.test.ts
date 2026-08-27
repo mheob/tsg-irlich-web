@@ -61,7 +61,6 @@ function mockSanity({
 
 function routeProps(seite?: string | string[]): PageProps<'/news'> {
 	// `PageProps<'/news'>` types the search params as a promise.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return { searchParams: Promise.resolve({ seite }) } as unknown as PageProps<'/news'>;
 }
 

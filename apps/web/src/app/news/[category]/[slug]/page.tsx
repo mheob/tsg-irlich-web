@@ -84,8 +84,7 @@ export default async function NewsArticlePage({
 			<Hero
 				image={
 					article.featuredImage?.alt && imageSource
-						? // oxlint-disable-next-line react_perf/jsx-no-new-object-as-prop
-							{ alt: article.featuredImage.alt, src: imageSource }
+						? { alt: article.featuredImage.alt, src: imageSource }
 						: undefined
 				}
 				subTitle={hero.subtitle}

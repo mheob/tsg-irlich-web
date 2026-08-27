@@ -341,7 +341,6 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 								<Button
 									disabled={!filename.trim() || isUploading}
 									icon={isUploading ? Spinner : undefined}
-									// oxlint-disable-next-line typescript/no-misused-promises typescript/strict-void-return
 									onClick={handleConfirmUpload}
 									role="button"
 									text={isUploading ? 'Wird hochgeladen...' : 'Hochladen'}

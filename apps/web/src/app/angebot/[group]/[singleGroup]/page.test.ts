@@ -17,7 +17,6 @@ import { Main } from './_sections/main';
 import { Training } from './_sections/training';
 
 vi.mock(import('@/lib/sanity/client'), () => ({
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	client: {
 		config: () => ({ dataset: 'test-dataset', projectId: 'test-project' }),
 		fetch: vi.fn(),
@@ -74,7 +73,6 @@ function routeProps(
 	singleGroup = 'herren-1',
 ): PageProps<'/angebot/[group]/[singleGroup]'> {
 	// `PageProps<'/angebot/[group]/[singleGroup]'>` types the params as a promise.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		params: Promise.resolve({ group, singleGroup }),
 	} as unknown as PageProps<'/angebot/[group]/[singleGroup]'>;

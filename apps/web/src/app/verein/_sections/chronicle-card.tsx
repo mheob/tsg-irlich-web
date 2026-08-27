@@ -59,7 +59,6 @@ export function ChronicleCard({
 								className="prose-sm mt-10 text-base tracking-normal md:text-lg lg:prose"
 								render={<div />}
 							>
-								{/* oxlint-disable-next-line react/jsx-max-depth*/}
 								<PortableText value={description.text} />
 							</DialogDescription>
 						</ScrollArea>

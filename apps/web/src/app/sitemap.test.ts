@@ -12,7 +12,6 @@ import { clientFetchMock } from '../../test-utils/sanity-client-mock';
 
 // The real client validates `NEXT_PUBLIC_SANITY_*` at import time and would talk to the content
 // lake; only the three query results matter here. The cast names the one method the sitemap uses.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 vi.mock(import('@/lib/sanity/client'), () => ({
 	client: { fetch: vi.fn() } as unknown as typeof client,
 }));

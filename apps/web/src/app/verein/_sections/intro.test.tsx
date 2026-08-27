@@ -24,7 +24,6 @@ function image(key: string) {
 
 function buildContent(images: unknown[]): IntroContent {
 	// The generated type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		images,
 		intro: { text: [{ _key: 'intro', _type: 'block' }] },

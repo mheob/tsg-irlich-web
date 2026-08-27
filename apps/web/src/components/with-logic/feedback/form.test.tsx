@@ -12,7 +12,6 @@ vi.mock(import('@/actions/create-linear-issue'), () => ({ createLinearIssue: vi.
 
 // `vi.mocked` only needs the reference to the mock function object; it is never invoked as a bare,
 // unbound `this`-dependent call.
-// oxlint-disable-next-line typescript/unbound-method
 const mockedCreateLinearIssue = vi.mocked(createLinearIssue);
 
 const VALID_TITLE = 'Die Suche funktioniert nicht mehr richtig';

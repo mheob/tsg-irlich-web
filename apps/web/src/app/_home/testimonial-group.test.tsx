@@ -30,7 +30,6 @@ function testimonial(id: string, image?: unknown) {
 
 function buildTestimonials(entries: unknown[]): NonNullable<HomePageTestimonialsQueryResult> {
 	// The generated result type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return entries as unknown as NonNullable<HomePageTestimonialsQueryResult>;
 }
 

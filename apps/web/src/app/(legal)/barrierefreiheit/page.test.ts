@@ -11,7 +11,6 @@ import { findElement } from '../../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../../test-utils/sanity-client-mock';
 
 vi.mock(import('@/lib/sanity/client'), () => ({
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	client: {
 		config: () => ({ dataset: 'test-dataset', projectId: 'test-project' }),
 		fetch: vi.fn(),

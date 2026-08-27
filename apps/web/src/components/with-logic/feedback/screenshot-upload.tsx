@@ -256,7 +256,6 @@ export function ScreenshotUpload({
 							<button
 								aria-label={`Remove screenshot ${index + 1}`}
 								className="absolute top-1 right-1 rounded-full bg-destructive p-1 text-destructive-foreground opacity-0 transition-opacity group-hover:opacity-100"
-								// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 								onClick={() => {
 									removeUrl(url);
 								}}
@@ -288,7 +287,6 @@ export function ScreenshotUpload({
 							{file.progress === 'error' && (
 								<button
 									className="absolute top-1 right-1 rounded-full bg-destructive p-1 text-destructive-foreground"
-									// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 									onClick={() => {
 										removeUploading(file.id);
 									}}

@@ -33,7 +33,6 @@ vi.hoisted(() => {
 });
 
 vi.mock(import('@/lib/sanity/client'), () => ({
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	client: {
 		config: () => ({ dataset: 'test-dataset', projectId: 'test-project' }),
 		fetch: vi.fn(),
@@ -116,7 +115,6 @@ function shownTestimonials(page: ReactNode): unknown[] {
 	}
 	// The section's prop type is the query result, which is nullable; the page only ever hands it
 	// an array.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return section.props.testimonials as unknown[];
 }
 

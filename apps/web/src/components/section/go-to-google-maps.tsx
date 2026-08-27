@@ -42,13 +42,7 @@ function GoToGoogleMaps({ address, children, ...props }: Readonly<GoToGoogleMaps
 				<DialogFooter>
 					<DialogClose render={<Button variant="ghost" />}>Hier bleiben</DialogClose>
 					<ButtonLink
-						render={
-							<ExternalLink
-								href={printGoogleMapsLink(address)}
-								// oxlint-disable-next-line react/jsx-handler-names
-								onClick={closeDialog}
-							/>
-						}
+						render={<ExternalLink href={printGoogleMapsLink(address)} onClick={closeDialog} />}
 					>
 						Google Maps öffnen
 					</ButtonLink>

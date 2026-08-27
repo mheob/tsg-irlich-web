@@ -20,7 +20,7 @@ type ClientFetch = (
  * @returns The mock behind `client.fetch`.
  */
 function clientFetchMock(): MockedFunction<ClientFetch> {
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion, typescript/unbound-method
+	// oxlint-disable-next-line typescript/unbound-method
 	return vi.mocked(client.fetch) as unknown as MockedFunction<ClientFetch>;
 }
 

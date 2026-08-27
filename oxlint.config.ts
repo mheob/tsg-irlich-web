@@ -4,6 +4,9 @@ import { defineConfig } from 'oxlint';
 export default defineConfig({
 	extends: [baseConfig, reactConfig],
 	ignorePatterns: ['**/*.generated.ts', '**/*generated*.ts'],
+	options: {
+		reportUnusedDisableDirectives: 'warn',
+	},
 	overrides: [
 		{
 			files: ['**/*.test.ts', '**/*.test.tsx', '**/test-utils/**', '**/vitest.config.ts'],

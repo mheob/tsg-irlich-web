@@ -13,7 +13,6 @@ interface GroupCardProps {
 }
 
 export function GroupCard({ digit, icon, slug, title }: Readonly<GroupCardProps>) {
-	// oxlint-disable-next-line no-magic-numbers
 	const doubleDigit = digit.toString().padStart(2, '0');
 
 	return (

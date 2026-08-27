@@ -27,7 +27,6 @@ interface OperationSystemFieldProps {
 export function OperationSystemField({ form }: Readonly<OperationSystemFieldProps>) {
 	return (
 		<FormField
-			// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Betriebssystem</FormLabel>

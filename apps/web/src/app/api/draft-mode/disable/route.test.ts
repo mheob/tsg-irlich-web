@@ -19,7 +19,6 @@ describe('leaving the draft mode', () => {
 	it('turns the draft mode off and returns to the home page', async () => {
 		// The real return value carries `isEnabled` and an `enable` binding as well; the route only
 		// ever calls `disable`.
-		// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 		mockedDraftMode.mockResolvedValue({ disable } as unknown as Awaited<
 			ReturnType<typeof draftMode>
 		>);

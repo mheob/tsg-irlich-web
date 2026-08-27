@@ -22,7 +22,6 @@ function image(alt: string) {
 
 function buildArticle(overrides: Record<string, unknown> = {}): NewsArticlesQueryResult[number] {
 	// The generated result type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		author: { firstName: 'Ada', image: image('Ada Lovelace'), lastName: 'Lovelace' },
 		categories: [{ slug: 'vereinsleben', title: 'Vereinsleben' }],

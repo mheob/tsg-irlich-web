@@ -186,7 +186,6 @@ function LightboxGallery({ children, images }: Readonly<LightboxGalleryProps>) {
 
 					<Dialog.Popup
 						className="fixed inset-0 z-50 flex flex-col text-white outline-none"
-						// oxlint-disable-next-line react/jsx-handler-names
 						onKeyDown={handleKeyDown}
 					>
 						<Dialog.Title className="sr-only">{activeImage?.alt ?? 'Bildergalerie'}</Dialog.Title>

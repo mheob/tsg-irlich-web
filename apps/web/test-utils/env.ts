@@ -28,7 +28,6 @@ async function loadWithEnv<T>(
 
 	// A dynamic `import()` of a string specifier resolves to `any`; the caller supplies `T` to
 	// name the module's real shape.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return (await import(specifier)) as T;
 }
 

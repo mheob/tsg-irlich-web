@@ -12,7 +12,6 @@ interface TitleFieldProps {
 export function TitleField({ form }: Readonly<TitleFieldProps>) {
 	return (
 		<FormField
-			// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Titel</FormLabel>

@@ -1,4 +1,3 @@
-// oxlint-disable no-inline-comments
 //
 import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';

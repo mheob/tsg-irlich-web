@@ -38,12 +38,10 @@ vi.mock(
 	import('next/font/google'),
 	() =>
 		// The real loaders return a much larger object; the layout only reads `variable`.
-		// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 		({ Bebas_Neue: testFont, Inter: testFont, Oswald: testFont }) as unknown as GoogleFonts,
 );
 
 vi.mock(import('@/lib/sanity/client'), () => ({
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	client: { fetch: vi.fn() } as unknown as typeof client,
 }));
 
@@ -60,9 +58,7 @@ vi.mock(import('next/headers'), () => ({ draftMode: vi.fn() }));
 // layout only decides whether they are rendered at all.
 vi.mock(
 	import('next-sanity/visual-editing'),
-	() =>
-		// oxlint-disable-next-line typescript/no-unsafe-type-assertion
-		({ VisualEditing: nullComponent }) as unknown as typeof visualEditing,
+	() => ({ VisualEditing: nullComponent }) as unknown as typeof visualEditing,
 );
 vi.mock(import('@vercel/analytics/next'), () => ({ Analytics: () => null }));
 
@@ -73,7 +69,6 @@ const NAV_ITEM = { _key: 'news', title: 'News' };
 
 function mockDraftMode(isEnabled: boolean): void {
 	// The real return value also carries `enable`/`disable`; the layout only reads `isEnabled`.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	mockedDraftMode.mockResolvedValue({ isEnabled } as unknown as Awaited<
 		ReturnType<typeof draftMode>
 	>);

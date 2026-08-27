@@ -83,7 +83,6 @@ function mockSanity({
 
 function routeProps(): PageProps<'/news/[category]/[slug]'> {
 	// `PageProps<'/news/[category]/[slug]'>` types the params as a promise.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		params: Promise.resolve({ category: 'vereinsleben', slug: 'sommerfest' }),
 	} as unknown as PageProps<'/news/[category]/[slug]'>;

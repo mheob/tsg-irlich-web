@@ -1,5 +1,3 @@
-// oxlint-disable max-lines
-
 import type { SVGProps } from 'react';
 
 import { cn } from '../utils';

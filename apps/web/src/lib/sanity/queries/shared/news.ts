@@ -1,5 +1,3 @@
-// oxlint-disable no-inline-comments
-
 import { defineQuery } from 'next-sanity';
 
 import { featuredImage, meta } from '@/lib/sanity/queries';

@@ -18,7 +18,6 @@ const ASSET_REF = 'image-abc123def456-800x600-jpg';
 
 function buildImage(overrides: Partial<AnyImage> = {}): AnyImage {
 	// The generated image types carry more optional fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		_type: 'image',
 		asset: { _ref: ASSET_REF, _type: 'reference' },
