@@ -1,0 +1,54 @@
+name: E2E Preview
+
+# Runs against the deployed preview with the real dataset behind it. Content can change under this
+# suite at any time, so it reports rather than blocks: `continue-on-error` keeps a red run from
+# failing the check.
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e-preview:
+    name: E2E Preview
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          cache: pnpm
+          node-version-file: .nvmrc
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Cache Playwright Browsers
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ~/.cache/ms-playwright
+
+      - name: Install Playwright Browsers
+        run: pnpm --filter web exec playwright install --with-deps chromium
+
+      - name: Run Preview Smoke Tests
+        run: pnpm --filter web run test:e2e:preview
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ github.event.deployment_status.environment_url }}
+
+      - name: Upload Report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: playwright-preview-report
+          path: apps/web/playwright-report
+          retention-days: 7
