@@ -31,6 +31,10 @@ export default defineConfig({
 	test: {
 		coverage: {
 			exclude: ['**/*.test.{ts,tsx}', '**/test-utils/**', '**/*.config.ts', '**/*.generated.ts'],
+			// Vitest 4 replaced `coverage.all` with this: without it only files a test happens to
+			// import are scored, so an untested file drops out of the denominator instead of
+			// counting as uncovered.
+			include: ['src/**/*.{ts,tsx}'],
 			provider: 'v8',
 			reporter: ['text', 'html', 'lcov'],
 			reportsDirectory: './coverage',
