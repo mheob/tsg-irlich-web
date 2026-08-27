@@ -1,24 +1,20 @@
-// oxlint-disable import/no-namespace
-
-import * as SeparatorPrimitive from '@radix-ui/react-separator';
+import { Separator as BaseSeparator } from '@base-ui/react/separator';
 import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
 export function Separator({
 	className,
-	decorative = true,
 	orientation = 'horizontal',
 	...props
-}: ComponentProps<typeof SeparatorPrimitive.Root>) {
+}: ComponentProps<typeof BaseSeparator>) {
 	return (
-		<SeparatorPrimitive.Root
+		<BaseSeparator
 			className={cn(
 				`shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px`,
 				className,
 			)}
 			data-slot="separator"
-			decorative={decorative}
 			orientation={orientation}
 			{...props}
 		/>
