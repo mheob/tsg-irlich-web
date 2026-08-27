@@ -60,7 +60,7 @@
 		"test:e2e": {
 			"cache": false,
 			"dependsOn": ["^build"],
-			"env": ["E2E_RECORD", "PLAYWRIGHT_BASE_URL"],
+			"env": ["E2E_RECORD", "E2E_REUSE_SERVER", "PLAYWRIGHT_BASE_URL"],
 			"outputs": ["playwright-report/**", "test-results/**"]
 		},
 		"test:coverage": {
