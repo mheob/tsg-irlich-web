@@ -1,8 +1,9 @@
 'use client';
 
-import { Slot } from '@radix-ui/react-slot';
+import { mergeProps } from '@base-ui/react/merge-props';
+import { useRender } from '@base-ui/react/use-render';
 import { useId, useMemo } from 'react';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactElement } from 'react';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 
@@ -51,18 +52,23 @@ function FormLabel({ className, ...props }: ComponentProps<typeof Label>) {
 	);
 }
 
-function FormControl({ ...props }: ComponentProps<typeof Slot>) {
+// Hands the field's id and its error wiring to whatever control it wraps, without rendering an
+// element of its own — `children` is the element Base UI renders.
+function FormControl({ children, ...props }: Readonly<FormControlProps>) {
 	const { error, formDescriptionId, formItemId, formMessageId } = useFormField();
 
-	return (
-		<Slot
-			aria-describedby={error ? `${formDescriptionId} ${formMessageId}` : formDescriptionId}
-			aria-invalid={Boolean(error)}
-			data-slot="form-control"
-			id={formItemId}
-			{...props}
-		/>
-	);
+	return useRender({
+		props: mergeProps(
+			{
+				'aria-describedby': error ? `${formDescriptionId} ${formMessageId}` : formDescriptionId,
+				'aria-invalid': Boolean(error),
+				'data-slot': 'form-control',
+				id: formItemId,
+			},
+			props,
+		),
+		render: children,
+	});
 }
 
 function FormDescription({ className, ...props }: ComponentProps<'p'>) {
@@ -95,6 +101,10 @@ function FormMessage({ className, ...props }: ComponentProps<'p'>) {
 			{body}
 		</p>
 	);
+}
+
+interface FormControlProps extends Omit<ComponentProps<'div'>, 'children'> {
+	children: ReactElement;
 }
 
 export { FormProvider as Form } from 'react-hook-form';
