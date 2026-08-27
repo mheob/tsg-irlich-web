@@ -1,14 +1,14 @@
-// oxlint-disable import/no-namespace
 'use client';
 
-import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
+import { ToggleGroup as BaseToggleGroup } from '@base-ui/react/toggle-group';
 import type { VariantProps } from 'class-variance-authority';
 import { createContext, use, useMemo } from 'react';
 import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
-import { toggleVariants } from '@/components/ui/toggle';
+import { Toggle } from '@/components/ui/toggle';
+import type { toggleVariants } from '@/components/ui/toggle';
 
 const ToggleGroupContext = createContext<VariantProps<typeof toggleVariants>>({
 	size: 'default',
@@ -21,42 +21,31 @@ function ToggleGroup({
 	size,
 	variant,
 	...props
-}: ComponentProps<typeof ToggleGroupPrimitive.Root> & VariantProps<typeof toggleVariants>) {
+}: ComponentProps<typeof BaseToggleGroup> & VariantProps<typeof toggleVariants>) {
 	const memorizedValue = useMemo(() => ({ size, variant }), [size, variant]);
 
 	return (
-		<ToggleGroupPrimitive.Root
-			className={cn('flex items-center justify-center gap-1', className)}
-			{...props}
-		>
+		<BaseToggleGroup className={cn('flex items-center justify-center gap-1', className)} {...props}>
 			<ToggleGroupContext value={memorizedValue}>{children}</ToggleGroupContext>
-		</ToggleGroupPrimitive.Root>
+		</BaseToggleGroup>
 	);
 }
 
-function ToggleGroupItem({
-	children,
-	className,
-	size,
-	variant,
-	...props
-}: ComponentProps<typeof ToggleGroupPrimitive.Item> & VariantProps<typeof toggleVariants>) {
+function ToggleGroupItem({ children, className, size, variant, ...props }: ToggleGroupItemProps) {
 	const context = use(ToggleGroupContext);
 
 	return (
-		<ToggleGroupPrimitive.Item
-			className={cn(
-				toggleVariants({
-					size: context?.size ?? size,
-					variant: context?.variant ?? variant,
-				}),
-				className,
-			)}
+		<Toggle
+			className={className}
+			size={context?.size ?? size}
+			variant={context?.variant ?? variant}
 			{...props}
 		>
 			{children}
-		</ToggleGroupPrimitive.Item>
+		</Toggle>
 	);
 }
+
+type ToggleGroupItemProps = ComponentProps<typeof Toggle>;
 
 export { ToggleGroup, ToggleGroupItem };

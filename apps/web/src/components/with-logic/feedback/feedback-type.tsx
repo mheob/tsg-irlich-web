@@ -41,15 +41,14 @@ export function FeedbackTypeField({ form }: Readonly<FeedbackTypeFieldProps>) {
 					<FormControl>
 						<ToggleGroup
 							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
-							onValueChange={(value) => {
+							onValueChange={([value]) => {
 								if (value) {
 									field.onChange(value);
 								}
 							}}
 							className="flex-col items-start justify-start sm:flex-row sm:items-center sm:gap-4"
-							defaultValue="bug"
-							type="single"
-							value={field.value}
+							// Base UI represents the pressed state as an array, even for a single selection
+							value={[field.value]}
 						>
 							{feedbackTypes.map((type) => (
 								<ToggleGroupItem
