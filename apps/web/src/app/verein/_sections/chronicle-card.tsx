@@ -47,7 +47,11 @@ export function ChronicleCard({
 
 			<div className="place-content-end p-4 md:p-8">
 				<Dialog>
-					<DialogTrigger render={<Button variant="link" />}>Mehr erfahren &raquo;</DialogTrigger>
+					{/* The label sits inside the `render` element on purpose: this is a server component, so
+					    `Button` is rendered here, before `DialogTrigger` merges anything into it on the
+					    client. Children passed to the trigger would arrive too late and the button would
+					    render empty. */}
+					<DialogTrigger render={<Button variant="link">Mehr erfahren &raquo;</Button>} />
 					<DialogPopup className="max-w-2xl">
 						<DialogTitle className="text-lg tracking-normal md:text-2xl">{title}</DialogTitle>
 						<ScrollArea className="max-h-[calc(100vh-200px)]">
