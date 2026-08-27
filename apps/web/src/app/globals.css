@@ -320,9 +320,15 @@
 }
 
 @utility prose {
-	--tw-prose-links: var(--color-primary);
-	--tw-prose-quotes: var(--color-muted-foreground);
-	--tw-prose-quote-borders: var(--color-secondary);
+	/* The typography plugin emits its own `.prose` rule carrying the `--tw-prose-*` defaults, with
+	   the same specificity as this one and later in the utilities layer, so a plain `.prose` override
+	   loses the tie. Doubling the class lifts these three to `.prose.prose`, which wins regardless of
+	   order and follows every variant (`lg:prose` becomes `.lg\:prose.lg\:prose`). */
+	&& {
+		--tw-prose-links: var(--color-primary);
+		--tw-prose-quotes: var(--color-muted-foreground);
+		--tw-prose-quote-borders: var(--color-secondary);
+	}
 
 	/* A figure spaces itself, so its image must not add the vertical margin of a standalone image.
 	   The typography plugin only resets direct children of the figure, which the images wrapped in
