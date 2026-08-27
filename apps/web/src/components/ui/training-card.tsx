@@ -91,11 +91,12 @@ export function TrainingCard({ training }: Readonly<TrainingCardProps>) {
 				<CardDescription className="mt-6 text-sm">
 					<GoToGoogleMaps address={training.venue.location}>
 						<Button
+							nativeButton={false}
+							render={<span />}
 							title="Google Maps wird in einem neuen Tab geöffnet"
 							variant="secondary"
-							asChild
 						>
-							<span>Route auf Google Maps berechnen</span>
+							Route auf Google Maps berechnen
 						</Button>
 					</GoToGoogleMaps>
 				</CardDescription>

@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { cn, TSGLogo } from '@tsgi-web/shared';
 
-import { Button } from '@/components/ui/button';
+import { ButtonLink } from '@/components/ui/button';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
 import { getInternalHref } from '@/utils/links';
 
@@ -102,14 +102,14 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 
 					{/* Contact Button (Desktop) */}
 					<div className="hidden lg:block">
-						<Button
+						<ButtonLink
 							className="uppercase"
+							render={<Link href="/kontakt" />}
 							size={isScrolled ? 'sm' : 'default'}
 							variant="secondary"
-							asChild
 						>
-							<Link href="/kontakt">Kontakt aufnehmen</Link>
-						</Button>
+							Kontakt aufnehmen
+						</ButtonLink>
 					</div>
 
 					{/* Mobile Menu Button */}
@@ -156,18 +156,18 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					))}
 
 					<div className="px-3 py-6 sm:hidden">
-						<Button
+						<ButtonLink
 							className="uppercase"
+							fullWidth
 							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onClick={() => {
 								setIsMobileOpen(false);
 							}}
+							render={<Link href="/kontakt" />}
 							variant="secondary"
-							asChild
-							fullWidth
 						>
-							<Link href="/kontakt">Kontakt aufnehmen</Link>
-						</Button>
+							Kontakt aufnehmen
+						</ButtonLink>
 					</div>
 				</div>
 			</div>

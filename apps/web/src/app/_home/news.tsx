@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { cn } from '@tsgi-web/shared';
 
-import { Button } from '@/components/ui/button';
+import { ButtonLink } from '@/components/ui/button';
 import { NewsArticlePreviewWide } from '@/components/ui/news-article-preview-wide';
 import { SectionHeader } from '@/components/ui/section-header';
 import type { Home, NewsArticlesQueryResult } from '@/types/sanity.types';
@@ -35,9 +35,9 @@ export function News({ articles, intro, subtitle, title }: Readonly<NewsProps>) 
 				</div>
 
 				<footer className="mt-10 text-center md:mt-20">
-					<Button variant="secondary" asChild>
-						<Link href="/news">Alle Neuigkeiten ansehen</Link>
-					</Button>
+					<ButtonLink render={<Link href="/news" />} variant="secondary">
+						Alle Neuigkeiten ansehen
+					</ButtonLink>
 				</footer>
 			</div>
 		</section>

@@ -6,7 +6,7 @@ import { cn } from '@tsgi-web/shared';
 
 import type { Home } from '@/types/sanity.types';
 
-import { Button } from './button';
+import { ButtonLink } from './button';
 
 type PricingProps = Home['content']['pricingSection']['pricingAdult'];
 
@@ -75,9 +75,13 @@ export function PricingCard({
 			</div>
 
 			<footer className="mt-8">
-				<Button variant={isHighlighted ? 'secondary' : 'primary'} asChild fullWidth>
-					<Link href="/mitgliedschaft#downloads">{cta}</Link>
-				</Button>
+				<ButtonLink
+					fullWidth
+					render={<Link href="/mitgliedschaft#downloads" />}
+					variant={isHighlighted ? 'secondary' : 'primary'}
+				>
+					{cta}
+				</ButtonLink>
 			</footer>
 		</article>
 	);

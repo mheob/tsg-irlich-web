@@ -17,7 +17,7 @@ export default defineConfig({
 		},
 		{
 			files: ['**/*.tsx'],
-			plugins: ['react', 'nextjs'],
+			plugins: ['react', 'react-perf', 'nextjs'],
 			rules: {
 				'nextjs/google-font-display': 'warn',
 				'nextjs/google-font-preconnect': 'warn',

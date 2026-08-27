@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { ButtonLink } from '@/components/ui/button';
 import { ContactLink } from '@/components/with-logic/contact-link';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { NewsArticleContentQueryResult } from '@/types/sanity.types';
@@ -42,9 +42,13 @@ export function Author({ article, ...props }: Readonly<AuthorProps>) {
 				</div>
 			</div>
 
-			<Button className="mt-6" variant="secondary" asChild>
-				<ContactLink href={`mailto:${article.author.email}`}>Autor anschreiben</ContactLink>
-			</Button>
+			<ButtonLink
+				className="mt-6"
+				render={<ContactLink href={`mailto:${article.author.email}`} />}
+				variant="secondary"
+			>
+				Autor anschreiben
+			</ButtonLink>
 		</section>
 	);
 }
