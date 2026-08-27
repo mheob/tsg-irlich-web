@@ -8,7 +8,7 @@
 		"utils": "@/utils"
 	},
 	"rsc": true,
-	"style": "new-york",
+	"style": "base-lyra",
 	"tailwind": {
 		"baseColor": "neutral",
 		"config": "tailwind.config.ts",

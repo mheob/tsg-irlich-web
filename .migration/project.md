@@ -50,10 +50,10 @@ Twenty-one files outside `src/components/ui` changed. The break surface was wide
 - `go-to-google-maps.tsx` closes through the dialog's imperative handle so its Google Maps link stays
   a link.
 
-Seven test files changed, each because the DOM or the timing genuinely changed, never to make a red
+Eight test files changed, each because the DOM or the timing genuinely changed, never to make a red
 run green: `author.test.tsx`, `badge.test.tsx`, `arrow-button.test.tsx`, `contact-form.test.tsx`,
-`feedback/form.test.tsx`, `lightbox.test.tsx`, plus the `getAnimations` stub in
-`test-utils/setup-dom.ts`.
+`feedback/form.test.tsx`, `lightbox.test.tsx`, the new `separator.test.tsx`, plus the
+`getAnimations` stub in `test-utils/setup-dom.ts`.
 
 ## Defects found and fixed on the way
 
@@ -84,7 +84,7 @@ run green: `author.test.tsx`, `badge.test.tsx`, `arrow-button.test.tsx`, `contac
 
 Thresholds ratcheted in `apps/web/vitest.config.ts` from 90/90/82/80 to
 91 statements / 91 lines / 83 functions / 81 branches. Measured after the migration:
-**92.45 % statements · 83.92 % branches · 85.33 % functions · 92.56 % lines**
+**92.52 % statements · 84.11 % branches · 85.57 % functions · 92.64 % lines**
 (baseline before the migration: 92.39 / 83.73 / 85.37 / 92.5). `AGENTS.md`'s threshold note was
 updated to match.
 
@@ -96,23 +96,22 @@ now:
 | Check | Baseline | After |
 | --- | --- | --- |
 | `pnpm run typecheck` | pass | pass |
-| `pnpm run test` | 70 files / 630 cases | 70 files / 631 cases |
-| `pnpm run test:coverage` | 92.39 / 83.73 / 85.37 / 92.5 | 92.45 / 83.92 / 85.33 / 92.56 |
+| `pnpm run test` | 70 files / 630 cases | 71 files / 633 cases |
+| `pnpm run test:coverage` | 92.39 / 83.73 / 85.37 / 92.5 | 92.52 / 84.11 / 85.57 / 92.64 |
 | `pnpm run lint` | 0 errors | 0 errors, 0 warnings |
 | `pnpm run build` | pass | pass |
 
 ## Flagged, not fixed
 
-- **`components.json` still says `new-york`.** The shadcn registry serves that style only in its
-  Radix flavour, so a future `shadcn add <component>` will deliver a Radix component that has to be
-  migrated by hand. Switching the project to a `base-*` style would restyle it, so the decision is
-  left open. Noted in the root `AGENTS.md`.
+- **`components.json` moved to the `base-lyra` style.** `style` is a required field, so it could not
+  simply be dropped — the CLI rejects the whole file without it. `base-lyra` makes `shadcn add`
+  deliver Base UI components (`shadcn info` reports `base: base`) instead of Radix ones. It delivers
+  that style's classes rather than this app's, so a fetched component stays a starting point to
+  replay onto the existing wrapper, never a drop-in overwrite. Noted in the root `AGENTS.md`.
 - **The single-choice feedback type is no longer a radio group.** Base UI's toggle group makes no
   role distinction between single and multiple selection. Rebuilding that field on
   `@base-ui/react/radio-group` would restore radio semantics; it is a redesign of the field, not a
   migration of it. See `.migration/toggle-group.md`.
-- **The separator is now announced to screen readers**, since Base UI has no `decorative` prop. See
-  `.migration/separator.md`.
 - **Motion feel changed where the transitions were rewritten** (dialog, lightbox backdrop, select).
   The dialog no longer slides while it scales. Every component report carries a manual QA list; the
   select and the lightbox are the two that most need a real browser.
