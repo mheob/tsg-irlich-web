@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { cn } from '@tsgi-web/shared';
 
-import { Button } from '@/components/ui/button';
+import { ButtonLink } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
 import visionImage1 from '@/images/vision/vision-1.webp';
 import visionImage2 from '@/images/vision/vision-2.webp';
@@ -91,9 +91,9 @@ export function Vision(props: Readonly<VisionProps>) {
 					</SectionHeader>
 
 					{props._type === 'home' && (
-						<Button className="relative mt-12" asChild>
-							<Link href="/verein#vision-section">{props.cta}</Link>
-						</Button>
+						<ButtonLink className="relative mt-12" render={<Link href="/verein#vision-section" />}>
+							{props.cta}
+						</ButtonLink>
 					)}
 					{props._type === 'aboutUs' && <LongVisionDialog {...props} />}
 				</div>

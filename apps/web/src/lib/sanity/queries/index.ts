@@ -1,5 +1,3 @@
-// oxlint-disable no-inline-comments
-
 const contactPersons = /* groq */ `
   firstName,
   lastName,

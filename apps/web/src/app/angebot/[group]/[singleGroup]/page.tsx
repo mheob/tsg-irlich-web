@@ -94,8 +94,7 @@ export default async function SingleGroupsPage({
 			<Hero
 				image={
 					groupData.featuredImage?.alt && imageSource
-						? // oxlint-disable-next-line react_perf/jsx-no-new-object-as-prop
-							{ alt: groupData.featuredImage.alt, src: imageSource }
+						? { alt: groupData.featuredImage.alt, src: imageSource }
 						: undefined
 				}
 				subTitle={page.subtitle}
@@ -105,10 +104,9 @@ export default async function SingleGroupsPage({
 				description={
 					// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 					(groupData.description as SimpleBlockContent) ??
-					// oxlint-disable-next-line typescript/no-unsafe-type-assertion react-perf/jsx-no-new-object-as-prop
+					// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 					({ text: [] } as unknown as SimpleBlockContent)
 				}
-				// oxlint-disable-next-line react_perf/jsx-no-new-array-as-prop
 				gallery={groupData.images ?? []}
 				title={groupData.title ?? ''}
 			/>

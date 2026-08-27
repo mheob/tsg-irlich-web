@@ -46,7 +46,6 @@ describe('arrow button', () => {
 		const { getByRole } = renderWithUser(
 			// The prop type only allows the eight known directions; a value from the CMS can still
 			// reach it, and the component answers that with no icon at all.
-			// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 			<ArrowButton aria-label="Pfeil" direction={'sideways' as 'left'} size="size-8" />,
 		);
 
@@ -130,7 +129,13 @@ describe('arrow button group', () => {
 		expect(getByRole('link', { name: 'Zurück' })).not.toBeNull();
 	});
 
-	// `asChild` is deliberately not covered: the group always renders its own two arrows as the
-	// children of `Slot`, so a wrapper element passed as `children` never reaches it and Radix
-	// throws "Slot failed to slot onto its children". The prop cannot be used as it stands.
+	it('renders as the given element instead of a div when render is set', () => {
+		const { getByRole } = renderWithUser(
+			<ArrowButtonGroup render={<nav aria-label="Blättern" />} />,
+		);
+
+		const group = getByRole('navigation', { name: 'Blättern' });
+		expect(group.tagName).toBe('NAV');
+		expect(group.querySelectorAll('button')).toHaveLength(2);
+	});
 });

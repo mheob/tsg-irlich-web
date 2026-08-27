@@ -15,7 +15,6 @@ import { groupSections } from '@/utils/groups';
 import { getInternalHref } from '@/utils/links';
 import { getBaseUrl } from '@/utils/url';
 
-// oxlint-disable-next-line max-lines-per-function
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const baseUrl = getBaseUrl();
 

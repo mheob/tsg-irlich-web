@@ -11,7 +11,6 @@ const CONTACT_LINK_NAME = 'Kontaktlink - tippen zum Anzeigen';
 
 function buildSocialMedia(fields: Record<string, string>): SocialMediaQueryResult {
 	// The generated result type carries the document meta fields as well.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return fields as unknown as SocialMediaQueryResult;
 }
 

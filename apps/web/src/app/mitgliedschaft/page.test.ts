@@ -15,7 +15,6 @@ import { Downloads } from './_sections/downloads';
 import { Intro } from './_sections/intro';
 
 vi.mock(import('@/lib/sanity/client'), () => ({
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	client: {
 		config: () => ({ dataset: 'test-dataset', projectId: 'test-project' }),
 		fetch: vi.fn(),

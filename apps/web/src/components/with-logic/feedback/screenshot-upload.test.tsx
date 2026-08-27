@@ -16,7 +16,6 @@ vi.mock(import('@/actions/upload-to-linear'), () => ({ uploadToLinear: vi.fn() }
 
 // `vi.mocked` only needs the reference to the mock function object; it is never invoked as a bare,
 // unbound `this`-dependent call.
-// oxlint-disable-next-line typescript/unbound-method
 const mockedUploadToLinear = vi.mocked(uploadToLinear);
 
 // Mirrors the `TEN_MB` constant in `screenshot-upload.tsx` (not exported) and the matching
@@ -69,7 +68,6 @@ function createDeferred<T>(): Deferred<T> {
  */
 function buildDragEvent(type: string, files: File[] = []): Event {
 	const event = new Event(type, { bubbles: true, cancelable: true });
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	(event as Event & { dataTransfer: unknown }).dataTransfer = { files };
 	return event;
 }
@@ -87,7 +85,6 @@ function buildDragEvent(type: string, files: File[] = []): Event {
 function buildPasteEvent(files: (File | null)[], type = 'image/png'): Event {
 	const event = new Event('paste', { bubbles: true });
 	const items = files.map((file) => ({ getAsFile: () => file, type }));
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	(event as Event & { clipboardData: unknown }).clipboardData = { items };
 	return event;
 }

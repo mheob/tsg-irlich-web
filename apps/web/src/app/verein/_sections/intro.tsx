@@ -29,7 +29,6 @@ function Intro({ content }: Readonly<IntroProps>) {
 		return null;
 	}
 
-	// oxlint-disable-next-line react_perf/jsx-no-new-array-as-prop
 	const images = [mainImage, ...footerImages];
 
 	return (

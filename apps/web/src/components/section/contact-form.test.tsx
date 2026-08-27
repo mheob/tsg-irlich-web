@@ -12,7 +12,6 @@ vi.mock(import('@/actions/send-contact-form'), () => ({ sendContactForm: vi.fn()
 
 // `vi.mocked` only needs the reference to the mock function object; it is never invoked as a bare,
 // unbound `this`-dependent call.
-// oxlint-disable-next-line typescript/unbound-method
 const mockedSendContactForm = vi.mocked(sendContactForm);
 
 const VALID_MESSAGE = 'Dies ist eine ausführliche Testnachricht für das Kontaktformular.';
@@ -111,7 +110,9 @@ describe('the contact form', () => {
 		expect((getByLabelText('Name') as HTMLInputElement).value).toBe('');
 		expect((getByLabelText('E-Mail') as HTMLInputElement).value).toBe('');
 		expect((getByLabelText('Nachricht') as HTMLTextAreaElement).value).toBe('');
-		expect(getByLabelText('Datenschutzbestimmungen').getAttribute('aria-checked')).toBe('false');
+		// Base UI's checkbox puts the label's `id` on its hidden native input, so this is that input
+		// rather than the `role="checkbox"` element Radix exposed.
+		expect((getByLabelText('Datenschutzbestimmungen') as HTMLInputElement).checked).toBe(false);
 	});
 
 	it('disables submission while the action is pending', async () => {

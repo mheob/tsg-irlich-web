@@ -1,6 +1,6 @@
-// oxlint-disable no-inline-comments
 //
-import { Slot } from '@radix-ui/react-slot';
+import { mergeProps } from '@base-ui/react/merge-props';
+import { useRender } from '@base-ui/react/use-render';
 import { ChevronsRight, Ellipsis } from 'lucide-react';
 import type { ComponentProps } from 'react';
 
@@ -33,22 +33,18 @@ function BreadcrumbItem({ className, ...props }: ComponentProps<'li'>) {
 	);
 }
 
-function BreadcrumbLink({
-	asChild,
-	className,
-	...props
-}: ComponentProps<'a'> & {
-	asChild?: boolean;
-}) {
-	const Comp = asChild ? Slot : 'a';
-
-	return (
-		<Comp
-			className={cn('underline transition-colors hover:text-secondary', className)}
-			data-slot="breadcrumb-link"
-			{...props}
-		/>
-	);
+function BreadcrumbLink({ className, render, ...props }: useRender.ComponentProps<'a'>) {
+	return useRender({
+		defaultTagName: 'a',
+		props: mergeProps(
+			{
+				className: cn('underline transition-colors hover:text-secondary', className),
+				'data-slot': 'breadcrumb-link',
+			},
+			props,
+		),
+		render,
+	});
 }
 
 function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {

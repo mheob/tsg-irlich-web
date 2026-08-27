@@ -16,7 +16,6 @@ import { Chronicle } from './_sections/chronicle';
 // lake. `config()` is what `@sanity/image-url` reads to build an image URL for the open graph
 // image, so the fake answers it with the same shape the real client would.
 vi.mock(import('@/lib/sanity/client'), () => ({
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	client: {
 		config: () => ({ dataset: 'test-dataset', projectId: 'test-project' }),
 		fetch: vi.fn(),
@@ -39,7 +38,6 @@ const ASSET_REF = 'image-abc123def456-800x600-jpg';
 function buildPage(overrides: Record<string, unknown> = {}): AboutUsPageQueryResult {
 	// The generated result type describes the full document; a fixture only names what the page
 	// itself reads, and every section receives its slice as an opaque prop.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		_type: 'aboutUs',
 		content: {

@@ -18,7 +18,6 @@ const ASSET_REF = 'image-abc123def456-800x600-jpg';
 
 function buildDescription(): SimpleBlockContent {
 	// The generated type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		text: [
 			{
@@ -34,7 +33,6 @@ function buildDescription(): SimpleBlockContent {
 
 function buildGallery(count: number): GroupDance['images'] {
 	// The generated type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return Array.from({ length: count }, (_unused, index) => ({
 		_key: `image-${index + 1}`,
 		alt: `Bild ${index + 1}`,

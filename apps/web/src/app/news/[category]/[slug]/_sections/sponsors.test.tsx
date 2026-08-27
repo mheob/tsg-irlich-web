@@ -18,7 +18,6 @@ const ASSET_REF = 'image-abc123def456-800x600-jpg';
 
 function buildSponsors(overrides: Record<string, unknown>[] = []): SponsorsQueryResult {
 	// The generated result type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return overrides as unknown as SponsorsQueryResult;
 }
 

@@ -3,7 +3,7 @@
 import type { AboutUs } from '@/types/sanity.types';
 
 import { Button } from '../ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogDescription, DialogPopup, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { PortableText } from '../ui/portable-text';
 import { ScrollArea } from '../ui/scroll-area';
 
@@ -19,20 +19,18 @@ export function LongVisionDialog({
 }: Readonly<LongVisionDialogProps>) {
 	return (
 		<Dialog>
-			<DialogTrigger asChild>
-				<Button className="relative mt-12">{ctaLongVision}</Button>
-			</DialogTrigger>
-			<DialogContent className="max-w-3xl">
+			<DialogTrigger render={<Button className="relative mt-12" />}>{ctaLongVision}</DialogTrigger>
+			<DialogPopup className="max-w-3xl">
 				<DialogTitle className="text-lg tracking-normal md:text-2xl">{longVisionTitle}</DialogTitle>
 				<ScrollArea className="max-h-[calc(100vh-200px)]">
 					<DialogDescription
 						className="prose-sm mt-10 text-base tracking-normal md:text-lg lg:prose"
-						asChild
+						render={<div />}
 					>
-						<div>{longVision?.text && <PortableText value={longVision.text} />}</div>
+						{longVision?.text && <PortableText value={longVision.text} />}
 					</DialogDescription>
 				</ScrollArea>
-			</DialogContent>
+			</DialogPopup>
 		</Dialog>
 	);
 }

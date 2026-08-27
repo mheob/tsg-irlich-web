@@ -7,7 +7,6 @@ import { Counter } from './counter';
 
 function buildStats(count: number): Stats[] {
 	// The generated type carries the object meta fields as well.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return Array.from({ length: count }, (_unused, index) => ({
 		title: `Kennzahl ${index + 1}`,
 		value: (index + 1) * 100,
@@ -23,7 +22,6 @@ describe('the counter', () => {
 	});
 
 	it('wraps a value in its prefix and suffix', () => {
-		// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 		const values = [
 			{ prefix: 'über ', suffix: '+', title: 'Mitglieder', value: 1200 },
 		] as unknown as Stats[];

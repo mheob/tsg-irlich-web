@@ -137,6 +137,49 @@ describe('portable text', () => {
 		expect(link.getAttribute('target')).toBe('_blank');
 	});
 
+	// The children of a mark are a plain string only while the marked text carries no other mark. As
+	// soon as it is split — `Skigebiet <strong>Gitschberg-Jochtal</strong>.` — they are an array of
+	// strings and elements, which `toString()` renders as `[object Object]`.
+	it('builds the accessible name of an external link from text that is split by another mark', () => {
+		const { getByRole } = renderPortableText([
+			{
+				_key: 'split',
+				_type: 'block',
+				children: [
+					{ _key: 'split-1', _type: 'span', marks: ['split-mark'], text: 'Skigebiet ' },
+					{
+						_key: 'split-2',
+						_type: 'span',
+						marks: ['split-mark', 'strong'],
+						text: 'Gitschberg-Jochtal',
+					},
+					{ _key: 'split-3', _type: 'span', marks: ['split-mark'], text: '.' },
+				],
+				markDefs: [
+					{ _key: 'split-mark', _type: 'externalLink', href: 'https://gitschberg-jochtal.com' },
+				],
+				style: 'normal',
+			},
+		]);
+
+		const link = getByRole('link', {
+			name: 'Skigebiet Gitschberg-Jochtal. (öffnet in neuem Tab)',
+		});
+		expect(link.querySelector('strong')?.textContent).toBe('Gitschberg-Jochtal');
+	});
+
+	it('falls back to a generic accessible name for an external link without text', () => {
+		const { getByRole } = renderPortableText([
+			markedBlock('empty', '', {
+				_key: 'empty-mark',
+				_type: 'externalLink',
+				href: 'https://sponsor.example.com',
+			}),
+		]);
+
+		expect(getByRole('link', { name: 'Link (öffnet in neuem Tab)' })).not.toBeNull();
+	});
+
 	it('does not crash rendering an unknown block type', () => {
 		const warnSpy = vi.spyOn(console, 'warn').mockReturnValue();
 

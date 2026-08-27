@@ -25,7 +25,6 @@ function findElements<P>(node: ReactNode, type: ElementType<P>): ReactElement<P>
 	const { children } = node.props as { children?: ReactNode };
 	const nested = children === undefined ? [] : findElements(children, type);
 
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return node.type === type ? [node as ReactElement<P>, ...nested] : nested;
 }
 

@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { cn, TSGLogo } from '@tsgi-web/shared';
 
-import { Button } from '@/components/ui/button';
+import { ButtonLink } from '@/components/ui/button';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
 import { getInternalHref } from '@/utils/links';
 
@@ -35,7 +35,6 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 	const navItemsWithActive: NavItemWithActive[] = useMemo(
 		() =>
 			navItems
-				// oxlint-disable-next-line oxc/no-map-spread
 				.map(({ link, ...item }) => {
 					const href = getInternalHref(link);
 					return href ? { ...item, href, isActive: isActivePage(pathname, href) } : undefined;
@@ -102,14 +101,14 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 
 					{/* Contact Button (Desktop) */}
 					<div className="hidden lg:block">
-						<Button
+						<ButtonLink
 							className="uppercase"
+							render={<Link href="/kontakt" />}
 							size={isScrolled ? 'sm' : 'default'}
 							variant="secondary"
-							asChild
 						>
-							<Link href="/kontakt">Kontakt aufnehmen</Link>
-						</Button>
+							Kontakt aufnehmen
+						</ButtonLink>
 					</div>
 
 					{/* Mobile Menu Button */}
@@ -117,7 +116,6 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 						<button
 							aria-label="Toggle menu"
 							className="my-2 inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-muted/40"
-							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onClick={() => {
 								setIsMobileOpen(!isMobileOpen);
 							}}
@@ -146,7 +144,6 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 							)}
 							href={item.href}
 							key={item._key}
-							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 							onClick={() => {
 								setIsMobileOpen(false);
 							}}
@@ -156,18 +153,17 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					))}
 
 					<div className="px-3 py-6 sm:hidden">
-						<Button
+						<ButtonLink
 							className="uppercase"
-							// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
+							fullWidth
 							onClick={() => {
 								setIsMobileOpen(false);
 							}}
+							render={<Link href="/kontakt" />}
 							variant="secondary"
-							asChild
-							fullWidth
 						>
-							<Link href="/kontakt">Kontakt aufnehmen</Link>
-						</Button>
+							Kontakt aufnehmen
+						</ButtonLink>
 					</div>
 				</div>
 			</div>

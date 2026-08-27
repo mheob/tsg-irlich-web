@@ -1,4 +1,4 @@
-import { Slot } from '@radix-ui/react-slot';
+import { Button as BaseButton } from '@base-ui/react/button';
 import type { VariantProps } from 'class-variance-authority';
 import type { ComponentProps } from 'react';
 
@@ -6,13 +6,7 @@ import { cn } from '@tsgi-web/shared';
 
 import { buttonVariants } from './variants';
 
-export interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
-	asChild?: boolean;
-	fullWidth?: boolean;
-}
-
 export function Button({
-	asChild = false,
 	children,
 	className,
 	fullWidth = false,
@@ -20,15 +14,18 @@ export function Button({
 	variant,
 	...props
 }: Readonly<ButtonProps>) {
-	const Comp = asChild ? Slot : 'button';
-
 	return (
-		<Comp
+		<BaseButton
 			className={cn(buttonVariants({ className, size, variant }), { 'btn--width-full': fullWidth })}
 			data-slot="button"
 			{...props}
 		>
 			<span>{children}</span>
-		</Comp>
+		</BaseButton>
 	);
+}
+
+export interface ButtonProps
+	extends ComponentProps<typeof BaseButton>, VariantProps<typeof buttonVariants> {
+	fullWidth?: boolean;
 }

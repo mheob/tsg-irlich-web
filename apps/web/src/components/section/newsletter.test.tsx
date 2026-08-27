@@ -11,7 +11,6 @@ import { Newsletter } from './newsletter';
 // itself.
 vi.mock(import('@/actions/subscribe-to-newsletter'), () => ({ subscribeToNewsletter: vi.fn() }));
 
-// oxlint-disable-next-line typescript/unbound-method
 const mockedSubscribeToNewsletter = vi.mocked(subscribeToNewsletter);
 
 const SUCCESS_STATE: NewsletterFormState = {

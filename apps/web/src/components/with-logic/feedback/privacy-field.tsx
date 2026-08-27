@@ -12,7 +12,6 @@ interface PrivacyFieldProps {
 export function PrivacyField({ form }: Readonly<PrivacyFieldProps>) {
 	return (
 		<FormField
-			// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Datenschutzbestimmungen</FormLabel>

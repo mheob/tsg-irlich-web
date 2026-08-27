@@ -10,7 +10,6 @@ import { LightboxGallery, LightboxTrigger } from './lightbox';
 // Use `Gallery` or `LightboxGallery` directly whenever several images belong together and should be
 // pageable.
 function ZoomableImage({ className, image, ...props }: Readonly<ZoomableImageProps>) {
-	// oxlint-disable-next-line react_perf/jsx-no-new-array-as-prop
 	const images = [image];
 
 	return (

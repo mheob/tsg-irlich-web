@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { cn } from '@tsgi-web/shared';
 
-import { Button } from '@/components/ui/button';
+import { ButtonLink } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
 import { SocialMediaIcon } from '@/components/ui/social-media-icon';
 import ArrowCta from '@/icons/design/arrow-cta';
@@ -25,9 +25,7 @@ export function Hero({ intro, socialMedia, subtitle, title }: Readonly<HeroProps
 					</SectionHeader>
 
 					<div className="mt-8 flex gap-8 text-primary">
-						<Button asChild>
-							<Link href="/kontakt">Kontakt aufnehmen</Link>
-						</Button>
+						<ButtonLink render={<Link href="/kontakt" />}>Kontakt aufnehmen</ButtonLink>
 
 						<ArrowCta aria-hidden="true" />
 					</div>

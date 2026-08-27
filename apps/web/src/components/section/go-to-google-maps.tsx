@@ -1,30 +1,37 @@
 'use client';
 
 import type { ComponentProps } from 'react';
+import { useRef } from 'react';
 
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button, ButtonLink } from '@/components/ui/button';
 import { ExternalLink } from '@/components/ui/external-link';
 import { printGoogleMapsLink } from '@/utils/url';
 
+import type { DialogActions } from '../ui/dialog';
 import {
 	Dialog,
 	DialogClose,
-	DialogContent,
 	DialogDescription,
 	DialogFooter,
+	DialogPopup,
 	DialogTitle,
 	DialogTrigger,
 } from '../ui/dialog';
 
-interface GoToGoogleMapsProps extends ComponentProps<typeof DialogTrigger> {
-	address: Parameters<typeof printGoogleMapsLink>[number];
-}
+function GoToGoogleMaps({ address, children, ...props }: Readonly<GoToGoogleMapsProps>) {
+	// The Google Maps link has to stay a link, so it cannot be a `DialogClose`: Base UI puts button
+	// semantics on whatever a `Close` renders as. It closes the dialog through the root's imperative
+	// handle instead.
+	const dialogActions = useRef<DialogActions>(null);
 
-export function GoToGoogleMaps({ address, children, ...props }: Readonly<GoToGoogleMapsProps>) {
+	const closeDialog = () => {
+		dialogActions.current?.close();
+	};
+
 	return (
-		<Dialog>
+		<Dialog actionsRef={dialogActions}>
 			<DialogTrigger {...props}>{children}</DialogTrigger>
-			<DialogContent>
+			<DialogPopup>
 				<DialogTitle className="text-lg tracking-normal md:text-2xl">
 					Achtung: Du wechselst zu Google Maps
 				</DialogTitle>
@@ -33,16 +40,20 @@ export function GoToGoogleMaps({ address, children, ...props }: Readonly<GoToGoo
 					berechnen.
 				</DialogDescription>
 				<DialogFooter>
-					<DialogClose asChild>
-						<Button variant="ghost">Hier bleiben</Button>
-					</DialogClose>
-					<DialogClose asChild>
-						<ExternalLink className={buttonVariants()} href={printGoogleMapsLink(address)}>
-							<span>Google Maps öffnen</span>
-						</ExternalLink>
-					</DialogClose>
+					<DialogClose render={<Button variant="ghost" />}>Hier bleiben</DialogClose>
+					<ButtonLink
+						render={<ExternalLink href={printGoogleMapsLink(address)} onClick={closeDialog} />}
+					>
+						Google Maps öffnen
+					</ButtonLink>
 				</DialogFooter>
-			</DialogContent>
+			</DialogPopup>
 		</Dialog>
 	);
 }
+
+interface GoToGoogleMapsProps extends ComponentProps<typeof DialogTrigger> {
+	address: Parameters<typeof printGoogleMapsLink>[number];
+}
+
+export { GoToGoogleMaps };

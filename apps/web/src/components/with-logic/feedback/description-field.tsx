@@ -31,7 +31,6 @@ export function DescriptionField({ form }: Readonly<DescriptionFieldProps>) {
 
 	return (
 		<FormField
-			// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Beschreibung</FormLabel>

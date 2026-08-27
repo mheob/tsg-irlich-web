@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # apps/web
 
-The public website (Next.js App Router, Tailwind CSS, Shadcn UI, Sanity as CMS). The monorepo-wide conventions live in the repository root `AGENTS.md` — this file only adds what is specific to this app.
+The public website (Next.js App Router, Tailwind CSS, Shadcn-style components on Base UI, Sanity as CMS). The monorepo-wide conventions live in the repository root `AGENTS.md` — this file only adds what is specific to this app.
 
 ## Commands
 
@@ -25,17 +25,17 @@ pnpm run typegen:sanity  # regenerate src/types/sanity.types.generated.ts from t
 
 ## Directory map
 
-| Path                        | Contains                                                       |
-| --------------------------- | -------------------------------------------------------------- |
-| `src/app`                   | routes, colocated `_sections`, `_shared` and `_assets` folders |
-| `src/actions`               | server actions (`'use server'`)                                |
-| `src/components/layout`     | header, footer and other page chrome                           |
-| `src/components/section`    | full page sections that are reused across routes               |
-| `src/components/ui`         | Shadcn-style primitives (CVA variants in `variants.ts`)        |
-| `src/components/with-logic` | components that own state, hooks or browser APIs               |
-| `src/lib/sanity`            | client, live/preview bindings, GROQ queries, image helpers     |
-| `src/lib/validations`       | Zod schemas shared by forms and server actions                 |
-| `src/types`                 | hand-written types plus the generated Sanity types             |
+| Path | Contains |
+| --- | --- |
+| `src/app` | routes, colocated `_sections`, `_shared` and `_assets` folders |
+| `src/actions` | server actions (`'use server'`) |
+| `src/components/layout` | header, footer and other page chrome |
+| `src/components/section` | full page sections that are reused across routes |
+| `src/components/ui` | Shadcn-style wrappers around Base UI (CVA variants in `variants.ts`) |
+| `src/components/with-logic` | components that own state, hooks or browser APIs |
+| `src/lib/sanity` | client, live/preview bindings, GROQ queries, image helpers |
+| `src/lib/validations` | Zod schemas shared by forms and server actions |
+| `src/types` | hand-written types plus the generated Sanity types |
 
 ## Fetching content from Sanity
 
@@ -85,7 +85,7 @@ Static image imports (`.webp` and friends) are resolved by the `assetStub` Vite 
 
 Three more helpers live in `test-utils/`:
 
-- `setup-dom.ts` — stubs `matchMedia`, `ResizeObserver` and `IntersectionObserver`, mocks `next/image`, `next/navigation` and `motion/react`, and registers one central `afterEach` (DOM cleanup plus every mock's state reset) as the `dom` project's `setupFiles` — a test needs neither itself. A consumer's own `afterEach` should still nest inside a `describe` rather than sit at the file's root, matching the existing `vi.fn()`-reset pattern (see `form.test.tsx`).
+- `setup-dom.ts` — stubs `matchMedia`, `ResizeObserver`, `IntersectionObserver`, the pointer-capture API, `scrollIntoView` and `getAnimations` (Base UI's scroll area calls the last one after mount), mocks `next/image`, `next/navigation` and `motion/react`, and registers one central `afterEach` (DOM cleanup plus every mock's state reset) as the `dom` project's `setupFiles` — a test needs neither itself. A consumer's own `afterEach` should still nest inside a `describe` rather than sit at the file's root, matching the existing `vi.fn()`-reset pattern (see `form.test.tsx`).
 - `env.ts` — `loadWithEnv` resets the module registry and stubs the environment, because `src/lib/env.ts` caches validated values in a module-level `Map`. A test using it must import the module under test only as `import type` and get its runtime binding from `loadWithEnv`'s return value — see `src/utils/url.test.ts`.
 - `fetch-mock.ts` — `createFetchMock` replaces `fetch` with a queue of canned responses and records every call. Recorded headers are normalized through `Headers`, same as the real `fetch`, so they come back lowercased — assert against lowercase header names.
 

@@ -12,7 +12,6 @@ vi.mock(import('@/actions/create-linear-issue'), () => ({ createLinearIssue: vi.
 
 // `vi.mocked` only needs the reference to the mock function object; it is never invoked as a bare,
 // unbound `this`-dependent call.
-// oxlint-disable-next-line typescript/unbound-method
 const mockedCreateLinearIssue = vi.mocked(createLinearIssue);
 
 const VALID_TITLE = 'Die Suche funktioniert nicht mehr richtig';
@@ -56,7 +55,11 @@ describe('the feedback form', () => {
 	it('shows the browser, operating system and device fields by default, since the feedback type defaults to a bug report', () => {
 		const { getByRole, queryByLabelText } = renderForm();
 
-		expect(getByRole('radio', { name: 'Fehlermeldung' }).getAttribute('aria-checked')).toBe('true');
+		// Base UI's toggle group reports its pressed item with `aria-pressed`, not the `aria-checked`
+		// of Radix's `type="single"` radio group.
+		expect(getByRole('button', { name: 'Fehlermeldung' }).getAttribute('aria-pressed')).toBe(
+			'true',
+		);
 		expect(queryByLabelText('Browser')).not.toBeNull();
 		expect(queryByLabelText('Betriebssystem')).not.toBeNull();
 		expect(queryByLabelText(/^Gerät/u)).not.toBeNull();
@@ -65,7 +68,7 @@ describe('the feedback form', () => {
 	it('hides the browser, operating system and device fields once the feedback type is switched away from a bug report', async () => {
 		const { getByRole, queryByLabelText, user } = renderForm();
 
-		await user.click(getByRole('radio', { name: 'Verbesserungsvorschlag' }));
+		await user.click(getByRole('button', { name: 'Verbesserungsvorschlag' }));
 
 		expect(queryByLabelText('Browser')).toBeNull();
 		expect(queryByLabelText('Betriebssystem')).toBeNull();
@@ -75,8 +78,8 @@ describe('the feedback form', () => {
 	it('shows the browser, operating system and device fields again once the feedback type is switched back to a bug report', async () => {
 		const { getByRole, queryByLabelText, user } = renderForm();
 
-		await user.click(getByRole('radio', { name: 'Verbesserungsvorschlag' }));
-		await user.click(getByRole('radio', { name: 'Fehlermeldung' }));
+		await user.click(getByRole('button', { name: 'Verbesserungsvorschlag' }));
+		await user.click(getByRole('button', { name: 'Fehlermeldung' }));
 
 		expect(queryByLabelText('Browser')).not.toBeNull();
 		expect(queryByLabelText('Betriebssystem')).not.toBeNull();

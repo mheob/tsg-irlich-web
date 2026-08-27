@@ -9,7 +9,6 @@ type FeatureSection = Home['content']['featureSection'];
 
 function buildSection(features: unknown[]): FeatureSection {
 	// The generated type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		features,
 		intro: 'Das macht uns aus.',

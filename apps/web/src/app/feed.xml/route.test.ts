@@ -4,7 +4,7 @@ import { GET } from '@/app/feed.xml/route';
 import type { client } from '@/lib/sanity/client';
 
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+
 vi.mock(import('@/lib/sanity/client'), () => ({
 	client: { fetch: vi.fn() } as unknown as typeof client,
 }));

@@ -83,6 +83,7 @@
 		"oxlint": {
 			"initialization_options": {
 				"settings": {
+					"typeAware": true,
 					"unusedDisableDirectives": "warn"
 				}
 			}

@@ -34,8 +34,8 @@ This is a **monorepo** built with **Turbo** and **pnpm** containing:
 - **Next.js 16** with App Router and Turbopack
 - **React 19** with TypeScript
 - **Tailwind CSS 4** for styling
-- **Radix UI** components with custom styling
-- **Shadcn/ui** component library
+- **Base UI** primitives with custom styling
+- **Shadcn/ui** component patterns (CVA variants)
 - **Sanity Client** for headless CMS integration
 - **Vercel Analytics** for performance monitoring
 

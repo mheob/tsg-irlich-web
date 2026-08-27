@@ -1,13 +1,14 @@
-import { Slot } from '@radix-ui/react-slot';
+import { mergeProps } from '@base-ui/react/merge-props';
+import { useRender } from '@base-ui/react/use-render';
 import type { LinkProps as NextLinkProps } from 'next/link';
-import type { ComponentProps, ComponentPropsWithoutRef } from 'react';
+import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
 import { ArrowButton, ArrowElement, ArrowLink } from './arrow-button';
 
-interface BaseProps extends ComponentPropsWithoutRef<'div'> {
-	asChild?: boolean;
+// The group always renders its own two arrows, so it never accepts children of its own.
+interface BaseProps extends Omit<useRender.ComponentProps<'div'>, 'children'> {
 	isDisabledNext?: boolean;
 	isDisabledPrevious?: boolean;
 	size?: ComponentProps<typeof ArrowButton>['size'];
@@ -30,21 +31,19 @@ interface LinkProps {
 type ArrowButtonGroupProps = BaseProps & (ButtonProps | LinkProps);
 
 export function ArrowButtonGroup({
-	asChild = false,
 	className,
 	hrefNext,
 	hrefPrev,
 	isDisabledNext = false,
 	isDisabledPrevious = false,
+	render,
 	scroll = false,
 	size = 'size-8 md:size-12',
 	type = 'button',
 	...props
 }: Readonly<ArrowButtonGroupProps>) {
-	const Comp = asChild ? Slot : 'div';
-
-	return (
-		<Comp className={cn('flex items-center justify-center gap-4', className)} {...props}>
+	const arrows = (
+		<>
 			{type === 'button' && (
 				<>
 					<ArrowButton
@@ -111,6 +110,16 @@ export function ArrowButtonGroup({
 					)}
 				</>
 			)}
-		</Comp>
+		</>
 	);
+
+	return useRender({
+		defaultTagName: 'div',
+		props: mergeProps(
+			{ className: cn('flex items-center justify-center gap-4', className) },
+			props,
+			{ children: arrows },
+		),
+		render,
+	});
 }

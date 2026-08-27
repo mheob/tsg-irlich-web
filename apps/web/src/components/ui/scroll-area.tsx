@@ -1,55 +1,38 @@
-// oxlint-disable import/no-namespace
-
-import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
-import type { ComponentPropsWithoutRef, ComponentRef, RefObject } from 'react';
+import { ScrollArea as BaseScrollArea } from '@base-ui/react/scroll-area';
+import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
 function ScrollBar({
 	className,
 	orientation = 'vertical',
-	ref,
 	...props
-}: ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> & {
-	ref?: RefObject<ComponentRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> | null>;
-}) {
+}: ComponentProps<typeof BaseScrollArea.Scrollbar>) {
 	return (
-		<ScrollAreaPrimitive.ScrollAreaScrollbar
+		<BaseScrollArea.Scrollbar
 			className={cn(
-				'flex touch-none transition-colors select-none',
+				'flex touch-none opacity-0 transition-opacity select-none data-hovering:pointer-events-auto data-hovering:opacity-100 data-scrolling:pointer-events-auto data-scrolling:opacity-100 data-scrolling:duration-0',
 				orientation === 'vertical' && 'h-full w-2.5 border-l border-l-transparent p-px',
 				orientation === 'horizontal' && 'h-2.5 flex-col border-t border-t-transparent p-px',
 				className,
 			)}
 			orientation={orientation}
-			ref={ref}
 			{...props}
 		>
-			<ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
-		</ScrollAreaPrimitive.ScrollAreaScrollbar>
+			<BaseScrollArea.Thumb className="relative flex-1 rounded-full bg-border" />
+		</BaseScrollArea.Scrollbar>
 	);
 }
 
-function ScrollArea({
-	children,
-	className,
-	ref,
-	...props
-}: ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
-	ref?: RefObject<ComponentRef<typeof ScrollAreaPrimitive.Root> | null>;
-}) {
+function ScrollArea({ children, className, ...props }: ComponentProps<typeof BaseScrollArea.Root>) {
 	return (
-		<ScrollAreaPrimitive.Root
-			className={cn('relative overflow-hidden', className)}
-			ref={ref}
-			{...props}
-		>
-			<ScrollAreaPrimitive.Viewport className="size-full rounded-[inherit]">
-				{children}
-			</ScrollAreaPrimitive.Viewport>
+		<BaseScrollArea.Root className={cn('relative overflow-hidden', className)} {...props}>
+			<BaseScrollArea.Viewport className="size-full rounded-[inherit]">
+				<BaseScrollArea.Content>{children}</BaseScrollArea.Content>
+			</BaseScrollArea.Viewport>
 			<ScrollBar />
-			<ScrollAreaPrimitive.Corner />
-		</ScrollAreaPrimitive.Root>
+			<BaseScrollArea.Corner />
+		</BaseScrollArea.Root>
 	);
 }
 

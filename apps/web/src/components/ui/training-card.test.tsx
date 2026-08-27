@@ -14,7 +14,6 @@ const LOCATION = {
 
 function buildTraining(overrides: Record<string, unknown> = {}): TrainingTimeSection {
 	// The generated type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		endTime: '20:00',
 		season: 'yearly',

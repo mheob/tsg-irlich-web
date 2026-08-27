@@ -17,7 +17,6 @@ type DownloadsSection = NonNullable<MembershipPageQueryResult['membership']>['do
 
 function buildSection(downloads: unknown[]): DownloadsSection {
 	// The generated type carries more fields than a fixture needs to name.
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 	return {
 		downloads,
 		intro: 'Alles zum Mitnehmen.',

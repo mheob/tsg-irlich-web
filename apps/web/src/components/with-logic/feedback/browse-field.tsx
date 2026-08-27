@@ -26,12 +26,11 @@ interface BrowserFieldProps {
 export function BrowserField({ form }: Readonly<BrowserFieldProps>) {
 	return (
 		<FormField
-			// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Browser</FormLabel>
 					{/* oxlint-disable-next-line react/jsx-handler-names */}
-					<Select defaultValue={field.value} onValueChange={field.onChange}>
+					<Select defaultValue={field.value} items={browserOptions} onValueChange={field.onChange}>
 						<FormControl>
 							<SelectTrigger>
 								<SelectValue placeholder="Welcher Browser wird verwendet?" />

@@ -4,6 +4,9 @@ import { defineConfig } from 'oxlint';
 export default defineConfig({
 	extends: [baseConfig, reactConfig],
 	ignorePatterns: ['**/*.generated.ts', '**/*generated*.ts'],
+	options: {
+		reportUnusedDisableDirectives: 'warn',
+	},
 	overrides: [
 		{
 			files: ['**/*.test.ts', '**/*.test.tsx', '**/test-utils/**', '**/vitest.config.ts'],
@@ -17,7 +20,7 @@ export default defineConfig({
 		},
 		{
 			files: ['**/*.tsx'],
-			plugins: ['react', 'nextjs'],
+			plugins: ['react', 'react-perf', 'nextjs'],
 			rules: {
 				'nextjs/google-font-display': 'warn',
 				'nextjs/google-font-preconnect': 'warn',

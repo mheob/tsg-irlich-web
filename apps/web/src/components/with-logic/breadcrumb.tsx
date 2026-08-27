@@ -43,18 +43,14 @@ export default function Breadcrumb({ currentPage, ...props }: Readonly<Breadcrum
 		<ShadcnBreadcrumb className="mt-8" {...props}>
 			<BreadcrumbList>
 				<BreadcrumbItem>
-					<BreadcrumbLink asChild>
-						<Link href="/">Home</Link>
-					</BreadcrumbLink>
+					<BreadcrumbLink render={<Link href="/" />}>Home</BreadcrumbLink>
 				</BreadcrumbItem>
 
 				{breadcrumbItemsPaths.map((item) => (
 					<Fragment key={item.path}>
 						<BreadcrumbSeparator />
 						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href={item.path}>{item.title}</Link>
-							</BreadcrumbLink>
+							<BreadcrumbLink render={<Link href={item.path} />}>{item.title}</BreadcrumbLink>
 						</BreadcrumbItem>
 					</Fragment>
 				))}

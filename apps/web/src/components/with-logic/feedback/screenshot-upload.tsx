@@ -16,6 +16,7 @@ const TEN_MB = 10 * BYTES_PER_KB * BYTES_PER_KB;
 interface ScreenshotUploadProps {
 	onChange: (urls: string[]) => void;
 	disabled?: boolean;
+	inputId?: string;
 	maxFiles?: number;
 	value: string[];
 }
@@ -30,6 +31,7 @@ interface UploadingFile {
 
 export function ScreenshotUpload({
 	disabled = false,
+	inputId,
 	maxFiles = 5,
 	onChange,
 	value,
@@ -232,6 +234,7 @@ export function ScreenshotUpload({
 					accept="image/png,image/jpeg,image/gif,image/webp"
 					className="hidden"
 					disabled={disabled || !canAddMore}
+					id={inputId}
 					onChange={handleFileInput}
 					type="file"
 					multiple
@@ -256,7 +259,6 @@ export function ScreenshotUpload({
 							<button
 								aria-label={`Remove screenshot ${index + 1}`}
 								className="absolute top-1 right-1 rounded-full bg-destructive p-1 text-destructive-foreground opacity-0 transition-opacity group-hover:opacity-100"
-								// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 								onClick={() => {
 									removeUrl(url);
 								}}
@@ -288,7 +290,6 @@ export function ScreenshotUpload({
 							{file.progress === 'error' && (
 								<button
 									className="absolute top-1 right-1 rounded-full bg-destructive p-1 text-destructive-foreground"
-									// oxlint-disable-next-line react_perf/jsx-no-new-function-as-prop
 									onClick={() => {
 										removeUploading(file.id);
 									}}

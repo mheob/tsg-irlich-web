@@ -51,7 +51,6 @@ function parseGraphqlBody(call: FetchCall): { query: string; variables: Record<s
 	if (!call.body) {
 		throw new Error(`Expected a JSON string body for ${call.url}`);
 	}
-	// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- `JSON.parse` widens to `any`
 	// here, so this narrows a JSON body this test file itself constructed, not an external payload.
 	return JSON.parse(call.body) as { query: string; variables: Record<string, unknown> };
 }
