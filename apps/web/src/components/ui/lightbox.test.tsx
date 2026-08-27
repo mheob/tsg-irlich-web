@@ -1,4 +1,4 @@
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 import Image from 'next/image';
 import { describe, expect, it } from 'vitest';
 
@@ -102,14 +102,24 @@ describe('lightbox gallery', () => {
 
 		await user.keyboard('{Escape}');
 
-		expect(queryByRole('dialog')).toBeNull();
+		// Base UI keeps the popup mounted until its closing transition has finished, so the dialog
+		// disappears a frame or two after the key rather than with it.
+		await waitFor(() => {
+			expect(queryByRole('dialog')).toBeNull();
+		});
 	});
 
 	it('pages forward and backward through the images with the arrow keys', async () => {
 		const { findByRole, getByRole, user } = renderGallery(THREE_IMAGES);
 
 		await user.click(getByRole('button', { name: 'Erstes Bild vergrößern' }));
-		await findByRole('dialog', { name: 'Erstes Bild' });
+		const dialog = await findByRole('dialog', { name: 'Erstes Bild' });
+
+		// The paging keys are handled on the dialog, which only sees them once the modal has pulled
+		// focus inside itself — it does that after the popup has mounted, not with it.
+		await waitFor(() => {
+			expect(dialog.contains(document.activeElement)).toBe(true);
+		});
 
 		await user.keyboard('{ArrowRight}');
 		const secondDialog = await findByRole('dialog', { name: 'Zweites Bild' });

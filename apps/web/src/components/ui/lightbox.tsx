@@ -1,14 +1,12 @@
 'use client';
 
-// oxlint-disable import/no-namespace
-
-import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { Dialog } from '@base-ui/react/dialog';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import type { PanInfo, Transition } from 'motion/react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
-import type { ReactNode } from 'react';
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import type { KeyboardEvent, ReactNode } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
@@ -150,25 +148,20 @@ function LightboxGallery({ children, images }: Readonly<LightboxGalleryProps>) {
 
 	const isOpen = activeIndex !== null;
 
-	useEffect(() => {
-		function handleKeyDown(event: KeyboardEvent) {
-			if (!isOpen) {
-				return;
-			}
+	// The paging keys are handled on the popup rather than on `window`: Base UI's `Dialog.Popup`
+	// stops the propagation of every composite key, the arrow keys among them, so a listener above it
+	// never sees them once focus is inside the dialog.
+	const handleKeyDown = useCallback(
+		(event: KeyboardEvent<HTMLDivElement>) => {
 			if (event.key === 'ArrowLeft') {
 				paginate(PREVIOUS_STEP);
 			}
 			if (event.key === 'ArrowRight') {
 				paginate(NEXT_STEP);
 			}
-		}
-
-		globalThis.addEventListener('keydown', handleKeyDown);
-
-		return () => {
-			globalThis.removeEventListener('keydown', handleKeyDown);
-		};
-	}, [isOpen, paginate]);
+		},
+		[paginate],
+	);
 
 	const slideFrom = useMemo(
 		() => ({ opacity: 0, x: shouldReduceMotion ? 0 : direction * SLIDE_OFFSET }),
@@ -187,14 +180,16 @@ function LightboxGallery({ children, images }: Readonly<LightboxGalleryProps>) {
 		<LightboxContext.Provider value={contextValue}>
 			{children}
 
-			<DialogPrimitive.Root open={isOpen} onOpenChange={handleOpenChange}>
-				<DialogPrimitive.Portal>
-					<DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/90 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+			<Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
+				<Dialog.Portal>
+					<Dialog.Backdrop className="fixed inset-0 z-50 bg-black/90 transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0" />
 
-					<DialogPrimitive.Content className="fixed inset-0 z-50 flex flex-col text-white outline-none">
-						<DialogPrimitive.Title className="sr-only">
-							{activeImage?.alt ?? 'Bildergalerie'}
-						</DialogPrimitive.Title>
+					<Dialog.Popup
+						className="fixed inset-0 z-50 flex flex-col text-white outline-none"
+						// oxlint-disable-next-line react/jsx-handler-names
+						onKeyDown={handleKeyDown}
+					>
+						<Dialog.Title className="sr-only">{activeImage?.alt ?? 'Bildergalerie'}</Dialog.Title>
 
 						<div className="flex shrink-0 items-center justify-between p-4 md:p-6">
 							{hasMultipleImages && activeIndex !== null ? (
@@ -205,10 +200,10 @@ function LightboxGallery({ children, images }: Readonly<LightboxGalleryProps>) {
 								<span />
 							)}
 
-							<DialogPrimitive.Close className="cursor-pointer rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none">
+							<Dialog.Close className="cursor-pointer rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none">
 								<X className="size-8 md:size-10" />
 								<span className="sr-only">Schließen</span>
-							</DialogPrimitive.Close>
+							</Dialog.Close>
 						</div>
 
 						<div className="relative flex min-h-0 flex-1 items-center justify-center">
@@ -267,9 +262,9 @@ function LightboxGallery({ children, images }: Readonly<LightboxGalleryProps>) {
 								<p className="text-sm text-white/80 italic">{activeImage.caption}</p>
 							)}
 						</div>
-					</DialogPrimitive.Content>
-				</DialogPrimitive.Portal>
-			</DialogPrimitive.Root>
+					</Dialog.Popup>
+				</Dialog.Portal>
+			</Dialog.Root>
 		</LightboxContext.Provider>
 	);
 }
