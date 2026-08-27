@@ -31,7 +31,7 @@ export function BrowserField({ form }: Readonly<BrowserFieldProps>) {
 				<FormItem>
 					<FormLabel>Browser</FormLabel>
 					{/* oxlint-disable-next-line react/jsx-handler-names */}
-					<Select defaultValue={field.value} onValueChange={field.onChange}>
+					<Select defaultValue={field.value} items={browserOptions} onValueChange={field.onChange}>
 						<FormControl>
 							<SelectTrigger>
 								<SelectValue placeholder="Welcher Browser wird verwendet?" />

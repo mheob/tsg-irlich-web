@@ -32,7 +32,7 @@ export function OperationSystemField({ form }: Readonly<OperationSystemFieldProp
 				<FormItem>
 					<FormLabel>Betriebssystem</FormLabel>
 					{/* oxlint-disable-next-line react/jsx-handler-names */}
-					<Select onValueChange={field.onChange} value={field.value}>
+					<Select items={operationSystemOptions} onValueChange={field.onChange} value={field.value}>
 						<FormControl>
 							<SelectTrigger>
 								<SelectValue placeholder="Welches Betriebssystem wird verwendet?" />
