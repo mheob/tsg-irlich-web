@@ -1,21 +1,20 @@
-import { Slot } from '@radix-ui/react-slot';
+import { mergeProps } from '@base-ui/react/merge-props';
+import { useRender } from '@base-ui/react/use-render';
 import type { VariantProps } from 'class-variance-authority';
-import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
 import { badgeVariants } from './variants';
 
-export interface BadgeProps extends ComponentProps<'div'>, VariantProps<typeof badgeVariants> {}
+export function Badge({ className, render, variant, ...props }: Readonly<BadgeProps>) {
+	const variantClassName = badgeVariants({ variant });
 
-export function Badge({
-	asChild = false,
-	className,
-	variant,
-	...props
-}: ComponentProps<'span'> & VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
-	const Comp = asChild ? Slot : 'span';
-	return (
-		<Comp className={cn(badgeVariants({ variant }), className)} data-slot="badge" {...props} />
-	);
+	return useRender({
+		defaultTagName: 'span',
+		props: mergeProps({ className: cn(variantClassName, className), 'data-slot': 'badge' }, props),
+		render,
+	});
 }
+
+export interface BadgeProps
+	extends useRender.ComponentProps<'span'>, VariantProps<typeof badgeVariants> {}
