@@ -16,7 +16,7 @@ export type Settled<T> = { ok: true; value: T } | { error: unknown; ok: false };
  * 	// handle the rejection
  * }
  */
-export function settle<T>(promise: PromiseLike<T>): Promise<Settled<T>> {
+export async function settle<T>(promise: PromiseLike<T>): Promise<Settled<T>> {
 	return Promise.resolve(promise).then(
 		(value) => ({ ok: true, value }) as const,
 		(error: unknown) => ({ error, ok: false }) as const,
