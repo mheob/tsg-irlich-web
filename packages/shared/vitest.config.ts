@@ -1,12 +1,23 @@
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-	plugins: [tsconfigPaths()],
+	resolve: { tsconfigPaths: true },
 	test: {
 		coverage: {
-			exclude: ['**/*.test.{ts,tsx}', '**/test-utils/**', '**/*.config.ts', '**/*.generated.ts'],
+			exclude: [
+				'**/*.test.{ts,tsx}',
+				'**/test-utils/**',
+				'**/*.config.ts',
+				'**/*.generated.ts',
+				// Barrels only re-export; they carry no logic to cover and importing one in a test
+				// would raise the number without testing anything.
+				'**/index.ts',
+			],
+			// Vitest 4 replaced `coverage.all` with this: without it only files a test happens to
+			// import are scored, so an untested file drops out of the denominator instead of
+			// counting as uncovered.
+			include: ['src/**/*.{ts,tsx}'],
 			provider: 'v8',
 			reporter: ['text', 'html', 'lcov'],
 			reportsDirectory: './coverage',
