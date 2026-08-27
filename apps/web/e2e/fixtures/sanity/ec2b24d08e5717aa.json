@@ -1,0 +1,125 @@
+{
+	"body": {
+		"result": [
+			{
+				"featuredImage": {
+					"_type": "extendedImage",
+					"alt": "Tänzerinnen und Tänzer der \"Sweet Diamonds\" in rot blauen Cowgirl Kostümen vor einer Mauer",
+					"asset": {
+						"_ref": "image-6e7e578d9adcac840cf0c684b777f5a0918d03cb-5120x3840-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.07774013466291656,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Gruppenbild der Sweet Diamonds ",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6706911669548401,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5004634364612631
+					}
+				},
+				"icon": "Tanzen",
+				"overviewTitle": null,
+				"slug": "sweet-diamonds",
+				"title": "Sweet Diamonds"
+			},
+			{
+				"featuredImage": {
+					"_type": "extendedImage",
+					"alt": "Die Little Diamonds in pastellfarbenen Kostümen, mit rosa Oberteilen und türkisen Röcken, posiert vor einer Steinmauer",
+					"asset": {
+						"_ref": "image-969072877eda552c6e6245f0bbe9ea3a4b544c0e-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Gruppenbild der Little Diamonds ",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7635415612027944,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				"icon": "Tanzen",
+				"overviewTitle": null,
+				"slug": "little-diamonds",
+				"title": "Little Diamonds"
+			},
+			{
+				"featuredImage": {
+					"_type": "extendedImage",
+					"alt": "Die Magic Diamonds in schwarz silbernen Kostümen posiert auf einer Steintreppe im Freien",
+					"asset": {
+						"_ref": "image-1433c73677a0bbc8f7b0d8fbacf561c87c0bf33e-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0.028888663899294658,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Gruppenbild der Magic Diamonds ",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.9472005669737774,
+						"width": 0.9711113361007053,
+						"x": 0.5144443319496473,
+						"y": 0.5
+					}
+				},
+				"icon": "Tanzen",
+				"overviewTitle": null,
+				"slug": "magic-diamonds",
+				"title": "Magic Diamonds"
+			},
+			{
+				"featuredImage": {
+					"_type": "extendedImage",
+					"alt": "Die Funky Diamonds in pinken und organgenen Kostümen, von denen einige auf den Schultern stehen, posiert auf Steinstufen mit Herz-Requisiten",
+					"asset": {
+						"_ref": "image-3788f91787dec33b2fe63b0bdb1c0be5d75a88d9-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Gruppenbild der Funky Diamonds ",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8181887212716412,
+						"width": 0.9961526779386454,
+						"x": 0.5,
+						"y": 0.5530905133137592
+					}
+				},
+				"icon": "Sportakrobatik",
+				"overviewTitle": null,
+				"slug": "funky-diamonds",
+				"title": "Funky Diamonds"
+			}
+		],
+		"syncTags": ["s1:aQPN8w"],
+		"ms": 5
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType%5D%5B%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09icon%2C%0A%09%09featuredImage%2C%0A%09%09overviewTitle%2C%0A%09%09%27slug%27%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24groupType=%22group.dance%22&returnQuery=false"
+}

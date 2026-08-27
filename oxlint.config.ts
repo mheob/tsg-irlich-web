@@ -19,6 +19,25 @@ export default defineConfig({
 			},
 		},
 		{
+			// The Playwright suite is neither Vitest nor application code: its specs are `.spec.ts`
+			// files that import Playwright's own `test`, and the mock preload is a linear script that
+			// reads its fixtures from disk before the server starts.
+			files: ['e2e/**', '**/e2e/**', 'playwright*.config.ts', '**/playwright*.config.ts'],
+			plugins: ['vitest'],
+			rules: {
+				'max-statements': 'off',
+				'no-await-in-loop': 'off',
+				'no-magic-numbers': 'off',
+				'node/no-sync': 'off',
+				'sort-keys': 'off',
+				'typescript/no-unsafe-type-assertion': 'off',
+				'vitest/consistent-test-filename': 'off',
+				'vitest/no-conditional-in-test': 'off',
+				'vitest/prefer-importing-vitest-globals': 'off',
+				'vitest/require-hook': 'off',
+			},
+		},
+		{
 			files: ['**/*.tsx'],
 			plugins: ['react', 'react-perf', 'nextjs'],
 			rules: {

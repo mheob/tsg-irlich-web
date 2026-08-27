@@ -4,12 +4,18 @@
 # Local env files
 .env*
 !.env*.example
+# The end-to-end run only holds dummy credentials — every service it names is intercepted by MSW.
+!.env.e2e
 
 # Next.js
 next-env.d.ts
 
 # Sanity
 # sanity.types.ts
+
+# Playwright
+playwright-report/
+test-results/
 
 # Vercel
 .turbo/

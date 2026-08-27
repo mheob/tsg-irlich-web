@@ -1,0 +1,14 @@
+{
+	"body": {
+		"result": {
+			"_type": "socialFields",
+			"facebook": "https://www.facebook.com/tsgirlich",
+			"instagram": "https://www.instagram.com/tsgirlich",
+			"whatsapp": "https://wa.me/491702418600?text=Hallo%2C%20ich%20habe%20eine%20Frage%20zur%20TSG%20Irlich%20%F0%9F%91%8B",
+			"youtube": "https://www.youtube.com/@tsgirlich"
+		},
+		"syncTags": ["s1:Mvlp1g"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27site-settings%27%5D%5B0%5D.socialFields&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

@@ -1,0 +1,24 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'news.category' && slug.current == $slug][0] {\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n",
+		"result": {
+			"meta": {
+				"metaDescription": "Die Fußball-Abteilung der TSG umfasst neben den Seniorenfußballern auch die Jugendabteilung, die „Alten Herren“ und die „Montagskicker“. Hier dreht sich alles um Fußball.",
+				"metaTitle": null,
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die Heimat der Fußballer: Das Pappelstadion Irlich",
+					"asset": {
+						"_ref": "image-156ef90d279d9eac5ccb909e9510e32097512fb3-4000x2250-jpg",
+						"_type": "reference"
+					}
+				}
+			},
+			"slug": "fussball",
+			"title": "Fußball"
+		},
+		"syncTags": ["s1:g12uZw"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.category%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%0A%09%7D%0A&%24slug=%22fussball%22&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+}

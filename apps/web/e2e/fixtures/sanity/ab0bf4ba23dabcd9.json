@@ -1,0 +1,412 @@
+{
+	"body": {
+		"result": {
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "347a4672d6b8",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "34a8dd010e64",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c339a8154d5e",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Vorfreude in Irlich steigt: Am Samstag, den "
+								},
+								{
+									"_key": "768f02d25b7f",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "15. August 2026"
+								},
+								{
+									"_key": "85198678637b",
+									"_type": "span",
+									"marks": [],
+									"text": ", findet in den Rheinanlagen endlich wieder das Rheinuferfest statt. Was vor einigen Jahren als gemeinschaftliches Projekt der "
+								},
+								{
+									"_key": "e2490cad88b4",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Irlicher Ortsvereine"
+								},
+								{
+									"_key": "b515cd1eace5",
+									"_type": "span",
+									"marks": [],
+									"text": " begann, hat sich inzwischen zu einer festen Größe im Irlicher Veranstaltungskalender entwickelt. 2026 geht das Fest bereits in seine sechste Auflage."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "56648d5c5862",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1292f5d26820",
+									"_type": "span",
+									"marks": [],
+									"text": "Nachdem das Rheinuferfest in den Anfangsjahren jährlich veranstaltet wurde, findet es seit 2024 im Zwei-Jahres-Rhythmus statt. Umso größer dürfte die Vorfreude bei Vereinen, Unterstützern und Gästen sein, dass das Fest in den Rheinanlagen wieder stattfindet."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "c142918a26e1",
+					"_type": "mainImage",
+					"alt": "Drohnenaufnahme vom Festgelände am Rheinufer in Irlich",
+					"asset": {
+						"_ref": "image-c6c645332ecd36d17eea087d747aed0af5014009-4000x2250-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0.13235294117647062,
+						"right": 0.0738295318127251,
+						"top": 0
+					},
+					"description": "Drohnenaufnahme vom Festgelände am Rheinufer in Irlich",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6862745098039216,
+						"width": 0.7253901560624252,
+						"x": 0.4950480192076832,
+						"y": 0.4647859143657463
+					}
+				},
+				{
+					"_key": "0acfe9dfca55",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "1ff2b342d28f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f2d6331cd11c",
+									"_type": "span",
+									"marks": [],
+									"text": "Gemeinschaftliches Engagement als Erfolgsrezept"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "e1af62cb8fd6",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "60381edd3746",
+									"_type": "span",
+									"marks": [],
+									"text": "Das Besondere am Rheinuferfest ist seit jeher die enge Zusammenarbeit der Irlicher Ortsvereine. Gemeinsam schaffen sie Jahr für Jahr einen Abend, der Menschen aller Generationen zusammenbringt und das lebendige Vereinsleben im Ort sichtbar macht."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "1b3db923247e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "78a66a2edb96",
+									"_type": "span",
+									"marks": [],
+									"text": "Auch 2026 werden die Besucherinnen und Besucher wieder auf ihre Kosten kommen. Neben Leckereien vom Grill werden Wein, Cocktails, ein Whiskey-Stand sowie der beliebte Bierbrunnen alle Gäste bestens versorgen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "19b365d7d3c7",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "eaa0e6d385f9",
+									"_type": "span",
+									"marks": [],
+									"text": "Für den Getränkeverkauf sind traditionell die "
+								},
+								{
+									"_key": "773e5b6f82f7",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "TSG Irlich"
+								},
+								{
+									"_key": "5821aa4488da",
+									"_type": "span",
+									"marks": [],
+									"text": " und die "
+								},
+								{
+									"_key": "d376baa1fa23",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Kirmesgesellschaft Irlich"
+								},
+								{
+									"_key": "4e024df5a43d",
+									"_type": "span",
+									"marks": [],
+									"text": " verantwortlich. Neu im Kreis der Mitwirkenden ist die "
+								},
+								{
+									"_key": "eb079969d061",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Karnevalsgesellschaft Irlich"
+								},
+								{
+									"_key": "5754e06c6fa9",
+									"_type": "span",
+									"marks": [],
+									"text": ", die künftig am Bierbrunnen und an der Kellnertheke unterstützen wird. Die Veranstalter freuen sich über die zusätzliche Unterstützung und die weiterhin starke Zusammenarbeit der Irlicher Vereine."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "a29bbd3ea84d",
+					"_type": "mainImage",
+					"alt": "Abendliches Ambiente: Bei Dunkelheit verwandelt sich das Festgelände in ein Lichtermeer",
+					"asset": {
+						"_ref": "image-4ad2903d0a09894d81f5afa9d720c30e1402a2ef-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Abendliches Ambiente: Bei Dunkelheit verwandelt sich das Festgelände in ein Lichtermeer",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8451914254733506,
+						"width": 0.8338444375547363,
+						"x": 0.5650609130056756,
+						"y": 0.47597797981483025
+					}
+				},
+				{
+					"_key": "cb97fd537125",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "4a11ec6bfbfe",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "90a72dd448e6",
+									"_type": "span",
+									"marks": [],
+									"text": "Gottesdienst eröffnet den Festabend"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "ff6e8a545dc5",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ca6053d7f091",
+									"_type": "span",
+									"marks": [],
+									"text": "Bereits um 18 Uhr beginnt das Rheinuferfest mit einem ökumenischen Gottesdienst der "
+								},
+								{
+									"_key": "f35b5245ab39",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Gemeinde St. Peter und Paul"
+								},
+								{
+									"_key": "85faa697b45d",
+									"_type": "span",
+									"marks": [],
+									"text": " in den Rheinanlagen. Ab 19 Uhr startet anschließend der offizielle Festbetrieb."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "300a9d68e9c2",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ae4d3eeee7e9",
+									"_type": "span",
+									"marks": [],
+									"text": "Auch musikalisch dürfen sich die Gäste auf ein abwechslungsreiches Programm freuen. Am Abend sorgt der "
+								},
+								{
+									"_key": "0d23d81941e5",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "MFZ Irlich"
+								},
+								{
+									"_key": "6af9b755cd4c",
+									"_type": "span",
+									"marks": [],
+									"text": " mit Live-Musik für beste Unterhaltung. Darüber hinaus werden ein Gitarrist sowie ein Saxophonist die Veranstaltung musikalisch begleiten und für eine stimmungsvolle Atmosphäre am Rheinufer sorgen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "91e57b68edc3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "18d062a1a9e7",
+									"_type": "span",
+									"marks": [],
+									"text": "Die einzigartige Lage direkt am Rheinufer, das abwechslungsreiche gastronomische Angebot und die besondere Atmosphäre haben das Rheinuferfest in den vergangenen Jahren zu einem beliebten Treffpunkt für viele Irlicherinnen und Irlicher sowie zahlreiche Gäste aus der Umgebung gemacht."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "bcc798a4d984",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "0cc410818801",
+									"_type": "span",
+									"marks": [],
+									"text": "Termin schon jetzt vormerken"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "950d2f9af1d7",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "0cddb3389d94",
+									"_type": "span",
+									"marks": [],
+									"text": "Bis zum RUF 2026 ist zwar noch etwas Zeit, dennoch sollten sich Freunde des Rheinuferfestes den Termin bereits heute im Kalender notieren. Am Samstag, den 15. August 2026, laden die beteiligten Ortsvereine wieder in die Irlicher Rheinanlagen ein."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "5fdda43e7192",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7d69203b576a",
+									"_type": "span",
+									"marks": ["em", "strong"],
+									"text": "Die beteiligten Vereine freuen sich schon heute auf viele Besucherinnen und Besucher und einen stimmungsvollen Sommerabend am Rhein."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "veranstaltungen",
+					"title": "Veranstaltungen"
+				},
+				{
+					"slug": "verein",
+					"title": "Gesamtverein"
+				}
+			],
+			"excerpt": "Die Vorfreude in Irlich steigt: Am Samstag, den 15. August 2026, findet in den Rheinanlagen endlich wieder das Rheinuferfest statt.",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Tolles Ambiente am Rhein: Die Besucher des Rheinuferfests",
+				"asset": {
+					"_ref": "image-e8b223aabbbc2426375651ed25a43f25ebd5fc5a-4032x3024-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.586287430144299,
+					"width": 0.8999062876835761,
+					"x": 0.4969971886305073,
+					"y": 0.6414630077571106
+				}
+			},
+			"meta": {
+				"metaDescription": "Die Vorfreude in Irlich steigt: Am Samstag, den 15. August 2026, findet in den Rheinanlagen endlich wieder das Rheinuferfest statt. Hier gibt’s alle Infos.",
+				"metaTitle": "Rheinuferfest Irlich 2026: Live-Musik & Genuss mit TSG Irlich",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-06-19T08:35:43.135Z",
+			"slug": "rheinuferfest-2026",
+			"title": "Rheinuferfest geht 2026 in die sechste Runde"
+		},
+		"syncTags": ["s1:Wh/T7g", "s1:+YVtFA", "s1:vJBgQg", "s1:Ik/M0w"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22rheinuferfest-2026%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

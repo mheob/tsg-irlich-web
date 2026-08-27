@@ -1,0 +1,723 @@
+{
+	"body": {
+		"result": [
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat auch ihr zweites Ligaspiel gewonnen. Gegen die Zweitvertretung des VfL Oberbieber setzte sich die TSG verdient mit 3:1 (1:0) durch.",
+				"publishedAt": "2026-08-21T15:07:27.430Z",
+				"slug": "heimsieg-oberbieber",
+				"title": "Souveräner Heimsieg – TSG schlägt Oberbieber II mit 3:1 "
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die #11fürIrlich hat am 1. Spieltag die ersten drei Punkte der neuen Saison eingefahren. Beim SV Rengsdorf II setzte sich die TSG mit 3:2 (2:0) durch.",
+				"publishedAt": "2026-08-15T15:14:00.000Z",
+				"slug": "spaeter-treffer-sieg-in-rengsdorf",
+				"title": "TSG trifft spät in Rengsdorf und feiert ersten Saisonsieg"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Der Pflichtspielauftakt ist misslungen. In der 1. Runde des Bitburger Kreispokals unterlag die TSG dem SV Türkiyemspor Ransbach-Baumbach II mit 2:6 (0:3).",
+				"publishedAt": "2026-08-05T15:32:00.000Z",
+				"slug": "pokal-aus-tuerkiyemspor",
+				"title": "Pokal-Aus zum Saisonauftakt – TSG unterliegt Türkiyemspor mit 2:6"
+			},
+			{
+				"_updatedAt": "2026-08-27T14:45:35Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Nach zwei Skifreizeiten in den vergangenen Jahren heißt es auch 2027 wieder: Ski anschnallen und gemeinsam eine unvergessliche Woche in den Bergen verbringen! ",
+				"publishedAt": "2026-07-31T18:47:00.000Z",
+				"slug": "Anmeldung-skitour-2027",
+				"title": "Skitour 2027 – Gemeinsam ins Skigebiet Gitschberg-Jochtal"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "rope-skipping",
+				"categoryTitle": "Rope Skipping ",
+				"excerpt": "Große Erfolge für die TSG Irlich: Zwei Landesmeistertitel und weitere Top-Platzierungen im Rope Skipping.",
+				"publishedAt": "2026-06-20T14:58:00.000Z",
+				"slug": "erfolgreiche-wettkampftage-rope-skipperinnen",
+				"title": "Erfolgreiche Wettkampftage für die Rope Skipperinnen der TSG "
+			},
+			{
+				"_updatedAt": "2026-08-27T15:05:14Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "veranstaltungen",
+				"categoryTitle": "Veranstaltungen",
+				"excerpt": "Die Vorfreude in Irlich steigt: Am Samstag, den 15. August 2026, findet in den Rheinanlagen endlich wieder das Rheinuferfest statt.",
+				"publishedAt": "2026-06-19T08:35:43.135Z",
+				"slug": "rheinuferfest-2026",
+				"title": "Rheinuferfest geht 2026 in die sechste Runde"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Auch in diesem Jahr war die TSG Irlich wieder mit einer großen Gruppe beim Neuwieder Deichlauf vertreten. Rund 40 Läufer gingen für die TSG an den Start.",
+				"publishedAt": "2026-06-15T20:34:12.979Z",
+				"slug": "deichlauf-2026",
+				"title": "TSG Irlich beim Deichlauf 2026 erfolgreich vertreten"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Knapp 40 Mitglieder nahmen an der diesjährigen JHV der TSG Irlich im Vereinsheim „Pappelstübchen“ teil. In diesem Jahr standen keine Vorstandswahlen an.",
+				"publishedAt": "2026-06-03T15:28:00.000Z",
+				"slug": "jahreshauptversammlung-2026",
+				"title": "JHV 2026: TSG Irlich blickt auf erfolgreiches Vereinsjahr zurück"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "veranstaltungen",
+				"categoryTitle": "Veranstaltungen",
+				"excerpt": "Am vergangenen Samstag fiel um 11 Uhr auf dem Parkplatz des REWE Müller in Irlich der offizielle Startschuss für die StickerStars-Aktion der TSG Irlich.",
+				"publishedAt": "2026-06-02T16:02:00.000Z",
+				"slug": "kickoff-stickerstars",
+				"title": "Gelungener Start für die StickerStars-Aktion der TSG Irlich"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Mit einem torreichen und kuriosen Spiel verabschiedete sich die TSG Irlich am Pfingstsonntag in die Sommerpause. Gegen Niederbieber II gewann die TSG mit 3:5!",
+				"publishedAt": "2026-05-29T13:08:00.000Z",
+				"slug": "spektakel-niederbieber",
+				"title": "Spektakel zum Saisonabschluss – TSG gewinnt 5:3 in Niederbieber"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Im letzten Heimspiel der Saison 25/26 trennte sich die TSG Irlich am vergangenen Sonntag mit 1:1 (0:0) vom SSV Heimbach-Weis II. Hier geht´s zum Spielbericht.",
+				"publishedAt": "2026-05-23T12:42:00.000Z",
+				"slug": "punkteteilung-ssv-heimbach",
+				"title": "Punkteteilung im letzten Heimspiel gegen den SSV Heimbach-W. II"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die 1. Mannschaft der TSG Irlich hat ihre starke Form eindrucksvoll bestätigt und das Auswärtsspiel bei der SG Neuwied III klar mit 9:0 (3:0) gewonnen.",
+				"publishedAt": "2026-05-16T16:27:34.558Z",
+				"slug": "kantersieg-neuwied",
+				"title": "TSG feiert 9:0-Kantersieg in Neuwied – fünfter Sieg in Folge!"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat sich eindrucksvoll für die deutliche Hinspiel-Niederlage revanchiert und das Heimspiel gegen den CSV Neuwied II mit 1:0 gewonnen.",
+				"publishedAt": "2026-05-06T20:29:11.515Z",
+				"slug": "tsg-gewinnt-csv",
+				"title": "Revanche geglückt – TSG gewinnt 1:0 gegen CSV Neuwied II"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "20 Jahre Engagement bei der TSG Irlich: Melanie Klein prägt die Kinder- und Jugendarbeit des Vereins mit Herzblut. Jetzt mehr über ihr Jubiläum erfahren!",
+				"publishedAt": "2026-05-05T15:10:00.000Z",
+				"slug": "20-jahre-ehrenamt-melanie-klein-feiert-jubilaeum",
+				"title": "20 Jahre Ehrenamt - Melanie Klein feiert Jubiläum"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat am Sonntag ein echtes Ausrufezeichen gesetzt und das Auswärtsspiel beim VfL Oberbieber II klar mit 6:1 (1:1) gewonnen.",
+				"publishedAt": "2026-05-02T13:58:00.000Z",
+				"slug": "auswaertssieg-oberbieber",
+				"title": "TSG dreht auf: Deutlicher 6:1-Auswärtssieg in Oberbieber"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "veranstaltungen",
+				"categoryTitle": "Veranstaltungen",
+				"excerpt": "Ab sofort ist die Anmeldung für das beliebte Dorfturnier im Rahmen des „TSG Vaddertach“ geöffnet. Jetzt anmelden und mit eurem Team dabei sein! ",
+				"publishedAt": "2026-04-25T15:21:00.000Z",
+				"slug": "anmeldung-dorfturnier",
+				"title": "Anmeldung fürs Dorfturnier ab sofort möglich!"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat nach dem Auswärtssieg in Gladbach erneut nachgelegt und ihr Heimspiel gegen die SG Leutesdorf souverän mit 3:0 (1:0) gewonnen.",
+				"publishedAt": "2026-04-25T10:25:00.000Z",
+				"slug": "heimsieg-leutesdorf",
+				"title": "TSG überzeugt beim 3:0-Heimsieg gegen die SG Leutesdorf"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Eine tolle Woche im Schnee liegt hinter der TSG Irlich: 32 Teilnehmer erlebten im Ahrntal abwechslungsreiche Skitage und jede Menge gemeinsame Highlights.",
+				"publishedAt": "2026-04-18T19:20:00.000Z",
+				"slug": "rueckblick-tsg-skitour-2026",
+				"title": "Rückblick auf die TSG-Skitour 2026"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "TSG Irlich feiert nach Rückstand einen umkämpften 4:3-Auswärtssieg in Gladbach – mit Doppelpacker Kari und Spannung bis zur letzten Minute.",
+				"publishedAt": "2026-04-15T14:58:00.000Z",
+				"slug": "auswaertssieg-gladbach",
+				"title": "Auswärtssieg in Gladbach – TSG holt erste Punkte im Jahr 2026!"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Am vergangenen Sonntag musste die TSG Irlich eine deutliche Niederlage hinnehmen. Gegen den Tabellenführer HSV Neuwied II unterlag die TSG klar mit 1:8.\n",
+				"publishedAt": "2026-04-03T18:23:00.000Z",
+				"slug": "heimniederlage-hsv-neuwied",
+				"title": "Deutliche Heimniederlage gegen den Tabellenführer HSV Neuwied"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die Seniorenmannschaft der TSG Irlich verliert mit 0:3 bei der SG Neuwied II, zeigt aber bis zur 70. Minute eine ordentliche Leistung. Hier gibt´s alle Infos.",
+				"publishedAt": "2026-03-28T15:54:00.000Z",
+				"slug": "tsg-unterliegt-neuwied",
+				"title": "TSG zeigt gute Leistung – unterliegt aber in Neuwied mit 0:3"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich muss sich im Lokalderby dem TuS Rodenbach mit 0:2 geschlagen geben. Zwei Treffer im zweiten Durchgang entscheiden die Partie zugunsten der Gäste.",
+				"publishedAt": "2026-03-21T16:58:00.000Z",
+				"slug": "derby-niederlage-rodenbach",
+				"title": "Derby-Niederlage: TSG unterliegt Rodenbach mit 0:2"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "„TSG Vaddertach“ im Pappelstadion: Beliebtes Dorfturnier, Live-Musik mit „De Knocheläcker“ und MFZ Irlich, Bierbrunnen & tolles Programm für die ganze Familie.",
+				"publishedAt": "2026-03-18T16:40:00.000Z",
+				"slug": "tsg-vaddertach-2026",
+				"title": "„TSG Vaddertach“ im Pappelstadion – save the date!"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Die TSG Irlich lädt alle Mitglieder zur Jahreshauptversammlung am 17. April ein. Neben Berichten aus dem Vereinsleben stehen auch Ehrungen auf dem Programm.",
+				"publishedAt": "2026-03-15T23:52:00.000Z",
+				"slug": "Einladung-JHV-2026",
+				"title": "Einladung zur Jahreshauptversammlung der TSG Irlich"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "jugend",
+				"categoryTitle": "Jugend",
+				"excerpt": "Die U19 startet mit einem souveränem 3:0-Sieg gegen Raiffeisen-United ins Pflichtspieljahr: starke Defensive und kein Gegentor sorgen für Tabellenplatz 5.",
+				"publishedAt": "2026-03-12T15:54:00.000Z",
+				"slug": "u19-sieg-raiffeisen",
+				"title": "Souveräner U19-Heimsieg zum Pflichtspielstart"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Bittere Derbyniederlage in Feldkirchen, die TSG zeigt aber eine starke Anfangsphase, die Mut macht. Jetzt soll im Heimderby gegen Rodenbach die Antwort folgen.",
+				"publishedAt": "2026-03-09T10:15:00.000Z",
+				"slug": "derby-niederlage-feldkirchen",
+				"title": "Derby-Niederlage zum Pflichtspielauftakt"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Nach der Winterpause hat Trainer Dominik Fleuth die Verantwortlichen informiert, dass er sein Traineramt aus beruflichen Gründen niederlegen muss. ",
+				"publishedAt": "2026-03-05T13:52:30.096Z",
+				"slug": "veraenderung-trainerteam",
+				"title": "Veränderung im Trainerteam der Seniorenmannschaft"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Mit zahlreichen Auftritten beenden die Diamonds die Session 2025/26. Die letzte Karnevalswoche und der gemeinsame Umzug in Irlich bildeten einen rundum gelungenen Abschluss.",
+				"publishedAt": "2026-03-01T07:17:00.000Z",
+				"slug": "erfolgreicher-sessionsabschluss-diamonds",
+				"title": "Erfolgreicher Sessions-Abschluss: Diamonds glänzen nochmal"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Ein ganzes Wochenende voller Auftritte, Emotionen und Heimspiel-Highlights: Erlebe, wie unsere Diamonds die Säle zum Beben bringen!",
+				"publishedAt": "2026-02-09T16:25:00.000Z",
+				"slug": "diamonds-rocken-heimspiel-wochenende",
+				"title": "Irlich Vür Bäi! Diamonds rocken das Heimspiel-Wochenende"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Prall gefülltes Karnevalswochenende der Diamonds mit starken Auftritten, großem Gruppenfoto und Vorfreude aufs große Heimspiel bei der KG Irlich.",
+				"publishedAt": "2026-02-04T16:27:00.000Z",
+				"slug": "heimspiel-light-diamonds",
+				"title": "\"Heimspiel Light\" für die Little und Funky Diamonds"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Rückblick auf ein erfolgreiches Tanzwochenende der TSG Irlich: Fünf Auftritte, begeistertes Publikum und viel karnevalistische Stimmung.",
+				"publishedAt": "2026-01-27T09:14:39.238Z",
+				"slug": "rueckblick-wochenende",
+				"title": "Diamonds unterwegs: Rückblick auf ein gelungenes Wochenende"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "TSG Irlich erlebt mit über 70 Mitgliedern einen mitreißenden Eishockey-Abend beim EHC Neuwied – mit Blick hinter die Kulissen und einem spektakulären 7:2-Sieg.",
+				"publishedAt": "2026-01-24T18:39:00.000Z",
+				"slug": "Besuch-ehc-neuwied",
+				"title": "TSG Irlich zu Gast beim EHC in der Bärenhöhle"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Sweet, Magic, Little & Funky Diamonds begeistern mit Premieren, Showtänzen und Hebefiguren – lies, wie das große TSG-Auftrittswochenende lief!",
+				"publishedAt": "2026-01-22T16:11:00.000Z",
+				"slug": "Diamonds-Niederbreitbach",
+				"title": "TSG-Invasion in Niederbreitbach - Sweet Diamonds feiern Bühnenpremiere"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "jugend",
+				"categoryTitle": "Jugend",
+				"excerpt": "Die TSG Irlich hat ein spannendes Hallenfußball-Wochenende ausgerichtet: Vier U13-Turniere, packende Duelle und ein Highlight mit der Masters-Qualifikation – hier gibt’s alle Details.",
+				"publishedAt": "2026-01-21T15:51:00.000Z",
+				"slug": "erfolgreiches-turnier-wochenende",
+				"title": "Budenzauber in Niederbieber: Erfolgreiches Turnier-Wochenende"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "jugend",
+				"categoryTitle": "Jugend",
+				"excerpt": "Daniel Baldus, Jugendleiter und U13-Trainer der TSG Irlich, hat die C-Lizenz erworben und stärkt damit die Jugendarbeit des Vereins. Mehr erfahren!",
+				"publishedAt": "2026-01-20T15:38:00.000Z",
+				"slug": "c-lizenz-baldus",
+				"title": "Jugendleiter Daniel Baldus erlangt DFB-C-Lizenz"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Begeisternde Auftritte, gelungene Premieren und Vorfreude pur: Die Diamonds der TSG Irlich blicken auf ein starkes Karnevalswochenende zurück.",
+				"publishedAt": "2026-01-13T17:31:56.452Z",
+				"slug": "erfolgreiches-auftrittswochenende",
+				"title": "Erfolgreiches Auftrittswochenende: Zwei Gruppen feiern Bühnenpremiere"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "after-work-fitness",
+				"categoryTitle": "After Work Fitness",
+				"excerpt": "Du willst im neuen Jahr aktiver werden und suchst den idealen Ausgleich nach der Arbeit? Unser beliebter Kurs After Work Fitness hat wieder freie Plätze!",
+				"publishedAt": "2026-01-10T11:56:00.000Z",
+				"slug": "afterwork-fitness-freie-plaetze",
+				"title": "Kursangebot „After Work Fitness“ – Jetzt einsteigen und durchstarten!"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Die Funky Diamonds begeisterten mit ihrer Premiere „Liebechaos“ in Heddesdorf. Neue Mitglieder und starke Auftritte sorgen für beste Stimmung!",
+				"publishedAt": "2026-01-05T23:51:00.000Z",
+				"slug": "premiere-funky-diamonds",
+				"title": "Liebeschaos in Heddesdorf: Gelungene Premiere der Funky Diamonds"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "taekwondo",
+				"categoryTitle": "Taekwondo",
+				"excerpt": "Gustav hat die Trainer-C-Lizenz erworben und wird das Taekwondo-Team verstärken. Erfahre mehr über seine intensive Ausbildung und zukünftige Rolle!",
+				"publishedAt": "2026-01-04T21:01:06.931Z",
+				"slug": "c-lizenz-gustav",
+				"title": "Trainer-C-Lizenz: Gustav verstärkt das Taekwondo-Trainerteam"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "a.boehm@tsg-irlich.de",
+					"firstName": "Alexander",
+					"lastName": "Böhm"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Entdecke hier den spannenden Weg zu unserer neuen Webseite: von der Ablösung von WordPress bis zu modernen Tools und neuen Features.",
+				"publishedAt": "2026-01-03T16:34:00.000Z",
+				"slug": "digitaler-weg-website-v2",
+				"title": "Ein Neuanfang nach 12 Jahren: Der Weg zu unserer neuen Webseite"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "TSG Irlich überzeugt beim Hallenturnier mit starkem Teamgeist und erreicht einen respektablen zweiten Platz. Spannung pur bis zum Finale!",
+				"publishedAt": "2025-12-31T13:54:00.000Z",
+				"slug": "budenzauber-mendig",
+				"title": "TSG Irlich rockt den Budenzauber in Mendig!"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "breitensport",
+				"categoryTitle": "Breitensport",
+				"excerpt": "Erlebt das Gefühlschaos der Funky Diamonds! 32 Tänzer:innen zwischen 18-39 Jahren begeistern mit Leidenschaft und atemberaubenden Hebefiguren.",
+				"publishedAt": "2025-12-30T13:54:00.000Z",
+				"slug": "herzklopfen-garantiert-funky-diamonds-zwischen-liebe-chaos",
+				"title": "Herzklopfen garantiert – Funky Diamonds zwischen Liebe und Chaos! "
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "breitensport",
+				"categoryTitle": "Breitensport",
+				"excerpt": "Erlebe die Magic Diamonds auf ihrer galaktischen Tanzreise! Von Kölle bis ins All, die bunte Crew begeistert mit spektakulären Kostümen.",
+				"publishedAt": "2025-12-29T20:25:47.979Z",
+				"slug": "koelle-bis-ins-all-magic-diamonds-starten-durch",
+				"title": "Von Kölle bis ins All – die Magic Diamonds starten durch!"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "breitensport",
+				"categoryTitle": "Breitensport",
+				"excerpt": "Unsere Little Diamonds verzaubern die Bühne als 'Die zuckersüßen Littles'. 21 Kids in rosa-türkisen Kostümen sorgen für einen Zuckerschock!",
+				"publishedAt": "2025-12-28T20:18:00.000Z",
+				"slug": "zuckersuesser-tanz-buehne-frei-fuer-unsere-little-diamonds",
+				"title": "Zuckersüßer Tanz – Bühne frei für unsere Little Diamonds!"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "breitensport",
+				"categoryTitle": "Breitensport",
+				"excerpt": "Die Sweet Diamonds, unsere jüngsten Tänzer, entführen euch als Cowgirls in den Wilden Westen. Freut euch auf bunte Kostüme und mitreißende Auftritte!",
+				"publishedAt": "2025-12-27T20:07:00.000Z",
+				"slug": "yeehaw-sweet-diamonds-machen-den-wilden-westen-unsicher",
+				"title": "Yeehaw! Die Sweet Diamonds machen den Wilden Westen unsicher! "
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "breitensport",
+				"categoryTitle": "Breitensport",
+				"excerpt": "Unsere Breitensportgruppen feierten mit Schrottwichteln, leckerem Essen und viel Lachen. Freut euch auf ein sportliches neues Jahr!",
+				"publishedAt": "2025-12-25T19:56:00.000Z",
+				"slug": "weihnachtsfeiern-bei-unseren-breitensport-gruppen",
+				"title": "Weihnachtsfeiern bei unseren Breitensport-Gruppen!"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "breitensport",
+				"categoryTitle": "Breitensport",
+				"excerpt": "Drei Taekwondo-Sportler der TSG Irlich stellten sich der Landes-Dan-Prüfung in Mainz – und bestanden alle mit Bravour. Von Formen bis Bruchtest: So lief der Prüfungstag.",
+				"publishedAt": "2025-12-23T14:21:45.983Z",
+				"slug": "taekwondo-trio-erfolgreich-tolle-ergebnisse-bei-2-landes-dan-pruefung-mainz",
+				"title": "Taekwondo-Trio erfolgreich: Tolle Ergebnisse bei der 2. Landes-Dan-Prüfung in Mainz"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Buffet, Gesangseinlagen und eine Tombola: Die 1. Mannschaft feierte ihre Weihnachtsfeier im Pappelstübchen. Wer die Spieler der Hinrunde sind, erfahrt ihr hier.",
+				"publishedAt": "2025-12-23T13:45:25.186Z",
+				"slug": "weihnachtsfeier-1-mannschaft",
+				"title": "Weihnachtsfeier der 1. Mannschaft im Pappelstübchen"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "p.pfeiffer@tsg-irlich.de",
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "jugend",
+				"categoryTitle": "Jugend",
+				"excerpt": "Hallenturniere, Schokoladenweihnachtsmänner und eine große Menge an Spaß: So feierten unsere Jugendmannschaften von den Bambinis bis zur U13 den Jahresabschluss.",
+				"publishedAt": "2025-12-23T11:55:48.313Z",
+				"slug": "weihnachtsfeiern-jugendteams",
+				"title": "Weihnachtsfeiern bei den Jugendteams der JSG Irlich"
+			},
+			{
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"author": {
+					"email": "s.thome@tsg-irlich.de",
+					"firstName": "Sophie ",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Schneeballschlachten, Wichtel-Winterlandschaften und strahlende Kinderaugen: So erlebten unsere Kinderturngruppen ihre Weihnachtsstunden in der Turnhalle.",
+				"publishedAt": "2025-12-21T14:15:00.000Z",
+				"slug": "4-advent",
+				"title": "4. Advent"
+			}
+		],
+		"syncTags": [
+			"s1:ycr7jw",
+			"s1:Ik/M0w",
+			"s1:gDNQog",
+			"s1:+YVtFA",
+			"s1:bmIwtw",
+			"s1:Fwy1kg",
+			"s1:GNFE5A",
+			"s1:yx3Vpw",
+			"s1:uv+Zzg",
+			"s1:mCzbTw",
+			"s1:xVTd2Q",
+			"s1:X4XzKA",
+			"s1:vJBgQg"
+		],
+		"ms": 23
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+defined%28publishedAt%29%5D+%7C+order%28publishedAt+desc%29+%5B0..49%5D+%7B%0A%09%09title%2C%0A%09%09excerpt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A%09%09%22categoryTitle%22%3A+categories%5B0%5D-%3Etitle%2C%0A%09%09%22author%22%3A+author-%3E%7B+firstName%2C+lastName%2C+email+%7D%2C%0A%09%09publishedAt%2C%0A%09%09_updatedAt%0A%09%7D%0A&returnQuery=false"
+}

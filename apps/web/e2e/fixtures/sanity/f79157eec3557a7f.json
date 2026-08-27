@@ -1,0 +1,308 @@
+{
+	"body": {
+		"result": {
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "0e65911533ce",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "fbee7ceaa20f",
+								"_type": "span",
+								"marks": [],
+								"text": "In der C-Jugend sind die Nachwuchs-Fußballer nun im \"großen Fußball\" angekommen! Erstmals wird im 11 gegen 11 auf dem Großfeld gespielt. Doch komplexer wird in diesem Alter nicht nur das Spiel, sondern auch der Umgang mit den Jugendlichen!"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "9c3e90d3421d",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "fbee7ceaa20f",
+								"_type": "span",
+								"marks": [],
+								"text": "Gerade im Bereich der C-Jugend sind die individuellen Unterschiede häufig sehr groß, sowohl im körperlichen als auch im spielerischen Bereich. Im Fokus steht hier neben der Förderung der ganzheitlichen Entwicklung durch eine vielseitige motorische Ausbildung die intensive Technikausbildung, zunehmend spezifisch für die verschiedenen Positionen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "Die C-Junioren der JSG Feldkirchen/Irlich jubelnd auf einem Spielfeld.",
+				"asset": {
+					"_ref": "image-1100819cf002bd5dc14a175278827d06b19ce6fa-4512x3000-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"description": "Die C-Junioren der JSG Feldkirchen/Irlich",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.6171974647807775,
+					"width": 0.9276356216131453,
+					"x": 0.4884907575378816,
+					"y": 0.3955207394534368
+				}
+			},
+			"images": [
+				{
+					"_key": "35e3140cfac0",
+					"_type": "extendedImage",
+					"alt": "Die U15 der JSG Irlich/Feldkirchen",
+					"asset": {
+						"_ref": "image-1100819cf002bd5dc14a175278827d06b19ce6fa-4512x3000-jpg",
+						"_type": "reference"
+					}
+				}
+			],
+			"meta": {
+				"metaDescription": "C-Jugend TSG Irlich: Erstmals 11 gegen 11 auf dem Großfeld! Vielseitige motorische Ausbildung und positionsspezifische Technikschulung stehen im Fokus.",
+				"metaTitle": "Die C-Jugend der JSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die Spieler der C-Jugend der JSG Irlich und ihre Trainer posieren für ein Foto auf einem grünen Rasen.",
+					"asset": {
+						"_ref": "image-1100819cf002bd5dc14a175278827d06b19ce6fa-4512x3000-jpg",
+						"_type": "reference"
+					}
+				}
+			},
+			"title": "C-Jugend",
+			"training": {
+				"trainingDescription": null,
+				"trainingTimes": [
+					{
+						"_key": "362e29894145",
+						"_type": "trainingTime",
+						"endTime": "18:30",
+						"season": "yearly",
+						"startTime": "17:00",
+						"venue": {
+							"_createdAt": "2024-09-20T10:39:23Z",
+							"_id": "044de207-3af7-4121-bcec-11cafebce68c",
+							"_rev": "FGdPcw6oZ4f5ikxTPQ5UcC",
+							"_system": {
+								"base": {
+									"id": "044de207-3af7-4121-bcec-11cafebce68c",
+									"rev": "R4zj9VDraGU9JFViHjguwF"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "0fc16ae5ada5",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "271f1699d76f0",
+												"_type": "span",
+												"marks": [],
+												"text": "Der Sportplatz im Nachbarort Feldkirchen, die Heimat des SV Feldkirchen, befindet sich in der Schillerstraße. Es handelt sich um einen modernen Kunstrasenplatz, der optimale Bedingungen für sportliche Aktivitäten bietet. Die Jugendteams der JSG Irlich/Wied nutzen diesen Platz regelmäßig für Training und Spiele."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "3",
+								"name": "Sportplatz Feldkirchen",
+								"street": "Thomas-Mann-Straße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Der Kunstrasenplatz des SV in Feldkirchen",
+								"asset": {
+									"_ref": "image-78973616efe9b149977c5fd7cf7d674279491fef-4000x2250-jpg",
+									"_type": "reference"
+								}
+							},
+							"title": "Sportplatz Feldkirchen",
+							"type": "artificial-turf"
+						},
+						"weekday": "tuesday"
+					},
+					{
+						"_key": "61e5242eff5d",
+						"_type": "trainingTime",
+						"endTime": "18:30",
+						"season": "yearly",
+						"startTime": "17:00",
+						"venue": {
+							"_createdAt": "2024-09-20T10:39:23Z",
+							"_id": "044de207-3af7-4121-bcec-11cafebce68c",
+							"_rev": "FGdPcw6oZ4f5ikxTPQ5UcC",
+							"_system": {
+								"base": {
+									"id": "044de207-3af7-4121-bcec-11cafebce68c",
+									"rev": "R4zj9VDraGU9JFViHjguwF"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "0fc16ae5ada5",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "271f1699d76f0",
+												"_type": "span",
+												"marks": [],
+												"text": "Der Sportplatz im Nachbarort Feldkirchen, die Heimat des SV Feldkirchen, befindet sich in der Schillerstraße. Es handelt sich um einen modernen Kunstrasenplatz, der optimale Bedingungen für sportliche Aktivitäten bietet. Die Jugendteams der JSG Irlich/Wied nutzen diesen Platz regelmäßig für Training und Spiele."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "3",
+								"name": "Sportplatz Feldkirchen",
+								"street": "Thomas-Mann-Straße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Der Kunstrasenplatz des SV in Feldkirchen",
+								"asset": {
+									"_ref": "image-78973616efe9b149977c5fd7cf7d674279491fef-4000x2250-jpg",
+									"_type": "reference"
+								}
+							},
+							"title": "Sportplatz Feldkirchen",
+							"type": "artificial-turf"
+						},
+						"weekday": "thursday"
+					},
+					{
+						"_key": "772e1342129a",
+						"_type": "trainingTime",
+						"endTime": "18:30",
+						"season": "yearly",
+						"startTime": "17:00",
+						"venue": {
+							"_createdAt": "2024-09-20T10:39:23Z",
+							"_id": "044de207-3af7-4121-bcec-11cafebce68c",
+							"_rev": "FGdPcw6oZ4f5ikxTPQ5UcC",
+							"_system": {
+								"base": {
+									"id": "044de207-3af7-4121-bcec-11cafebce68c",
+									"rev": "R4zj9VDraGU9JFViHjguwF"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "0fc16ae5ada5",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "271f1699d76f0",
+												"_type": "span",
+												"marks": [],
+												"text": "Der Sportplatz im Nachbarort Feldkirchen, die Heimat des SV Feldkirchen, befindet sich in der Schillerstraße. Es handelt sich um einen modernen Kunstrasenplatz, der optimale Bedingungen für sportliche Aktivitäten bietet. Die Jugendteams der JSG Irlich/Wied nutzen diesen Platz regelmäßig für Training und Spiele."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "3",
+								"name": "Sportplatz Feldkirchen",
+								"street": "Thomas-Mann-Straße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Der Kunstrasenplatz des SV in Feldkirchen",
+								"asset": {
+									"_ref": "image-78973616efe9b149977c5fd7cf7d674279491fef-4000x2250-jpg",
+									"_type": "reference"
+								}
+							},
+							"title": "Sportplatz Feldkirchen",
+							"type": "artificial-turf"
+						},
+						"weekday": "friday"
+					},
+					{
+						"_key": "6126b6bf9f32",
+						"_type": "trainingTime",
+						"endTime": "20:00",
+						"season": "winter",
+						"startTime": "18:30",
+						"venue": {
+							"_createdAt": "2025-11-06T22:00:28Z",
+							"_id": "3870ef4d-1fbf-4934-a5a9-b7103999f01c",
+							"_rev": "dtJXu1REiVbNFr2bYflroe",
+							"_type": "venue",
+							"_updatedAt": "2025-11-06T22:04:23Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "1a5420c37696",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "88e08f58a63b",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Große Turnhalle der Carmen-Sylva-Schule im Ortsteil Niederbieber steht nach jahrelanger Sperrung endlich wieder für den Schul- und Vereinssport zur Verfügung."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "23",
+								"name": "Turnhalle Niederbieber",
+								"street": "Augustenthaler Straße",
+								"zipCode": "56567"
+							},
+							"title": "Turnhalle Niederbieber",
+							"type": "hall-3"
+						},
+						"weekday": "wednesday"
+					}
+				]
+			}
+		},
+		"syncTags": ["s1:vOS/bA", "s1:hZnkHg", "s1:uf4YSw"],
+		"ms": 5
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24groupType=%22group.soccer%22&%24slug=%22c-jugend%22&returnQuery=false"
+}

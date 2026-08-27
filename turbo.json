@@ -2,6 +2,7 @@
 	"$schema": "https://turbo.build/schema.json",
 	"globalDependencies": ["**/.env.*local"],
 	"globalEnv": [
+		"E2E_MOCK",
 		"NEXT_PUBLIC_SANITY_API_VERSION",
 		"NEXT_PUBLIC_SANITY_DATASET",
 		"NEXT_PUBLIC_SANITY_PROJECT_ID",
@@ -56,6 +57,12 @@
 			"outputs": ["dist/**"]
 		},
 		"test": {},
+		"test:e2e": {
+			"cache": false,
+			"dependsOn": ["^build"],
+			"env": ["E2E_RECORD", "PLAYWRIGHT_BASE_URL"],
+			"outputs": ["playwright-report/**", "test-results/**"]
+		},
 		"test:coverage": {
 			"outputs": ["coverage/**"]
 		},

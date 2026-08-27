@@ -1,0 +1,41 @@
+{
+	"body": {
+		"result": [
+			{
+				"contactAs": "both",
+				"email": "breitensport@tsg-irlich.de",
+				"firstName": "Melanie ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+					"asset": {
+						"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+						"_type": "reference"
+					}
+				},
+				"lastName": "Klein",
+				"phone": "+49 171 9941807",
+				"role": "Abteilungsleitung Breitensport",
+				"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+			}
+		],
+		"syncTags": [
+			"s1:o7Cn/w",
+			"s1:eOuqJg",
+			"s1:lvB0iQ",
+			"s1:bW4l3Q",
+			"s1:w5t4Lw",
+			"s1:yJoVrQ",
+			"s1:SgUpiQ",
+			"s1:y+gLqA",
+			"s1:hC9C9g",
+			"s1:FAyvtw",
+			"s1:MdmizQ",
+			"s1:B7LhMw",
+			"s1:mWzJLg",
+			"s1:mR2JeA"
+		],
+		"ms": 15
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27person%27%5D%5Baffiliations%5B0%5D.role-%3Eemail+%3D%3D+%24email%5D+%7B%0A%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%7D%0A&%24email=%22breitensport%40tsg-irlich.de%22&returnQuery=false"
+}

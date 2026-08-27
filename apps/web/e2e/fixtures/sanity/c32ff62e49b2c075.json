@@ -1,0 +1,283 @@
+{
+	"body": {
+		"result": {
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "8467af30768f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "1d6b6edaaa57",
+								"_type": "span",
+								"marks": [],
+								"text": "Im Bereich der A-Junioren begeben sich die Spieler auf den Weg zum letzten Feinschliff vor dem Senioren-Fußball. Außersportlich ist die Schule abgeschlossen und der Eintritt ins Berufsleben steht an! Die körperlich völlig ausgereiften Spieler sind \"fast erwachsen\" und zeigen eine hohe Einsatzbereitschaft und Motivation, die es teilweise zu bremsen oder lenken gilt."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "849e7368b43c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "1d6b6edaaa57",
+								"_type": "span",
+								"marks": [],
+								"text": "In den letzten beiden Jahren werden die Nachwuchsfußballer mittels \"reduziertem Erwachsenen-Training\" auf die ersten Schritte im Senioren-Fußball und ein körperlich robustes Spiel vorbereitet. Die Spielformen sollten einen hohen Wettkampfcharakter aufweisen und neben \"1 gegen 1\", Unterzahlsituationen und Überzahlsituationen, müssen unbedingt taktische Spielformen in größeren Gruppen genutzt werden."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "Die beiden A-Junioren-Teams der JSG Irlich posieren in Sportkleidung auf einem Fußballplatz, lächelnd in die Kamera.",
+				"asset": {
+					"_ref": "image-843448fee760b95366e6a9ca34a8fab873762c4d-2674x2006-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"description": "Die beiden A-Junioren-Teams der JSG Irlich",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.6352815141224057,
+					"width": 1,
+					"x": 0.5,
+					"y": 0.3775898523739997
+				}
+			},
+			"images": [
+				{
+					"_key": "656334779303",
+					"_type": "extendedImage",
+					"alt": "Jubel nach Heimsieg der U19",
+					"asset": {
+						"_ref": "image-348259a251cdeb28ed25924f744400d50b868575-5528x4000-jpg",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "84096bedf1fa",
+					"_type": "extendedImage",
+					"alt": "U19 Spieler mit Ball am Fuß",
+					"asset": {
+						"_ref": "image-28c9d681b39643a9ba99f60de06774a3d8419560-6000x4000-jpg",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "6477f5ee013c",
+					"_type": "extendedImage",
+					"alt": "Handshake zwischen zwei Spielern der U19.",
+					"asset": {
+						"_ref": "image-5fe1f9ec7251506b9d94f994d35fe5350fa53437-6000x4000-jpg",
+						"_type": "reference"
+					}
+				}
+			],
+			"meta": {
+				"metaDescription": "A-Junioren TSG Irlich: Der letzte Feinschliff vor dem Seniorenfußball. Taktiktraining, Wettkampfformen und Vorbereitung auf den robusten Erwachsenenfußball.",
+				"metaTitle": "Die A-Jugend der JSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die A-Jugend der JSG Irlich mit ihren zwei Trainern posiert für ein Gruppenfoto auf einem Spielfeld. Die Spieler tragen blaue und rote Trikots, einige sitzen, andere stehen, zwei halten Fußbälle in den Händen.",
+					"asset": {
+						"_ref": "image-843448fee760b95366e6a9ca34a8fab873762c4d-2674x2006-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5306948035699391,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.39018058220035035
+					}
+				}
+			},
+			"title": "A-Jugend",
+			"training": {
+				"trainingDescription": null,
+				"trainingTimes": [
+					{
+						"_key": "d8f226d7d4c6",
+						"_type": "trainingTime",
+						"endTime": "20:00",
+						"season": "yearly",
+						"startTime": "18:30",
+						"venue": {
+							"_createdAt": "2024-09-20T10:39:23Z",
+							"_id": "044de207-3af7-4121-bcec-11cafebce68c",
+							"_rev": "FGdPcw6oZ4f5ikxTPQ5UcC",
+							"_system": {
+								"base": {
+									"id": "044de207-3af7-4121-bcec-11cafebce68c",
+									"rev": "R4zj9VDraGU9JFViHjguwF"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "0fc16ae5ada5",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "271f1699d76f0",
+												"_type": "span",
+												"marks": [],
+												"text": "Der Sportplatz im Nachbarort Feldkirchen, die Heimat des SV Feldkirchen, befindet sich in der Schillerstraße. Es handelt sich um einen modernen Kunstrasenplatz, der optimale Bedingungen für sportliche Aktivitäten bietet. Die Jugendteams der JSG Irlich/Wied nutzen diesen Platz regelmäßig für Training und Spiele."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "3",
+								"name": "Sportplatz Feldkirchen",
+								"street": "Thomas-Mann-Straße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Der Kunstrasenplatz des SV in Feldkirchen",
+								"asset": {
+									"_ref": "image-78973616efe9b149977c5fd7cf7d674279491fef-4000x2250-jpg",
+									"_type": "reference"
+								}
+							},
+							"title": "Sportplatz Feldkirchen",
+							"type": "artificial-turf"
+						},
+						"weekday": "tuesday"
+					},
+					{
+						"_key": "519a3f7258d8",
+						"_type": "trainingTime",
+						"endTime": "21:45",
+						"season": "yearly",
+						"startTime": "20:15",
+						"venue": {
+							"_createdAt": "2024-09-20T10:39:23Z",
+							"_id": "044de207-3af7-4121-bcec-11cafebce68c",
+							"_rev": "FGdPcw6oZ4f5ikxTPQ5UcC",
+							"_system": {
+								"base": {
+									"id": "044de207-3af7-4121-bcec-11cafebce68c",
+									"rev": "R4zj9VDraGU9JFViHjguwF"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "0fc16ae5ada5",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "271f1699d76f0",
+												"_type": "span",
+												"marks": [],
+												"text": "Der Sportplatz im Nachbarort Feldkirchen, die Heimat des SV Feldkirchen, befindet sich in der Schillerstraße. Es handelt sich um einen modernen Kunstrasenplatz, der optimale Bedingungen für sportliche Aktivitäten bietet. Die Jugendteams der JSG Irlich/Wied nutzen diesen Platz regelmäßig für Training und Spiele."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "3",
+								"name": "Sportplatz Feldkirchen",
+								"street": "Thomas-Mann-Straße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Der Kunstrasenplatz des SV in Feldkirchen",
+								"asset": {
+									"_ref": "image-78973616efe9b149977c5fd7cf7d674279491fef-4000x2250-jpg",
+									"_type": "reference"
+								}
+							},
+							"title": "Sportplatz Feldkirchen",
+							"type": "artificial-turf"
+						},
+						"weekday": "wednesday"
+					},
+					{
+						"_key": "2ec38e036c1d",
+						"_type": "trainingTime",
+						"endTime": "22:00",
+						"season": "winter",
+						"startTime": "20:00",
+						"venue": {
+							"_createdAt": "2025-11-06T21:55:19Z",
+							"_id": "c61807c0-e58f-4d18-a347-3fc7c6d7e97b",
+							"_rev": "iXFi0dmSD9bydBwpfJgnLM",
+							"_type": "venue",
+							"_updatedAt": "2025-11-06T21:57:42Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "f6e6bf0b5fc2",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "f2dda4c8ba88",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Turnhalle der Sonnenlandschule steht als Sporthalle in Neuwied Stadt zur Verfügung. Eigentümer ist die Stadt Neuwied."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "46",
+								"name": "Turnhalle Sonnenlandschule",
+								"street": "Sonnenstraße",
+								"zipCode": "56564"
+							},
+							"title": "Turnhalle Sonnenlandschule",
+							"type": "hall-2"
+						},
+						"weekday": "wednesday"
+					}
+				]
+			}
+		},
+		"syncTags": ["s1:uf4YSw", "s1:4+Elpw", "s1:LW1bag"],
+		"ms": 7
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24groupType=%22group.soccer%22&%24slug=%22a-jugend%22&returnQuery=false"
+}

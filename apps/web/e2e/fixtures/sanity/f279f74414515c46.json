@@ -1,0 +1,582 @@
+{
+	"body": {
+		"result": {
+			"author": {
+				"email": "s.thome@tsg-irlich.de",
+				"firstName": "Sophie ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+					"asset": {
+						"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6740816500468764,
+						"width": 0.6978607346799625,
+						"x": 0.4942576493650388,
+						"y": 0.40427639989772435
+					}
+				},
+				"jobTitle": "PR-Team Bereich Breitensport",
+				"lastName": "Thomé"
+			},
+			"body": [
+				{
+					"_key": "c2be9fb0e50a",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "c404644ad7f7",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "bcd0e18eb248",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach zwei gelungenen Skifreizeiten in den vergangenen Jahren heißt es auch 2027 wieder: Ski anschnallen und gemeinsam eine unvergessliche Woche in den Südtiroler Bergen verbringen! Vom "
+								},
+								{
+									"_key": "0706965e0c66",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "20. bis 26. März 2027"
+								},
+								{
+									"_key": "35a8b7df28a9",
+									"_type": "span",
+									"marks": [],
+									"text": " geht es für eine Delegation der TSG Irlich in das familienfreundliche "
+								},
+								{
+									"_key": "6ef95d7f28cc",
+									"_type": "span",
+									"marks": ["3abd4cf0a0e8"],
+									"text": "Skigebiet "
+								},
+								{
+									"_key": "a8a32c1e7e25",
+									"_type": "span",
+									"marks": ["3abd4cf0a0e8", "strong"],
+									"text": "Gitschberg-Jochtal"
+								},
+								{
+									"_key": "4e8749e685bd",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "3abd4cf0a0e8",
+									"_type": "externalLink",
+									"href": "https://www.gitschberg-jochtal.com/winter/das-skigebiet"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "698f5f730717",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f036e2839202",
+									"_type": "span",
+									"marks": [],
+									"text": "Skigebiet sorgt für Vorfreude"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "dc9fd5f1f231",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7c79e0fd7346",
+									"_type": "span",
+									"marks": [],
+									"text": "Alle Teilnehmerinnen und Teilnehmer dürfen sich auf sieben Tage voller Schnee, Bewegung, Gemeinschaft und beeindruckender Berglandschaften freuen. Das Skigebiet Gitschberg-Jochtal zählt zu den schönsten Familienskigebieten Südtirols und überzeugt mit rund "
+								},
+								{
+									"_key": "a704c66671c9",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "55 Kilometern bestens präparierten Pisten"
+								},
+								{
+									"_key": "2df56fb0dca0",
+									"_type": "span",
+									"marks": [],
+									"text": ", "
+								},
+								{
+									"_key": "2f7211c1e44d",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "15 modernen Liftanlagen"
+								},
+								{
+									"_key": "9f77624d25b0",
+									"_type": "span",
+									"marks": [],
+									"text": " sowie abwechslungsreichen Abfahrten für jedermann. Von breiten Genusspisten über sportliche Hänge bis hin zu Übungsbereichen für Einsteiger bietet das Gebiet ideale Bedingungen für eine gelungene Skiwoche."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "199f6aae814f",
+					"_type": "mainImage",
+					"alt": "Ein Bild der letzten Skitour wie einige Skifahrer in bunten Klamotten einen Ski im Schnee aufstellen",
+					"asset": {
+						"_ref": "image-88b8d6507e2dc09c1377e35b53ea8c185d506bee-1024x768-jpg",
+						"_type": "reference"
+					},
+					"description": "Spaß auf der Piste: Ein Bild der Skitour 2026"
+				},
+				{
+					"_key": "4e23ad7f8ffd",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "1066e535f9b1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f6a571f1a69c",
+									"_type": "span",
+									"marks": [],
+									"text": "Besonders für Familien und große Gruppen ist die übersichtliche Gestaltung des Skigebiets, sowie die zahlreichen Einkehrmöglichkeiten mit typisch Südtiroler Spezialitäten super geeignet.  Mit einem beeindruckenden Panorama auf die Dolomiten, die Zillertaler Alpen und die Rieserfernergruppe ist gleichzeitig auch etwas für das Auge dabei. Auch abseits der Pisten lädt die Region zum Entspannen und Genießen ein. "
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "f7ef36d9986d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "df7a259b7be5",
+									"_type": "span",
+									"marks": [],
+									"text": "Alle Infos rund um die Unterkunft"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "e6022b6808e9",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "8a7c7e323c82",
+									"_type": "span",
+									"marks": [],
+									"text": "Während des Aufenthalts ist die Gruppe im "
+								},
+								{
+									"_key": "2cbe0507cbeb",
+									"_type": "span",
+									"marks": ["strong", "eaafe54f2da5"],
+									"text": "Hotel Stocknerhof"
+								},
+								{
+									"_key": "ad11fea527ec",
+									"_type": "span",
+									"marks": [],
+									"text": " in Schabs untergebracht. Im Reisepreis enthalten sind:"
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "eaafe54f2da5",
+									"_type": "externalLink",
+									"href": "https://www.stocknerhof.com/"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "74f29fbf5e4a",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "00596c840df9",
+									"_type": "span",
+									"marks": [],
+									"text": "6 Übernachtungen im Hotel Stocknerhof"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "4714ea5b034a",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9c63495c85f4",
+									"_type": "span",
+									"marks": [],
+									"text": "Halbpension mit reichhaltigem Frühstücksbuffet und Abendessen"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "a19930b82818",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "58ca59017636",
+									"_type": "span",
+									"marks": [],
+									"text": "5-Tage-Skipass für das Skigebiet Gitschberg-Jochtal"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "1d7a5a0b3447",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7ff4f5931816",
+									"_type": "span",
+									"marks": [],
+									"text": "Die An- und Abreise erfolgt diesmal "
+								},
+								{
+									"_key": "604c93ea9417",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "in Eigenregie"
+								},
+								{
+									"_key": "80a0809b280c",
+									"_type": "span",
+									"marks": [],
+									"text": ". Das bedeutet aber nicht, dass jeder auf sich alleine gestellt ist. Nach der finalen Buchung folgen weitere Abstimmungen mit dem Ziel, Fahrgemeinschaften zu bilden und die An- und Abreise so reibungslos wie möglich zu gestalten. "
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "9cf9848e12a4",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "59a4588f38c7",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4cdb7e7e558d",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Preise im Überblick "
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "2217df739c2d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c58a12b825b9",
+									"_type": "span",
+									"marks": [],
+									"text": "pro Person im Doppel-/Mehrbettzimmer - "
+								},
+								{
+									"_key": "d0023a954dd9",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "689,00€"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "429ed55777c1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1fe581cae9b5",
+									"_type": "span",
+									"marks": [],
+									"text": "pro Person im Einzelzimmer - "
+								},
+								{
+									"_key": "108e7cce275f",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "779,00€"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "52ac3645e9c8",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "5e3d765f4958",
+									"_type": "span",
+									"marks": [],
+									"text": "pro Kind 3-6 Jahre - "
+								},
+								{
+									"_key": "905ece11f924",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "229,00€"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "f17defccca56",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "6d94abf3049c",
+									"_type": "span",
+									"marks": [],
+									"text": "pro Kind 7-12 Jahre - "
+								},
+								{
+									"_key": "28679c5ac01b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "529,00€"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "a1a8598a3071",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "6fff517cb76d",
+									"_type": "span",
+									"marks": [],
+									"text": "pro Kind 13-17 Jahre - "
+								},
+								{
+									"_key": "1e283eb6a0ef",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "619,00€"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "ca63310a79c7",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "cb4c4590c430",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f3807dfba2a9",
+									"_type": "span",
+									"marks": [],
+									"text": "Ob erfahrene Skifahrer, Genussfahrer oder Einsteiger – die Skitour 2027 bietet die perfekte Gelegenheit für alle Teilnehmenden, gemeinsam sportlich aktiv zu sein und eine tolle Woche in geselliger Runde zu verbringen. Neben den Stunden auf der Piste stehen vor allem das Miteinander, gemütliche Abende und der gemeinsame Spaß im Mittelpunkt."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "1bb3a59e166a",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "35dcb362b95e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "12841c963ef5",
+									"_type": "span",
+									"marks": [],
+									"text": "Anmeldung & Interesse"
+								}
+							],
+							"markDefs": [],
+							"style": "h2"
+						},
+						{
+							"_key": "912b967486ec",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "827b331a46fc",
+									"_type": "span",
+									"marks": [],
+									"text": "Ihr habt Lust, mit uns eine unvergessliche Woche im Schnee zu verbringen? Dann meldet euch gerne bei unserer Organisatorin "
+								},
+								{
+									"_key": "d94903f6cdba",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Meike Kaap "
+								},
+								{
+									"_key": "1f2458f6a980",
+									"_type": "span",
+									"marks": [],
+									"text": "unter "
+								},
+								{
+									"_key": "d0ace114afef",
+									"_type": "span",
+									"marks": ["9f74f63aee6b"],
+									"text": "m.kaap@tsg-irlich.de"
+								},
+								{
+									"_key": "db428cc46eb8",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "9f74f63aee6b",
+									"_type": "externalLink",
+									"href": "mailto:m.kaap@tsg-irlich.de"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "3064027165d6",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7807a90dc210",
+									"_type": "span",
+									"marks": [],
+									"text": "Um an der Tour teilzunehmen ist eine Mitgliedschaft bei der TSG Irlich kein Muss. Jeder ist herzlichst eingeladen mitzufahren. Um frühzeitig planen zu können bitten wir um Anmeldungen bis zum "
+								},
+								{
+									"_key": "93062b865509",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "10. September 2026."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "7fccbdde5750",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ae0b9919efc8",
+									"_type": "span",
+									"marks": [],
+									"text": "Wir freuen uns schon jetzt auf eine erlebnisreiche Woche im Schnee und hoffen, dass wieder viele Irlicher mit dabei sein werden."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "verein",
+					"title": "Gesamtverein"
+				}
+			],
+			"excerpt": "Nach zwei Skifreizeiten in den vergangenen Jahren heißt es auch 2027 wieder: Ski anschnallen und gemeinsam eine unvergessliche Woche in den Bergen verbringen! ",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Banner Skitour 2027 mit Bergen im Hintergrund ",
+				"asset": {
+					"_ref": "image-dade8defa1621162fd705ddadf3dad82180a490a-5669x1890-png",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.9543796850713262,
+					"width": 0.47261215663975353,
+					"x": 0.5009505473945949,
+					"y": 0.5
+				}
+			},
+			"meta": {
+				"metaDescription": "Erlebt mit der TSG Irlich die Skitour 2027 im Skigebiet Gitschberg-Jochtal. 7 Tage Südtirol mit Hotel, Halbpension und Skipass. Jetzt informieren!",
+				"metaTitle": "Skifreizeit 2027 in Gitschberg-Jochtal",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-07-31T18:47:00.000Z",
+			"slug": "Anmeldung-skitour-2027",
+			"title": "Skitour 2027 – Gemeinsam ins Skigebiet Gitschberg-Jochtal"
+		},
+		"syncTags": ["s1:msjQWw", "s1:gDNQog", "s1:+YVtFA"],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22Anmeldung-skitour-2027%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

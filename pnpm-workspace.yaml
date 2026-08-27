@@ -3,11 +3,14 @@ packages:
   - packages/*
 
 # better-sqlite3 (native binding for cve-lite-cli), esbuild (platform binary) and lefthook
-# (git hook binary) are unusable without their install scripts.
+# (git hook binary) are unusable without their install scripts. msw only copies its browser
+# service worker into a public directory, which the end-to-end mocks never use — they run in the
+# Node.js server process.
 allowBuilds:
   better-sqlite3: true
   esbuild: true
   lefthook: true
+  msw: false
 
 # Exclude trusted packages from the age gate
 minimumReleaseAgeExclude:

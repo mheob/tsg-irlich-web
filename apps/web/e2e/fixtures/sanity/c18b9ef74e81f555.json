@@ -1,0 +1,11 @@
+{
+	"body": {
+		"result": {
+			"subtitle": "Blog",
+			"title": "News-Artikel"
+		},
+		"syncTags": ["s1:tQ6aqw"],
+		"ms": 2
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news-article-page%27%5D%5B0%5D+%7B%0A%09%09title%2C%0A%09%09subtitle%2C%0A%09%7D%0A&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}
