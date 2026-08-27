@@ -18,7 +18,7 @@ overrides:
   "@sanity/sdk-react": 2.19.0
   # react-email → conf → ajv pulls fast-uri 3.1.5, vulnerable to improper hex-encoding
   # handling in URL normalization (CVE-2026-76172); 3.1.6 fixes it and stays in ajv's ^3 range
-  fast-uri: "^3.1.6"
+  fast-uri: "^4.0.0"
   js-yaml: ">=4.3.1"
   # @tailwindcss/typography pins 6.0.10, which is vulnerable to uncontrolled recursion
   # in `toString()` (CVE-2026-9358); fixed in 6.1.3
