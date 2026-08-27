@@ -15,6 +15,9 @@ export default defineConfig({
 			provider: 'v8',
 			reporter: ['text', 'html', 'lcov'],
 			reportsDirectory: './coverage',
+			// A floor at the level the suite currently reaches, to keep it from slipping while the
+			// schemas are still largely untested. Raise it with every batch of new tests.
+			thresholds: { branches: 60, functions: 20, lines: 23, statements: 23 },
 		},
 		environment: 'jsdom',
 		exclude: ['dist/**', 'node_modules/**', '.sanity/**'],

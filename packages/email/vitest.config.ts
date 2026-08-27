@@ -25,6 +25,9 @@ export default defineConfig({
 			provider: 'v8',
 			reporter: ['text', 'html', 'lcov'],
 			reportsDirectory: './coverage',
+			// This workspace is fully covered and stays that way: anything new either comes with a
+			// test or is excluded above for having no coverable statements.
+			thresholds: { branches: 100, functions: 100, lines: 100, statements: 100 },
 		},
 		environment: 'node',
 		exclude: ['.react-email/**', 'node_modules/**'],
