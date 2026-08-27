@@ -1,0 +1,176 @@
+{
+	"body": {
+		"result": {
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "82dce729ca1d",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "c9b718dd557c",
+								"_type": "span",
+								"marks": [],
+								"text": "Die \""
+							},
+							{
+								"_key": "864321ccf16b",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "Alten Herren\""
+							},
+							{
+								"_key": "5971b68a1b1d",
+								"_type": "span",
+								"marks": [],
+								"text": " der "
+							},
+							{
+								"_key": "74403785f644",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "TSG Irlich"
+							},
+							{
+								"_key": "9037cf8f76e6",
+								"_type": "span",
+								"marks": [],
+								"text": " treffen sich in der Regel einmal wöchentlich zum gemeinsamen Fußball spielen. Ein Großteil der Teilnehmer hat bereits in jüngeren Jahren für die TSG die Fußballschuhe geschnürt und kommt nun immer noch seinem Hobby nach. "
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "Die \"Alten Herren\" der TSG Irlich",
+				"asset": {
+					"_ref": "image-8361e8a33651330a7247141aa42e1a9299af843b-4032x3024-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0.07568396829455382,
+					"top": 0.07363845563794426
+				},
+				"description": "Die \"Alten Herren\" der TSG Irlich",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.650899173271968,
+					"width": 0.807721810278701,
+					"x": 0.4767003323958067,
+					"y": 0.39908804227392825
+				}
+			},
+			"images": [
+				{
+					"_key": "83b3b0447927",
+					"_type": "extendedImage",
+					"alt": "Die \"Alten Herren\" der TSG Irlich",
+					"asset": {
+						"_ref": "image-8361e8a33651330a7247141aa42e1a9299af843b-4032x3024-jpg",
+						"_type": "reference"
+					}
+				}
+			],
+			"meta": {
+				"metaDescription": "Alte Herren TSG Irlich: Einmal wöchentlich treffen sich erfahrene Fußballer zum Kicken – viele davon seit Jahren dem Verein treu. Hobby mit Tradition!",
+				"metaTitle": "Die \"Alte Herren\" der TSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die \"Alte Herren\" der TSG Irlich posieren in ihren gelben Trikots vor einem Sporttor in einer Turnhalle.",
+					"asset": {
+						"_ref": "image-8361e8a33651330a7247141aa42e1a9299af843b-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5950871632329635,
+						"width": 0.781076283592921,
+						"x": 0.483257762650823,
+						"y": 0.464363166235716
+					}
+				}
+			},
+			"title": "Alte Herren",
+			"training": {
+				"trainingDescription": null,
+				"trainingTimes": [
+					{
+						"_key": "b12bc1bcc03a",
+						"_type": "trainingTime",
+						"endTime": "20:00",
+						"season": "yearly",
+						"startTime": "19:00",
+						"venue": {
+							"_createdAt": "2024-09-20T10:51:19Z",
+							"_id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+							"_rev": "dtJXu1REiVbNFr2bYfpcdI",
+							"_system": {
+								"base": {
+									"id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+									"rev": "y6qAFx3KEt65PvSAGze7lj"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "2d364aa6e545",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "a23c592ffa610",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Turnhalle der Robert-Krups-Schule in Neuwied ist eine großzügige Geräteturnhalle, die Teil der kooperativen Realschule ist. Mit Maßen von 18 x 33 Metern bietet sie ausreichend Platz für vielfältige sportliche Aktivitäten und Veranstaltungen. Die moderne Ausstattung und die großzügige Fläche machen sie zu einem idealen Ort für den Sportunterricht und Vereinssport. Nach der Generalsanierung, die fast 2 Mio. Euro kostete und in einer rekordverdächtigen Bauzeit von nur 16 Monaten abgeschlossen wurde, wurde die Turnhalle im November 2016 wiedereröffnet."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "21",
+								"name": "Turnhalle Robert-Krups-Schule Irlich",
+								"street": "Marienstraße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion",
+								"asset": {
+									"_ref": "image-c6ce126a8971e3f1fada153c0cf6698a8bbbdef2-4000x2250-jpg",
+									"_type": "reference"
+								},
+								"description": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion"
+							},
+							"title": "Turnhalle Robert-Krups-Schule",
+							"type": "hall-2"
+						},
+						"weekday": "wednesday"
+					}
+				]
+			}
+		},
+		"syncTags": ["s1:0BPX0Q", "s1:vKMQtw"],
+		"ms": 6
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24groupType=%22group.soccer%22&%24slug=%22alte-herren%22&returnQuery=false"
+}

@@ -1,0 +1,178 @@
+{
+	"body": {
+		"result": [
+			{
+				"_id": "efc76fab-8321-44fb-a508-e4724b838141",
+				"firstName": "Markus",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Markus Josten",
+					"asset": {
+						"_ref": "image-34b67387b312ad38cc2a5d116a87f99c33cd6f7e-414x501-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.30036363636363617,
+						"left": 0.15757575757575756,
+						"right": 0.2151515151515151,
+						"top": 0.23027878787878794
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.3191757575757577,
+						"width": 0.3545454545454548,
+						"x": 0.48636363636363644,
+						"y": 0.43992727272727283
+					}
+				},
+				"lastName": "Josten",
+				"quote": "Die TSG zeichnet sich seit über 140 Jahren durch ihre Vielfalt und das Engagement ihrer Mitglieder aus. Sie ist ein wesentlicher Bestandteil des gesellschaftlichen Lebens in Irlich und stärkt den Zusammenhalt. Ich bin stolz, lange Zeit in verschiedenen Positionen aktiv dabei gewesen zu sein.",
+				"role": "Ehrenmitglied und ehem. Vorsitzender"
+			},
+			{
+				"_id": "84814923-c80b-4ef3-8187-3e1b4e704e61",
+				"firstName": "Christian ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Christian Krechel in einem roten T-shirt vor einer weißen Wand",
+					"asset": {
+						"_ref": "image-63d7ab016d0f5fddf287644ef57bbe1e99669bdf-979x1305-jpg",
+						"_type": "reference"
+					},
+					"description": "Christian Krechel "
+				},
+				"lastName": "Krechel",
+				"quote": "Ich finde es beeindruckend, welche großes Spektrum die TSG mit ihrem sportlichen Angebot abdeckt. Egal ob Wettkampf-, Breiten- oder Gesundheitssport, egal ob alt oder jung, egal ob Fußball, Tanzen, Taekwondo, Turnen, Wandern, Badminton, Rope-Skipping und und und - für jeden ist was dabei!",
+				"role": "Ehemaliger Jugendtrainer "
+			},
+			{
+				"_id": "5b133aee-14bf-4ec5-9412-f3c8aa3ae15c",
+				"firstName": "Peter",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Neuwieds Bürgermeister Peter Jung",
+					"asset": {
+						"_ref": "image-7be62aa15d7fdf92f75958b78f425dcc429ebda7-3648x5472-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.5403385579937314,
+						"left": 0.18808777429467083,
+						"right": 0.20062695924764884,
+						"top": 0.015009404388714735
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.33331081495034526,
+						"width": 0.4630043496022876,
+						"x": 0.4884063087049223,
+						"y": 0.19508389481514227
+					}
+				},
+				"lastName": "Jung",
+				"quote": "Die TSG Irlich verbindet Tradition mit voller Leidenschaft und engagiert sich mit einem vielfältigen und breiten Sportangebot. Vorbildlich ist insbesondere das Engagement für unsere Jugend. Die TSG ist ein unverzichtbarer Partner in Neuwied! Herzlichen Dank dafür!",
+				"role": "Bürgermeister Stadt Neuwied"
+			},
+			{
+				"_id": "ecb45fd7-35b9-4496-9e43-5045c12f9ac4",
+				"firstName": "Dennis",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "FVR-Geschäftsführer Dennis Gronau",
+					"asset": {
+						"_ref": "image-db43bfa55dd812983c909259141992c644d641d5-4512x3318-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.11504601840736284,
+						"left": 0.12316176470588229,
+						"right": 0.19117647058823506,
+						"top": 0.025010004001600642
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5948379351740697,
+						"width": 0.5294117647058829,
+						"x": 0.47977941176470595,
+						"y": 0.4349739895958384
+					}
+				},
+				"lastName": "Gronau",
+				"quote": "Bei der TSG Irlich spielt ehrenamtliches Engagement eine große Rolle, insbesondere in der Jugendarbeit – und das ist ebenso lobenswert wie die sozialen Initiativen des Vereins, beispielsweise über Hilfsaktionen für Flutopfer und Spenden für ein Kinderhospiz.",
+				"role": "Geschäftsführer Fußballverband Rheinland e.V."
+			},
+			{
+				"_id": "73204adc-c630-47f8-8e1d-081baf5ad77a",
+				"firstName": "Peter",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Peter Werhand",
+					"asset": {
+						"_ref": "image-cf7402f1381982041e75b79cc6513eeb31cfdf52-533x749-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0.015000000000000001
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8220667380553337,
+						"width": 0.8951984099226077,
+						"x": 0.44759920496130384,
+						"y": 0.42603336902766686
+					}
+				},
+				"lastName": "Werhand",
+				"quote": "Ich bin immer wieder überrascht und begeistert, was Ihr als Verein alles auf die Beine stellt. Das ist für Irlich, aber auch für die umliegenden Gemeinden und die Stadt Neuwied ein sehr großer Zugewinn. Gerade die Jugendarbeit und die damit verbundene Integration sind vorbildlich. Diese ehrenamtliche Arbeit kann gar nicht hoch genug gewürdigt werden. Danke dafür!",
+				"role": "Geschäftsführer der Firma Werhand"
+			},
+			{
+				"_id": "35965450-3830-4aca-8438-1dd51ba6c6d7",
+				"firstName": "Dominik",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Inhaber 11ts Vallendar Dominik Süßmeyer",
+					"asset": {
+						"_ref": "image-23476294112cc353ee8d2146f9142cf89bf07d28-2400x3600-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.04006015037593991,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5593383458646615,
+						"width": 0.6917293233082711,
+						"x": 0.5037593984962406,
+						"y": 0.3072105263157894
+					}
+				},
+				"lastName": "Süßmeyer",
+				"quote": "Als stolzer Partner bedanken wir uns für die jahrelange, erfolgreiche Zusammenarbeit. Es ist eine Freude, Teil dieser engagierten Gemeinschaft zu sein und die Leidenschaft für den Sport zu teilen. Wir schätzen die positiven Entwicklungen und unvergesslichen Momente, die wir gemeinsam erleben durften. Wir freuen uns darauf, weiter an eurer Seite zu stehen.",
+				"role": "Inhaber 11TS Store Vallendar"
+			}
+		],
+		"syncTags": [
+			"s1:Cc+ZCg",
+			"s1:Mg1Kew",
+			"s1:5DdZwQ",
+			"s1:FnXdAw",
+			"s1:V1c4Sg",
+			"s1:/iNbNg",
+			"s1:lWfrkQ"
+		],
+		"ms": 11
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27home%27%5D%5B0%5D.content.testimonialSection.testimonials%5B%5D-%3E+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09image%2C%0A%09%09quote%2C%0A%09%09role%2C%0A%09%7D%0A&returnQuery=false"
+}

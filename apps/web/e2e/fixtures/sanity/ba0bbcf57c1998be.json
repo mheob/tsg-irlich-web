@@ -1,0 +1,635 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'news.article' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == \"grid\" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t}\n",
+		"result": {
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "0ed51076aa36",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "3e0d03670b6a",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "449a5fe19cd0",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Die TSG Irlich hat auch ihr zweites Ligaspiel der neuen Saison gewonnen. Im ersten Heimspiel im Pappelstadion setzte sich die TSG verdient und weitgehend ungefährdet mit 3:1 (1:0) gegen die Zweitvertretung des "
+								},
+								{
+									"_key": "a7d8957bc800",
+									"_type": "span",
+									"marks": ["strong", "em", "551e5ddb0e4c"],
+									"text": "VfL Oberbieber"
+								},
+								{
+									"_key": "207a865ff823",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": " durch. Niklas Kindler traf doppelt, den weiteren Treffer erzielte Diego Kohns."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "551e5ddb0e4c",
+									"_type": "externalLink",
+									"href": "https://vfloberbieber.de/home/"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "9fda0bd2af6b",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "340ab22dd6a1",
+									"_type": "span",
+									"marks": [],
+									"text": "Bereits vor dem Anpfiff kam es zu einer ungewöhnlichen Situation: Aufgrund eines Missverständnisses stand für die Begegnung kein angesetzter Schiedsrichter zur Verfügung. Deshalb erklärte sich TSG-Kapitän "
+								},
+								{
+									"_key": "d7e644f40154",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dominik Fleuth"
+								},
+								{
+									"_key": "6d88cf729227",
+									"_type": "span",
+									"marks": [],
+									"text": " bereit, die Leitung der Partie zu übernehmen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "2bff7de12203",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "83637bbc1702",
+									"_type": "span",
+									"marks": [],
+									"text": "Trotz der besonderen Umstände entwickelte sich ein intensives, aber jederzeit sehr faires Spiel. Beide Mannschaften machten es Fleuth durch ihr sportliches Auftreten leicht, die Begegnung sicher über die Bühne zu bringen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "27ea4a9a0cfb",
+					"_type": "mainImage",
+					"alt": "Die beiden Kapitäne geben sich die Hände",
+					"asset": {
+						"_ref": "image-32a126fd2a7194aa41407b5b3b9b677e10552359-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Shakehands vor Spielbeginn: TSG-Captain Fleuth übernahm die Spielleitung",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8745418903946135,
+						"width": 0.5818063013153782,
+						"x": 0.4854541322196653,
+						"y": 0.510909400835251
+					}
+				},
+				{
+					"_key": "38d7b8493d25",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "794bb96f3fe3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "87af218850ce",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Kindler bringt die TSG in Führung"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "317884bb8e58",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "d98cd469305e",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG übernahm früh die Kontrolle und zeigte von Beginn an einen souveränen Auftritt. Die Mannschaft ließ den Ball gut durch die eigenen Reihen laufen und erspielte sich mehrfach aussichtsreiche Möglichkeiten."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "cbf8932aeee3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "224bb54c75b9",
+									"_type": "span",
+									"marks": [],
+									"text": "In der "
+								},
+								{
+									"_key": "67580ef23d47",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "21. Minute"
+								},
+								{
+									"_key": "741fb7cfcb6b",
+									"_type": "span",
+									"marks": [],
+									"text": " belohnte sich Irlich für den guten Start. Nach einem schönen Steckpass tauchte "
+								},
+								{
+									"_key": "6c6a336b97aa",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Niklas Kindler"
+								},
+								{
+									"_key": "7f19c5ae4fa8",
+									"_type": "span",
+									"marks": [],
+									"text": " vor dem Oberbieberer Tor auf und verwandelte sicher ins linke untere Eck. Auch danach blieb die TSG spielbestimmend und hätte ihre Führung bereits vor der Pause ausbauen können. Mehrere gute Möglichkeiten blieben jedoch ungenutzt, sodass es mit dem knappen 1:0 in die Kabinen ging."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "d64b107cd613",
+					"_type": "blockquote",
+					"author": "Trainer Michael Lehmann",
+					"quote": "Die Mentalität der Mannschaft stimmt absolut. "
+				},
+				{
+					"_key": "9c931b856d06",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "066006051d59",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "42b81f21c7c9",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Doppelschlag sorgt für klare Verhältnisse"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "c062f354777e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "19047cc03bca",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach dem Seitenwechsel knüpfte die TSG an ihren souveränen Auftritt aus der ersten Halbzeit an. In der "
+								},
+								{
+									"_key": "42603c927033",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "55. Minute"
+								},
+								{
+									"_key": "7d2c5cd07a54",
+									"_type": "span",
+									"marks": [],
+									"text": " erhöhte "
+								},
+								{
+									"_key": "f85a9c5110c4",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Diego Kohns"
+								},
+								{
+									"_key": "949a8a6d83b9",
+									"_type": "span",
+									"marks": [],
+									"text": " auf "
+								},
+								{
+									"_key": "a9abf45f6d17",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "2:0"
+								},
+								{
+									"_key": "5f05fc5ed3d5",
+									"_type": "span",
+									"marks": [],
+									"text": " und brachte seine Mannschaft damit auf die Siegerstraße."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "292b1a293bd0",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f3b5029958cf",
+									"_type": "span",
+									"marks": [],
+									"text": "Nur zwei Minuten später folgte bereits der nächste Treffer: Erneut war es Youngster "
+								},
+								{
+									"_key": "8d0e7b5b69cb",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Niklas Kindler"
+								},
+								{
+									"_key": "1822fa9a1990",
+									"_type": "span",
+									"marks": [],
+									"text": ", der den Torwart gekonnt umdribbelte und anschließend eiskalt zum "
+								},
+								{
+									"_key": "a777c66e9843",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "3:0"
+								},
+								{
+									"_key": "b2388d08aabe",
+									"_type": "span",
+									"marks": [],
+									"text": " einschob."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "e5e02db99504",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c22e00a3f396",
+									"_type": "span",
+									"marks": [],
+									"text": "Trotz der deutlichen Führung erspielte sich die TSG weitere Chancen. Der einzige Kritikpunkt blieb jedoch die Chancenverwertung: Angesichts der zahlreichen Möglichkeiten hätte das Ergebnis durchaus höher ausfallen können."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "fe0c409e6ea3",
+					"_type": "mainImage",
+					"alt": "Doppeltorschütze Niklas Kindler umkurvt den Keeper und trifft für die TSG.",
+					"asset": {
+						"_ref": "image-95be110cba53d623e8d5687327a8dd0e44a51f42-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09000255689082076,
+						"left": 0,
+						"right": 0.08545697320946617,
+						"top": 0.06818375522031876
+					},
+					"description": "Doppeltorschütze Niklas Kindler umkurvt den Keeper und trifft für die TSG.",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5308957640842069,
+						"width": 0.5290775306116651,
+						"x": 0.5445467200772749,
+						"y": 0.5463649535498168
+					}
+				},
+				{
+					"_key": "4dbab522cc8f",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "6b7c21fdbacb",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c85a54801945",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Anschlusstreffer bringt TSG nicht aus der Ruhe"
+								}
+							],
+							"markDefs": [],
+							"style": "h2"
+						},
+						{
+							"_key": "b448fc87046f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "65b642e21662",
+									"_type": "span",
+									"marks": [],
+									"text": "In der "
+								},
+								{
+									"_key": "cc7a3816a9de",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "73. Minute"
+								},
+								{
+									"_key": "564da9c007b2",
+									"_type": "span",
+									"marks": [],
+									"text": " gelang den Gästen der Anschlusstreffer. Nach einer Ecke kam "
+								},
+								{
+									"_key": "73b0e9560c67",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Evgeni Rib "
+								},
+								{
+									"_key": "0da189a6f344",
+									"_type": "span",
+									"marks": [],
+									"text": "rund fünf Meter vor dem Irlicher Tor frei zum Abschluss und verkürzte auf "
+								},
+								{
+									"_key": "322f68374475",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "3:1"
+								},
+								{
+									"_key": "9397d3e62e76",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "fb922bff5a62",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a9d9eb499475",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG ließ sich davon jedoch nicht aus der Ruhe bringen. Die Mannschaft behielt die Kontrolle, verteidigte konzentriert und spielte die Führung souverän über die Zeit. So stand am Ende ein verdienter und weitgehend ungefährdeter Heimsieg."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "53dfc3d393b8",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4ee24ed3e971",
+									"_type": "span",
+									"marks": [],
+									"text": "Trainer "
+								},
+								{
+									"_key": "e456da343d80",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Michael Lehmann"
+								},
+								{
+									"_key": "ca35f577abdb",
+									"_type": "span",
+									"marks": [],
+									"text": " zeigte sich mit dem Auftritt seiner Mannschaft zufrieden, sah aber weiterhin Verbesserungspotenzial:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "8b7ec1c26ce3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "b1ba234bc131",
+									"_type": "span",
+									"marks": [],
+									"text": "„Wie schon in Rengsdorf waren unsere Tore sehr schön herausgespielt. Allerdings müssen wir aus unseren vielen Möglichkeiten noch mehr Treffer machen – daran werden wir weiter arbeiten. Die Mentalität der Mannschaft stimmt absolut. Wir haben unsere ersten beiden Ligaspiele gewonnen und wollen diesen Weg in den kommenden Partien natürlich fortsetzen.“"
+								}
+							],
+							"markDefs": [],
+							"style": "blockquote"
+						},
+						{
+							"_key": "33873ea47811",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9a89e88eada0",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach dem 3:2-Auswärtssieg in Rengsdorf hat die TSG nun auch das erste Liga-Heimspiel für sich entschieden. Mit sechs Punkten aus den ersten beiden Begegnungen ist der Start in die neue Saison gelungen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "7b923e8904d0",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "5c86e303cb66",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a30a2162ae10",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Auswärtsspiel am Wasserturm"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "bf3ed81d3d72",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "db85b137d7bf",
+									"_type": "span",
+									"marks": [],
+									"text": "Am kommenden "
+								},
+								{
+									"_key": "d8fc40035c02",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Sonntag"
+								},
+								{
+									"_key": "a8c96d22382e",
+									"_type": "span",
+									"marks": [],
+									"text": " steht für die TSG das zweite Auswärtsspiel der Saison an. Am Wasserturm trifft die Mannschaft um "
+								},
+								{
+									"_key": "1286489df252",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "12:00 Uhr"
+								},
+								{
+									"_key": "7659c758e663",
+									"_type": "span",
+									"marks": [],
+									"text": " auf den "
+								},
+								{
+									"_key": "d914c0faa0f1",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "FV Engers III"
+								},
+								{
+									"_key": "8553f5471823",
+									"_type": "span",
+									"marks": [],
+									"text": ". Die Gastgeber konnten aus ihren ersten beiden Ligaspielen drei Punkte holen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "5dcfad7ef97b",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "022e22929c6c",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG möchte an den erfolgreichen Saisonstart anknüpfen und auch in Engers etwas Zählbares mitnehmen. "
+								},
+								{
+									"_key": "1789d17ddddf",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Wir freuen uns auf ein spannendes Duell und auf eure Unterstützung am Wasserturm!"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "senioren",
+					"title": "Senioren"
+				},
+				{
+					"slug": "fussball",
+					"title": "Fußball"
+				}
+			],
+			"excerpt": "Die TSG Irlich hat auch ihr zweites Ligaspiel gewonnen. Gegen die Zweitvertretung des VfL Oberbieber setzte sich die TSG verdient mit 3:1 (1:0) durch.",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Gemeinsamer Jubel nach dem Heimsieg",
+				"asset": {
+					"_ref": "image-7b0d4817ae2caca98573501e5259f6bd691684e1-3024x4032-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0.22305480526269933,
+					"left": 0,
+					"right": 0,
+					"top": 0.34015857802561644
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.29737736342249715,
+					"width": 0.8364221144126764,
+					"x": 0.49628232078210627,
+					"y": 0.5669164415788097
+				}
+			},
+			"meta": {
+				"metaDescription": "Die TSG Irlich hat auch ihr zweites Ligaspiel gewonnen. Gegen die Zweitvertretung des VfL Oberbieber setzte sich die TSG verdient mit 3:1 (1:0) durch.",
+				"metaTitle": null,
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-08-21T15:07:27.430Z",
+			"slug": "heimsieg-oberbieber",
+			"title": "Souveräner Heimsieg – TSG schlägt Oberbieber II mit 3:1 "
+		},
+		"syncTags": ["s1:Ik/M0w", "s1:QA6cwA", "s1:uv+Zzg", "s1:c5Grjg"],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22heimsieg-oberbieber%22&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+}

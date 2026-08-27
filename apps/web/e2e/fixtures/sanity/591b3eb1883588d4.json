@@ -1,0 +1,372 @@
+{
+	"body": {
+		"result": {
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "a151d7558be6",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "fd980d1b8f99",
+								"_type": "span",
+								"marks": [],
+								"text": "Die B-Junioren befinden sich körperlich fast voll ausgebildet im \"zweiten goldenen Lernalter\". Meist verfügen die Spieler über hohe Lern- und Leistungsbereitschaft und sind im Begriff, eine eigene Persönlichkeit zu entwickeln."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "c25b9216f39a",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "fd980d1b8f99",
+								"_type": "span",
+								"marks": [],
+								"text": "Im Training werden zunehmend komplexere Spiel- und Übungsformen zur taktischen und technischen Verfeinerung angewendet. Ein Ziel ist Technikverfeinerung mit Tempo-, Zeit- und Gegnerdruck. Im Zuge der Entwicklung kristallisieren sich die ersten Führungsspieler der Mannschaft heraus, die auch als Bindeglied zwischen Team und Trainerteam agieren können."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "B-Junioren der JSG Feldkirchen/Irlich in Fußballtrikots jubelnd in der Kabine",
+				"asset": {
+					"_ref": "image-ec2668c896cb38739dd427020ebd9c40de3ba6fe-4512x3000-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0.06728563950984337,
+					"left": 0.014547993831650615,
+					"right": 0.016366493060606942,
+					"top": 0.04102562264363456
+				},
+				"description": "Die B-Junioren der JSG Feldkirchen/Irlich",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.6458596934174197,
+					"width": 0.9690855131077425,
+					"x": 0.49909075038552186,
+					"y": 0.37151538977146303
+				}
+			},
+			"images": [
+				{
+					"_key": "bd01f31e3ad0",
+					"_type": "extendedImage",
+					"alt": "Teamfoto B-Jugend",
+					"asset": {
+						"_ref": "image-ec2668c896cb38739dd427020ebd9c40de3ba6fe-4512x3000-jpg",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "0405e151eea4",
+					"_type": "extendedImage",
+					"alt": "U17-Spieler passt den Ball",
+					"asset": {
+						"_ref": "image-0b1fb4fa35893e56f2121ffac29b24ef66e30578-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8636324895593624,
+						"width": 0.6036251029858801,
+						"x": 0.5618199380664224,
+						"y": 0.45908974686780873
+					}
+				},
+				{
+					"_key": "fe675f2ea05d",
+					"_type": "extendedImage",
+					"alt": "Torabschluss der U17",
+					"asset": {
+						"_ref": "image-c8bced2ddebf71c683617e9d743bba54989dacec-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6454444728543425,
+						"width": 0.6690815079973863,
+						"x": 0.33454075399869315,
+						"y": 0.456362396658996
+					}
+				}
+			],
+			"meta": {
+				"metaDescription": "B-Jugend TSG Irlich: Technikverfeinerung unter Tempo- und Gegnerdruck. Komplexe taktische Spielformen fördern Persönlichkeit und Führungsqualitäten.",
+				"metaTitle": "Die B-Jugend der JSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die B-Jugend der JSG Irlich, einschließlich Trainer, posiert für ein Gruppenfoto auf einem grünen Feld.",
+					"asset": {
+						"_ref": "image-ec2668c896cb38739dd427020ebd9c40de3ba6fe-4512x3000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.43699403915505064,
+						"width": 0.9492656886229677,
+						"x": 0.5078764010400353,
+						"y": 0.4150880026738879
+					}
+				}
+			},
+			"title": "B-Jugend",
+			"training": {
+				"trainingDescription": null,
+				"trainingTimes": [
+					{
+						"_key": "33cb51c48ed9",
+						"_type": "trainingTime",
+						"endTime": "18:45",
+						"season": "summer",
+						"startTime": "17:15",
+						"venue": {
+							"_createdAt": "2024-09-20T10:50:08Z",
+							"_id": "9918d3c2-b4db-44c8-9075-9496cefc74f5",
+							"_rev": "FGdPcw6oZ4f5ikxTPQ5UcC",
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "5f2f04bdd35f",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "1a3c3f64fd970",
+												"_type": "span",
+												"marks": [],
+												"text": "Der Sportplatz in Hüllenberg ist ein Naturrasenplatz am ruhigen Ortsrand. Direkt am Platz befindet sich das Vereinslokal des SV Hüllenberg, das \"Clubhaus am Sportplatz\". Hier können Besucher nach dem Spiel oder Training einkehren. In den Sommermonaten ist der Sportplatz Hüllenberg Spiel- und Trainingsort der JSG-Teams."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "10",
+								"name": "Sportplatz Hüllenberg",
+								"street": "Windhauser Weg",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Der Naturrasenplatz des SV in Hüllenberg",
+								"asset": {
+									"_ref": "image-ad6c7d5eff1260a35da18257e5e2a77be3c3a33d-4000x2250-jpg",
+									"_type": "reference"
+								}
+							},
+							"title": "Sportplatz Hüllenberg",
+							"type": "grass"
+						},
+						"weekday": "tuesday"
+					},
+					{
+						"_key": "4c16f6cc5a5c",
+						"_type": "trainingTime",
+						"endTime": "18:45",
+						"season": "summer",
+						"startTime": "17:15",
+						"venue": {
+							"_createdAt": "2024-09-20T10:50:08Z",
+							"_id": "9918d3c2-b4db-44c8-9075-9496cefc74f5",
+							"_rev": "FGdPcw6oZ4f5ikxTPQ5UcC",
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "5f2f04bdd35f",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "1a3c3f64fd970",
+												"_type": "span",
+												"marks": [],
+												"text": "Der Sportplatz in Hüllenberg ist ein Naturrasenplatz am ruhigen Ortsrand. Direkt am Platz befindet sich das Vereinslokal des SV Hüllenberg, das \"Clubhaus am Sportplatz\". Hier können Besucher nach dem Spiel oder Training einkehren. In den Sommermonaten ist der Sportplatz Hüllenberg Spiel- und Trainingsort der JSG-Teams."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "10",
+								"name": "Sportplatz Hüllenberg",
+								"street": "Windhauser Weg",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Der Naturrasenplatz des SV in Hüllenberg",
+								"asset": {
+									"_ref": "image-ad6c7d5eff1260a35da18257e5e2a77be3c3a33d-4000x2250-jpg",
+									"_type": "reference"
+								}
+							},
+							"title": "Sportplatz Hüllenberg",
+							"type": "grass"
+						},
+						"weekday": "thursday"
+					},
+					{
+						"_key": "65c3c74c1181",
+						"_type": "trainingTime",
+						"endTime": "20:00",
+						"season": "winter",
+						"startTime": "18:30",
+						"venue": {
+							"_createdAt": "2024-09-20T10:51:19Z",
+							"_id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+							"_rev": "dtJXu1REiVbNFr2bYfpcdI",
+							"_system": {
+								"base": {
+									"id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+									"rev": "y6qAFx3KEt65PvSAGze7lj"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "2d364aa6e545",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "a23c592ffa610",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Turnhalle der Robert-Krups-Schule in Neuwied ist eine großzügige Geräteturnhalle, die Teil der kooperativen Realschule ist. Mit Maßen von 18 x 33 Metern bietet sie ausreichend Platz für vielfältige sportliche Aktivitäten und Veranstaltungen. Die moderne Ausstattung und die großzügige Fläche machen sie zu einem idealen Ort für den Sportunterricht und Vereinssport. Nach der Generalsanierung, die fast 2 Mio. Euro kostete und in einer rekordverdächtigen Bauzeit von nur 16 Monaten abgeschlossen wurde, wurde die Turnhalle im November 2016 wiedereröffnet."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "21",
+								"name": "Turnhalle Robert-Krups-Schule Irlich",
+								"street": "Marienstraße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion",
+								"asset": {
+									"_ref": "image-c6ce126a8971e3f1fada153c0cf6698a8bbbdef2-4000x2250-jpg",
+									"_type": "reference"
+								},
+								"description": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion"
+							},
+							"title": "Turnhalle Robert-Krups-Schule",
+							"type": "hall-2"
+						},
+						"weekday": "tuesday"
+					},
+					{
+						"_key": "070dfa01ce87",
+						"_type": "trainingTime",
+						"endTime": "20:00",
+						"season": "winter",
+						"startTime": "18:30",
+						"venue": {
+							"_createdAt": "2024-09-20T10:51:19Z",
+							"_id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+							"_rev": "dtJXu1REiVbNFr2bYfpcdI",
+							"_system": {
+								"base": {
+									"id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+									"rev": "y6qAFx3KEt65PvSAGze7lj"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-08-26T07:54:56Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "2d364aa6e545",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "a23c592ffa610",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Turnhalle der Robert-Krups-Schule in Neuwied ist eine großzügige Geräteturnhalle, die Teil der kooperativen Realschule ist. Mit Maßen von 18 x 33 Metern bietet sie ausreichend Platz für vielfältige sportliche Aktivitäten und Veranstaltungen. Die moderne Ausstattung und die großzügige Fläche machen sie zu einem idealen Ort für den Sportunterricht und Vereinssport. Nach der Generalsanierung, die fast 2 Mio. Euro kostete und in einer rekordverdächtigen Bauzeit von nur 16 Monaten abgeschlossen wurde, wurde die Turnhalle im November 2016 wiedereröffnet."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "21",
+								"name": "Turnhalle Robert-Krups-Schule Irlich",
+								"street": "Marienstraße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion",
+								"asset": {
+									"_ref": "image-c6ce126a8971e3f1fada153c0cf6698a8bbbdef2-4000x2250-jpg",
+									"_type": "reference"
+								},
+								"description": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion"
+							},
+							"title": "Turnhalle Robert-Krups-Schule",
+							"type": "hall-2"
+						},
+						"weekday": "thursday"
+					}
+				]
+			}
+		},
+		"syncTags": ["s1:s2qc/Q", "s1:Gi+weg", "s1:vKMQtw"],
+		"ms": 7
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24groupType=%22group.soccer%22&%24slug=%22b-jugend%22&returnQuery=false"
+}

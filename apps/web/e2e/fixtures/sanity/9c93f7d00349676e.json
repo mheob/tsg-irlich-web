@@ -1,0 +1,32 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2024-06-22T09:37:10Z",
+			"_id": "singleGroupPage",
+			"_rev": "iXFi0dmSD9bydBwpfJgnCe",
+			"_system": {
+				"base": {
+					"id": "singleGroupPage",
+					"rev": "DsTYbjVoduiX0PPPquQnQ9"
+				}
+			},
+			"_type": "singleGroupPage",
+			"_updatedAt": "2025-08-30T14:43:26Z",
+			"content": {
+				"contactPersonsSection": {
+					"intro": "Du hast Fragen rund um diesen Sportbereich? Kein Problem – unsere Verantwortlichen sind  für dich da! Egal ob du Infos zu Trainingszeiten brauchst, wissen willst, ob das Angebot zu dir passt, oder einfach neugierig bist: Melde dich gern direkt bei uns. Wir freuen uns auf deine Nachricht!",
+					"subtitle": "Ansprechpartner",
+					"title": "Dein Kontakt"
+				},
+				"trainingSection": {
+					"title": "Trainingszeiten und -orte"
+				}
+			},
+			"subtitle": "Wir bieten dir",
+			"title": "Angebote"
+		},
+		"syncTags": ["s1:ZEP+uQ"],
+		"ms": 4
+	},
+	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27singleGroupPage%27%5D%5B0%5D&returnQuery=false"
+}

@@ -1,0 +1,64 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2024-06-21T18:46:50Z",
+			"_id": "groupsPage",
+			"_rev": "dtJXu1REiVbNFr2bYflrtp",
+			"_system": {
+				"base": {
+					"id": "groupsPage",
+					"rev": "ksNw5HcyoyerJUQoIxwMtO"
+				}
+			},
+			"_type": "groupsPage",
+			"_updatedAt": "2026-01-03T16:07:41Z",
+			"content": {
+				"contactPersonsSection": {
+					"intro": "Du hast Fragen rund um diesen Sportbereich? Kein Problem – unsere Abteilungsleitung ist für dich da! Egal ob du Infos zu Trainingszeiten brauchst, wissen willst, ob das Angebot zu dir passt, oder einfach neugierig bist: Melde dich gern direkt bei uns. Wir freuen uns auf deine Nachricht!",
+					"subtitle": "Ansprechpartner",
+					"title": "Kontakt zu unserer Abteilungsleitung"
+				},
+				"groupsSection": {
+					"intro": "Für Jedermann, der sich gerne bewegt und mit Menschen zusammen ist. Egal ob im Breitensport, beim gemütlichen Beisammensein oder dem leistungsorientierten Sport. In über 18 verschiedenen Sportarten bieten wir dir alles, was du benötigst.",
+					"subtitle": "In diesem Bereich",
+					"title": "Unser Bereich"
+				},
+				"stats": [
+					{
+						"_key": "40d4a28f5866",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "Fußball-Teams",
+						"value": 10
+					},
+					{
+						"_key": "512c6655bfdc",
+						"_type": "stats",
+						"title": "Breitensportgruppen ",
+						"value": 20
+					},
+					{
+						"_key": "7bd41fbb5755",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "aktive Kinder / Jugendliche",
+						"value": 250
+					},
+					{
+						"_key": "decc26209366",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "aktive Sportler ",
+						"value": 420
+					}
+				]
+			},
+			"metaDescription": "Für jede Person, die sich gerne bewegt und mit Menschen zusammen ist. Egal ob im Breitensport, Leistungssport oder beim gemütlichen Beisammensein.",
+			"subtitle": "Wir bieten dir",
+			"title": "Bereich:"
+		},
+		"syncTags": ["s1:yk6Q2Q"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27groupsPage%27%5D%5B0%5D&returnQuery=false"
+}

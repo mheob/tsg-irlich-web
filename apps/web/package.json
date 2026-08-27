@@ -6,12 +6,17 @@
 	"scripts": {
 		"build": "next build",
 		"dev": "next dev",
+		"e2e:browsers": "playwright install --with-deps chromium webkit",
+		"e2e:record": "E2E_RECORD=1 playwright test --project=chromium",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"lint:github": "oxlint --format=github",
 		"start": "next start",
 		"test": "vitest run",
 		"test:coverage": "vitest run --coverage",
+		"test:e2e": "playwright test",
+		"test:e2e:preview": "playwright test --config playwright.preview.config.ts",
+		"test:e2e:ui": "playwright test --ui",
 		"test:watch": "vitest",
 		"typecheck": "tsc --noEmit",
 		"typegen:routes": "next typegen && tsc --noEmit",
@@ -43,6 +48,7 @@
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.62.1",
 		"@testing-library/react": "^16.3.2",
 		"@testing-library/user-event": "^14.6.6",
 		"@types/node": "^24.13.3",
@@ -51,6 +57,7 @@
 		"@vitejs/plugin-react": "^6.1.0",
 		"@vitest/coverage-v8": "^4.1.11",
 		"jsdom": "^30.0.1",
+		"msw": "^2.15.0",
 		"oxlint": "^1.80.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"postcss": "^8.5.26",

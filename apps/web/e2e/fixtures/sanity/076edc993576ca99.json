@@ -1,0 +1,56 @@
+{
+	"body": {
+		"result": {
+			"mainNavigation": [
+				{
+					"_key": "e67d3415723b",
+					"link": {
+						"_type": "home",
+						"category": null,
+						"slug": "home"
+					},
+					"title": "Home"
+				},
+				{
+					"_key": "3ec68f9c2d7e",
+					"link": {
+						"_type": "aboutUs",
+						"category": null,
+						"slug": "verein"
+					},
+					"title": "Verein"
+				},
+				{
+					"_key": "908f94712108",
+					"link": {
+						"_type": "departmentsPage",
+						"category": null,
+						"slug": "angebot"
+					},
+					"title": "Angebot"
+				},
+				{
+					"_key": "e7ad8bed787c",
+					"link": {
+						"_type": "newsOverview",
+						"category": null,
+						"slug": "news"
+					},
+					"title": "Aktuelles"
+				},
+				{
+					"_key": "0f273d2b52be",
+					"link": {
+						"_type": "membership",
+						"category": null,
+						"slug": "mitgliedschaft"
+					},
+					"title": "Mitgliedschaft"
+				}
+			]
+		},
+		"syncTags": ["s1:Mvlp1g", "s1:u8DZ7g", "s1:DjTpKA", "s1:GHyXfA", "s1:SypkIg", "s1:RTKmCw"],
+		"ms": 12
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27site-settings%27%5D%5B0%5D+%7B%0A%09%09mainNavigation%5B%5D+%7B%0A%09%09%09_key%2C%0A%09%09%09%22link%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D%2C%0A%09%09%09title%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
+}

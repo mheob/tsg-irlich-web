@@ -1,0 +1,23 @@
+{
+	"body": {
+		"result": {
+			"meta": {
+				"metaDescription": "Die Herrenfußballer sind Hobby-Fußballer, die sich in der Regel zwei mal wöchentlich zum Training treffen und am Wochenende am Spielbetrieb des FV Rheinland teilnehmen. ",
+				"metaTitle": null,
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die Senioren-Fußballer der TSG im Pappelstadion",
+					"asset": {
+						"_ref": "image-a6abf54daebf1b59f4d2d9ffef90e5453ba2e17b-6000x4000-jpg",
+						"_type": "reference"
+					}
+				}
+			},
+			"slug": "senioren",
+			"title": "Senioren"
+		},
+		"syncTags": ["s1:MZ0Z8g"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.category%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%0A%09%7D%0A&%24slug=%22senioren%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

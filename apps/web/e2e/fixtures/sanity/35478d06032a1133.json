@@ -1,0 +1,2007 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2024-06-09T14:47:23Z",
+			"_id": "privacy",
+			"_rev": "FGdPcw6oZ4f5ikxTPQ5UaQ",
+			"_system": {
+				"base": {
+					"id": "privacy",
+					"rev": "0SZDKdrK59hVKpDvRf7eBV"
+				}
+			},
+			"_type": "privacy",
+			"_updatedAt": "2026-08-26T07:54:56Z",
+			"address": "TSG Irlich 1882 e. V.\nGotenstraße 20\n56567 Neuwied",
+			"content": {
+				"_type": "blockContent",
+				"text": [
+					{
+						"_key": "f7ee04966332",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b1859e809986",
+								"_type": "span",
+								"marks": [],
+								"text": "1. Datenschutz auf einen Blick"
+							}
+						],
+						"markDefs": [],
+						"style": "h2"
+					},
+					{
+						"_key": "4e9499971f4b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b1859e809986",
+								"_type": "span",
+								"marks": [],
+								"text": "Allgemeine Hinweise"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "d95e6df1dfff",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b1859e809986",
+								"_type": "span",
+								"marks": [],
+								"text": "Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen Sie unserer unter diesem Text aufgeführten Datenschutzerklärung."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "886363801e6f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": [],
+								"text": "Datenerfassung auf dieser Website"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "3920ac5a1e8f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "Wer ist verantwortlich für die Datenerfassung auf dieser Website?"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "e5dcc30fa43a",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": [],
+								"text": "Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt „Hinweis zur verantwortlichen Stelle“ in dieser Datenschutzerklärung entnehmen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "f9436c06170e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "Wie erfassen wir Ihre Daten?"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "4d11dd9d0267",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": [],
+								"text": "Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in ein Kontaktformular eingeben."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "40ca4f338dd1",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": [],
+								"text": "Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie diese Website betreten."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "2be9d95e1d6b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "Wofür nutzen wir Ihre Daten?"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "0aeec76ee429",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": [],
+								"text": "Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden. Sofern über die Website Verträge geschlossen oder angebahnt werden können, werden die übermittelten Daten auch für Vertragsangebote, Bestellungen oder sonstige Auftragsanfragen verarbeitet."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "1a60f6b7eb4f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "Welche Rechte haben Sie bezüglich Ihrer Daten?"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "cfd1af6c9012",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": [],
+								"text": "Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Außerdem haben Sie das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Des Weiteren steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "f8619fd81dd6",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "4f0c00ba299c",
+								"_type": "span",
+								"marks": [],
+								"text": "Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit an uns wenden."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "d73958ebd606",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "0f0e33fabedb",
+								"_type": "span",
+								"marks": [],
+								"text": "2. Hosting"
+							}
+						],
+						"markDefs": [],
+						"style": "h2"
+					},
+					{
+						"_key": "107a8c514e63",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "0f0e33fabedb",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir hosten die Inhalte unserer Website bei folgendem Anbieter:"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "94bab1cf9c2d",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "0f0e33fabedb",
+								"_type": "span",
+								"marks": [],
+								"text": "Externes Hosting"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "bf95d2df60f5",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "0f0e33fabedb",
+								"_type": "span",
+								"marks": [],
+								"text": "Diese Website wird extern gehostet. Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters/der Hoster gespeichert. Hierbei kann es sich v. a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten, Vertragsdaten, Kontaktdaten, Namen, Websitezugriffe und sonstige Daten, die über eine Website generiert werden, handeln."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "539478f3f260",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "0f0e33fabedb",
+								"_type": "span",
+								"marks": [],
+								"text": "Das externe Hosting erfolgt zum Zwecke der Vertragserfüllung gegenüber unseren potenziellen und bestehenden Kunden (Art. 6 Abs. 1 lit. b DSGVO) und im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots durch einen professionellen Anbieter (Art. 6 Abs. 1 lit. f DSGVO). Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "45004324cd4a",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "68c3d6675053",
+								"_type": "span",
+								"marks": [],
+								"text": "Unser(e) Hoster wird bzw. werden Ihre Daten nur insoweit verarbeiten, wie dies zur Erfüllung seiner Leistungspflichten erforderlich ist, und unsere Weisungen in Bezug auf diese Daten befolgen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "8a73ab6f3562",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "1d96bb2b502e",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir setzen folgende(n) Hoster ein:"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "85bc8acbaf33",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "1d96bb2b502e",
+								"_type": "span",
+								"marks": [],
+								"text": "Vercel Inc.\n440 N Barranca Ave #4133\nCovina, CA 91723\nUSA"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "d2190c9e541f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "1d96bb2b502e",
+								"_type": "span",
+								"marks": [],
+								"text": "---"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "cc85368be977",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "1d96bb2b502e",
+								"_type": "span",
+								"marks": [],
+								"text": "Sanity AS\nTrondheimsveien 2K\n0560 Oslo, Norwegen\n"
+							},
+							{
+								"_key": "e0470c215ef0",
+								"_type": "span",
+								"marks": ["88bc622702f8"],
+								"text": "privacy@sanity.io"
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "88bc622702f8",
+								"_type": "externalLink",
+								"href": "mailto:privacy@sanity.io"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "ad8d461c9e60",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "1d96bb2b502e",
+								"_type": "span",
+								"marks": [],
+								"text": "Auftragsverarbeitung"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "0c265abc020c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "1d96bb2b502e",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir haben einen Vertrag über Auftragsverarbeitung (AVV) zur Nutzung des oben genannten Dienstes geschlossen. Hierbei handelt es sich um einen datenschutzrechtlich vorgeschriebenen Vertrag, der gewährleistet, dass dieser die personenbezogenen Daten unserer Websitebesucher nur nach unseren Weisungen und unter Einhaltung der DSGVO verarbeitet."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "111fe5d0d032",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "67c1f9b2d8d4",
+								"_type": "span",
+								"marks": [],
+								"text": "3. Allgemeine Hinweise und Pflichtinformationen"
+							}
+						],
+						"markDefs": [],
+						"style": "h2"
+					},
+					{
+						"_key": "96c62abcca27",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "67c1f9b2d8d4",
+								"_type": "span",
+								"marks": [],
+								"text": "Datenschutz"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "1bea814b96c0",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "67c1f9b2d8d4",
+								"_type": "span",
+								"marks": [],
+								"text": "Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "1a69f8c8b9bb",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "67c1f9b2d8d4",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie diese Website benutzen, werden verschiedene personenbezogene Daten erhoben. Personenbezogene Daten sind Daten, mit denen Sie persönlich identifiziert werden können. Die vorliegende Datenschutzerklärung erläutert, welche Daten wir erheben und wofür wir sie nutzen. Sie erläutert auch, wie und zu welchem Zweck das geschieht."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "a1e3ff37b2ee",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "67c1f9b2d8d4",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir weisen darauf hin, dass die Datenübertragung im Internet (z. B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "1c5e0b7e039f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "67c1f9b2d8d4",
+								"_type": "span",
+								"marks": [],
+								"text": "Hinweis zur verantwortlichen Stelle"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "0d4de61f05e8",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "67c1f9b2d8d4",
+								"_type": "span",
+								"marks": [],
+								"text": "Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "262670c144ac",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "67c1f9b2d8d4",
+								"_type": "span",
+								"marks": [],
+								"text": "TSG Irlich 1882 e. V.\nGotenstraße 20\n56567 Neuwied\nE-Mail: "
+							},
+							{
+								"_key": "c77f066c4fe6",
+								"_type": "span",
+								"marks": ["12eff4da1a90"],
+								"text": "info@tsg-irlich.de"
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "12eff4da1a90",
+								"_type": "externalLink",
+								"href": "mailto:info@tsg-irlich.de"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "2db580183f57",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "67c1f9b2d8d4",
+								"_type": "span",
+								"marks": [],
+								"text": "Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z. B. Namen, E-Mail-Adressen o. Ä.) entscheidet."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "82b4659c9770",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "faaa1d000632",
+								"_type": "span",
+								"marks": [],
+								"text": "Speicherdauer"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "3e6c6e725bff",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "faaa1d000632",
+								"_type": "span",
+								"marks": [],
+								"text": "Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für die Speicherung Ihrer personenbezogenen Daten haben (z. B. steuer- oder handelsrechtliche Aufbewahrungsfristen); im letztgenannten Fall erfolgt die Löschung nach Fortfall dieser Gründe."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "72928babcfbe",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "faaa1d000632",
+								"_type": "span",
+								"marks": [],
+								"text": "Allgemeine Hinweise zu den Rechtsgrundlagen der Datenverarbeitung auf dieser Website"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "61c4734a5d73",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "faaa1d000632",
+								"_type": "span",
+								"marks": [],
+								"text": "Sofern Sie in die Datenverarbeitung eingewilligt haben, verarbeiten wir Ihre personenbezogenen Daten auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO bzw. Art. 9 Abs. 2 lit. a DSGVO, sofern besondere Datenkategorien nach Art. 9 Abs. 1 DSGVO verarbeitet werden. Im Falle einer ausdrücklichen Einwilligung in die Übertragung personenbezogener Daten in Drittstaaten erfolgt die Datenverarbeitung außerdem auf Grundlage von Art. 49 Abs. 1 lit. a DSGVO. Sofern Sie in die Speicherung von Cookies oder in den Zugriff auf Informationen in Ihr Endgerät (z. B. via Device-Fingerprinting) eingewilligt haben, erfolgt die Datenverarbeitung zusätzlich auf Grundlage von § 25 Abs. 1 TDDDG. Die Einwilligung ist jederzeit widerrufbar. Sind Ihre Daten zur Vertragserfüllung oder zur Durchführung vorvertraglicher Maßnahmen erforderlich, verarbeiten wir Ihre Daten auf Grundlage des Art. 6 Abs. 1 lit. b DSGVO. Des Weiteren verarbeiten wir Ihre Daten, sofern diese zur Erfüllung einer rechtlichen Verpflichtung erforderlich sind, auf Grundlage von Art. 6 Abs. 1 lit. c DSGVO. Die Datenverarbeitung kann ferner auf Grundlage unseres berechtigten Interesses nach Art. 6 Abs. 1 lit. f DSGVO erfolgen. Über die jeweils im Einzelfall einschlägigen Rechtsgrundlagen wird in den folgenden Absätzen dieser Datenschutzerklärung informiert."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "6c3339548ad3",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "faaa1d000632",
+								"_type": "span",
+								"marks": [],
+								"text": "Empfänger von personenbezogenen Daten"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "844591f18d3f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "faaa1d000632",
+								"_type": "span",
+								"marks": [],
+								"text": "Im Rahmen unserer Geschäftstätigkeit arbeiten wir mit verschiedenen externen Stellen zusammen. Dabei ist teilweise auch eine Übermittlung von personenbezogenen Daten an diese externen Stellen erforderlich. Wir geben personenbezogene Daten nur dann an externe Stellen weiter, wenn dies im Rahmen einer Vertragserfüllung erforderlich ist, wenn wir gesetzlich hierzu verpflichtet sind (z. B. Weitergabe von Daten an Steuerbehörden), wenn wir ein berechtigtes Interesse nach Art. 6 Abs. 1 lit. f DSGVO an der Weitergabe haben oder wenn eine sonstige Rechtsgrundlage die Datenweitergabe erlaubt. Beim Einsatz von Auftragsverarbeitern geben wir personenbezogene Daten unserer Kunden nur auf Grundlage eines gültigen Vertrags über Auftragsverarbeitung weiter. Im Falle einer gemeinsamen Verarbeitung wird ein Vertrag über gemeinsame Verarbeitung geschlossen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "6926c88ec566",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "faaa1d000632",
+								"_type": "span",
+								"marks": [],
+								"text": "Widerruf Ihrer Einwilligung zur Datenverarbeitung"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "6c790e6a4483",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "faaa1d000632",
+								"_type": "span",
+								"marks": [],
+								"text": "Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "4292e12e34a8",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "faaa1d000632",
+								"_type": "span",
+								"marks": [],
+								"text": "Widerspruchsrecht gegen die Datenerhebung in besonderen Fällen sowie gegen Direktwerbung (Art. 21 DSGVO)"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "9eeedac3584f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "ff23f3bc7db9",
+								"_type": "span",
+								"marks": [],
+								"text": "WENN DIE DATENVERARBEITUNG AUF GRUNDLAGE VON ART. 6 ABS. 1 LIT. E ODER F DSGVO ERFOLGT, HABEN SIE JEDERZEIT DAS RECHT, AUS GRÜNDEN, DIE SICH AUS IHRER BESONDEREN SITUATION ERGEBEN, GEGEN DIE VERARBEITUNG IHRER PERSONENBEZOGENEN DATEN WIDERSPRUCH EINZULEGEN; DIES GILT AUCH FÜR EIN AUF DIESE BESTIMMUNGEN GESTÜTZTES PROFILING. DIE JEWEILIGE RECHTSGRUNDLAGE, AUF DENEN EINE VERARBEITUNG BERUHT, ENTNEHMEN SIE DIESER DATENSCHUTZERKLÄRUNG. WENN SIE WIDERSPRUCH EINLEGEN, WERDEN WIR IHRE BETROFFENEN PERSONENBEZOGENEN DATEN NICHT MEHR VERARBEITEN, ES SEI DENN, WIR KÖNNEN ZWINGENDE SCHUTZWÜRDIGE GRÜNDE FÜR DIE VERARBEITUNG NACHWEISEN, DIE IHRE INTERESSEN, RECHTE UND FREIHEITEN ÜBERWIEGEN ODER DIE VERARBEITUNG DIENT DER GELTENDMACHUNG, AUSÜBUNG ODER VERTEIDIGUNG VON RECHTSANSPRÜCHEN (WIDERSPRUCH NACH ART. 21 ABS. 1 DSGVO)."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "8d6c0b834ddd",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "03918a726652",
+								"_type": "span",
+								"marks": [],
+								"text": "WERDEN IHRE PERSONENBEZOGENEN DATEN VERARBEITET, UM DIREKTWERBUNG ZU BETREIBEN, SO HABEN SIE DAS RECHT, JEDERZEIT WIDERSPRUCH GEGEN DIE VERARBEITUNG SIE BETREFFENDER PERSONENBEZOGENER DATEN ZUM ZWECKE DERARTIGER WERBUNG EINZULEGEN; DIES GILT AUCH FÜR DAS PROFILING, SOWEIT ES MIT SOLCHER DIREKTWERBUNG IN VERBINDUNG STEHT. WENN SIE WIDERSPRECHEN, WERDEN IHRE PERSONENBEZOGENEN DATEN ANSCHLIESSEND NICHT MEHR ZUM ZWECKE DER DIREKTWERBUNG VERWENDET (WIDERSPRUCH NACH ART. 21 ABS. 2 DSGVO)."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "20040f7c01e7",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Beschwerderecht bei der zuständigen Aufsichtsbehörde"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "af8e9500181c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu. Das Beschwerderecht besteht unbeschadet anderweitiger verwaltungsrechtlicher oder gerichtlicher Rechtsbehelfe."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "e967ed7ee6ae",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Recht auf Datenübertragbarkeit"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "1a5202c36cd8",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Sie haben das Recht, Daten, die wir auf Grundlage Ihrer Einwilligung oder in Erfüllung eines Vertrags automatisiert verarbeiten, an sich oder an einen Dritten in einem gängigen, maschinenlesbaren Format aushändigen zu lassen. Sofern Sie die direkte Übertragung der Daten an einen anderen Verantwortlichen verlangen, erfolgt dies nur, soweit es technisch machbar ist."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "ed05b53c7588",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Auskunft, Berichtigung und Löschung"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "dc1f26e431e3",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung und ggf. ein Recht auf Berichtigung oder Löschung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten können Sie sich jederzeit an uns wenden."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "3819f0b9ee9b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Recht auf Einschränkung der Verarbeitung"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "f5a5c6874880",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Sie haben das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Hierzu können Sie sich jederzeit an uns wenden. Das Recht auf Einschränkung der Verarbeitung besteht in folgenden Fällen:"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "a7e6f8a56b03",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie die Richtigkeit Ihrer bei uns gespeicherten personenbezogenen Daten bestreiten, benötigen wir in der Regel Zeit, um dies zu überprüfen. Für die Dauer der Prüfung haben Sie das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen."
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "13225750c8ae",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn die Verarbeitung Ihrer personenbezogenen Daten unrechtmäßig geschah/geschieht, können Sie statt der Löschung die Einschränkung der Datenverarbeitung verlangen."
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "6ff6690b4b6b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn wir Ihre personenbezogenen Daten nicht mehr benötigen, Sie sie jedoch zur Ausübung, Verteidigung oder Geltendmachung von Rechtsansprüchen benötigen, haben Sie das Recht, statt der Löschung die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen."
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "93c50946e03e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f53836308101",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie einen Widerspruch nach Art. 21 Abs. 1 DSGVO eingelegt haben, muss eine Abwägung zwischen Ihren und unseren Interessen vorgenommen werden. Solange noch nicht feststeht, wessen Interessen überwiegen, haben Sie das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen."
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "8cc39f9f9dbd",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "076ac62a8298",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie die Verarbeitung Ihrer personenbezogenen Daten eingeschränkt haben, dürfen diese Daten – von ihrer Speicherung abgesehen – nur mit Ihrer Einwilligung oder zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen oder zum Schutz der Rechte einer anderen natürlichen oder juristischen Person oder aus Gründen eines wichtigen öffentlichen Interesses der Europäischen Union oder eines Mitgliedstaats verarbeitet werden."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "359eafeee27c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "2b70c3fd6d6e",
+								"_type": "span",
+								"marks": [],
+								"text": "SSL- bzw. TLS-Verschlüsselung"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "88088196034a",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "2b70c3fd6d6e",
+								"_type": "span",
+								"marks": [],
+								"text": "Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL- bzw. TLSVerschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://“ auf „https://“ wechselt und an dem Schloss-Symbol in Ihrer Browserzeile."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "25f75e90bff7",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "2b70c3fd6d6e",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn die SSL- bzw. TLS-Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "1608c40dc0a0",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "4. Datenerfassung auf dieser Website"
+							}
+						],
+						"markDefs": [],
+						"style": "h2"
+					},
+					{
+						"_key": "01c4abb9bde2",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Server-Log-Dateien"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "7c0c8bcbd6f5",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind:"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "ca505c5af9ed",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Browsertyp und Browserversion"
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "7d3658bcfbcf",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "verwendetes Betriebssystem"
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "f4445f54316f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Referrer-URL"
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "f1f612a80d87",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Hostname des zugreifenden Rechners"
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "37f1f5378bda",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Uhrzeit der Serveranfrage"
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "a9db9aaa6977",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "IP-Adresse"
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "9085e50b81cc",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "ccf41cc69dc8",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und der Optimierung seiner Website – hierzu müssen die Server-Log-Files erfasst werden."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "ae418ba35768",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Kontaktformular"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "0f3f1b3d54e8",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "93b4c654e161",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), sofern diese abgefragt wurde; die Einwilligung ist jederzeit widerrufbar."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "3a491432efe7",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "440fa074175e",
+								"_type": "span",
+								"marks": [],
+								"text": "Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "bb6c110acf2e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "35051a4df527",
+								"_type": "span",
+								"marks": [],
+								"text": "Anfrage per E-Mail, Telefon oder Telefax"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "a3085b260dc9",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "35051a4df527",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "c0d93d2f18cc",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "35051a4df527",
+								"_type": "span",
+								"marks": [],
+								"text": "Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), sofern diese abgefragt wurde; die Einwilligung ist jederzeit widerrufbar."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "0240660e8ffd",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "35051a4df527",
+								"_type": "span",
+								"marks": [],
+								"text": "Die von Ihnen an uns per Kontaktanfragen übersandten Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihres Anliegens). Zwingende gesetzliche Bestimmungen – insbesondere gesetzliche Aufbewahrungsfristen – bleiben unberührt."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "61f327c2bfa8",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "35051a4df527",
+								"_type": "span",
+								"marks": [],
+								"text": "Kommunikation via WhatsApp"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "f877d2b92e1b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "35051a4df527",
+								"_type": "span",
+								"marks": [],
+								"text": "Für die Kommunikation mit unseren Kunden und sonstigen Dritten nutzen wir unter anderem den Instant-Messaging-Dienst WhatsApp. Anbieter ist die WhatsApp Ireland Limited, 4 Grand Canal Square, Grand Canal Harbour, Dublin 2, Irland."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "32326327e335",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "35051a4df527",
+								"_type": "span",
+								"marks": [],
+								"text": "Die Kommunikation erfolgt über eine Ende-zu-Ende-Verschlüsselung (Peer-to-Peer), die verhindert, dass WhatsApp oder sonstige Dritte Zugriff auf die Kommunikationsinhalte erlangen können. WhatsApp erhält jedoch Zugriff auf Metadaten, die im Zuge des Kommunikationsvorgangs entstehen (z. B. Absender, Empfänger und Zeitpunkt). Wir weisen ferner darauf hin, dass WhatsApp nach eigener Aussage, personenbezogene Daten seiner Nutzer mit seiner in den USA ansässigen Konzernmutter Meta teilt. Weitere Details zur Datenverarbeitung finden Sie in der Datenschutzrichtlinie von WhatsApp unter "
+							},
+							{
+								"_key": "56a7aa57d607",
+								"_type": "span",
+								"marks": ["0cce5a66ea1d"],
+								"text": "www.whatsapp.com/legal/#privacy-policy"
+							},
+							{
+								"_key": "6ba96f4e891d",
+								"_type": "span",
+								"marks": [],
+								"text": "."
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "0cce5a66ea1d",
+								"_type": "externalLink",
+								"href": "https://www.whatsapp.com/legal/#privacy-policy"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "894838c77e04",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "ccdca9eb43f2",
+								"_type": "span",
+								"marks": [],
+								"text": "Der Einsatz von WhatsApp erfolgt auf Grundlage unseres berechtigten Interesses an einer möglichst schnellen und effektiven Kommunikation mit Kunden, Interessenten und sonstigen Geschäfts- und Vertragspartnern (Art. 6 Abs. 1 lit. f DSGVO). Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Datenverarbeitung ausschließlich auf Grundlage der Einwilligung; diese ist jederzeit mit Wirkung für die Zukunft widerrufbar."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "4a76a27ce13f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "ccdca9eb43f2",
+								"_type": "span",
+								"marks": [],
+								"text": "Die zwischen Ihnen und uns auf WhatsApp ausgetauschten Kommunikationsinhalte verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "25e943349fd2",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "ccdca9eb43f2",
+								"_type": "span",
+								"marks": [],
+								"text": "Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, das die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: "
+							},
+							{
+								"_key": "5d0d5d517297",
+								"_type": "span",
+								"marks": ["2957e2f202ff"],
+								"text": "www.dataprivacyframework.gov/participant/7735"
+							},
+							{
+								"_key": "4c6103bcaab9",
+								"_type": "span",
+								"marks": [],
+								"text": "."
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "2957e2f202ff",
+								"_type": "externalLink",
+								"href": "https://www.dataprivacyframework.gov/participant/7735"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "762412216b68",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "ccdca9eb43f2",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir nutzen WhatsApp in der Variante „WhatsApp Business“. Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier: "
+							},
+							{
+								"_key": "2dfe6fa898de",
+								"_type": "span",
+								"marks": ["dea2d2be40ba"],
+								"text": "www.whatsapp.com/legal/business-data-transfer-addendum"
+							},
+							{
+								"_key": "8796c1f02a5a",
+								"_type": "span",
+								"marks": [],
+								"text": "."
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "dea2d2be40ba",
+								"_type": "externalLink",
+								"href": "https://www.whatsapp.com/legal/business-data-transfer-addendum"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "6043671e1110",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b4726bd3d4d3",
+								"_type": "span",
+								"marks": [],
+								"text": "5. Newsletter"
+							}
+						],
+						"markDefs": [],
+						"style": "h2"
+					},
+					{
+						"_key": "608d78374aa1",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b4726bd3d4d3",
+								"_type": "span",
+								"marks": [],
+								"text": "Newsletterdaten"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "9d93872c1e1a",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b4726bd3d4d3",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie den auf der Website angebotenen Newsletter beziehen möchten, benötigen wir von Ihnen eine E-Mail-Adresse sowie Informationen, welche uns die Überprüfung gestatten, dass Sie der Inhaber der angegebenen E-Mail-Adresse und mit dem Empfang des Newsletters einverstanden sind. Weitere Daten werden nicht bzw. nur auf freiwilliger Basis erhoben. Für die Abwicklung der Newsletter nutzen wir Newsletterdiensteanbieter, die nachfolgend beschrieben werden."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "09717bfb4cf8",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b4726bd3d4d3",
+								"_type": "span",
+								"marks": [],
+								"text": "CleverReach"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "d2573285ce5a",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b4726bd3d4d3",
+								"_type": "span",
+								"marks": [],
+								"text": "Diese Website nutzt CleverReach für den Versand von Newslettern. Anbieter ist die CleverReach GmbH & Co. KG, Schafjückenweg 2, 26180 Rastede, Deutschland (nachfolgend „CleverReach“). CleverReach ist ein Dienst, mit dem der Newsletterversand organisiert und analysiert werden kann. Die von Ihnen zwecks Newsletterbezug eingegebenen Daten (z. B. E-Mail-Adresse) werden auf den Servern von CleverReach in Deutschland bzw. Irland gespeichert."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "6adb223f8d61",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b4726bd3d4d3",
+								"_type": "span",
+								"marks": [],
+								"text": "Unsere mit CleverReach versandten Newsletter ermöglichen uns die Analyse des Verhaltens der Newsletterempfänger. Hierbei kann u. a. analysiert werden, wie viele Empfänger die Newsletternachricht geöffnet haben und wie oft welcher Link im Newsletter angeklickt wurde. Mithilfe des sogenannten Conversion-Trackings kann außerdem analysiert werden, ob nach Anklicken des Links im Newsletter eine vorab definierte Aktion (z. B. Kauf eines Produkts auf dieser Website) erfolgt ist. Weitere Informationen zur Datenanalyse durch CleverReach-Newsletter erhalten Sie unter "
+							},
+							{
+								"_key": "70f8aced0f6e",
+								"_type": "span",
+								"marks": ["35ff93cd69aa"],
+								"text": "www.cleverreach.com/de/funktionen/reporting-und-tracking/"
+							},
+							{
+								"_key": "f00988f515a0",
+								"_type": "span",
+								"marks": [],
+								"text": "."
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "35ff93cd69aa",
+								"_type": "externalLink",
+								"href": "https://www.cleverreach.com/de/funktionen/reporting-und-tracking/"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "55c96e638287",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6bf6389fe467",
+								"_type": "span",
+								"marks": [],
+								"text": "Die Datenverarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Sie können diese Einwilligung jederzeit widerrufen, indem Sie den Newsletter abbestellen. Die Rechtmäßigkeit der bereits erfolgten Datenverarbeitungsvorgänge bleibt vom Widerruf unberührt."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "3940aba0068e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6bf6389fe467",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie keine Analyse durch CleverReach wollen, müssen Sie den Newsletter abbestellen. Hierfür stellen wir in jeder Newsletternachricht einen entsprechenden Link zur Verfügung."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "b8feec831566",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6bf6389fe467",
+								"_type": "span",
+								"marks": [],
+								"text": "Die von Ihnen zum Zwecke des Newsletter-Bezugs bei uns hinterlegten Daten werden von uns bis zu Ihrer Austragung aus dem Newsletter bei uns bzw. dem Newsletterdiensteanbieter gespeichert und nach der Abbestellung des Newsletters aus der Newsletterverteilerliste gelöscht. Daten, die zu anderen Zwecken bei uns gespeichert wurden, bleiben hiervon unberührt."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "95429fc94fa8",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6bf6389fe467",
+								"_type": "span",
+								"marks": [],
+								"text": "Nach Ihrer Austragung aus der Newsletterverteilerliste wird Ihre E-Mail-Adresse bei uns bzw. dem Newsletterdiensteanbieter ggf. in einer Blacklist gespeichert, sofern dies zur Verhinderung künftiger Mailings erforderlich ist. Die Daten aus der Blacklist werden nur für diesen Zweck verwendet und nicht mit anderen Daten zusammengeführt. Dies dient sowohl Ihrem Interesse als auch unserem Interesse an der Einhaltung der gesetzlichen Vorgaben beim Versand von Newslettern (berechtigtes Interesse im Sinne des Art. 6 Abs. 1 lit. f DSGVO). Die Speicherung in der Blacklist ist zeitlich nicht befristet. "
+							},
+							{
+								"_key": "35f7898fc918",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "Sie können der Speicherung widersprechen, sofern Ihre Interessen unser berechtigtes Interesse überwiegen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "519668bba26c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6bf6389fe467",
+								"_type": "span",
+								"marks": [],
+								"text": "Näheres entnehmen Sie den Datenschutzbestimmungen von CleverReach unter: "
+							},
+							{
+								"_key": "1bcf188c1dcb",
+								"_type": "span",
+								"marks": ["a6515d37eed7"],
+								"text": "www.cleverreach.com/de/datenschutz/"
+							},
+							{
+								"_key": "937915e7ef00",
+								"_type": "span",
+								"marks": [],
+								"text": "."
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "a6515d37eed7",
+								"_type": "externalLink",
+								"href": "https://www.cleverreach.com/de/datenschutz/"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "cae5d84ba3ea",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6bf6389fe467",
+								"_type": "span",
+								"marks": [],
+								"text": "Auftragsverarbeitung"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "c225fc447e8e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6bf6389fe467",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir haben einen Vertrag über Auftragsverarbeitung (AVV) zur Nutzung des oben genannten Dienstes geschlossen. Hierbei handelt es sich um einen datenschutzrechtlich vorgeschriebenen Vertrag, der gewährleistet, dass dieser die personenbezogenen Daten unserer Websitebesucher nur nach unseren Weisungen und unter Einhaltung der DSGVO verarbeitet."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "5628fa69858e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f5fbd77984c1",
+								"_type": "span",
+								"marks": [],
+								"text": "6. eCommerce und Zahlungsanbieter"
+							}
+						],
+						"markDefs": [],
+						"style": "h2"
+					},
+					{
+						"_key": "f71822cb1193",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f5fbd77984c1",
+								"_type": "span",
+								"marks": [],
+								"text": "Verarbeiten von Kunden- und Vertragsdaten"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "8582e0b343f2",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f5fbd77984c1",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir erheben, verarbeiten und nutzen personenbezogene Kunden- und Vertragsdaten zur Begründung, inhaltlichen Ausgestaltung und Änderung unserer Vertragsbeziehungen. Personenbezogene Daten über die Inanspruchnahme dieser Website (Nutzungsdaten) erheben, verarbeiten und nutzen wir nur, soweit dies erforderlich ist, um dem Nutzer die Inanspruchnahme des Dienstes zu ermöglichen oder abzurechnen. Rechtsgrundlage hierfür ist Art. 6 Abs. 1 lit. b DSGVO."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "81d3643a440b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f5fbd77984c1",
+								"_type": "span",
+								"marks": [],
+								"text": "Die erhobenen Kundendaten werden nach Abschluss des Auftrags oder Beendigung der Geschäftsbeziehung und Ablauf der ggf. bestehenden gesetzlichen Aufbewahrungsfristen gelöscht. Gesetzliche Aufbewahrungsfristen bleiben unberührt."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "e7661c646435",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f5fbd77984c1",
+								"_type": "span",
+								"marks": [],
+								"text": "Datenübermittlung bei Vertragsschluss für Dienstleistungen und digitale Inhalte"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "029168a6a08b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f5fbd77984c1",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir übermitteln personenbezogene Daten an Dritte nur dann, wenn dies im Rahmen der Vertragsabwicklung notwendig ist, etwa an das mit der Zahlungsabwicklung beauftragte Kreditinstitut."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "6b53bec33fd5",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f5fbd77984c1",
+								"_type": "span",
+								"marks": [],
+								"text": "Eine weitergehende Übermittlung der Daten erfolgt nicht bzw. nur dann, wenn Sie der Übermittlung ausdrücklich zugestimmt haben. Eine Weitergabe Ihrer Daten an Dritte ohne ausdrückliche Einwilligung, etwa zu Zwecken der Werbung, erfolgt nicht."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "370c5f820602",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f5fbd77984c1",
+								"_type": "span",
+								"marks": [],
+								"text": "Grundlage für die Datenverarbeitung ist Art. 6 Abs. 1 lit. b DSGVO, der die Verarbeitung von Daten zur Erfüllung eines Vertrags oder vorvertraglicher Maßnahmen gestattet."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "0f2e468c92bf",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "ddf6cacbecae",
+								"_type": "span",
+								"marks": [],
+								"text": "7. Unsere Social-Media-Auftritte"
+							}
+						],
+						"markDefs": [],
+						"style": "h2"
+					},
+					{
+						"_key": "8972719ed03e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "a10a10bea568",
+								"_type": "span",
+								"marks": [],
+								"text": "Diese Datenschutzerklärung gilt für folgende Social-Media-Auftritte"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "40932b2bd65d",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "777fab1c4b02",
+								"_type": "span",
+								"marks": ["d71fb28d5544"],
+								"text": "www.facebook.com/tsgirlich"
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [
+							{
+								"_key": "d71fb28d5544",
+								"_type": "link",
+								"href": "https://www.facebook.com/tsgirlich"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "1f5ecf574cdd",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "bb0c66d8de0b",
+								"_type": "span",
+								"marks": ["a0209bf9a730"],
+								"text": "www.instagram.com/tsgirlich"
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [
+							{
+								"_key": "a0209bf9a730",
+								"_type": "link",
+								"href": "https://www.instagram.com/tsgirlich/"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "ed5f5c3731f5",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "5e3883001825",
+								"_type": "span",
+								"marks": ["f7b80f5e34f4"],
+								"text": "www.youtube.com/@tsgirlich"
+							}
+						],
+						"level": 1,
+						"listItem": "bullet",
+						"markDefs": [
+							{
+								"_key": "f7b80f5e34f4",
+								"_type": "link",
+								"href": "https://www.youtube.com/@tsgirlich"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "dcf45724c7d6",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "73b917b8181e",
+								"_type": "span",
+								"marks": [],
+								"text": "Datenverarbeitung durch soziale Netzwerke"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "796399014273",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "e033d5e50ff4",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir unterhalten öffentlich zugängliche Profile in sozialen Netzwerken. Die im Einzelnen von uns genutzten sozialen Netzwerke finden Sie weiter unten."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "984e209eb359",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "5f7d3343579c",
+								"_type": "span",
+								"marks": [],
+								"text": "Soziale Netzwerke wie Facebook, X etc. können Ihr Nutzerverhalten in der Regel umfassend analysieren, wenn Sie deren Website oder eine Website mit integrierten Social-Media-Inhalten (z. B. Like-Buttons oder Werbebannern) besuchen. Durch den Besuch unserer Social-Media-Präsenzen werden zahlreiche datenschutzrelevante Verarbeitungsvorgänge ausgelöst. Im Einzelnen:"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "37dc9076b8c3",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "742ac8772045",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie in Ihrem Social-Media-Account eingeloggt sind und unsere Social-Media-Präsenz besuchen, kann der Betreiber des Social-Media-Portals diesen Besuch Ihrem Benutzerkonto zuordnen. Ihre personenbezogenen Daten können unter Umständen aber auch dann erfasst werden, wenn Sie nicht eingeloggt sind oder keinen Account beim jeweiligen Social-Media-Portal besitzen. Diese Datenerfassung erfolgt in diesem Fall beispielsweise über Cookies, die auf Ihrem Endgerät gespeichert werden, oder durch Erfassung Ihrer IP-Adresse."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "bb485253e5fd",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "31888d7ac613",
+								"_type": "span",
+								"marks": [],
+								"text": "Mithilfe der so erfassten Daten können die Betreiber der Social-Media-Portale Nutzerprofile erstellen, in denen Ihre Präferenzen und Interessen hinterlegt sind. Auf diese Weise kann Ihnen interessenbezogene Werbung in- und außerhalb der jeweiligen Social-Media-Präsenz angezeigt werden. Sofern Sie über einen Account beim jeweiligen sozialen Netzwerk verfügen, kann die interessenbezogene Werbung auf allen Geräten angezeigt werden, auf denen Sie eingeloggt sind oder eingeloggt waren."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "2e133a696ed5",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "413c6483d823",
+								"_type": "span",
+								"marks": [],
+								"text": "Bitte beachten Sie außerdem, dass wir nicht alle Verarbeitungsprozesse auf den Social-Media-Portalen nachvollziehen können. Je nach Anbieter können daher ggf. weitere Verarbeitungsvorgänge von den Betreibern der Social-Media-Portale durchgeführt werden. Details hierzu entnehmen Sie den Nutzungsbedingungen und Datenschutzbestimmungen der jeweiligen Social-Media-Portale."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "764daa7c063e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "8ae2eae61e38",
+								"_type": "span",
+								"marks": [],
+								"text": "Rechtsgrundlage"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "eaf501bcf973",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "489e4578811a",
+								"_type": "span",
+								"marks": [],
+								"text": "Unsere Social-Media-Auftritte sollen eine möglichst umfassende Präsenz im Internet gewährleisten. Hierbei handelt es sich um ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO. Die von den sozialen Netzwerken initiierten Analyseprozesse beruhen ggf. auf abweichenden Rechtsgrundlagen, die von den Betreibern der sozialen Netzwerke anzugeben sind (z. B. Einwilligung im Sinne des Art. 6 Abs. 1 lit. a DSGVO)."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "ca9171e9a629",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f3d829f8dea6",
+								"_type": "span",
+								"marks": [],
+								"text": "Verantwortlicher und Geltendmachung von Rechten"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "40df3d9dbb1e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "3013d4125c79",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Sie einen unserer Social-Media-Auftritte (z. B. Facebook) besuchen, sind wir gemeinsam mit dem Betreiber der Social-Media-Plattform für die bei diesem Besuch ausgelösten Datenverarbeitungsvorgänge verantwortlich. Sie können Ihre Rechte (Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Beschwerde) grundsätzlich sowohl ggü. uns als auch ggü. dem Betreiber des jeweiligen Social-Media-Portals (z. B. ggü. Facebook) geltend machen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "4485cc15c27c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "e8d4e3b96b95",
+								"_type": "span",
+								"marks": [],
+								"text": "Bitte beachten Sie, dass wir trotz der gemeinsamen Verantwortlichkeit mit den Social-Media-Portal-Betreibern nicht vollumfänglich Einfluss auf die Datenverarbeitungsvorgänge der Social-Media-Portale haben. Unsere Möglichkeiten richten sich maßgeblich nach der Unternehmenspolitik des jeweiligen Anbieters."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"email": "datenschutz@tsg-irlich.de",
+			"introText": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "a69687d7eb8c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "80986e7a96a9",
+								"_type": "span",
+								"marks": [],
+								"text": "In eigener Sache:"
+							}
+						],
+						"markDefs": [],
+						"style": "h2"
+					},
+					{
+						"_key": "028a7299bec9",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "80986e7a96a9",
+								"_type": "span",
+								"marks": [],
+								"text": "Auch wir wollen unsere Pflicht erfüllen und Dich daher darüber aufklären, was – hoffentlich nicht nur für uns – ohnehin selbstverständlich ist."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "6158cbec7c90",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "80986e7a96a9",
+								"_type": "span",
+								"marks": [],
+								"text": "Der Datenschutz ist ein wichtiger Bestandteil unserer Philosophie. Daher gehen wir mit größtmöglicher Vorsicht mit Deinen Daten um. Bei Fragen kannst Du Dich daher jederzeit an uns wenden."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"meta": {
+				"_type": "metaFields",
+				"metaDescription": "Der Datenschutz ist ein wichtiger Bestandteil unserer Philosophie. Daher gehen wir mit größtmöglicher Vorsicht mit Deinen Daten um.",
+				"metaTitle": "Datenschutzerklärung der TSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Logo der TSG Irlich 1882 e. V.",
+					"asset": {
+						"_ref": "image-458104d8ae03852b0f2f4d8c86f2c11be072a7b6-1024x768-webp",
+						"_type": "reference"
+					}
+				}
+			},
+			"slug": {
+				"_type": "slug",
+				"current": "datenschutz"
+			},
+			"subtitle": "Deine Daten sind uns wichtig",
+			"title": "Datenschutzerklärung"
+		},
+		"syncTags": ["s1:M2338A"],
+		"ms": 13
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27privacy%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09introText+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09content+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%7D%0A&returnQuery=false"
+}

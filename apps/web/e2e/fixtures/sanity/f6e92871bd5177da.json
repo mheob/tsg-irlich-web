@@ -1,0 +1,615 @@
+{
+	"body": {
+		"result": {
+			"membership": {
+				"_createdAt": "2024-06-17T07:03:29Z",
+				"_id": "membership",
+				"_rev": "FGdPcw6oZ4f5ikxTPQ5XcU",
+				"_system": {
+					"base": {
+						"id": "membership",
+						"rev": "vIbXU0RSRuiYQLk215G0tJ"
+					}
+				},
+				"_type": "membership",
+				"_updatedAt": "2026-08-26T07:54:57Z",
+				"contactPersonsSection": {
+					"contactPersons": [
+						{
+							"contactAs": "both",
+							"email": "verwaltung@tsg-irlich.de",
+							"firstName": "Melina",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Melina Dinter im Polo der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-32c7a18d61105ff1d2a01e528209cb5edf7effd2-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Dinter",
+							"phone": "+49 151 50422094",
+							"role": "Vorstand Verwaltung",
+							"taskDescription": "Als Vorstand Verwaltung kümmere ich mich um alle administrativen Aufgaben. Von Vertragsabwicklung über Versicherungen bis zu Protokollen und Post. Ich betreue die digitale Mitgliederverwaltung und sorge für eine reibungslose Dokumentation und Kommunikation."
+						},
+						{
+							"contactAs": "both",
+							"email": "breitensport@tsg-irlich.de",
+							"firstName": "Melanie ",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Klein",
+							"phone": "+49 171 9941807",
+							"role": "Abteilungsleitung Breitensport",
+							"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+						},
+						{
+							"contactAs": "both",
+							"email": "fussball@tsg-irlich.de",
+							"firstName": "Markus",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Abteilungsleiter Markus Straeten in einem Shirts der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-0ce6f3246b26f5cfd54973c83fece2aaf34317d6-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.882559012428059,
+									"width": 0.9733088664609225,
+									"x": 0.5133455667695388,
+									"y": 0.5587204937859704
+								}
+							},
+							"lastName": "Straeten",
+							"phone": "+49 170 2206948",
+							"role": "Abteilungsleitung Fußball",
+							"taskDescription": "Als Abteilungsleiter Fußball trage ich die Gesamtverantwortung für die Abteilung und koordiniere alle Teams. Ich führe das Team, wähle Übungsleiter aus, organisiere die Materialbeschaffung und entwickle das sportliche Angebot laufend weiter."
+						}
+					],
+					"intro": "Bei generellen Fragen zur Mitgliedschaft, Änderungen oder Kündigung hilft dir unsere Vorstand-Verwaltung Melina Dinter. Bei sportlichen Belangen stehen dir unsere beiden Abteilungsleiterinnen und -leiter zur Verfügung.",
+					"subtitle": "Ansprechpartner",
+					"title": "Fragen zur Mitgliedschaft"
+				},
+				"downloadsSection": {
+					"downloads": [
+						{
+							"_key": "abdc87f7d288",
+							"_type": "documentDownload",
+							"document": {
+								"_type": "file",
+								"asset": {
+									"_createdAt": "2026-08-26T07:50:12Z",
+									"_id": "file-72cddcd108ddcabcf7f285ab68de71b90ef29835-pdf",
+									"_rev": "iXFi0dmSD9bydBwpfJhIbG",
+									"_type": "sanity.fileAsset",
+									"_updatedAt": "2026-08-26T07:50:12Z",
+									"altText": null,
+									"assetId": "72cddcd108ddcabcf7f285ab68de71b90ef29835",
+									"creditLine": null,
+									"description": null,
+									"extension": "pdf",
+									"mimeType": "application/pdf",
+									"opt": {
+										"media": {
+											"tags": null
+										}
+									},
+									"originalFilename": "tsg-irlich-satzung-2018.pdf",
+									"path": "files/j4rxwl5m/development/72cddcd108ddcabcf7f285ab68de71b90ef29835.pdf",
+									"sha1hash": "72cddcd108ddcabcf7f285ab68de71b90ef29835",
+									"size": 442282,
+									"title": null,
+									"uploadId": "4330e70c8cd6095634331eab82e82ed824faa6c1",
+									"url": "https://cdn.sanity.io/files/j4rxwl5m/development/72cddcd108ddcabcf7f285ab68de71b90ef29835.pdf"
+								}
+							},
+							"title": "Satzung"
+						},
+						{
+							"_key": "888b01f7002a",
+							"_type": "documentDownload",
+							"document": {
+								"_type": "file",
+								"asset": {
+									"_createdAt": "2026-08-26T07:50:12Z",
+									"_id": "file-9fc450f154eba15d257dc6019fc94b97ab2ae80e-pdf",
+									"_rev": "FGdPcw6oZ4f5ikxTPQ4O1S",
+									"_type": "sanity.fileAsset",
+									"_updatedAt": "2026-08-26T07:50:12Z",
+									"assetId": "9fc450f154eba15d257dc6019fc94b97ab2ae80e",
+									"extension": "pdf",
+									"mimeType": "application/pdf",
+									"originalFilename": "tsg-irlich-mitgliedsantrag-1-4-20240613-form.pdf",
+									"path": "files/j4rxwl5m/development/9fc450f154eba15d257dc6019fc94b97ab2ae80e.pdf",
+									"sha1hash": "9fc450f154eba15d257dc6019fc94b97ab2ae80e",
+									"size": 200071,
+									"uploadId": "0d7f4a5332d14e04c3a454e0e5cdb0e94750d021",
+									"url": "https://cdn.sanity.io/files/j4rxwl5m/development/9fc450f154eba15d257dc6019fc94b97ab2ae80e.pdf"
+								}
+							},
+							"title": "Mitgliedsantrag (Digital)"
+						},
+						{
+							"_key": "4e5f5e80931f",
+							"_type": "documentDownload",
+							"document": {
+								"_type": "file",
+								"asset": {
+									"_createdAt": "2026-08-26T07:50:12Z",
+									"_id": "file-fcf2c51f73ab7100042517730b95fb2120d0fc2c-pdf",
+									"_rev": "dtJXu1REiVbNFr2bYfmNiQ",
+									"_type": "sanity.fileAsset",
+									"_updatedAt": "2026-08-26T07:50:12Z",
+									"assetId": "fcf2c51f73ab7100042517730b95fb2120d0fc2c",
+									"extension": "pdf",
+									"mimeType": "application/pdf",
+									"originalFilename": "tsg-irlich-mitgliedsantrag-1-4-20240613-druck.pdf",
+									"path": "files/j4rxwl5m/development/fcf2c51f73ab7100042517730b95fb2120d0fc2c.pdf",
+									"sha1hash": "fcf2c51f73ab7100042517730b95fb2120d0fc2c",
+									"size": 128227,
+									"uploadId": "e60d87785c13572e4d90aefcfec23f7112426e11",
+									"url": "https://cdn.sanity.io/files/j4rxwl5m/development/fcf2c51f73ab7100042517730b95fb2120d0fc2c.pdf"
+								}
+							},
+							"title": "Mitgliedsantrag (Druck)"
+						}
+					],
+					"intro": "Alle wichtigen Vereinsdokumente findest du hier zum Download. Lies sie dir bitte genau durch, wenn du in Betracht ziehst, Mitglied in unserem Verein zu werden.",
+					"subtitle": "Downloads",
+					"title": "Wichtige Vereinsdokumente"
+				},
+				"intro": {
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "7d7dba07e9f3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "df8ac9cb92b7",
+									"_type": "span",
+									"marks": [],
+									"text": "Fragen und Antworten"
+								}
+							],
+							"markDefs": [],
+							"style": "h2"
+						},
+						{
+							"_key": "2a277b03525f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7f258c796951",
+									"_type": "span",
+									"marks": [],
+									"text": "Wie werde ich Mitglied?"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "7c2d71b65c40",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7f258c796951",
+									"_type": "span",
+									"marks": [],
+									"text": "Einfach den ausgefüllten und unterschriebenen Aufnahmeantrag an "
+								},
+								{
+									"_key": "77af154bd276",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "TSG Irlich 1882 e. V., Gotenstraße 20, 56567 Neuwied"
+								},
+								{
+									"_key": "a8bfb87dea73",
+									"_type": "span",
+									"marks": [],
+									"text": " senden. Mitglied werden ist einfach."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "ad67dc67600f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "db383637c338",
+									"_type": "span",
+									"marks": [],
+									"text": "Woher bekomme ich diesen Aufnahmeantrag?"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "65103325877f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "db383637c338",
+									"_type": "span",
+									"marks": [],
+									"text": "Unsere Trainer, die Abteilungsleiter und der Vorstand halten Beitrittserklärungen für Sie bereit. Sprechen Sie uns einfach an! Der Antrag kann einfach online ausgefüllt und ausgedruckt werden."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "3ed0bff617c0",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "db383637c338",
+									"_type": "span",
+									"marks": [],
+									"text": "Wann wird der Beitrag fällig und wie kann ich ihn bezahlen?"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "1277bd557db3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "db383637c338",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Vereinsbeitrag ist jeweils zum 01.02. und 01.08. im Voraus für ein halbes Jahr zu entrichten.\nAufgrund der Satzung werden die Mitgliedsbeiträge durch das SEPA-Lastschriftverfahren eingezogen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "d6b54f53cd40",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "942bb662b219",
+									"_type": "span",
+									"marks": [],
+									"text": "Mit dem Lastschriftverfahren steht allen ein sicheres und flexibles Verfahren zur Verfügung."
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "bbcf04b697dd",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "942bb662b219",
+									"_type": "span",
+									"marks": [],
+									"text": "Einer Lastschrift kann jederzeit widersprochen werden."
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "3233a102a998",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ee6800d19ffe",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Bankverbindung kann jederzeit geändert werden."
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "f39b34b8c01d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "b1885fd8adf8",
+									"_type": "span",
+									"marks": [],
+									"text": "Abbuchungen nach Beitragsänderungen sind aktueller nachvollziehbar."
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "c3f87c59a1e4",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "8d84cdad0e03",
+									"_type": "span",
+									"marks": [],
+									"text": "Wann kann ich die Mitgliedschaft bei der TSG Irlich kündigen?"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "84c04d0d2916",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "8d84cdad0e03",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach § 3 unserer Satzung erlischt die Mitgliedschaft durch Austritt. Die Austrittserklärung ist vom Mitglied schriftlich ("
+								},
+								{
+									"_key": "3272d8a300bb",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "TSG Irlich 1882 e. V., Gotenstraße 20, 56567 Neuwied"
+								},
+								{
+									"_key": "8e508b1961a2",
+									"_type": "span",
+									"marks": [],
+									"text": ") oder per E-Mail ("
+								},
+								{
+									"_key": "c4ce4d0fd4fa",
+									"_type": "span",
+									"marks": ["953b02e5674c"],
+									"text": "mitglieder@tsg-irlich.de"
+								},
+								{
+									"_key": "55097c6f4f72",
+									"_type": "span",
+									"marks": [],
+									"text": ") zum 30. Juni oder 31. Dezember an den Vorstand zu richten."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "953b02e5674c",
+									"_type": "link",
+									"href": "mailto:mitglieder@tsg-irlich.de"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "e1118bfa5394",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "55097c6f4f72",
+									"_type": "span",
+									"marks": [],
+									"text": "Wo kann ich meine Beitrittserklärung abgeben?"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "fedb25a37e87",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "55097c6f4f72",
+									"_type": "span",
+									"marks": [],
+									"text": "Unsere Übungsleiter, Trainer, die Abteilungsleiter und der Vorstand nehmen diese gerne entgegen. Zudem gibt es am Pappelstadion den Briefkasten unserer Geschäftsstelle."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "17f18d26f026",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "cce995142309",
+									"_type": "span",
+									"marks": [],
+									"text": "Hinweise zu den Beiträgen"
+								}
+							],
+							"markDefs": [],
+							"style": "h2"
+						},
+						{
+							"_key": "9cd0f6801131",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "fe534f535176",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Mitgliedsbeiträge sind bei der TSG Irlich immer halbjährlich zu entrichten.\nDie Gebühren staffeln sich wie folgt:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "e5bfd2ea9d53",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "469e888a5eea",
+									"_type": "span",
+									"marks": [],
+									"text": "42,00 € (7,00 € monatlich) für Jugendliche bis zur Vollendung des 18. Lebensjahres. Schüler, Studenten, Azubis über dem 18. Lebensjahr mit gesondertem Nachweis."
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "1c56c8e29245",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a97446e65b11",
+									"_type": "span",
+									"marks": [],
+									"text": "60,00 € (10,00 € monatlich) für Erwachsene"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "7f8f9c8ec134",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "fc6339c0ac5d",
+									"_type": "span",
+									"marks": [],
+									"text": "90,00 € (15,00 € monatlich) für Familien, unabhängig von der Zahl der im Haushalt lebenden Personen (Familienangehörige mit eigenem Einkommen sind vom Familienbeitrag ausgeschlossen und müssen sich selbst anmelden, ggf. ummelden)."
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				"meta": {
+					"_type": "metaFields",
+					"metaDescription": "Bei der TSG Irlich erwarten dich Fußball, Turnen, Tanzen und viele weitere Sportarten – hier ist für jeden etwas dabei. Werde Teil dieser tollen Gemeinschaft.",
+					"metaTitle": "Werde ein Teil von der TSG Irlich",
+					"openGraphImage": {
+						"_type": "image",
+						"alt": "Ein paar Mitglieder sitzen auf der Terrasse eines Restaurants am Fluss.",
+						"asset": {
+							"_ref": "image-7fa779ae4f293d954f90454282577e5ddc55efb9-1170x1170-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.03200850779881558,
+							"left": 0,
+							"right": 0,
+							"top": 0.16213821002585704
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6227687880557178,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.5055311118525315
+						}
+					}
+				},
+				"slug": {
+					"_type": "slug",
+					"current": "mitgliedschaft"
+				},
+				"subtitle": "Werde ein Teil von uns",
+				"title": "Mitgliedschaft"
+			},
+			"pricingSection": {
+				"intro": "Finde in dieser Übersicht den passenden Mitgliedsbeitrag für Dich, Deine Familie oder Dein Kind. Vergleiche die Optionen und wähle den Beitrag, der am besten zu Dir oder euch passt.",
+				"pricingAdult": {
+					"benefits": [
+						"Volle Flexibilität - Training in jeder Abteilung möglich.",
+						"mit Menschen, die gleiche Ziele verfolgen",
+						"angeleitet durch qualifizierte Übungsleiter",
+						"fit und lokal - dein regionaler Sportverein"
+					],
+					"benefitsTitle": "Deine Vorteile",
+					"cta": "Werde Mitglied!",
+					"intro": "Einzelmitgliedschaft für Erwachsene. Treibe selbst Sport oder unterstütze den Verein, das Vereinsleben zu organisieren und die Tradition zu wahren.",
+					"price": 10,
+					"subtitle": "ab 18 Jahre",
+					"title": "Erwachsene"
+				},
+				"pricingFamily": {
+					"benefits": [
+						"Mitgliedschaft für deine gesamte Familie (s. Bedingungen)",
+						"Volle Flexibilität - Training in jeder Abteilung möglich",
+						"mit Menschen in deinem Alter",
+						"angeleitet durch qualifizierte Übungsleiter"
+					],
+					"benefitsTitle": "Eure Vorteile",
+					"cta": "Werdet Mitglieder!",
+					"intro": "Vergünstigtes Angebot für Familien, unabhängig von der Zahl der im Haushalt lebenden Personen. Hinweis: Familienangehörige mit eigenem Einkommen sind vom Familienbeitrag ausgeschlossen und müssen sich selbst anmelden oder ggf. ummelden.",
+					"price": 15,
+					"subtitle": "für Familien",
+					"title": "Familientarif"
+				},
+				"pricingYouth": {
+					"benefits": [
+						"Volle Flexibilität - Training in jeder Abteilung möglich",
+						"mit Kindern & Jugendlichen in deinem Alter",
+						"angeleitet durch qualifizierte Übungsleiter",
+						"altersgerechte Betreuung & Bewegungsangebote"
+					],
+					"benefitsTitle": "Deine Vorteile",
+					"cta": "Werde Mitglied!",
+					"intro": "Vergünstigte Mitgliedschaft für Kinder und Jugendliche – denn die Kinder- und Jugendarbeit liegt uns ganz besonders am Herzen! Hinweis: Schüler, Studenten und Azubis über dem 18. Lebensjahr benötigen einen gesonderten Nachweis.",
+					"price": 7,
+					"subtitle": "bis 18 Jahre",
+					"title": "Jugend"
+				},
+				"subtitle": "Mitgliedsbeiträge",
+				"title": "Der richtige Preis für Dich und Euch"
+			}
+		},
+		"syncTags": [
+			"s1:26XUmQ",
+			"s1:BpJQvw",
+			"s1:kG7Arw",
+			"s1:WU9DBg",
+			"s1:gPeMUg",
+			"s1:V4dP4Q",
+			"s1:MNG81A",
+			"s1:Cc+ZCg",
+			"s1:SgUpiQ",
+			"s1:B7LhMw",
+			"s1:bW4l3Q"
+		],
+		"ms": 14
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09%7B%0A%09%09%22membership%22%3A+*%5B_type+%3D%3D+%27membership%27%5D%5B0%5D+%7B%0A%09%09%09...%2C%0A%09%09%09intro+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09downloadsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09downloads%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09document+%7B%0A%09%09%09%09%09%09...%2C%0A%09%09%09%09%09%09asset-%3E%0A%09%09%09%09%09%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09%22pricingSection%22%3A+*%5B_type+%3D%3D+%27home%27%5D%5B0%5D.content.pricingSection%0A%09%7D%0A&returnQuery=false"
+}

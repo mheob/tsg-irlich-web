@@ -1,0 +1,54 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n",
+		"result": [
+			{
+				"_id": "f6f95815-acc9-4db3-b7d6-f408a4eacfc4",
+				"logo": {
+					"_type": "image",
+					"asset": {
+						"_ref": "image-d8e642db018c8649ecf637f4365da340934df81b-400x120-webp",
+						"_type": "reference"
+					}
+				},
+				"name": "Abbas"
+			},
+			{
+				"_id": "899c87c1-457a-4077-8f30-f0697f3d6d47",
+				"logo": {
+					"_type": "image",
+					"asset": {
+						"_ref": "image-4fa574c98b2541a26ec96f11f6a948ef28efd7a7-400x120-webp",
+						"_type": "reference"
+					}
+				},
+				"name": "Ingo Jahn"
+			},
+			{
+				"_id": "967028ee-8c58-4dd1-b367-2f09fb2fb6da",
+				"logo": {
+					"_type": "image",
+					"asset": {
+						"_ref": "image-5c7229941a6e99bc50dbc4dea7475f3fe36bc1f1-400x120-webp",
+						"_type": "reference"
+					}
+				},
+				"name": "Rewe Müller"
+			},
+			{
+				"_id": "f0651443-8920-4633-9264-f0619984d93e",
+				"logo": {
+					"_type": "image",
+					"asset": {
+						"_ref": "image-54c06a763f0e0977a6bb492fdbac45b95bd361db-400x120-webp",
+						"_type": "reference"
+					}
+				},
+				"name": "SWN"
+			}
+		],
+		"syncTags": ["s1:GP6TuQ"],
+		"ms": 2
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27sponsors%27%5D+%7B%0A%09%09_id%2C%0A%09%09name%2C%0A%09%09logo%2C%0A%09%7D+%7C+order%28name+asc%29%0A&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+}

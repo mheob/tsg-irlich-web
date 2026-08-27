@@ -1,0 +1,154 @@
+{
+	"body": {
+		"result": [
+			{
+				"featuredImage": {
+					"_type": "extendedImage",
+					"alt": "Die Badminton Gruppe der TSG Irlich posiert mit Schlägern in einer Turnhalle",
+					"asset": {
+						"_ref": "image-4fed79cb6245f6598f8d4d0a9110dbe6dcde52a2-4284x5712-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.24314934216258602,
+						"left": 0.02602306061398159,
+						"right": 0.027693067294008306,
+						"top": 0.3881894223229067
+					},
+					"description": "Gruppenbild der Abteilung Badminton",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.227291539600941,
+						"width": 0.939632711616247,
+						"x": 0.5024905768978682,
+						"y": 0.5448886904243271
+					}
+				},
+				"icon": "Badminton",
+				"overviewTitle": null,
+				"slug": "badminton",
+				"title": "Badminton"
+			},
+			{
+				"featuredImage": {
+					"_type": "extendedImage",
+					"alt": "Die Gruppe der Frauengymnastik posiert lächelnden in weißen Oberteilen und Sportbekleidung in einer Turnhalle",
+					"asset": {
+						"_ref": "image-5e53d2552b1ded5f085fef992dec094df166cef8-5712x4284-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.06807721810278697,
+						"left": 0,
+						"right": 0,
+						"top": 0.15613014574277678
+					},
+					"description": "Gruppenbild der Abteilung Frauengymnastik ",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.3100289722734923,
+						"width": 0.8640890731735914,
+						"x": 0.4961021468486739,
+						"y": 0.4355575409058836
+					}
+				},
+				"icon": "Gymnastik",
+				"overviewTitle": null,
+				"slug": "frauengymnastik",
+				"title": "Frauengymnastik"
+			},
+			{
+				"featuredImage": {
+					"_type": "extendedImage",
+					"alt": "Mitglieder der Jedermänner in blauen Team-Shirts posieren für ein Gruppenfoto in einer Turnhalle, mit einem Ball.",
+					"asset": {
+						"_ref": "image-94a0bb2411769cb8803d33fa3120be76f8abefd8-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.08780789226966676,
+						"left": 0.16861895934543594,
+						"right": 0.14536723344413194,
+						"top": 0.27340620472172505
+					},
+					"description": "Gruppenbild der Abteilung Jedermänner",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4371217932327623,
+						"width": 0.5070793914599846,
+						"x": 0.511625862950652,
+						"y": 0.602872240688656
+					}
+				},
+				"icon": "SportInGebaeuden",
+				"overviewTitle": null,
+				"slug": "jedermaenner",
+				"title": "Jedermänner"
+			},
+			{
+				"featuredImage": {
+					"_type": "extendedImage",
+					"alt": "Teilnehmerinnen und Teilnehmer der Gruppe \"Rope Skipping\" in blauen T-Shirts der TSG Irlich im Pappelstadion.",
+					"asset": {
+						"_ref": "image-6777f3410f32556b6d74fd02a3e31c6de14354e7-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.12004326752348352,
+						"left": 0.13404599179786886,
+						"right": 0.11566474276278112,
+						"top": 0.22175067958577926
+					},
+					"description": "Gruppenbild der Abteilung Rope Skipping",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.37526477614992054,
+						"width": 0.7502892654393499,
+						"x": 0.5091906245175438,
+						"y": 0.4830428307221901
+					}
+				},
+				"icon": "RopeSkipping",
+				"overviewTitle": null,
+				"slug": "rope-skipping",
+				"title": "Rope Skipping"
+			},
+			{
+				"featuredImage": {
+					"_type": "extendedImage",
+					"alt": "Die bunt gemischte Wandergruppe der TSG Irlich, steht auf einem Bürgersteig vor einem Haus und einem großen grünen Baum.",
+					"asset": {
+						"_ref": "image-390b174f1e47cd4bf5cf5580bd214fdc734e895b-3072x4080-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.20894393797392857,
+						"left": 0,
+						"right": 0,
+						"top": 0.30559237429195835
+					},
+					"description": "Gruppenbild der Abteilung Wandern",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.25451690609488287,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5196028524243228
+					}
+				},
+				"icon": "Wandern",
+				"overviewTitle": null,
+				"slug": "wandern",
+				"title": "Wandern"
+			}
+		],
+		"syncTags": ["s1:UjEcig"],
+		"ms": 6
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType%5D%5B%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09icon%2C%0A%09%09featuredImage%2C%0A%09%09overviewTitle%2C%0A%09%09%27slug%27%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24groupType=%22group.other-sports%22&returnQuery=false"
+}
