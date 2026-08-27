@@ -1,8 +1,5 @@
-// oxlint-disable import/no-namespace
-
 'use client';
 
-import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import { useId, useMemo } from 'react';
 import type { ComponentProps } from 'react';
@@ -40,7 +37,7 @@ function FormItem({ className, ...props }: ComponentProps<'div'>) {
 	);
 }
 
-function FormLabel({ className, ...props }: ComponentProps<typeof LabelPrimitive.Root>) {
+function FormLabel({ className, ...props }: ComponentProps<typeof Label>) {
 	const { error, formItemId } = useFormField();
 
 	return (
