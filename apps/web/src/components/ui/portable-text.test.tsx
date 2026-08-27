@@ -164,4 +164,32 @@ describe('portable text', () => {
 
 		warnSpy.mockRestore();
 	});
+
+	it('warns about an unresolvable internal link while developing', () => {
+		vi.stubEnv('NODE_ENV', 'development');
+		const warnSpy = vi.spyOn(console, 'warn').mockReturnValue();
+
+		renderPortableText([
+			markedBlock('int-dev', 'Toter Link', {
+				_key: 'int-mark-dev',
+				_type: 'internalLink',
+				target: null,
+			}),
+		]);
+
+		expect(warnSpy).toHaveBeenCalledWith(
+			'Internal link without a resolvable target:',
+			expect.anything(),
+		);
+
+		warnSpy.mockRestore();
+		vi.unstubAllEnvs();
+	});
+
+	// The `link` mark maps to an `async` component in `portable-text.tsx` (it awaits nothing, but the
+	// signature makes it one), and React cannot render an async component on the client — the tree
+	// suspends forever and the container stays empty. Its three branches (a path or the club domain
+	// stays in the app, an external target opens in a new tab, a mark without a target renders plain
+	// text) are therefore not reachable from a test; the `externalLink` mark above covers the same
+	// shape for the mark the CMS actually writes.
 });

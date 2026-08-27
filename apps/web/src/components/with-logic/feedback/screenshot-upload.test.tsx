@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
@@ -27,9 +27,14 @@ const DROP_ZONE_LABEL = /Klicken, ziehen/u;
 
 // `ScreenshotUpload` is a controlled component (`value`/`onChange` come from the parent) — this
 // stands in for `feedback/form.tsx`'s own `useState<string[]>`, the same as the real form.
-function ControlledScreenshotUpload(): ReactElement {
+function ControlledScreenshotUpload({
+	disabled,
+	maxFiles,
+}: Readonly<{ disabled?: boolean; maxFiles?: number }> = {}): ReactElement {
 	const [value, setValue] = useState<string[]>([]);
-	return <ScreenshotUpload onChange={setValue} value={value} />;
+	return (
+		<ScreenshotUpload disabled={disabled} maxFiles={maxFiles} onChange={setValue} value={value} />
+	);
 }
 
 function renderUpload() {
@@ -51,6 +56,40 @@ function createDeferred<T>(): Deferred<T> {
 		resolve = res;
 	});
 	return { promise, resolve };
+}
+
+/**
+ * Builds a drag event carrying the given files, the way a browser hands one to a drop zone.
+ *
+ * jsdom has no `DataTransfer`, so the payload is attached to a plain event object.
+ *
+ * @param type - The event to build, for example `drop` or `dragover`.
+ * @param files - The files the event carries.
+ * @returns The event, ready to be dispatched.
+ */
+function buildDragEvent(type: string, files: File[] = []): Event {
+	const event = new Event(type, { bubbles: true, cancelable: true });
+	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+	(event as Event & { dataTransfer: unknown }).dataTransfer = { files };
+	return event;
+}
+
+/**
+ * Builds a paste event carrying the given files as clipboard items.
+ *
+ * jsdom has no `ClipboardEvent` with a writable `clipboardData`, so the payload is attached to a
+ * plain event object.
+ *
+ * @param files - The files the clipboard holds; a `null` entry stands for an item without a file.
+ * @param type - The mime type the clipboard items report.
+ * @returns The event, ready to be dispatched on `document`.
+ */
+function buildPasteEvent(files: (File | null)[], type = 'image/png'): Event {
+	const event = new Event('paste', { bubbles: true });
+	const items = files.map((file) => ({ getAsFile: () => file, type }));
+	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+	(event as Event & { clipboardData: unknown }).clipboardData = { items };
+	return event;
 }
 
 describe('the screenshot upload', () => {
@@ -158,5 +197,131 @@ describe('the screenshot upload', () => {
 
 		await expect(findByText('Der Server hat ein Problem.')).resolves.not.toBeNull();
 		expect(queryAllByRole('img', { name: 'Screenshot 1' })).toHaveLength(0);
+	});
+
+	it('uploads an image that was dropped on the drop zone', async () => {
+		mockedUploadToLinear.mockResolvedValue({
+			data: { assetUrl: 'https://uploads.linear.app/dropped.png' },
+		});
+		const { findByRole, getByLabelText } = render(<ControlledScreenshotUpload />);
+
+		const file = buildImageFile('dropped.png');
+		fireEvent(getByLabelText(DROP_ZONE_LABEL), buildDragEvent('drop', [file]));
+
+		await expect(findByRole('img', { name: 'Screenshot 1' })).resolves.not.toBeNull();
+		expect(mockedUploadToLinear).toHaveBeenCalledExactlyOnceWith({ file });
+	});
+
+	it('takes no more files than the drop zone still has room for', async () => {
+		mockedUploadToLinear.mockResolvedValue({
+			data: { assetUrl: 'https://uploads.linear.app/dropped.png' },
+		});
+		const { findByRole, getByLabelText } = render(<ControlledScreenshotUpload maxFiles={1} />);
+
+		fireEvent(
+			getByLabelText(DROP_ZONE_LABEL),
+			buildDragEvent('drop', [buildImageFile('one.png'), buildImageFile('two.png')]),
+		);
+
+		await findByRole('img', { name: 'Screenshot 1' });
+
+		const [[{ file }]] = mockedUploadToLinear.mock.calls;
+
+		expect(mockedUploadToLinear).toHaveBeenCalledOnce();
+		expect(file.name).toBe('one.png');
+	});
+
+	it('ignores a drop while the field is disabled', () => {
+		const { getByLabelText } = render(<ControlledScreenshotUpload disabled />);
+
+		fireEvent(
+			getByLabelText(DROP_ZONE_LABEL),
+			buildDragEvent('drop', [buildImageFile('dropped.png')]),
+		);
+
+		expect(mockedUploadToLinear).not.toHaveBeenCalled();
+	});
+
+	it('takes no further file once the maximum is reached', async () => {
+		mockedUploadToLinear.mockResolvedValue({
+			data: { assetUrl: 'https://uploads.linear.app/one.png' },
+		});
+		const { findByRole, getByLabelText, user } = renderWithUser(
+			<ControlledScreenshotUpload maxFiles={1} />,
+		);
+
+		await user.upload(getByLabelText(DROP_ZONE_LABEL), buildImageFile('one.png'));
+		await findByRole('img', { name: 'Screenshot 1' });
+
+		fireEvent(getByLabelText(DROP_ZONE_LABEL), buildDragEvent('drop', [buildImageFile('two.png')]));
+
+		expect(mockedUploadToLinear).toHaveBeenCalledOnce();
+	});
+
+	it('accepts dragging over and leaving the drop zone again', () => {
+		const { getByLabelText } = render(<ControlledScreenshotUpload />);
+		const dropZone = getByLabelText(DROP_ZONE_LABEL);
+
+		fireEvent(dropZone, buildDragEvent('dragover'));
+		fireEvent(dropZone, buildDragEvent('dragleave'));
+
+		expect(mockedUploadToLinear).not.toHaveBeenCalled();
+	});
+
+	it('uploads an image pasted from the clipboard', async () => {
+		mockedUploadToLinear.mockResolvedValue({
+			data: { assetUrl: 'https://uploads.linear.app/pasted.png' },
+		});
+		const { findByRole } = render(<ControlledScreenshotUpload />);
+
+		const file = buildImageFile('pasted.png');
+		fireEvent(document, buildPasteEvent([file]));
+
+		await expect(findByRole('img', { name: 'Screenshot 1' })).resolves.not.toBeNull();
+		expect(mockedUploadToLinear).toHaveBeenCalledExactlyOnceWith({ file });
+	});
+
+	it.each([
+		['the clipboard item carries no file', buildPasteEvent([null])],
+		['the clipboard holds something other than an image', buildPasteEvent([null], 'text/plain')],
+		['the clipboard is empty', new Event('paste', { bubbles: true })],
+	])('ignores a paste when %s', (_name, event) => {
+		render(<ControlledScreenshotUpload />);
+
+		fireEvent(document, event);
+
+		expect(mockedUploadToLinear).not.toHaveBeenCalled();
+	});
+
+	it('ignores a paste while the field is disabled', () => {
+		render(<ControlledScreenshotUpload disabled />);
+
+		fireEvent(document, buildPasteEvent([buildImageFile('pasted.png')]));
+
+		expect(mockedUploadToLinear).not.toHaveBeenCalled();
+	});
+
+	it('treats a thrown upload as a failed one', async () => {
+		mockedUploadToLinear.mockRejectedValue(new Error('network down'));
+		const { findByText, getByLabelText, user } = renderUpload();
+
+		await user.upload(getByLabelText(DROP_ZONE_LABEL), buildImageFile('screenshot.png'));
+
+		await expect(findByText('Upload failed')).resolves.not.toBeNull();
+	});
+
+	// The button that clears a failed tile carries no accessible name — unlike the one on an
+	// uploaded tile, which is labelled `Remove screenshot N`. Pinning the defect: it is the only
+	// button on screen in this state, so the test can still reach it.
+	it('clears a failed tile when its button is used', async () => {
+		mockedUploadToLinear.mockResolvedValue({ serverError: 'Der Server hat ein Problem.' });
+		const { findByText, getByLabelText, getByRole, queryAllByRole, user } = renderUpload();
+
+		await user.upload(getByLabelText(DROP_ZONE_LABEL), buildImageFile('screenshot.png'));
+		await findByText('Der Server hat ein Problem.');
+
+		await user.click(getByRole('button'));
+
+		expect(queryAllByRole('img')).toHaveLength(0);
 	});
 });
