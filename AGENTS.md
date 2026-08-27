@@ -38,6 +38,7 @@ pnpm run format                      # Format with oxfmt (format:check to only v
 pnpm run test                        # Run every unit test suite
 pnpm run test:affected               # Only the affected packages
 pnpm run test:coverage               # Run with coverage (lcov per workspace)
+pnpm run test:e2e                    # Playwright end-to-end suite (apps/web, fully mocked)
 
 # Type Checking & Generation
 pnpm run typecheck                   # Type check all apps
@@ -164,6 +165,7 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`); tests live next to their source (`foo.ts` → `foo.test.ts`)
 - Import `describe`/`it`/`expect`/`vi` explicitly from `vitest` — `globals` stays off
 - `apps/web` splits into a `node` and a `dom` (jsdom) project; component and hook tests land in `dom` — see `apps/web/AGENTS.md`
+- End-to-end tests are Playwright, live in `apps/web/e2e` and are separated from Vitest by extension (`*.spec.ts` vs `*.test.ts`). They mock every outbound service in the Next.js process itself and run in their own CI workflow — see `apps/web/AGENTS.md` before touching them
 - `packages/email` runs entirely in the `node` environment and renders every component with `render()` from `react-email` to a plain HTML string — no `@testing-library/react`, no DOM. The newsletter template carries exactly two snapshots (the plain mailing and the CleverReach template), deliberately kept to that count since a full-document snapshot churns on any markup change; the suite freezes the clock with `vi.useFakeTimers()`/`vi.setSystemTime(...)` to a mid-year date before snapshotting, so the footer's `new Date().getFullYear()` doesn't drift the snapshot on New Year's Day
 - oxlint's vitest plugin warns (`pnpm run lint` still exits 0) when a `describe` title isn't lowercase or repeats an imported identifier, or a hook sits outside a `describe` block — the convention is kept repo-wide regardless
 - Test files, `test-utils/**` and `vitest.config.ts` are exempt from `sort-keys`, `no-magic-numbers`, `max-lines`, `max-lines-per-function` and `typescript/no-unsafe-type-assertion` in `oxlint.config.ts` — widen a single rule inline, never the override itself

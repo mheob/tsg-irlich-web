@@ -21,6 +21,9 @@ pnpm run lint            # oxlint (use lint:fix to autofix)
 pnpm run typecheck       # tsc --noEmit
 pnpm run typegen:routes  # regenerate the typed routes after adding or moving a route
 pnpm run typegen:sanity  # regenerate src/types/sanity.types.generated.ts from the studio schema
+pnpm run test:e2e        # Playwright end-to-end suite (mocked)
+pnpm run test:e2e:ui     # the same suite in Playwright's UI mode
+pnpm run e2e:record      # refresh the recorded Sanity fixtures from the real dataset
 ```
 
 ## Directory map
@@ -98,6 +101,40 @@ No animation prop (`initial`, `animate`, `transition`, `layoutId`, …) is ever 
 Assert what a user can observe — role, label, text, accessible name, href — never a class name and never a test-only `data-testid`.
 
 A test that pins a known production defect rather than the intended behaviour carries a short comment directly above that `it` explaining the defect (see `src/actions/subscribe-to-newsletter.test.ts`).
+
+## End-to-end tests
+
+Playwright lives in `e2e/`, next to `src/`, and is separated from Vitest by extension: `*.spec.ts` is Playwright, `*.test.ts(x)` is Vitest. Vitest only ever looks below `src/`, so the two never see each other's files.
+
+| Path | Contains |
+| --- | --- |
+| `e2e/specs` | the mocked suite — the one CI blocks on |
+| `e2e/preview` | the smoke suite that runs against a deployed preview with real content |
+| `e2e/mocks/preload.ts` | every server-side network mock, preloaded into the Next.js process |
+| `e2e/fixtures` | recorded Sanity responses plus the stub image every asset resolves to |
+| `e2e/support/test.ts` | the extended `test` — import `test`/`expect` from here, never from `@playwright/test` |
+
+Two projects run every spec: `chromium` on a desktop viewport and `mobile-safari` on an iPhone 14. A spec that only applies to one of them calls `test.skip(isMobile, '…')`.
+
+### How the mocking works
+
+The pages render on the server, so `page.route` cannot see the requests that matter. `e2e/mocks/preload.ts` is preloaded with `NODE_OPTIONS='--import …'` (set by `playwright.config.ts`) before any application module is imported, and installs MSW over Sanity, CleverReach, Resend and Linear. It covers `next build` as well, because `generateStaticParams` queries Sanity while the pages are generated.
+
+- An outbound request nothing handles **fails the run** — deliberately, so a new integration cannot silently reach the real service. Add a branch to the resolver in `preload.ts` instead.
+- The newsletter mock decides its answer from the submitted address (`NEWSLETTER_SCENARIOS` in `preload.ts`); that is how a spec reaches the "already subscribed" path.
+- Only the browser-side requests are handled in `e2e/support/test.ts`: the `<SanityLive />` event stream and the analytics beacons. That file also turns off `scroll-behavior: smooth`, which otherwise moves elements out from under the pointer mid-click in WebKit.
+- `.env.e2e` is committed. Every credential in it is a dummy, because everything it names is intercepted; only the two public Sanity values are real, since the fixtures are keyed by the URLs they appear in.
+
+### Fixtures
+
+`pnpm run e2e:record` runs the suite against the real dataset with a real read token from `.env.local` and writes every Sanity response to `e2e/fixtures/sanity/<hash>.json`, keyed by request path plus query string. Assertions may fail during a recording run — the fixtures are still written. Re-record after changing a GROQ query or adding a route, and commit the result.
+
+### Writing a spec
+
+- Import `test` and `expect` from `../support/test`.
+- Assert what a user can observe — role, accessible name, text, URL — never a class name, never a `data-testid`, same rule as the unit tests.
+- Content assertions are pinned to the recorded fixtures, so prefer stable UI strings (navigation labels, section headings) over an article's title.
+- react-hook-form resets its fields when the form hydrates. Interact with a client-only control first (the receiver select does the job), then fill the text fields — otherwise WebKit loses the input.
 
 ## Gotchas
 
