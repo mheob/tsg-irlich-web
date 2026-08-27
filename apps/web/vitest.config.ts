@@ -1,5 +1,4 @@
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig, type Plugin } from 'vitest/config';
 
 const ASSET_PATTERN = /\.(?:avif|gif|jpe?g|png|svg|webp)$/u;
@@ -27,7 +26,8 @@ function assetStub(): Plugin {
 }
 
 export default defineConfig({
-	plugins: [assetStub(), tsconfigPaths()],
+	plugins: [assetStub()],
+	resolve: { tsconfigPaths: true },
 	test: {
 		coverage: {
 			exclude: ['**/*.test.{ts,tsx}', '**/test-utils/**', '**/*.config.ts', '**/*.generated.ts'],
