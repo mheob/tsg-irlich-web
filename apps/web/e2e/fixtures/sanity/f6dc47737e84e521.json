@@ -1,0 +1,144 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2025-06-20T06:28:34Z",
+			"_id": "departmentsPage",
+			"_rev": "iXFi0dmSD9bydBwpfJjyVO",
+			"_system": {
+				"base": {
+					"id": "departmentsPage",
+					"rev": "quzXVhgnav6xgjOcRtM7vx"
+				}
+			},
+			"_type": "departmentsPage",
+			"_updatedAt": "2026-08-26T07:54:57Z",
+			"content": {
+				"contactPersonsSection": {
+					"contactPersons": [
+						{
+							"contactAs": "both",
+							"email": "breitensport@tsg-irlich.de",
+							"firstName": "Melanie ",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Klein",
+							"phone": "+49 171 9941807",
+							"role": "Abteilungsleitung Breitensport",
+							"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+						},
+						{
+							"contactAs": "both",
+							"email": "fussball@tsg-irlich.de",
+							"firstName": "Markus",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Abteilungsleiter Markus Straeten in einem Shirts der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-0ce6f3246b26f5cfd54973c83fece2aaf34317d6-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.882559012428059,
+									"width": 0.9733088664609225,
+									"x": 0.5133455667695388,
+									"y": 0.5587204937859704
+								}
+							},
+							"lastName": "Straeten",
+							"phone": "+49 170 2206948",
+							"role": "Abteilungsleitung Fußball",
+							"taskDescription": "Als Abteilungsleiter Fußball trage ich die Gesamtverantwortung für die Abteilung und koordiniere alle Teams. Ich führe das Team, wähle Übungsleiter aus, organisiere die Materialbeschaffung und entwickle das sportliche Angebot laufend weiter."
+						}
+					],
+					"intro": "Allgemeine Fragen zum sportlichen Bereich können direkt an unsere Abteilungsleiter gestellt werden.",
+					"subtitle": "Ansprechpartner",
+					"title": "Kontakt zu unseren Abteilungsleitungen"
+				},
+				"departmentsSection": {
+					"intro": "Bei uns geht immer was! Ob Fußball, Kinderturnen, spannende Kurse, klassisches Turnen oder Taekwondo – wir haben für jedes Alter und jedes Level das passende Angebot. Bewegung, Spaß und ein starkes Miteinander stehen bei uns an erster Stelle. Werde Teil unserer Sport-Gemeinschaft und zeig, was in dir steckt!",
+					"subtitle": "Unser Angebot",
+					"title": "Unsere Abteilungen bieten für jeden etwas"
+				},
+				"stats": [
+					{
+						"_key": "c4608d2c93c2",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "Gruppenanzahl ",
+						"value": 30
+					},
+					{
+						"_key": "f57226095f72",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "Trainingsstunden / Woche ",
+						"value": 60
+					},
+					{
+						"_key": "3feaa17e8243",
+						"_type": "stats",
+						"title": "Trainingsstätten ",
+						"value": 9
+					},
+					{
+						"_key": "98739275fc4b",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "Trainer / Übungsleiter ",
+						"value": 40
+					}
+				]
+			},
+			"meta": {
+				"_type": "metaFields",
+				"metaDescription": "Ob Fußball, Kinderturnen, Kurse oder Taekwondo – für jedes Alter ist etwas dabei. Bewegung, Spaß und Gemeinschaft stehen bei uns an erster Stelle.",
+				"metaTitle": "Großes Sportangebot bei der TSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Eine Gruppe von Kindern macht in einer Turnhalle Gymnastik, mit Menschenpyramiden und verschiedenen Posen.",
+					"asset": {
+						"_ref": "image-95a308b3e9e32176a18d8927b612071b40074986-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.688568687963967,
+						"width": 0.9962743626101704,
+						"x": 0.5,
+						"y": 0.394184252231212
+					}
+				}
+			},
+			"slug": {
+				"_type": "slug",
+				"current": "angebot"
+			},
+			"subtitle": "Wir bieten dir",
+			"title": "Unsere Abteilungen"
+		},
+		"syncTags": ["s1:kG7Arw", "s1:WU9DBg", "s1:ZGhU9g", "s1:B7LhMw", "s1:bW4l3Q"],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A*%5B_type+%3D%3D+%27departmentsPage%27%5D%5B0%5D+%7B%0A%09...%2C%0A%09content+%7B%0A%09%09...%2C%0A%09%09contactPersonsSection+%7B%0A%09%09%09...%2C%0A%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A%7D%0A&returnQuery=false"
+}

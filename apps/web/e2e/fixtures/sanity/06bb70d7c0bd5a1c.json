@@ -1,0 +1,225 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2024-06-09T14:55:24Z",
+			"_id": "imprint",
+			"_rev": "FGdPcw6oZ4f5ikxTPQ5Xg2",
+			"_system": {
+				"base": {
+					"id": "imprint",
+					"rev": "qfw0tsFoAJsTXLf2Hlcksk"
+				}
+			},
+			"_type": "imprint",
+			"_updatedAt": "2026-08-26T07:54:57Z",
+			"address": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "26ab19a02c75",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "fa56781293c4",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "TSG Irlich 1882 e.V."
+							},
+							{
+								"_key": "1bc32ed43a20",
+								"_type": "span",
+								"marks": [],
+								"text": "\nGotenstraße 20\n56567 Neuwied"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"consumerDisputeResolution": "Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
+			"contactForm": {
+				"link": {
+					"_type": "contact",
+					"category": null,
+					"slug": "kontakt"
+				},
+				"title": "Kontaktiere uns"
+			},
+			"credits": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "ea0723cd2bba",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "84ebd3eb217e",
+								"_type": "span",
+								"marks": [],
+								"text": "Sportarten Piktogramme: © DOSB/Sportdeutschland"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"email": "info@tsg-irlich.de",
+			"intro": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "d21f78e5ab09",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f8dd82b15e65",
+								"_type": "span",
+								"marks": [],
+								"text": "Unser Impressum gilt für die Seite www.tsg-irlich.de sowie für die TSG Irlich-Seiten auf "
+							},
+							{
+								"_key": "68ad011c42c9",
+								"_type": "span",
+								"marks": ["fd165fd95e95"],
+								"text": "Facebook"
+							},
+							{
+								"_key": "5bf05e4d6ac7",
+								"_type": "span",
+								"marks": [],
+								"text": ", "
+							},
+							{
+								"_key": "99e9be52346a",
+								"_type": "span",
+								"marks": ["9094c42e9af5"],
+								"text": "Instagram"
+							},
+							{
+								"_key": "3859967fa07b",
+								"_type": "span",
+								"marks": [],
+								"text": " und "
+							},
+							{
+								"_key": "6c191183004e",
+								"_type": "span",
+								"marks": ["d90483493b8e"],
+								"text": "Youtube"
+							},
+							{
+								"_key": "d83198be2924",
+								"_type": "span",
+								"marks": [],
+								"text": "."
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "9094c42e9af5",
+								"_type": "link",
+								"href": "https://www.instagram.com/tsgirlich"
+							},
+							{
+								"_key": "fd165fd95e95",
+								"_type": "link",
+								"href": "https://www.facebook.com/tsgirlich"
+							},
+							{
+								"_key": "d90483493b8e",
+								"_type": "link",
+								"href": "https://www.youtube.com/@tsgirlich"
+							}
+						],
+						"style": "normal"
+					}
+				]
+			},
+			"meta": {
+				"_type": "metaFields",
+				"metaDescription": "Unser Impressum gilt neben der Seite www.tsg-irlich.de auch für die TSG Irlich-Sozialen-Medien auf Facebook, Instagram und Youtube.",
+				"metaTitle": "TSG Irlich - Impressum",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Logo der TSG Irlich 1882 e. V.",
+					"asset": {
+						"_ref": "image-458104d8ae03852b0f2f4d8c86f2c11be072a7b6-1024x768-webp",
+						"_type": "reference"
+					}
+				}
+			},
+			"registerCourt": "Amtsgericht Montabaur",
+			"registerNo": "VR 10036",
+			"represented": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "b2184695fb56",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "fa4ad4428b1a",
+								"_type": "span",
+								"marks": [],
+								"text": "Alexander Hof, Vorsitz\nRené Linn, Vorstand Finanzen\nMelina Dinter, Vorstand Verwaltung\nPhilipp Pfeiffer, Vorstand Öffentlichkeitsarbeit"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"responsible": "Alexander Hof, René Linn, Melina Dinter und Philipp Pfeiffer",
+			"slug": {
+				"_type": "slug",
+				"current": "impressum"
+			},
+			"subtitle": "Rechtliche Informationen",
+			"support": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "20a902277d49",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "d9171910519b0",
+								"_type": "span",
+								"marks": [],
+								"text": "Design, Umsetzung und technische Leitung: "
+							},
+							{
+								"_key": "c50146e06d6d",
+								"_type": "span",
+								"marks": ["aadc8e794198"],
+								"text": "www.alex-boehm.dev"
+							},
+							{
+								"_key": "d429a4198cb5",
+								"_type": "span",
+								"marks": [],
+								"text": "\n(Vielen Dank ♥)"
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "aadc8e794198",
+								"_type": "link",
+								"href": "https://www.alex-boehm.dev/de/"
+							}
+						],
+						"style": "normal"
+					}
+				]
+			},
+			"technicalQuestionsEmail": "it@tsg-irlich.de",
+			"technicalQuestionsName": "Alexander Böhm",
+			"title": "Impressum"
+		},
+		"syncTags": ["s1:OevtwA", "s1:fcrxxQ"],
+		"ms": 7
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27imprint%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09%22contactForm%22%3A+contactForm+%7B%0A%09%09%09%22title%22%3A+link-%3Etitle%2C%0A%09%09%09%22link%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
+}

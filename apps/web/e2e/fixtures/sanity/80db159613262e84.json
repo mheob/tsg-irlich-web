@@ -1,0 +1,371 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2024-06-17T18:34:35Z",
+			"_id": "home",
+			"_rev": "dtJXu1REiVbNFr2bYfprpa",
+			"_system": {
+				"base": {
+					"id": "home",
+					"rev": "vIbXU0RSRuiYQLk215D56k"
+				}
+			},
+			"_type": "home",
+			"_updatedAt": "2026-08-26T07:54:57Z",
+			"content": {
+				"contactPersonsSection": {
+					"contactPersons": [
+						{
+							"contactAs": "both",
+							"email": "vorsitz@tsg-irlich.de",
+							"firstName": "Alexander",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Alexander Hof in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz.",
+								"asset": {
+									"_ref": "image-1e4595eb53901b21a62170411d838b4bc0e65adc-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.89125541277692,
+									"width": 0.9561294492393759,
+									"x": 0.521935275380312,
+									"y": 0.5543722936115401
+								}
+							},
+							"lastName": "Hof",
+							"phone": "+49 170 4489500",
+							"role": "Vorsitzender",
+							"taskDescription": "Als Vorsitzender gestalte ich die strategische Ausrichtung und Weiterentwicklung des Vereins. Ich repräsentiere ihn nach außen, pflege den Austausch mit der Kommune, Verbänden und Sponsoren und setze mein Netzwerk gezielt für eine erfolgreiche Zusammenarbeit ein."
+						},
+						{
+							"contactAs": "email",
+							"email": "finanzen@tsg-irlich.de",
+							"firstName": "René",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "René Linn in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz. ",
+								"asset": {
+									"_ref": "image-9a54eec0662a8a7b613a63a7f2a85acc75bfbf06-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Linn",
+							"phone": "+49 160 1818712",
+							"role": "Vorstand Finanzen",
+							"taskDescription": "Ich verantworte die gesamte Finanzverwaltung der TSG Irlich. Von Abrechnungen bis zu Steuerfragen. Zudem plane und kontrolliere ich die Finanzen und sorge für eine transparente sowie nachhaltige Haushaltsführung des Vereins. Bei Fragen zu Finanzthemen bin ich ihr Ansprechpartner."
+						},
+						{
+							"contactAs": "both",
+							"email": "verwaltung@tsg-irlich.de",
+							"firstName": "Melina",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Melina Dinter im Polo der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-32c7a18d61105ff1d2a01e528209cb5edf7effd2-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Dinter",
+							"phone": "+49 151 50422094",
+							"role": "Vorstand Verwaltung",
+							"taskDescription": "Als Vorstand Verwaltung kümmere ich mich um alle administrativen Aufgaben. Von Vertragsabwicklung über Versicherungen bis zu Protokollen und Post. Ich betreue die digitale Mitgliederverwaltung und sorge für eine reibungslose Dokumentation und Kommunikation."
+						},
+						{
+							"contactAs": "both",
+							"email": "presse@tsg-irlich.de",
+							"firstName": "Philipp",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Philipp Pfeiffer im T-shirt der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0.10636665814369727,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"description": "Philipp Pfeiffer, Vorstandsmitglied und Jugendtrainer",
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.738174379953976,
+									"width": 0.5472598653370835,
+									"x": 0.4836358987471234,
+									"y": 0.49727264979118724
+								}
+							},
+							"lastName": "Pfeiffer",
+							"phone": "+49 170 2418600",
+							"role": "Vorstand Öffentlichkeitsarbeit",
+							"taskDescription": "In meinem Ehrenamt gestalte und steuere ich die gesamte PR und Kommunikation der TSG. Ich leite das PR-Team, das unsere Social-Media-Kanäle und unsere Website verwaltet, Printmedien gestaltet und das 'TSG Echo' publiziert. Ich bin zudem Ansprechpartner für Projektplanungen."
+						},
+						{
+							"contactAs": "both",
+							"email": "breitensport@tsg-irlich.de",
+							"firstName": "Melanie ",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Klein",
+							"phone": "+49 171 9941807",
+							"role": "Abteilungsleitung Breitensport",
+							"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+						},
+						{
+							"contactAs": "both",
+							"email": "fussball@tsg-irlich.de",
+							"firstName": "Markus",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Abteilungsleiter Markus Straeten in einem Shirts der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-0ce6f3246b26f5cfd54973c83fece2aaf34317d6-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.882559012428059,
+									"width": 0.9733088664609225,
+									"x": 0.5133455667695388,
+									"y": 0.5587204937859704
+								}
+							},
+							"lastName": "Straeten",
+							"phone": "+49 170 2206948",
+							"role": "Abteilungsleitung Fußball",
+							"taskDescription": "Als Abteilungsleiter Fußball trage ich die Gesamtverantwortung für die Abteilung und koordiniere alle Teams. Ich führe das Team, wähle Übungsleiter aus, organisiere die Materialbeschaffung und entwickle das sportliche Angebot laufend weiter."
+						}
+					],
+					"intro": "Finde in dieser Übersicht den richtigen Ansprechpartner für dein Anliegen. Setze dich direkt mit uns in Verbindung – wir helfen dir gerne weiter!",
+					"subtitle": "Unser Vorstandsteam",
+					"title": "Wir sind für dich da"
+				},
+				"featureSection": {
+					"features": [
+						{
+							"_key": "df33454a794f",
+							"_type": "feature",
+							"icon": "Dumbbell",
+							"intro": "Die TSG bietet mit ihrem vielfältigem Sportangebot jedem Sportler eine Heimat.",
+							"title": "Sportliche Vielfalt"
+						},
+						{
+							"_key": "7ba1cff161d3",
+							"_type": "feature",
+							"icon": "Calendar",
+							"intro": "Bei uns trainieren alle Altersgruppen. Vom Kleinkind- bis zum Senioren-Sport.",
+							"title": "Jung und alt"
+						},
+						{
+							"_key": "01104f709bea",
+							"_type": "feature",
+							"icon": "GraduationCap",
+							"intro": "Wir fördern und investieren in die Ausbildung unserer ehrenamtlichen Übungsleiterinnen und Übungsleiter.",
+							"title": "Engagiert und Kompetent"
+						},
+						{
+							"_key": "b6feee11cfec",
+							"_type": "feature",
+							"icon": "House",
+							"intro": "Wir engagieren uns im vielfältigen Dorfleben von unserer Heimat - Irlich am Rhein.",
+							"title": "Irlich - Unsere Heimat"
+						}
+					],
+					"intro": "Sport ist mehr als Training. Bei der TSG Irlich erlebst du ein breites Sportangebot, das Menschen zusammenbringt, begeistert und zur Bewegung motiviert – ganz unabhängig von Alter oder Leistungsstand. Steigere deine Fitness und deine Gesundheit! Entdecke unser vielfältiges Angebot und werde Teil einer aktiven Gemeinschaft.",
+					"subtitle": "Features",
+					"title": "Unser Angebot an Dich"
+				},
+				"groupsSection": {
+					"subtitle": "Übersicht unseres Sportangebots",
+					"title": "Unsere Angebote"
+				},
+				"newsSection": {
+					"intro": "Hier findest du alle Neuigkeiten rund ums Vereinsleben der TSG Irlich. Bleib auf dem Laufenden über Veranstaltungen, Erfolge und spannende Entwicklungen!",
+					"subtitle": "Aktuelles",
+					"title": "Neuigkeiten rund um die TSG"
+				},
+				"pricingSection": {
+					"intro": "Finde in dieser Übersicht den passenden Mitgliedsbeitrag für Dich, Deine Familie oder Dein Kind. Vergleiche die Optionen und wähle den Beitrag, der am besten zu Dir oder euch passt.",
+					"pricingAdult": {
+						"benefits": [
+							"Volle Flexibilität - Training in jeder Abteilung möglich.",
+							"mit Menschen, die gleiche Ziele verfolgen",
+							"angeleitet durch qualifizierte Übungsleiter",
+							"fit und lokal - dein regionaler Sportverein"
+						],
+						"benefitsTitle": "Deine Vorteile",
+						"cta": "Werde Mitglied!",
+						"intro": "Einzelmitgliedschaft für Erwachsene. Treibe selbst Sport oder unterstütze den Verein, das Vereinsleben zu organisieren und die Tradition zu wahren.",
+						"price": 10,
+						"subtitle": "ab 18 Jahre",
+						"title": "Erwachsene"
+					},
+					"pricingFamily": {
+						"benefits": [
+							"Mitgliedschaft für deine gesamte Familie (s. Bedingungen)",
+							"Volle Flexibilität - Training in jeder Abteilung möglich",
+							"mit Menschen in deinem Alter",
+							"angeleitet durch qualifizierte Übungsleiter"
+						],
+						"benefitsTitle": "Eure Vorteile",
+						"cta": "Werdet Mitglieder!",
+						"intro": "Vergünstigtes Angebot für Familien, unabhängig von der Zahl der im Haushalt lebenden Personen. Hinweis: Familienangehörige mit eigenem Einkommen sind vom Familienbeitrag ausgeschlossen und müssen sich selbst anmelden oder ggf. ummelden.",
+						"price": 15,
+						"subtitle": "für Familien",
+						"title": "Familientarif"
+					},
+					"pricingYouth": {
+						"benefits": [
+							"Volle Flexibilität - Training in jeder Abteilung möglich",
+							"mit Kindern & Jugendlichen in deinem Alter",
+							"angeleitet durch qualifizierte Übungsleiter",
+							"altersgerechte Betreuung & Bewegungsangebote"
+						],
+						"benefitsTitle": "Deine Vorteile",
+						"cta": "Werde Mitglied!",
+						"intro": "Vergünstigte Mitgliedschaft für Kinder und Jugendliche – denn die Kinder- und Jugendarbeit liegt uns ganz besonders am Herzen! Hinweis: Schüler, Studenten und Azubis über dem 18. Lebensjahr benötigen einen gesonderten Nachweis.",
+						"price": 7,
+						"subtitle": "bis 18 Jahre",
+						"title": "Jugend"
+					},
+					"subtitle": "Mitgliedsbeiträge",
+					"title": "Der richtige Preis für Dich und Euch"
+				},
+				"stats": [
+					{
+						"_key": "808b1b1f85e9",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "Anzahl der Ehrenamtler ",
+						"value": 60
+					},
+					{
+						"_key": "27c52d67c3f1",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "Mitglieder",
+						"value": 675
+					},
+					{
+						"_key": "27d314a0e0c2",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "Jahre Tradition",
+						"value": 140
+					},
+					{
+						"_key": "1e995e4abdc0",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "Social Media Follower ",
+						"value": 2000
+					}
+				],
+				"testimonialSection": {
+					"subtitle": "Meinungen und Referenzen",
+					"testimonials": [
+						{
+							"_key": "d7022149e025",
+							"_ref": "efc76fab-8321-44fb-a508-e4724b838141",
+							"_type": "reference"
+						},
+						{
+							"_key": "4f027b112ee2",
+							"_ref": "84814923-c80b-4ef3-8187-3e1b4e704e61",
+							"_type": "reference"
+						},
+						{
+							"_key": "f39d2c4d519a",
+							"_ref": "5b133aee-14bf-4ec5-9412-f3c8aa3ae15c",
+							"_type": "reference"
+						},
+						{
+							"_key": "8ccd788fe5a7",
+							"_ref": "ecb45fd7-35b9-4496-9e43-5045c12f9ac4",
+							"_type": "reference"
+						},
+						{
+							"_key": "f8295d6f8112",
+							"_ref": "73204adc-c630-47f8-8e1d-081baf5ad77a",
+							"_type": "reference"
+						},
+						{
+							"_key": "405a814632c2",
+							"_ref": "35965450-3830-4aca-8438-1dd51ba6c6d7",
+							"_type": "reference"
+						}
+					],
+					"title": "Was wird über uns gesagt?"
+				},
+				"visionSection": {
+					"cta": "Erfahre mehr über uns",
+					"intro": "Unsere Mission ist es, den Sport in Irlich und Umgebung zu fördern. Wir setzen uns für Vielfalt, Integration und ein starkes soziales Miteinander ein und fördern alle Altersgruppen. Durch unsere sportlichen Angebote schaffen wir einen Raum, der Menschen verbindet und Gemeinschaft stärkt.",
+					"subtitle": "Unsere Vision",
+					"title": "Was sind unsere Ziele? Wofür stehen wir?"
+				}
+			},
+			"intro": "Bei der Turn- und Sportgemeinde Irlich erwarten dich Fußball, Turnen, Tanzen und viele weitere Sportarten – hier ist für jeden etwas dabei. Gemeinsam stehen bei uns Spaß, Bewegung und eine starke Gemeinschaft im Mittelpunkt. Fühl dich einfach wohl!",
+			"meta": {
+				"_type": "metaFields",
+				"metaDescription": "TSG Irlich – dein Sportverein für Fußball, Turnen, Tanzen, Taekwondo und viele weitere Sportarten. Für jedes Alter, mit Spaß, Bewegung und starker Gemeinschaft.",
+				"metaTitle": "Mehr als Sport – wir sind die TSG Irlich.",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Logo der TSG Irlich 1882 e. V.",
+					"asset": {
+						"_ref": "image-458104d8ae03852b0f2f4d8c86f2c11be072a7b6-1024x768-webp",
+						"_type": "reference"
+					}
+				}
+			},
+			"slug": {
+				"_type": "slug",
+				"current": "home"
+			},
+			"subtitle": "Mit Tradition und Leidenschaft seit 1882",
+			"title": "Mehr als Sport – wir sind die TSG Irlich."
+		},
+		"syncTags": [
+			"s1:eOuqJg",
+			"s1:bW4l3Q",
+			"s1:yJoVrQ",
+			"s1:SgUpiQ",
+			"s1:N029bQ",
+			"s1:BpJQvw",
+			"s1:y+gLqA",
+			"s1:NuVTmQ",
+			"s1:WU9DBg",
+			"s1:B7LhMw",
+			"s1:Cc+ZCg",
+			"s1:PeVrtw",
+			"s1:kG7Arw"
+		],
+		"ms": 11
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27home%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09...%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
+}

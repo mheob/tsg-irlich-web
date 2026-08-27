@@ -56,17 +56,33 @@ const NEWSLETTER_SCENARIOS = {
 };
 
 /**
+ * Query parameters that say how a result is fetched rather than what is fetched. They differ
+ * between the two fetchers, and between a build and a request — keying on them would ask for a
+ * separate recording of identical content per caller.
+ */
+const VOLATILE_PARAMS = ['cacheMode', 'perspective', 'returnQuery', 'tag'];
+
+/**
  * Builds the file name a Sanity response is stored under.
  *
- * The GROQ query and its parameters live in the query string, so path plus search identifies a
- * request exactly, while the hash keeps the (very long) result out of the file name.
+ * The GROQ query and its parameters live in the query string, so the path plus the meaningful part
+ * of the search identifies a request, while the hash keeps the (very long) result out of the file
+ * name.
  *
  * @param url - The requested Sanity URL.
  * @returns The fixture's base name without extension.
  */
 function fixtureKey(url: URL): string {
+	const params = new URLSearchParams(url.search);
+
+	for (const name of VOLATILE_PARAMS) {
+		params.delete(name);
+	}
+
+	params.sort();
+
 	return createHash('sha256')
-		.update(`${url.pathname}${url.search}`)
+		.update(`${url.pathname}?${params.toString()}`)
 		.digest('hex')
 		.slice(0, KEY_LENGTH);
 }

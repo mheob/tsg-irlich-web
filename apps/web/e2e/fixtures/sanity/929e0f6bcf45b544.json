@@ -1,0 +1,105 @@
+{
+	"body": {
+		"result": [
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "jedermanner"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "jugend"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "historie"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "wandern"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "senioren"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "faszien"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "turnen"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "breitensport"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "pr-team"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "kinderturnen"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "fussball"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "alte-herren"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "montagskicker"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "schiedsrichter"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "verein"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "diamonds"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "soziales"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "badminton"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "after-work-fitness"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "veranstaltungen"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "frauengymnastik"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "rope-skipping"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "pilates"
+			},
+			{
+				"lastModified": "2026-08-26T07:54:56Z",
+				"slug": "taekwondo"
+			}
+		],
+		"syncTags": ["s1:0IpYkw"],
+		"ms": 4
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.category%27%5D+%7B%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22lastModified%22%3A+_updatedAt%0A%09%7D%0A&returnQuery=false"
+}

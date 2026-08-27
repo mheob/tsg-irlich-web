@@ -1,0 +1,437 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2026-01-02T10:22:52Z",
+			"_id": "accessibility",
+			"_rev": "iXFi0dmSD9bydBwpfJjyVO",
+			"_system": {
+				"base": {
+					"id": "accessibility",
+					"rev": "CGcn53gD3w5TD8K8jjHgIS"
+				}
+			},
+			"_type": "accessibility",
+			"_updatedAt": "2026-08-26T07:54:57Z",
+			"content": {
+				"_type": "blockContent",
+				"text": [
+					{
+						"_key": "9f57e5228c62",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6d742b4ec957",
+								"_type": "span",
+								"marks": [],
+								"text": "Erklärung zur Barrierefreiheit für Dienstleistungen"
+							}
+						],
+						"markDefs": [],
+						"style": "h2"
+					},
+					{
+						"_key": "e9af39736dcf",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "f8d125dd25e3",
+								"_type": "span",
+								"marks": [],
+								"text": "Im Rahmen unserer Barrierefreiheitserklärung möchten wir Ihnen einen Überblick über den Stand der Vereinbarkeit der unten beschriebenen Dienstleistung(en) mit den Anforderungen der Barrierefreiheit nach gesetzlichen Vorschriften (insbesondere mit dem Barrierefreiheitsstärkungsgesetz – BFSG) geben."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "1639b0c3f972",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "09444a9c6b52",
+								"_type": "span",
+								"marks": [],
+								"text": "Angaben zum Dienstleistungserbringer "
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "7327aa43873d",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "04a08f856c4c",
+								"_type": "span",
+								"marks": [],
+								"text": "TSG Irlich 1882 e. V.\nGotenstraße 20\n56567 Neuwied"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "fd71ae65cabd",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "48e5f454dcc4",
+								"_type": "span",
+								"marks": [],
+								"text": "E-Mail: "
+							},
+							{
+								"_key": "bfc6b43d6d2f",
+								"_type": "span",
+								"marks": ["6c0234101122"],
+								"text": "info@tsg-irlich.de"
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "6c0234101122",
+								"_type": "externalLink",
+								"href": "mailto:info@tsg-irlich.de"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "88597c33876f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b33a97bb25dc",
+								"_type": "span",
+								"marks": [],
+								"text": "Link zur Website: "
+							},
+							{
+								"_key": "ac2d9e0bb5b5",
+								"_type": "span",
+								"marks": ["75b72c710efc"],
+								"text": "www.tsg-irlich.de"
+							},
+							{
+								"_key": "2cb17dd2b6a9",
+								"_type": "span",
+								"marks": [],
+								"text": "\nLink zum Impressum: "
+							},
+							{
+								"_key": "0c8f9c807cdc",
+								"_type": "span",
+								"marks": ["ce3be3778c03"],
+								"text": "www.tsg-irlich.de/impressum"
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "75b72c710efc",
+								"_type": "internalLink",
+								"link": {
+									"_ref": "home",
+									"_type": "reference"
+								},
+								"target": {
+									"_type": "home",
+									"category": null,
+									"slug": "home"
+								}
+							},
+							{
+								"_key": "ce3be3778c03",
+								"_type": "internalLink",
+								"link": {
+									"_ref": "imprint",
+									"_type": "reference"
+								},
+								"target": {
+									"_type": "imprint",
+									"category": null,
+									"slug": "impressum"
+								}
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "a42fd60ea085",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "49adb99bc3a3",
+								"_type": "span",
+								"marks": [],
+								"text": "Allgemeine Beschreibung der Dienstleistung"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "59c1a40c417f",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "017052f71011",
+								"_type": "span",
+								"marks": [],
+								"text": "Bereitstellen von Informationen rund um die TSG Irlich."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "8e90a1767095",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "910fbcfd87ac",
+								"_type": "span",
+								"marks": [],
+								"text": "Erläuterungen zur Durchführung der Dienstleistung"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "93d6cda5ab6e",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "20ee52093f25",
+								"_type": "span",
+								"marks": [],
+								"text": "Über unsere Website www.tsg-irlich.de stellen wir Informationen rund um die TSG Irlich bereit. Du kannst dich zu unserem Newsletter anmelden und den Kontakt zu uns aufnehmen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "97020df6f15c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "042be8bb35f4",
+								"_type": "span",
+								"marks": [],
+								"text": "Stand der Vereinbarkeit mit den Anforderungen"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "5acf037c9f24",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "7fcd8ea5acb9",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir setzen uns für digitale Barrierefreiheit ein und verfolgen das Ziel, unsere Website so zu gestalten, dass sie für alle Nutzerinnen und Nutzer uneingeschränkt zugänglich ist. Daher arbeiten wir kontinuierlich daran, die Anforderungen des Barrierefreiheitsstärkungsgesetzes (BFSG) und der Verordnung zum Barrierefreiheitsstärkungsgesetz (BFSGV) vollständig umzusetzen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "0f71186be5b7",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "9b00775c46b1",
+								"_type": "span",
+								"marks": [],
+								"text": "Unsere Webseite setzt die Vorgaben gemäß Web Content Accessibility Guidelines (WCAG) um:"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "15e2a82b84e1",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "ba90898586be",
+								"_type": "span",
+								"marks": [],
+								"text": "Tastaturbedienbarkeit: Alle Inhalte und Funktionen sind vollständig über die Tastatur zugänglich, sodass auch Nutzerinnen und Nutzer ohne Maus uneingeschränkt navigieren können."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "aba2e546074d",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "b34faf702db2",
+								"_type": "span",
+								"marks": [],
+								"text": "Vorlesefunktion und ARIA-Attribute: Unsere Website unterstützt Vorlesefunktionen und ist mit ARIA-Attributen versehen, um die Nutzung mit Screenreadern zu erleichtern."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "51722b966b6b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "8b70d1ff157c",
+								"_type": "span",
+								"marks": [],
+								"text": "Optimierte Kontraste und flexible Schriftgrößen: Wir achten auf ausreichend hohe Farbkontraste für eine bessere Lesbarkeit und ermöglichen es, die Schriftgröße individuell anzupassen, um den unterschiedlichen Bedürfnissen gerecht zu werden."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "f6b73009aca8",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "bb2f9849d999",
+								"_type": "span",
+								"marks": [],
+								"text": "Feedbackmöglichkeit zur Meldung von Barrieren"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "57c9f02aae0c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "3d46c213b191",
+								"_type": "span",
+								"marks": [],
+								"text": "Wenn Ihnen Barrieren beim Zugang zu Inhalten auf unserer Website aufgefallen sind, können Sie uns gern einen Hinweis geben:"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "24013b72dce2",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "74491d3a7bdb",
+								"_type": "span",
+								"marks": [],
+								"text": "E-Mail: "
+							},
+							{
+								"_key": "eeffbd382083",
+								"_type": "span",
+								"marks": ["ab2919f8d31a"],
+								"text": "it@tsg-irlich.de"
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "ab2919f8d31a",
+								"_type": "externalLink",
+								"href": "mailto:it@tsg-irlich.de"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "15a5171cd3df",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "10e6467a6fb9",
+								"_type": "span",
+								"marks": [],
+								"text": "Zuständige Marktüberwachungsbehörde"
+							}
+						],
+						"markDefs": [],
+						"style": "h3"
+					},
+					{
+						"_key": "81d4cb245d15",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6f2e4a3b6a96",
+								"_type": "span",
+								"marks": [],
+								"text": "Marktüberwachungsstelle der Länder für die Barrierefreiheit von Produkten und Dienstleistungen (MLBF)\nc/o Ministerium für Arbeit, Soziales, Gesundheit und Gleichstellung Sachsen-Anhalt\nPostfach 39 11 55\n39135 Magdeburg"
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "0a1fb808e99c",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "9183972a2ff7",
+								"_type": "span",
+								"marks": [],
+								"text": "Telefon: "
+							},
+							{
+								"_key": "a8ebd6ca5090",
+								"_type": "span",
+								"marks": ["841651ae2cb5"],
+								"text": "+49 391 567 6970"
+							},
+							{
+								"_key": "285477c67515",
+								"_type": "span",
+								"marks": [],
+								"text": "\nE-Mail: "
+							},
+							{
+								"_key": "b21fd19599fc",
+								"_type": "span",
+								"marks": ["aabe733111a3"],
+								"text": "mlbf@ms.sachsen-anhalt.de"
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "aabe733111a3",
+								"_type": "externalLink",
+								"href": "mailto:mlbf@ms.sachsen-anhalt.de"
+							},
+							{
+								"_key": "841651ae2cb5",
+								"_type": "externalLink",
+								"href": "tel:+493915676970"
+							}
+						],
+						"style": "normal"
+					}
+				]
+			},
+			"slug": {
+				"_type": "slug",
+				"current": "barrierefreiheit"
+			},
+			"subtitle": "Zugang für jede Person",
+			"title": "Barrierefreiheit"
+		},
+		"syncTags": ["s1:NlU22g", "s1:Hi85NA", "s1:u8DZ7g"],
+		"ms": 7
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27accessibility%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%7D%0A&returnQuery=false"
+}

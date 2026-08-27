@@ -1,0 +1,771 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'news.article' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == \"grid\" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t}\n",
+		"result": {
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "168448f5081f",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "f1684401e8e9",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "09fe7c624199",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Pflichtspielauftakt in die Saison 2026/27 ist der TSG Irlich misslungen. In der 1. Runde des "
+								},
+								{
+									"_key": "7c41fd68166a",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Bitburger Kreispokals"
+								},
+								{
+									"_key": "5fcc1afe0dc7",
+									"_type": "span",
+									"marks": [],
+									"text": " unterlag die Mannschaft von Trainer Michael Lehmann dem "
+								},
+								{
+									"_key": "120b7f32f6bc",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "SV Türkiyemspor Ransbach-Baumbach II"
+								},
+								{
+									"_key": "060f575b36f8",
+									"_type": "span",
+									"marks": [],
+									"text": " im heimischen Pappelstadion mit "
+								},
+								{
+									"_key": "bc65cc2137a2",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "2:6 (0:3)"
+								},
+								{
+									"_key": "5653c8ed117a",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "650f06cfe19d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7a98142f9ae8",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Saisonauftakt mit Mannschaftsfoto und Kapitänswahlen"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "fa4db13f8fd1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "43b5f09ce7fc",
+									"_type": "span",
+									"marks": [],
+									"text": "Bereits vor dem Anpfiff stand der erste gemeinsame Termin der neuen Saison auf dem Programm. Traditionell traf sich die Mannschaft zum offiziellen Mannschaftsfoto, zudem wurden durch das PR-Team neue Einzelporträts aller Spieler aufgenommen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "5eb6bfa1c9a1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c8a339631e42",
+									"_type": "span",
+									"marks": [],
+									"text": "Außerdem wählte das Team seinen neuen Kapitän sowie den Mannschaftsrat. "
+								},
+								{
+									"_key": "009b228e11cd",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dominik Fleuth"
+								},
+								{
+									"_key": "e1dfdebf1ca3",
+									"_type": "span",
+									"marks": [],
+									"text": " wird die Seniorenmannschaft der TSG künftig als Kapitän aufs Feld führen. Unterstützt wird er von "
+								},
+								{
+									"_key": "334e1452c31f",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dennis Marschke"
+								},
+								{
+									"_key": "6c0673a9cf51",
+									"_type": "span",
+									"marks": [],
+									"text": " als 2. Kapitän und "
+								},
+								{
+									"_key": "57788f468e9e",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Justin Lehmann"
+								},
+								{
+									"_key": "f60edaf12eea",
+									"_type": "span",
+									"marks": [],
+									"text": " als 3. Kapitän. Gemeinsam mit "
+								},
+								{
+									"_key": "5812efc46c6c",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Tom Jaensch"
+								},
+								{
+									"_key": "9b462a9e040f",
+									"_type": "span",
+									"marks": [],
+									"text": " und "
+								},
+								{
+									"_key": "d8acf5679eea",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Marius Wepper"
+								},
+								{
+									"_key": "2803b4e34024",
+									"_type": "span",
+									"marks": [],
+									"text": " bilden sie den Mannschaftsrat für die Saison 2026/27."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "33ff90bd677b",
+					"_type": "mainImage",
+					"alt": "Mannschaftsfoto der TSG Irlich in Trikots im Pappelstadion",
+					"asset": {
+						"_ref": "image-7303a7bade47d234ea7eaa10d6f3cd6fdec216e1-5861x3907-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09273768151903501,
+						"left": 0.10363694238467487,
+						"right": 0.05454575914982888,
+						"top": 0.09001010265082801
+					},
+					"description": "Das Teamfoto zur Saison 2026/27",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6563250626059294,
+						"width": 0.7818169634006845,
+						"x": 0.5254546876032535,
+						"y": 0.527275788682069
+					}
+				},
+				{
+					"_key": "773c299a25ae",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "210cd45e471b",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3414fc8646dc",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Nach ordentlichem Beginn verliert die TSG den Faden"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "3f5a86b23fb3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "98a88ba97d20",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Partie begann zunächst ausgeglichen. Beide Mannschaften tasteten sich ab, ehe sich früh zeigte, woran es der TSG an diesem Nachmittag mangelte: In den Defensiv-Zweikämpfen fehlte die letzte Konsequenz, wodurch die Gäste zunehmend zu Chancen kamen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "701b679a0906",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "41d79a7a918f",
+									"_type": "span",
+									"marks": [],
+									"text": "Das "
+								},
+								{
+									"_key": "5a0f508bcdcf",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "0:1"
+								},
+								{
+									"_key": "16cddb14cdf7",
+									"_type": "span",
+									"marks": [],
+									"text": " fiel schließlich nach einer Standardsituation. Ein perfekt getretener Eckball auf den zweiten Pfosten segelte über TSG-Keeper "
+								},
+								{
+									"_key": "8678344f0d5e",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Luca Eisenburger"
+								},
+								{
+									"_key": "ea66686e02ba",
+									"_type": "span",
+									"marks": [],
+									"text": ", einen der Neuzugänge im Irlicher Trikot, hinweg und schlug direkt im Winkel ein – ein stark getretener Eckball."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "dd5955ff7c4e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "b666fa325db0",
+									"_type": "span",
+									"marks": [],
+									"text": "Mit dem Rückstand verlor die TSG komplett den Rhythmus. Die Kommunikation auf dem Platz funktionierte kaum noch und die Gäste nutzten die sich bietenden Räume konsequent aus. Noch vor der Pause erhöhten "
+								},
+								{
+									"_key": "aebde14e2373",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "A. Alagöz"
+								},
+								{
+									"_key": "d693d842a312",
+									"_type": "span",
+									"marks": [],
+									"text": " und "
+								},
+								{
+									"_key": "b0635432ca62",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "T. Celik"
+								},
+								{
+									"_key": "4105b600ea4d",
+									"_type": "span",
+									"marks": [],
+									"text": " auf "
+								},
+								{
+									"_key": "822505009c7b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "0:3"
+								},
+								{
+									"_key": "2a59b89c4e2f",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "73cc41b87cd9",
+					"_type": "blockquote",
+					"author": "Trainer Michael Lehmann",
+					"quote": "Das war unser schlechtestes Spiel der letzten Monate."
+				},
+				{
+					"_key": "1df92e475c7b",
+					"_type": "mainImage",
+					"alt": "TSG-Spieler verfolgt einen Gäste-Spieler",
+					"asset": {
+						"_ref": "image-4e488bcd4dc59ba0d4bcb49e5c2da0fe196f7841-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.05454700417625501,
+						"left": 0.21455154975993637,
+						"right": 0,
+						"top": 0.10091195772607175
+					},
+					"description": "Oftmals einen Schritt zu spät: Türkiyemspor (in türkis) gewinnt deutlich im Pappelstadion",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.727264979118725,
+						"width": 0.6545356402170515,
+						"x": 0.5854569732094662,
+						"y": 0.5463649535498168
+					}
+				},
+				{
+					"_key": "3182ef64ebcb",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "453b7032ea33",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "8b38c2d8a21a",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Bessere zweite Halbzeit reicht nicht mehr"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "91dbb1571ab8",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7079b876a900",
+									"_type": "span",
+									"marks": [],
+									"text": "In der Pause wurden die Probleme deutlich angesprochen und die Mannschaft nahm sich für den zweiten Durchgang einiges vor. Spielerisch wirkte die TSG nach Wiederbeginn verbessert, dennoch erhöhten die Gäste durch "
+								},
+								{
+									"_key": "6cbcbfd720c2",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "D. Orentsis "
+								},
+								{
+									"_key": "105a389cc6cd",
+									"_type": "span",
+									"marks": [],
+									"text": "und "
+								},
+								{
+									"_key": "5ee0d2d30655",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "T. Celik"
+								},
+								{
+									"_key": "7243d0eb1738",
+									"_type": "span",
+									"marks": [],
+									"text": " zunächst auf "
+								},
+								{
+									"_key": "d00529740f11",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "0:5"
+								},
+								{
+									"_key": "694b51963f40",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "779d9354270f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "895f36780bb9",
+									"_type": "span",
+									"marks": [],
+									"text": "Trotz des deutlichen Rückstands gab sich die TSG nicht auf. In der "
+								},
+								{
+									"_key": "11fccb49f2ff",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "64. Minute"
+								},
+								{
+									"_key": "c291301dd6e6",
+									"_type": "span",
+									"marks": [],
+									"text": " belohnte sich "
+								},
+								{
+									"_key": "fc94af724ef3",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Niklas Kindler"
+								},
+								{
+									"_key": "08c83d3f74ce",
+									"_type": "span",
+									"marks": [],
+									"text": ", der in diesem Sommer aus der eigenen Jugend in den Seniorenbereich aufgerückt ist, mit seinem ersten Pflichtspieltor für die Erste Mannschaft und verkürzte auf "
+								},
+								{
+									"_key": "54b5d24272df",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "1:5"
+								},
+								{
+									"_key": "e7e3f1bd29fb",
+									"_type": "span",
+									"marks": [],
+									"text": ". Kurz vor Schluss traf auch "
+								},
+								{
+									"_key": "153737944603",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dominik Bejko "
+								},
+								{
+									"_key": "c9ae7837207d",
+									"_type": "span",
+									"marks": [],
+									"text": "zum "
+								},
+								{
+									"_key": "289ec0165fe8",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "2:5"
+								},
+								{
+									"_key": "f7e7ff588317",
+									"_type": "span",
+									"marks": [],
+									"text": ", ehe "
+								},
+								{
+									"_key": "048ea8aca7ee",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "D. Orentsis "
+								},
+								{
+									"_key": "c61f218d446b",
+									"_type": "span",
+									"marks": [],
+									"text": "mit seinem zweiten Treffer den "
+								},
+								{
+									"_key": "b09c310ce55b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "2:6-Endstand"
+								},
+								{
+									"_key": "37eb91620999",
+									"_type": "span",
+									"marks": [],
+									"text": " herstellte."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "08d39033700f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "72c6553358ae",
+									"_type": "span",
+									"marks": [],
+									"text": "Am Ende stand eine verdiente Niederlage, aus der die TSG jedoch wichtige Erkenntnisse für den Ligastart mitnehmen wird."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "022d7b39a3fc",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "09942b0b7d11",
+									"_type": "span",
+									"marks": [],
+									"text": "Trainer "
+								},
+								{
+									"_key": "9242c679b477",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Michael Lehmann"
+								},
+								{
+									"_key": "ac89daff745e",
+									"_type": "span",
+									"marks": [],
+									"text": " fand nach dem Spiel klare Worte:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "3fcb19d9ae5e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3994b6a78620",
+									"_type": "span",
+									"marks": ["em"],
+									"text": "„Das war unser schlechtestes Spiel der letzten Monate. Obwohl wir eine ordentliche Saison-Vorbereitung hatten, haben wir heute vieles vermissen lassen. Jetzt gilt es, das Spiel schnell abzuhaken und den Fokus voll auf den Ligastart am Sonntag zu richten.“"
+								}
+							],
+							"markDefs": [],
+							"style": "blockquote"
+						},
+						{
+							"_key": "2025a28e0156",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "45661a2c0e30",
+									"_type": "span",
+									"marks": [],
+									"text": "Ein Dank geht an den "
+								},
+								{
+									"_key": "d4ba398e34db",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "SV Türkiyemspor "
+								},
+								{
+									"_key": "fae11c74f87d",
+									"_type": "span",
+									"marks": [],
+									"text": "für ein faires und sportliches Spiel. Ebenfalls ein Lob an Schiedsrichter "
+								},
+								{
+									"_key": "76543c2f2c50",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Jörn Janssen"
+								},
+								{
+									"_key": "e4a95bba5d81",
+									"_type": "span",
+									"marks": [],
+									"text": ", der die Partie mit seiner ruhigen und kommunikativen Art jederzeit souverän leitete. Wir gratulieren den Gästen zum Einzug in die nächste Pokalrunde und wünschen viel Erfolg."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "fc5fdbc722bb",
+					"_type": "mainImage",
+					"alt": "Spieler beider Teams geben sich die Hand.",
+					"asset": {
+						"_ref": "image-bcde32f66f14c81a0215ba32ec4d4101404677b1-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.11182135856132276,
+						"left": 0.1581863121111395,
+						"right": 0.08909344015454985,
+						"top": 0.06000170459388051
+					},
+					"description": "Handshake nach Abpfiff: Herzlichen Glückwunsch an den SVT!",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.770902582459729,
+						"width": 0.6836273757777211,
+						"x": 0.5363646694508367,
+						"y": 0.46727179749424697
+					}
+				},
+				{
+					"_key": "fb969f44c39c",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "4035e58dc7ab",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "bcf1bc2f733e",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Ligastart in Rengsdorf"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "976dc430e814",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ffe10f93fc6f",
+									"_type": "span",
+									"marks": [],
+									"text": "Viel Zeit zum Hadern bleibt der TSG nicht. Bereits am Sonntag startet die Mannschaft in die neue Kreisliga-C-Saison. Am 1. Spieltag gastiert die TSG beim "
+								},
+								{
+									"_key": "f7c4121da524",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "SV Rengsdorf II"
+								},
+								{
+									"_key": "eee6de8cd37d",
+									"_type": "span",
+									"marks": [],
+									"text": " auf dem Sportplatz am Tannenweg. Anstoß der Partie ist um "
+								},
+								{
+									"_key": "b7c59ba2317e",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "12:00 Uhr"
+								},
+								{
+									"_key": "a0568f539570",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "d11aa842d9a7",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "d5a82283584e",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach dem enttäuschenden Pokalauftakt möchte die TSG dort eine Reaktion zeigen und mit einem Erfolgserlebnis in die neue Ligasaison starten. Das Team freut sich über jede Unterstützung vor Ort."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "senioren",
+					"title": "Senioren"
+				},
+				{
+					"slug": "fussball",
+					"title": "Fußball"
+				}
+			],
+			"excerpt": "Der Pflichtspielauftakt ist misslungen. In der 1. Runde des Bitburger Kreispokals unterlag die TSG dem SV Türkiyemspor Ransbach-Baumbach II mit 2:6 (0:3).",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "TSG-Spieler mit Ball am Fuß im Zweikampf mit dem gegnerischen Spieler",
+				"asset": {
+					"_ref": "image-e2e168c8227dd2c4226b73a6b00c92cfac02436f-6000x4000-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.6072615699309639,
+					"width": 0.7999943180203983,
+					"x": 0.49272706610983275,
+					"y": 0.33635898747123516
+				}
+			},
+			"meta": {
+				"metaDescription": "Der Pflichtspielauftakt ist misslungen. In der 1. Runde des Bitburger Kreispokals unterlag die TSG dem SV Türkiyemspor Ransbach-Baumbach II mit 2:6 (0:3).",
+				"metaTitle": "TSG Irlich: 2:6-Pokalpleite vor Ligastart in Rengsdorf",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-08-05T15:32:00.000Z",
+			"slug": "pokal-aus-tuerkiyemspor",
+			"title": "Pokal-Aus zum Saisonauftakt – TSG unterliegt Türkiyemspor mit 2:6"
+		},
+		"syncTags": ["s1:uv+Zzg", "s1:Ik/M0w", "s1:c5Grjg", "s1:/YvTQw"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22pokal-aus-tuerkiyemspor%22&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+}

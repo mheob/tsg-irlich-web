@@ -1,0 +1,259 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2024-06-17T06:52:11Z",
+			"_id": "contact",
+			"_rev": "dtJXu1REiVbNFr2bYfprkP",
+			"_system": {
+				"base": {
+					"id": "contact",
+					"rev": "F3sTDhDX14LkAN51LuSRNA"
+				}
+			},
+			"_type": "contact",
+			"_updatedAt": "2026-08-26T07:54:57Z",
+			"content": {
+				"contactPersonsSection": {
+					"contactPersons": [
+						{
+							"contactAs": "both",
+							"email": "vorsitz@tsg-irlich.de",
+							"firstName": "Alexander",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Alexander Hof in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz.",
+								"asset": {
+									"_ref": "image-1e4595eb53901b21a62170411d838b4bc0e65adc-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.89125541277692,
+									"width": 0.9561294492393759,
+									"x": 0.521935275380312,
+									"y": 0.5543722936115401
+								}
+							},
+							"lastName": "Hof",
+							"phone": "+49 170 4489500",
+							"role": "Vorsitzender",
+							"taskDescription": "Als Vorsitzender gestalte ich die strategische Ausrichtung und Weiterentwicklung des Vereins. Ich repräsentiere ihn nach außen, pflege den Austausch mit der Kommune, Verbänden und Sponsoren und setze mein Netzwerk gezielt für eine erfolgreiche Zusammenarbeit ein."
+						},
+						{
+							"contactAs": "email",
+							"email": "finanzen@tsg-irlich.de",
+							"firstName": "René",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "René Linn in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz. ",
+								"asset": {
+									"_ref": "image-9a54eec0662a8a7b613a63a7f2a85acc75bfbf06-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Linn",
+							"phone": "+49 160 1818712",
+							"role": "Vorstand Finanzen",
+							"taskDescription": "Ich verantworte die gesamte Finanzverwaltung der TSG Irlich. Von Abrechnungen bis zu Steuerfragen. Zudem plane und kontrolliere ich die Finanzen und sorge für eine transparente sowie nachhaltige Haushaltsführung des Vereins. Bei Fragen zu Finanzthemen bin ich ihr Ansprechpartner."
+						},
+						{
+							"contactAs": "both",
+							"email": "verwaltung@tsg-irlich.de",
+							"firstName": "Melina",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Melina Dinter im Polo der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-32c7a18d61105ff1d2a01e528209cb5edf7effd2-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Dinter",
+							"phone": "+49 151 50422094",
+							"role": "Vorstand Verwaltung",
+							"taskDescription": "Als Vorstand Verwaltung kümmere ich mich um alle administrativen Aufgaben. Von Vertragsabwicklung über Versicherungen bis zu Protokollen und Post. Ich betreue die digitale Mitgliederverwaltung und sorge für eine reibungslose Dokumentation und Kommunikation."
+						},
+						{
+							"contactAs": "both",
+							"email": "presse@tsg-irlich.de",
+							"firstName": "Philipp",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Philipp Pfeiffer im T-shirt der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0.10636665814369727,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"description": "Philipp Pfeiffer, Vorstandsmitglied und Jugendtrainer",
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.738174379953976,
+									"width": 0.5472598653370835,
+									"x": 0.4836358987471234,
+									"y": 0.49727264979118724
+								}
+							},
+							"lastName": "Pfeiffer",
+							"phone": "+49 170 2418600",
+							"role": "Vorstand Öffentlichkeitsarbeit",
+							"taskDescription": "In meinem Ehrenamt gestalte und steuere ich die gesamte PR und Kommunikation der TSG. Ich leite das PR-Team, das unsere Social-Media-Kanäle und unsere Website verwaltet, Printmedien gestaltet und das 'TSG Echo' publiziert. Ich bin zudem Ansprechpartner für Projektplanungen."
+						},
+						{
+							"contactAs": "both",
+							"email": "breitensport@tsg-irlich.de",
+							"firstName": "Melanie ",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Klein",
+							"phone": "+49 171 9941807",
+							"role": "Abteilungsleitung Breitensport",
+							"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+						},
+						{
+							"contactAs": "both",
+							"email": "fussball@tsg-irlich.de",
+							"firstName": "Markus",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Abteilungsleiter Markus Straeten in einem Shirts der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-0ce6f3246b26f5cfd54973c83fece2aaf34317d6-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.882559012428059,
+									"width": 0.9733088664609225,
+									"x": 0.5133455667695388,
+									"y": 0.5587204937859704
+								}
+							},
+							"lastName": "Straeten",
+							"phone": "+49 170 2206948",
+							"role": "Abteilungsleitung Fußball",
+							"taskDescription": "Als Abteilungsleiter Fußball trage ich die Gesamtverantwortung für die Abteilung und koordiniere alle Teams. Ich führe das Team, wähle Übungsleiter aus, organisiere die Materialbeschaffung und entwickle das sportliche Angebot laufend weiter."
+						}
+					],
+					"intro": "Unser Vorstandsteam dient als zentrale Anlaufstelle für organisatorische Anliegen und steht dir bei Fragen zur Verfügung. Wir freuen uns auf die Kontaktaufnahme und sind dir gerne behilflich.",
+					"subtitle": "Ansprechpartner",
+					"title": "Unser Vorstandsteam ist für dich da"
+				},
+				"receiver": [
+					{
+						"_key": "14c26e91ca4c",
+						"_type": "contactNameMail",
+						"email": "info@tsg-irlich.de",
+						"name": "Allgemeine Anfrage"
+					},
+					{
+						"_key": "0577ca0f261c",
+						"_type": "contactNameMail",
+						"email": "mitglieder@tsg-irlich.de",
+						"name": "Mitgliedschaft"
+					},
+					{
+						"_key": "0e55ba2bf947",
+						"_type": "contactNameMail",
+						"email": "finanzen@tsg-irlich.de",
+						"name": "Finanzielles"
+					},
+					{
+						"_key": "c42f4339cde8",
+						"_type": "contactNameMail",
+						"email": "pr@tsg-irlich.de",
+						"name": "Öffentlichkeitsarbeit"
+					},
+					{
+						"_key": "103e8bd9a5f2",
+						"_type": "contactNameMail",
+						"email": "breitensport@tsg-irlich.de",
+						"name": "Abteilungsleitung Breitensport"
+					},
+					{
+						"_key": "22c8a7a5f886",
+						"_type": "contactNameMail",
+						"email": "fussball@tsg-irlich.de",
+						"name": "Abteilungsleitung Fußball"
+					}
+				]
+			},
+			"meta": {
+				"_type": "metaFields",
+				"metaDescription": "Trete mit der TSG Irlich in Kontakt. Wähle deine gewünschte Kategorie und deine Frage wird von der richtigen verantwortlichen Person beantwortet.",
+				"metaTitle": "Nachricht an die Verantwortlichen der TSG Irlich schreiben",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Der Vorstand der TSG Irlich steht draußen vor einer Hecke.",
+					"asset": {
+						"_ref": "image-66363cb8ca80323925c14b5e179eae7f7ecc53b0-3024x4032-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.13097673229353107,
+						"left": 0,
+						"right": 0,
+						"top": 0.2756115230546322
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.34356089661638123,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5415388221256286
+					}
+				}
+			},
+			"slug": {
+				"_type": "slug",
+				"current": "kontakt"
+			},
+			"subtitle": "Kontakt",
+			"title": "Kontaktiere uns"
+		},
+		"syncTags": [
+			"s1:y+gLqA",
+			"s1:NuVTmQ",
+			"s1:B7LhMw",
+			"s1:LD/aiQ",
+			"s1:yJoVrQ",
+			"s1:SgUpiQ",
+			"s1:eOuqJg",
+			"s1:WU9DBg",
+			"s1:bW4l3Q",
+			"s1:PeVrtw",
+			"s1:N029bQ",
+			"s1:BpJQvw",
+			"s1:kG7Arw"
+		],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27contact%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09...%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
+}

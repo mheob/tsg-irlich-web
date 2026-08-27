@@ -1,0 +1,569 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'news.article' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == \"grid\" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t}\n",
+		"result": {
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "02547b6f288a",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "7fdc2f56eb55",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "2d716da938ec",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Seniorenmannschaft der TSG hat am 1. Spieltag die ersten drei Punkte der neuen Saison eingefahren. Bei der 2. Mannschaft des "
+								},
+								{
+									"_key": "578aef6767ed",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "SV Rengsdorf "
+								},
+								{
+									"_key": "b36cbbaf01ba",
+									"_type": "span",
+									"marks": [],
+									"text": "setzte sich die TSG nach einer spannenden Partie mit 3:2 (2:0) durch. Dabei gab die Mannschaft eine zwischenzeitliche 2:0-Führung aus der Hand, bewies in der Schlussphase aber große Moral und erzielte in Unterzahl den umjubelten Siegtreffer."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "501a87fb2af8",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "fb622c3217a6",
+									"_type": "span",
+									"marks": [],
+									"text": "Frühe Führung und starke Umschaltmomente"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "393380947cea",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7f1698fb9684",
+									"_type": "span",
+									"marks": [],
+									"text": "Auf dem neuen, sehr gut bespielbaren Kunstrasen in Rengsdorf erwischte die TSG einen guten Start. Nach einem Dribbling von Julius Petry kam es im Strafraum zu einem Kontakt, der einen etwas glücklichen Strafstoß zur Folge hatte. "
+								},
+								{
+									"_key": "023b12d7ff2c",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dennis Marschke"
+								},
+								{
+									"_key": "9ee387ad15e9",
+									"_type": "span",
+									"marks": [],
+									"text": " blieb in der 16. Minute eiskalt und verwandelte zum 0:1."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "d91dcdb85463",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a5f30d58a672",
+									"_type": "span",
+									"marks": [],
+									"text": "Anschließend kamen die Gastgeber besser in die Partie und hatten deutlich mehr Ballbesitz. Die TSG blieb allerdings vor allem nach Ballgewinnen gefährlich und hatte die zwingenderen Torchancen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "f423de19630e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "630fcc57fbf1",
+									"_type": "span",
+									"marks": [],
+									"text": "In der 22. Minute belohnte sich die #11fürIrlich erneut. Nach einem tollen Spielzug über Dominik Fleuth und Niklas Kindler landete der Ball bei "
+								},
+								{
+									"_key": "2eb39b9ee0a9",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Marc Diether"
+								},
+								{
+									"_key": "056ade96e225",
+									"_type": "span",
+									"marks": [],
+									"text": ", der überlegt zum 0:2 einschob."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "e4afbd12ed88",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "50b957523b60",
+									"_type": "span",
+									"marks": [],
+									"text": "Bis zur Pause blieb es eine abwechslungsreiche Partie mit Chancen auf beiden Seiten. Die TSG hätte die Führung durchaus weiter ausbauen können, traf allerdings gleich zweimal Aluminium. Auch Rengsdorf kam zu Möglichkeiten. Die Chancenverwertung blieb auf beiden Seiten ausbaufähig."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "b13d4bd7f5da",
+					"_type": "mainImage",
+					"alt": "Umkämpftes Duell: TSG-Verteidiger grätscht nach dem Fall",
+					"asset": {
+						"_ref": "image-fcc028ff884fda18c986794256f6556ad935651c-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.06539327717073984,
+						"left": 0.155698278977952,
+						"right": 0.06138960713987822,
+						"top": 0.04003670030861623
+					},
+					"description": "Umkämpftes Duell: TSG-Verteidiger Fabian Kochhäuser gewinnt den Zweikampf gegen zwei Rengsdorfer",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7357577779631329,
+						"width": 0.5337948675174465,
+						"x": 0.5427058136625239,
+						"y": 0.5387021436316625
+					}
+				},
+				{
+					"_key": "d1968f5b5ce0",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "1567ff053fb8",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9535d19a69b7",
+									"_type": "span",
+									"marks": [],
+									"text": "Rengsdorf kämpft sich zurück"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "6b6532d8ceb5",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "42cf5e4d9eb0",
+									"_type": "span",
+									"marks": [],
+									"text": "Mit der 2:0-Führung im Rücken ging die TSG in die zweite Halbzeit, war sich aber bewusst, dass die Gastgeber über genügend Qualität verfügen, um zurückzukommen. Und genau das zeigte sich nach Wiederanpfiff."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "82018da131ff",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4467ece79db5",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG fand zunächst nicht richtig ins Spiel und Rengsdorf nutzte dies aus. In der 52. Minute erzielte "
+								},
+								{
+									"_key": "474e56893531",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Martin Nass"
+								},
+								{
+									"_key": "ac43aa31b703",
+									"_type": "span",
+									"marks": [],
+									"text": " den Anschlusstreffer zum 1:2."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "f5416d157302",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "cbe8741563c3",
+									"_type": "span",
+									"marks": [],
+									"text": "Kurz darauf hatte Rengsdorf gleich zweimal die große Möglichkeit zum Ausgleich: Zunächst vergaben die Gastgeber einen Strafstoß, wenig später blieb auch eine hundertprozentige Torchance ungenutzt."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "b3820cb4f5e1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3e2a6f8cbb13",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG konnte sich in dieser Phase nur schwer befreien und musste in der 82. Minute schließlich doch den Ausgleich hinnehmen. Nach einem bitteren Fehlpass traf "
+								},
+								{
+									"_key": "2d04a298cede",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Max Weber"
+								},
+								{
+									"_key": "8c061ce6c2bf",
+									"_type": "span",
+									"marks": [],
+									"text": " zum 2:2."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "d4287507c605",
+					"_type": "blockquote",
+					"author": "Trainer Michael Lehmann",
+					"quote": "Entscheidend waren heute unsere Einstellung und Moral!"
+				},
+				{
+					"_key": "4ab18865c4e0",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "a04c92d9de59",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "d76933d97f92",
+									"_type": "span",
+									"marks": [],
+									"text": "Siegtreffer in Unterzahl"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "d4c30f42c4cc",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "661778e00d18",
+									"_type": "span",
+									"marks": [],
+									"text": "Wenig später schwächte sich die TSG zudem selbst. Einwechselspieler Lennard Armbrecht sah die Gelb-Rote Karte und die TSG musste die Schlussphase in Unterzahl bestreiten."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "75e7b3dec4ca",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "8ad7b3a711ed",
+									"_type": "span",
+									"marks": [],
+									"text": "Doch anstatt sich zurückzuziehen, setzte die TSG noch einmal einen entscheidenden Nadelstich. In der 86. Minute wurde eine Ecke kurz ausgeführt. Nach einer starken Kombination zwischen Marc Diether und Dominik Fleuth landete der Ball bei "
+								},
+								{
+									"_key": "1c80f25d0356",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dennis Marschke"
+								},
+								{
+									"_key": "98063e306257",
+									"_type": "span",
+									"marks": [],
+									"text": ", der aus kurzer Distanz nur noch einschieben musste – 3:2 für die TSG!"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "c89e5ff9ab9d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "93c7fddc29b8",
+									"_type": "span",
+									"marks": [],
+									"text": "Die letzten Minuten wurden anschließend zur echten Kraftprobe. Mit viel Einsatz, Kampf und Leidenschaft verteidigte die TSG die Führung über die Ziellinie. Auch die "
+								},
+								{
+									"_key": "1abb6b65369b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "zehnminütige Nachspielzeit"
+								},
+								{
+									"_key": "fadc5651ddc1",
+									"_type": "span",
+									"marks": [],
+									"text": " wurde gemeinsam überstanden."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "8fc8d1a29e34",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "93a9ad0f7ad8",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Trainer Michael Lehmann"
+								},
+								{
+									"_key": "dd0b4b735f97",
+									"_type": "span",
+									"marks": [],
+									"text": " zeigte sich nach dem Abpfiff stolz auf seine Mannschaft:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "91a725bf39e5",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "b8ef45da5387",
+									"_type": "span",
+									"marks": [],
+									"text": "„Unsere Tore waren teilweise richtig stark herausgespielt. Bei den Gegentoren haben wir den Gegner dagegen zu einfach eingeladen. Entscheidend waren heute unsere Einstellung und Moral – deshalb war der Sieg alles andere als unverdient. Ich bin stolz auf die Jungs. Die Mischung aus jungen und erfahrenen Spielern passt aktuell richtig gut.“"
+								}
+							],
+							"markDefs": [],
+							"style": "blockquote"
+						},
+						{
+							"_key": "fb118108478d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3fafe450d4f9",
+									"_type": "span",
+									"marks": [],
+									"text": "Damit startet die TSG mit drei Punkten in die neue Saison. Nach dem frühen Pokalaus am vergangenen Wochenende zeigte die #11fürIrlich die gewünschte Reaktion und belohnte sich für einen engagierten Auftritt mit dem ersten Saisonsieg."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "6a220c4741d5",
+					"_type": "mainImage",
+					"alt": "Großer Jubel: Die TSG feiert den Auswärtssieg in Rengsdorf!",
+					"asset": {
+						"_ref": "image-cab96ea730936b08d7d71b1783329007481431ed-3024x1701-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0.18727490996398563,
+						"right": 0.09903961584633855,
+						"top": 0
+					},
+					"description": "Großer Jubel: Die TSG feiert den Auswärtssieg in Rengsdorf!",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7278911564625852,
+						"width": 0.6488595438175266,
+						"x": 0.5432172869147659,
+						"y": 0.50640256102441
+					}
+				},
+				{
+					"_key": "47a152930edb",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "5bebe7f2813c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "99c16ce8018e",
+									"_type": "span",
+									"marks": [],
+									"text": "Erstes Heimspiel im Pappelstadion"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "2ad039b7a7df",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "23f60c65a487",
+									"_type": "span",
+									"marks": [],
+									"text": "Am morgigen Sonntag steht nun das erste Liga-Heimspiel der neuen Saison an. Im Pappelstadion empfängt die TSG die 2. Mannschaft des "
+								},
+								{
+									"_key": "aedf951b8560",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "VfL Oberbieber"
+								},
+								{
+									"_key": "f7c2609b9efe",
+									"_type": "span",
+									"marks": [],
+									"text": ", die zum Auftakt mit 4:3 gegen die TuS Rodenbach gewinnen konnte."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "20ef79916a5d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "90d8f5d7313f",
+									"_type": "span",
+									"marks": [],
+									"text": "Anstoß ist um 14:30 Uhr. Im Pappelstadion gibt es dabei nicht nur erstmals in dieser Saison Kreisliga-Fußball zu sehen – in der vergangenen Woche wurden auch neue Sitzbänke für die Zuschauer installiert."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "c949e525225d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1fac0a6fbf9a",
+									"_type": "span",
+									"marks": [],
+									"text": "Wir freuen uns auf ein spannendes Duell und auf eure Unterstützung beim ersten Heimspiel der Saison!"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "senioren",
+					"title": "Senioren"
+				},
+				{
+					"slug": "fussball",
+					"title": "Fußball"
+				}
+			],
+			"excerpt": "Die #11fürIrlich hat am 1. Spieltag die ersten drei Punkte der neuen Saison eingefahren. Beim SV Rengsdorf II setzte sich die TSG mit 3:2 (2:0) durch.",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Das Team der TSG bei der Besprechung in der Halbzeitpause",
+				"asset": {
+					"_ref": "image-74c5e630d48dc538e8b15e643c5530d1ce67ceb8-5999x3374-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.6029819359316225,
+					"width": 0.8217269154325507,
+					"x": 0.5891365422837247,
+					"y": 0.4439692248290596
+				}
+			},
+			"meta": {
+				"metaDescription": "Die #11fürIrlich hat am 1. Spieltag die ersten drei Punkte der neuen Saison eingefahren. Beim SV Rengsdorf II setzte sich die TSG mit 3:2 (2:0) durch.",
+				"metaTitle": "TSG Irlich siegt 3:2 in Rengsdorf & startet stark in Saison",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-08-15T15:14:00.000Z",
+			"slug": "spaeter-treffer-sieg-in-rengsdorf",
+			"title": "TSG trifft spät in Rengsdorf und feiert ersten Saisonsieg"
+		},
+		"syncTags": ["s1:Ev2MZg", "s1:uv+Zzg", "s1:Ik/M0w", "s1:c5Grjg"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22spaeter-treffer-sieg-in-rengsdorf%22&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+}

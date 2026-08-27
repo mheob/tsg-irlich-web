@@ -1,0 +1,55 @@
+{
+	"body": {
+		"result": [
+			{
+				"contactAs": "both",
+				"email": "fussball@tsg-irlich.de",
+				"firstName": "Markus",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Abteilungsleiter Markus Straeten in einem Shirts der TSG Irlich auf einem Fußballplatz",
+					"asset": {
+						"_ref": "image-0ce6f3246b26f5cfd54973c83fece2aaf34317d6-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.882559012428059,
+						"width": 0.9733088664609225,
+						"x": 0.5133455667695388,
+						"y": 0.5587204937859704
+					}
+				},
+				"lastName": "Straeten",
+				"phone": "+49 170 2206948",
+				"role": "Abteilungsleitung Fußball",
+				"taskDescription": "Als Abteilungsleiter Fußball trage ich die Gesamtverantwortung für die Abteilung und koordiniere alle Teams. Ich führe das Team, wähle Übungsleiter aus, organisiere die Materialbeschaffung und entwickle das sportliche Angebot laufend weiter."
+			}
+		],
+		"syncTags": [
+			"s1:B7LhMw",
+			"s1:bW4l3Q",
+			"s1:mWzJLg",
+			"s1:w5t4Lw",
+			"s1:yJoVrQ",
+			"s1:SgUpiQ",
+			"s1:mR2JeA",
+			"s1:hC9C9g",
+			"s1:lvB0iQ",
+			"s1:FAyvtw",
+			"s1:o7Cn/w",
+			"s1:eOuqJg",
+			"s1:y+gLqA",
+			"s1:MdmizQ"
+		],
+		"ms": 16
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27person%27%5D%5Baffiliations%5B0%5D.role-%3Eemail+%3D%3D+%24email%5D+%7B%0A%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%7D%0A&%24email=%22fussball%40tsg-irlich.de%22&returnQuery=false"
+}

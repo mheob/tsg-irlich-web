@@ -1,0 +1,988 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2024-06-22T10:47:26Z",
+			"_id": "aboutUs",
+			"_rev": "FGdPcw6oZ4f5ikxTPQ5Xg2",
+			"_system": {
+				"base": {
+					"id": "aboutUs",
+					"rev": "qfw0tsFoAJsTXLf2HlXpM5"
+				}
+			},
+			"_type": "aboutUs",
+			"_updatedAt": "2026-08-26T07:54:57Z",
+			"content": {
+				"chronicleSection": {
+					"chronicleCategories": [
+						{
+							"_key": "027f5a97d668",
+							"_type": "imageCard",
+							"description": {
+								"_type": "blockContent",
+								"text": [
+									{
+										"_key": "0ab957598b3d",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "384e855e5b5e",
+												"_type": "span",
+												"marks": [],
+												"text": "Gründung des Turnvereins Irlich (1882–1945)"
+											}
+										],
+										"markDefs": [],
+										"style": "h3"
+									},
+									{
+										"_key": "da32e2c76afd",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "9f0768e0e950",
+												"_type": "span",
+												"marks": [],
+												"text": "Im Jahr 1882 gründeten engagierte Irlicher Bürger den Turnverein – inspiriert von einem Fürsten-Turnfest und unter der Leitung von Johann Fischer. Von den ersten Turnstunden über Handball bis zu großen Festen prägte der "
+											},
+											{
+												"_key": "8776c354d561",
+												"_type": "span",
+												"marks": ["strong"],
+												"text": "TV Irlich"
+											},
+											{
+												"_key": "bbf23d1ed706",
+												"_type": "span",
+												"marks": [],
+												"text": " über 50 Jahre lang den Sport im Ort. Entdecke die Anfänge eines Vereins, der Tradition und Begeisterung miteinander verband."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "300a0bb75d7c",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "d51e952c4fc4",
+												"_type": "span",
+												"marks": [],
+												"text": "Gründung des Spiel- und Sportverein Irlich (1910–1945)"
+											}
+										],
+										"markDefs": [],
+										"style": "h3"
+									},
+									{
+										"_key": "c5eb40e93d14",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "eac7766df976",
+												"_type": "span",
+												"marks": [],
+												"text": "Fußballfieber in Irlich: 1910 gründeten Jugendliche den "
+											},
+											{
+												"_key": "37616edf350a",
+												"_type": "span",
+												"marks": ["strong"],
+												"text": "Spiel- und Sportverein Irlich"
+											},
+											{
+												"_key": "32155f7b1b35",
+												"_type": "span",
+												"marks": [],
+												"text": " und kämpften sich von Freundschaftsspielen bis zur Bezirksliga vor. Von anfänglichen Schwierigkeiten bis zu ersten Meisterschaften – erfahre, wie Leidenschaft, Kampfgeist und Teamgeist den Verein überregional bekannt machten."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "6c3a5c5315f1",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "dbe03d37d2a6",
+												"_type": "span",
+												"marks": [],
+												"text": "Zusammenschluss zur TSG Irlich und Entwicklung in der Nachkriegszeit"
+											}
+										],
+										"markDefs": [],
+										"style": "h3"
+									},
+									{
+										"_key": "5057c6fc28f6",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "c3d5b56e40d4",
+												"_type": "span",
+												"marks": [],
+												"text": "1938 fusionierten Turn- und Fußballverein zur TSG Irlich – doch erst nach dem Krieg begann das wahre Wiederaufleben. Fußballer, Turner, Tänzer und Sportbegeisterte brachten den Verein zurück ins Leben. Von den Trümmern bis hin zu einem der größten Sportvereine in Neuwied: Erlebe, wie die TSG Irlich Sportgeschichte schrieb und Generationen begeisterte."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "2aee41c3d1f3",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "98928d134810",
+												"_type": "span",
+												"marks": ["strong"],
+												"text": "Blau-Gelb: Die Farben unserer TSG"
+											}
+										],
+										"markDefs": [],
+										"style": "h2"
+									},
+									{
+										"_key": "89bf44baf47e",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "2654f354eac4",
+												"_type": "span",
+												"marks": [],
+												"text": "Die traditionellen Vereinsfarben der TSG sind Blau-Gelb. Ihr Ursprung liegt vermutlich im Irlicher Ortswappen, auch wenn keine schriftlichen Belege im Vereinsarchiv existieren. Das Irlich-Wappen zeigt links den saynischen Löwen und rechts die drei Hämmer der Burgherrschaft Hammerstein, geführt in Gold, Rot und Blau – früher auch in Blau-Gelb dargestellt. Als vor über 100 Jahren die ersten Irlicher Fußballer Trikots benötigten, wurden diese Farben wahrscheinlich übernommen und prägen seitdem das Erscheinungsbild der TSG. "
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "07a17c76ef0a",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "86d380259377",
+												"_type": "span",
+												"marks": ["strong", "em"],
+												"text": "Wir bauen noch an der Chronik. Freut euch in Zukunft auf mehr!"
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"excerpt": "1882 entstand der Turnverein und 1910 der Fußballverein in Irlich, 1938 folgte die Fusion zur Turn- und Sportgemeinde Irlich. Eine Geschichte von Leidenschaft, Zusammenhalt und Engagement, die bis heute den Puls des Vereinslebens bestimmt und den Grundstein für Sport, Gemeinschaft und Tradition legte.",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Die Turner des TV Irlich im Jahre 1932 vor der Turnhalle die 1912 erbaut wurde.",
+								"asset": {
+									"_ref": "image-5ae23434efbfe99b1895e9b6590bf47b2d24eac3-550x341-jpg",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.7995950614457884,
+									"width": 0.9780737946481197,
+									"x": 0.4999999999999999,
+									"y": 0.541259840290573
+								}
+							},
+							"title": "Vereinsgeschichte: Gründung und Fusion"
+						},
+						{
+							"_key": "830fbc33441fb22765ba2d61b79bd3ae",
+							"_type": "imageCard",
+							"description": {
+								"_type": "blockContent",
+								"text": [
+									{
+										"_key": "0e715ed3ecc3",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "0ebe82e0ff64",
+												"_type": "span",
+												"marks": ["strong"],
+												"text": "Tradition und Entwicklung im Irlicher Breitensport"
+											}
+										],
+										"markDefs": [],
+										"style": "h2"
+									},
+									{
+										"_key": "c10c6bf75c6a",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "6dcd42fa0699",
+												"_type": "span",
+												"marks": [],
+												"text": "Der Breitensport hat in der TSG Irlich eine lange und lebendige Geschichte. Bereits in den frühen Vereinsjahren gehörte neben dem Turnen sogar Handball zum Sportangebot, eine Abteilung, die heute jedoch nicht mehr existiert. Besonders das Turnen entwickelte sich zu einem Aushängeschild des Vereins: Die Turnriege war weit über Irlich hinaus bekannt und prägte das sportliche Bild der TSG über Generationen. Auch heute bleibt Turnen ein zentraler Bestandteil – nun in moderner Form als Kinderturnen mit Bewegungslandschaften, Parcours und spielerischen Koordinationsübungen."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "06550d87ce46",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "001a8303c14b",
+												"_type": "span",
+												"marks": ["strong"],
+												"text": "Kampfkunst und moderne Fitnessangebote"
+											}
+										],
+										"markDefs": [],
+										"style": "h2"
+									},
+									{
+										"_key": "c05964d521f3",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "dc21ac3dc44c",
+												"_type": "span",
+												"marks": [],
+												"text": "Seit fast 30 Jahren bietet die TSG Irlich auch Taekwondo und Selbstverteidigung an. Diese Abteilung steht für Disziplin, Körperbeherrschung und Sicherheit im Alltag – offen für jedes Alter und jedes Niveau. Gleichzeitig beweist der Verein mit Trendsportarten wie Yoga, Pilates oder dem neuen Afterwork-Fitnesskurs (seit 2024), dass er sich kontinuierlich weiterentwickelt und moderne Bewegungsformen fest im Programm verankert."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "0339c8377222",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "fa583044fbc2",
+												"_type": "span",
+												"marks": ["strong"],
+												"text": "Showtanz als Publikumsmagnet"
+											}
+										],
+										"markDefs": [],
+										"style": "h2"
+									},
+									{
+										"_key": "4576fa03e9f6",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "62849a642e8d",
+												"_type": "span",
+												"marks": [],
+												"text": "In der jüngeren Vereinsgeschichte hat sich der Showtanz zu einem echten Highlight entwickelt. 2001 begann alles mit den „Funky Diamonds“. Heute stellt die TSG vier Tanzgruppen für Kinder, Jugendliche und Erwachsene, die mit kreativen Choreografien und energiegeladenen Auftritten – besonders im Karneval – regelmäßig das Publikum begeistern.\n"
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "07a17c76ef0a",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "86d380259377",
+												"_type": "span",
+												"marks": ["strong", "em"],
+												"text": "Wir bauen noch an der Chronik. Freut euch in Zukunft auf mehr!"
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"excerpt": "Turnen, Gymnastik, Tanz oder Rope Skipping – in Irlich ist Breitensport mehr als Bewegung. Von den Anfängen beim Turnverein bis zu modernen Gruppen für Jung und Alt zeigt die TSG, wie Tradition, Vielfalt und Spaß am Sport Generationen verbindet.",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Die Turnriege der TSG Irlich, die 1930 am Turnfest in Weißenthurm teilnahm.",
+								"asset": {
+									"_ref": "image-0e337ab2dc0782bc487f6cc68b0b9a0829d762f4-550x339-jpg",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.7864690196779743,
+									"width": 0.8464524895661458,
+									"x": 0.4963441068944319,
+									"y": 0.5296570806002813
+								}
+							},
+							"title": "Breitensport, der ein Dorf bewegte"
+						},
+						{
+							"_key": "be01c3c28b312de005ecae83c9a98d17",
+							"_type": "imageCard",
+							"description": {
+								"_type": "blockContent",
+								"text": [
+									{
+										"_key": "aed7e23b9e35",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "95b9e0597196",
+												"_type": "span",
+												"marks": ["strong"],
+												"text": "Die Anfänge des Irlicher Fußballs (1910–1945)"
+											}
+										],
+										"markDefs": [],
+										"style": "h2"
+									},
+									{
+										"_key": "ae8d1c6d8307",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "97e8b6a784bd",
+												"_type": "span",
+												"marks": [],
+												"text": "Der Fußball kam 1910 nach Irlich – getragen von der Begeisterung junger Spieler, die in „Pleitgens Scheuer“ den "
+											},
+											{
+												"_key": "702a688518f1",
+												"_type": "span",
+												"marks": ["strong"],
+												"text": "Spiel- und Sportverein Irlich"
+											},
+											{
+												"_key": "4f6e295eab04",
+												"_type": "span",
+												"marks": [],
+												"text": " gründeten. Anfangs noch ohne geregelten Spielbetrieb und mit selbstgetragenen Toren, entwickelte sich der Verein schnell zu einer lokalen Größe. Ab 1919 im Westdeutschen Spielverband, folgten Meistertitel in der C- und B-Klasse, der Aufstieg in die Bezirksliga und zahlreiche Erfolge gegen renommierte Teams. 1931 fand der Verein am heutigen Pappelstadion seine feste Heimat. Die sportliche Entwicklung wurde jedoch 1938 durch die zwangsweise Fusion zur TSG Irlich und später durch den Zweiten Weltkrieg ausgebremst."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "a8a1d7be913d",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "f97f5fd733d1",
+												"_type": "span",
+												"marks": ["strong"],
+												"text": "Aufschwung, Gemeinschaft und Spielgemeinschaften (ab 1945)"
+											}
+										],
+										"markDefs": [],
+										"style": "h2"
+									},
+									{
+										"_key": "76d6741454dc",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "236daff309c3",
+												"_type": "span",
+												"marks": [],
+												"text": "Nach Kriegsende erwachte der Fußball in Irlich schnell zu neuem Leben. 1946 nahm die „SG Irlich“ wieder am Spielbetrieb teil und feierte 1948/49 die erste Nachkriegsmeisterschaft. In den folgenden Jahrzehnten gelang der TSG der Weg bis in die Landesliga – eine außergewöhnliche Leistung für den kleinen Stadtteil am Rhein-Wied-Eck. Besonders die 1980er-Jahre prägten den Verein: Aufstiege, volle Ränge und eine junge, eigengewachsene Mannschaft machten Irlich überregional bekannt."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "99aed64ce2a4",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "afda477896b6",
+												"_type": "span",
+												"marks": [],
+												"text": "In den vergangenen 30 Jahren zeigte sich die TSG erneut anpassungsfähig und offen für Kooperationen. Zwischen 1975 und 1981 bestand – trotz großer Rivalität – eine SG mit Feldkirchen. 1998 folgte die SG Irlich/Hüllenberg, die ab 2001 durch den SV Neuwied zur SG Neuwied/Irlich/Hüllenberg erweitert wurde und bis 2004 Bestand hatte. 2024 wagte die TSG eine weitere Partnerschaft mit Rodenbach, die jedoch nur ein Jahr dauerte und heute bereits Geschichte ist. Jede dieser Gemeinschaften verdeutlicht die Bereitschaft, Herausforderungen aktiv anzugehen."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "ab3a11f45b9b",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "66d2492cc860",
+												"_type": "span",
+												"marks": [],
+												"text": "„Wir“ haben in unserer langen Vereinsgeschichte vieles erlebt – sportliche Höhen, emotionale Momente und Zusammenhalt über Generationen hinweg. Menschen aller Altersklassen diese Erfahrungen zu ermöglichen, bleibt das zentrale Ziel der TSG Irlich."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									},
+									{
+										"_key": "07a17c76ef0a",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "86d380259377",
+												"_type": "span",
+												"marks": ["strong", "em"],
+												"text": "Wir bauen noch an der Chronik. Freut euch in Zukunft auf mehr!"
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"excerpt": "Seit 1910 jagt in Irlich die Fußballbegeisterung durch den Ort. Von den ersten Freundschaftsspielen über Meisterschaften bis zur Landesliga in unserem Pappelstadion – erlebe die packende Geschichte des Ballsports, der Generationen begeistert und die TSG Irlich weit über die Region hinaus bekannt machte.",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Die TSG-Mannschaft der zwanziger Jahre",
+								"asset": {
+									"_ref": "image-e8de56b85a9b34f3f8b3a64b291c0fd18e8e865a-550x362-jpg",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.7622259664534397,
+									"width": 0.9890816962580178,
+									"x": 0.5,
+									"y": 0.5
+								}
+							},
+							"title": "Fußball in Irlich (ab 1910)"
+						}
+					],
+					"intro": "Über 140 Jahre Sport, Gemeinschaft und Emotionen – die Geschichte der TSG Irlich ist ein Spiegel unserer Heimat. Vom ersten Turnverein im 19. Jahrhunderts über die frühen Fußballpioniere bis hin zum modernen Mehrspartenverein: Jede Epoche erzählt von Menschen, die anpackten, zusammenhielten und Sport mit Leidenschaft lebten. Heute zählt die TSG zu den größten Sportvereinen in Neuwied. Unsere Chronik nimmt dich mit auf eine Reise durch Erfolge, Herausforderungen und unzählige Momente, die Irlich bewegt haben – und bis heute prägen.",
+					"subtitle": "Die Entstehung der TSG",
+					"title": "Chronik der heutigen Turn- und Sportgemeinde"
+				},
+				"contactPersonsSection": {
+					"contactPersons": [
+						{
+							"contactAs": "both",
+							"email": "vorsitz@tsg-irlich.de",
+							"firstName": "Alexander",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Alexander Hof in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz.",
+								"asset": {
+									"_ref": "image-1e4595eb53901b21a62170411d838b4bc0e65adc-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.89125541277692,
+									"width": 0.9561294492393759,
+									"x": 0.521935275380312,
+									"y": 0.5543722936115401
+								}
+							},
+							"lastName": "Hof",
+							"phone": "+49 170 4489500",
+							"role": "Vorsitzender",
+							"taskDescription": "Als Vorsitzender gestalte ich die strategische Ausrichtung und Weiterentwicklung des Vereins. Ich repräsentiere ihn nach außen, pflege den Austausch mit der Kommune, Verbänden und Sponsoren und setze mein Netzwerk gezielt für eine erfolgreiche Zusammenarbeit ein."
+						},
+						{
+							"contactAs": "email",
+							"email": "finanzen@tsg-irlich.de",
+							"firstName": "René",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "René Linn in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz. ",
+								"asset": {
+									"_ref": "image-9a54eec0662a8a7b613a63a7f2a85acc75bfbf06-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Linn",
+							"phone": "+49 160 1818712",
+							"role": "Vorstand Finanzen",
+							"taskDescription": "Ich verantworte die gesamte Finanzverwaltung der TSG Irlich. Von Abrechnungen bis zu Steuerfragen. Zudem plane und kontrolliere ich die Finanzen und sorge für eine transparente sowie nachhaltige Haushaltsführung des Vereins. Bei Fragen zu Finanzthemen bin ich ihr Ansprechpartner."
+						},
+						{
+							"contactAs": "both",
+							"email": "verwaltung@tsg-irlich.de",
+							"firstName": "Melina",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Melina Dinter im Polo der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-32c7a18d61105ff1d2a01e528209cb5edf7effd2-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Dinter",
+							"phone": "+49 151 50422094",
+							"role": "Vorstand Verwaltung",
+							"taskDescription": "Als Vorstand Verwaltung kümmere ich mich um alle administrativen Aufgaben. Von Vertragsabwicklung über Versicherungen bis zu Protokollen und Post. Ich betreue die digitale Mitgliederverwaltung und sorge für eine reibungslose Dokumentation und Kommunikation."
+						},
+						{
+							"contactAs": "both",
+							"email": "presse@tsg-irlich.de",
+							"firstName": "Philipp",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Philipp Pfeiffer im T-shirt der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0.10636665814369727,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"description": "Philipp Pfeiffer, Vorstandsmitglied und Jugendtrainer",
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.738174379953976,
+									"width": 0.5472598653370835,
+									"x": 0.4836358987471234,
+									"y": 0.49727264979118724
+								}
+							},
+							"lastName": "Pfeiffer",
+							"phone": "+49 170 2418600",
+							"role": "Vorstand Öffentlichkeitsarbeit",
+							"taskDescription": "In meinem Ehrenamt gestalte und steuere ich die gesamte PR und Kommunikation der TSG. Ich leite das PR-Team, das unsere Social-Media-Kanäle und unsere Website verwaltet, Printmedien gestaltet und das 'TSG Echo' publiziert. Ich bin zudem Ansprechpartner für Projektplanungen."
+						},
+						{
+							"contactAs": "both",
+							"email": "breitensport@tsg-irlich.de",
+							"firstName": "Melanie ",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+									"_type": "reference"
+								}
+							},
+							"lastName": "Klein",
+							"phone": "+49 171 9941807",
+							"role": "Abteilungsleitung Breitensport",
+							"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+						},
+						{
+							"contactAs": "both",
+							"email": "fussball@tsg-irlich.de",
+							"firstName": "Markus",
+							"image": {
+								"_type": "extendedImage",
+								"alt": "Abteilungsleiter Markus Straeten in einem Shirts der TSG Irlich auf einem Fußballplatz",
+								"asset": {
+									"_ref": "image-0ce6f3246b26f5cfd54973c83fece2aaf34317d6-600x600-webp",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0,
+									"left": 0,
+									"right": 0,
+									"top": 0
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.882559012428059,
+									"width": 0.9733088664609225,
+									"x": 0.5133455667695388,
+									"y": 0.5587204937859704
+								}
+							},
+							"lastName": "Straeten",
+							"phone": "+49 170 2206948",
+							"role": "Abteilungsleitung Fußball",
+							"taskDescription": "Als Abteilungsleiter Fußball trage ich die Gesamtverantwortung für die Abteilung und koordiniere alle Teams. Ich führe das Team, wähle Übungsleiter aus, organisiere die Materialbeschaffung und entwickle das sportliche Angebot laufend weiter."
+						}
+					],
+					"intro": "Unser Vorstandsteam verantwortet die Geschäftsführung, koordiniert den Sportbetrieb und gestaltet die strategische Weiterentwicklung des Vereins. Der Vorstand dient als zentrale Anlaufstelle für organisatorische Anliegen und steht dir bei Fragen zur Verfügung.",
+					"subtitle": "Ansprechpartner",
+					"title": "Unser Vorstandsteam ist für dich da"
+				},
+				"introSection": {
+					"images": [
+						{
+							"_key": "fedacc90e15f",
+							"_type": "extendedImage",
+							"alt": "Taekwondo Duell",
+							"asset": {
+								"_ref": "image-57ed6f0f695123214ce8add9ce5b065299810d2f-3200x4000-jpg",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.5563642665280305,
+								"width": 0.9930679837206473,
+								"x": 0.49653399186032365,
+								"y": 0.3031366432718135
+							}
+						},
+						{
+							"_key": "b9ab90490928",
+							"_type": "extendedImage",
+							"alt": "Funky Diamonds in rot weiß",
+							"asset": {
+								"_ref": "image-09d3dd5ee1d7447f2e9f352f6eb664e2e3dc3251-6000x4000-jpg",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.727264979118725,
+								"width": 0.912724793317992,
+								"x": 0.5272735020881275,
+								"y": 0.5245461518793149
+							}
+						},
+						{
+							"_key": "2931cca59889",
+							"_type": "extendedImage",
+							"alt": "Jugendkicker der TSG Irlich im Pappelstadion",
+							"asset": {
+								"_ref": "image-d6de190eecde0ef34932c25c98d377673416a949-6000x4000-jpg",
+								"_type": "reference"
+							}
+						}
+					],
+					"intro": {
+						"_type": "blockContent",
+						"text": [
+							{
+								"_key": "20f33f2cd430",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "fef31668fdf0",
+										"_type": "span",
+										"marks": [],
+										"text": "Wir sind die TSG Irlich, 1882 gegründet, und ein lebendiger Mehrspartenverein im Neuwieder Stadtteil Irlich. Seit über 140 Jahren stehen wir für Tradition, Gemeinschaft und Integration. In unseren Sportstätten und unserem Vereinsheim in der Gotenstraße bieten wir ein breites Sportangebot für alle Altersgruppen – von Jung bis Alt – und bauen unser Angebot regelmäßig aus, um mit der Zeit zu gehen. Bei uns findet jede*r seine sportliche Heimat. Wir engagieren uns aktiv im Dorfleben von Irlich und freuen uns darauf, Menschen zusammenzubringen, die Spaß an Bewegung haben und Teil unserer lebendigen Vereinsgemeinschaft werden möchten."
+									}
+								],
+								"markDefs": [],
+								"style": "normal"
+							}
+						]
+					},
+					"subtitle": "Unser Verein",
+					"title": "TSG Irlich - Wir stehen für Tradition und Sport"
+				},
+				"stats": [
+					{
+						"_key": "414ba3513023",
+						"_type": "stats",
+						"suffix": ".000+",
+						"title": "Social-Media-Aufrufe / Monat",
+						"value": 100
+					},
+					{
+						"_key": "8bc62455443b",
+						"_type": "stats",
+						"suffix": "+",
+						"title": "ältestes Mitglied ",
+						"value": 85
+					},
+					{
+						"_key": "1edfa5edb4aa",
+						"_type": "stats",
+						"prefix": "< ",
+						"title": "jüngstes Mitglied",
+						"value": 1
+					},
+					{
+						"_key": "bb15bafc9e19",
+						"_type": "stats",
+						"title": "Anzahl Sportarten ",
+						"value": 13
+					}
+				],
+				"visionSection": {
+					"ctaLongVision": "Siehe dir unsere Werte an",
+					"intro": "Unsere Mission ist es, den Sport in Irlich und Umgebung zu fördern. Wir setzen uns für Vielfalt, Integration und ein starkes soziales Miteinander ein und fördern alle Altersgruppen. Durch unsere sportlichen Angebote schaffen wir einen Raum, der Menschen verbindet und Gemeinschaft stärkt.",
+					"longVision": {
+						"_type": "blockContent",
+						"text": [
+							{
+								"_key": "496e6df62bcf",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "b01ed24fb91a",
+										"_type": "span",
+										"marks": [],
+										"text": "Die Turn- und Sportgemeinde Irlich 1882 e.V. wurde im Jahr 1882 gegründet und ist einer der ältesten und traditionsreichsten Vereine im Kreis Neuwied. Die TSG bietet seinen rund 700 Mitgliedern ein vielfältiges Sportangebot in 18 verschiedenen Sparten. Die Vereinsfarben sind Blau und Gelb und die sportliche Heimat befindet sich in der Gotenstraße in Irlich."
+									}
+								],
+								"markDefs": [],
+								"style": "normal"
+							},
+							{
+								"_key": "8c5d7768877e",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "7a1e64968ab5",
+										"_type": "span",
+										"marks": [],
+										"text": "Sportverein für alle"
+									}
+								],
+								"markDefs": [],
+								"style": "h3"
+							},
+							{
+								"_key": "0857c18e72c4",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "62fe51616b73",
+										"_type": "span",
+										"marks": [],
+										"text": "Die TSG Irlich ist ein integrativer Sportverein für alle sportbegeisterten Menschen, unabhängig vom Alter oder Leistungsniveau. Wir bieten ein breites und vielfältiges Angebot an Sportaktivitäten für die ganze Familie, das sowohl die körperliche Fitness als auch das soziale Miteinander fördert. Dabei legen wir großen Wert auf soziale Verantwortung, Fairness und die Schaffung eines Ortes, an dem soziale und sportliche Begegnungen stattfinden können."
+									}
+								],
+								"markDefs": [],
+								"style": "normal"
+							},
+							{
+								"_key": "c2be13d54fe7",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "63333c5976be",
+										"_type": "span",
+										"marks": [],
+										"text": "Vielfalt"
+									}
+								],
+								"markDefs": [],
+								"style": "h3"
+							},
+							{
+								"_key": "c8ea38755cc0",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "22c9ea26570a",
+										"_type": "span",
+										"marks": [],
+										"text": "Wir glauben an die verbindende Kraft des Sports!\nDeshalb geben wir Menschen eine sportliche Heimat – unabhängig von Herkunft, Glaube, Hautfarbe, Geschlecht, sexueller Orientierung und körperlicher oder geistiger Beeinträchtigung. Damit fördern wir eine Kultur der Offenheit."
+									}
+								],
+								"markDefs": [],
+								"style": "normal"
+							},
+							{
+								"_key": "d24b616c3ea7",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "055ba2a8e983",
+										"_type": "span",
+										"marks": [],
+										"text": "Integration"
+									}
+								],
+								"markDefs": [],
+								"style": "h3"
+							},
+							{
+								"_key": "f7b57f8bdc39",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "359ab32f8e9e",
+										"_type": "span",
+										"marks": [],
+										"text": "Seit jeher steht der Vereinssport auch für die Völkerverständigung, für gelebte Integration und Toleranz. Denn an kaum einem Ort kommen Menschen so vieler unterschiedlicher Nationen, Kulturen und Religionen zusammen wie im Verein – und erleben noch dazu zusammen Erfolg, Misserfolg und große Emotionen."
+									}
+								],
+								"markDefs": [],
+								"style": "normal"
+							},
+							{
+								"_key": "1029d55fa4f5",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "727fde2506d7",
+										"_type": "span",
+										"marks": [],
+										"text": "Gesellschaftliche Verantwortung"
+									}
+								],
+								"markDefs": [],
+								"style": "h3"
+							},
+							{
+								"_key": "c6bb004c9e63",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "be553045b512",
+										"_type": "span",
+										"marks": [],
+										"text": "Besonders wichtig ist uns die Kinder- Jugendarbeit in Irlich und Umgebung. Durch den Einsatz unserer Ehrenamtlichen vermitteln wir der nächsten Generation unsere Werte: Teamgeist, Hilfsbereitschaft, Respekt und Gemeinschaft. Dies fördert nicht nur individuelle Fähigkeiten, sondern stärkt auch das soziale Miteinander und die gesellschaftliche Verantwortung. Die Entwicklung der Persönlichkeit und das Vermitteln von gesellschaftlich relevanten Werten wie Hilfsbereitschaft, Ehrlichkeit und Verantwortungsbewusstsein nimmt einen ebenso großen Stellenwert ein wie die sportliche Ausbildung."
+									}
+								],
+								"markDefs": [],
+								"style": "normal"
+							},
+							{
+								"_key": "7ad4db72aa9e",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "d8bd008ff3ac",
+										"_type": "span",
+										"marks": [],
+										"text": "Ehrenamt"
+									}
+								],
+								"markDefs": [],
+								"style": "h3"
+							},
+							{
+								"_key": "f0643ec22823",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "7fb18e663b1b",
+										"_type": "span",
+										"marks": [],
+										"text": "Unser Verein zeichnet sich dadurch aus, dass bei uns alle Altersgruppen trainieren können – vom Kleinkind bis hin zu den Senioren. Das Herzstück bilden dabei unsere engagierten und kompetenten Ehrenamtlichen, die mit viel Leidenschaft und Fachwissen dafür sorgen, dass jedes Mitglied die bestmögliche Unterstützung erhält."
+									}
+								],
+								"markDefs": [],
+								"style": "normal"
+							},
+							{
+								"_key": "06a72b04ca9a",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "b7f789acf226",
+										"_type": "span",
+										"marks": [],
+										"text": "Dorfleben"
+									}
+								],
+								"markDefs": [],
+								"style": "h3"
+							},
+							{
+								"_key": "a1e4a866a50f",
+								"_type": "block",
+								"children": [
+									{
+										"_key": "ea05e1d35a89",
+										"_type": "span",
+										"marks": [],
+										"text": "Neben unseren sportlichen Aktivitäten engagieren wir uns als mitgliederstärkster Verein im Ort aktiv im Dorfleben von Irlich am Rhein. Wir sehen uns als wichtigen Bestandteil der Dorf-Gemeinschaft und tragen durch unsere vielfältigen Angebote zur Belebung und Stärkung des sozialen Zusammenhalts bei. Bei der TSG Irlich wird nicht nur Sport großgeschrieben, sondern auch das Miteinander und die gegenseitige Unterstützung."
+									}
+								],
+								"markDefs": [],
+								"style": "normal"
+							}
+						]
+					},
+					"longVisionTitle": "Unsere Werte",
+					"subtitle": "Unsere Vision",
+					"title": "Für was steht die TSG und was wollen wir erreichen?"
+				}
+			},
+			"meta": {
+				"_type": "metaFields",
+				"metaDescription": "Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.",
+				"metaTitle": "TSG Irlich? Wer sind wir?",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Fifteen adults, men and women, hold certificates and flowers outdoors with a Maypole behind them.",
+					"asset": {
+						"_ref": "image-81964f9af5664a5d8ff270afb5e61710c2c60bc9-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7033322212027691,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.6191925932104428
+					}
+				}
+			},
+			"slug": {
+				"_type": "slug",
+				"current": "verein"
+			},
+			"subtitle": "Wer sind wir?",
+			"title": "Über unseren Verein"
+		},
+		"syncTags": [
+			"s1:SgUpiQ",
+			"s1:PeVrtw",
+			"s1:N029bQ",
+			"s1:BpJQvw",
+			"s1:y+gLqA",
+			"s1:BU299g",
+			"s1:kG7Arw",
+			"s1:eOuqJg",
+			"s1:NuVTmQ",
+			"s1:WU9DBg",
+			"s1:B7LhMw",
+			"s1:bW4l3Q",
+			"s1:yJoVrQ"
+		],
+		"ms": 13
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27aboutUs%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09...%2C%0A%09%09%09introSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09intro+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%7D%2C%0A%09%09%09chronicleSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09chronicleCategories%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09description+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%2C%0A%09%09%09visionSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09longVision+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%7D%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
+}
