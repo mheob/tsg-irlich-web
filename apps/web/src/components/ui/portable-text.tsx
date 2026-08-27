@@ -20,8 +20,37 @@ import type {
 } from 'next-sanity';
 import { PortableText as PortableTextPrimitive } from 'next-sanity';
 import NextLink from 'next/link';
+import type { ReactNode } from 'react';
+import { isValidElement } from 'react';
 
 import { getInternalHref } from '@/utils/links';
+
+/**
+ * Collects the plain text of a rendered React tree.
+ *
+ * A mark's `children` are only a string when the marked span carries no other mark. As soon as the
+ * text is split — `Skigebiet <strong>Gitschberg-Jochtal</strong>.` — they are an array holding
+ * strings and elements, and `toString()` on those yields `[object Object]`. Walking the tree keeps
+ * the whole text, which is what the link's accessible name needs.
+ *
+ * @param node - The React node to read the text of.
+ * @returns The concatenated text of the node and everything below it.
+ */
+function getTextContent(node: ReactNode): string {
+	if (typeof node === 'string' || typeof node === 'number') {
+		return String(node);
+	}
+
+	if (Array.isArray(node)) {
+		return node.map((child: ReactNode) => getTextContent(child)).join('');
+	}
+
+	if (isValidElement<{ children?: ReactNode }>(node)) {
+		return getTextContent(node.props.children);
+	}
+
+	return '';
+}
 
 const Blockquote: PortableTextComponent<PortableTextBlock> = ({ children }) => (
 	<blockquote className="border-l-4 border-gray-300 pl-4">{children}</blockquote>
@@ -80,8 +109,7 @@ const ListItem: PortableTextListItemComponent = ({ children }) => (
 
 const ExternalLink: PortableTextMarkComponent = ({ children, value }) => (
 	<a
-		// oxlint-disable-next-line typescript/no-base-to-string
-		aria-label={`${children?.toString() ?? 'Link'} (öffnet in neuem Tab)`}
+		aria-label={`${getTextContent(children) || 'Link'} (öffnet in neuem Tab)`}
 		// oxlint-disable-next-line typescript/no-unsafe-member-access typescript/no-unsafe-assignment
 		href={value?.href}
 		rel="noopener noreferrer"
@@ -125,8 +153,7 @@ const Link: PortableTextMarkComponent = async ({ children, value }) => {
 
 	return (
 		<a
-			// oxlint-disable-next-line typescript/no-base-to-string
-			aria-label={`${children?.toString() ?? 'Link'} (öffnet in neuem Tab)`}
+			aria-label={`${getTextContent(children) || 'Link'} (öffnet in neuem Tab)`}
 			href={href}
 			rel="noopener noreferrer"
 			target="_blank"
