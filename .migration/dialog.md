@@ -18,7 +18,9 @@ renamed to match, and the enter/exit animation rewritten in Base UI's idiom.
   `fade-in-0`, `zoom-in-95`, `slide-in-from-top-[48%]`, `slide-in-from-left-1/2` and their `-out`
   counterparts were replaced by Base UI's model: `transition-opacity` on the backdrop and
   `transition-[opacity,scale]` on the popup, both driven by `data-starting-style:` and
-  `data-ending-style:`. The `duration-200` is kept, so the timing is unchanged. Centring moved from
+  `data-ending-style:`. The popup keeps its `duration-200`; the backdrop, which had no explicit
+  duration and therefore ran at `tailwindcss-animate`'s 150 ms default, was given the same
+  `duration-200` so both halves of the transition match. Centring moved from
   `top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]` to the equivalent
   `top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`, which is the same computed position but does
   not fight the animated `scale`.

@@ -11,7 +11,7 @@ This is the main web application for the TSG Irlich website, featuring:
 - **Sanity CMS** integration for content management
 - **TypeScript** for type safety
 - **Tailwind CSS** for styling
-- **Shadcn UI** components
+- **Shadcn UI** component patterns on **Base UI** primitives
 - **React Hook Form** + **Zod** for form validation
 - **Next Safe Action** for type-safe server actions
 
@@ -102,7 +102,8 @@ apps/web/
 ### Styling
 
 - **Tailwind CSS 4** - Utility-first CSS framework
-- **Shadcn UI** - Component library with CVA patterns
+- **Base UI** - Unstyled component primitives
+- **Shadcn UI** - Component patterns with CVA variants
 - **CSS Modules** - Component-scoped styles
 
 ### Content Management
@@ -200,7 +201,7 @@ interface MyComponentProps {
 ### Styling Guidelines
 
 - Use **Tailwind CSS** utility classes
-- Follow **Shadcn UI** component patterns
+- Follow **Shadcn UI** component patterns on **Base UI** primitives
 - Use **CSS Modules** for component-specific styles
 - Mobile-first responsive design
 
@@ -245,4 +246,5 @@ See [SANITY_WEBHOOK_SETUP.md](../../docs/SANITY_WEBHOOK_SETUP.md) for webhook co
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Sanity Documentation](https://www.sanity.io/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Base UI Documentation](https://base-ui.com)
 - [Shadcn UI Documentation](https://ui.shadcn.com)
