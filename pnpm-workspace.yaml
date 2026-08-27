@@ -22,7 +22,7 @@ overrides:
   js-yaml: ">=4.3.1"
   # @tailwindcss/typography pins 6.0.10, which is vulnerable to uncontrolled recursion
   # in `toString()` (CVE-2026-9358); fixed in 6.1.3
-  postcss-selector-parser: "^6.1.3"
+  postcss-selector-parser: "^7.0.0"
   smol-toml: ">=1.6.1"
   # Bounded to v7: jsdom (via the Sanity CLI) deep-imports undici v7 internals that v8 removed
   undici: "^7.29.0"
