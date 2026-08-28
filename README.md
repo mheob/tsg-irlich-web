@@ -41,7 +41,7 @@ This is a **monorepo** built with **Turbo** and **pnpm** containing:
 
 ### CMS (apps/studio)
 
-- **Sanity 5** headless CMS
+- **Sanity 6** headless CMS
 - **Sanity Studio** with custom configuration
 - **German localization** support
 - **Custom plugins** for enhanced functionality
@@ -56,10 +56,11 @@ This is a **monorepo** built with **Turbo** and **pnpm** containing:
 
 - **Turbo** for build orchestration and caching
 - **pnpm** for package management with workspace support
-- **ESLint** with custom configuration
-- **Prettier** with Tailwind CSS plugin
-- **Commitlint** for conventional commits
-- **Husky** for git hooks
+- **oxlint** with `@mheob/oxlint-config` (plus oxlint-tsgolint for type-aware rules)
+- **oxfmt** with `@mheob/oxfmt-config` for formatting
+- **Vitest** for unit tests, **Playwright** for end-to-end and accessibility tests
+- **Commitlint** with **czg** for conventional commits
+- **Lefthook** for git hooks
 - **TypeScript** for type safety
 
 ## 📁 Project Structure
@@ -124,8 +125,8 @@ tsg-web/
 
 ### Prerequisites
 
-- **Node.js** ^24.14.1
-- **pnpm** 11.22.0 package manager
+- **Node.js** ^24.20.0
+- **pnpm** 11.24.0 package manager
 - **Git** for version control
 
 ### Installation
@@ -188,9 +189,17 @@ pnpm run build                  # Build all apps for production
 pnpm run build:affected         # Build only affected packages
 pnpm run lint                   # Lint all apps
 pnpm run lint:affected          # Lint only affected packages
+pnpm run lint:fix               # Lint and autofix
+pnpm run format                 # Format with oxfmt (format:check to only verify)
+pnpm run test                   # Run every unit test suite
+pnpm run test:affected          # Only the affected packages
+pnpm run test:coverage          # Run with coverage (lcov per workspace)
+pnpm run test:e2e               # Playwright end-to-end suite (apps/web)
 pnpm run typecheck              # Type check all apps
+pnpm run extract-types          # Extract the Sanity schema from the studio
 pnpm run typegen:sanity         # Generate Sanity types for web app
 pnpm run typegen:routes         # Generate Next.js route types
+pnpm run cve                    # Audit the dependencies with cve-lite
 ```
 
 ### Individual App Commands

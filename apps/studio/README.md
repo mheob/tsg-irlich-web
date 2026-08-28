@@ -17,8 +17,8 @@ This Sanity Studio instance provides a custom content editing environment for th
 
 ### Prerequisites
 
-- **Node.js** ^24.14.1
-- **pnpm** 11.22.0 (package manager)
+- **Node.js** ^24.20.0
+- **pnpm** 11.24.0 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation
@@ -55,7 +55,11 @@ Open [http://localhost:3333](http://localhost:3333) to access the Studio interfa
 | `deploy:graphql` | Deploy GraphQL API                     |
 | `deploy:schema`  | Deploy schema definitions              |
 | `extract-types`  | Extract schema types for typegen       |
-| `lint`           | Run ESLint with auto-fix               |
+| `lint`           | Run oxlint                             |
+| `lint:fix`       | Run oxlint with auto-fix               |
+| `test`           | Run the unit tests once with Vitest    |
+| `test:watch`     | Run the unit tests in watch mode       |
+| `test:coverage`  | Run the unit tests with coverage       |
 | `typecheck`      | Run TypeScript type checking           |
 
 ## Project Structure

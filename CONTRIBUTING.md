@@ -19,8 +19,8 @@ Thank you for your interest in contributing to the TSG Irlich website! This docu
 
 ### Prerequisites
 
-- **Node.js** ^24.14.1
-- **pnpm** 11.22.0 (package manager)
+- **Node.js** ^24.20.0
+- **pnpm** 11.24.0 (package manager)
 - **Git** for version control
 
 ### Development Setup

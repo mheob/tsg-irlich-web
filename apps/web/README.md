@@ -19,8 +19,8 @@ This is the main web application for the TSG Irlich website, featuring:
 
 ### Prerequisites
 
-- **Node.js** ^24.14.1
-- **pnpm** 11.22.0 (package manager)
+- **Node.js** ^24.20.0
+- **pnpm** 11.24.0 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation
@@ -48,15 +48,22 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ## Available Scripts
 
-| Script           | Description                                   |
-| ---------------- | --------------------------------------------- |
-| `dev`            | Start Next.js development server              |
-| `build`          | Build the application for production          |
-| `start`          | Start the production server                   |
-| `lint`           | Run ESLint with auto-fix                      |
-| `typecheck`      | Run TypeScript type checking                  |
-| `typegen:sanity` | Generate TypeScript types from Sanity schemas |
-| `typegen:routes` | Generate Next.js route types                  |
+| Script           | Description                                     |
+| ---------------- | ----------------------------------------------- |
+| `dev`            | Start Next.js development server                |
+| `build`          | Build the application for production            |
+| `start`          | Start the production server                     |
+| `lint`           | Run oxlint                                      |
+| `lint:fix`       | Run oxlint with auto-fix                        |
+| `test`           | Run the unit tests once with Vitest             |
+| `test:watch`     | Run the unit tests in watch mode                |
+| `test:coverage`  | Run the unit tests with coverage                |
+| `test:e2e`       | Run the Playwright end-to-end suite             |
+| `test:e2e:ui`    | Run the end-to-end suite in the Playwright UI   |
+| `e2e:browsers`   | Install the browsers the end-to-end suite needs |
+| `typecheck`      | Run TypeScript type checking                    |
+| `typegen:sanity` | Generate TypeScript types from Sanity schemas   |
+| `typegen:routes` | Generate Next.js route types                    |
 
 ## Project Structure
 

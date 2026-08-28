@@ -101,10 +101,14 @@ const iconName: DosbIconName = 'Fussball';
 
 ## Available Scripts
 
-| Script      | Description                  |
-| ----------- | ---------------------------- |
-| `lint`      | Run ESLint with auto-fix     |
-| `typecheck` | Run TypeScript type checking |
+| Script          | Description                         |
+| --------------- | ----------------------------------- |
+| `lint`          | Run oxlint                          |
+| `lint:fix`      | Run oxlint with auto-fix            |
+| `test`          | Run the unit tests once with Vitest |
+| `test:watch`    | Run the unit tests in watch mode    |
+| `test:coverage` | Run the unit tests with coverage    |
+| `typecheck`     | Run TypeScript type checking        |
 
 ## Dependencies
 

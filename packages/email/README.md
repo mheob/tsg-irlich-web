@@ -14,11 +14,18 @@ Open [localhost:3001](http://localhost:3001) to preview email templates in your 
 
 ## Available Scripts
 
-| Script      | Description                                       |
-| ----------- | ------------------------------------------------- |
-| `dev:email` | Start the React Email preview server on port 3001 |
-| `build`     | Build email templates                             |
-| `export`    | Export email templates                            |
+| Script              | Description                                       |
+| ------------------- | ------------------------------------------------- |
+| `dev:email`         | Start the React Email preview server on port 3001 |
+| `build`             | Build email templates                             |
+| `build:preview`     | Build the preview mailing                         |
+| `build:cleverreach` | Build the CleverReach template                    |
+| `export`            | Export email templates                            |
+| `lint`              | Run oxlint                                        |
+| `lint:fix`          | Run oxlint with auto-fix                          |
+| `test`              | Run the unit tests once with Vitest               |
+| `test:watch`        | Run the unit tests in watch mode                  |
+| `test:coverage`     | Run the unit tests with coverage                  |
 
 ## Creating New Templates
 
