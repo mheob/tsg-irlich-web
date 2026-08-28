@@ -17,6 +17,8 @@
  *   fails the run instead of silently reaching the real service.
  * - `E2E_RECORD=1` — Sanity requests go through to the real API and their responses are written to
  *   `e2e/fixtures/` (see `pnpm run e2e:record`).
+ *
+ * It also pins `Math.random`, which is the second source of non-determinism the pages have.
  */
 
 import { createHash } from 'node:crypto';
@@ -31,6 +33,9 @@ import { setupServer } from 'msw/node';
 const HTTP_CONFLICT = 409;
 const KEY_LENGTH = 16;
 const JSON_INDENT = 2;
+
+/** The one value `Math.random` returns under the mocks. Arbitrary, and never changes. */
+const RANDOM_VALUE = 0.42;
 
 const isRecording = process.env.E2E_RECORD === '1';
 
@@ -244,6 +249,23 @@ const handlers = [
 		);
 	}),
 ];
+
+/**
+ * Pins `Math.random` to a single value.
+ *
+ * The home page picks three of its testimonials at random on every render, which makes its markup —
+ * and with it its screenshot — different every time. A seeded sequence is not enough: it fixes the
+ * order of the values but not the position the shuffle draws from, and how many other calls come
+ * first depends on how the build parallelized. A constant removes the position from the equation, so
+ * the Fisher-Yates pass in `shuffleArray` produces the same permutation everywhere.
+ *
+ * @returns Nothing.
+ */
+function freezeRandom(): void {
+	Math.random = () => RANDOM_VALUE;
+}
+
+freezeRandom();
 
 const server = setupServer(...handlers);
 

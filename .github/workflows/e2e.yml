@@ -12,6 +12,21 @@ jobs:
   e2e:
     name: E2E
     runs-on: ubuntu-latest
+    # The visual regression baselines are pixel-comparable only against the image that produced
+    # them, so the whole suite runs inside the pinned Playwright container — the same one
+    # `apps/web/scripts/update-screenshots.sh` uses locally. The tag has to be bumped together with
+    # `@playwright/test` and with the image name in that script.
+    container:
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+      # `pwuser` — the image's unprivileged account, and the UID the workspace belongs to. As root,
+      # Chromium refuses to start with its sandbox enabled.
+      options: --user 1001 --ipc=host
+    # The image ships its browsers under `/ms-playwright` and says so through its own `ENV`, but a
+    # container job's steps do not inherit that — Playwright would look in `$HOME/.cache` and find
+    # nothing. Naming it here is what makes the preinstalled browsers reachable, and why this job
+    # needs no install step.
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
     steps:
       - name: Checkout Repo
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
@@ -39,21 +54,13 @@ jobs:
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
 
-      - name: Cache Playwright Browsers
-        id: playwright-cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          path: ~/.cache/ms-playwright
-
-      - name: Install Playwright Browsers
-        run: pnpm --filter web run e2e:browsers
-
       # Every outbound request is served by the mocks in `apps/web/e2e/mocks/preload.ts`, so this
       # job needs no secret of any kind — `apps/web/.env.e2e` carries the dummy values.
       - name: Run E2E Tests
         run: pnpm run test:e2e
 
+      # `test-results` carries the actual/expected/diff triple of every failed screenshot
+      # comparison, which is the only way to judge a visual diff from the outside.
       - name: Upload Report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

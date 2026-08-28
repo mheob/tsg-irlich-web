@@ -23,6 +23,8 @@ pnpm run typegen:routes  # regenerate the typed routes after adding or moving a 
 pnpm run typegen:sanity  # regenerate src/types/sanity.types.generated.ts from the studio schema
 pnpm run test:e2e        # Playwright end-to-end suite (mocked)
 pnpm run test:e2e:ui     # the same suite in Playwright's UI mode
+pnpm run test:e2e:visual # only the visual regression specs (skipped outside Linux)
+pnpm run test:e2e:visual:update  # regenerate the screenshot baselines in the Playwright container
 pnpm run e2e:record      # refresh the recorded Sanity fixtures from the real dataset
 ```
 
@@ -110,9 +112,12 @@ Playwright lives in `e2e/`, next to `src/`, and is separated from Vitest by exte
 | --- | --- |
 | `e2e/specs` | the mocked suite — the one CI blocks on |
 | `e2e/preview` | the smoke suite that runs against a deployed preview with real content |
-| `e2e/mocks/preload.ts` | every server-side network mock, preloaded into the Next.js process |
+| `e2e/mocks/preload.ts` | every server-side network mock plus the seeded `Math.random`, preloaded into the Next.js process |
 | `e2e/fixtures` | recorded Sanity responses plus the stub image every asset resolves to |
+| `e2e/__screenshots__` | the committed visual regression baselines, one folder per browser project |
 | `e2e/support/test.ts` | the extended `test` — import `test`/`expect` from here, never from `@playwright/test` |
+| `e2e/support/navigation.ts` | the shared page helpers (`waitForPage`, the two drill-downs) |
+| `e2e/support/visual.ts` | prepares a page for a screenshot and compares it against its baseline |
 | `e2e/support/axe.ts` | the axe helper the accessibility sweep calls, plus its attachment shape |
 | `e2e/support/axe-baseline.ts` | the accepted accessibility violations, keyed by route template |
 | `e2e/support/axe-summary-reporter.ts` | renders the axe attachments into GitHub's job summary |
@@ -127,6 +132,7 @@ The pages render on the server, so `page.route` cannot see the requests that mat
 - The newsletter mock decides its answer from the submitted address (`NEWSLETTER_SCENARIOS` in `preload.ts`); that is how a spec reaches the "already subscribed" path.
 - Only the browser-side requests are handled in `e2e/support/test.ts`: the `<SanityLive />` event stream and the analytics beacons. That file also turns off `scroll-behavior: smooth`, which otherwise moves elements out from under the pointer mid-click in WebKit.
 - `.env.e2e` is committed. Every credential in it is a dummy, because everything it names is intercepted; only the two public Sanity values are real, since the fixtures are keyed by the URLs they appear in.
+- `preload.ts` also pins `Math.random` to a constant. The home page picks three of its testimonials at random on every render, so without it the markup — and the screenshot — differs from one request to the next. A *seeded sequence* is not enough and was tried first: it fixes the order of the values but not the position the shuffle draws from, and how many calls come before it depends on how the build parallelized, so a local baseline and a CI run still disagreed. A constant takes the position out of the equation.
 
 The preview suite additionally needs `VERCEL_AUTOMATION_BYPASS_SECRET` (Vercel → project → Deployment Protection → "Protection Bypass for Automation", mirrored into a GitHub Actions secret). Preview deployments sit behind Vercel's SSO, so without the token every request is answered by a login page; the suite skips itself when the variable is unset.
 
@@ -138,8 +144,37 @@ Every run builds the app and starts its own server on port 3100. An already runn
 
 - The dynamic routes are reached by clicking through the overviews, never by a hard-coded slug, and are keyed in the baseline by their route template (`/news/[category]/[slug]`).
 - Every scan attaches its full axe result to the test, so the HTML report — and with it the artifact CI uploads — carries the detail. `AxeSummaryReporter` folds those attachments into one markdown table in GitHub's job summary; outside Actions it does nothing.
-- `KNOWN_VIOLATIONS` in `e2e/support/axe-baseline.ts` is the only way a violation is tolerated, and it is **currently empty**: the first sweep found four distinct defects and all of them were fixed. An entry is an exception that names its follow-up ticket, never a permission — anything unlisted fails the run. A baseline entry that stops firing is reported as stale in the job summary and belongs in the same commit as its fix.
+- `KNOWN_VIOLATIONS` in `e2e/support/axe-baseline.ts` is the only way a violation is tolerated. The first sweep found four distinct defects and all of them were fixed; the list holds one entry today, `aria-toggle-field-name` on `/`, `/kontakt` and `/kontakt/feedback`, for the unnamed privacy checkbox that WEB-302 removes. That node only enters the accessibility tree after hydration, so the sweep saw it for the first time when the suite moved into the Playwright container — on a fast runner axe still measures before hydration and the entry is reported as stale instead. An entry is an exception that names its follow-up ticket, never a permission — anything unlisted fails the run. A baseline entry that stops firing is reported as stale in the job summary and belongs in the same commit as its fix.
 - `waitForPage` waits for the document title as well as for the chrome: after a client-side navigation the title lands a tick later, and axe reports the gap as `document-title`.
+
+### Visual regression
+
+`e2e/specs/visual.spec.ts` takes a full-page screenshot of eight routes — `/`, `/verein`, `/angebot`, `/news`, `/mitgliedschaft`, `/kontakt` plus one department and one news article — in both browser projects, and compares it against the baseline committed under `e2e/__screenshots__/<project>/`. The three legal pages are deliberately left out: they are the same prose layout three times over and would only add baselines to re-approve on every typography change.
+
+The container ships its browsers under `/ms-playwright`, and two things have to name that path for a run to find them: `PLAYWRIGHT_BROWSERS_PATH` in the job's `env` (a container job's steps do not inherit the image's own `ENV`), and the same variable in the `test:e2e` task in the root `turbo.json` — the suite is started through Turbo, which passes on nothing it was not told about.
+
+**Baselines are Linux-only.** A screenshot is comparable against the platform that produced it and nothing else, so both CI and the local update path run inside the pinned container `mcr.microsoft.com/playwright:v1.62.1-noble`. Outside Linux `visual.spec.ts` skips itself, which keeps a macOS `pnpm run test:e2e` from writing baselines nobody can match. The image tag appears in `.github/workflows/e2e.yml` and in `apps/web/scripts/update-screenshots.sh`, and both have to be bumped together with `@playwright/test`.
+
+#### Approving an intended design change
+
+```bash
+pnpm --filter web run test:e2e:visual:update   # needs a running Docker daemon
+git add apps/web/e2e/__screenshots__
+```
+
+The script runs the visual suite with `--update-snapshots` in the container and writes the refreshed PNGs straight into the working tree. It pins everything CI pins — the image tag, `--platform linux/amd64` and the Node version from `.nvmrc` — because a baseline taken on another architecture is not the one CI compares against; on Apple Silicon that means an emulated run, so give it time. The repository is bind-mounted, but the workspace `node_modules` trees and `.next` are named volumes, so the host's macOS install is never overwritten and the second run starts warm. Review the diff before committing — a baseline update is a design change being approved, and it belongs in the same commit as the change that caused it.
+
+When a comparison fails in CI, the `playwright-report` artifact carries the expected, actual and diff PNG of every failure; that is the only way to judge the change from the outside.
+
+#### What keeps the shots stable
+
+- `expectPageToMatchBaseline` in `e2e/support/visual.ts` is the only entry point, and `installScreenshotEnvironment` from the same file belongs in the spec's `beforeEach` — `addInitScript` only reaches navigations that come after it. Together they freeze animation delays and the text caret, load every deferred image, and wait for the fonts and the images before the shot.
+- A full-page screenshot in Chromium captures beyond the viewport **without** scrolling, which breaks anything that waits to be scrolled to. `loading="lazy"` is flipped to `eager` on every image so the browser loads them natively rather than through an observer.
+- `installScreenshotEnvironment` replaces `IntersectionObserver` with one that **never reports**, which pins the spring-animated counters in the stats section to the value the server rendered. Letting them run and then waiting for them to settle does not work: how far a spring has come depends on when the browser scheduled its animation frames, and under load a page goes a long time between frames while timers keep firing — CI captured `58+` against a baseline holding `60+` that way. `useInView` in `number-ticker.tsx` is the only intersection observer the app uses today; a reveal-on-scroll pattern added later would be captured in its hidden state and needs the stub revisited.
+- The stub is deliberately not part of the shared `test` fixture in `e2e/support/test.ts`. The other suites should see the page the way a visitor does, animations included.
+- Only one region is masked, the footer's `©<year>`. Every date on a page is content and comes from the recorded fixtures; the copyright year comes from `new Date()` and would turn each New Year's Eve into a red suite.
+- `maxDiffPixelRatio` is 0.005 (`playwright.config.ts`). Everything runs in one pinned image, so the only expected difference is font antialiasing on a redrawn glyph — well under half a percent, and far below the footprint of any layout shift.
+- Fonts are loaded through `next/font/google`, which self-hosts them at build time. Nothing is fetched from Google at runtime, so a network hiccup cannot change a baseline.
 
 ### Fixtures
 
