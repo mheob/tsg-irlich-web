@@ -72,6 +72,10 @@ export function ArrowButtonGroup({
 							aria-label="Zurück"
 							data-disabled={isDisabledPrevious}
 							direction="left"
+							// A `<div>` has no role, and `aria-label`/`aria-disabled` are prohibited on one.
+							// The disabled direction stays a link for assistive technology — it just has no
+							// target and is not focusable.
+							role="link"
 							size={size}
 							variant="ghost"
 						/>
@@ -93,6 +97,10 @@ export function ArrowButtonGroup({
 							aria-label="Weiter"
 							data-disabled={isDisabledNext}
 							direction="right"
+							// A `<div>` has no role, and `aria-label`/`aria-disabled` are prohibited on one.
+							// The disabled direction stays a link for assistive technology — it just has no
+							// target and is not focusable.
+							role="link"
 							size={size}
 							variant="secondary"
 						/>

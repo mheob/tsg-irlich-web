@@ -89,16 +89,16 @@ export function TrainingCard({ training }: Readonly<TrainingCardProps>) {
 				)}
 
 				<CardDescription className="mt-6 text-sm">
-					<GoToGoogleMaps address={training.venue.location}>
-						<Button
-							nativeButton={false}
-							render={<span />}
-							title="Google Maps wird in einem neuen Tab geöffnet"
-							variant="secondary"
-						>
-							Route auf Google Maps berechnen
-						</Button>
-					</GoToGoogleMaps>
+					{/* The trigger *is* the button: rendering one inside the other left a focusable
+					    element inside a focusable element. */}
+					<GoToGoogleMaps
+						address={training.venue.location}
+						render={
+							<Button title="Google Maps wird in einem neuen Tab geöffnet" variant="secondary">
+								Route auf Google Maps berechnen
+							</Button>
+						}
+					/>
 				</CardDescription>
 			</CardContent>
 		</Card>
