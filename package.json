@@ -43,7 +43,7 @@
 		"czg": "^1.14.0",
 		"eslint-plugin-better-tailwindcss": "^4.7.0",
 		"lefthook": "^2.1.10",
-		"oxfmt": "^0.64.0",
+		"oxfmt": "^0.65.0",
 		"oxlint": "^1.80.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"sanity": "^6.11.0",
@@ -53,8 +53,8 @@
 		"vitest": "^4.1.11"
 	},
 	"engines": {
-		"node": "^24.19.0",
-		"pnpm": "^11.22.0"
+		"node": "^24.20.0",
+		"pnpm": "^11.24.0"
 	},
-	"packageManager": "pnpm@11.22.0"
+	"packageManager": "pnpm@11.24.0"
 }

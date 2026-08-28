@@ -57,7 +57,7 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 - Built with **Turbo** for build orchestration and caching
 - **pnpm** as package manager with workspace support
 - Shared dependencies managed with explicit pinned versions
-- Node.js ^24.19.0 and pnpm 11.22.0 required
+- Node.js ^24.20.0 and pnpm 11.24.0 required
 
 ### Web App (Next.js)
 
