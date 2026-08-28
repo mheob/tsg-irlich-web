@@ -107,9 +107,15 @@ const ListItem: PortableTextListItemComponent = ({ children }) => (
 	<li className="ml-2">{children}</li>
 );
 
+// A link inside running text has to be recognisable without colour (WCAG 1.4.1), and the prose
+// styles are not in reach everywhere portable text is rendered — hence the explicit underline on
+// every mark below.
+const LINK_CLASS_NAME = 'underline';
+
 const ExternalLink: PortableTextMarkComponent = ({ children, value }) => (
 	<a
 		aria-label={`${getTextContent(children) || 'Link'} (öffnet in neuem Tab)`}
+		className={LINK_CLASS_NAME}
 		// oxlint-disable-next-line typescript/no-unsafe-member-access typescript/no-unsafe-assignment
 		href={value?.href}
 		rel="noopener noreferrer"
@@ -134,7 +140,11 @@ const InternalLink: PortableTextMarkComponent = ({ children, value }) => {
 		return children;
 	}
 
-	return <NextLink href={href}>{children}</NextLink>;
+	return (
+		<NextLink className={LINK_CLASS_NAME} href={href}>
+			{children}
+		</NextLink>
+	);
 };
 
 const Link: PortableTextMarkComponent = async ({ children, value }) => {
@@ -148,12 +158,17 @@ const Link: PortableTextMarkComponent = async ({ children, value }) => {
 	const internalLinkRegex = /^(?:\/|https?:\/\/(?:[a-z0-9-]+\.)?tsg-irlich\.de(?:\/|$))/iu;
 
 	if (internalLinkRegex.test(href)) {
-		return <NextLink href={href}>{children}</NextLink>;
+		return (
+			<NextLink className={LINK_CLASS_NAME} href={href}>
+				{children}
+			</NextLink>
+		);
 	}
 
 	return (
 		<a
 			aria-label={`${getTextContent(children) || 'Link'} (öffnet in neuem Tab)`}
+			className={LINK_CLASS_NAME}
 			href={href}
 			rel="noopener noreferrer"
 			target="_blank"

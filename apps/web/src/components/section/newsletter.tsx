@@ -63,12 +63,12 @@ export function Newsletter() {
 					className="relative z-1 mt-16 flex max-w-(--breakpoint-sm) items-center justify-between gap-2 rounded-md bg-background px-2 pb-2 shadow-xl md:mx-auto md:gap-6 md:px-6"
 					ref={formReference}
 				>
-					<label
-						aria-label="E-Mail"
-						className="sr-only text-primary md:not-sr-only"
-						htmlFor="email"
-					>
-						<AtSign />
+					{/* The icon is the whole visible label, so the name of the field is carried by the
+					    hidden text next to it — `aria-label` is prohibited on `<label>` and was dropped by
+					    every assistive technology, leaving the input unnamed. */}
+					<label className="sr-only text-primary md:not-sr-only" htmlFor="email">
+						<AtSign aria-hidden="true" />
+						<span className="sr-only">E-Mail</span>
 					</label>
 
 					<Input

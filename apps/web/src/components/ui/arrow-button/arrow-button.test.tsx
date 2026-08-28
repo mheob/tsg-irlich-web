@@ -99,8 +99,10 @@ describe('arrow button group', () => {
 		expect(getByRole('link', { name: 'Weiter' }).getAttribute('href')).toBe('/news?seite=3');
 	});
 
-	it('drops the link of a disabled direction instead of pointing nowhere', () => {
-		const { getByLabelText, getByRole, queryByRole } = renderWithUser(
+	// A disabled direction stays a link for assistive technology — announced as disabled — but it
+	// carries no target and is not focusable, so it can never be followed.
+	it('drops the target of a disabled direction instead of pointing nowhere', () => {
+		const { getByRole } = renderWithUser(
 			<ArrowButtonGroup
 				hrefNext="/news?seite=3"
 				hrefPrev="/news?seite=1"
@@ -109,13 +111,15 @@ describe('arrow button group', () => {
 			/>,
 		);
 
-		expect(queryByRole('link', { name: 'Zurück' })).toBeNull();
-		expect(getByLabelText('Zurück').getAttribute('aria-disabled')).toBe('true');
-		expect(getByRole('link', { name: 'Weiter' })).not.toBeNull();
+		const previous = getByRole('link', { name: 'Zurück' });
+
+		expect(previous.getAttribute('aria-disabled')).toBe('true');
+		expect(previous.getAttribute('href')).toBeNull();
+		expect(getByRole('link', { name: 'Weiter' }).getAttribute('href')).toBe('/news?seite=3');
 	});
 
-	it('drops the link of the next direction when that one is disabled', () => {
-		const { getByLabelText, getByRole, queryByRole } = renderWithUser(
+	it('drops the target of the next direction when that one is disabled', () => {
+		const { getByRole } = renderWithUser(
 			<ArrowButtonGroup
 				hrefNext="/news?seite=3"
 				hrefPrev="/news?seite=1"
@@ -124,9 +128,11 @@ describe('arrow button group', () => {
 			/>,
 		);
 
-		expect(queryByRole('link', { name: 'Weiter' })).toBeNull();
-		expect(getByLabelText('Weiter').getAttribute('aria-disabled')).toBe('true');
-		expect(getByRole('link', { name: 'Zurück' })).not.toBeNull();
+		const next = getByRole('link', { name: 'Weiter' });
+
+		expect(next.getAttribute('aria-disabled')).toBe('true');
+		expect(next.getAttribute('href')).toBeNull();
+		expect(getByRole('link', { name: 'Zurück' }).getAttribute('href')).toBe('/news?seite=1');
 	});
 
 	it('renders as the given element instead of a div when render is set', () => {

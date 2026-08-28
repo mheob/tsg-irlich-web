@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import type { PortableTextBlock } from 'next-sanity';
+import { renderToReadableStream } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
 
 import { PortableText } from './portable-text';
@@ -38,6 +39,25 @@ function markedBlock(key: string, text: string, markDef: MarkDef): PortableTextB
 
 function renderPortableText(value: PortableTextValue) {
 	return render(<PortableText value={value} />);
+}
+
+/**
+ * Renders portable text through React's server renderer and puts the result into the document.
+ *
+ * The `link` mark is an `async` component, and React cannot render one on the client — the tree
+ * suspends and the container stays empty. The server renderer awaits it, and the markup it returns
+ * is then queried like any other render.
+ *
+ * @param value - The portable text to render.
+ * @returns The Testing Library result for the rendered markup.
+ */
+async function renderPortableTextOnServer(value: PortableTextValue) {
+	const stream = await renderToReadableStream(<PortableText value={value} />);
+	const html = await new Response(stream).text();
+
+	// The markup comes straight out of the component under test, nothing external is injected.
+	// oxlint-disable-next-line react/no-danger
+	return render(<div dangerouslySetInnerHTML={{ __html: html }} />);
 }
 
 describe('portable text', () => {
@@ -229,10 +249,46 @@ describe('portable text', () => {
 		vi.unstubAllEnvs();
 	});
 
-	// The `link` mark maps to an `async` component in `portable-text.tsx` (it awaits nothing, but the
-	// signature makes it one), and React cannot render an async component on the client — the tree
-	// suspends forever and the container stays empty. Its three branches (a path or the club domain
-	// stays in the app, an external target opens in a new tab, a mark without a target renders plain
-	// text) are therefore not reachable from a test; the `externalLink` mark above covers the same
-	// shape for the mark the CMS actually writes.
+	// The `link` mark maps to an `async` component (it awaits nothing, but the signature makes it
+	// one), so the three cases below go through the server renderer — see
+	// `renderPortableTextOnServer`.
+	it.each([
+		['a path', '/verein'],
+		['the club domain', 'https://tsg-irlich.de/verein'],
+		['a subdomain of the club', 'https://www.tsg-irlich.de/verein'],
+	])('keeps a link mark pointing at %s inside the app', async (_case, href) => {
+		const { getByRole } = await renderPortableTextOnServer([
+			markedBlock('lnk-int', 'Zum Verein', { _key: 'lnk-int-mark', _type: 'link', href }),
+		]);
+
+		const link = getByRole('link', { name: 'Zum Verein' });
+
+		expect(link.getAttribute('href')).toBe(href);
+		expect(link.getAttribute('target')).toBeNull();
+	});
+
+	it('opens a link mark pointing anywhere else in a new tab', async () => {
+		const { getByRole } = await renderPortableTextOnServer([
+			markedBlock('lnk-ext', 'Zum Verband', {
+				_key: 'lnk-ext-mark',
+				_type: 'link',
+				href: 'https://dosb.de',
+			}),
+		]);
+
+		const link = getByRole('link', { name: 'Zum Verband (öffnet in neuem Tab)' });
+
+		expect(link.getAttribute('href')).toBe('https://dosb.de');
+		expect(link.getAttribute('target')).toBe('_blank');
+		expect(link.getAttribute('rel')).toBe('noopener noreferrer');
+	});
+
+	it('renders a link mark without a target as plain text', async () => {
+		const { getByText, queryByRole } = await renderPortableTextOnServer([
+			markedBlock('lnk-none', 'Kein Ziel', { _key: 'lnk-none-mark', _type: 'link' }),
+		]);
+
+		expect(getByText('Kein Ziel')).not.toBeNull();
+		expect(queryByRole('link')).toBeNull();
+	});
 });

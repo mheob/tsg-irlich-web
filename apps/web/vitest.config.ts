@@ -42,7 +42,7 @@ export default defineConfig({
 			// a regression fails the run while normal work does not. Raise them, never lower them.
 			// The remaining gap is a long tail of single branches plus a handful of spots the test
 			// harness cannot reach at all (see `AGENTS.md`).
-			thresholds: { branches: 81, functions: 83, lines: 91, statements: 91 },
+			thresholds: { branches: 83, functions: 84, lines: 92, statements: 92 },
 		},
 		projects: [
 			{
