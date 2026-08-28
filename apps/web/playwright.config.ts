@@ -1,6 +1,6 @@
 import process from 'node:process';
 
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices, type ReporterDescription } from '@playwright/test';
 
 const E2E_PORT = 3100;
 const RETRIES_IN_CI = 2;
@@ -21,14 +21,20 @@ process.loadEnvFile('.env.e2e');
 
 const baseURL = `http://localhost:${E2E_PORT}`;
 
+// The accessibility sweep attaches its axe result to every test; the last reporter turns those
+// attachments into GitHub's job summary and is inert outside Actions.
+const reporter: ReporterDescription[] = [
+	isCi ? ['github'] : ['list'],
+	['html', { open: 'never' }],
+	['./e2e/support/axe-summary-reporter.ts'],
+];
+
 export default defineConfig({
 	expect: { timeout: 10_000 },
 	forbidOnly: isCi,
 	fullyParallel: true,
 	outputDir: './test-results',
-	reporter: isCi
-		? [['github'], ['html', { open: 'never' }]]
-		: [['list'], ['html', { open: 'never' }]],
+	reporter,
 	retries: isCi ? RETRIES_IN_CI : 0,
 	testDir: './e2e/specs',
 	use: {

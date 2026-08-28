@@ -113,6 +113,9 @@ Playwright lives in `e2e/`, next to `src/`, and is separated from Vitest by exte
 | `e2e/mocks/preload.ts` | every server-side network mock, preloaded into the Next.js process |
 | `e2e/fixtures` | recorded Sanity responses plus the stub image every asset resolves to |
 | `e2e/support/test.ts` | the extended `test` — import `test`/`expect` from here, never from `@playwright/test` |
+| `e2e/support/axe.ts` | the axe helper the accessibility sweep calls, plus its attachment shape |
+| `e2e/support/axe-baseline.ts` | the accepted accessibility violations, keyed by route template |
+| `e2e/support/axe-summary-reporter.ts` | renders the axe attachments into GitHub's job summary |
 
 Two projects run every spec: `chromium` on a desktop viewport and `mobile-safari` on an iPhone 14. A spec that only applies to one of them calls `test.skip(isMobile, '…')`.
 
@@ -128,6 +131,15 @@ The pages render on the server, so `page.route` cannot see the requests that mat
 The preview suite additionally needs `VERCEL_AUTOMATION_BYPASS_SECRET` (Vercel → project → Deployment Protection → "Protection Bypass for Automation", mirrored into a GitHub Actions secret). Preview deployments sit behind Vercel's SSO, so without the token every request is answered by a login page; the suite skips itself when the variable is unset.
 
 Every run builds the app and starts its own server on port 3100. An already running one is only reused with `E2E_REUSE_SERVER=1` — a foreign server on that port cannot be checked for the mock preload, and one without it would answer from the real Sanity API while the suite still passed.
+
+### Accessibility (axe)
+
+`e2e/specs/accessibility.spec.ts` runs `@axe-core/playwright` over fourteen routes — the ten that render without a slug plus one department, one group, one news category and one article — in both browser projects. The rule sets are WCAG 2.1 level A and AA (`wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`); `best-practice` and the experimental tags stay out, because a suite that blocks on advice gets muted.
+
+- The dynamic routes are reached by clicking through the overviews, never by a hard-coded slug, and are keyed in the baseline by their route template (`/news/[category]/[slug]`).
+- Every scan attaches its full axe result to the test, so the HTML report — and with it the artifact CI uploads — carries the detail. `AxeSummaryReporter` folds those attachments into one markdown table in GitHub's job summary; outside Actions it does nothing.
+- `KNOWN_VIOLATIONS` in `e2e/support/axe-baseline.ts` is the only way a violation is tolerated, and it is **currently empty**: the first sweep found four distinct defects and all of them were fixed. An entry is an exception that names its follow-up ticket, never a permission — anything unlisted fails the run. A baseline entry that stops firing is reported as stale in the job summary and belongs in the same commit as its fix.
+- `waitForPage` waits for the document title as well as for the chrome: after a client-side navigation the title lands a tick later, and axe reports the gap as `document-title`.
 
 ### Fixtures
 
