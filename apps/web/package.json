@@ -17,6 +17,8 @@
 		"test:e2e": "playwright test",
 		"test:e2e:preview": "playwright test --config playwright.preview.config.ts",
 		"test:e2e:ui": "playwright test --ui",
+		"test:e2e:visual": "playwright test --grep @visual",
+		"test:e2e:visual:update": "./scripts/update-screenshots.sh",
 		"test:watch": "vitest",
 		"typecheck": "tsc --noEmit",
 		"typegen:routes": "next typegen && tsc --noEmit",

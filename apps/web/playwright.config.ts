@@ -5,6 +5,7 @@ import { defineConfig, devices, type ReporterDescription } from '@playwright/tes
 const E2E_PORT = 3100;
 const RETRIES_IN_CI = 2;
 const WEB_SERVER_TIMEOUT_MS = 180_000;
+const SCREENSHOT_DIFF_RATIO = 0.005;
 
 const isCi = Boolean(process.env.CI);
 
@@ -30,12 +31,29 @@ const reporter: ReporterDescription[] = [
 ];
 
 export default defineConfig({
-	expect: { timeout: 10_000 },
+	expect: {
+		timeout: 10_000,
+		toHaveScreenshot: {
+			// CSS animations, transitions and Web Animations are frozen for the shot; anything
+			// mid-flight is rewound to its first frame instead of caught halfway.
+			animations: 'disabled',
+			// A device pixel ratio of 2 would double every baseline's size without showing a
+			// regression the CSS pixels do not already show.
+			scale: 'css',
+			// Everything runs in one pinned container, so the only expected difference is font
+			// antialiasing on a redrawn glyph. Half a percent absorbs that and stays far below the
+			// footprint of any layout shift.
+			maxDiffPixelRatio: SCREENSHOT_DIFF_RATIO,
+		},
+	},
 	forbidOnly: isCi,
 	fullyParallel: true,
 	outputDir: './test-results',
 	reporter,
 	retries: isCi ? RETRIES_IN_CI : 0,
+	// Baselines are only ever produced on Linux, so the platform suffix Playwright appends by
+	// default would be noise. `visual.spec.ts` skips itself everywhere else.
+	snapshotPathTemplate: './e2e/__screenshots__/{projectName}/{arg}{ext}',
 	testDir: './e2e/specs',
 	use: {
 		baseURL,
