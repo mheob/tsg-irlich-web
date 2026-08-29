@@ -6,6 +6,14 @@ name: Lighthouse
 # the merge button until the scores have proven themselves stable over a few pull requests.
 on:
   deployment_status:
+  # A `deployment_status` run cannot be replayed — GitHub cannot reconstruct the event — so this is
+  # the way to re-measure a deployment that is already up, or to score production on demand.
+  workflow_dispatch:
+    inputs:
+      url:
+        description: The base URL to measure. Defaults to the production site.
+        required: false
+        default: https://www.tsg-irlich.de
 
 permissions:
   contents: read
@@ -13,7 +21,7 @@ permissions:
 jobs:
   lighthouse:
     name: Lighthouse
-    if: github.event.deployment_status.state == 'success'
+    if: github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     continue-on-error: true
     # Preview deployments are behind Vercel's SSO. The token comes from the project's "Protection
@@ -49,7 +57,7 @@ jobs:
         if: ${{ env.VERCEL_AUTOMATION_BYPASS_SECRET != '' }}
         run: pnpm --filter web run test:lighthouse
         env:
-          LHCI_BASE_URL: ${{ github.event.deployment_status.environment_url }}
+          LHCI_BASE_URL: ${{ inputs.url || github.event.deployment_status.environment_url }}
 
       # One HTML report per URL per run, plus the JSON they were rendered from. Opening the HTML is
       # the only way to see which audit moved a score.

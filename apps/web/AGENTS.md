@@ -204,6 +204,8 @@ Two different things measure the same subject. `@vercel/speed-insights` sits in 
 - `@lhci/cli` drags three transitive packages that `pnpm run cve` flags high: `tmp`, `@puppeteer/browsers` and the `proxy-agent` its 3.x line wants. All three are pinned forward in `pnpm-workspace.yaml`, each with its advisory in a comment — the audit and `pnpm peers check` both stay clean.
 - The whole job is `continue-on-error: true` for now, like the preview suite. Flip it to blocking once a handful of pull requests have shown the three hard categories holding at 1.
 
+A `deployment_status` run cannot be replayed — GitHub cannot rebuild the event — so the workflow also takes a `workflow_dispatch` with a `url` input. That is how a deployment that is already up gets re-measured, and how production gets scored on demand.
+
 Run it locally against anything reachable:
 
 ```bash
