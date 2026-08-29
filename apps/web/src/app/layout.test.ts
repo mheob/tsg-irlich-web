@@ -54,13 +54,14 @@ vi.mock(import('@/lib/sanity/live'), () => ({
 
 vi.mock(import('next/headers'), () => ({ draftMode: vi.fn() }));
 
-// Both pull in Next-internal client entry points that a plain node test run cannot resolve; the
-// layout only decides whether they are rendered at all.
+// All three pull in Next-internal client entry points that a plain node test run cannot resolve;
+// the layout only decides whether they are rendered at all.
 vi.mock(
 	import('next-sanity/visual-editing'),
 	() => ({ VisualEditing: nullComponent }) as unknown as typeof visualEditing,
 );
 vi.mock(import('@vercel/analytics/next'), () => ({ Analytics: () => null }));
+vi.mock(import('@vercel/speed-insights/next'), () => ({ SpeedInsights: () => null }));
 
 const mockedFetch = clientFetchMock();
 const mockedDraftMode = vi.mocked(draftMode);

@@ -38,6 +38,23 @@ export default defineConfig({
 			},
 		},
 		{
+			// Lighthouse CI `require()`s its config file, and `apps/web` is `"type": "module"` — so the
+			// file has to be CommonJS, and nothing about it can be typed. It is a tool's input, not
+			// application code. `sort-keys` is off because `collect`/`assert`/`upload` read in the
+			// order Lighthouse runs them.
+			files: ['**/lighthouserc.cjs'],
+			rules: {
+				'import/no-commonjs': 'off',
+				'sort-keys': 'off',
+				'typescript/no-require-imports': 'off',
+				'typescript/no-unsafe-argument': 'off',
+				'typescript/no-unsafe-assignment': 'off',
+				'typescript/no-unsafe-call': 'off',
+				'typescript/no-unsafe-member-access': 'off',
+				'typescript/no-var-requires': 'off',
+			},
+		},
+		{
 			files: ['**/*.tsx'],
 			plugins: ['react', 'react-perf', 'nextjs'],
 			rules: {

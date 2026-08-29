@@ -1,0 +1,62 @@
+name: Lighthouse
+
+# Runs against the deployed preview, because that is the only place the numbers mean anything: the
+# CDN, the image optimizer and the real payloads are all part of what is being measured. Like the
+# preview end-to-end suite it reports rather than blocks — `continue-on-error` keeps a red run off
+# the merge button until the scores have proven themselves stable over a few pull requests.
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    name: Lighthouse
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    # Preview deployments are behind Vercel's SSO. The token comes from the project's "Protection
+    # Bypass for Automation". It is lifted to the job level because the run step below has to skip
+    # itself when it is unset, and a step's `if` cannot read the `secrets` context — only `env`.
+    env:
+      VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          # Nothing here pushes, so the job never needs the token in `.git/config`.
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          cache: pnpm
+          node-version-file: .nvmrc
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      # Lighthouse drives the Chrome the runner image already ships; there is no browser to install.
+      # `LHCI_BASE_URL` is the deployment this event was raised for, so every pull request is scored
+      # against its own preview.
+      - name: Run Lighthouse
+        # Without the bypass token every request is answered by Vercel's login page, and the job
+        # would report a wall of failures about a page nobody ships. It reports nothing instead.
+        if: ${{ env.VERCEL_AUTOMATION_BYPASS_SECRET != '' }}
+        run: pnpm --filter web run test:lighthouse
+        env:
+          LHCI_BASE_URL: ${{ github.event.deployment_status.environment_url }}
+
+      # One HTML report per URL per run, plus the JSON they were rendered from. Opening the HTML is
+      # the only way to see which audit moved a score.
+      - name: Upload Report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: lighthouse-report
+          path: apps/web/lighthouse-report
+          retention-days: 7

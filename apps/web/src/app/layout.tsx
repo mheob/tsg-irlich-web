@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { VisualEditing } from 'next-sanity/visual-editing';
 import { Bebas_Neue, Inter, Oswald } from 'next/font/google';
@@ -86,6 +87,7 @@ export default async function RootLayout({
 				<main className="grid flex-1">{children}</main>
 				<Footer />
 				<Analytics />
+				<SpeedInsights />
 				<SanityLive />
 				{isDraftMode && (
 					<>
