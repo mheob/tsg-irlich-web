@@ -71,8 +71,11 @@ export default async function RootLayout({
 		console.warn('No navigation items loaded from Sanity');
 	}
 
+	// No `data-scroll-behavior="smooth"` on `<html>` on purpose: that attribute makes the router
+	// force `scroll-behavior: auto` for the duration of a navigation, which would kill the very
+	// smooth scroll to the top we want. Next.js warns about its absence in development.
 	return (
-		<html lang="de" data-scroll-behavior="smooth">
+		<html lang="de">
 			<body
 				className={cn(
 					`${oswald.variable} ${bebasNeue.variable} ${inter.variable} antialiased`,
