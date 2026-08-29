@@ -358,6 +358,12 @@
 		background-color: var(--color-background);
 		color: var(--color-foreground);
 	}
+
+	@media screen and (prefers-reduced-motion: no-preference) {
+		html {
+			scroll-behavior: smooth;
+		}
+	}
 }
 
 @layer base {
