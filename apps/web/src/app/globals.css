@@ -337,8 +337,12 @@
 		margin-block: 0;
 	}
 
-	a:hover {
-		color: var(--color-primary-light);
+	a {
+		font-weight: inherit;
+
+		&:hover {
+			color: var(--color-primary-light);
+		}
 	}
 
 	blockquote {
