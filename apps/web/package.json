@@ -19,6 +19,7 @@
 		"test:e2e:ui": "playwright test --ui",
 		"test:e2e:visual": "playwright test --grep @visual",
 		"test:e2e:visual:update": "./scripts/update-screenshots.sh",
+		"test:lighthouse": "lhci autorun",
 		"test:watch": "vitest",
 		"typecheck": "tsc --noEmit",
 		"typegen:routes": "next typegen && tsc --noEmit",
@@ -35,6 +36,7 @@
 		"@tsgi-web/email": "workspace:*",
 		"@tsgi-web/shared": "workspace:*",
 		"@vercel/analytics": "^2.0.1",
+		"@vercel/speed-insights": "^2.0.0",
 		"class-variance-authority": "^0.7.1",
 		"lucide-react": "^1.34.0",
 		"motion": "^13.1.1",
@@ -51,6 +53,7 @@
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.13.0",
+		"@lhci/cli": "^0.15.1",
 		"@playwright/test": "^1.62.1",
 		"@testing-library/react": "^16.3.2",
 		"@testing-library/user-event": "^14.6.6",

@@ -3,14 +3,22 @@ import { test as base } from '@playwright/test';
 /** The Live Content API stream `<SanityLive />` opens from the browser. */
 const LIVE_EVENTS = '**/data/live/events/**';
 
-/** The beacons `@vercel/analytics` fires on every page view. */
-const ANALYTICS = ['**/_vercel/insights/**', '**/va.vercel-scripts.com/**'];
+/**
+ * The beacons `@vercel/analytics` and `@vercel/speed-insights` fire on every page view, plus the
+ * script both load off `va.vercel-scripts.com` when the app does not run on Vercel — which is
+ * exactly the case here, where it is served by a local `next start`.
+ */
+const ANALYTICS = [
+	'**/_vercel/insights/**',
+	'**/_vercel/speed-insights/**',
+	'**/va.vercel-scripts.com/**',
+];
 
 /**
  * The base test with the browser-side noise silenced.
  *
- * MSW only covers the server, so the two requests the browser makes on its own are handled here:
- * the live stream is answered with an empty one, the analytics beacons are dropped.
+ * MSW only covers the server, so the requests the browser makes on its own are handled here: the
+ * live stream is answered with an empty one, the analytics and Speed Insights beacons are dropped.
  */
 /**
  * The root element carries `scroll-behavior: smooth`, and an animated scroll moves an element out

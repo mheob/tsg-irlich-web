@@ -19,6 +19,11 @@ minimumReleaseAgeExclude:
 overrides:
   # 2.20.0 ships untranspiled JSX in dist; 2.20.1 fixes it but is still inside the age gate
   "@sanity/sdk-react": 2.19.0
+  # puppeteer-core (through lighthouse, through @lhci/cli) pins @puppeteer/browsers 2.x, whose
+  # extract-zip 2.0.1 has no fixed release (GHSA-jmr9-qjv8-65gv). 3.x dropped extract-zip for
+  # modern-tar. Only the browser downloader lives behind it, and Lighthouse CI never runs it —
+  # both CI and the local path point at a Chrome that is already installed
+  "@puppeteer/browsers": "^3.2.1"
   # react-email → conf → ajv pulls fast-uri 3.1.5, vulnerable to improper hex-encoding
   # handling in URL normalization (CVE-2026-76172); 3.1.6 fixes it and stays in ajv's ^3 range
   fast-uri: "^3.1.6"
@@ -30,7 +35,15 @@ overrides:
   # @tailwindcss/typography pins 6.0.10, which is vulnerable to uncontrolled recursion
   # in `toString()` (CVE-2026-9358); fixed in 6.1.3
   postcss-selector-parser: "^6.1.3"
+  # @puppeteer/browsers 3.x wants a proxy-agent that @lhci/cli and puppeteer-core still pin to
+  # 6.5.0. 8.x is the same `ProxyAgent` surface and only carries the proxy support behind a
+  # browser download and an `lhci upload` — neither of which this repo's Lighthouse run does
+  proxy-agent: "^8.0.2"
   smol-toml: ">=1.6.1"
+  # @lhci/cli pulls tmp 0.0.33 (through inquirer → external-editor) and 0.1.0, both of which
+  # write through a symlinked path parameter (GHSA-52f5-9888-hmc6, GHSA-ph9p-34f9-6g65); 0.2.6
+  # fixes both and keeps the `fileSync`/`dirSync` API the two call sites use
+  tmp: "^0.2.6"
   # Bounded to v7: jsdom (via the Sanity CLI) deep-imports undici v7 internals that v8 removed
   undici: "^7.29.0"
   uuid: ">=11.1.1"

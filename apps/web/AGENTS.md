@@ -26,6 +26,7 @@ pnpm run test:e2e:ui     # the same suite in Playwright's UI mode
 pnpm run test:e2e:visual # only the visual regression specs (skipped outside Linux)
 pnpm run test:e2e:visual:update  # regenerate the screenshot baselines in the Playwright container
 pnpm run e2e:record      # refresh the recorded Sanity fixtures from the real dataset
+pnpm run test:lighthouse # Lighthouse CI against LHCI_BASE_URL (a deployed preview in CI)
 ```
 
 ## Directory map
@@ -186,6 +187,34 @@ When a comparison fails in CI, the `playwright-report` artifact carries the expe
 - Assert what a user can observe — role, accessible name, text, URL — never a class name, never a `data-testid`, same rule as the unit tests.
 - Content assertions are pinned to the recorded fixtures, so prefer stable UI strings (navigation labels, section headings) over an article's title.
 - react-hook-form resets its fields when the form hydrates. Interact with a client-only control first (the receiver select does the job), then fill the text fields — otherwise WebKit loses the input.
+
+## Lighthouse and Speed Insights
+
+Two different things measure the same subject. `@vercel/speed-insights` sits in the root layout next to `@vercel/analytics` and reports what real visitors actually experience (field data, Core Web Vitals from their own browsers). Lighthouse CI is the lab counterpart: one throttled synthetic run per pull request, which is what catches a regression before anyone lives through it.
+
+### Lighthouse CI
+
+`lighthouserc.cjs` configures it, `.github/workflows/lighthouse.yml` runs it on `deployment_status` — the same trigger as the preview end-to-end suite, and for the same reason: only a real deployment has the CDN, the image optimizer and the real payloads behind it. A local `next start` would score the runner rather than the site. The job needs `VERCEL_AUTOMATION_BYPASS_SECRET` and skips its run step without it, exactly like the preview suite.
+
+- **Five routes**, three runs each, median reported: `/`, `/verein`, `/angebot`, `/news`, `/kontakt` — the home page with its hero and counters, one prose page, one card overview, the news list and the form page. No dynamic route: a department or an article is only reachable through a slug that lives in the dataset, and Lighthouse takes URLs and nothing else. Those routes stay with Playwright, which clicks its way there.
+- **Accessibility, best practices and SEO are hard assertions at a perfect score.** They barely move between runs, so there is no reason to accept less.
+- **Performance is a warning, never a failure**, and so are the LCP / TBT / CLS budgets underneath it. A GitHub runner shares its CPU with whatever else the machine is doing and the score swings about ten points between two identical runs; a gate on that flaps and gets muted.
+- Two audits are switched off, each with its reason in the config: `is-crawlable`, because Vercel answers every preview with `X-Robots-Tag: noindex`, and `aria-toggle-field-name`, the same defect `KNOWN_VIOLATIONS` in `e2e/support/axe-baseline.ts` tolerates. That second one is deleted together with the baseline entry when WEB-302 lands.
+- The reports are written to `apps/web/lighthouse-report` and leave CI as an artifact. Lighthouse CI's `temporary-public-storage` target is deliberately not used — it publishes every report to a bucket anyone with the link can read.
+- `@lhci/cli` drags three transitive packages that `pnpm run cve` flags high: `tmp`, `@puppeteer/browsers` and the `proxy-agent` its 3.x line wants. All three are pinned forward in `pnpm-workspace.yaml`, each with its advisory in a comment — the audit and `pnpm peers check` both stay clean.
+- The whole job is `continue-on-error: true` for now, like the preview suite. Flip it to blocking once a handful of pull requests have shown the three hard categories holding at 1.
+
+Run it locally against anything reachable:
+
+```bash
+LHCI_BASE_URL=http://localhost:3000 pnpm --filter web run test:lighthouse
+```
+
+A local run scores best practices at 0.96, and the gap is entirely local: `errors-in-console` picks up the Sanity live stream failing CORS against `localhost` plus the 404s for `/_vercel/insights/script.js` and `/_vercel/speed-insights/script.js`, none of which exist outside Vercel. Read a local number as a relative signal, never as the one CI asserts on.
+
+### Speed Insights
+
+`<SpeedInsights />` needs nothing but the Vercel project it is deployed to — no environment variable, no key. It ships a script and a beacon per page view, and the end-to-end suite drops both: `ANALYTICS` in `e2e/support/test.ts` covers `/_vercel/speed-insights/**` alongside the analytics patterns. A unit test that renders the root layout mocks the component away for the same reason the analytics one is mocked — its entry point is Next-internal client code a node test run cannot resolve.
 
 ## Gotchas
 
