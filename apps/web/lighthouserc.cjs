@@ -74,14 +74,8 @@ module.exports = {
 		assert: {
 			assertions: {
 				'categories:accessibility': ['error', { minScore: 1 }],
+				'categories:best-practices': ['error', { minScore: 1 }],
 				'categories:seo': ['error', { minScore: 1 }],
-
-				// Should be `error` alongside the other two, and scores 0.96 only because of
-				// `errors-in-console`: the Live Content API stream fails CORS on a preview, since the
-				// per-deployment URL is not one of the Sanity project's allowed origins. Add
-				// `https://*.vercel.app` there and this goes back to `error` — do not skip the audit,
-				// a real console error is worth failing on.
-				'categories:best-practices': ['warn', { minScore: 1 }],
 
 				// A GitHub runner shares its CPU with whatever else the machine is doing, and the
 				// performance score moves by around ten points between two identical runs. A hard gate
