@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createLinearIssue } from '@/actions/create-linear-issue';
 
 import { renderWithUser } from '../../../../test-utils/render';
+import type { RenderWithUserResult } from '../../../../test-utils/render';
 import { FeedbackForm } from './form';
 
 // `feedback/form.tsx` imports `createLinearIssue` and calls it directly (wrapped in `settle()`),
@@ -34,9 +35,30 @@ function createDeferred<T>(): Deferred<T> {
 	return { promise, resolve };
 }
 
+/**
+ * The privacy checkbox the way a user reaches it: the `role="checkbox"` element, named through the
+ * `aria-labelledby` `PrivacyField` wires up. `privacyCheckbox(getByRole)` resolves
+ * the `aria-hidden` input Base UI keeps for form submission instead — a node neither a pointer nor
+ * assistive technology ever touches.
+ *
+ * @param getByRole - The render result's `getByRole` query.
+ * @returns The checkbox element.
+ */
+function privacyCheckbox(getByRole: RenderWithUserResult['getByRole']): HTMLElement {
+	return getByRole('checkbox', { name: /^Ich akzeptiere die Datenschutzbestimmungen/u });
+}
+
 describe('the feedback form', () => {
 	afterEach(() => {
 		mockedCreateLinearIssue.mockReset();
+	});
+
+	it('names the privacy checkbox with the text standing next to it', () => {
+		const { getByRole, getByText } = renderForm();
+
+		const description = getByText(/^Ich akzeptiere die Datenschutzbestimmungen/u);
+
+		expect(privacyCheckbox(getByRole).getAttribute('aria-labelledby')).toBe(description.id);
 	});
 
 	it('shows the schema validation messages on an empty submission and never calls the action', async () => {
@@ -102,7 +124,7 @@ describe('the feedback form', () => {
 		await user.click(await findByRole('option', { name: 'macOS' }));
 
 		await user.type(getByLabelText(/^E-Mail/u), 'max@mustermann.de');
-		await user.click(getByLabelText('Datenschutzbestimmungen'));
+		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Feedback senden' }));
 
@@ -129,7 +151,7 @@ describe('the feedback form', () => {
 
 		await user.type(getByLabelText('Titel'), VALID_TITLE);
 		await user.type(getByLabelText('Beschreibung'), VALID_DESCRIPTION);
-		await user.click(getByLabelText('Datenschutzbestimmungen'));
+		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Feedback senden' }));
 
@@ -144,7 +166,7 @@ describe('the feedback form', () => {
 
 		await user.type(getByLabelText('Titel'), VALID_TITLE);
 		await user.type(getByLabelText('Beschreibung'), VALID_DESCRIPTION);
-		await user.click(getByLabelText('Datenschutzbestimmungen'));
+		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Feedback senden' }));
 
