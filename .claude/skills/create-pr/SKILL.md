@@ -12,7 +12,7 @@ Create a Pull Request based on all commits in the current branch that differ fro
 2. Push the branch to the remote
 3. Use the `gitbutler` SKILL to create the PR:
    1. Set the target branch to `main`
-   2. Write a clear, descriptive title following conventional commit style
+   2. Write a clear, descriptive title following conventional commit style, max 50 characters inclusive type and scope
    3. Include sections: **Summary**, **Changes**, **Motivation**, **Testing**, **Breaking Changes**
 4. If the `gitbutler` command fails, try `gh`
 
