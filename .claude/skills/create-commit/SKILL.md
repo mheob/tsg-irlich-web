@@ -55,7 +55,7 @@ Use the `gitbutler` SKILL to create commits.
 ## Best Practices
 
 - One logical change per commit
-- Description: imperative mood, lowercase first letter, no period at end, max 50 characters
+- Description: imperative mood, lowercase first letter, no period at end, max 50 characters inclusive type and scope
 - Body: explain **what** and **why**, not **how**. Wrap at 72 characters.
 - Reference issues: `Closes #123`, `Refs #456`
 
