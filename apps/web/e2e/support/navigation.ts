@@ -3,7 +3,8 @@ import type { Locator, Page } from '@playwright/test';
 import { expect } from './test';
 
 /**
- * Waits for the chrome every page shares; once it is up, the server-rendered content is in the DOM.
+ * Waits for the chrome every page shares *and* for the App Router client behind it, so every caller
+ * sees the same page regardless of how fast the machine is.
  *
  * @param page - The page that has just been navigated.
  * @returns Nothing.
@@ -14,6 +15,14 @@ export async function waitForPage(page: Page): Promise<void> {
 	// A client-side navigation swaps the document title a tick after the markup, and axe reports the
 	// gap as a missing `<title>`. Waiting for it keeps `document-title` from flaking.
 	await expect(page).toHaveTitle(/\S/u);
+	// Everything above is server-rendered and therefore in place long before the client is, which
+	// left the axe sweep measuring a hydrated tree on a slow runner and an unhydrated one on a fast
+	// one. `window.next.router` is the first observable sign that the App Router client exists: it
+	// is undefined while the document is merely committed. The callback is serialized into the page,
+	// so it has to stand on its own — no module-scope helper is in scope there.
+	await page.waitForFunction(() =>
+		Boolean((globalThis as { next?: { router?: unknown } }).next?.router),
+	);
 }
 
 /**
