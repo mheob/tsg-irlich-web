@@ -3,7 +3,7 @@
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { cn, TSGLogo } from '@tsgi-web/shared';
 
@@ -33,6 +33,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileOpen, setIsMobileOpen] = useState(false);
 
+	const toggleRef = useRef<HTMLButtonElement>(null);
 	const pathname = usePathname();
 
 	const navItemsWithActive: NavItemWithActive[] = useMemo(
@@ -45,6 +46,24 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 				.filter((item): item is NavItemWithActive => item !== undefined),
 		[navItems, pathname],
 	);
+
+	// The menu is a disclosure, not a dialog, so it deliberately does not trap the focus (the ARIA
+	// APG does not ask for one here and the page behind stays usable). What it does need is Escape
+	// and a defined place for the focus to go: the collapsed container is `inert`, so a focus left
+	// inside it would be dropped to `<body>`.
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (!isMobileOpen || event.key !== 'Escape') return;
+
+			setIsMobileOpen(false);
+			toggleRef.current?.focus();
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isMobileOpen]);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -90,6 +109,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					<div className="hidden items-center space-x-3 lg:flex">
 						{navItemsWithActive.map((item) => (
 							<Link
+								aria-current={item.isActive ? 'page' : undefined}
 								className={cn(
 									'flex h-16 items-center px-3 py-2 font-bold text-primary uppercase transition-colors hover:bg-secondary/40',
 									{ 'border-b-2 border-secondary': item.isActive },
@@ -119,11 +139,12 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 						<button
 							aria-controls={MOBILE_MENU_ID}
 							aria-expanded={isMobileOpen}
-							aria-label="Toggle menu"
+							aria-label="Menü"
 							className="my-2 inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-muted/40"
 							onClick={() => {
 								setIsMobileOpen(!isMobileOpen);
 							}}
+							ref={toggleRef}
 							type="button"
 						>
 							{isMobileOpen ? <X className="size-6" /> : <Menu className="size-6" />}
@@ -148,6 +169,7 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 				>
 					{navItemsWithActive.map((item) => (
 						<Link
+							aria-current={item.isActive ? 'page' : undefined}
 							className={cn(
 								'block rounded-md px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted/40',
 								{ 'bg-secondary/40': item.isActive },

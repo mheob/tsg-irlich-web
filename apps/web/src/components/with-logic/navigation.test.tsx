@@ -108,22 +108,48 @@ describe('navigation', () => {
 		expect(getAllByRole('link')).toHaveLength(9);
 	});
 
-	it('exposes no attribute that would let assistive technology identify the item matching the current pathname — the active state is only expressed through a CSS class', () => {
+	it('marks the item matching the current pathname with aria-current in both the desktop and the mobile list', () => {
 		setPathname('/ueber-uns');
 		const { container } = renderNavigation(NAV_ITEMS);
 
 		const activeLinks = linksWithHref(container, '/ueber-uns');
-		const inactiveLinks = linksWithHref(container, '/news/meldungen');
 
-		for (const link of [...activeLinks, ...inactiveLinks]) {
+		expect(activeLinks).toHaveLength(2);
+		for (const link of activeLinks) {
+			expect(link.getAttribute('aria-current')).toBe('page');
+		}
+	});
+
+	it('leaves aria-current off every item that does not match the current pathname', () => {
+		setPathname('/ueber-uns');
+		const { container } = renderNavigation(NAV_ITEMS);
+
+		const inactiveLinks = [
+			...linksWithHref(container, '/news/meldungen'),
+			...linksWithHref(container, '/angebot/fussball/herren-1'),
+		];
+
+		expect(inactiveLinks).toHaveLength(4);
+		for (const link of inactiveLinks) {
 			expect(link.getAttribute('aria-current')).toBeNull();
 		}
+	});
+
+	// The button's name stays the same in both states on purpose: `aria-expanded` already carries
+	// open/closed, and a name that changes with the state gets announced on top of it.
+	it('names the mobile menu toggle in German, and keeps that name when the menu opens', async () => {
+		const { getByRole, user } = renderNavigation(NAV_ITEMS);
+
+		const toggle = getByRole('button', { name: 'Menü' });
+		await user.click(toggle);
+
+		expect(getByRole('button', { name: 'Menü' })).toBe(toggle);
 	});
 
 	it('wires the mobile menu toggle to the menu it controls and reports the collapsed state', () => {
 		const { container, getByRole } = renderNavigation(NAV_ITEMS);
 
-		const toggle = getByRole('button', { name: 'Toggle menu' });
+		const toggle = getByRole('button', { name: 'Menü' });
 		const menuId = toggle.getAttribute('aria-controls');
 
 		expect(menuId).not.toBeNull();
@@ -144,7 +170,7 @@ describe('navigation', () => {
 	it('drops inert and flips aria-expanded when the toggle opens the mobile menu', async () => {
 		const { container, getByRole, user } = renderNavigation(NAV_ITEMS);
 
-		const toggle = getByRole('button', { name: 'Toggle menu' });
+		const toggle = getByRole('button', { name: 'Menü' });
 		await user.click(toggle);
 
 		expect(toggle.getAttribute('aria-expanded')).toBe('true');
@@ -154,7 +180,7 @@ describe('navigation', () => {
 	it('restores inert and aria-expanded=false when the toggle closes the mobile menu again', async () => {
 		const { container, getByRole, user } = renderNavigation(NAV_ITEMS);
 
-		const toggle = getByRole('button', { name: 'Toggle menu' });
+		const toggle = getByRole('button', { name: 'Menü' });
 		await user.click(toggle);
 		await user.click(toggle);
 
@@ -162,10 +188,42 @@ describe('navigation', () => {
 		expect(mobileMenu(container).hasAttribute('inert')).toBe(true);
 	});
 
+	it('closes the mobile menu on Escape and moves the focus back to the toggle', async () => {
+		const { container, getByRole, user } = renderNavigation(NAV_ITEMS);
+
+		const toggle = getByRole('button', { name: 'Menü' });
+		await user.click(toggle);
+
+		// With the focus inside the menu, collapsing it would otherwise strand the focus: the
+		// container becomes `inert`, so the browser drops the focus to `<body>`.
+		const [, mobileLink] = linksWithHref(container, '/ueber-uns');
+		mobileLink.focus();
+		expect(document.activeElement).toBe(mobileLink);
+
+		await user.keyboard('{Escape}');
+
+		expect(toggle.getAttribute('aria-expanded')).toBe('false');
+		expect(mobileMenu(container).hasAttribute('inert')).toBe(true);
+		expect(document.activeElement).toBe(toggle);
+	});
+
+	it('leaves the focus where it is when Escape is pressed while the mobile menu is closed', async () => {
+		const { getByRole, user } = renderNavigation(NAV_ITEMS);
+
+		const toggle = getByRole('button', { name: 'Menü' });
+		const logo = getByRole('link', { name: 'Logo der TSG Irlich 1882 e. V.' });
+		logo.focus();
+
+		await user.keyboard('{Escape}');
+
+		expect(document.activeElement).toBe(logo);
+		expect(toggle.getAttribute('aria-expanded')).toBe('false');
+	});
+
 	it('collapses the mobile menu again when one of its links is followed', async () => {
 		const { container, getByRole, user } = renderNavigation(NAV_ITEMS);
 
-		const toggle = getByRole('button', { name: 'Toggle menu' });
+		const toggle = getByRole('button', { name: 'Menü' });
 		await user.click(toggle);
 
 		// `linksWithHref` returns document order, so the second hit is the mobile list's copy.

@@ -14,6 +14,15 @@ test.describe('navigation', () => {
 			page.getByRole('heading', { name: 'Unsere Abteilungen', exact: true }),
 		).toBeVisible();
 
+		// The item for the page you are on is the only one carrying `aria-current`.
+		await expect(navigation.getByRole('link', { name: 'Angebot', exact: true })).toHaveAttribute(
+			'aria-current',
+			'page',
+		);
+		await expect(
+			navigation.getByRole('link', { name: 'Aktuelles', exact: true }),
+		).not.toHaveAttribute('aria-current', 'page');
+
 		await navigation.getByRole('link', { name: 'Aktuelles', exact: true }).click();
 		await expect(page).toHaveURL('/news');
 
@@ -32,7 +41,7 @@ test.describe('navigation', () => {
 
 		await page.goto('/');
 
-		const toggle = page.getByRole('button', { name: 'Toggle menu' });
+		const toggle = page.getByRole('button', { name: 'Menü' });
 
 		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 		await expect(toggle).toHaveAttribute('aria-controls', 'mobile-navigation');
@@ -57,6 +66,13 @@ test.describe('navigation', () => {
 		await link.focus();
 		await expect(link).toBeFocused();
 
+		// Escape closes the menu from inside it and hands the focus back to the toggle. Without that,
+		// collapsing the menu makes it `inert` and the browser drops the focus to `<body>`.
+		await page.keyboard.press('Escape');
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+		await expect(toggle).toBeFocused();
+
+		await toggle.click();
 		await link.click();
 		await expect(page).toHaveURL('/verein');
 	});
