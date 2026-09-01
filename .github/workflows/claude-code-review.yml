@@ -31,11 +31,25 @@ jobs:
         with:
           fetch-depth: 1
 
+      # A bot may open a pull request that is worth reviewing — Renovate does, every Thursday. A bot
+      # `synchronize` is something else: kodiak rebasing the branch just before it merges, or
+      # Renovate refreshing its own. The review already ran when the pull request was opened, so
+      # skip those instead of posting a second identical comment.
+      #
+      # The condition sits on the step, not on the job: `claude-review` is a required status check
+      # on `next`, and a job that runs and skips its work still reports success, while a skipped
+      # job is a bet on how branch protection reads that state.
       - name: Run Claude Code Review
         id: claude-review
+        if: github.event.sender.type != 'Bot' || github.event.action != 'synchronize'
         uses: anthropics/claude-code-action@a60f3e1db3edbceed2b1e6c6a9d34c36b8a15eba # v1.0.209
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # Without this the action refuses every bot actor, which is why all 17 Renovate runs and
+          # both kodiak runs failed. The action lowercases and strips a trailing `[bot]` on both
+          # sides before comparing, so either spelling matches; the suffixed form is what the
+          # action's own documentation asks for.
+          allowed_bots: "kodiakhq[bot],renovate[bot]"
           plugin_marketplaces: "https://github.com/anthropics/claude-code.git"
           plugins: "code-review@claude-code-plugins"
           prompt: "/code-review:code-review --comment ${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
