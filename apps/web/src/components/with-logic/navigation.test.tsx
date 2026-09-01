@@ -75,6 +75,25 @@ function linksWithHref(container: HTMLElement, href: string): HTMLAnchorElement[
 	return [...container.querySelectorAll<HTMLAnchorElement>(`a[href="${href}"]`)];
 }
 
+/**
+ * The mobile menu container, located through the `aria-controls` of the toggle button, so the
+ * lookup fails as soon as that wiring breaks.
+ *
+ * @param container - The element to search within.
+ * @returns The element the mobile menu toggle controls.
+ * @throws {Error} If no element matches the toggle's `aria-controls`.
+ */
+function mobileMenu(container: HTMLElement): HTMLElement {
+	const menuId = container.querySelector('button[aria-controls]')?.getAttribute('aria-controls');
+	const menu = menuId ? container.querySelector(`#${menuId}`) : null;
+
+	if (!(menu instanceof HTMLElement)) {
+		throw new Error("no element matches the mobile menu toggle's aria-controls");
+	}
+
+	return menu;
+}
+
 describe('navigation', () => {
 	it('renders the resolvable items as links with the href getInternalHref produces, once for the desktop list and once for the mobile list, and drops the unresolvable ones', () => {
 		const { container, getAllByRole } = renderNavigation(NAV_ITEMS);
@@ -101,18 +120,59 @@ describe('navigation', () => {
 		}
 	});
 
-	it('does not expose an aria-expanded (or any other) state on the mobile menu toggle button', () => {
-		const { getByRole } = renderNavigation(NAV_ITEMS);
+	it('wires the mobile menu toggle to the menu it controls and reports the collapsed state', () => {
+		const { container, getByRole } = renderNavigation(NAV_ITEMS);
 
 		const toggle = getByRole('button', { name: 'Toggle menu' });
+		const menuId = toggle.getAttribute('aria-controls');
 
-		expect(toggle.getAttribute('aria-expanded')).toBeNull();
-		expect(toggle.getAttribute('aria-controls')).toBeNull();
+		expect(menuId).not.toBeNull();
+		expect(container.querySelector(`#${menuId}`)).not.toBeNull();
+		expect(toggle.getAttribute('aria-expanded')).toBe('false');
 	});
 
-	// The mobile menu toggle has no programmatically observable effect: no `aria-expanded`, no
-	// `aria-controls`, and the nav links never leave the DOM regardless of `isMobileOpen` — so
-	// clicking it cannot be asserted here without pinning markup (the class toggle) or an icon swap
-	// distinguishable only by class name/SVG path data, both barred by this PR's rules. That absence
-	// is itself the accessibility finding recorded for follow-up.
+	// The collapsed menu keeps its links in the DOM so the open/close transition has something to
+	// animate, so `inert` is what takes them out of the accessibility tree and out of the tab order.
+	// jsdom does not implement `inert`'s behaviour, so the attribute is all this test can check; the
+	// browser-level consequence is asserted in `e2e/specs/navigation.spec.ts`.
+	it('marks the collapsed mobile menu inert so its links leave the accessibility tree and the tab order', () => {
+		const { container } = renderNavigation(NAV_ITEMS);
+
+		expect(mobileMenu(container).hasAttribute('inert')).toBe(true);
+	});
+
+	it('drops inert and flips aria-expanded when the toggle opens the mobile menu', async () => {
+		const { container, getByRole, user } = renderNavigation(NAV_ITEMS);
+
+		const toggle = getByRole('button', { name: 'Toggle menu' });
+		await user.click(toggle);
+
+		expect(toggle.getAttribute('aria-expanded')).toBe('true');
+		expect(mobileMenu(container).hasAttribute('inert')).toBe(false);
+	});
+
+	it('restores inert and aria-expanded=false when the toggle closes the mobile menu again', async () => {
+		const { container, getByRole, user } = renderNavigation(NAV_ITEMS);
+
+		const toggle = getByRole('button', { name: 'Toggle menu' });
+		await user.click(toggle);
+		await user.click(toggle);
+
+		expect(toggle.getAttribute('aria-expanded')).toBe('false');
+		expect(mobileMenu(container).hasAttribute('inert')).toBe(true);
+	});
+
+	it('collapses the mobile menu again when one of its links is followed', async () => {
+		const { container, getByRole, user } = renderNavigation(NAV_ITEMS);
+
+		const toggle = getByRole('button', { name: 'Toggle menu' });
+		await user.click(toggle);
+
+		// `linksWithHref` returns document order, so the second hit is the mobile list's copy.
+		const [, mobileLink] = linksWithHref(container, '/ueber-uns');
+		await user.click(mobileLink);
+
+		expect(toggle.getAttribute('aria-expanded')).toBe('false');
+		expect(mobileMenu(container).hasAttribute('inert')).toBe(true);
+	});
 });

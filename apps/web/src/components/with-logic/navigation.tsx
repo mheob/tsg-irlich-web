@@ -11,6 +11,9 @@ import { ButtonLink } from '@/components/ui/button';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
 import { getInternalHref } from '@/utils/links';
 
+/** Ties the mobile menu toggle's `aria-controls` to the menu container it opens. */
+const MOBILE_MENU_ID = 'mobile-navigation';
+
 function isActivePage(pathname: string, href: string) {
 	return pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
 }
@@ -114,6 +117,8 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 					{/* Mobile Menu Button */}
 					<div className="flex items-center gap-2 lg:hidden">
 						<button
+							aria-controls={MOBILE_MENU_ID}
+							aria-expanded={isMobileOpen}
 							aria-label="Toggle menu"
 							className="my-2 inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-muted/40"
 							onClick={() => {
@@ -135,6 +140,11 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 							'max-h-full pt-12 opacity-100': isMobileOpen,
 						},
 					)}
+					id={MOBILE_MENU_ID}
+					// The collapsed menu is only hidden visually so the transition has something to
+					// animate, which leaves its links in the accessibility tree and in the tab order.
+					// `inert` removes them from both for as long as the menu is closed.
+					inert={!isMobileOpen}
 				>
 					{navItemsWithActive.map((item) => (
 						<Link
