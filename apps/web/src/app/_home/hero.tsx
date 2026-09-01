@@ -36,6 +36,7 @@ export function Hero({ intro, socialMedia, subtitle, title }: Readonly<HeroProps
 					<div className={styles.bgBalls} />
 
 					<nav
+						aria-label="Social Media"
 						className={cn(
 							'flex text-white',
 							'w-full items-end justify-around justify-self-end py-10',

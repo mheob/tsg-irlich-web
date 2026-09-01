@@ -1,3 +1,4 @@
+import { openFirstArticle, waitForPage } from '../support/navigation';
 import { expect, test } from '../support/test';
 
 test.describe('navigation', () => {
@@ -6,7 +7,7 @@ test.describe('navigation', () => {
 
 		await page.goto('/');
 
-		const navigation = page.getByRole('navigation').first();
+		const navigation = page.getByRole('navigation', { name: 'Hauptnavigation' });
 
 		await navigation.getByRole('link', { name: 'Angebot', exact: true }).click();
 		await expect(page).toHaveURL('/angebot');
@@ -75,6 +76,24 @@ test.describe('navigation', () => {
 		await toggle.click();
 		await link.click();
 		await expect(page).toHaveURL('/verein');
+	});
+
+	test('names every navigation landmark, so a landmark list can tell them apart', async ({
+		page,
+	}) => {
+		await page.goto('/');
+		await waitForPage(page);
+
+		// The three the home page carries. `landmark-unique` would report them, but it is an axe
+		// `best-practice` rule and the sweep deliberately runs the WCAG tags only, so this spec is
+		// what holds the names in place.
+		for (const name of ['Hauptnavigation', 'Fußzeilennavigation', 'Social Media']) {
+			await expect(page.getByRole('navigation', { exact: true, name })).toHaveCount(1);
+		}
+
+		// The fourth only exists below the overviews.
+		await openFirstArticle(page);
+		await expect(page.getByRole('navigation', { exact: true, name: 'Breadcrumb' })).toHaveCount(1);
 	});
 
 	test('reaches every legal page from the footer', async ({ page }) => {

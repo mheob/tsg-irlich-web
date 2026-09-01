@@ -104,7 +104,7 @@ export default async function Footer() {
 							Feedback geben
 						</Link>
 					</div>
-					<nav className="flex items-center gap-4">
+					<nav aria-label="Fußzeilennavigation" className="flex items-center gap-4">
 						<div className="gap-2 sm:flex sm:items-center sm:gap-4">
 							<Link className="hover:text-secondary" href={imprint?.href}>
 								{imprint?.label}
