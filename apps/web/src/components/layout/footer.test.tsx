@@ -76,6 +76,14 @@ describe('the footer', () => {
 		expect(getByText(new RegExp(`©${currentYear} TSG Irlich`, 'u'))).not.toBeNull();
 	});
 
+	it('names its navigation landmark, which carries the legal links and the jump back to the top', async () => {
+		const { getByRole } = await renderFooter();
+
+		const navigation = getByRole('navigation', { name: 'Fußzeilennavigation' });
+
+		expect(navigation.querySelectorAll('a')).toHaveLength(4);
+	});
+
 	it('offers a jump back to the top of the page', async () => {
 		const { getByRole } = await renderFooter();
 

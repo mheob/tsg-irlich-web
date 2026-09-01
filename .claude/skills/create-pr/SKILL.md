@@ -8,8 +8,6 @@ agent: git-versioning
 
 Create a Pull Request based on all commits in the current branch that differ from `main`.
 
-Check for an available changeset.
-
 1. Ensure all changes are committed
 2. Push the branch to the remote
 3. Use the `gitbutler` SKILL to create the PR:

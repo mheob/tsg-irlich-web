@@ -10,7 +10,7 @@ describe('breadcrumb', () => {
 		setPathname('/verein/vorstand-team');
 		const { getByRole, getByText } = renderWithUser(<Breadcrumb currentPage="Der Vorstand" />);
 
-		const nav = getByRole('navigation', { name: 'breadcrumb' });
+		const nav = getByRole('navigation', { name: 'Breadcrumb' });
 		const links = within(nav).getAllByRole('link');
 
 		expect(links.map((link) => [link.getAttribute('href'), link.textContent])).toStrictEqual([
@@ -30,7 +30,7 @@ describe('breadcrumb', () => {
 		setPathname('/a/b/c');
 		const { getByRole } = renderWithUser(<Breadcrumb currentPage="Current Page" />);
 
-		const nav = getByRole('navigation', { name: 'breadcrumb' });
+		const nav = getByRole('navigation', { name: 'Breadcrumb' });
 		const links = within(nav).getAllByRole('link');
 
 		expect(links.map((link) => [link.getAttribute('href'), link.textContent])).toStrictEqual([
@@ -51,7 +51,7 @@ describe('breadcrumb', () => {
 		setPathname('/a/b/c/d');
 		const { getByRole } = renderWithUser(<Breadcrumb currentPage="Current Page" />);
 
-		const nav = getByRole('navigation', { name: 'breadcrumb' });
+		const nav = getByRole('navigation', { name: 'Breadcrumb' });
 		const links = within(nav).getAllByRole('link');
 
 		expect(links.map((link) => [link.getAttribute('href'), link.textContent])).toStrictEqual([
@@ -66,7 +66,7 @@ describe('breadcrumb', () => {
 		setPathname('/MEIN-Verein/team');
 		const { getByRole } = renderWithUser(<Breadcrumb currentPage="Teamübersicht" />);
 
-		const nav = getByRole('navigation', { name: 'breadcrumb' });
+		const nav = getByRole('navigation', { name: 'Breadcrumb' });
 
 		expect(within(nav).getByRole('link', { name: 'Mein Verein' })).not.toBeNull();
 	});

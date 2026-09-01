@@ -9,7 +9,7 @@ import { expect } from './test';
  * @returns Nothing.
  */
 export async function waitForPage(page: Page): Promise<void> {
-	await expect(page.getByRole('navigation').first()).toBeVisible();
+	await expect(page.getByRole('navigation', { name: 'Hauptnavigation' })).toBeVisible();
 	await expect(page.getByRole('contentinfo')).toBeVisible();
 	// A client-side navigation swaps the document title a tick after the markup, and axe reports the
 	// gap as a missing `<title>`. Waiting for it keeps `document-title` from flaking.
