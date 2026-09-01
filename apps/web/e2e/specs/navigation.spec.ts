@@ -24,19 +24,40 @@ test.describe('navigation', () => {
 		await expect(page).toHaveURL('/');
 	});
 
-	test('opens the mobile menu and navigates from it', async ({ isMobile, page }) => {
+	test('keeps the collapsed mobile menu out of reach, then opens it and navigates from it', async ({
+		isMobile,
+		page,
+	}) => {
 		test.skip(!isMobile, 'the mobile menu only exists below the desktop breakpoint');
 
 		await page.goto('/');
 
 		const toggle = page.getByRole('button', { name: 'Toggle menu' });
 
-		// The closed menu is only collapsed visually (`max-h-0 overflow-hidden`), so its links stay in
-		// the accessibility tree and remain focusable — asserting they are hidden would fail. That is
-		// a defect in the navigation, not in this spec.
-		await toggle.click();
-		await page.getByRole('link', { name: 'Verein', exact: true }).click();
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+		await expect(toggle).toHaveAttribute('aria-controls', 'mobile-navigation');
 
+		const menu = page.locator('#mobile-navigation');
+
+		// The collapsed menu stays in the DOM so the open/close transition has something to animate,
+		// and `inert` is what keeps its links out of the tab order and out of the accessibility tree.
+		// Asking for the focus outright is the sharper check of the two: it also fails when only the
+		// tab order was patched up. Before this was fixed, the focus landed on an invisible link.
+		const collapsedLink = menu.locator('a[href="/verein"]');
+		await collapsedLink.evaluate((element: HTMLElement) => {
+			element.focus();
+		});
+		await expect(collapsedLink).not.toBeFocused();
+
+		await toggle.click();
+		await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+
+		// Open, the same link takes the focus and can be reached by keyboard.
+		const link = menu.getByRole('link', { name: 'Verein', exact: true });
+		await link.focus();
+		await expect(link).toBeFocused();
+
+		await link.click();
 		await expect(page).toHaveURL('/verein');
 	});
 
