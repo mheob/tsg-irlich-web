@@ -27,6 +27,12 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
+      # Before anything that needs generated types or a build, because it needs neither and takes
+      # about two seconds. `lefthook.yml` also formats staged files on `pre-commit`, but that hook
+      # does not fire for a GitButler `but commit`, so this is the only gate that always runs.
+      - name: Check formatting
+        run: pnpm run format:check
+
       # The type-aware lint rules need the types Next.js generates (route types and
       # the module declarations for image imports), which are not checked in.
       - name: Generate Route Types
