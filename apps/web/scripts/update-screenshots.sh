@@ -55,7 +55,6 @@ exec docker run --rm --init \
 	--ipc=host \
 	--user "${CONTAINER_UID}" \
 	--env COREPACK_ENABLE_DOWNLOAD_PROMPT=0 \
-	--env npm_config_store_dir=/home/pwuser/.pnpm-store \
 	--env HOME=/home/pwuser \
 	--workdir /work \
 	--volume "${repo_root}:/work" \
@@ -81,7 +80,11 @@ exec docker run --rm --init \
 		mkdir -p "${HOME}/.bin"
 		corepack enable --install-directory "${HOME}/.bin"
 
-		pnpm install --frozen-lockfile --ignore-scripts
+		# `--store-dir` as a flag, not as `npm_config_store_dir`: pnpm 11 does not read the npm-style
+		# environment config for this setting. Without it pnpm puts the store next to the project
+		# root, which is the bind-mounted working tree — a 500 MB directory appearing in `git status`
+		# on the host. `.gitignore` covers it as well, so a leak can never be committed.
+		pnpm install --frozen-lockfile --ignore-scripts --store-dir "${HOME}/.pnpm-store"
 		pnpm --filter web run typegen:routes
 		# Not `pnpm run … -- --update-snapshots`: the separator is forwarded verbatim, and Playwright
 		# reads everything after it as a positional test filter instead of as a flag.

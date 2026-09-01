@@ -32,6 +32,9 @@ scripts/production-backup.tar.gz
 # Testing
 coverage
 
+# The Playwright container's pnpm store, if it ever lands beside the project root again
+.pnpm-store
+
 # Vercel
 .turbo
 
