@@ -23,7 +23,7 @@
 		"@sanity/assist": "^6.1.21",
 		"@sanity/icons": "^5.2.1",
 		"@sanity/locale-de-de": "^1.1.37",
-		"@sanity/ui": "^4.0.6",
+		"@sanity/ui": "^4.0.7",
 		"@sanity/vision": "^6.11.0",
 		"@tsgi-web/shared": "workspace:*",
 		"dotenv": "^17.4.2",
@@ -34,12 +34,12 @@
 		"sanity-plugin-media": "^6.1.7",
 		"slugify": "^1.6.9",
 		"styled-components": "^6.5.3",
-		"zod": "^4.4.3"
+		"zod": "^4.5.4"
 	},
 	"devDependencies": {
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.5",
-		"@vitejs/plugin-react": "^6.1.0",
+		"@vitejs/plugin-react": "^6.1.1",
 		"@vitest/coverage-v8": "^4.1.11",
 		"jsdom": "^30.0.1",
 		"oxlint": "^1.80.0",
