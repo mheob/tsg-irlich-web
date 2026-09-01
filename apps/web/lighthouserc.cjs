@@ -84,12 +84,6 @@ module.exports = {
 				'cumulative-layout-shift': ['warn', { maxNumericValue: CUMULATIVE_LAYOUT_SHIFT }],
 				'largest-contentful-paint': ['warn', { maxNumericValue: LARGEST_CONTENTFUL_PAINT_MS }],
 				'total-blocking-time': ['warn', { maxNumericValue: TOTAL_BLOCKING_TIME_MS }],
-
-				// The same defect `KNOWN_VIOLATIONS` in `e2e/support/axe-baseline.ts` tolerates: the
-				// unnamed privacy checkbox on `/`, `/kontakt` and `/kontakt/feedback`, removed by
-				// WEB-302. Lighthouse runs axe too, so it reports it a second time. Delete this line
-				// together with the baseline entry.
-				'aria-toggle-field-name': 'off',
 			},
 		},
 		upload: {

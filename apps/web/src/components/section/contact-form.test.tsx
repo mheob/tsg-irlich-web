@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { sendContactForm } from '@/actions/send-contact-form';
 
 import { renderWithUser } from '../../../test-utils/render';
+import type { RenderWithUserResult } from '../../../test-utils/render';
 import { ContactForm } from './contact-form';
 
 // `contact-form.tsx` imports `sendContactForm` and calls it directly (wrapped in `settle()`), it
@@ -33,9 +34,30 @@ function createDeferred<T>(): Deferred<T> {
 	return { promise, resolve };
 }
 
+/**
+ * The privacy checkbox the way a user reaches it: the `role="checkbox"` element, named through the
+ * `aria-labelledby` `PrivacyField` wires up. `privacyCheckbox(getByRole)` resolves
+ * the `aria-hidden` input Base UI keeps for form submission instead — a node neither a pointer nor
+ * assistive technology ever touches.
+ *
+ * @param getByRole - The render result's `getByRole` query.
+ * @returns The checkbox element.
+ */
+function privacyCheckbox(getByRole: RenderWithUserResult['getByRole']): HTMLElement {
+	return getByRole('checkbox', { name: /^Ich akzeptiere die Datenschutzbestimmungen/u });
+}
+
 describe('the contact form', () => {
 	afterEach(() => {
 		mockedSendContactForm.mockReset();
+	});
+
+	it('names the privacy checkbox with the text standing next to it', () => {
+		const { getByRole, getByText } = renderForm();
+
+		const description = getByText(/^Ich akzeptiere die Datenschutzbestimmungen/u);
+
+		expect(privacyCheckbox(getByRole).getAttribute('aria-labelledby')).toBe(description.id);
 	});
 
 	it('shows the schema validation messages on an empty submission and never calls the action', async () => {
@@ -59,7 +81,7 @@ describe('the contact form', () => {
 		await user.type(getByLabelText('Name'), 'Max Mustermann');
 		await user.type(getByLabelText('E-Mail'), 'max@mustermann.de');
 		await user.type(getByLabelText('Nachricht'), VALID_MESSAGE);
-		await user.click(getByLabelText('Datenschutzbestimmungen'));
+		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Kontaktiere uns' }));
 
@@ -84,7 +106,7 @@ describe('the contact form', () => {
 		await user.type(getByLabelText('Name'), 'Max Mustermann');
 		await user.type(getByLabelText('E-Mail'), 'max@mustermann.de');
 		await user.type(getByLabelText('Nachricht'), VALID_MESSAGE);
-		await user.click(getByLabelText('Datenschutzbestimmungen'));
+		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Kontaktiere uns' }));
 
@@ -99,7 +121,7 @@ describe('the contact form', () => {
 		await user.type(getByLabelText('Name'), 'Max Mustermann');
 		await user.type(getByLabelText('E-Mail'), 'max@mustermann.de');
 		await user.type(getByLabelText('Nachricht'), VALID_MESSAGE);
-		await user.click(getByLabelText('Datenschutzbestimmungen'));
+		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Kontaktiere uns' }));
 
@@ -112,7 +134,7 @@ describe('the contact form', () => {
 		expect((getByLabelText('Nachricht') as HTMLTextAreaElement).value).toBe('');
 		// Base UI's checkbox puts the label's `id` on its hidden native input, so this is that input
 		// rather than the `role="checkbox"` element Radix exposed.
-		expect((getByLabelText('Datenschutzbestimmungen') as HTMLInputElement).checked).toBe(false);
+		expect(privacyCheckbox(getByRole).getAttribute('aria-checked')).toBe('false');
 	});
 
 	it('disables submission while the action is pending', async () => {
@@ -123,7 +145,7 @@ describe('the contact form', () => {
 		await user.type(getByLabelText('Name'), 'Max Mustermann');
 		await user.type(getByLabelText('E-Mail'), 'max@mustermann.de');
 		await user.type(getByLabelText('Nachricht'), VALID_MESSAGE);
-		await user.click(getByLabelText('Datenschutzbestimmungen'));
+		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Kontaktiere uns' }));
 

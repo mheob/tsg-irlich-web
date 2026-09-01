@@ -1,13 +1,4 @@
 /**
- * The privacy checkbox in `PrivacyField` renders as a `span` with `role="checkbox"` and takes its
- * accessible name from Base UI's `aria-labelledby`, which only a Base UI `Field` fills in — this app
- * wires its forms itself, so the control ends up unnamed. The node reaches the accessibility tree
- * only once the page has hydrated, which is why the sweep did not report it before the suite moved
- * into the Playwright container. WEB-302 removes these three entries.
- */
-const UNNAMED_PRIVACY_CHECKBOX = ['aria-toggle-field-name'];
-
-/**
  * Accessibility violations that exist in the application today and are *not* fixed by the ticket
  * that introduced this sweep (WEB-299), keyed by the route template they appear on and listed by
  * axe rule id.
@@ -21,7 +12,6 @@ const UNNAMED_PRIVACY_CHECKBOX = ['aria-toggle-field-name'];
  * on one viewport but not the other is the same defect either way.
  */
 export const KNOWN_VIOLATIONS: Readonly<Record<string, readonly string[]>> = {
-	'/': UNNAMED_PRIVACY_CHECKBOX,
-	'/kontakt': UNNAMED_PRIVACY_CHECKBOX,
-	'/kontakt/feedback': UNNAMED_PRIVACY_CHECKBOX,
+	// Empty on purpose: every violation the sweep has found so far is fixed. An entry added here
+	// names the ticket that removes it again.
 };
