@@ -146,7 +146,7 @@ describe('navigation', () => {
 		expect(getByRole('button', { name: 'Menü' })).toBe(toggle);
 	});
 
-	it('names the navigation landmark, so it can be told apart from the page\'s other ones', () => {
+	it("names the navigation landmark, so it can be told apart from the page's other ones", () => {
 		const { getByRole } = renderNavigation(NAV_ITEMS);
 
 		expect(getByRole('navigation', { name: 'Hauptnavigation' })).not.toBeNull();
