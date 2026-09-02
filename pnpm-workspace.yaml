@@ -18,7 +18,7 @@ minimumReleaseAgeExclude:
 
 overrides:
   # 2.20.0 ships untranspiled JSX in dist; 2.20.1 fixes it but is still inside the age gate
-  "@sanity/sdk-react": 2.19.0
+  "@sanity/sdk-react": 3.0.0
   # puppeteer-core (through lighthouse, through @lhci/cli) pins @puppeteer/browsers 2.x, whose
   # extract-zip 2.0.1 has no fixed release (GHSA-jmr9-qjv8-65gv). 3.x dropped extract-zip for
   # modern-tar. Only the browser downloader lives behind it, and Lighthouse CI never runs it —
