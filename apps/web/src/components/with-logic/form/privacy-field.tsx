@@ -22,7 +22,9 @@ export function PrivacyField({ form }: Readonly<PrivacyFieldProps>) {
 				<FormItem>
 					<FormLabel>Datenschutzbestimmungen</FormLabel>
 					<FormDescription>
-						{/* The label makes the text toggle the checkbox for pointer and keyboard alike */}
+						{/* The label makes the text toggle the checkbox for pointer and keyboard alike. Base UI's
+						    `Checkbox` is the control, the rule only recognizes native form elements */}
+						{/* oxlint-disable-next-line jsx-a11y/label-has-associated-control */}
 						<label className="flex max-w-full cursor-pointer gap-2">
 							<FormControl>
 								<Checkbox

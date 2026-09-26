@@ -13,7 +13,7 @@ import {
 	Text,
 } from 'react-email';
 
-import { tailwindConfig } from '../tailwind-config';
+import { tailwindConfig } from '../tailwind.config';
 
 function linkWithoutProtocol(url: string) {
 	return url.replace(/^https?:\/\//u, '');

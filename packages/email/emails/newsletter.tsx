@@ -9,7 +9,7 @@ import { NewsletterHeader } from '../components/newsletter/newsletter-header';
 import { SponsorCard } from '../components/newsletter/sponsor-card';
 import { UpcomingEvents } from '../components/newsletter/upcoming-events';
 import { CrHtml, TemplateModeProvider } from '../lib/cleverreach-tags';
-import { tailwindConfig } from '../tailwind-config';
+import { tailwindConfig } from '../tailwind.config';
 
 const SALUTATION = 'Hallo TSG-Familie!';
 

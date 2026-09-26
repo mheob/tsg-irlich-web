@@ -16,6 +16,8 @@ describe('badge', () => {
 
 	it('renders as the given element instead of a span when render is set', () => {
 		const { getByRole } = renderWithUser(
+			// The link text arrives as the badge's children, which the rule cannot follow into `render`
+			// oxlint-disable-next-line jsx-a11y/control-has-associated-label
 			<Badge render={<a href="https://tsg-irlich.de/kontakt" />}>Kontakt</Badge>,
 		);
 

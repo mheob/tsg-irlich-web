@@ -44,19 +44,6 @@ function buildImageFile(name: string, byteLength = 3): File {
 	return new File([new Uint8Array(byteLength)], name, { type: 'image/png' });
 }
 
-interface Deferred<T> {
-	promise: Promise<T>;
-	resolve: (value: T) => void;
-}
-
-function createDeferred<T>(): Deferred<T> {
-	let resolve!: (value: T) => void;
-	const promise = new Promise<T>((res) => {
-		resolve = res;
-	});
-	return { promise, resolve };
-}
-
 /**
  * Builds a drag event carrying the given files, the way a browser hands one to a drop zone.
  *
@@ -143,7 +130,7 @@ describe('the screenshot upload', () => {
 	});
 
 	it('shows the pending state while the upload is running', async () => {
-		const deferred = createDeferred<Awaited<ReturnType<typeof uploadToLinear>>>();
+		const deferred = Promise.withResolvers<Awaited<ReturnType<typeof uploadToLinear>>>();
 		mockedUploadToLinear.mockReturnValue(deferred.promise);
 		const { findByRole, getByLabelText, queryByRole, user } = renderUpload();
 

@@ -165,7 +165,6 @@ function SelectWithLabel({
 					items={selectItems}
 					// oxlint-disable-next-line typescript/no-unsafe-assignment
 					onValueChange={onValueChange ?? field?.onChange}
-					// oxlint-disable-next-line typescript/no-unsafe-assignment
 					value={field?.value}
 				>
 					<SelectTrigger>

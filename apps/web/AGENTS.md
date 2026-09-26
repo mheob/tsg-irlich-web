@@ -154,7 +154,7 @@ Every run builds the app and starts its own server on port 3100. An already runn
 
 The container ships its browsers under `/ms-playwright`, and two things have to name that path for a run to find them: `PLAYWRIGHT_BROWSERS_PATH` in the job's `env` (a container job's steps do not inherit the image's own `ENV`), and the same variable in the `test:e2e` task in the root `turbo.json` — the suite is started through Turbo, which passes on nothing it was not told about.
 
-**Baselines are Linux-only.** A screenshot is comparable against the platform that produced it and nothing else, so both CI and the local update path run inside the pinned container `mcr.microsoft.com/playwright:v1.62.1-noble`. Outside Linux `visual.spec.ts` skips itself, which keeps a macOS `pnpm run test:e2e` from writing baselines nobody can match. The image tag appears in `.github/workflows/e2e.yml` and in `apps/web/scripts/update-screenshots.sh`, and both have to be bumped together with `@playwright/test`.
+**Baselines are Linux-only.** A screenshot is comparable against the platform that produced it and nothing else, so both CI and the local update path run inside the pinned container `mcr.microsoft.com/playwright:v1.63.0-noble`. Outside Linux `visual.spec.ts` skips itself, which keeps a macOS `pnpm run test:e2e` from writing baselines nobody can match. The image tag appears in `.github/workflows/e2e.yml` and in `apps/web/scripts/update-screenshots.sh`, and both have to be bumped together with `@playwright/test`.
 
 #### Approving an intended design change
 

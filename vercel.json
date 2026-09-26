@@ -1,3 +1,4 @@
 {
-	"installCommand": "pnpm install --frozen-lockfile"
+	"installCommand": "pnpm install --frozen-lockfile",
+	"regions": ["fra1"]
 }
