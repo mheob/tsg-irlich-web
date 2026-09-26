@@ -71,7 +71,7 @@ packages/email/lib/
   render-newsletter.ts                            renderNewsletterHtml und renderNewsletterTemplate
 packages/email/scripts/build-cleverreach-template.ts   Schreibt die Template-Datei nach dist/
 packages/email/emails/index.ts                    Nur ContactForwardEmail; Newsletter über `@tsgi-web/email/newsletter`
-packages/email/tailwind-config.ts                 Tokens auf Hex umstellen und ergänzen
+packages/email/tailwind.config.ts                 Tokens auf Hex umstellen und ergänzen
 ```
 
 Konventionen laut `AGENTS.md`: kebab-case Dateinamen, Funktionsdeklarationen statt `const`, Named Exports, TypeScript-Interfaces am Dateiende, Micro-Folder-Struktur.
@@ -180,7 +180,7 @@ Die Trennlinie der Termine sitzt jetzt **über** jedem Termin statt zwischen ihn
 - **Bildmaße der News-Karten kommen als Props** aus `news-grid.tsx` (`CARD_WIDTH`, `CARD_IMAGE_HEIGHT`), damit keine Magic Numbers in der Karte stehen.
 - **Der Newsletter liegt nicht im Haupt-Entry des Pakets.** `lib/cleverreach-tags.tsx` nutzt `createContext`; Next.js bricht den Build ab, sobald so ein Modul über `emails/index.ts` in den Server-Component-Graph der Webseite gerät (die Kontaktformular-Action importiert dieses Entry). Der Newsletter wird deshalb nur über `@tsgi-web/email/newsletter` exportiert.
 - **Das Marker-Regex hat keine Capture-Group.** Die Webseite typecheckt das Paket mit `target: ES2017`, das keine benannten Gruppen erlaubt (TS1503), und `oxlint` verlangt für unbenannte Gruppen einen Namen. `toCleverReachTemplate()` schneidet Prefix und Suffix daher per `slice`.
-- **`tailwind-config.ts` hat zusätzlich** `background` (war zuvor als `bg-background` in `contact-forward.tsx` genutzt, ohne dass das Token existierte) und `secondary-dark`.
+- **`tailwind.config.ts` hat zusätzlich** `background` (war zuvor als `bg-background` in `contact-forward.tsx` genutzt, ohne dass das Token existierte) und `secondary-dark`.
 
 ## Abnahmekriterien (Stand der Umsetzung)
 

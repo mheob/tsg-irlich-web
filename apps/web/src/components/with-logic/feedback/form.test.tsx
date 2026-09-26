@@ -22,19 +22,6 @@ function renderForm() {
 	return renderWithUser(<FeedbackForm />);
 }
 
-interface Deferred<T> {
-	promise: Promise<T>;
-	resolve: (value: T) => void;
-}
-
-function createDeferred<T>(): Deferred<T> {
-	let resolve!: (value: T) => void;
-	const promise = new Promise<T>((res) => {
-		resolve = res;
-	});
-	return { promise, resolve };
-}
-
 /**
  * The privacy checkbox the way a user reaches it: the `role="checkbox"` element, named through the
  * `aria-labelledby` `PrivacyField` wires up. `privacyCheckbox(getByRole)` resolves
@@ -160,7 +147,7 @@ describe('the feedback form', () => {
 	});
 
 	it('disables submission while the action is pending', async () => {
-		const deferred = createDeferred<Awaited<ReturnType<typeof createLinearIssue>>>();
+		const deferred = Promise.withResolvers<Awaited<ReturnType<typeof createLinearIssue>>>();
 		mockedCreateLinearIssue.mockReturnValue(deferred.promise);
 		const { findByRole, getByLabelText, getByRole, user } = renderForm();
 

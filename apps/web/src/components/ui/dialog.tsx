@@ -27,7 +27,7 @@ function DialogPopup({ children, className, ...props }: ComponentProps<typeof Ba
 			<DialogBackdrop />
 			<BaseDialog.Popup
 				className={cn(
-					'fixed top-1/2 left-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 border bg-background p-6 shadow-lg transition-[opacity,scale] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 sm:rounded-lg',
+					'fixed top-1/2 left-1/2 z-50 grid w-full max-w-lg -translate-1/2 gap-4 border bg-background p-6 shadow-lg transition-[opacity,scale] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 sm:rounded-lg',
 					className,
 				)}
 				{...props}

@@ -206,7 +206,9 @@ export function ScreenshotUpload({
 
 	return (
 		<div className="space-y-3">
-			{/* Drop zone */}
+			{/* Drop zone. Dropping is the pointer shortcut; the file input it labels and Ctrl+V cover the
+			    same ground, so the drag handlers on the label add nothing a keyboard user misses */}
+			{/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
 			<label
 				className={cn(
 					`flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors`,

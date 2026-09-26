@@ -4290,8 +4290,7 @@ export type SitemapGroupsQueryResult = Array<
 >;
 
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+declare global {
   interface SanityQueries {
     '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n },\n\t\t\ttitle\n\t\t}\n\t}\n': MainNavigationQueryResult;
     '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
@@ -4327,4 +4326,8 @@ declare module "@sanity/client" {
     '\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
     "\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
   }
+}
+// Lets @sanity/client releases that predate the global registry read it too
+declare module "@sanity/client" {
+  interface SanityQueries extends globalThis.SanityQueries {}
 }

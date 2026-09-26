@@ -6,7 +6,7 @@ Sanity Studio CMS for managing content for the TSG Irlich website. This is the c
 
 This Sanity Studio instance provides a custom content editing environment for the TSG Irlich website, featuring:
 
-- **Sanity Studio 5** - Modern content editing interface
+- **Sanity Studio 6** - Modern content editing interface
 - **Custom schemas** for sports groups, news, people, and more
 - **German language** interface for content editors
 - **Type-safe** schema definitions with TypeScript
@@ -18,7 +18,7 @@ This Sanity Studio instance provides a custom content editing environment for th
 ### Prerequisites
 
 - **Node.js** ^24.20.0
-- **pnpm** 11.24.0 (package manager)
+- **pnpm** 12.5.0 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation

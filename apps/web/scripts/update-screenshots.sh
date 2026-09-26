@@ -12,7 +12,7 @@ set -euo pipefail
 # would otherwise overwrite — the workspace `node_modules` trees and the Next.js build output — is a
 # named volume, so the host's macOS install stays untouched and the second run starts warm.
 
-readonly IMAGE='mcr.microsoft.com/playwright:v1.62.1-noble'
+readonly IMAGE='mcr.microsoft.com/playwright:v1.63.0-noble@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27'
 readonly VOLUME_PREFIX='tsg-irlich-e2e'
 # `pwuser` is the image's own unprivileged account and the same UID the CI job runs as, so Chromium
 # keeps its sandbox in both places.

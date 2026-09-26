@@ -1,0 +1,51 @@
+/**
+ * Lint-only mirror of the react-email Tailwind config.
+ * Not imported at runtime — keep in sync with `tailwindConfig`.
+ */
+
+@import 'tailwindcss';
+
+@theme {
+	/* colors */
+	--color-background: #ffffff;
+	--color-background-high-contrast: #e1e1e1;
+	--color-background-low-contrast: #f2f2f2;
+	--color-border: #b4b4b4;
+	--color-foreground: #161616;
+	--color-muted-foreground: #424853;
+	--color-primary: #332c61;
+	--color-primary-foreground: #fcfcfc;
+	--color-secondary: #ffd404;
+	--color-secondary-dark: #cf9b00;
+	--color-secondary-foreground: #161616;
+
+	/* fonts */
+	--font-heading: Impact, 'Arial Narrow Bold', 'Arial Black', sans-serif;
+	--font-sans: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+	/* pixelBasedPreset: rem is not supported in some e-mail clients */
+	--spacing: 4px;
+
+	--text-xs: 12px;
+	--text-sm: 14px;
+	--text-base: 16px;
+	--text-lg: 18px;
+	--text-xl: 20px;
+	--text-2xl: 24px;
+	--text-3xl: 30px;
+	--text-4xl: 36px;
+	--text-5xl: 48px;
+	--text-6xl: 60px;
+	--text-7xl: 72px;
+	--text-8xl: 96px;
+	--text-9xl: 128px;
+
+	--radius-xs: 2px;
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+	--radius-xl: 12px;
+	--radius-2xl: 16px;
+	--radius-3xl: 24px;
+	--radius-4xl: 32px;
+}
