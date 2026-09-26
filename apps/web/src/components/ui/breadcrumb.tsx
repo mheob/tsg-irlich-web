@@ -52,12 +52,10 @@ function BreadcrumbLink({ className, render, ...props }: useRender.ComponentProp
 
 function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {
 	return (
-		<span // NOSONAR
+		<span
 			aria-current="page"
-			aria-disabled="true"
 			className={cn('font-normal', className)}
 			data-slot="breadcrumb-page"
-			role="presentation"
 			{...props}
 		/>
 	);

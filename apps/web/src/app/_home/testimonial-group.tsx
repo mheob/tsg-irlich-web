@@ -112,7 +112,7 @@ interface TestimonialGroupProps extends HTMLAttributes<HTMLDivElement> {
 export function TestimonialGroup({ testimonials }: Readonly<TestimonialGroupProps>) {
 	return (
 		<div>
-			<div className="bg-primary-border-primary-foreground mt-10 ml-6 rounded-xl shadow-xl md:mt-0 md:ml-0 md:py-16 md:pr-28 md:pl-12">
+			<div className="mt-10 ml-6 rounded-xl bg-background shadow-xl md:mt-0 md:ml-0 md:py-16 md:pr-28 md:pl-12">
 				{testimonials.map((props, index) => (
 					<TestimonialItem {...props} isHighlighted={index === 1} key={props._id} />
 				))}
