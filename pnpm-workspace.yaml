@@ -22,6 +22,9 @@ overrides:
   # modern-tar. Only the browser downloader lives behind it, and Lighthouse CI never runs it —
   # both CI and the local path point at a Chrome that is already installed
   "@puppeteer/browsers": "^3.2.1"
+  # @module-federation/dts-plugin (through the Sanity CLI's workbench) pins adm-zip 0.6.0, which
+  # allocates whatever uncompressed size an archive declares (GHSA-7q85-xj36-vmfc); 0.6.1 fixes it
+  adm-zip: "^0.6.1"
   # react-email → conf → ajv pulls fast-uri 3.1.5, vulnerable to improper hex-encoding
   # handling in URL normalization (CVE-2026-76172); 3.1.6 fixes it and stays in ajv's ^3 range
   fast-uri: "^3.1.6"
