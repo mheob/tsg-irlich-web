@@ -1,5 +1,12 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["github>mheob/renovate-config"],
-	"schedule": ["before 4am on Thursday"]
+	"schedule": ["before 4am on Thursday"],
+	"packageRules": [
+		{
+			"description": "jsdom 30.1 changed the Blob internals that Vitest 4's URL.createObjectURL patch reads, which breaks every upload test. Drop this rule together with the move to Vitest 5 (WEB-318).",
+			"matchPackageNames": ["jsdom"],
+			"allowedVersions": "<30.1.0"
+		}
+	]
 }
