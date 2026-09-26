@@ -21,7 +21,11 @@ permissions:
 jobs:
   lighthouse:
     name: Lighthouse
-    if: github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success'
+    # Only the website is scored: the studio deploys from the same commit and raises its own
+    # `deployment_status` (environment `Preview – tsg-irlich-web-studio`).
+    if: >-
+      github.event_name == 'workflow_dispatch' || (github.event.deployment_status.state == 'success' &&
+      endsWith(github.event.deployment.environment, 'tsg-irlich-web'))
     runs-on: ubuntu-latest
     continue-on-error: true
     # Preview deployments are behind Vercel's SSO. The token comes from the project's "Protection

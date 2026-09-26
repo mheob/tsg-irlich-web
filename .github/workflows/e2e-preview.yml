@@ -12,7 +12,12 @@ permissions:
 jobs:
   e2e-preview:
     name: E2E Preview
-    if: github.event.deployment_status.state == 'success'
+    # Vercel deploys the website and the studio from the same commit and raises a
+    # `deployment_status` for each. The suite only makes sense against the website; the studio's
+    # environment is `Preview – tsg-irlich-web-studio`. A skipped job reports success, so the
+    # required check is not held up by it.
+    if: >-
+      github.event.deployment_status.state == 'success' && endsWith(github.event.deployment.environment, 'tsg-irlich-web')
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
