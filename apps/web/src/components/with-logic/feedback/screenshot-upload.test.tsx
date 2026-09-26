@@ -81,6 +81,17 @@ describe('the screenshot upload', () => {
 		mockedUploadToLinear.mockReset();
 	});
 
+	// jsdom applies no stylesheet, so this only pins the DOM side: the input stays in the tab order
+	// (no `tabIndex={-1}`, not disabled while there is room). Whether the CSS keeps it focusable —
+	// `display: none` would not — is checked in a real browser by `e2e/specs/feedback-form.spec.ts`.
+	it('reaches the file input with the keyboard', async () => {
+		const { getByLabelText, user } = renderUpload();
+
+		await user.tab();
+
+		expect(document.activeElement).toBe(getByLabelText(DROP_ZONE_LABEL));
+	});
+
 	it('uploads a selected image and shows it in the preview list', async () => {
 		mockedUploadToLinear.mockResolvedValue({
 			data: { assetUrl: 'https://uploads.linear.app/one.png' },
