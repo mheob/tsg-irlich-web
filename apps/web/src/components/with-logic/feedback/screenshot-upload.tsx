@@ -211,7 +211,8 @@ export function ScreenshotUpload({
 			{/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
 			<label
 				className={cn(
-					`flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors`,
+					// The input inside is only visually hidden, so the ring shows where keyboard focus is
+					`relative flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors has-focus-visible:border-ring has-focus-visible:ring-[3px] has-focus-visible:ring-ring/50`,
 					isDragging
 						? 'border-primary bg-primary/5'
 						: `border-muted-foreground/25 hover:border-muted-foreground/50`,
@@ -234,7 +235,9 @@ export function ScreenshotUpload({
 				</div>
 				<input
 					accept="image/png,image/jpeg,image/gif,image/webp"
-					className="hidden"
+					// `sr-only`, not `hidden`: an input with `display: none` drops out of the tab order,
+					// which leaves keyboard users without a way to open the file picker
+					className="sr-only"
 					disabled={disabled || !canAddMore}
 					id={inputId}
 					onChange={handleFileInput}
