@@ -18,7 +18,7 @@ This Sanity Studio instance provides a custom content editing environment for th
 ### Prerequisites
 
 - **Node.js** ^24.20.0
-- **pnpm** 12.5.0 (package manager)
+- **pnpm** 12.7.0 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation
