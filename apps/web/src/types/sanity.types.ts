@@ -23,7 +23,7 @@ export type {
 	SanityImage,
 	SanityImageReference,
 } from './image.types';
-// oxlint-disable-next-line import/export, oxc/no-barrel-file
+// oxlint-disable-next-line import/export
 export * from './sanity.types.generated';
 export type { TrainingTimeSection } from './training-time';
 
