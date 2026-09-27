@@ -12,6 +12,10 @@ allowBuilds:
   lefthook: true
   msw: false
 
+# Fold compatible versions of a dependency onto one while installing, so the lock file no longer
+# needs a separate `pnpm dedupe`. Frozen installs (CI) leave the lock file as it is
+autoDedupe: true
+
 # Exclude trusted packages from the age gate
 minimumReleaseAgeExclude:
   - "@mheob/*"
