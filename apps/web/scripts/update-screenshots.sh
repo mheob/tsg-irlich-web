@@ -86,6 +86,10 @@ exec docker run --rm --init \
 		# on the host. `.gitignore` covers it as well, so a leak can never be committed.
 		pnpm install --frozen-lockfile --ignore-scripts --store-dir "${HOME}/.pnpm-store"
 		pnpm --filter web run typegen:routes
+		# The image optimizer keeps its results in `.next/cache/images`, which lives in a named volume
+		# and outlasts the build. CI starts without it, so a baseline taken from an image the mocks no
+		# longer serve could never be matched there.
+		rm -rf /work/apps/web/.next/cache/images
 		# Not `pnpm run … -- --update-snapshots`: the separator is forwarded verbatim, and Playwright
 		# reads everything after it as a positional test filter instead of as a flag.
 		pnpm --filter web exec playwright test --grep @visual --update-snapshots

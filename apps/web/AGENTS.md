@@ -114,7 +114,7 @@ Playwright lives in `e2e/`, next to `src/`, and is separated from Vitest by exte
 | `e2e/specs` | the mocked suite — the one CI blocks on |
 | `e2e/preview` | the smoke suite that runs against a deployed preview with real content |
 | `e2e/mocks/preload.ts` | every server-side network mock plus the seeded `Math.random`, preloaded into the Next.js process |
-| `e2e/fixtures` | recorded Sanity responses plus the stub image every asset resolves to |
+| `e2e/fixtures` | recorded Sanity responses |
 | `e2e/__screenshots__` | the committed visual regression baselines, one folder per browser project |
 | `e2e/support/test.ts` | the extended `test` — import `test`/`expect` from here, never from `@playwright/test` |
 | `e2e/support/navigation.ts` | the shared page helpers (`waitForPage`, the two drill-downs) |
@@ -130,6 +130,7 @@ Two projects run every spec: `chromium` on a desktop viewport and `mobile-safari
 The pages render on the server, so `page.route` cannot see the requests that matter. `e2e/mocks/preload.ts` is preloaded with `NODE_OPTIONS='--import …'` (set by `playwright.config.ts`) before any application module is imported, and installs MSW over Sanity, CleverReach, Resend and Linear. It covers `next build` as well, because `generateStaticParams` queries Sanity while the pages are generated.
 
 - An outbound request nothing handles **fails the run** — deliberately, so a new integration cannot silently reach the real service. Add a branch to the resolver in `preload.ts` instead.
+- Every Sanity image is answered with a transparent PNG generated on the spot, in the proportions the real CDN would deliver for that URL: exactly `w` × `h` for `fit=crop`, otherwise those of the `rect` crop or of the original, whose dimensions are part of the asset's file name. The shape matters. A browser reserves an image's box from `width` and `height` only until the image has loaded, then switches to its natural proportions. The single 1 × 1 stub used before resized every image once it arrived and moved everything below it, and WebKit, which has no scroll anchoring, let a click aimed at the footer miss.
 - The newsletter mock decides its answer from the submitted address (`NEWSLETTER_SCENARIOS` in `preload.ts`); that is how a spec reaches the "already subscribed" path.
 - Only the browser-side requests are handled in `e2e/support/test.ts`: the `<SanityLive />` event stream and the analytics beacons. That file also turns off `scroll-behavior: smooth`, which otherwise moves elements out from under the pointer mid-click in WebKit.
 - `.env.e2e` is committed. Every credential in it is a dummy, because everything it names is intercepted; only the two public Sanity values are real, since the fixtures are keyed by the URLs they appear in.
