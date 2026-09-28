@@ -98,6 +98,9 @@ test.describe('navigation', () => {
 
 	test('reaches every legal page from the footer', async ({ page }) => {
 		await page.goto('/');
+		// The footer sits a long scroll below the fold, so the first click can land before the App
+		// Router has hydrated, and WebKit then drops the navigation.
+		await waitForPage(page);
 
 		const footer = page.getByRole('contentinfo');
 
