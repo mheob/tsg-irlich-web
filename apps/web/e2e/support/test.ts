@@ -23,11 +23,23 @@ const ANALYTICS = [
 /**
  * The root element carries `scroll-behavior: smooth`, and an animated scroll moves an element out
  * from under the pointer between Playwright's hit test and the click itself. Every run turns it off.
+ *
+ * WebKit runs an init script before the root element exists, so appending to it straight away threw
+ * there and left `mobile-safari` scrolling smoothly. The style waits for the element in that case.
  */
 const DISABLE_SMOOTH_SCROLL = `
 	const style = document.createElement('style');
 	style.textContent = 'html { scroll-behavior: auto !important; }';
-	document.documentElement.append(style);
+	if (document.documentElement) {
+		document.documentElement.append(style);
+	} else {
+		new MutationObserver((_records, observer) => {
+			if (document.documentElement) {
+				document.documentElement.append(style);
+				observer.disconnect();
+			}
+		}).observe(document, { childList: true });
+	}
 `;
 
 const test = base.extend({
