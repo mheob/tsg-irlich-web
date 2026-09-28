@@ -42,9 +42,6 @@ const isRecording = process.env.E2E_RECORD === '1';
 
 const sanityFixturesDirectory = path.join(import.meta.dirname, '..', 'fixtures', 'sanity');
 
-/** A Sanity asset's file name ends in its dimensions: `<hash>-<width>x<height>.<format>`. */
-const ASSET_DIMENSIONS = /\d+x\d+(?=\.\w+$)/u;
-
 /** `rect=<left>,<top>,<width>,<height>`: the size starts at the third value. */
 const RECT_SIZE_OFFSET = 2;
 
@@ -223,10 +220,14 @@ function sanityImageSize(url: URL): ImageSize {
 		return { height: rectHeight, width: rectWidth };
 	}
 
-	const [assetDimensions = '1x1'] = ASSET_DIMENSIONS.exec(url.pathname) ?? [];
-	const [assetWidth, assetHeight] = assetDimensions.split('x').map(Number);
+	// A Sanity asset's file name ends in its dimensions: `<hash>-<width>x<height>.<format>`.
+	const { pathname } = url;
+	const [assetWidth, assetHeight] = pathname
+		.slice(pathname.lastIndexOf('-') + 1, pathname.lastIndexOf('.'))
+		.split('x')
+		.map(Number);
 
-	return { height: assetHeight, width: assetWidth };
+	return { height: assetHeight || 1, width: assetWidth || 1 };
 }
 
 /**
