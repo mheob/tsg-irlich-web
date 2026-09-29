@@ -9,12 +9,14 @@ import { client } from '@/lib/sanity/client';
 import {
 	offerGroupsGroupPageContactPersonsQuery,
 	offerGroupsGroupPageGroupsQuery,
+	offerGroupsGroupPageNewsQuery,
 	offerGroupsGroupPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups-group';
 import { urlForImage } from '@/lib/sanity/utils';
 import type {
 	OfferGroupsGroupPageContactPersonsQueryResult,
 	OfferGroupsGroupPageGroupsQueryResult,
+	OfferGroupsGroupPageNewsQueryResult,
 	OfferGroupsGroupPageQueryResult,
 	SimpleBlockContent,
 } from '@/types/sanity.types.generated';
@@ -24,6 +26,7 @@ import { getGroupSchema } from '@/utils/structured-data';
 import { getBaseUrl } from '@/utils/url';
 
 import { Main } from './_sections/main';
+import { News } from './_sections/news';
 import { Training } from './_sections/training';
 
 const IMAGE_SIZE = { height: 1920, width: 600 };
@@ -70,7 +73,7 @@ export default async function SingleGroupsPage({
 		notFound();
 	}
 
-	const [page, groupData, coaches] = await Promise.all([
+	const [page, groupData, coaches, news] = await Promise.all([
 		client.fetch<OfferGroupsGroupPageQueryResult>(offerGroupsGroupPageQuery),
 		client.fetch<OfferGroupsGroupPageGroupsQueryResult>(offerGroupsGroupPageGroupsQuery, {
 			groupType: currentDepartment?._type,
@@ -80,6 +83,10 @@ export default async function SingleGroupsPage({
 			offerGroupsGroupPageContactPersonsQuery,
 			{ slug: singleGroup },
 		),
+		client.fetch<OfferGroupsGroupPageNewsQueryResult>(offerGroupsGroupPageNewsQuery, {
+			groupType: currentDepartment._type,
+			slug: singleGroup,
+		}),
 	]);
 
 	if (!page || !groupData) {
@@ -122,6 +129,7 @@ export default async function SingleGroupsPage({
 			{groupData.training && (
 				<Training title={page.content.trainingSection.title ?? ''} training={groupData.training} />
 			)}
+			{news && news.articles.length > 0 && <News {...news} />}
 			<ContactPersons {...page.content.contactPersonsSection} contactPersons={coaches} />
 			<Newsletter />
 		</>

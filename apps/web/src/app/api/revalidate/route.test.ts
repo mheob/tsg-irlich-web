@@ -166,9 +166,24 @@ describe('sanity revalidation webhook', () => {
 
 		// The article's category is no part of the payload, so its own URL cannot be built and the
 		// whole route is revalidated instead.
-		expect(revalidatedPaths()).toStrictEqual(['/news', '/news/[category]/[slug]']);
+		expect(revalidatedPaths()).toStrictEqual([
+			'/news',
+			'/news/[category]/[slug]',
+			'/angebot/[group]/[singleGroup]',
+		]);
 		expect(mockedRevalidatePath).toHaveBeenCalledWith('/news/[category]/[slug]', 'page');
 	});
+
+	it.each(['news.article', 'news.category'])(
+		'revalidates every group page for a %s, since each one shows the news of its category',
+		async (type) => {
+			mockedParseBody.mockResolvedValue(parsed({ _type: type, slug: { current: 'senioren' } }));
+
+			await POST(REQUEST);
+
+			expect(mockedRevalidatePath).toHaveBeenCalledWith('/angebot/[group]/[singleGroup]', 'page');
+		},
+	);
 
 	it('adds the category page for a news category', async () => {
 		mockedParseBody.mockResolvedValue(
@@ -180,6 +195,7 @@ describe('sanity revalidation webhook', () => {
 		expect(revalidatedPaths()).toStrictEqual([
 			'/news',
 			'/news/[category]/[slug]',
+			'/angebot/[group]/[singleGroup]',
 			'/news/vereinsleben',
 		]);
 	});

@@ -2,6 +2,8 @@ import { defineQuery } from 'next-sanity';
 
 import { featuredImage, meta } from '@/lib/sanity/queries';
 
+import { newsArticle } from '../shared/news';
+
 /**
  * Query to get the groups page
  *
@@ -57,8 +59,27 @@ const offerGroupsGroupPageContactPersonsQuery = defineQuery(`
 	}
 `);
 
+/**
+ * Query to get the news category of a group together with its latest articles
+ *
+ * @param groupType - The type of the group (e.g., 'group.taekwondo')
+ * @param slug - The slug of the group
+ * @returns The category with up to three of its newest articles, or `null` when none is set
+ */
+const offerGroupsGroupPageNewsQuery = defineQuery(`
+	*[_type == $groupType && slug.current == $slug][0].newsCategory-> {
+		_type,
+		title,
+		"slug": slug.current,
+		"articles": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {
+			${newsArticle}
+		}
+	}
+`);
+
 export {
 	offerGroupsGroupPageQuery,
 	offerGroupsGroupPageGroupsQuery,
 	offerGroupsGroupPageContactPersonsQuery,
+	offerGroupsGroupPageNewsQuery,
 };

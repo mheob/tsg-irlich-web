@@ -3732,6 +3732,14 @@
 				},
 				"optional": true
 			},
+			"newsCategory": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "news.category.reference"
+				},
+				"optional": true
+			},
 			"isSportGroup": {
 				"type": "objectAttribute",
 				"value": {
@@ -4885,66 +4893,6 @@
 		}
 	},
 	{
-		"name": "news.category",
-		"type": "document",
-		"attributes": {
-			"_id": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_type": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string",
-					"value": "news.category"
-				}
-			},
-			"_createdAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_updatedAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_rev": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"title": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"slug": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "slug"
-				},
-				"optional": false
-			},
-			"meta": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "metaFields"
-				},
-				"optional": true
-			}
-		}
-	},
-	{
 		"name": "group.taekwondo",
 		"type": "document",
 		"attributes": {
@@ -5202,6 +5150,14 @@
 							"optional": true
 						}
 					}
+				},
+				"optional": true
+			},
+			"newsCategory": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "news.category.reference"
 				},
 				"optional": true
 			},
@@ -5475,6 +5431,14 @@
 				},
 				"optional": true
 			},
+			"newsCategory": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "news.category.reference"
+				},
+				"optional": true
+			},
 			"isSportGroup": {
 				"type": "objectAttribute",
 				"value": {
@@ -5742,6 +5706,14 @@
 							"optional": true
 						}
 					}
+				},
+				"optional": true
+			},
+			"newsCategory": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "news.category.reference"
 				},
 				"optional": true
 			},
@@ -6015,6 +5987,14 @@
 				},
 				"optional": true
 			},
+			"newsCategory": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "news.category.reference"
+				},
+				"optional": true
+			},
 			"isSportGroup": {
 				"type": "objectAttribute",
 				"value": {
@@ -6282,6 +6262,14 @@
 							"optional": true
 						}
 					}
+				},
+				"optional": true
+			},
+			"newsCategory": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "news.category.reference"
 				},
 				"optional": true
 			},
@@ -6555,12 +6543,80 @@
 				},
 				"optional": true
 			},
+			"newsCategory": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "news.category.reference"
+				},
+				"optional": true
+			},
 			"isSportGroup": {
 				"type": "objectAttribute",
 				"value": {
 					"type": "boolean"
 				},
 				"optional": false
+			}
+		}
+	},
+	{
+		"name": "news.category",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "news.category"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"title": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"slug": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "slug"
+				},
+				"optional": false
+			},
+			"meta": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "metaFields"
+				},
+				"optional": true
 			}
 		}
 	},

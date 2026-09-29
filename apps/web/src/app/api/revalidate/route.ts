@@ -55,14 +55,17 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 		revalidatePath('/', 'layout');
 	},
 	// An article lives below its category, which the webhook payload does not carry, so the whole
-	// route has to be revalidated.
+	// route has to be revalidated. The same goes for the group pages, each of which shows the latest
+	// articles of the category assigned to it.
 	'news.article': () => {
 		revalidatePath('/news');
 		revalidatePath('/news/[category]/[slug]', 'page');
+		revalidatePath('/angebot/[group]/[singleGroup]', 'page');
 	},
 	'news.category': (slug) => {
 		revalidatePath('/news');
 		revalidatePath('/news/[category]/[slug]', 'page');
+		revalidatePath('/angebot/[group]/[singleGroup]', 'page');
 		if (slug) {
 			revalidatePath(`/news/${slug}`);
 		}

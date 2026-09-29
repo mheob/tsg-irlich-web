@@ -1,0 +1,188 @@
+{
+	"body": {
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "367c42ed-9920-4d1c-9b8e-a6ee731fb5f2",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "senioren",
+							"title": "Senioren"
+						},
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						}
+					],
+					"excerpt": "Die TSG Irlich musste am Freitagabend eine knappe Auswärtsniederlage hinnehmen. Bei der dritten Mannschaft des SC Bendorf-Sayn unterlag die TSG mit 0:1.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Spieler der TSG duellieren sich mit den Gastgebern aus Bendorf",
+						"asset": {
+							"_ref": "image-1e55f64e40bf64a42aa1dfa9aea29bdf7e4d52a8-4032x3024-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.0627241638168321,
+							"left": 0.0760712213604823,
+							"right": 0.07607122136048246,
+							"top": 0.16815414129618816
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.4768537826340814,
+							"width": 0.8478575572790352,
+							"x": 0.4999999999999999,
+							"y": 0.60676453415631
+						}
+					},
+					"meta": null,
+					"publishedAt": "2026-09-26T13:58:47.882Z",
+					"slug": "niederlage-bendorf",
+					"title": "Gebrauchter Abend in Bendorf – TSG unterliegt knapp"
+				},
+				{
+					"_id": "eb82e401-be72-4130-9966-5d82ed2a83e2",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "senioren",
+							"title": "Senioren"
+						},
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						}
+					],
+					"excerpt": "Die TSG Irlich hat sich mit einem Heimsieg zurückgemeldet. Im Pappelstadion setzte sich die TSG mit 4:1 (2:1) gegen den FC Rojava Neuwied durch.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Spieler der TSG in Türkisen Trikots wie sie durch den Regen und über den durchweichten Platz laufen",
+						"asset": {
+							"_ref": "image-ceffebe1ba7e9ee7595355f13b916231949399b1-6000x4000-jpg",
+							"_type": "reference"
+						}
+					},
+					"meta": {
+						"metaDescription": "Die TSG Irlich gewinnt im Pappelstadion mit 4:1 gegen Rojava Neuwied und holt trotz Starkregen drei wichtige Punkte, die das Team Frank Kaiser widmet.",
+						"metaTitle": "TSG Irlich gewinnt 4:1 gegen FC Rojava Neuwied",
+						"openGraphImage": null
+					},
+					"publishedAt": "2026-09-18T14:21:00.000Z",
+					"slug": "heimsieg-rojava-neuwied",
+					"title": "Heimsieg in der Schlammschlacht – drei Punkte für Frank! "
+				},
+				{
+					"_id": "e943a0c2-e57d-43cd-815f-00211b1e9657",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "senioren",
+							"title": "Senioren"
+						},
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						}
+					],
+					"excerpt": "Die TSG Irlich musste sich im Derby bei der SG Feldkirchen II mit 2:3 (0:2) geschlagen geben. Ein Gegentreffer nach einer Ecke entschied die Begegnung. ",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Ein Foto vom Sportplatz in Hüllenberg bei Sonnenuntergang",
+						"asset": {
+							"_ref": "image-6e9bdd2679f0a34509f33537ebae16ea8f86716b-5712x4284-jpg",
+							"_type": "reference"
+						}
+					},
+					"meta": null,
+					"publishedAt": "2026-09-12T13:47:00.000Z",
+					"slug": "derbyniederlage-feldkirchen",
+					"title": "TSG verliert umkämpftes Derby gegen Feldkirchen"
+				}
+			],
+			"slug": "senioren",
+			"title": "Senioren"
+		},
+		"syncTags": ["s1:3Z4N5A", "s1:GNFE5A", "s1:uv+Zzg", "s1:Ik/M0w", "s1:c5Grjg"],
+		"ms": 14
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupType=%22group.soccer%22&%24slug=%221-mannschaft%22&returnQuery=false"
+}

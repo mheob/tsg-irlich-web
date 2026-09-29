@@ -714,6 +714,7 @@ export type GroupAdmin = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -921,17 +922,6 @@ export type NewsOverview = {
   };
 };
 
-export type NewsCategory = {
-  _id: string;
-  _type: "news.category";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  slug: Slug;
-  meta?: MetaFields;
-};
-
 export type GroupTaekwondo = {
   _id: string;
   _type: "group.taekwondo";
@@ -984,6 +974,7 @@ export type GroupTaekwondo = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -1039,6 +1030,7 @@ export type GroupSoccer = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -1094,6 +1086,7 @@ export type GroupOtherSports = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -1149,6 +1142,7 @@ export type GroupDance = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -1204,6 +1198,7 @@ export type GroupCourses = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -1259,7 +1254,19 @@ export type GroupChildrenGymnastics = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
+};
+
+export type NewsCategory = {
+  _id: string;
+  _type: "news.category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  meta?: MetaFields;
 };
 
 export type DepartmentsPage = {
@@ -1742,13 +1749,13 @@ export type AllSanitySchemaTypes =
   | Privacy
   | Imprint
   | NewsOverview
-  | NewsCategory
   | GroupTaekwondo
   | GroupSoccer
   | GroupOtherSports
   | GroupDance
   | GroupCourses
   | GroupChildrenGymnastics
+  | NewsCategory
   | DepartmentsPage
   | Contact
   | TestimonialReference
@@ -3746,6 +3753,44 @@ export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
   taskDescription: string | null;
 }>;
 
+// Source: src/lib/sanity/queries/pages/offer-groups-group.ts
+// Variable: offerGroupsGroupPageNewsQuery
+// Query: *[_type == $groupType && slug.current == $slug][0].newsCategory-> {		_type,		title,		"slug": slug.current,		"articles": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {				_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,		}	}
+export type OfferGroupsGroupPageNewsQueryResult = {
+  _type: "news.category";
+  title: string;
+  slug: string;
+  articles: Array<{
+    _id: string;
+    publishedAt: string;
+    author: {
+      firstName: string;
+      lastName: string;
+      image: ExtendedImage;
+    };
+    categories: Array<{
+      title: string;
+      slug: string;
+    }>;
+    excerpt: string;
+    meta: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      openGraphImage: {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+      } | null;
+    } | null;
+    featuredImage: MainImage;
+    slug: string;
+    title: string;
+  }>;
+} | null;
+
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageQuery
 // Query: *[_type == 'groupsPage'][0]
@@ -4453,6 +4498,7 @@ declare global {
     "*[_type == 'singleGroupPage'][0]": OfferGroupsGroupPageQueryResult;
     "\n\t*[_type == $groupType && slug.current == $slug][0] {\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n": OfferGroupsGroupPageGroupsQueryResult;
     '\n\t*[\n\t\t_type == \'person\' &&\n\t\tdefined(affiliations[team->slug.current == $slug][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t"email": affiliations[team->slug.current == $slug][0].team->email,\n\t\t"role":  affiliations[team->slug.current == $slug][0].role->title,\n\t\t"team":  affiliations[team->slug.current == $slug][0].team->title,\n\t\t"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,\n\t}\n': OfferGroupsGroupPageContactPersonsQueryResult;
+    '\n\t*[_type == $groupType && slug.current == $slug][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"articles": *[_type == \'news.article\' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n': OfferGroupsGroupPageNewsQueryResult;
     "*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
     "\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\tfeaturedImage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
     '\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
