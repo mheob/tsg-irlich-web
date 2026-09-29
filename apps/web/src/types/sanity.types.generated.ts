@@ -1730,6 +1730,63 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: src/lib/sanity/queries/llms.ts
+// Variable: llmsTxtQuery
+// Query: {		"aboutUs": *[_type == 'aboutUs'][0].meta.metaDescription,		"contact": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },		"description": *[_type == 'home'][0].meta.metaDescription,		"groups": *[_type in [			'group.soccer',			'group.children-gymnastics',			'group.courses',			'group.taekwondo',			'group.dance',			'group.other-sports',		]] | order(sortOrder asc) {			_type,			"description": meta.metaDescription,			"slug": slug.current,			title,		},		"membership": *[_type == 'membership'][0].meta.metaDescription,	}
+export type LlmsTxtQueryResult = {
+  aboutUs: string | null;
+  contact: {
+    email: string;
+    phone: string;
+    postalAddress: {
+      street: string;
+      houseNumber: string;
+      zipCode?: string;
+      city: string;
+    };
+  } | null;
+  description: string | null;
+  groups: Array<
+    | {
+        _type: "group.children-gymnastics";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+    | {
+        _type: "group.courses";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+    | {
+        _type: "group.dance";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+    | {
+        _type: "group.other-sports";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+    | {
+        _type: "group.soccer";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+    | {
+        _type: "group.taekwondo";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+  >;
+  membership: string | null;
+};
+
 // Source: src/lib/sanity/queries/main-navigation.ts
 // Variable: mainNavigationQuery
 // Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"link": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current },			title		}	}
@@ -4315,6 +4372,7 @@ export type SitemapGroupsQueryResult = Array<
 // Query TypeMap
 declare global {
   interface SanityQueries {
+    "\n\t{\n\t\t\"aboutUs\": *[_type == 'aboutUs'][0].meta.metaDescription,\n\t\t\"contact\": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },\n\t\t\"description\": *[_type == 'home'][0].meta.metaDescription,\n\t\t\"groups\": *[_type in [\n\t\t\t'group.soccer',\n\t\t\t'group.children-gymnastics',\n\t\t\t'group.courses',\n\t\t\t'group.taekwondo',\n\t\t\t'group.dance',\n\t\t\t'group.other-sports',\n\t\t]] | order(sortOrder asc) {\n\t\t\t_type,\n\t\t\t\"description\": meta.metaDescription,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"membership\": *[_type == 'membership'][0].meta.metaDescription,\n\t}\n": LlmsTxtQueryResult;
     '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n },\n\t\t\ttitle\n\t\t}\n\t}\n': MainNavigationQueryResult;
     '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
     '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': AccessibilityPageQueryResult;
