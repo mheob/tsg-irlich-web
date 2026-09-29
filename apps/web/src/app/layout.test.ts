@@ -1,6 +1,6 @@
 import { VisualEditing } from 'next-sanity/visual-editing';
 import type * as visualEditing from 'next-sanity/visual-editing';
-import type * as googleFonts from 'next/font/google';
+import type localFont from 'next/font/local';
 import { draftMode } from 'next/headers';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -14,15 +14,13 @@ import { findElement } from '../../test-utils/react-tree';
 import { clientFetchMock } from '../../test-utils/sanity-client-mock';
 
 /**
- * Stands in for a `next/font/google` loader, which runs at build time and is unavailable here.
+ * Stands in for the `next/font/local` loader, which runs at build time and is unavailable here.
  *
  * @returns The class names the layout reads off a font.
  */
 function testFont(): { className: string; variable: string } {
 	return { className: 'font', variable: '--font-test' };
 }
-
-type GoogleFonts = typeof googleFonts;
 
 /**
  * Stands in for a component the layout only decides to render or not.
@@ -33,13 +31,13 @@ function nullComponent(): null {
 	return null;
 }
 
-// `next/font/google` runs the font loader at build time and is unavailable in a test run; the
+// `next/font/local` runs the font loader at build time and is unavailable in a test run; the
 // layout only ever reads the `variable` class name of each font.
 vi.mock(
-	import('next/font/google'),
+	import('next/font/local'),
 	() =>
-		// The real loaders return a much larger object; the layout only reads `variable`.
-		({ Bebas_Neue: testFont, Inter: testFont, Oswald: testFont }) as unknown as GoogleFonts,
+		// The real loader returns a much larger object; the layout only reads `variable`.
+		({ default: testFont }) as unknown as { default: typeof localFont },
 );
 
 vi.mock(import('@/lib/sanity/client'), () => ({

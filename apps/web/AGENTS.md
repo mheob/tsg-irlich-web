@@ -101,6 +101,17 @@ The resolved target is added as `target` next to the untouched `link` reference,
 
 Read them through `env('KEY')` from `@/lib/env` — never `process.env` directly. The helper validates a single variable lazily with Zod and caches it. A new variable has to be added to the schema in `src/lib/env.ts`, to `globalEnv` (or the matching task) in the root `turbo.json`, and to the list in the root `AGENTS.md`.
 
+## Fonts
+
+Inter, Oswald and Bebas Neue live in `src/app/_assets/fonts/<font>/`, each with its OFL license, and are loaded by `next/font/local` in the root layout. They used to come through `next/font/google`, which fetches them from Google on every build without a warm Turbopack cache. Google sometimes answers with `/l/font?kit=…&skey=…` URLs, and Turbopack then fails the build with "next/font/google queries have exactly one entry" ([vercel/next.js#99114](https://github.com/vercel/next.js/issues/99114)). The first deployment of a branch takes over Production's build cache, which Turbopack cannot reuse across Next.js versions, so it hit exactly those builds.
+
+- The files are the `latin` and `latin-ext` subsets Google serves, byte for byte, so the glyphs match what the site showed before.
+- The faces copy Google's CSS. Each variable file is declared once per weight (400, 700), so `font-medium` still renders at 400 and `font-semibold` at 700. Every subset carries Google's `unicode-range`, so only `latin` is preloaded and `latin-ext` is downloaded only by a page that contains one of its characters (ł, č, ő, …).
+- `next/font/local` declares the `latin` faces. The `latin-ext` faces sit in `src/app/_assets/fonts/latin-ext.css` and join the same families by name. `next/font/local` names a family after the variable it is assigned to (`inter`, `oswald`, `bebasNeue`), so renaming a variable means renaming the family in that file too.
+- The html element resolves the literal stacks in `globals.css` (`Inter, …`, `Oswald, …`), not the `next/font` variables on `<body>`. CSS matches family names case-insensitively, which is why `Inter` still finds the `inter` faces.
+- The fallback metrics are computed from the files now rather than taken from Google's metadata, which moves `size-adjust` by under one percent (Inter 107.89 % instead of 107.12 %). That only shows in the instant before the font swaps in.
+- A new weight or subset means downloading the file from the URL in Google's CSS (`https://fonts.googleapis.com/css2?family=…` with a current Chrome user agent), dropping it next to the others and adding the face.
+
 ## Forms and server actions
 
 Forms use react-hook-form with a Zod schema from `src/lib/validations`. The matching server action lives in `src/actions`, is built with `actionClient` from `@/lib/actions/safe-action` (next-safe-action) and validates the same schema via `.inputSchema()`.
@@ -200,7 +211,7 @@ When a comparison fails in CI, the `playwright-report` artifact carries the expe
 - The stub is deliberately not part of the shared `test` fixture in `e2e/support/test.ts`. The other suites should see the page the way a visitor does, animations included.
 - Only one region is masked, the footer's `©<year>`. Every date on a page is content and comes from the recorded fixtures; the copyright year comes from `new Date()` and would turn each New Year's Eve into a red suite.
 - `maxDiffPixelRatio` is 0.005 (`playwright.config.ts`). Everything runs in one pinned image, so the only expected difference is font antialiasing on a redrawn glyph — well under half a percent, and far below the footprint of any layout shift.
-- Fonts are loaded through `next/font/google`, which self-hosts them at build time. Nothing is fetched from Google at runtime, so a network hiccup cannot change a baseline.
+- The fonts are committed to the repository (see "Fonts" below), so neither the build nor a page load reaches Google and a network hiccup cannot change a baseline. The mocks no longer let `fonts.googleapis.com` or `fonts.gstatic.com` through.
 
 ### Fixtures
 
