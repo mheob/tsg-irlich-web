@@ -58,6 +58,16 @@ Rules for `sanityFetch`:
 
 Adding a previewable route also means adding a `mainDocuments` route and a `locations` entry in `apps/studio/plugins/presentation.ts`, and a `revalidatePath` entry in `src/app/api/revalidate/route.ts` for the affected document type.
 
+## Page metadata
+
+Every route builds its metadata with `getPageMetadata` from `src/utils/metadata.ts`, and a new route should too:
+
+- Next.js merges metadata shallowly, so a page that sets `openGraph` or `alternates` replaces the layout's object whole. The helper therefore repeats the site-wide open graph fields (`siteName`, `locale`, `type`) and the RSS alternate on every page, next to the canonical URL and `og:url` built from the `path` it is given.
+- The editors' `meta` object wins over the document's title, description and image; the page passes the document's own values as fallbacks.
+- The root layout's title template appends ` | TSG Irlich`. Most meta titles in the studio already name the club, so a title containing "Irlich" goes through as `absolute` instead.
+- The paginated news overviews point their canonical URL at the page they show (`?seite=N`, the first page without the parameter). An article points at its first category, like the sitemap and the feed, since it renders under any category segment.
+- The layout sets only `twitter.card`. Next.js fills in the X card's title, description and image from each page's open graph fields.
+
 ## Internal links
 
 A slug in Sanity only holds the **last** segment of the URL, so no link can be built from the slug alone: news articles live below their category, groups below their department (which comes from the document type, not from a field) and the home page at the root. `getInternalHref` in `src/utils/links.ts` is the single place that knows those rules — never assemble a path from a slug by hand, and never render a link when it returns `undefined`.

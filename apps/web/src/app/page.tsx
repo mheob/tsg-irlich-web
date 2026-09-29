@@ -23,6 +23,7 @@ import type {
 	SocialMediaQueryResult,
 	SponsorsQueryResult,
 } from '@/types/sanity.types';
+import { getPageMetadata } from '@/utils/metadata';
 
 import { Features } from './_home/features';
 import { Groups } from './_home/groups';
@@ -30,7 +31,6 @@ import { Hero } from './_home/hero';
 import { News } from './_home/news';
 import { Sponsors } from './_home/sponsors';
 import { Testimonials } from './_home/testimonials';
-import { getOpenGraphImageOptions } from './news/_shared/utils';
 
 // oxlint-disable-next-line no-magic-numbers
 const TESTIMONIALS_REVALIDATE_SECONDS = 60 * 60 * 12;
@@ -42,16 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	const description = page.meta?.metaDescription ?? '';
-	const image = page.meta?.openGraphImage;
-	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
-	const title = page.meta?.metaTitle ?? page.title ?? '';
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({ meta: page.meta, path: '/', title: page.title });
 }
 
 export default async function HomePage() {

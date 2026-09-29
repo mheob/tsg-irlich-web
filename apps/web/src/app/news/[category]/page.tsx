@@ -13,10 +13,11 @@ import {
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
 import { newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
+import { getPageMetadata } from '@/utils/metadata';
 
 import newsOverviewImage from '../_assets/news-overview.webp';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
-import { getOpenGraphImageOptions } from '../_shared/utils';
+import { getPageNumber, getPaginatedPath } from '../_shared/utils';
 
 const START_INDEX = 0;
 const ITEMS_PER_PAGE = 9;
@@ -31,9 +32,7 @@ function getCurrentPage(page?: string | string[]): {
 	end: number;
 	start: number;
 } {
-	const pageString = Array.isArray(page) ? page[0] : page;
-	const parsed = Math.trunc(Number(pageString ?? '1'));
-	const currentPage = Number.isFinite(parsed) && parsed >= 1 ? Math.floor(parsed) : 1;
+	const currentPage = getPageNumber(page);
 	const start = (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX;
 	const end = start + (ITEMS_PER_PAGE - 1);
 	return { currentPage, end, start };
@@ -41,8 +40,10 @@ function getCurrentPage(page?: string | string[]): {
 
 export async function generateMetadata({
 	params,
+	searchParams,
 }: Readonly<PageProps<'/news/[category]'>>): Promise<Metadata> {
 	const { category: categoryParameter } = await params;
+	const { seite } = await searchParams;
 
 	const { data: category } = await sanityFetch({
 		params: { slug: categoryParameter },
@@ -53,16 +54,11 @@ export async function generateMetadata({
 		return {};
 	}
 
-	const description = category.meta?.metaDescription ?? '';
-	const image = category.meta?.openGraphImage;
-	const images = image ? getOpenGraphImageOptions(image, category.title) : [];
-	const title = category.meta?.metaTitle ?? category.title ?? '';
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({
+		meta: category.meta,
+		path: getPaginatedPath(`/news/${category.slug ?? categoryParameter}`, getPageNumber(seite)),
+		title: category.title,
+	});
 }
 
 export default async function NewsCategoryPage({

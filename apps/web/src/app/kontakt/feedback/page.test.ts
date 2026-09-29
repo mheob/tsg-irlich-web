@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import FeedbackPage, { metadata } from '@/app/kontakt/feedback/page';
 import { Hero } from '@/components/section/hero';
 import { FeedbackForm } from '@/components/with-logic/feedback/form';
+import type { client } from '@/lib/sanity/client';
 
 import { findElement } from '../../../../test-utils/react-tree';
 
@@ -13,10 +14,19 @@ vi.hoisted(() => {
 	globalThis.process.env.RESEND_API_KEY = 'test-resend-key';
 });
 
+// The page reads nothing from Sanity, but the shared metadata helper builds image URLs through the
+// Sanity client, which reads its configuration at import time.
+vi.mock(import('@/lib/sanity/client'), () => ({
+	client: {
+		config: () => ({ dataset: 'test-dataset', projectId: 'test-project' }),
+	} as unknown as typeof client,
+}));
+
 describe('the feedback page', () => {
-	it('carries the club-wide metadata', () => {
-		expect(metadata.title).toBe('TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich');
-		expect(metadata.description).toContain('TSG Irlich');
+	it('names the page and points its canonical URL at it', () => {
+		expect(metadata.title).toBe('Feedback zur Website');
+		expect(metadata.description).toContain('Feedback');
+		expect(metadata.alternates?.canonical).toBe('/kontakt/feedback');
 	});
 
 	it('heads the page with the feedback titles', () => {

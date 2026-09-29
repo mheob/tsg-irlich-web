@@ -58,6 +58,7 @@ describe('contact page', () => {
 			build: buildPage,
 			fetchMock: mockedFetch,
 			generateMetadata,
+			path: '/kontakt',
 			title: 'Kontakt',
 		});
 	});

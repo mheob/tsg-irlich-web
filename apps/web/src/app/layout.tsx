@@ -14,6 +14,7 @@ import { client } from '@/lib/sanity/client';
 import { SanityLive } from '@/lib/sanity/live';
 import { mainNavigationQuery } from '@/lib/sanity/queries/main-navigation';
 import type { MainNavigationQueryResult } from '@/types/sanity.types.generated';
+import { FEED_ALTERNATES, SITE_NAME, SITE_OPEN_GRAPH } from '@/utils/metadata';
 import { getBaseUrl } from '@/utils/url';
 
 // oxlint-disable-next-line import/no-unassigned-import
@@ -44,11 +45,17 @@ const inter = Inter({
 const NAVIGATION_REVALIDATE_SECONDS = 60 * 60 * 12;
 
 export const metadata: Metadata = {
-	alternates: { types: { 'application/rss+xml': '/feed.xml' } },
+	alternates: { types: FEED_ALTERNATES },
 	description:
 		'Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.',
 	metadataBase: new URL(getBaseUrl()),
-	title: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
+	openGraph: SITE_OPEN_GRAPH,
+	title: {
+		default: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
+		template: `%s | ${SITE_NAME}`,
+	},
+	// Next.js fills in the title, description and image from each page's open graph fields.
+	twitter: { card: 'summary_large_image' },
 };
 
 export default async function RootLayout({

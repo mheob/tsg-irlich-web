@@ -12,11 +12,12 @@ import {
 	newsArticlesQuery,
 	newsArticlesTotalQuery,
 } from '@/lib/sanity/queries/shared/news';
+import { getPageMetadata } from '@/utils/metadata';
 
 import newsOverviewImage from './_assets/news-overview.webp';
 import { LatestNews } from './_sections/latest-news';
 import { LatestNewsPagination } from './_sections/latest-news-pagination';
-import { getOpenGraphImageOptions } from './_shared/utils';
+import { getPageNumber, getPaginatedPath } from './_shared/utils';
 
 const START_INDEX = 3;
 const ITEMS_PER_PAGE = 6;
@@ -26,29 +27,28 @@ const HERO_IMAGE = {
 	src: newsOverviewImage,
 };
 
-export async function generateMetadata(): Promise<Metadata> {
-	const { data: page } = await sanityFetch({ query: newsOverviewPageQuery, stega: false });
+export async function generateMetadata({
+	searchParams,
+}: Readonly<PageProps<'/news'>>): Promise<Metadata> {
+	const [{ data: page }, { seite }] = await Promise.all([
+		sanityFetch({ query: newsOverviewPageQuery, stega: false }),
+		searchParams,
+	]);
 
 	if (!page) {
 		return {};
 	}
 
-	const description = page.meta?.metaDescription ?? '';
-	const image = page.meta?.openGraphImage;
-	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
-	const title = page.meta?.metaTitle ?? page.title ?? '';
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({
+		meta: page.meta,
+		path: getPaginatedPath('/news', getPageNumber(seite)),
+		title: page.title,
+	});
 }
 
 export default async function NewsOverviewPage({ searchParams }: Readonly<PageProps<'/news'>>) {
 	const { seite } = await searchParams;
-	const pageString = Array.isArray(seite) ? seite[0] : seite;
-	const currentPage = Math.trunc(Number(pageString ?? '1'));
+	const currentPage = getPageNumber(seite);
 
 	const [{ data: page }, { data: totalArticles }, { data: articles }, { data: paginatedArticles }] =
 		await Promise.all([

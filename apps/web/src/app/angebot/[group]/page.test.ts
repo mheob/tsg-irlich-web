@@ -89,7 +89,7 @@ describe('department page', () => {
 			mockSanity();
 
 			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
-				title: 'Fußball bei der TSG Irlich',
+				title: { absolute: 'Fußball bei der TSG Irlich' },
 			});
 		});
 
@@ -97,8 +97,16 @@ describe('department page', () => {
 			mockSanity();
 
 			await expect(generateMetadata(routeProps('gibt-es-nicht'))).resolves.toMatchObject({
-				title: 'Sport bei der TSG Irlich',
+				title: { absolute: 'Sport bei der TSG Irlich' },
 			});
+		});
+
+		it('points its canonical URL at the department page', async () => {
+			mockSanity();
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.alternates?.canonical).toBe('/angebot/fussball');
 		});
 
 		it('takes the description from the document', async () => {

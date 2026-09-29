@@ -118,13 +118,13 @@ describe('news article page', () => {
 			mockSanity({
 				article: {
 					...ARTICLE,
-					meta: { metaDescription: 'Kurzfassung', metaTitle: 'Sommerfest · TSG Irlich' },
+					meta: { metaDescription: 'Kurzfassung', metaTitle: 'Sommerfest im Rückblick' },
 				},
 			});
 
 			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
 				description: 'Kurzfassung',
-				title: 'Sommerfest · TSG Irlich',
+				title: 'Sommerfest im Rückblick',
 			});
 		});
 
@@ -142,6 +142,70 @@ describe('news article page', () => {
 			const metadata = await generateMetadata(routeProps());
 
 			expect(metadata.openGraph?.images).toStrictEqual([]);
+		});
+
+		it('describes the article as one, with its author and dates', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					_updatedAt: '2026-06-03T08:00:00Z',
+					author: { firstName: 'Erika', lastName: 'Mustermann' },
+					publishedAt: '2026-06-01T18:00:00Z',
+				},
+			});
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.openGraph).toMatchObject({
+				authors: ['Erika Mustermann'],
+				modifiedTime: '2026-06-03T08:00:00Z',
+				publishedTime: '2026-06-01T18:00:00Z',
+				type: 'article',
+			});
+		});
+
+		it('never dates the last change before the publication', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					_updatedAt: '2026-05-28T08:00:00Z',
+					publishedAt: '2026-06-01T18:00:00Z',
+				},
+			});
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.openGraph).toMatchObject({ modifiedTime: '2026-06-01T18:00:00Z' });
+		});
+
+		it('names no author when the article has none', async () => {
+			mockSanity();
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.openGraph).toMatchObject({ authors: undefined });
+		});
+
+		it('points the canonical URL at the first category of the article', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					categories: [{ slug: 'fussball' }, { slug: 'vereinsleben' }],
+					slug: 'sommerfest',
+				},
+			});
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.alternates?.canonical).toBe('/news/fussball/sommerfest');
+		});
+
+		it('falls back to the requested category for the canonical URL', async () => {
+			mockSanity({ article: { ...ARTICLE, categories: null, slug: 'sommerfest' } });
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.alternates?.canonical).toBe('/news/vereinsleben/sommerfest');
 		});
 
 		it('looks the article up by its slug without stega encoding', async () => {

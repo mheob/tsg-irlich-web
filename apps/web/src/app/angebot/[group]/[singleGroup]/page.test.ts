@@ -90,19 +90,36 @@ describe('single group page', () => {
 			await expect(generateMetadata(routeProps('gibt-es-nicht'))).resolves.toStrictEqual({});
 		});
 
-		it('is empty when the group carries no meta object', async () => {
-			mockSanity({ group: { ...GROUP, meta: null } });
+		it('is empty when the group does not exist', async () => {
+			mockSanity({ group: null });
 
 			await expect(generateMetadata(routeProps())).resolves.toStrictEqual({});
 		});
 
-		it('appends the club name to the group title', async () => {
+		it('falls back to the group title when the group carries no meta object', async () => {
+			mockSanity({ group: { ...GROUP, meta: null } });
+
+			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
+				description: '',
+				title: 'Herren 1',
+			});
+		});
+
+		it('leaves the club name to the title template', async () => {
 			mockSanity();
 
 			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
 				description: 'Die erste Herrenmannschaft',
-				title: 'Herren 1 — TSG Irlich',
+				title: 'Herren 1',
 			});
+		});
+
+		it('points its canonical URL at the group page', async () => {
+			mockSanity();
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.alternates?.canonical).toBe('/angebot/fussball/herren-1');
 		});
 
 		it('prefers the meta title over the group title', async () => {
@@ -113,10 +130,12 @@ describe('single group page', () => {
 			});
 		});
 
-		it('has an empty title when neither a meta title nor a group title is set', async () => {
+		it('keeps the layout title when neither a meta title nor a group title is set', async () => {
 			mockSanity({ group: { ...GROUP, meta: {}, title: null } });
 
-			await expect(generateMetadata(routeProps())).resolves.toMatchObject({ title: '' });
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.title).toBeUndefined();
 		});
 
 		it('falls back to the featured image for the open graph image', async () => {

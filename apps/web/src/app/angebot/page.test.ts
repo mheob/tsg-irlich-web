@@ -52,6 +52,7 @@ describe('offer page', () => {
 			build: buildPage,
 			fetchMock: mockedFetch,
 			generateMetadata,
+			path: '/angebot',
 			title: 'Angebot',
 		});
 	});

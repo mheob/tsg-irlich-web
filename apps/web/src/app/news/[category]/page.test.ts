@@ -122,6 +122,18 @@ describe('news category page', () => {
 			});
 		});
 
+		it('points the canonical URL at the category, and at the page beyond the first', async () => {
+			mockSanity();
+
+			const [firstPage, secondPage] = await Promise.all([
+				generateMetadata(routeProps()),
+				generateMetadata(routeProps('2')),
+			]);
+
+			expect(firstPage.alternates?.canonical).toBe('/news/vereinsleben');
+			expect(secondPage.alternates?.canonical).toBe('/news/vereinsleben?seite=2');
+		});
+
 		it('looks the category up by its slug without stega encoding', async () => {
 			mockSanity();
 

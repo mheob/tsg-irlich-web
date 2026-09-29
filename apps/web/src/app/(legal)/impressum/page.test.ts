@@ -64,6 +64,7 @@ describe('imprint page', () => {
 			build: buildPage,
 			fetchMock: mockedFetch,
 			generateMetadata,
+			path: '/impressum',
 			title: 'Impressum',
 		});
 	});
