@@ -217,6 +217,10 @@ When a comparison fails in CI, the `playwright-report` artifact carries the expe
 
 `pnpm run e2e:record` runs the suite against the real dataset with a real read token from `.env.local` and writes every Sanity response to `e2e/fixtures/sanity/<hash>.json`, keyed by request path plus query string. Assertions may fail during a recording run — the fixtures are still written. Re-record after changing a GROQ query or adding a route, and commit the result.
 
+The `webServer` command deletes `.next/cache/fetch-cache` before it builds. Otherwise `next build` answers every query it already made in an earlier build from that cache, and the request never reaches `preload.ts`. A recording would then leave those fixtures out: after all fixtures were deleted for WEB-341, it wrote 41 of 56. A mocked run would render stale data even where a fixture is missing. The same holds inside the screenshot container, whose `.next` lives in a named volume. The Turbopack cache and `node_modules` stay warm. Only CI never needed this, because it starts without `.next`.
+
+To refresh every fixture at once, delete `e2e/fixtures/sanity/*.json` and record again. That also drops fixtures no page requests any more, for instance articles that have left the overview.
+
 ### Writing a spec
 
 - Import `test` and `expect` from `../support/test`.
