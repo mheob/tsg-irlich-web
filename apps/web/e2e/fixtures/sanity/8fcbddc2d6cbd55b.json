@@ -16,6 +16,7 @@
 				"contactPersonsSection": {
 					"contactPersons": [
 						{
+							"_id": "51dfa04b-7577-48d0-9434-a096e0b3ff42",
 							"contactAs": "both",
 							"email": "verwaltung@tsg-irlich.de",
 							"firstName": "Melina",
@@ -33,6 +34,7 @@
 							"taskDescription": "Als Vorstand Verwaltung kümmere ich mich um alle administrativen Aufgaben. Von Vertragsabwicklung über Versicherungen bis zu Protokollen und Post. Ich betreue die digitale Mitgliederverwaltung und sorge für eine reibungslose Dokumentation und Kommunikation."
 						},
 						{
+							"_id": "d191c9ee-bb52-48ed-8aef-57ce2a5af9d1",
 							"contactAs": "both",
 							"email": "breitensport@tsg-irlich.de",
 							"firstName": "Melanie ",
@@ -50,6 +52,7 @@
 							"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
 						},
 						{
+							"_id": "6ea6af4c-6dcb-4492-97cf-404c8128b359",
 							"contactAs": "both",
 							"email": "fussball@tsg-irlich.de",
 							"firstName": "Markus",
@@ -611,5 +614,5 @@
 		],
 		"ms": 14
 	},
-	"url": "/v2025-02-19/data/query/development?query=%0A%09%7B%0A%09%09%22membership%22%3A+*%5B_type+%3D%3D+%27membership%27%5D%5B0%5D+%7B%0A%09%09%09...%2C%0A%09%09%09intro+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09downloadsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09downloads%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09document+%7B%0A%09%09%09%09%09%09...%2C%0A%09%09%09%09%09%09asset-%3E%0A%09%09%09%09%09%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09%22pricingSection%22%3A+*%5B_type+%3D%3D+%27home%27%5D%5B0%5D.content.pricingSection%0A%09%7D%0A&returnQuery=false"
+	"url": "/v2025-02-19/data/query/development?query=%0A%09%7B%0A%09%09%22membership%22%3A+*%5B_type+%3D%3D+%27membership%27%5D%5B0%5D+%7B%0A%09%09%09...%2C%0A%09%09%09intro+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09downloadsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09downloads%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09document+%7B%0A%09%09%09%09%09%09...%2C%0A%09%09%09%09%09%09asset-%3E%0A%09%09%09%09%09%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09%22pricingSection%22%3A+*%5B_type+%3D%3D+%27home%27%5D%5B0%5D.content.pricingSection%0A%09%7D%0A&returnQuery=false"
 }

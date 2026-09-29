@@ -16,6 +16,7 @@
 				"contactPersonsSection": {
 					"contactPersons": [
 						{
+							"_id": "d191c9ee-bb52-48ed-8aef-57ce2a5af9d1",
 							"contactAs": "both",
 							"email": "breitensport@tsg-irlich.de",
 							"firstName": "Melanie ",
@@ -33,6 +34,7 @@
 							"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
 						},
 						{
+							"_id": "6ea6af4c-6dcb-4492-97cf-404c8128b359",
 							"contactAs": "both",
 							"email": "fussball@tsg-irlich.de",
 							"firstName": "Markus",
@@ -140,5 +142,5 @@
 		"syncTags": ["s1:kG7Arw", "s1:WU9DBg", "s1:ZGhU9g", "s1:B7LhMw", "s1:bW4l3Q"],
 		"ms": 9
 	},
-	"url": "/v2025-02-19/data/query/development?query=%0A*%5B_type+%3D%3D+%27departmentsPage%27%5D%5B0%5D+%7B%0A%09...%2C%0A%09content+%7B%0A%09%09...%2C%0A%09%09contactPersonsSection+%7B%0A%09%09%09...%2C%0A%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A%7D%0A&returnQuery=false"
+	"url": "/v2025-02-19/data/query/development?query=%0A*%5B_type+%3D%3D+%27departmentsPage%27%5D%5B0%5D+%7B%0A%09...%2C%0A%09content+%7B%0A%09%09...%2C%0A%09%09contactPersonsSection+%7B%0A%09%09%09...%2C%0A%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A%7D%0A&returnQuery=false"
 }

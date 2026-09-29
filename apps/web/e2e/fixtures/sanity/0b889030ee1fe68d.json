@@ -2,6 +2,7 @@
 	"body": {
 		"result": [
 			{
+				"_id": "6ea6af4c-6dcb-4492-97cf-404c8128b359",
 				"contactAs": "both",
 				"email": "fussball@tsg-irlich.de",
 				"firstName": "Markus",
@@ -51,5 +52,5 @@
 		],
 		"ms": 16
 	},
-	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27person%27%5D%5Baffiliations%5B0%5D.role-%3Eemail+%3D%3D+%24email%5D+%7B%0A%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%7D%0A&%24email=%22fussball%40tsg-irlich.de%22&returnQuery=false"
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27person%27%5D%5Baffiliations%5B0%5D.role-%3Eemail+%3D%3D+%24email%5D+%7B%0A%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%7D%0A&%24email=%22fussball%40tsg-irlich.de%22&returnQuery=false"
 }
