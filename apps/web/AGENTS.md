@@ -77,6 +77,11 @@ JSON-LD is typed with `schema-dts` and rendered by `JsonLd` (`src/components/ui/
 - The article schema receives a `stegaClean` copy of just the fields it reads, so draft mode's invisible characters stay out of the JSON while the rendered article keeps its click-to-edit overlays.
 - `getLastModified` (`src/utils/time.ts`) never dates a change before the publication: editors often finish an article before its scheduled date. The article metadata, the JSON-LD and the visible "Aktualisiert am" line all go through it.
 
+## Crawlers and llms.txt
+
+- `src/app/robots.ts` allows every crawler, and names the AI crawlers the club lets in on purpose (search, training and user-triggered fetchers of OpenAI, Anthropic, Perplexity, Google, Apple and Common Crawl), with the reasoning in its doc comment. They share the one group with `*`: a crawler with a group of its own ignores the `*` group, so a `disallow` added there later would not reach it.
+- `src/app/llms.txt/route.ts` serves a Markdown summary for language models, following [llmstxt.org](https://llmstxt.org). The club description, contact details and every group with its meta description come from `llmsTxtQuery`. The departments come from `groupSections`, in the order the offer page shows them. It is served as `text/plain` so a browser shows it instead of downloading it.
+
 ## Internal links
 
 A slug in Sanity only holds the **last** segment of the URL, so no link can be built from the slug alone: news articles live below their category, groups below their department (which comes from the document type, not from a field) and the home page at the root. `getInternalHref` in `src/utils/links.ts` is the single place that knows those rules — never assemble a path from a slug by hand, and never render a link when it returns `undefined`.

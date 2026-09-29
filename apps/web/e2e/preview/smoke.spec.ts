@@ -59,4 +59,14 @@ test.describe('preview smoke', () => {
 		expect(sitemap.status()).toBe(200);
 		expect(feed.status()).toBe(200);
 	});
+
+	test('serves robots.txt and llms.txt for crawlers and language models', async ({ page }) => {
+		const robots = await page.request.get('/robots.txt');
+		const llms = await page.request.get('/llms.txt');
+
+		expect(robots.status()).toBe(200);
+		expect(await robots.text()).toContain('User-Agent: GPTBot');
+		expect(llms.status()).toBe(200);
+		expect(await llms.text()).toMatch(/^# TSG Irlich\n/u);
+	});
 });
