@@ -2,12 +2,10 @@ packages:
   - apps/*
   - packages/*
 
-# better-sqlite3 (native binding for cve-lite-cli), esbuild (platform binary) and lefthook
-# (git hook binary) are unusable without their install scripts. msw only copies its browser
-# service worker into a public directory, which the end-to-end mocks never use — they run in the
-# Node.js server process.
+# esbuild (platform binary) and lefthook (git hook binary) are unusable without their install
+# scripts. msw only copies its browser service worker into a public directory, which the
+# end-to-end mocks never use — they run in the Node.js server process.
 allowBuilds:
-  better-sqlite3: true
   esbuild: true
   lefthook: true
   msw: false
@@ -29,6 +27,10 @@ overrides:
   # @module-federation/dts-plugin (through the Sanity CLI's workbench) pins adm-zip 0.6.0, which
   # allocates whatever uncompressed size an archive declares (GHSA-7q85-xj36-vmfc); 0.6.1 fixes it
   adm-zip: "^0.6.1"
+  # cve-lite-cli pins better-sqlite3 12, whose install script runs the unmaintained
+  # prebuild-install and prints Node's DEP0176 deprecation on every install. 13.x ships the
+  # prebuilt bindings inside the package, so nothing is built at install time any more
+  better-sqlite3: "^13.0.3"
   # react-email → conf → ajv pulls fast-uri 3.1.5, vulnerable to improper hex-encoding
   # handling in URL normalization (CVE-2026-76172); 3.1.6 fixes it and stays in ajv's ^3 range
   fast-uri: "^3.1.6"
