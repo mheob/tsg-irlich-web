@@ -25,6 +25,20 @@ const CUMULATIVE_LAYOUT_SHIFT = 0.1;
 const MIN_PERFORMANCE_SCORE = 0.9;
 
 /**
+ * How long Lighthouse waits for a page to settle before it measures anyway. Its default is 45
+ * seconds, and every page used all of them: `<SanityLive />` in the root layout holds the Live
+ * Content API stream open for as long as the page lives. `@sanity/client` streams it through
+ * `fetch` rather than a native `EventSource`, so Lighthouse counts it as a critical request that
+ * never finishes and waits for a network quiet that never comes. The observed load event lands
+ * within 1.5 seconds even on the cold first hit of a preview, so ten seconds leaves plenty of room
+ * and cuts a run from about a minute to about twenty seconds.
+ *
+ * Every report therefore still carries the "page loaded too slowly" warning — it always did. Read
+ * `observedLoad` in the metrics audit to tell a real timeout from this one.
+ */
+const MAX_WAIT_FOR_LOAD_MS = 10_000;
+
+/**
  * The base URL of the deployment under test. The workflow passes the preview URL that triggered it;
  * locally, point it at whatever you want to measure.
  */
@@ -55,6 +69,7 @@ module.exports = {
 			// connection, which is both the harsher measurement and the one most of the club's
 			// visitors live in. `preset: 'desktop'` would flatter every number.
 			settings: {
+				maxWaitForLoad: MAX_WAIT_FOR_LOAD_MS,
 				// Vercel answers every preview deployment with `X-Robots-Tag: noindex`, which is the
 				// point of a preview and says nothing about what production serves. The audit can
 				// never pass here, and it carries a third of the SEO category — so it is skipped
