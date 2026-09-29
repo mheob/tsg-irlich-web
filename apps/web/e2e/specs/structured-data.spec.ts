@@ -41,6 +41,28 @@ test.describe('structured data', () => {
 		]);
 	});
 
+	test('describes a group and where it trains', async ({ page }) => {
+		await page.goto('/angebot/fussball');
+		await waitForPage(page);
+		await page
+			.getByRole('main')
+			.getByRole('link', { name: /^Mehr über .* erfahren$/u })
+			.first()
+			.click();
+		await expect(page).toHaveURL(/\/angebot\/fussball\/[^/]+$/u);
+		await waitForPage(page);
+
+		const blocks = await readStructuredData(page);
+		const group = blocks.find((block) => block['@type'] === 'SportsTeam');
+
+		expect(group).toMatchObject({
+			location: expect.arrayContaining([
+				expect.objectContaining({ '@type': 'SportsActivityLocation' }),
+			]),
+			parentOrganization: expect.objectContaining({ name: 'TSG Irlich' }),
+		});
+	});
+
 	test('describes an article and the trail to it', async ({ page }) => {
 		await openFirstArticle(page);
 

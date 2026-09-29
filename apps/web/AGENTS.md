@@ -72,10 +72,15 @@ Every route builds its metadata with `getPageMetadata` from `src/utils/metadata.
 
 JSON-LD is typed with `schema-dts` and rendered by `JsonLd` (`src/components/ui/json-ld.tsx`), which escapes `<` so a string from the CMS cannot close the script element early. The builders are pure functions:
 
-- `src/utils/structured-data.ts`: `getSiteGraph` (the `SportsOrganization` and the `WebSite`, as one `@graph` in the root layout) and `getNewsArticleSchema` (on the article page). The club node carries the ID `<base URL>/#organization`, and every other node refers to it by that ID. The contact details come from `organizationQuery`, the same query the footer reads.
+- `src/utils/structured-data.ts`: `getSiteGraph` (the `SportsOrganization` and the `WebSite`, as one `@graph` in the root layout), `getNewsArticleSchema` (on the article page) and `getGroupSchema` (on a group page: a `SportsTeam` for the soccer groups, a `SportsOrganization` for every other group, with the club as `parentOrganization` and each venue it trains at as a `SportsActivityLocation`). The training times are deliberately not marked up: Google reads neither an `Event` without a fixed `startDate` nor an `eventSchedule`, and it excludes recurring opening-hours-like times from events. The club node carries the ID `<base URL>/#organization`, and every other node refers to it by that ID. The contact details come from `organizationQuery`, the same query the footer reads.
 - `src/utils/breadcrumb.ts`: `getBreadcrumbItems` derives the trail from the path, and `getBreadcrumbListSchema` describes it. It lives apart from the other builders because the breadcrumb is a client component, and `structured-data.ts` pulls in the Sanity image builder.
 - The article schema receives a `stegaClean` copy of just the fields it reads, so draft mode's invisible characters stay out of the JSON while the rendered article keeps its click-to-edit overlays.
 - `getLastModified` (`src/utils/time.ts`) never dates a change before the publication: editors often finish an article before its scheduled date. The article metadata, the JSON-LD and the visible "Aktualisiert am" line all go through it.
+
+## Crawlers and llms.txt
+
+- `src/app/robots.ts` allows every crawler, and names the AI crawlers the club lets in on purpose (search, training and user-triggered fetchers of OpenAI, Anthropic, Perplexity, Google, Apple and Common Crawl), with the reasoning in its doc comment. They share the one group with `*`: a crawler with a group of its own ignores the `*` group, so a `disallow` added there later would not reach it.
+- `src/app/llms.txt/route.ts` serves a Markdown summary for language models, following [llmstxt.org](https://llmstxt.org). The club description, contact details and every group with its meta description come from `llmsTxtQuery`. The departments come from `groupSections`, in the order the offer page shows them. It is served as `text/plain` so a browser shows it instead of downloading it.
 
 ## Internal links
 

@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import SingleGroupsPage, { generateMetadata } from '@/app/angebot/[group]/[singleGroup]/page';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
+import { JsonLd } from '@/components/ui/json-ld';
 import type { client } from '@/lib/sanity/client';
 import {
 	offerGroupsGroupPageContactPersonsQuery,
@@ -188,6 +189,26 @@ describe('single group page', () => {
 				subTitle: 'Eine Gruppe der TSG',
 				title: 'Gruppe',
 			});
+		});
+
+		it('describes a soccer group as a team of the club under its canonical URL', async () => {
+			mockSanity();
+
+			const jsonLd = findElement(await SingleGroupsPage(routeProps()), JsonLd);
+
+			expect(jsonLd?.props.data).toMatchObject({
+				'@type': 'SportsTeam',
+				name: 'Herren 1',
+				url: 'http://localhost:3000/angebot/fussball/herren-1',
+			});
+		});
+
+		it('describes a group of any other department as an organization of the club', async () => {
+			mockSanity();
+
+			const jsonLd = findElement(await SingleGroupsPage(routeProps('kurse', 'yoga')), JsonLd);
+
+			expect(jsonLd?.props.data).toMatchObject({ '@type': 'SportsOrganization' });
 		});
 
 		it('leaves the hero without an image when the featured image has no alt text', async () => {
