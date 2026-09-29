@@ -5,6 +5,10 @@ name: E2E Preview
 # failing the check.
 on:
   deployment_status:
+  # Only here to report the required check on every pull request commit. A commit that affects
+  # neither app gets no Vercel deployment and so no `deployment_status`, which would leave the
+  # check missing. The job below skips itself for this event, and a skipped job reports success.
+  pull_request:
 
 permissions:
   contents: read
