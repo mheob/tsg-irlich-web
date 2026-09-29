@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
+import { JsonLd } from '@/components/ui/json-ld';
 import { client } from '@/lib/sanity/client';
 import {
 	offerGroupsGroupPageContactPersonsQuery,
@@ -19,6 +20,8 @@ import type {
 } from '@/types/sanity.types.generated';
 import { getCurrentDepartment } from '@/utils/groups';
 import { getPageMetadata } from '@/utils/metadata';
+import { getGroupSchema } from '@/utils/structured-data';
+import { getBaseUrl } from '@/utils/url';
 
 import { Main } from './_sections/main';
 import { Training } from './_sections/training';
@@ -84,9 +87,19 @@ export default async function SingleGroupsPage({
 	}
 
 	const imageSource = urlForImage(groupData.featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
+	// Only the soccer groups play as teams; a course or a dance group is a group of the club.
+	const isTeam = currentDepartment._type === 'group.soccer';
 
 	return (
 		<>
+			<JsonLd
+				data={getGroupSchema({
+					baseUrl: getBaseUrl(),
+					group: groupData,
+					isTeam,
+					path: `/angebot/${group}/${singleGroup}`,
+				})}
+			/>
 			<Hero
 				image={
 					groupData.featuredImage?.alt && imageSource
