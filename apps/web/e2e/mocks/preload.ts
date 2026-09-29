@@ -67,12 +67,7 @@ const PNG_DATA_OFFSET = 8;
 const stubImages = new Map<string, Uint8Array>();
 
 /** Hosts the app is allowed to reach for real, because nothing about them is under test. */
-const PASSTHROUGH_HOSTS = new Set([
-	'127.0.0.1',
-	'fonts.googleapis.com',
-	'fonts.gstatic.com',
-	'localhost',
-]);
+const PASSTHROUGH_HOSTS = new Set(['127.0.0.1', 'localhost']);
 
 /**
  * The e-mail addresses a spec uses to steer the CleverReach mock into a specific outcome. Every
