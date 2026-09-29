@@ -2472,10 +2472,40 @@
 				"value": {
 					"type": "object",
 					"attributes": {
-						"address": {
+						"postalAddress": {
 							"type": "objectAttribute",
 							"value": {
-								"type": "string"
+								"type": "object",
+								"attributes": {
+									"street": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"houseNumber": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"zipCode": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"city": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									}
+								}
 							},
 							"optional": false
 						},

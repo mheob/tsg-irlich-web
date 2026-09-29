@@ -16,13 +16,20 @@ vi.hoisted(() => {
 /** The `image-<id>-<width>x<height>-<format>` shape `@sanity/image-url` requires. */
 const ASSET_REF = 'image-abc123def456-800x600-jpg';
 
-type ArticleAuthor = Pick<NonNullable<NewsArticleContentQueryResult>, 'author' | 'publishedAt'>;
+type ArticleAuthor = Pick<
+	NonNullable<NewsArticleContentQueryResult>,
+	'_updatedAt' | 'author' | 'publishedAt'
+>;
 
 const PORTRAIT = { alt: 'Ada Lovelace', asset: { _ref: ASSET_REF } };
 
-function buildArticle(image: unknown = PORTRAIT): ArticleAuthor {
+function buildArticle(
+	image: unknown = PORTRAIT,
+	updatedAt = '2026-07-01T09:30:00Z',
+): ArticleAuthor {
 	// The generated result type carries more fields than a fixture needs to name.
 	return {
+		_updatedAt: updatedAt,
 		author: {
 			email: 'ada@tsg-irlich.de',
 			firstName: 'Ada',
@@ -40,6 +47,22 @@ describe('the author beside an article', () => {
 		expect(getByRole('heading', { name: 'Autor' })).not.toBeNull();
 		expect(getByText('Ada Lovelace')).not.toBeNull();
 		expect(getByText('1. Juli 2026')).not.toBeNull();
+	});
+
+	it('adds the date of a later update', () => {
+		const { getByText } = renderWithUser(
+			<Author article={buildArticle(PORTRAIT, '2026-07-14T10:00:00Z')} />,
+		);
+
+		expect(getByText('Aktualisiert am', { exact: false }).textContent).toBe(
+			'Aktualisiert am 14. Juli 2026',
+		);
+	});
+
+	it('leaves out an update on the day of publication', () => {
+		const { queryByText } = renderWithUser(<Author article={buildArticle()} />);
+
+		expect(queryByText('Aktualisiert am', { exact: false })).toBeNull();
 	});
 
 	it('shows the portrait of an author who has one', () => {

@@ -54,6 +54,17 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 4. If the type is rendered on the website, add a `mainDocuments` route and a `locations` entry in `plugins/presentation.ts`, and a `revalidatePath` entry in the web app's `src/app/api/revalidate/route.ts`.
 5. Run `pnpm run extract-types && pnpm run typegen:sanity` from the repository root.
 
+## Content migrations
+
+A schema change that moves existing data comes with a migration in `migrations/<id>/index.ts` (`defineMigration` from `sanity/migrate`), next to a test for its pure parts. `sanity migration run` does a dry run by default and needs both the project and the dataset:
+
+```bash
+pnpm exec sanity migration run <id> --project j4rxwl5m --dataset development
+pnpm exec sanity migration run <id> --project j4rxwl5m --dataset development --no-dry-run
+```
+
+Run it on `development` first (the e2e fixtures are recorded from there), then on `production`, and before the change ships if the website reads the new shape.
+
 ## Preview (presentation tool)
 
 `plugins/presentation.ts` renders the website in an iframe next to the editor. It calls `/api/draft-mode/enable` on the frontend, so the frontend origin has to be a CORS origin of the Sanity project **with credentials allowed**. The previewed site comes from `SANITY_STUDIO_PREVIEW_URL` (default `http://localhost:3000`), and `allowOrigins` limits which origins may talk to the studio.

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
 import type { ComponentPropsWithoutRef } from 'react';
 
-import { capitalizeWords } from '@/utils/typography';
+import { getBreadcrumbItems, getBreadcrumbListSchema } from '@/utils/breadcrumb';
 
 import {
 	BreadcrumbItem,
@@ -15,54 +15,43 @@ import {
 	BreadcrumbSeparator,
 	Breadcrumb as ShadcnBreadcrumb,
 } from '../ui/breadcrumb';
+import { JsonLd } from '../ui/json-ld';
 
 const LAST_INDEX = -1;
 
-function getBreadcrumbItemsPaths(pathname: string) {
-	const breadcrumbItems = pathname.split('/').slice(1);
-
-	let breadcrumbItemsPathsLast = '';
-	const breadcrumbItemsPaths = breadcrumbItems.slice(0, LAST_INDEX).map((item) => {
-		const path = `${breadcrumbItemsPathsLast}/${item}`;
-		breadcrumbItemsPathsLast = `/${item}`;
-		return { path, title: capitalizeWords(item) };
-	});
-
-	return breadcrumbItemsPaths;
-}
-
 interface BreadcrumbProps extends ComponentPropsWithoutRef<typeof ShadcnBreadcrumb> {
+	/** The site's base URL, which the structured data needs for absolute links. */
+	baseUrl: string;
 	currentPage?: string;
 }
 
-export default function Breadcrumb({ currentPage, ...props }: Readonly<BreadcrumbProps>) {
+export default function Breadcrumb({ baseUrl, currentPage, ...props }: Readonly<BreadcrumbProps>) {
 	const pathname = usePathname();
-	const breadcrumbItemsPaths = getBreadcrumbItemsPaths(pathname);
+	const items = getBreadcrumbItems(pathname, currentPage);
+	const page = items.at(LAST_INDEX);
 
 	return (
-		<ShadcnBreadcrumb className="mt-8" {...props}>
-			<BreadcrumbList>
-				<BreadcrumbItem>
-					<BreadcrumbLink render={<Link href="/" />}>Home</BreadcrumbLink>
-				</BreadcrumbItem>
+		<>
+			<ShadcnBreadcrumb className="mt-8" {...props}>
+				<BreadcrumbList>
+					{items.slice(0, LAST_INDEX).map((item, index) => (
+						<Fragment key={item.path}>
+							{index > 0 && <BreadcrumbSeparator />}
+							<BreadcrumbItem>
+								<BreadcrumbLink render={<Link href={item.path} />}>{item.name}</BreadcrumbLink>
+							</BreadcrumbItem>
+						</Fragment>
+					))}
 
-				{breadcrumbItemsPaths.map((item) => (
-					<Fragment key={item.path}>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbLink render={<Link href={item.path} />}>{item.title}</BreadcrumbLink>
-						</BreadcrumbItem>
-					</Fragment>
-				))}
+					<BreadcrumbSeparator />
 
-				<BreadcrumbSeparator />
+					<BreadcrumbItem>
+						<BreadcrumbPage>{page?.name}</BreadcrumbPage>
+					</BreadcrumbItem>
+				</BreadcrumbList>
+			</ShadcnBreadcrumb>
 
-				<BreadcrumbItem>
-					<BreadcrumbPage>
-						{currentPage ?? breadcrumbItemsPaths.at(LAST_INDEX)?.title}
-					</BreadcrumbPage>
-				</BreadcrumbItem>
-			</BreadcrumbList>
-		</ShadcnBreadcrumb>
+			<JsonLd data={getBreadcrumbListSchema(baseUrl, items)} />
+		</>
 	);
 }
