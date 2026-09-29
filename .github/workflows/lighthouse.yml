@@ -6,6 +6,10 @@ name: Lighthouse
 # the merge button until the scores have proven themselves stable over a few pull requests.
 on:
   deployment_status:
+  # Only here to report the required check on every pull request commit. A commit that affects
+  # neither app gets no Vercel deployment and so no `deployment_status`, which would leave the
+  # check missing. The job below skips itself for this event, and a skipped job reports success.
+  pull_request:
   # A `deployment_status` run cannot be replayed — GitHub cannot reconstruct the event — so this is
   # the way to re-measure a deployment that is already up, or to score production on demand.
   workflow_dispatch:
