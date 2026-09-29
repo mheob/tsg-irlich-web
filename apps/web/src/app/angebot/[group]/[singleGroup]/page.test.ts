@@ -1,4 +1,6 @@
 import { notFound } from 'next/navigation';
+import { Children, isValidElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import SingleGroupsPage, { generateMetadata } from '@/app/angebot/[group]/[singleGroup]/page';
@@ -9,12 +11,14 @@ import type { client } from '@/lib/sanity/client';
 import {
 	offerGroupsGroupPageContactPersonsQuery,
 	offerGroupsGroupPageGroupsQuery,
+	offerGroupsGroupPageNewsQuery,
 	offerGroupsGroupPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups-group';
 
 import { findElement } from '../../../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../../../test-utils/sanity-client-mock';
 import { Main } from './_sections/main';
+import { News } from './_sections/news';
 import { Training } from './_sections/training';
 
 vi.mock(import('@/lib/sanity/client'), () => ({
@@ -53,20 +57,47 @@ const GROUP = {
 	training: [{ _key: 'monday', day: 'Montag' }],
 };
 
+const NEWS = {
+	_type: 'news.category',
+	articles: [{ _id: 'news-1' }],
+	slug: 'senioren',
+	title: 'Senioren',
+};
+
 interface SingleGroupResults {
 	coaches?: unknown[];
 	group?: unknown;
+	news?: unknown;
 	page?: unknown;
 }
 
-function mockSanity({ coaches = [], group = GROUP, page = PAGE }: SingleGroupResults = {}): void {
+function mockSanity({
+	coaches = [],
+	group = GROUP,
+	news = NEWS,
+	page = PAGE,
+}: SingleGroupResults = {}): void {
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedFetch.mockImplementation(async (query: string) => {
 		if (query === offerGroupsGroupPageQuery) return page;
 		if (query === offerGroupsGroupPageGroupsQuery) return group;
 		if (query === offerGroupsGroupPageContactPersonsQuery) return coaches;
+		if (query === offerGroupsGroupPageNewsQuery) return news;
 		throw new Error(`unexpected query: ${query}`);
 	});
+}
+
+/**
+ * Lists the page's top-level sections in the order they render.
+ *
+ * @param page - The awaited return value of the page component, a fragment of sections.
+ * @returns The component type of every section.
+ */
+function sectionOrder(page: ReactNode): unknown[] {
+	const { children } = (page as ReactElement<{ children: ReactNode }>).props;
+	return Children.toArray(children)
+		.filter((child) => isValidElement(child))
+		.map((child) => child.type);
 }
 
 function routeProps(
@@ -255,6 +286,45 @@ describe('single group page', () => {
 			const page = await SingleGroupsPage(routeProps());
 
 			expect(findElement(page, Training)).toBeUndefined();
+		});
+
+		it('shows the latest news of the category assigned to the group', async () => {
+			mockSanity();
+
+			const news = findElement(await SingleGroupsPage(routeProps()), News);
+
+			expect(news?.props).toStrictEqual(NEWS);
+		});
+
+		it('looks the news up by department type and group slug', async () => {
+			mockSanity();
+
+			await SingleGroupsPage(routeProps('taekwondo', 'anfaenger'));
+
+			expect(mockedFetch).toHaveBeenCalledWith(offerGroupsGroupPageNewsQuery, {
+				groupType: 'group.taekwondo',
+				slug: 'anfaenger',
+			});
+		});
+
+		it('places the news between the training times and the contact persons', async () => {
+			mockSanity();
+
+			const order = sectionOrder(await SingleGroupsPage(routeProps()));
+
+			expect(order.indexOf(News)).toBe(order.indexOf(Training) + 1);
+			expect(order.indexOf(ContactPersons)).toBe(order.indexOf(News) + 1);
+		});
+
+		it.each<[string, unknown]>([
+			['no news category is assigned to the group', null],
+			['the news category has no articles yet', { ...NEWS, articles: [] }],
+		])('leaves the news section out when %s', async (_name, news) => {
+			mockSanity({ news });
+
+			const page = await SingleGroupsPage(routeProps());
+
+			expect(findElement(page, News)).toBeUndefined();
 		});
 
 		it('lists the coaches of the group as contact persons', async () => {
