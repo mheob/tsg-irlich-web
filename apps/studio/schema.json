@@ -3577,11 +3577,19 @@
 						},
 						{
 							"type": "string",
+							"value": "ElternKindTurnen"
+						},
+						{
+							"type": "string",
 							"value": "Fitness"
 						},
 						{
 							"type": "string",
 							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gehen"
 						},
 						{
 							"type": "string",
@@ -3593,7 +3601,19 @@
 						},
 						{
 							"type": "string",
+							"value": "Laufen"
+						},
+						{
+							"type": "string",
+							"value": "Medaille"
+						},
+						{
+							"type": "string",
 							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "Pokal"
 						},
 						{
 							"type": "string",
@@ -3618,6 +3638,14 @@
 						{
 							"type": "string",
 							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Tischtennis"
+						},
+						{
+							"type": "string",
+							"value": "Trainer"
 						},
 						{
 							"type": "string",
@@ -5022,11 +5050,19 @@
 						},
 						{
 							"type": "string",
+							"value": "ElternKindTurnen"
+						},
+						{
+							"type": "string",
 							"value": "Fitness"
 						},
 						{
 							"type": "string",
 							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gehen"
 						},
 						{
 							"type": "string",
@@ -5038,7 +5074,19 @@
 						},
 						{
 							"type": "string",
+							"value": "Laufen"
+						},
+						{
+							"type": "string",
+							"value": "Medaille"
+						},
+						{
+							"type": "string",
 							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "Pokal"
 						},
 						{
 							"type": "string",
@@ -5063,6 +5111,14 @@
 						{
 							"type": "string",
 							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Tischtennis"
+						},
+						{
+							"type": "string",
+							"value": "Trainer"
 						},
 						{
 							"type": "string",
@@ -5264,11 +5320,19 @@
 						},
 						{
 							"type": "string",
+							"value": "ElternKindTurnen"
+						},
+						{
+							"type": "string",
 							"value": "Fitness"
 						},
 						{
 							"type": "string",
 							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gehen"
 						},
 						{
 							"type": "string",
@@ -5280,7 +5344,19 @@
 						},
 						{
 							"type": "string",
+							"value": "Laufen"
+						},
+						{
+							"type": "string",
+							"value": "Medaille"
+						},
+						{
+							"type": "string",
 							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "Pokal"
 						},
 						{
 							"type": "string",
@@ -5305,6 +5381,14 @@
 						{
 							"type": "string",
 							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Tischtennis"
+						},
+						{
+							"type": "string",
+							"value": "Trainer"
 						},
 						{
 							"type": "string",
@@ -5506,11 +5590,19 @@
 						},
 						{
 							"type": "string",
+							"value": "ElternKindTurnen"
+						},
+						{
+							"type": "string",
 							"value": "Fitness"
 						},
 						{
 							"type": "string",
 							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gehen"
 						},
 						{
 							"type": "string",
@@ -5522,7 +5614,19 @@
 						},
 						{
 							"type": "string",
+							"value": "Laufen"
+						},
+						{
+							"type": "string",
+							"value": "Medaille"
+						},
+						{
+							"type": "string",
 							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "Pokal"
 						},
 						{
 							"type": "string",
@@ -5547,6 +5651,14 @@
 						{
 							"type": "string",
 							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Tischtennis"
+						},
+						{
+							"type": "string",
+							"value": "Trainer"
 						},
 						{
 							"type": "string",
@@ -5748,11 +5860,19 @@
 						},
 						{
 							"type": "string",
+							"value": "ElternKindTurnen"
+						},
+						{
+							"type": "string",
 							"value": "Fitness"
 						},
 						{
 							"type": "string",
 							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gehen"
 						},
 						{
 							"type": "string",
@@ -5764,7 +5884,19 @@
 						},
 						{
 							"type": "string",
+							"value": "Laufen"
+						},
+						{
+							"type": "string",
+							"value": "Medaille"
+						},
+						{
+							"type": "string",
 							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "Pokal"
 						},
 						{
 							"type": "string",
@@ -5789,6 +5921,14 @@
 						{
 							"type": "string",
 							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Tischtennis"
+						},
+						{
+							"type": "string",
+							"value": "Trainer"
 						},
 						{
 							"type": "string",
@@ -5990,11 +6130,19 @@
 						},
 						{
 							"type": "string",
+							"value": "ElternKindTurnen"
+						},
+						{
+							"type": "string",
 							"value": "Fitness"
 						},
 						{
 							"type": "string",
 							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gehen"
 						},
 						{
 							"type": "string",
@@ -6006,7 +6154,19 @@
 						},
 						{
 							"type": "string",
+							"value": "Laufen"
+						},
+						{
+							"type": "string",
+							"value": "Medaille"
+						},
+						{
+							"type": "string",
 							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "Pokal"
 						},
 						{
 							"type": "string",
@@ -6031,6 +6191,14 @@
 						{
 							"type": "string",
 							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Tischtennis"
+						},
+						{
+							"type": "string",
+							"value": "Trainer"
 						},
 						{
 							"type": "string",
@@ -6232,11 +6400,19 @@
 						},
 						{
 							"type": "string",
+							"value": "ElternKindTurnen"
+						},
+						{
+							"type": "string",
 							"value": "Fitness"
 						},
 						{
 							"type": "string",
 							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gehen"
 						},
 						{
 							"type": "string",
@@ -6248,7 +6424,19 @@
 						},
 						{
 							"type": "string",
+							"value": "Laufen"
+						},
+						{
+							"type": "string",
+							"value": "Medaille"
+						},
+						{
+							"type": "string",
 							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "Pokal"
 						},
 						{
 							"type": "string",
@@ -6273,6 +6461,14 @@
 						{
 							"type": "string",
 							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Tischtennis"
+						},
+						{
+							"type": "string",
+							"value": "Trainer"
 						},
 						{
 							"type": "string",

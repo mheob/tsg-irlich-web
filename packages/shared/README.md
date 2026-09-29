@@ -56,20 +56,29 @@ Component for rendering DOSB (German Olympic Sports Confederation) sport icons. 
 - `Badminton`
 - `Bodenturnen`
 - `Cheerleading`
+- `ElternKindTurnen`
 - `Fitness`
 - `Fussball`
+- `Gehen`
 - `Gymnastik`
 - `Jujutsu`
+- `Laufen`
+- `Medaille`
 - `Pilates`
+- `Pokal`
 - `RopeSkipping`
 - `SportInGebaeuden`
 - `Sportakrobatik`
 - `StepAerobic`
 - `Taekwondo`
 - `Tanzen`
+- `Tischtennis`
+- `Trainer`
 - `Turnen`
 - `Wandern`
 - `Yoga`
+
+**Adding an icon:** add its name to `DOSB_ICONS` in `src/icons/dosb.types.ts`, then add the shape component and an entry in `DOSB_ICON_SHAPES` in `src/icons/dosb.tsx`. The entry carries the `viewBox` of the source SVG, because the Sportdeutschland downloads use different artboards (`592`, `142` and `199` so far). Replace the source fill colour with `currentColor`. The studio's icon list and the Sanity types pick the new name up after `pnpm run extract-types && pnpm run typegen:sanity`.
 
 ```tsx
 import { DOSBIcon } from '@tsgi-web/shared';
