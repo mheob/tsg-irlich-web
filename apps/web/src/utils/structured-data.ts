@@ -1,4 +1,11 @@
-import type { Graph, NewsArticle, WithContext } from 'schema-dts';
+import type {
+	Graph,
+	NewsArticle,
+	PostalAddress as PostalAddressNode,
+	SportsActivityLocation,
+	SportsOrganization,
+	WithContext,
+} from 'schema-dts';
 
 import { urlForImage } from '@/lib/sanity/utils';
 import type { AnyImage } from '@/types/image.types';
@@ -7,10 +14,10 @@ import { SITE_NAME } from './metadata';
 import { getLastModified } from './time';
 
 /**
- * The aspect ratios search engines pick an article image from, each 1200 px wide. Google asks for
- * 16:9, 4:3 and 1:1, so a result can show the image in whichever shape it has room for.
+ * The aspect ratios search engines pick an image from, each 1200 px wide. Google asks for 16:9, 4:3
+ * and 1:1, so a result can show the image in whichever shape it has room for.
  */
-const ARTICLE_IMAGE_SIZES = [
+const IMAGE_SIZES = [
 	{ height: 675, width: 1200 },
 	{ height: 900, width: 1200 },
 	{ height: 1200, width: 1200 },
@@ -38,6 +45,19 @@ interface Organization {
 	} | null;
 }
 
+interface Venue {
+	_id: string;
+	location?: (PostalAddress & { name?: string | null }) | null;
+	title?: string | null;
+}
+
+interface Group {
+	featuredImage?: AnyImage | null;
+	meta?: { metaDescription?: string | null } | null;
+	title?: string | null;
+	training?: { trainingTimes?: ({ venue?: Venue | null } | null)[] | null } | null;
+}
+
 interface Article {
 	_updatedAt: string;
 	author?: { firstName?: string | null; jobTitle?: string | null; lastName?: string | null } | null;
@@ -60,6 +80,36 @@ function getOrganizationId(baseUrl: string): string {
 }
 
 /**
+ * Builds the URLs of an image in the shapes search results use.
+ *
+ * @param image - The Sanity image.
+ * @returns The URLs, or `undefined` when there is no image to show.
+ */
+function getImageUrls(image?: AnyImage | null): string[] | undefined {
+	const urls = IMAGE_SIZES.map(({ height, width }) =>
+		urlForImage(image ?? undefined, height, width),
+	).filter((url): url is string => Boolean(url));
+
+	return urls.length > 0 ? urls : undefined;
+}
+
+/**
+ * Describes a postal address. Every address the club uses lies in Germany.
+ *
+ * @param address - The address parts from Sanity.
+ * @returns The `PostalAddress` node.
+ */
+function getPostalAddress(address: PostalAddress): PostalAddressNode {
+	return {
+		'@type': 'PostalAddress',
+		addressCountry: 'DE',
+		addressLocality: address.city ?? undefined,
+		postalCode: address.zipCode ?? undefined,
+		streetAddress: [address.street, address.houseNumber].filter(Boolean).join(' '),
+	};
+}
+
+/**
  * Describes the club and the website, for the root layout.
  *
  * @param baseUrl - The site's base URL.
@@ -76,15 +126,7 @@ function getSiteGraph(baseUrl: string, organization?: Organization | null): Grap
 			{
 				'@id': getOrganizationId(baseUrl),
 				'@type': 'SportsOrganization',
-				address: address
-					? {
-							'@type': 'PostalAddress',
-							addressCountry: 'DE',
-							addressLocality: address.city ?? undefined,
-							postalCode: address.zipCode ?? undefined,
-							streetAddress: [address.street, address.houseNumber].filter(Boolean).join(' '),
-						}
-					: undefined,
+				address: address ? getPostalAddress(address) : undefined,
 				email: organization?.contact?.email ?? undefined,
 				logo: `${baseUrl}/tsg-irlich-logo.png`,
 				name: SITE_NAME,
@@ -123,9 +165,6 @@ function getNewsArticleSchema(
 	const authorName = [article.author?.firstName, article.author?.lastName]
 		.filter(Boolean)
 		.join(' ');
-	const images = ARTICLE_IMAGE_SIZES.map(({ height, width }) =>
-		urlForImage(article.featuredImage ?? undefined, height, width),
-	).filter((url): url is string => Boolean(url));
 
 	return {
 		'@context': 'https://schema.org',
@@ -137,7 +176,7 @@ function getNewsArticleSchema(
 		datePublished: article.publishedAt,
 		description: article.meta?.metaDescription ?? article.excerpt ?? undefined,
 		headline: article.title ?? undefined,
-		image: images.length > 0 ? images : undefined,
+		image: getImageUrls(article.featuredImage),
 		inLanguage: LANGUAGE,
 		mainEntityOfPage: `${baseUrl}${path}`,
 		// The layout describes the club in full. Type and name are repeated so the node still reads
@@ -150,4 +189,61 @@ function getNewsArticleSchema(
 	};
 }
 
-export { getNewsArticleSchema, getSiteGraph };
+/**
+ * Describes a group of the club on its page: what it is, where it trains and that it belongs to
+ * the club.
+ *
+ * The training times stay in the page's markup only. Google reads a training time neither as an
+ * `Event` without a fixed `startDate` nor from an `eventSchedule`, and it excludes recurring
+ * opening-hours-like times from events altogether, so marking them up would only produce errors.
+ *
+ * @param options - The group and where its page lives.
+ * @param options.baseUrl - The site's base URL.
+ * @param options.group - The group.
+ * @param options.isTeam - Whether the group plays as a team, which makes it a `SportsTeam`.
+ * @param options.path - The group page's canonical path.
+ * @returns The `SportsTeam` or `SportsOrganization` node.
+ */
+function getGroupSchema({
+	baseUrl,
+	group,
+	isTeam,
+	path,
+}: {
+	baseUrl: string;
+	group: Group;
+	isTeam: boolean;
+	path: string;
+}): WithContext<Exclude<SportsOrganization, string>> {
+	const venues = new Map<string, Venue>();
+
+	for (const trainingTime of group.training?.trainingTimes ?? []) {
+		const venue = trainingTime?.venue;
+
+		if (venue) {
+			venues.set(venue._id, venue);
+		}
+	}
+
+	const locations = [...venues.values()].map((venue): SportsActivityLocation => ({
+		'@type': 'SportsActivityLocation',
+		address: venue.location ? getPostalAddress(venue.location) : undefined,
+		name: venue.location?.name ?? venue.title ?? undefined,
+	}));
+	return {
+		'@context': 'https://schema.org',
+		'@type': isTeam ? 'SportsTeam' : 'SportsOrganization',
+		description: group.meta?.metaDescription ?? undefined,
+		image: getImageUrls(group.featuredImage),
+		location: locations.length > 0 ? locations : undefined,
+		name: group.title ?? undefined,
+		parentOrganization: {
+			'@id': getOrganizationId(baseUrl),
+			'@type': 'SportsOrganization',
+			name: SITE_NAME,
+		},
+		url: `${baseUrl}${path}`,
+	};
+}
+
+export { getGroupSchema, getNewsArticleSchema, getSiteGraph };
