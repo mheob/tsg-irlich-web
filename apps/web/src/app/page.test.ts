@@ -129,6 +129,7 @@ describe('home page', () => {
 			build: buildPage,
 			fetchMock: mockedFetch,
 			generateMetadata,
+			path: '/',
 			title: 'TSG Irlich',
 		});
 	});

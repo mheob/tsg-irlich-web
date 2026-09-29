@@ -10,8 +10,8 @@ import heroImage from '@/images/verein/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { aboutUsPageQuery } from '@/lib/sanity/queries/pages/about-us';
 import type { AboutUsPageQueryResult } from '@/types/sanity.types.generated';
+import { getPageMetadata } from '@/utils/metadata';
 
-import { getOpenGraphImageOptions } from '../news/_shared/utils';
 import { Chronicle } from './_sections/chronicle';
 import { Intro } from './_sections/intro';
 
@@ -27,16 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	const description = page.meta?.metaDescription ?? '';
-	const image = page.meta?.openGraphImage;
-	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
-	const title = page.meta?.metaTitle ?? page.title ?? '';
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({ meta: page.meta, path: '/verein', title: page.title });
 }
 
 export default async function VereinPage() {

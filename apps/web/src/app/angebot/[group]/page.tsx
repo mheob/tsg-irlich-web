@@ -20,6 +20,7 @@ import type {
 	OfferGroupsPageQueryResult,
 } from '@/types/sanity.types.generated';
 import { getCurrentDepartment, getGroupImage, getOGImage } from '@/utils/groups';
+import { getPageMetadata } from '@/utils/metadata';
 
 import { Groups } from './_sections/groups';
 
@@ -36,17 +37,13 @@ export async function generateMetadata({
 		return {};
 	}
 
-	const image = getOGImage(groupParameter);
-
-	return {
-		description: page.metaDescription ?? '',
-		openGraph: {
-			description: page.metaDescription ?? '',
-			images: image ?? [],
-			title: `${currentDepartment?.title ?? 'Sport'} bei der TSG Irlich`,
-		},
+	return getPageMetadata({
+		description: page.metaDescription,
+		// A department page has no image of its own in Sanity, but a static one per department.
+		openGraph: { images: getOGImage(groupParameter) },
+		path: `/angebot/${groupParameter}`,
 		title: `${currentDepartment?.title ?? 'Sport'} bei der TSG Irlich`,
-	};
+	});
 }
 
 export default async function GroupsPage({ params }: PageProps<'/angebot/[group]'>) {

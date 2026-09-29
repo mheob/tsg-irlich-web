@@ -9,8 +9,8 @@ import heroImage from '@/images/angebot/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { offerPageQuery } from '@/lib/sanity/queries/pages/offer';
 import type { OfferPageQueryResult } from '@/types/sanity.types.generated';
+import { getPageMetadata } from '@/utils/metadata';
 
-import { getOpenGraphImageOptions } from '../news/_shared/utils';
 import { Groups } from './_sections/groups';
 
 const HERO_IMAGE = { alt: 'TSG Irlich Schiedsrichter-Trikot in blau von JAKO', src: heroImage };
@@ -22,16 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	const description = page.meta?.metaDescription ?? '';
-	const image = page.meta?.openGraphImage;
-	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
-	const title = page.meta?.metaTitle ?? page.title ?? '';
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({ meta: page.meta, path: '/angebot', title: page.title });
 }
 
 export default async function OfferPage() {

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
@@ -19,6 +18,7 @@ import type {
 	SimpleBlockContent,
 } from '@/types/sanity.types.generated';
 import { getCurrentDepartment } from '@/utils/groups';
+import { getPageMetadata } from '@/utils/metadata';
 
 import { Main } from './_sections/main';
 import { Training } from './_sections/training';
@@ -44,20 +44,16 @@ export async function generateMetadata({
 		},
 	);
 
-	if (!page?.meta) {
+	if (!page) {
 		return {};
 	}
 
-	const description = page.meta?.metaDescription ?? '';
-	const image = page.meta?.openGraphImage ?? page.featuredImage;
-	const images = image ? getOpenGraphImageOptions(image, page.title ?? '') : [];
-	const title = page.meta.metaTitle ?? (page.title ? `${page.title} — TSG Irlich` : '');
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({
+		image: page.featuredImage,
+		meta: page.meta,
+		path: `/angebot/${group}/${singleGroup}`,
+		title: page.title,
+	});
 }
 
 export default async function SingleGroupsPage({

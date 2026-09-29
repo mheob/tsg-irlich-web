@@ -9,8 +9,7 @@ import contactImage from '@/images/kontakt/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { contactPageQuery } from '@/lib/sanity/queries/pages/contact';
 import type { ContactPageQueryResult } from '@/types/sanity.types.generated';
-
-import { getOpenGraphImageOptions } from '../news/_shared/utils';
+import { getPageMetadata } from '@/utils/metadata';
 
 const HERO_IMAGE = {
 	alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
@@ -24,16 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	const description = page.meta?.metaDescription ?? '';
-	const image = page.meta?.openGraphImage;
-	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
-	const title = page.meta?.metaTitle ?? page.title ?? '';
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({ meta: page.meta, path: '/kontakt', title: page.title });
 }
 
 export default async function ContactPage() {

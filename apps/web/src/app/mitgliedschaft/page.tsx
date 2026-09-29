@@ -9,8 +9,8 @@ import heroImage from '@/images/mitgliedschaft/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { membershipPageQuery } from '@/lib/sanity/queries/pages/membership';
 import type { MembershipPageQueryResult } from '@/types/sanity.types.generated';
+import { getPageMetadata } from '@/utils/metadata';
 
-import { getOpenGraphImageOptions } from '../news/_shared/utils';
 import { Downloads } from './_sections/downloads';
 import { Intro } from './_sections/intro';
 
@@ -26,16 +26,11 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	const description = page.membership.meta?.metaDescription ?? '';
-	const image = page.membership.meta?.openGraphImage;
-	const images = image ? getOpenGraphImageOptions(image, page.membership.title) : [];
-	const title = page.membership.meta?.metaTitle ?? page.membership.title ?? '';
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({
+		meta: page.membership.meta,
+		path: '/mitgliedschaft',
+		title: page.membership.title,
+	});
 }
 
 export default async function ContactPage() {

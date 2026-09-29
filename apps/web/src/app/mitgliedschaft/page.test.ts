@@ -57,6 +57,7 @@ describe('membership page', () => {
 			// Both parts of the page come from one query, so an absent membership document still
 			// resolves to an object — only its `membership` property is missing.
 			missingDocument: { membership: null, pricingSection: null },
+			path: '/mitgliedschaft',
 			title: 'Mitgliedschaft',
 		});
 	});

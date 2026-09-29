@@ -45,6 +45,7 @@ describe('accessibility page', () => {
 			build: buildPage,
 			fetchMock: mockedFetch,
 			generateMetadata,
+			path: '/barrierefreiheit',
 			title: 'Barrierefreiheit',
 		});
 	});

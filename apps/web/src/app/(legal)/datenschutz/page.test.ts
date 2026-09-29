@@ -49,6 +49,7 @@ describe('privacy page', () => {
 			build: buildPage,
 			fetchMock: mockedFetch,
 			generateMetadata,
+			path: '/datenschutz',
 			title: 'Datenschutz',
 		});
 	});

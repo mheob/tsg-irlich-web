@@ -22,6 +22,7 @@ const newsArticleHeroQuery = defineQuery(`
  */
 const newsArticleContentQuery = defineQuery(`
 	*[_type == 'news.article' && slug.current == $slug][0] {
+		_updatedAt,
 		author -> {
 			email,
 			firstName,

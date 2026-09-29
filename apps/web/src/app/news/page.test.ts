@@ -85,13 +85,13 @@ describe('news overview page', () => {
 		it('is empty when the document is missing', async () => {
 			mockSanity({ page: null });
 
-			await expect(generateMetadata()).resolves.toStrictEqual({});
+			await expect(generateMetadata(routeProps())).resolves.toStrictEqual({});
 		});
 
 		it('reads the document without stega encoding', async () => {
 			mockSanity();
 
-			await generateMetadata();
+			await generateMetadata(routeProps());
 
 			expect(mockedSanityFetch).toHaveBeenCalledWith({
 				query: newsOverviewPageQuery,
@@ -102,7 +102,7 @@ describe('news overview page', () => {
 		it('falls back to the document title and an empty description', async () => {
 			mockSanity();
 
-			await expect(generateMetadata()).resolves.toMatchObject({
+			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
 				description: '',
 				openGraph: { images: [] },
 				title: 'News',
@@ -114,10 +114,27 @@ describe('news overview page', () => {
 				page: { ...OVERVIEW, meta: { metaDescription: 'Aktuelles', metaTitle: 'News · TSG' } },
 			});
 
-			await expect(generateMetadata()).resolves.toMatchObject({
+			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
 				description: 'Aktuelles',
 				title: 'News · TSG',
 			});
+		});
+
+		it('points the canonical URL of the first page at the plain overview', async () => {
+			mockSanity();
+
+			const metadata = await generateMetadata(routeProps('1'));
+
+			expect(metadata.alternates?.canonical).toBe('/news');
+		});
+
+		it('points the canonical URL of every later page at that page', async () => {
+			mockSanity();
+
+			const metadata = await generateMetadata(routeProps('2'));
+
+			expect(metadata.alternates?.canonical).toBe('/news?seite=2');
+			expect(metadata.openGraph).toMatchObject({ url: '/news?seite=2' });
 		});
 	});
 

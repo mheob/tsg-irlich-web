@@ -82,8 +82,20 @@ describe('the root layout', () => {
 	});
 
 	it('carries the club-wide metadata and points at the feed', () => {
-		expect(metadata.title).toBe('TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich');
+		expect(metadata.title).toStrictEqual({
+			default: 'TSG Irlich — deine Turn- und Sportgemeinde in Neuwied / Irlich',
+			template: '%s | TSG Irlich',
+		});
 		expect(metadata.alternates?.types).toStrictEqual({ 'application/rss+xml': '/feed.xml' });
+	});
+
+	it('names the site in the open graph fields and asks for large social previews', () => {
+		expect(metadata.openGraph).toMatchObject({
+			locale: 'de_DE',
+			siteName: 'TSG Irlich',
+			type: 'website',
+		});
+		expect(metadata.twitter).toStrictEqual({ card: 'summary_large_image' });
 	});
 
 	it('hands the navigation the items it fetched', async () => {
