@@ -152,3 +152,102 @@ describe('the news article', () => {
 		).toMatchObject({ author: undefined, image: undefined });
 	});
 });
+
+describe('a group of the club', () => {
+	const VENUE = {
+		_id: 'venue-pappelstadion',
+		location: {
+			city: 'Neuwied',
+			houseNumber: '20',
+			name: 'Pappelstadion Neuwied/Irlich',
+			street: 'Gotenstraße',
+			zipCode: '56567',
+		},
+		title: 'Pappelstadion',
+	};
+
+	const GROUP = {
+		featuredImage: ARTICLE.featuredImage,
+		meta: { metaDescription: 'Der perfekte Einstieg in den Fußball.' },
+		title: 'F-Jugend',
+		training: {
+			trainingTimes: [
+				{ venue: VENUE },
+				{ venue: VENUE },
+				{ venue: { _id: 'venue-halle', title: 'Turnhalle' } },
+			],
+		},
+	};
+
+	it('describes a soccer group as a team of the club', async () => {
+		const { getGroupSchema } = await loadStructuredData();
+
+		expect(
+			getGroupSchema({
+				baseUrl: BASE_URL,
+				group: GROUP,
+				isTeam: true,
+				path: '/angebot/fussball/f-jugend',
+			}),
+		).toMatchObject({
+			'@context': 'https://schema.org',
+			'@type': 'SportsTeam',
+			description: 'Der perfekte Einstieg in den Fußball.',
+			name: 'F-Jugend',
+			parentOrganization: { '@id': 'https://www.tsg-irlich.de/#organization', name: 'TSG Irlich' },
+			url: 'https://www.tsg-irlich.de/angebot/fussball/f-jugend',
+		});
+	});
+
+	it('describes every other group as an organization of the club', async () => {
+		const { getGroupSchema } = await loadStructuredData();
+
+		expect(
+			getGroupSchema({
+				baseUrl: BASE_URL,
+				group: GROUP,
+				isTeam: false,
+				path: '/angebot/kurse/yoga',
+			}),
+		).toMatchObject({ '@type': 'SportsOrganization' });
+	});
+
+	it('lists each venue it trains at once, with its address', async () => {
+		const { getGroupSchema } = await loadStructuredData();
+
+		const { location } = getGroupSchema({
+			baseUrl: BASE_URL,
+			group: GROUP,
+			isTeam: true,
+			path: '/angebot/fussball/f-jugend',
+		});
+
+		expect(location).toStrictEqual([
+			{
+				'@type': 'SportsActivityLocation',
+				address: {
+					'@type': 'PostalAddress',
+					addressCountry: 'DE',
+					addressLocality: 'Neuwied',
+					postalCode: '56567',
+					streetAddress: 'Gotenstraße 20',
+				},
+				name: 'Pappelstadion Neuwied/Irlich',
+			},
+			{ '@type': 'SportsActivityLocation', address: undefined, name: 'Turnhalle' },
+		]);
+	});
+
+	it('leaves location and image out for a group without training times or image', async () => {
+		const { getGroupSchema } = await loadStructuredData();
+
+		expect(
+			getGroupSchema({
+				baseUrl: BASE_URL,
+				group: { featuredImage: null, meta: null, title: 'Vorstand', training: null },
+				isTeam: false,
+				path: '/angebot/weitere-sportarten/vorstand',
+			}),
+		).toMatchObject({ description: undefined, image: undefined, location: undefined });
+	});
+});
