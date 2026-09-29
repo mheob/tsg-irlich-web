@@ -2,163 +2,168 @@
 	"body": {
 		"result": [
 			{
+				"_type": "group.other-sports",
+				"lastModified": "2026-09-29T13:56:31Z",
+				"slug": "tischtennis"
+			},
+			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "c-jugend"
 			},
 			{
 				"_type": "group.courses",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "yoga"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "alte-herren"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "f-jugend"
 			},
 			{
 				"_type": "group.dance",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "funky-diamonds"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "schiedsrichter"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "a-jugend"
 			},
 			{
 				"_type": "group.other-sports",
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "wandern"
 			},
 			{
 				"_type": "group.dance",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "sweet-diamonds"
 			},
 			{
 				"_type": "group.other-sports",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T14:02:42Z",
 				"slug": "badminton"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "bambinis"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "e-jugend"
 			},
 			{
 				"_type": "group.children-gymnastics",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "kinderturnen-ab-8"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "d-jugend"
 			},
 			{
 				"_type": "group.other-sports",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "rope-skipping"
 			},
 			{
 				"_type": "group.other-sports",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T14:02:51Z",
 				"slug": "frauengymnastik"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "1-mannschaft"
 			},
 			{
 				"_type": "group.courses",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "after-work-fitness"
 			},
 			{
 				"_type": "group.other-sports",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T14:03:07Z",
 				"slug": "jedermaenner"
 			},
 			{
 				"_type": "group.children-gymnastics",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "kinderturnen-ab-3"
 			},
 			{
 				"_type": "group.children-gymnastics",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "kinderturnen-ab-6"
 			},
 			{
 				"_type": "group.dance",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "magic-diamonds"
 			},
 			{
 				"_type": "group.courses",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "pilates"
 			},
 			{
 				"_type": "group.taekwondo",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "selbstverteidigung"
 			},
 			{
 				"_type": "group.children-gymnastics",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "eltern-kind-turnen"
 			},
 			{
 				"_type": "group.dance",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "little-diamonds"
 			},
 			{
 				"_type": "group.taekwondo",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "mini-scorpions"
 			},
 			{
 				"_type": "group.taekwondo",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "scorpions"
 			},
 			{
 				"_type": "group.courses",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "aerobic"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "b-jugend"
 			},
 			{
 				"_type": "group.soccer",
-				"lastModified": "2026-08-26T07:54:57Z",
+				"lastModified": "2026-09-29T13:56:31Z",
 				"slug": "montagskicker"
 			}
 		],
-		"syncTags": ["s1:aQPN8w", "s1:UjEcig", "s1:JoRayg", "s1:hlft0g", "s1:VaQVUA", "s1:p8OCEQ"],
-		"ms": 11
+		"syncTags": ["s1:JoRayg", "s1:hlft0g", "s1:aQPN8w", "s1:VaQVUA", "s1:p8OCEQ", "s1:UjEcig"],
+		"ms": 5
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+in+%5B%0A%09%09%27group.soccer%27%2C%0A%09%09%27group.children-gymnastics%27%2C%0A%09%09%27group.courses%27%2C%0A%09%09%27group.taekwondo%27%2C%0A%09%09%27group.dance%27%2C%0A%09%09%27group.other-sports%27%2C%0A%09%5D%5D+%7B%0A%09%09_type%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22lastModified%22%3A+_updatedAt%0A%09%7D%0A&returnQuery=false"
 }

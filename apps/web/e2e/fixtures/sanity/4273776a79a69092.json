@@ -125,7 +125,7 @@
 						"venue": {
 							"_createdAt": "2024-09-20T10:39:23Z",
 							"_id": "044de207-3af7-4121-bcec-11cafebce68c",
-							"_rev": "FGdPcw6oZ4f5ikxTPQ5UcC",
+							"_rev": "R3E9jQFgtI1iXWhprtj9yR",
 							"_system": {
 								"base": {
 									"id": "044de207-3af7-4121-bcec-11cafebce68c",
@@ -133,7 +133,7 @@
 								}
 							},
 							"_type": "venue",
-							"_updatedAt": "2026-08-26T07:54:56Z",
+							"_updatedAt": "2026-09-29T12:28:49Z",
 							"description": {
 								"_type": "simpleBlockContent",
 								"text": [
@@ -182,7 +182,7 @@
 						"venue": {
 							"_createdAt": "2024-09-20T10:39:23Z",
 							"_id": "044de207-3af7-4121-bcec-11cafebce68c",
-							"_rev": "FGdPcw6oZ4f5ikxTPQ5UcC",
+							"_rev": "R3E9jQFgtI1iXWhprtj9yR",
 							"_system": {
 								"base": {
 									"id": "044de207-3af7-4121-bcec-11cafebce68c",
@@ -190,7 +190,7 @@
 								}
 							},
 							"_type": "venue",
-							"_updatedAt": "2026-08-26T07:54:56Z",
+							"_updatedAt": "2026-09-29T12:28:49Z",
 							"description": {
 								"_type": "simpleBlockContent",
 								"text": [
@@ -239,7 +239,7 @@
 						"venue": {
 							"_createdAt": "2025-11-06T21:55:19Z",
 							"_id": "c61807c0-e58f-4d18-a347-3fc7c6d7e97b",
-							"_rev": "iXFi0dmSD9bydBwpfJgnLM",
+							"_rev": "Nik63qLLJXUuVJPKyfbivz",
 							"_type": "venue",
 							"_updatedAt": "2025-11-06T21:57:42Z",
 							"description": {
@@ -276,8 +276,8 @@
 				]
 			}
 		},
-		"syncTags": ["s1:uf4YSw", "s1:4+Elpw", "s1:LW1bag"],
-		"ms": 7
+		"syncTags": ["s1:LW1bag", "s1:uf4YSw", "s1:4+Elpw"],
+		"ms": 6
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24groupType=%22group.soccer%22&%24slug=%22a-jugend%22&returnQuery=false"
 }

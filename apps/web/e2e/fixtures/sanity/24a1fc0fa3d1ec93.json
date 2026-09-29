@@ -3,7 +3,7 @@
 		"result": {
 			"_createdAt": "2024-06-17T18:34:35Z",
 			"_id": "home",
-			"_rev": "dtJXu1REiVbNFr2bYfprpa",
+			"_rev": "Nik63qLLJXUuVJPKyfhCg9",
 			"_system": {
 				"base": {
 					"id": "home",
@@ -11,7 +11,7 @@
 				}
 			},
 			"_type": "home",
-			"_updatedAt": "2026-08-26T07:54:57Z",
+			"_updatedAt": "2026-09-29T12:28:50Z",
 			"content": {
 				"contactPersonsSection": {
 					"contactPersons": [
@@ -357,19 +357,19 @@
 			"title": "Mehr als Sport – wir sind die TSG Irlich."
 		},
 		"syncTags": [
-			"s1:eOuqJg",
+			"s1:B7LhMw",
 			"s1:bW4l3Q",
 			"s1:yJoVrQ",
-			"s1:SgUpiQ",
 			"s1:N029bQ",
 			"s1:BpJQvw",
+			"s1:kG7Arw",
 			"s1:y+gLqA",
 			"s1:NuVTmQ",
 			"s1:WU9DBg",
-			"s1:B7LhMw",
 			"s1:Cc+ZCg",
+			"s1:SgUpiQ",
 			"s1:PeVrtw",
-			"s1:kG7Arw"
+			"s1:eOuqJg"
 		],
 		"ms": 11
 	},

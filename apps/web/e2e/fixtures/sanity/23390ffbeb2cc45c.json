@@ -3,7 +3,7 @@
 		"result": {
 			"_createdAt": "2025-06-20T06:28:34Z",
 			"_id": "departmentsPage",
-			"_rev": "iXFi0dmSD9bydBwpfJjyVO",
+			"_rev": "R3E9jQFgtI1iXWhprtjIsR",
 			"_system": {
 				"base": {
 					"id": "departmentsPage",
@@ -11,7 +11,7 @@
 				}
 			},
 			"_type": "departmentsPage",
-			"_updatedAt": "2026-08-26T07:54:57Z",
+			"_updatedAt": "2026-09-29T12:28:50Z",
 			"content": {
 				"contactPersonsSection": {
 					"contactPersons": [

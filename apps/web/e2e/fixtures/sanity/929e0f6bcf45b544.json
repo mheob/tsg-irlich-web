@@ -2,104 +2,112 @@
 	"body": {
 		"result": [
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "jedermanner"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "jugend"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T13:55:26Z",
+				"slug": "tischtennis"
+			},
+			{
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "historie"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "wandern"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "senioren"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "faszien"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T13:59:10Z",
+				"slug": "kurse"
+			},
+			{
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "turnen"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "breitensport"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "pr-team"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "kinderturnen"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "fussball"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "alte-herren"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "montagskicker"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "schiedsrichter"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "verein"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "diamonds"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "soziales"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "badminton"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "after-work-fitness"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "veranstaltungen"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "frauengymnastik"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "rope-skipping"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "pilates"
 			},
 			{
-				"lastModified": "2026-08-26T07:54:56Z",
+				"lastModified": "2026-09-29T12:28:49Z",
 				"slug": "taekwondo"
 			}
 		],
 		"syncTags": ["s1:0IpYkw"],
-		"ms": 4
+		"ms": 6
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.category%27%5D+%7B%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22lastModified%22%3A+_updatedAt%0A%09%7D%0A&returnQuery=false"
 }

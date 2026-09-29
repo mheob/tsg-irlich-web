@@ -165,14 +165,14 @@
 		],
 		"syncTags": [
 			"s1:Cc+ZCg",
+			"s1:/iNbNg",
+			"s1:lWfrkQ",
+			"s1:V1c4Sg",
 			"s1:Mg1Kew",
 			"s1:5DdZwQ",
-			"s1:FnXdAw",
-			"s1:V1c4Sg",
-			"s1:/iNbNg",
-			"s1:lWfrkQ"
+			"s1:FnXdAw"
 		],
-		"ms": 11
+		"ms": 5
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27home%27%5D%5B0%5D.content.testimonialSection.testimonials%5B%5D-%3E+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09image%2C%0A%09%09quote%2C%0A%09%09role%2C%0A%09%7D%0A&returnQuery=false"
 }

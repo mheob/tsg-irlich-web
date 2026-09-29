@@ -1,6 +1,5 @@
 {
 	"body": {
-		"query": "\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n",
 		"result": [
 			{
 				"_id": "f6f95815-acc9-4db3-b7d6-f408a4eacfc4",
@@ -48,7 +47,7 @@
 			}
 		],
 		"syncTags": ["s1:GP6TuQ"],
-		"ms": 2
+		"ms": 3
 	},
-	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27sponsors%27%5D+%7B%0A%09%09_id%2C%0A%09%09name%2C%0A%09%09logo%2C%0A%09%7D+%7C+order%28name+asc%29%0A&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27sponsors%27%5D+%7B%0A%09%09_id%2C%0A%09%09name%2C%0A%09%09logo%2C%0A%09%7D+%7C+order%28name+asc%29%0A&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
 }

@@ -1,0 +1,351 @@
+{
+	"body": {
+		"result": {
+			"_updatedAt": "2026-09-29T12:28:50Z",
+			"author": {
+				"email": "s.thome@tsg-irlich.de",
+				"firstName": "Sophie ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+					"asset": {
+						"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6740816500468764,
+						"width": 0.6978607346799625,
+						"x": 0.4942576493650388,
+						"y": 0.40427639989772435
+					}
+				},
+				"jobTitle": "PR-Team Bereich Breitensport",
+				"lastName": "Thomé"
+			},
+			"body": [
+				{
+					"_key": "6a28584c3751",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "48487660ca99",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9173b9cf7315",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Am Mittwoch, den 5. August 2026, hieß es für die Mittwochsgirls der TSG Irlich wieder: Gemeinsam unterwegs sein und einen schönen Tag miteinander verbringen! Wie in jedem Jahr stand eine gemeinsame Tagestour auf dem Programm – diesmal ging es an die Mosel nach Cochem."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "72aa47777198",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "10e945bb43e1",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Tag begann bereits am Morgen mit der Fahrt im Schienenersatzverkehr nach Koblenz. Dort angekommen wartete zunächst ein gemeinsames Frühstück auf die Gruppe. Frische belegte Brötchen sorgten für einen guten Start in den Tag und natürlich durfte auch der obligatorische Sekt nicht fehlen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "df109b606c1e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f219c9549f39",
+									"_type": "span",
+									"marks": [],
+									"text": "Auf Entdeckungstour durch Cochem"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "c2aa3acb0fbd",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3dbb0f693dcd",
+									"_type": "span",
+									"marks": [],
+									"text": "Anschließend ging es weiter nach "
+								},
+								{
+									"_key": "717445e75586",
+									"_type": "span",
+									"marks": ["9bbeb56d7631"],
+									"text": "Cochem"
+								},
+								{
+									"_key": "8434511e91aa",
+									"_type": "span",
+									"marks": [],
+									"text": ". Cochem ist mit rund 5000 Einwohnern die Kreisstadt des Kreises Cochem-Zell und damit die "
+								},
+								{
+									"_key": "79b76a1e2abc",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "kleinste Kreisstadt in Deutschland"
+								},
+								{
+									"_key": "60f7e43e5c15",
+									"_type": "span",
+									"marks": [],
+									"text": ". Das Erstaunen über diese Tatsache ist oft groß, denn durch die zahlreichen Besucher und Touristen und die vielen Hotels und Einzelhandelsgeschäfte wirkt das beschauliche Städtchen an der Untermpsel eigentlich sehr viel größer und weitläufiger."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "9bbeb56d7631",
+									"_type": "externalLink",
+									"href": "https://cochem.de/"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "555c5af51a01",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "8434511e91aa",
+									"_type": "span",
+									"marks": [],
+									"text": "Bei einer unterhaltsamen "
+								},
+								{
+									"_key": "06b09e888c16",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Stadtführung"
+								},
+								{
+									"_key": "13ed6fb3c3d2",
+									"_type": "span",
+									"marks": [],
+									"text": " konnten die Mittwochsgirls die schöne Moselstadt näher kennenlernen und dabei sicher auch die eine oder andere neue Facette entdecken."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "5a2902289506",
+					"_type": "mainImage",
+					"alt": "Die Mittwochsgirls bei ihrer Stadtrundführung wie sie dem Guide gebannt zuhören",
+					"asset": {
+						"_ref": "image-6ad29225ab04f7311c6f62a3e7a19f69231a66d3-5184x3888-jpg",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "3c7cda99d1bb",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "8e3a09c7326c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4510a4029441",
+									"_type": "span",
+									"marks": [],
+									"text": "Eine Überraschung auf der Mosel"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "268435384c22",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "0cf78f5b5cb6",
+									"_type": "span",
+									"marks": [],
+									"text": "Danach wartete bereits der nächste Programmpunkt – und der war für die Teilnehmerinnen eine echte Überraschung: Eine "
+								},
+								{
+									"_key": "f23635a2da44",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Panoramafahrt"
+								},
+								{
+									"_key": "6e0e1609231e",
+									"_type": "span",
+									"marks": [],
+									"text": " mit dem Schiff auf der Mosel! Bei einem herrlichen Ausblick auf die Landschaft und die Weinberge ließen es sich die Mittwochsgirls gut gehen und genossen die gemeinsame Zeit. Die Überraschung kam bei allen bestens an und sorgte für viel Freude und gute Stimmung."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "4fac559c77b7",
+					"_type": "mainImage",
+					"alt": "Ein Schiff auf der Mosel",
+					"asset": {
+						"_ref": "image-2c0be31ad7b37fdc19e82a419dd535518b9d7346-5184x3888-jpg",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "dc6fb3f8c41d",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "dffd7f9c40ff",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3d708530f76e",
+									"_type": "span",
+									"marks": [],
+									"text": "Leckeres Abendessen zum Tagesabschluss"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "6e9b4f6e58ae",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "2cf2bcfc72b3",
+									"_type": "span",
+									"marks": [],
+									"text": "Am Abend ließ die Gruppe den gelungenen Ausflug bei einem gemeinsamen Essen in einem gemütlichen Lokal ausklingen. Bei leckerem Essen und geselligem Beisammensein wurden noch einmal die schönsten Momente des Tages besprochen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "ac51ec80de9d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ae7e9be5b987",
+									"_type": "span",
+									"marks": [],
+									"text": "Gegen 22:30 Uhr kamen die Mittwochsgirls schließlich wieder gut gelaunt in Neuwied an. Eine rundum gelungene Tagestour mit vielen schönen Eindrücken, guter Stimmung und vor allem viel gemeinsamer Zeit ging damit zu Ende."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "b451935d1909",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "56485ba644c9",
+									"_type": "span",
+									"marks": [],
+									"text": "Und eines ist sicher: Auch im nächsten Jahr darf die traditionelle Tagestour der "
+								},
+								{
+									"_key": "78b04576e8b2",
+									"_type": "span",
+									"marks": ["34fbd23893d2"],
+									"text": "Mittwochsgirls"
+								},
+								{
+									"_key": "bd8053259574",
+									"_type": "span",
+									"marks": [],
+									"text": " nicht fehlen!"
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "34fbd23893d2",
+									"_type": "internalLink",
+									"link": {
+										"_ref": "85948ebb-3e1d-4c73-a078-f1d5ece34ff9",
+										"_type": "reference"
+									},
+									"target": {
+										"_type": "group.other-sports",
+										"category": null,
+										"slug": "frauengymnastik"
+									}
+								}
+							],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "frauengymnastik",
+					"title": "Frauengymnastik"
+				},
+				{
+					"slug": "breitensport",
+					"title": "Breitensport"
+				}
+			],
+			"excerpt": "Am 5. August 2026 hieß es für die Mittwochsgirls der TSG Irlich wieder: Gemeinsam unterwegs sein und einen schönen Tag miteinander verbringen! ",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Alle Mittwochsgirls gemeinsam auf einem Gruppenbild vor einer gelben Hauswand ",
+				"asset": {
+					"_ref": "image-99650bdb7af6ad848db3a7b33ea9bba4b1569c99-5184x3888-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0.114253086084072,
+					"left": 0,
+					"right": 0,
+					"top": 0.1966257001468269
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.504016670918197,
+					"width": 0.9070265699640963,
+					"x": 0.513012182601135,
+					"y": 0.5478590904161468
+				}
+			},
+			"meta": {
+				"metaDescription": "Die Mittwochsgirls der TSG Irlich verbrachten einen geselligen Tag in Cochem – mit Stadtführung und einer überraschenden Moselfahrt.",
+				"metaTitle": "Mittwochsgirls der TSG Irlich auf Tagestour in Cochem",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-09-22T15:10:00.000Z",
+			"slug": "mittwochsgirls-unterwegs-in-cochem",
+			"title": "Mittwochsgirls unterwegs: Ein schöner Tag in Cochem"
+		},
+		"syncTags": ["s1:mCzbTw", "s1:gDNQog", "s1:8Qkb8Q", "s1:Z0MAkw", "s1:+eRs8g"],
+		"ms": 11
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22mittwochsgirls-unterwegs-in-cochem%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}
