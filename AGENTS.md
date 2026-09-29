@@ -156,6 +156,13 @@ pnpm run extract-types && pnpm run typegen:sanity
 
 A new variable also has to be registered in the root `turbo.json` (`globalEnv` or the matching task), otherwise Turbo hides it from the build.
 
+### Deployment (Vercel)
+
+- Two Vercel projects deploy from this repository: `tsg-irlich-web` (Root Directory `apps/web`) and `tsg-irlich-web-studio` (`apps/studio`). `next` deploys to the `staging` environment, `main` to production.
+- A project builds only when a commit affects it. Vercel's "Skip unaffected projects" handles changes inside the workspace packages, but it treats every file outside them (`.claude/`, `.github/`, root docs) as a global change and builds everything. The `ignoreCommand` in each app's `vercel.json` closes that gap with `turbo query affected --base=$VERCEL_GIT_PREVIOUS_SHA --packages <app> --exit-code`, which follows the dependency graph and the global dependencies of `turbo.json`. Exit code 0 cancels the build. If the base commit is unknown, turbo exits non-zero and the build runs as before.
+- A dependency between workspace packages has to be declared in the dependent package's `package.json`, otherwise neither mechanism sees it.
+- To build a skipped deployment anyway, redeploy it in the dashboard with "Use project's Ignore Build Step" unchecked.
+
 ### Code Quality Tools
 
 - **oxlint** with @mheob/oxlint-config (plus oxlint-tsgolint for type-aware rules)
