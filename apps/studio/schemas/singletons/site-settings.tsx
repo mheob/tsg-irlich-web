@@ -8,6 +8,7 @@ import { withRichDescription } from '@/components/rich-field-description';
 import { phoneFieldRegex } from '@/constants/regex';
 import { meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/fields/meta';
+import { postalAddressFields } from '@/shared/fields/postal-address';
 
 const metadataBaseFieldDescription = withRichDescription(
 	<Text muted size={1}>
@@ -38,11 +39,14 @@ const siteSettings = defineType({
 		defineField({
 			fields: [
 				defineField({
-					description: 'Adresse (Straße Hausnummer, Postleitzahl Ort)',
-					name: 'address',
-					title: 'Adresse',
-					type: 'string',
-					validation: (Rule) => [Rule.required().error('Die Adresse ist erforderlich')],
+					description:
+						'Die Anschrift des Vereins, wie sie im Footer und in den Suchergebnissen steht',
+					fields: postalAddressFields,
+					name: 'postalAddress',
+					options: { columns: 2 },
+					title: 'Anschrift',
+					type: 'object',
+					validation: (Rule) => [Rule.required().error('Die Anschrift ist erforderlich')],
 				}),
 
 				defineField({

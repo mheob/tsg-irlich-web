@@ -4,6 +4,8 @@ import type { ComponentPropsWithoutRef } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
+import { getBaseUrl } from '@/utils/url';
+
 import { SectionHeader } from '../ui/section-header';
 import Breadcrumb from '../with-logic/breadcrumb';
 
@@ -36,7 +38,7 @@ export function Hero({ children, image, subTitle, title, ...props }: Readonly<He
 					{children}
 				</SectionHeader>
 
-				<Breadcrumb currentPage={title} />
+				<Breadcrumb baseUrl={getBaseUrl()} currentPage={title} />
 			</div>
 		</section>
 	);

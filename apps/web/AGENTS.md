@@ -68,6 +68,15 @@ Every route builds its metadata with `getPageMetadata` from `src/utils/metadata.
 - The paginated news overviews point their canonical URL at the page they show (`?seite=N`, the first page without the parameter). An article points at its first category, like the sitemap and the feed, since it renders under any category segment.
 - The layout sets only `twitter.card`. Next.js fills in the X card's title, description and image from each page's open graph fields.
 
+## Structured data
+
+JSON-LD is typed with `schema-dts` and rendered by `JsonLd` (`src/components/ui/json-ld.tsx`), which escapes `<` so a string from the CMS cannot close the script element early. The builders are pure functions:
+
+- `src/utils/structured-data.ts`: `getSiteGraph` (the `SportsOrganization` and the `WebSite`, as one `@graph` in the root layout) and `getNewsArticleSchema` (on the article page). The club node carries the ID `<base URL>/#organization`, and every other node refers to it by that ID. The contact details come from `organizationQuery`, the same query the footer reads.
+- `src/utils/breadcrumb.ts`: `getBreadcrumbItems` derives the trail from the path, and `getBreadcrumbListSchema` describes it. It lives apart from the other builders because the breadcrumb is a client component, and `structured-data.ts` pulls in the Sanity image builder.
+- The article schema receives a `stegaClean` copy of just the fields it reads, so draft mode's invisible characters stay out of the JSON while the rendered article keeps its click-to-edit overlays.
+- `getLastModified` (`src/utils/time.ts`) never dates a change before the publication: editors often finish an article before its scheduled date. The article metadata, the JSON-LD and the visible "Aktualisiert am" line all go through it.
+
 ## Internal links
 
 A slug in Sanity only holds the **last** segment of the URL, so no link can be built from the slug alone: news articles live below their category, groups below their department (which comes from the document type, not from a field) and the home page at the root. `getInternalHref` in `src/utils/links.ts` is the single place that knows those rules — never assemble a path from a slug by hand, and never render a link when it returns `undefined`.

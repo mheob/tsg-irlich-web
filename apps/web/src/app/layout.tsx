@@ -8,13 +8,19 @@ import { draftMode } from 'next/headers';
 import { EMPTY_ARRAY, cn } from '@tsgi-web/shared';
 
 import Footer from '@/components/layout/footer';
+import { JsonLd } from '@/components/ui/json-ld';
 import { DisableDraftMode } from '@/components/with-logic/disable-draft-mode';
 import { Navigation } from '@/components/with-logic/navigation';
 import { client } from '@/lib/sanity/client';
 import { SanityLive } from '@/lib/sanity/live';
 import { mainNavigationQuery } from '@/lib/sanity/queries/main-navigation';
-import type { MainNavigationQueryResult } from '@/types/sanity.types.generated';
+import { organizationQuery } from '@/lib/sanity/queries/shared/organization';
+import type {
+	MainNavigationQueryResult,
+	OrganizationQueryResult,
+} from '@/types/sanity.types.generated';
 import { FEED_ALTERNATES, SITE_NAME, SITE_OPEN_GRAPH } from '@/utils/metadata';
+import { getSiteGraph } from '@/utils/structured-data';
 import { getBaseUrl } from '@/utils/url';
 
 // oxlint-disable-next-line import/no-unassigned-import
@@ -65,13 +71,17 @@ export default async function RootLayout({
 }>) {
 	const { isEnabled: isDraftMode } = await draftMode();
 
-	const mainNavigationQueryResults = await client
-		.fetch<MainNavigationQueryResult>(
-			mainNavigationQuery,
-			{},
-			{ next: { revalidate: NAVIGATION_REVALIDATE_SECONDS } },
-		)
-		.catch(() => null);
+	const [mainNavigationQueryResults, organization] = await Promise.all([
+		client
+			.fetch<MainNavigationQueryResult>(
+				mainNavigationQuery,
+				{},
+				{ next: { revalidate: NAVIGATION_REVALIDATE_SECONDS } },
+			)
+			.catch(() => null),
+		// Missing structured data must not take the page down with it.
+		client.fetch<OrganizationQueryResult>(organizationQuery).catch(() => null),
+	]);
 
 	const navItems = mainNavigationQueryResults?.mainNavigation ?? EMPTY_ARRAY;
 
@@ -93,6 +103,7 @@ export default async function RootLayout({
 				<Navigation navItems={navItems} />
 				<main className="grid flex-1">{children}</main>
 				<Footer />
+				<JsonLd data={getSiteGraph(getBaseUrl(), organization)} />
 				<Analytics />
 				<SpeedInsights />
 				<SanityLive />

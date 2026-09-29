@@ -10,6 +10,7 @@ import { cn } from '@tsgi-web/shared';
 
 import { Hero } from '@/components/section/hero';
 import { Gallery } from '@/components/ui/gallery';
+import { JsonLd } from '@/components/ui/json-ld';
 import { LightboxGallery, LightboxTrigger } from '@/components/ui/lightbox';
 import { PortableText } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
@@ -24,7 +25,11 @@ import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import { urlForImage } from '@/lib/sanity/utils';
 import { getGalleryImages } from '@/utils/image';
 import { getPageMetadata } from '@/utils/metadata';
+import { getNewsArticleSchema } from '@/utils/structured-data';
+import { getLastModified } from '@/utils/time';
+import { getBaseUrl } from '@/utils/url';
 
+import { getArticlePath } from '../../_shared/utils';
 import { Author } from './_sections/author';
 import { Categories } from './_sections/categories';
 import { SocialMedia } from './_sections/social-media';
@@ -58,18 +63,11 @@ export async function generateMetadata({
 		meta: article.meta,
 		openGraph: {
 			authors: authorName ? [authorName] : undefined,
-			// Editors often finish an article before its scheduled publication, so `_updatedAt` can
-			// predate it — and an article is never modified before it is published.
-			modifiedTime:
-				new Date(article._updatedAt) > new Date(article.publishedAt)
-					? article._updatedAt
-					: article.publishedAt,
+			modifiedTime: getLastModified(article.publishedAt, article._updatedAt),
 			publishedTime: article.publishedAt,
 			type: 'article',
 		},
-		// The article renders under any category segment, so the canonical URL names the one the
-		// sitemap and the feed link to.
-		path: `/news/${article.categories?.[0]?.slug ?? category}/${article.slug}`,
+		path: getArticlePath(article, category, slug),
 		title: article.title,
 	});
 }
@@ -77,7 +75,7 @@ export async function generateMetadata({
 export default async function NewsArticlePage({
 	params,
 }: Readonly<PageProps<'/news/[category]/[slug]'>>) {
-	const { slug } = await params;
+	const { category, slug } = await params;
 
 	const [{ data: hero }, { data: article }, { data: socialMedia }, { data: sponsors }] =
 		await Promise.all([
@@ -92,9 +90,26 @@ export default async function NewsArticlePage({
 	}
 
 	const imageSource = urlForImage(article.featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
+	// Only the fields the structured data reads, cleaned of the stega encoding draft mode adds, which
+	// leaves the rendered article and its click-to-edit overlays alone.
+	const articleSchema = getNewsArticleSchema(
+		getBaseUrl(),
+		getArticlePath(article, category, slug),
+		stegaClean({
+			_updatedAt: article._updatedAt,
+			author: article.author,
+			excerpt: article.excerpt,
+			featuredImage: article.featuredImage,
+			meta: article.meta,
+			publishedAt: article.publishedAt,
+			title: article.title,
+		}),
+	);
 
 	return (
 		<>
+			<JsonLd data={articleSchema} />
+
 			<Hero
 				image={
 					article.featuredImage?.alt && imageSource

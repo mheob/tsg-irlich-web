@@ -481,7 +481,12 @@ export type SiteSettings = {
   meta?: MetaFields;
   metadataBase?: string;
   contact?: {
-    address: string;
+    postalAddress: {
+      street: string;
+      houseNumber: string;
+      zipCode?: string;
+      city: string;
+    };
     phone: string;
     email: string;
   };
@@ -4217,6 +4222,23 @@ export type NewsCategoryQueryResult = {
   } | null;
 } | null;
 
+// Source: src/lib/sanity/queries/shared/organization.ts
+// Variable: organizationQuery
+// Query: *[_type == 'site-settings'][0] {		contact { email, phone, postalAddress },		socialFields,	}
+export type OrganizationQueryResult = {
+  contact: {
+    email: string;
+    phone: string;
+    postalAddress: {
+      street: string;
+      houseNumber: string;
+      zipCode?: string;
+      city: string;
+    };
+  } | null;
+  socialFields: SocialFields | null;
+} | null;
+
 // Source: src/lib/sanity/queries/shared/social-media.ts
 // Variable: socialMediaQuery
 // Query: *[_type == 'site-settings'][0].socialFields
@@ -4321,6 +4343,7 @@ declare global {
     '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
     'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
     "\n\t*[_type == 'news.category' && slug.current == $slug][0] {\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n": NewsCategoryQueryResult;
+    "\n\t*[_type == 'site-settings'][0] {\n\t\tcontact { email, phone, postalAddress },\n\t\tsocialFields,\n\t}\n": OrganizationQueryResult;
     "*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
     "\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;

@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import NewsArticlePage, { generateMetadata } from '@/app/news/[category]/[slug]/page';
 import { Hero } from '@/components/section/hero';
 import { Gallery } from '@/components/ui/gallery';
+import { JsonLd } from '@/components/ui/json-ld';
 import { LightboxGallery } from '@/components/ui/lightbox';
 import { PortableText } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
@@ -241,6 +242,28 @@ describe('news article page', () => {
 				image: { alt: 'Das Sommerfest' },
 				subTitle: 'Aktuelles',
 				title: 'News',
+			});
+		});
+
+		it('describes the article as structured data under its canonical URL', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					_updatedAt: '2026-06-03T08:00:00Z',
+					categories: [{ slug: 'fussball' }],
+					publishedAt: '2026-06-01T18:00:00Z',
+					slug: 'sommerfest',
+				},
+			});
+
+			const jsonLd = findElement(await NewsArticlePage(routeProps()), JsonLd);
+
+			expect(jsonLd?.props.data).toMatchObject({
+				'@type': 'NewsArticle',
+				dateModified: '2026-06-03T08:00:00Z',
+				datePublished: '2026-06-01T18:00:00Z',
+				headline: 'Sommerfest 2026',
+				mainEntityOfPage: 'http://localhost:3000/news/fussball/sommerfest',
 			});
 		});
 

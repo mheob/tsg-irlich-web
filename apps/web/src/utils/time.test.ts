@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getLocaleDate } from '@/utils/time';
+import { getLastModified, getLocaleDate } from '@/utils/time';
 
 // Normalizes ICU whitespace so a future ICU update that swaps a plain space for a narrow
 // no-break space (U+202F) or a no-break space (U+00A0) does not break the comparison.
@@ -42,6 +42,20 @@ describe('formatting a localized date', () => {
 	it('applies no padding for a single-digit day in the long variant', () => {
 		expect(normalizeSpaces(getLocaleDate(SINGLE_DIGIT_DAY, 'long'))).toBe(
 			normalizeSpaces('5. Januar 2024'),
+		);
+	});
+});
+
+describe('the last modification of a published document', () => {
+	it('is the last save when it came after the publication', () => {
+		expect(getLastModified('2026-06-01T18:00:00Z', '2026-06-03T08:00:00Z')).toBe(
+			'2026-06-03T08:00:00Z',
+		);
+	});
+
+	it('is the publication when the last save came before it', () => {
+		expect(getLastModified('2026-06-01T18:00:00.000Z', '2026-05-28T08:00:00Z')).toBe(
+			'2026-06-01T18:00:00.000Z',
 		);
 	});
 });

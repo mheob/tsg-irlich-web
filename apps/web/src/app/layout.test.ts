@@ -5,6 +5,7 @@ import { draftMode } from 'next/headers';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import RootLayout, { metadata } from '@/app/layout';
+import { JsonLd } from '@/components/ui/json-ld';
 import { DisableDraftMode } from '@/components/with-logic/disable-draft-mode';
 import { Navigation } from '@/components/with-logic/navigation';
 import type { client } from '@/lib/sanity/client';
@@ -96,6 +97,20 @@ describe('the root layout', () => {
 			type: 'website',
 		});
 		expect(metadata.twitter).toStrictEqual({ card: 'summary_large_image' });
+	});
+
+	it('describes the club and the website as structured data', async () => {
+		mockDraftMode(false);
+		mockedFetch.mockResolvedValue({ contact: { email: 'info@tsg-irlich.de' }, mainNavigation: [] });
+
+		const layout = await RootLayout({ children: null });
+
+		expect(findElement(layout, JsonLd)?.props.data).toMatchObject({
+			'@graph': [
+				{ '@type': 'SportsOrganization', email: 'info@tsg-irlich.de', name: 'TSG Irlich' },
+				{ '@type': 'WebSite', name: 'TSG Irlich' },
+			],
+		});
 	});
 
 	it('hands the navigation the items it fetched', async () => {
