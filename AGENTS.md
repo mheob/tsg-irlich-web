@@ -161,6 +161,7 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - Two Vercel projects deploy from this repository: `tsg-irlich-web` (Root Directory `apps/web`) and `tsg-irlich-web-studio` (`apps/studio`). `next` deploys to the `staging` environment, `main` to production.
 - A project builds only when a commit affects it. Vercel's "Skip unaffected projects" handles changes inside the workspace packages, but it treats every file outside them (`.claude/`, `.github/`, root docs) as a global change and builds everything. The `ignoreCommand` in each app's `vercel.json` closes that gap with `turbo query affected --base="$VERCEL_GIT_PREVIOUS_SHA" --packages <app> --exit-code || exit 1`, which follows the dependency graph and the global dependencies of `turbo.json`. Exit code 0 cancels the build, 1 runs it, and Vercel fails the deployment on any other code. That is why `|| exit 1` turns turbo's errors into a build. The first push of a branch has no previous deployment, so `VERCEL_GIT_PREVIOUS_SHA` is empty there, and turbo exits with 2.
 - A dependency between workspace packages has to be declared in the dependent package's `package.json`, otherwise neither mechanism sees it.
+- A deployment canceled by the `ignoreCommand` still reports a commit status, so the required checks are not held up by it.
 - To build a skipped deployment anyway, redeploy it in the dashboard with "Use project's Ignore Build Step" unchecked.
 
 ### Code Quality Tools
