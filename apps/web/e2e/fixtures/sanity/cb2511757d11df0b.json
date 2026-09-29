@@ -1,0 +1,37 @@
+{
+	"body": {
+		"result": {
+			"meta": {
+				"metaDescription": "Die Breitensport-Abteilung umfasst neben dem Turnen, Tanzen und Taekwondo auch Kursangebote und weitere diverse Sportangebote, die die TSG Irlich anbietet.",
+				"metaTitle": null,
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Viele Sportler der TSG Irlich beim Karnevalsumzug im Jahr 2026",
+					"asset": {
+						"_ref": "image-39ea18f07c0b601ba6e2ad8551ccedac58adbc39-1024x768-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7063975310701477,
+						"width": 0.8818894194666195,
+						"x": 0.4879887545220291,
+						"y": 0.5427058136625239
+					}
+				}
+			},
+			"slug": "breitensport",
+			"title": "Breitensport"
+		},
+		"syncTags": ["s1:nuGyZw"],
+		"ms": 2
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.category%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%0A%09%7D%0A&%24slug=%22breitensport%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

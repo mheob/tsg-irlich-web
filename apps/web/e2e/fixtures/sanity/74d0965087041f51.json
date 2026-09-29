@@ -117,7 +117,7 @@
 						"venue": {
 							"_createdAt": "2024-09-20T10:51:19Z",
 							"_id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
-							"_rev": "dtJXu1REiVbNFr2bYfpcdI",
+							"_rev": "Nik63qLLJXUuVJPKyfgzyq",
 							"_system": {
 								"base": {
 									"id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
@@ -125,7 +125,7 @@
 								}
 							},
 							"_type": "venue",
-							"_updatedAt": "2026-08-26T07:54:56Z",
+							"_updatedAt": "2026-09-29T12:28:49Z",
 							"description": {
 								"_type": "simpleBlockContent",
 								"text": [

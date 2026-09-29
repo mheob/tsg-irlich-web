@@ -21,6 +21,7 @@ vi.mock(import('@/lib/sanity/utils'), () => ({
 }));
 
 const BASE_PERSON: ContactPerson = {
+	_id: 'person-anna',
 	contactAs: 'both',
 	email: 'anna.schmidt@tsg-irlich.de',
 	firstName: 'Anna',
@@ -51,6 +52,10 @@ const PHONE_ONLY_LIST: ContactPerson[] = [{ ...BASE_PERSON, contactAs: 'phone' }
 const WHATSAPP_ONLY_LIST: ContactPerson[] = [{ ...BASE_PERSON, contactAs: 'whatsapp' }];
 const EMAIL_ONLY_LIST: ContactPerson[] = [{ ...BASE_PERSON, contactAs: 'email' }];
 const NO_PHONE_LIST: ContactPerson[] = [{ ...BASE_PERSON, phone: null }];
+const NAMESAKES_LIST: ContactPerson[] = [
+	{ ...BASE_PERSON, _id: 'person-gianna', firstName: 'Gianna', lastName: 'Kaap' },
+	{ ...BASE_PERSON, _id: 'person-meike', firstName: 'Meike', lastName: 'Kaap' },
+];
 
 // `contact-link.tsx` forces this exact aria-label on every `ContactLink` before it has been
 // interacted with, discarding whatever `ui/contact-button.tsx` passed in (see
@@ -82,6 +87,20 @@ describe('the contact persons list', () => {
 		const { container } = renderWithUser(<ContactPersons contactPersons={EMPTY_LIST} />);
 
 		expect(container.querySelectorAll('article')).toHaveLength(0);
+	});
+
+	// The Little Diamonds are looked after by Gianna and Meike Kaap. Keyed by last name, React
+	// reported a duplicate key for them and may drop or duplicate one on the next render.
+	it('keeps two persons who share a last name apart', () => {
+		const errorSpy = vi.spyOn(console, 'error').mockReturnValue();
+
+		const { getByRole } = renderWithUser(<ContactPersons contactPersons={NAMESAKES_LIST} />);
+		const errors = [...errorSpy.mock.calls];
+		errorSpy.mockRestore();
+
+		expect(getByRole('heading', { name: 'Gianna Kaap' })).not.toBeNull();
+		expect(getByRole('heading', { name: 'Meike Kaap' })).not.toBeNull();
+		expect(errors).toStrictEqual([]);
 	});
 
 	// Each `controls[n]` reference is queried once, before any interaction, then reused after

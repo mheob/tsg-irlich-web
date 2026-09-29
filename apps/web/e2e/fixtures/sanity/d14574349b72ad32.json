@@ -3,7 +3,7 @@
 		"result": {
 			"_createdAt": "2024-06-21T18:46:50Z",
 			"_id": "groupsPage",
-			"_rev": "dtJXu1REiVbNFr2bYflrtp",
+			"_rev": "R3E9jQFgtI1iXWhprtep0R",
 			"_system": {
 				"base": {
 					"id": "groupsPage",
@@ -58,7 +58,7 @@
 			"title": "Bereich:"
 		},
 		"syncTags": ["s1:yk6Q2Q"],
-		"ms": 3
+		"ms": 4
 	},
 	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27groupsPage%27%5D%5B0%5D&returnQuery=false"
 }

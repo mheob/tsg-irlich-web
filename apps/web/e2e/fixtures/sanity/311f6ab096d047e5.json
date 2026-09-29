@@ -1,0 +1,521 @@
+{
+	"body": {
+		"result": {
+			"_updatedAt": "2026-09-29T12:28:50Z",
+			"author": {
+				"email": "s.thome@tsg-irlich.de",
+				"firstName": "Sophie ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+					"asset": {
+						"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6740816500468764,
+						"width": 0.6978607346799625,
+						"x": 0.4942576493650388,
+						"y": 0.40427639989772435
+					}
+				},
+				"jobTitle": "PR-Team Bereich Breitensport",
+				"lastName": "Thomé"
+			},
+			"body": [
+				{
+					"_key": "543a8ec9bc8e",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "38c6cbbed0af",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "dc3a84884ac9",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Auch in diesem Jahr ging es für die Jedermänner der TSG Irlich wieder gemeinsam auf Tour! Vom 19. bis 22. Juni 2026 führte die diesjährige Reise nach Stuttgart. Vier Tage lang standen Kultur, Sport, Automobilgeschichte, gemeinsame Erlebnisse und natürlich jede Menge Geselligkeit auf dem Programm."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "14949f321a3f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "91d267a16028",
+									"_type": "span",
+									"marks": [],
+									"text": "Bereits die Anreise sorgte für gute Stimmung: Mit der Deutschen Bahn ging es planmäßig und völlig problemlos von Neuwied nach Stuttgart – ein gelungener Start in das gemeinsame Wochenende."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "e588383e555e",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "c236d9f0d065",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1a7cdd9ff68b",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach dem Einchecken im Hotel führte der erste Programmpunkt die Gruppe direkt zu einem Stuttgarter Wahrzeichen: dem "
+								},
+								{
+									"_key": "1bd5cd1d048a",
+									"_type": "span",
+									"marks": ["c721a83973e6"],
+									"text": "Fernsehturm"
+								},
+								{
+									"_key": "517fc84aaaaa",
+									"_type": "span",
+									"marks": [],
+									"text": ". Bei bestem Wetter bot sich aus luftiger Höhe ein beeindruckender Blick über die baden-württembergische Landeshauptstadt und die Umgebung. Am Samstagvormittag erkundeten die Jedermänner Stuttgart bei einer Stadtführung. Eine kompetente und unterhaltsame Stadtführerin brachte der Gruppe die Geschichte und Besonderheiten der Stadt näher und sorgte dabei für so manche neue Erkenntnis. Natürlich durfte auch das obligatorische Gruppenfoto nicht fehlen."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "c721a83973e6",
+									"_type": "externalLink",
+									"href": "https://www.fernsehturm-stuttgart.de/"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "8ba0bf320c0f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4689af9551cc",
+									"_type": "span",
+									"marks": [],
+									"text": ""
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						}
+					]
+				},
+				{
+					"_key": "56756152fb68",
+					"_type": "mainImage",
+					"alt": "Alle Teilnehmer der Tour auf einem Gruppenbild vor einem Denkmal",
+					"asset": {
+						"_ref": "image-86d4d16093925a4b63a45512f999616e1e4b109f-5849x3462-jpg",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "8009081f689e",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "8ba0bf320c0f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4689af9551cc",
+									"_type": "span",
+									"marks": [],
+									"text": "Auf den Spuren der Automobilgeschichte"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "feebffc7c205",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "69bd151d84d4",
+									"_type": "span",
+									"marks": [],
+									"text": "Am Nachmittag stand dann ein Besuch im "
+								},
+								{
+									"_key": "508b78d403a0",
+									"_type": "span",
+									"marks": ["bd5b91a7cac4"],
+									"text": "Mercedes-Benz"
+								},
+								{
+									"_key": "f022200db0ff",
+									"_type": "span",
+									"marks": ["strong", "bd5b91a7cac4"],
+									"text": " "
+								},
+								{
+									"_key": "f92316e42c3f",
+									"_type": "span",
+									"marks": ["bd5b91a7cac4"],
+									"text": "Museum "
+								},
+								{
+									"_key": "64a1e639b5c4",
+									"_type": "span",
+									"marks": [],
+									"text": "auf dem Programm. Von den ersten motorisierten Fahrzeugen bis hin zu modernen Automobilen konnten die Jedermänner die Entwicklungsgeschichte des Autos nachvollziehen. Dabei wurden bei dem einen oder anderen Ausstellungsstück sicherlich auch persönliche Erinnerungen wach."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "bd5b91a7cac4",
+									"_type": "externalLink",
+									"href": "https://www.mercedes-benz.com/de/kunst-und-kultur/museum/"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "f2c4e13e1265",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "37b1d40baf25",
+									"_type": "span",
+									"marks": [],
+									"text": "Auch der Sonntag stand zunächst ganz im Zeichen des Automobils: Im "
+								},
+								{
+									"_key": "c22d83448c9c",
+									"_type": "span",
+									"marks": ["4dac7360d967"],
+									"text": "Porsche-Museum in Zuffenhausen"
+								},
+								{
+									"_key": "e996de7844f0",
+									"_type": "span",
+									"marks": [],
+									"text": " warteten zahlreiche historische und aktuelle Fahrzeuge auf die Gruppe. Anschließend ging es zur "
+								},
+								{
+									"_key": "c09541ee6420",
+									"_type": "span",
+									"marks": ["8625bc9fa858"],
+									"text": "Grabkapelle auf dem"
+								},
+								{
+									"_key": "e67e73df2284",
+									"_type": "span",
+									"marks": ["strong", "8625bc9fa858"],
+									"text": " "
+								},
+								{
+									"_key": "f9d12eb85381",
+									"_type": "span",
+									"marks": ["8625bc9fa858"],
+									"text": "Württemberg"
+								},
+								{
+									"_key": "d25163e08e22",
+									"_type": "span",
+									"marks": [],
+									"text": ", die nicht nur mit ihrer eindrucksvollen Anlage, sondern auch mit einem herrlichen Ausblick über Stuttgart und die Weinberge beeindruckte."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "4dac7360d967",
+									"_type": "externalLink",
+									"href": "https://www.porsche.com/germany/aboutporsche/porschemuseum/"
+								},
+								{
+									"_key": "8625bc9fa858",
+									"_type": "externalLink",
+									"href": "https://www.grabkapelle-wuerttemberg.de/"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "6df6c173a3e3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e56cb468d357",
+									"_type": "span",
+									"marks": [],
+									"text": "Allerdings stellte das Wetter die sportliche Ausdauer der Jedermänner an diesem Tag noch einmal auf die Probe. Bei ausgesprochen heißen Temperaturen teilte sich die Gruppe nach dem Ausflug entsprechend der persönlichen Energiereserven auf. Während einige die wohlverdiente Erholung im Hotel suchten und andere im Biergarten für Abkühlung sorgten, entdeckte eine weitere Gruppe das klimatisierte Planetarium als perfekten Rückzugsort. Kultur und Abkühlung – eine Kombination, die bei diesen Temperaturen kaum zu übertreffen war."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "9d902a5a3491",
+					"_type": "gallery",
+					"images": [
+						{
+							"_key": "0da0e449f5a9",
+							"_type": "extendedImage",
+							"alt": "Ein Teich voller Seerosen im botanischen Garten",
+							"asset": {
+								"_ref": "image-433a73ae5ddeea557ec4e43c4a9738aa9deb461b-5712x3213-jpg",
+								"_type": "reference"
+							}
+						},
+						{
+							"_key": "a97a2cf1d9ce",
+							"_type": "extendedImage",
+							"alt": "Die Aussicht über die Stadt Stuttgart",
+							"asset": {
+								"_ref": "image-3e45c8381b9d519121efb3882f733e85dc840b75-5712x3213-jpg",
+								"_type": "reference"
+							}
+						}
+					]
+				},
+				{
+					"_key": "fca533e76070",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "efc0ee206531",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "75c9d12f948c",
+									"_type": "span",
+									"marks": [],
+									"text": "Ein abwechslungsreicher Abschluss "
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "b58aa27f19a2",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "442d282ac726",
+									"_type": "span",
+									"marks": [],
+									"text": "Am Montagvormittag bildete die "
+								},
+								{
+									"_key": "687823680e39",
+									"_type": "span",
+									"marks": ["40a61b75576e"],
+									"text": "Wilhelma"
+								},
+								{
+									"_key": "af4811ccf5ef",
+									"_type": "span",
+									"marks": [],
+									"text": " den Abschluss der gemeinsamen Reise. Der zoologisch-botanische Garten mit seinen zahlreichen Tieren, Pflanzen und historischen Gebäuden bot noch einmal abwechslungsreiche Eindrücke, bevor die Heimreise anstand."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "40a61b75576e",
+									"_type": "externalLink",
+									"href": "https://www.wilhelma.de/"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "4a0315601ced",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "64ae0d911438",
+									"_type": "span",
+									"marks": [],
+									"text": "Doch zuvor wartete noch ein letzter Stuttgarter Programmpunkt: Stuttgart 21. Die Jedermänner konnten die Dimensionen des Großprojekts bestaunen – und gleichzeitig ganz praktisch erfahren, welche Auswirkungen die aktuelle Baustellensituation auf Reisende hat. Die teilweise langen Wege zwischen U-Bahn und Bahnsteigen sorgten dafür, dass auch am letzten Tag der sportliche Anteil der Reise nicht zu kurz kam."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "201a6436c311",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "d25f04bcd76a",
+									"_type": "span",
+									"marks": [],
+									"text": "Am Nachmittag ging es schließlich wieder mit der Bahn zurück nach Neuwied. Nach vier ereignisreichen Tagen waren sich alle einig: Die gemeinsame Tour war wieder ein voller Erfolg und hat jede Menge Spaß gemacht."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "4cd1d1a72a5e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "63530335a9b0",
+									"_type": "span",
+									"marks": [],
+									"text": "Kultur, Autos, Tiere, sommerliche Hitze, Biergarten, Planetarium, lange Fußwege und vor allem eine gesellige Gemeinschaft – Stuttgart hatte für die Jedermänner einiges zu bieten."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "bc6a808f650b",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "58c66d0d1f17",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "bf55256eb4b2",
+									"_type": "span",
+									"marks": [],
+									"text": "Bleibt eigentlich nur noch eine Frage: Wohin geht es 2027? Die Planungen dürfen sicherlich schon bald beginnen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "bcbafd8a23e3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "711fdeac4ba3",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach der Tour ist vor dem Training"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "e7eff5345713",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "cb73a471a703",
+									"_type": "span",
+									"marks": [],
+									"text": "Bis dahin wird aber erst einmal wieder gemeinsam trainiert. Die "
+								},
+								{
+									"_key": "6811f3bd118d",
+									"_type": "span",
+									"marks": ["948fdf34e581"],
+									"text": "Jedermänner"
+								},
+								{
+									"_key": "2932d48582aa",
+									"_type": "span",
+									"marks": [],
+									"text": " treffen sich jeden Freitag um 20:00 Uhr in der Sporthalle der Robert-Krups-Schule."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "948fdf34e581",
+									"_type": "internalLink",
+									"link": {
+										"_ref": "99a99cb7-a09c-4e81-9ace-453367c48b1f",
+										"_type": "reference"
+									},
+									"target": {
+										"_type": "group.other-sports",
+										"category": null,
+										"slug": "jedermaenner"
+									}
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "ce29c7329546",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "46b621ffd991",
+									"_type": "span",
+									"marks": [],
+									"text": "Wer Lust auf Bewegung, Sport und eine gesellige Gemeinschaft hat, ist jederzeit herzlich willkommen. Neue Gesichter sind gerne gesehen – einfach vorbeikommen und mitmachen! "
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "jedermanner",
+					"title": "Jedermänner"
+				},
+				{
+					"slug": "breitensport",
+					"title": "Breitensport"
+				}
+			],
+			"excerpt": "Die Jedermänner waren vier Tage in Stuttgart unterwegs. Tolle Programmpunkte und jede Menge Geselligkeit sorgten für eine abwechslungsreiche Tour.",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Alle Teilnehmer der Tour gemeinsam auf einem Gruppenbild in der Innenstadt von Stuttgart",
+				"asset": {
+					"_ref": "image-86d4d16093925a4b63a45512f999616e1e4b109f-5849x3462-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.7099261658106689,
+					"width": 0.8020367878348228,
+					"x": 0.46650233819692516,
+					"y": 0.4624717750795386
+				}
+			},
+			"meta": {
+				"metaDescription": "Die Jedermänner waren vier Tage in Stuttgart unterwegs. Tolle Programmpunkte und jede Menge Geselligkeit sorgten für eine abwechslungsreiche Tour.",
+				"metaTitle": "Jedermänner der TSG Irlich auf Tour in Stuttgart",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-09-15T15:00:00.000Z",
+			"slug": "jedermaenner-unterwegs-stuttgart",
+			"title": "Jedermänner unterwegs: Vier abwechslungsreiche Tage in Stuttgart"
+		},
+		"syncTags": ["s1:gDNQog", "s1:mCzbTw", "s1:1qgVbg", "s1:Dy7Hhw", "s1:SvG3tg"],
+		"ms": 14
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22jedermaenner-unterwegs-stuttgart%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

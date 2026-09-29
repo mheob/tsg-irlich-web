@@ -3,7 +3,7 @@
 		"result": {
 			"_createdAt": "2024-06-22T10:47:26Z",
 			"_id": "aboutUs",
-			"_rev": "FGdPcw6oZ4f5ikxTPQ5Xg2",
+			"_rev": "Nik63qLLJXUuVJPKyfhCv0",
 			"_system": {
 				"base": {
 					"id": "aboutUs",
@@ -11,7 +11,7 @@
 				}
 			},
 			"_type": "aboutUs",
-			"_updatedAt": "2026-08-26T07:54:57Z",
+			"_updatedAt": "2026-09-29T12:28:50Z",
 			"content": {
 				"chronicleSection": {
 					"chronicleCategories": [
@@ -480,6 +480,7 @@
 				"contactPersonsSection": {
 					"contactPersons": [
 						{
+							"_id": "2e62c3c7-6d23-4799-9701-a08256d0c1b2",
 							"contactAs": "both",
 							"email": "vorsitz@tsg-irlich.de",
 							"firstName": "Alexander",
@@ -511,6 +512,7 @@
 							"taskDescription": "Als Vorsitzender gestalte ich die strategische Ausrichtung und Weiterentwicklung des Vereins. Ich repräsentiere ihn nach außen, pflege den Austausch mit der Kommune, Verbänden und Sponsoren und setze mein Netzwerk gezielt für eine erfolgreiche Zusammenarbeit ein."
 						},
 						{
+							"_id": "429f8069-7868-4fef-96ca-cfb9d88f68a3",
 							"contactAs": "email",
 							"email": "finanzen@tsg-irlich.de",
 							"firstName": "René",
@@ -528,6 +530,7 @@
 							"taskDescription": "Ich verantworte die gesamte Finanzverwaltung der TSG Irlich. Von Abrechnungen bis zu Steuerfragen. Zudem plane und kontrolliere ich die Finanzen und sorge für eine transparente sowie nachhaltige Haushaltsführung des Vereins. Bei Fragen zu Finanzthemen bin ich ihr Ansprechpartner."
 						},
 						{
+							"_id": "51dfa04b-7577-48d0-9434-a096e0b3ff42",
 							"contactAs": "both",
 							"email": "verwaltung@tsg-irlich.de",
 							"firstName": "Melina",
@@ -545,6 +548,7 @@
 							"taskDescription": "Als Vorstand Verwaltung kümmere ich mich um alle administrativen Aufgaben. Von Vertragsabwicklung über Versicherungen bis zu Protokollen und Post. Ich betreue die digitale Mitgliederverwaltung und sorge für eine reibungslose Dokumentation und Kommunikation."
 						},
 						{
+							"_id": "b9c684aa-f914-4c32-8619-fde519d41315",
 							"contactAs": "both",
 							"email": "presse@tsg-irlich.de",
 							"firstName": "Philipp",
@@ -577,6 +581,7 @@
 							"taskDescription": "In meinem Ehrenamt gestalte und steuere ich die gesamte PR und Kommunikation der TSG. Ich leite das PR-Team, das unsere Social-Media-Kanäle und unsere Website verwaltet, Printmedien gestaltet und das 'TSG Echo' publiziert. Ich bin zudem Ansprechpartner für Projektplanungen."
 						},
 						{
+							"_id": "d191c9ee-bb52-48ed-8aef-57ce2a5af9d1",
 							"contactAs": "both",
 							"email": "breitensport@tsg-irlich.de",
 							"firstName": "Melanie ",
@@ -594,6 +599,7 @@
 							"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
 						},
 						{
+							"_id": "6ea6af4c-6dcb-4492-97cf-404c8128b359",
 							"contactAs": "both",
 							"email": "fussball@tsg-irlich.de",
 							"firstName": "Markus",
@@ -968,21 +974,21 @@
 			"title": "Über unseren Verein"
 		},
 		"syncTags": [
+			"s1:yJoVrQ",
+			"s1:BpJQvw",
+			"s1:kG7Arw",
+			"s1:eOuqJg",
+			"s1:y+gLqA",
+			"s1:NuVTmQ",
+			"s1:B7LhMw",
 			"s1:SgUpiQ",
 			"s1:PeVrtw",
 			"s1:N029bQ",
-			"s1:BpJQvw",
-			"s1:y+gLqA",
-			"s1:BU299g",
-			"s1:kG7Arw",
-			"s1:eOuqJg",
-			"s1:NuVTmQ",
 			"s1:WU9DBg",
-			"s1:B7LhMw",
 			"s1:bW4l3Q",
-			"s1:yJoVrQ"
+			"s1:BU299g"
 		],
-		"ms": 13
+		"ms": 14
 	},
-	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27aboutUs%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09...%2C%0A%09%09%09introSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09intro+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%7D%2C%0A%09%09%09chronicleSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09chronicleCategories%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09description+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%2C%0A%09%09%09visionSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09longVision+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%7D%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27aboutUs%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09...%2C%0A%09%09%09introSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09intro+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%7D%2C%0A%09%09%09chronicleSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09chronicleCategories%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09description+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%2C%0A%09%09%09visionSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09longVision+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%7D%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
 }

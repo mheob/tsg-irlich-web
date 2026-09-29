@@ -99,7 +99,7 @@ export function ContactPersons({ contactPersons }: Readonly<ContactPersonsProps>
 			)}
 		>
 			{contactPersons.map((props) => (
-				<ContactPersonItem key={props.lastName} {...props} />
+				<ContactPersonItem key={props._id} {...props} />
 			))}
 		</div>
 	);

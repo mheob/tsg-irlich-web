@@ -2,7 +2,7 @@
 	"body": {
 		"result": [
 			{
-				"_id": "428db24b-825b-4d9c-b185-75cddd8b3fd2",
+				"_id": "367c42ed-9920-4d1c-9b8e-a6ee731fb5f2",
 				"author": {
 					"firstName": "Philipp",
 					"image": {
@@ -39,110 +39,110 @@
 						"title": "Fußball"
 					}
 				],
-				"excerpt": "Die TSG Irlich hat auch ihr zweites Ligaspiel gewonnen. Gegen die Zweitvertretung des VfL Oberbieber setzte sich die TSG verdient mit 3:1 (1:0) durch.",
+				"excerpt": "Die TSG Irlich musste am Freitagabend eine knappe Auswärtsniederlage hinnehmen. Bei der dritten Mannschaft des SC Bendorf-Sayn unterlag die TSG mit 0:1.",
 				"featuredImage": {
 					"_type": "mainImage",
-					"alt": "Gemeinsamer Jubel nach dem Heimsieg",
+					"alt": "Spieler der TSG duellieren sich mit den Gastgebern aus Bendorf",
 					"asset": {
-						"_ref": "image-7b0d4817ae2caca98573501e5259f6bd691684e1-3024x4032-jpg",
+						"_ref": "image-1e55f64e40bf64a42aa1dfa9aea29bdf7e4d52a8-4032x3024-jpg",
 						"_type": "reference"
 					},
 					"crop": {
 						"_type": "sanity.imageCrop",
-						"bottom": 0.22305480526269933,
-						"left": 0,
-						"right": 0,
-						"top": 0.34015857802561644
+						"bottom": 0.0627241638168321,
+						"left": 0.0760712213604823,
+						"right": 0.07607122136048246,
+						"top": 0.16815414129618816
 					},
 					"hotspot": {
 						"_type": "sanity.imageHotspot",
-						"height": 0.29737736342249715,
-						"width": 0.8364221144126764,
-						"x": 0.49628232078210627,
-						"y": 0.5669164415788097
+						"height": 0.4768537826340814,
+						"width": 0.8478575572790352,
+						"x": 0.4999999999999999,
+						"y": 0.60676453415631
 					}
 				},
 				"meta": {
-					"metaDescription": "Die TSG Irlich hat auch ihr zweites Ligaspiel gewonnen. Gegen die Zweitvertretung des VfL Oberbieber setzte sich die TSG verdient mit 3:1 (1:0) durch.",
-					"metaTitle": null,
+					"metaDescription": "TSG Irlich verliert beim SC Bendorf-Sayn III knapp mit 0:1. Ein individueller Fehler entscheidet das umkämpfte Auswärtsspiel nach der Pause.",
+					"metaTitle": "TSG Irlich verliert knapp mit 0:1 bei Bendorf-Sayn III",
 					"openGraphImage": null
 				},
-				"publishedAt": "2026-08-21T15:07:27.430Z",
-				"slug": "heimsieg-oberbieber",
-				"title": "Souveräner Heimsieg – TSG schlägt Oberbieber II mit 3:1 "
+				"publishedAt": "2026-09-26T13:58:47.882Z",
+				"slug": "niederlage-bendorf",
+				"title": "Gebrauchter Abend in Bendorf – TSG unterliegt knapp"
 			},
 			{
-				"_id": "97118b99-f582-46f0-98dc-fe0a9a267dcd",
+				"_id": "18348f91-f18a-4973-aab7-e005cf27ba0b",
 				"author": {
-					"firstName": "Philipp",
+					"firstName": "Sophie ",
 					"image": {
 						"_type": "extendedImage",
-						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
 						"asset": {
-							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
 							"_type": "reference"
 						},
 						"crop": {
 							"_type": "sanity.imageCrop",
-							"bottom": 0.09074985403286345,
+							"bottom": 0,
 							"left": 0,
-							"right": 0.026691133539077486,
+							"right": 0,
 							"top": 0
 						},
 						"hotspot": {
 							"_type": "sanity.imageHotspot",
-							"height": 0.6927356852875811,
-							"width": 0.6490937792297277,
-							"x": 0.510074160141839,
-							"y": 0.46890832100794233
+							"height": 0.6740816500468764,
+							"width": 0.6978607346799625,
+							"x": 0.4942576493650388,
+							"y": 0.40427639989772435
 						}
 					},
-					"lastName": "Pfeiffer"
+					"lastName": "Thomé"
 				},
 				"categories": [
 					{
-						"slug": "senioren",
-						"title": "Senioren"
+						"slug": "frauengymnastik",
+						"title": "Frauengymnastik"
 					},
 					{
-						"slug": "fussball",
-						"title": "Fußball"
+						"slug": "breitensport",
+						"title": "Breitensport"
 					}
 				],
-				"excerpt": "Die #11fürIrlich hat am 1. Spieltag die ersten drei Punkte der neuen Saison eingefahren. Beim SV Rengsdorf II setzte sich die TSG mit 3:2 (2:0) durch.",
+				"excerpt": "Am 5. August 2026 hieß es für die Mittwochsgirls der TSG Irlich wieder: Gemeinsam unterwegs sein und einen schönen Tag miteinander verbringen! ",
 				"featuredImage": {
 					"_type": "mainImage",
-					"alt": "Das Team der TSG bei der Besprechung in der Halbzeitpause",
+					"alt": "Alle Mittwochsgirls gemeinsam auf einem Gruppenbild vor einer gelben Hauswand ",
 					"asset": {
-						"_ref": "image-74c5e630d48dc538e8b15e643c5530d1ce67ceb8-5999x3374-jpg",
+						"_ref": "image-99650bdb7af6ad848db3a7b33ea9bba4b1569c99-5184x3888-jpg",
 						"_type": "reference"
 					},
 					"crop": {
 						"_type": "sanity.imageCrop",
-						"bottom": 0,
+						"bottom": 0.114253086084072,
 						"left": 0,
 						"right": 0,
-						"top": 0
+						"top": 0.1966257001468269
 					},
 					"hotspot": {
 						"_type": "sanity.imageHotspot",
-						"height": 0.6029819359316225,
-						"width": 0.8217269154325507,
-						"x": 0.5891365422837247,
-						"y": 0.4439692248290596
+						"height": 0.504016670918197,
+						"width": 0.9070265699640963,
+						"x": 0.513012182601135,
+						"y": 0.5478590904161468
 					}
 				},
 				"meta": {
-					"metaDescription": "Die #11fürIrlich hat am 1. Spieltag die ersten drei Punkte der neuen Saison eingefahren. Beim SV Rengsdorf II setzte sich die TSG mit 3:2 (2:0) durch.",
-					"metaTitle": "TSG Irlich siegt 3:2 in Rengsdorf & startet stark in Saison",
+					"metaDescription": "Die Mittwochsgirls der TSG Irlich verbrachten einen geselligen Tag in Cochem – mit Stadtführung und einer überraschenden Moselfahrt.",
+					"metaTitle": "Mittwochsgirls der TSG Irlich auf Tagestour in Cochem",
 					"openGraphImage": null
 				},
-				"publishedAt": "2026-08-15T15:14:00.000Z",
-				"slug": "spaeter-treffer-sieg-in-rengsdorf",
-				"title": "TSG trifft spät in Rengsdorf und feiert ersten Saisonsieg"
+				"publishedAt": "2026-09-22T15:10:00.000Z",
+				"slug": "mittwochsgirls-unterwegs-in-cochem",
+				"title": "Mittwochsgirls unterwegs: Ein schöner Tag in Cochem"
 			},
 			{
-				"_id": "f94aadcf-8c8f-4011-8375-3b18a554e81c",
+				"_id": "eb82e401-be72-4130-9966-5d82ed2a83e2",
 				"author": {
 					"firstName": "Philipp",
 					"image": {
@@ -179,40 +179,34 @@
 						"title": "Fußball"
 					}
 				],
-				"excerpt": "Der Pflichtspielauftakt ist misslungen. In der 1. Runde des Bitburger Kreispokals unterlag die TSG dem SV Türkiyemspor Ransbach-Baumbach II mit 2:6 (0:3).",
+				"excerpt": "Die TSG Irlich hat sich mit einem Heimsieg zurückgemeldet. Im Pappelstadion setzte sich die TSG mit 4:1 (2:1) gegen den FC Rojava Neuwied durch.",
 				"featuredImage": {
 					"_type": "mainImage",
-					"alt": "TSG-Spieler mit Ball am Fuß im Zweikampf mit dem gegnerischen Spieler",
+					"alt": "Spieler der TSG in Türkisen Trikots wie sie durch den Regen und über den durchweichten Platz laufen",
 					"asset": {
-						"_ref": "image-e2e168c8227dd2c4226b73a6b00c92cfac02436f-6000x4000-jpg",
+						"_ref": "image-ceffebe1ba7e9ee7595355f13b916231949399b1-6000x4000-jpg",
 						"_type": "reference"
-					},
-					"crop": {
-						"_type": "sanity.imageCrop",
-						"bottom": 0,
-						"left": 0,
-						"right": 0,
-						"top": 0
-					},
-					"hotspot": {
-						"_type": "sanity.imageHotspot",
-						"height": 0.6072615699309639,
-						"width": 0.7999943180203983,
-						"x": 0.49272706610983275,
-						"y": 0.33635898747123516
 					}
 				},
 				"meta": {
-					"metaDescription": "Der Pflichtspielauftakt ist misslungen. In der 1. Runde des Bitburger Kreispokals unterlag die TSG dem SV Türkiyemspor Ransbach-Baumbach II mit 2:6 (0:3).",
-					"metaTitle": "TSG Irlich: 2:6-Pokalpleite vor Ligastart in Rengsdorf",
+					"metaDescription": "Die TSG Irlich gewinnt im Pappelstadion mit 4:1 gegen Rojava Neuwied und holt trotz Starkregen drei wichtige Punkte, die das Team Frank Kaiser widmet.",
+					"metaTitle": "TSG Irlich gewinnt 4:1 gegen FC Rojava Neuwied",
 					"openGraphImage": null
 				},
-				"publishedAt": "2026-08-05T15:32:00.000Z",
-				"slug": "pokal-aus-tuerkiyemspor",
-				"title": "Pokal-Aus zum Saisonauftakt – TSG unterliegt Türkiyemspor mit 2:6"
+				"publishedAt": "2026-09-18T14:21:00.000Z",
+				"slug": "heimsieg-rojava-neuwied",
+				"title": "Heimsieg in der Schlammschlacht – drei Punkte für Frank! "
 			}
 		],
-		"syncTags": ["s1:GNFE5A", "s1:uv+Zzg", "s1:Ik/M0w", "s1:c5Grjg"],
+		"syncTags": [
+			"s1:GNFE5A",
+			"s1:uv+Zzg",
+			"s1:Ik/M0w",
+			"s1:mCzbTw",
+			"s1:c5Grjg",
+			"s1:8Qkb8Q",
+			"s1:gDNQog"
+		],
 		"ms": 11
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%7D%0A&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
