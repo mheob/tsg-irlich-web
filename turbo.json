@@ -17,6 +17,7 @@
 		"VERCEL_OIDC_TOKEN",
 		"VERCEL_PROJECT_PRODUCTION_URL"
 	],
+	"globalPassThroughEnv": ["ENABLE_EXPERIMENTAL_COREPACK"],
 	"tasks": {
 		"@tsgi-web/email#build": {
 			"env": [
