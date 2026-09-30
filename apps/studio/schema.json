@@ -241,6 +241,13 @@
 				"value": {
 					"type": "object",
 					"attributes": {
+						"emptyCategoryNotice": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "string"
+							},
+							"optional": false
+						},
 						"contactPersonsSection": {
 							"type": "objectAttribute",
 							"value": {
