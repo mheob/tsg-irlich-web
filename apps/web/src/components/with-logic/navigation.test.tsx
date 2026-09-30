@@ -8,29 +8,19 @@ import { Navigation } from './navigation';
 
 type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
 
-// The `mainNavigation` array items are `internalLink`/`externalLink` objects (see
-// `apps/studio/schemas/objects/internal-link.ts` and `external-link.ts`) and neither schema type
-// declares a `title` field, even though `mainNavigationQuery` (`src/lib/sanity/queries/main-
-// navigation.ts`) projects `title` directly on every item. `MainNavigationQueryResult` therefore
-// types every item's `title` as the literal `null` — there is no variant of `NavItem` with a
-// non-null title, so a type-correct fixture cannot give a nav item visible text. This is a
-// disagreement with the brief (which expects navigation items to render a visible label) and,
-// read together, a real content bug in `main-navigation.ts`/the `site-settings` schema: on the
-// current schema, every rendered `<Navigation>` item has an empty link text in production. It is
-// out of scope for this test task (fixing it would touch the GROQ query or the schema), so the
-// fixture below sets `title: null` to match the real type, and the tests identify links by `href`
-// rather than by accessible name/text.
+// Superseded in Task 8 of WEB-343 by `navigation/navigation.test.tsx`. The titles are set only to
+// match the regenerated `MainNavigationQueryResult`; the cases still identify links by `href`.
 
 const ABOUT_US_ITEM: NavItem = {
 	_key: 'nav-about-us',
 	link: { _type: 'aboutUs', category: null, slug: 'ueber-uns' },
-	title: null,
+	title: 'Über uns',
 };
 
 const NEWS_CATEGORY_ITEM: NavItem = {
 	_key: 'nav-news',
 	link: { _type: 'news.category', category: null, slug: 'meldungen' },
-	title: null,
+	title: 'Meldungen',
 };
 
 const GROUP_ITEM: NavItem = {
@@ -38,7 +28,7 @@ const GROUP_ITEM: NavItem = {
 	// `group.soccer`'s department path is `/angebot/fussball` (`src/utils/groups.ts`), so
 	// `getInternalHref` resolves this to `/angebot/fussball/herren-1`.
 	link: { _type: 'group.soccer', category: null, slug: 'herren-1' },
-	title: null,
+	title: 'Herren 1',
 };
 
 // `getInternalHref` returns `undefined` when the target has no resolvable slug, and the component
@@ -46,11 +36,11 @@ const GROUP_ITEM: NavItem = {
 const UNRESOLVABLE_SLUG_ITEM: NavItem = {
 	_key: 'nav-unresolvable',
 	link: { _type: 'contact', category: null, slug: null },
-	title: null,
+	title: 'Kontakt',
 };
 
 // The discriminated union's other member: an item with no link at all is filtered out the same way.
-const NO_LINK_ITEM: NavItem = { _key: 'nav-no-link', link: null, title: null };
+const NO_LINK_ITEM: NavItem = { _key: 'nav-no-link', link: null, title: 'Ohne Link' };
 
 const NAV_ITEMS: NavItem[] = [
 	ABOUT_US_ITEM,

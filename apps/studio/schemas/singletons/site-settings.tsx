@@ -114,10 +114,7 @@ const siteSettings = defineType({
 			description: 'Seiten und/oder Links für die Hauptnavigation hinzufügen',
 			group: 'navigation',
 			name: 'mainNavigation',
-			of: [
-				{ title: 'Internal Link', type: 'internalLink' },
-				{ title: 'External Link', type: 'externalLink' },
-			],
+			of: [{ type: 'mainNavigationItem' }],
 			title: 'Hauptmenü',
 			type: 'array',
 			validation: (Rule) => Rule.required().error('Das Hauptmenü ist erforderlich'),

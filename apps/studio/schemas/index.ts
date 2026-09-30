@@ -23,7 +23,9 @@ import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
 import imageCard from './objects/image-card';
 import internalLink from './objects/internal-link';
+import mainNavigationItem from './objects/main-navigation-item';
 import metFields from './objects/meta';
+import navigationLink from './objects/navigation-link';
 import simpleBlockContent from './objects/simple-block-content';
 import socialFields from './objects/social-fields';
 import stats from './objects/stats';
@@ -80,7 +82,9 @@ export const schemaTypes = [
 	externalLink,
 	imageCard,
 	internalLink,
+	mainNavigationItem,
 	metFields,
+	navigationLink,
 	simpleBlockContent,
 	socialFields,
 	stats,

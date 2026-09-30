@@ -384,6 +384,31 @@ export type SimpleBlockContent = {
   }>;
 };
 
+export type NavigationLink = {
+  _type: "navigationLink";
+  title: string;
+  linkType: "internal" | "external";
+  link?:
+    | HomeReference
+    | AboutUsReference
+    | ContactReference
+    | DepartmentsPageReference
+    | GroupChildrenGymnasticsReference
+    | GroupCoursesReference
+    | GroupDanceReference
+    | GroupOtherSportsReference
+    | GroupSoccerReference
+    | GroupTaekwondoReference
+    | MembershipReference
+    | NewsArticleReference
+    | NewsCategoryReference
+    | NewsOverviewReference
+    | AccessibilityReference
+    | PrivacyReference
+    | ImprintReference;
+  href?: string;
+};
+
 export type MetaFields = {
   _type: "metaFields";
   metaTitle?: string;
@@ -396,6 +421,36 @@ export type MetaFields = {
     alt?: string;
     _type: "image";
   };
+};
+
+export type MainNavigationItem = {
+  _type: "mainNavigationItem";
+  title: string;
+  linkType: "internal" | "external";
+  link?:
+    | HomeReference
+    | AboutUsReference
+    | ContactReference
+    | DepartmentsPageReference
+    | GroupChildrenGymnasticsReference
+    | GroupCoursesReference
+    | GroupDanceReference
+    | GroupOtherSportsReference
+    | GroupSoccerReference
+    | GroupTaekwondoReference
+    | MembershipReference
+    | NewsArticleReference
+    | NewsCategoryReference
+    | NewsOverviewReference
+    | AccessibilityReference
+    | PrivacyReference
+    | ImprintReference;
+  href?: string;
+  children?: Array<
+    {
+      _key: string;
+    } & NavigationLink
+  >;
 };
 
 export type InternalLink = {
@@ -496,12 +551,9 @@ export type SiteSettings = {
     cta: string;
   };
   mainNavigation: Array<
-    | ({
-        _key: string;
-      } & InternalLink)
-    | ({
-        _key: string;
-      } & ExternalLink)
+    {
+      _key: string;
+    } & MainNavigationItem
   >;
   legalNavigation?: Array<
     {
@@ -1720,7 +1772,9 @@ export type AllSanitySchemaTypes =
   | Stats
   | SocialFields
   | SimpleBlockContent
+  | NavigationLink
   | MetaFields
+  | MainNavigationItem
   | InternalLink
   | ImageCard
   | ExternalLink
@@ -1848,103 +1902,97 @@ export type LlmsTxtQueryResult = {
 // Variable: mainNavigationQuery
 // Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"link": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current },			title		}	}
 export type MainNavigationQueryResult = {
-  mainNavigation: Array<
-    | {
-        _key: string;
-        link: null;
-        title: null;
-      }
-    | {
-        _key: string;
-        link:
-          | {
-              _type: "aboutUs";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "accessibility";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "contact";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "departmentsPage";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "group.children-gymnastics";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.courses";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.dance";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.other-sports";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.soccer";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.taekwondo";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "home";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "imprint";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "membership";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "news.article";
-              slug: string;
-              category: string | null;
-            }
-          | {
-              _type: "news.category";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "newsOverview";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "privacy";
-              slug: string | null;
-              category: null;
-            };
-        title: null;
-      }
-  >;
+  mainNavigation: Array<{
+    _key: string;
+    link:
+      | {
+          _type: "aboutUs";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "accessibility";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "contact";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "departmentsPage";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "group.children-gymnastics";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.courses";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.dance";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.other-sports";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.soccer";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.taekwondo";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "home";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "imprint";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "membership";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "news.article";
+          slug: string;
+          category: string | null;
+        }
+      | {
+          _type: "news.category";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "newsOverview";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "privacy";
+          slug: string | null;
+          category: null;
+        }
+      | null;
+    title: string;
+  }>;
 } | null;
 
 // Source: src/lib/sanity/queries/pages/about-us.ts
