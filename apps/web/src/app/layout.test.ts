@@ -7,7 +7,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import RootLayout, { metadata } from '@/app/layout';
 import { JsonLd } from '@/components/ui/json-ld';
 import { DisableDraftMode } from '@/components/with-logic/disable-draft-mode';
-import { Navigation } from '@/components/with-logic/navigation';
+import { Navigation } from '@/components/with-logic/navigation/navigation';
 import type { client } from '@/lib/sanity/client';
 
 import { findElement } from '../../test-utils/react-tree';

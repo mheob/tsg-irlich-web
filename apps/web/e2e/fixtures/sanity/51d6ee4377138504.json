@@ -204,10 +204,10 @@
 			"s1:Ik/M0w",
 			"s1:mCzbTw",
 			"s1:c5Grjg",
-			"s1:8Qkb8Q",
-			"s1:gDNQog"
+			"s1:gDNQog",
+			"s1:8Qkb8Q"
 		],
-		"ms": 11
+		"ms": 9
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%7D%0A&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
 }

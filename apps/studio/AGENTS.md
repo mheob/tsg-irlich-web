@@ -63,7 +63,7 @@ pnpm exec sanity migration run <id> --project j4rxwl5m --dataset development
 pnpm exec sanity migration run <id> --project j4rxwl5m --dataset development --no-dry-run
 ```
 
-Run it on `development` first (the e2e fixtures are recorded from there), then on `production`, and before the change ships if the website reads the new shape.
+Run it on `development` first (the e2e fixtures are recorded from there), then on `production`, and before the change ships if the website reads the new shape. Without an interactive terminal, for instance from an agent, the real run also needs `--no-confirm`: the CLI refuses to show its confirmation prompt there and aborts.
 
 ## Preview (presentation tool)
 

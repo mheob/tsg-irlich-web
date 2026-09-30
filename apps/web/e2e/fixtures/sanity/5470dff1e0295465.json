@@ -162,8 +162,8 @@
 				"slug": "montagskicker"
 			}
 		],
-		"syncTags": ["s1:JoRayg", "s1:hlft0g", "s1:aQPN8w", "s1:VaQVUA", "s1:p8OCEQ", "s1:UjEcig"],
-		"ms": 5
+		"syncTags": ["s1:VaQVUA", "s1:JoRayg", "s1:p8OCEQ", "s1:UjEcig", "s1:hlft0g", "s1:aQPN8w"],
+		"ms": 8
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+in+%5B%0A%09%09%27group.soccer%27%2C%0A%09%09%27group.children-gymnastics%27%2C%0A%09%09%27group.courses%27%2C%0A%09%09%27group.taekwondo%27%2C%0A%09%09%27group.dance%27%2C%0A%09%09%27group.other-sports%27%2C%0A%09%5D%5D+%7B%0A%09%09_type%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22lastModified%22%3A+_updatedAt%0A%09%7D%0A&returnQuery=false"
 }

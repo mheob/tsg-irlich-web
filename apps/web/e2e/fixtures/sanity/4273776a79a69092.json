@@ -276,7 +276,7 @@
 				]
 			}
 		},
-		"syncTags": ["s1:LW1bag", "s1:uf4YSw", "s1:4+Elpw"],
+		"syncTags": ["s1:uf4YSw", "s1:4+Elpw", "s1:LW1bag"],
 		"ms": 6
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24groupType=%22group.soccer%22&%24slug=%22a-jugend%22&returnQuery=false"

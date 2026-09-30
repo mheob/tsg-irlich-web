@@ -9,43 +9,30 @@ import { cn, TSGLogo } from '@tsgi-web/shared';
 
 import { ButtonLink } from '@/components/ui/button';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
-import { getInternalHref } from '@/utils/links';
+
+import { DesktopNavigation } from './desktop-navigation';
+import { MobileNavigation } from './mobile-navigation';
+import { getNavigationEntries } from './navigation-entries';
 
 /** Ties the mobile menu toggle's `aria-controls` to the menu container it opens. */
 const MOBILE_MENU_ID = 'mobile-navigation';
 
-function isActivePage(pathname: string, href: string) {
-	return pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
-}
+const CONTACT_HREF = '/kontakt';
 
 type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
 
-interface NavItemWithActive extends Omit<NavItem, 'link'> {
-	href: string;
-	isActive: boolean;
-}
-
-interface NavigationProps {
-	navItems: NavItem[];
-}
-
-export function Navigation({ navItems }: Readonly<NavigationProps>) {
+function Navigation({ navItems }: Readonly<NavigationProps>) {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileOpen, setIsMobileOpen] = useState(false);
 
 	const toggleRef = useRef<HTMLButtonElement>(null);
 	const pathname = usePathname();
 
-	const navItemsWithActive: NavItemWithActive[] = useMemo(
-		() =>
-			navItems
-				.map(({ link, ...item }) => {
-					const href = getInternalHref(link);
-					return href ? { ...item, href, isActive: isActivePage(pathname, href) } : undefined;
-				})
-				.filter((item): item is NavItemWithActive => item !== undefined),
-		[navItems, pathname],
-	);
+	const entries = useMemo(() => getNavigationEntries(navItems, pathname), [navItems, pathname]);
+
+	const closeMobileMenu = () => {
+		setIsMobileOpen(false);
+	};
 
 	// The menu is a disclosure, not a dialog, so it deliberately does not trap the focus (the ARIA
 	// APG does not ask for one here and the page behind stays usable). What it does need is Escape
@@ -106,28 +93,24 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 						</Link>
 					</div>
 
-					{/* Desktop Navigation */}
-					<div className="hidden items-center space-x-3 lg:flex">
-						{navItemsWithActive.map((item) => (
-							<Link
-								aria-current={item.isActive ? 'page' : undefined}
-								className={cn(
-									'flex h-16 items-center px-3 py-2 font-bold text-primary uppercase transition-colors hover:bg-secondary/40',
-									{ 'border-b-2 border-secondary': item.isActive },
-								)}
-								href={item.href}
-								key={item._key}
-							>
-								{item.title}
-							</Link>
-						))}
-					</div>
+					<DesktopNavigation entries={entries} />
 
-					{/* Contact Button (Desktop) */}
-					<div className="hidden lg:block">
+					{/* Contact Button (Desktop). Compact between lg and xl, where the bar is tight; the wrappers
+					    carry the visibility because `btn` sets its own `display`. */}
+					<div className="hidden lg:block xl:hidden">
 						<ButtonLink
 							className="uppercase"
-							render={<Link href="/kontakt" />}
+							render={<Link href={CONTACT_HREF} />}
+							size="sm"
+							variant="secondary"
+						>
+							Kontakt
+						</ButtonLink>
+					</div>
+					<div className="hidden xl:block">
+						<ButtonLink
+							className="uppercase"
+							render={<Link href={CONTACT_HREF} />}
 							size={isScrolled ? 'sm' : 'default'}
 							variant="secondary"
 						>
@@ -155,44 +138,24 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 
 				{/* Mobile Navigation */}
 				<div
-					className={cn(
-						'space-y-2 overflow-hidden transition-all duration-300 ease-in-out lg:hidden',
-						{
-							'max-h-0 opacity-0': !isMobileOpen,
-							'max-h-full pt-12 opacity-100': isMobileOpen,
-						},
-					)}
+					className={cn('overflow-hidden transition-all duration-300 ease-in-out lg:hidden', {
+						'max-h-0 opacity-0': !isMobileOpen,
+						'max-h-full pt-12 opacity-100': isMobileOpen,
+					})}
 					id={MOBILE_MENU_ID}
 					// The collapsed menu is only hidden visually so the transition has something to
 					// animate, which leaves its links in the accessibility tree and in the tab order.
 					// `inert` removes them from both for as long as the menu is closed.
 					inert={!isMobileOpen}
 				>
-					{navItemsWithActive.map((item) => (
-						<Link
-							aria-current={item.isActive ? 'page' : undefined}
-							className={cn(
-								'block rounded-md px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted/40',
-								{ 'bg-secondary/40': item.isActive },
-							)}
-							href={item.href}
-							key={item._key}
-							onClick={() => {
-								setIsMobileOpen(false);
-							}}
-						>
-							{item.title}
-						</Link>
-					))}
+					<MobileNavigation entries={entries} onNavigate={closeMobileMenu} />
 
-					<div className="px-3 py-6 sm:hidden">
+					<div className="px-3 py-6">
 						<ButtonLink
 							className="uppercase"
 							fullWidth
-							onClick={() => {
-								setIsMobileOpen(false);
-							}}
-							render={<Link href="/kontakt" />}
+							onClick={closeMobileMenu}
+							render={<Link href={CONTACT_HREF} />}
 							variant="secondary"
 						>
 							Kontakt aufnehmen
@@ -203,3 +166,9 @@ export function Navigation({ navItems }: Readonly<NavigationProps>) {
 		</nav>
 	);
 }
+
+interface NavigationProps {
+	navItems: NavItem[];
+}
+
+export { Navigation };

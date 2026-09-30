@@ -1913,6 +1913,137 @@
 		}
 	},
 	{
+		"name": "navigationLink",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "navigationLink"
+					}
+				},
+				"title": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"linkType": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "internal"
+							},
+							{
+								"type": "string",
+								"value": "external"
+							}
+						]
+					},
+					"optional": false
+				},
+				"link": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "inline",
+								"name": "home.reference"
+							},
+							{
+								"type": "inline",
+								"name": "aboutUs.reference"
+							},
+							{
+								"type": "inline",
+								"name": "contact.reference"
+							},
+							{
+								"type": "inline",
+								"name": "departmentsPage.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.children-gymnastics.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.courses.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.dance.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.other-sports.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.soccer.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.taekwondo.reference"
+							},
+							{
+								"type": "inline",
+								"name": "membership.reference"
+							},
+							{
+								"type": "inline",
+								"name": "news.article.reference"
+							},
+							{
+								"type": "inline",
+								"name": "news.category.reference"
+							},
+							{
+								"type": "inline",
+								"name": "newsOverview.reference"
+							},
+							{
+								"type": "inline",
+								"name": "accessibility.reference"
+							},
+							{
+								"type": "inline",
+								"name": "privacy.reference"
+							},
+							{
+								"type": "inline",
+								"name": "imprint.reference"
+							}
+						]
+					},
+					"optional": true
+				},
+				"href": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"description": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
 		"name": "metaFields",
 		"type": "type",
 		"value": {
@@ -1990,6 +2121,173 @@
 								}
 							}
 						}
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "mainNavigationItem",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "mainNavigationItem"
+					}
+				},
+				"title": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"linkType": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "internal"
+							},
+							{
+								"type": "string",
+								"value": "external"
+							}
+						]
+					},
+					"optional": false
+				},
+				"link": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "inline",
+								"name": "home.reference"
+							},
+							{
+								"type": "inline",
+								"name": "aboutUs.reference"
+							},
+							{
+								"type": "inline",
+								"name": "contact.reference"
+							},
+							{
+								"type": "inline",
+								"name": "departmentsPage.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.children-gymnastics.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.courses.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.dance.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.other-sports.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.soccer.reference"
+							},
+							{
+								"type": "inline",
+								"name": "group.taekwondo.reference"
+							},
+							{
+								"type": "inline",
+								"name": "membership.reference"
+							},
+							{
+								"type": "inline",
+								"name": "news.article.reference"
+							},
+							{
+								"type": "inline",
+								"name": "news.category.reference"
+							},
+							{
+								"type": "inline",
+								"name": "newsOverview.reference"
+							},
+							{
+								"type": "inline",
+								"name": "accessibility.reference"
+							},
+							{
+								"type": "inline",
+								"name": "privacy.reference"
+							},
+							{
+								"type": "inline",
+								"name": "imprint.reference"
+							}
+						]
+					},
+					"optional": true
+				},
+				"href": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"children": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "array",
+						"of": {
+							"type": "object",
+							"attributes": {
+								"_key": {
+									"type": "objectAttribute",
+									"value": {
+										"type": "string"
+									}
+								}
+							},
+							"rest": {
+								"type": "inline",
+								"name": "navigationLink"
+							}
+						}
+					},
+					"optional": true
+				},
+				"overviewTitle": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"overviewDescription": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"hasTwoColumns": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
 					},
 					"optional": true
 				}
@@ -2562,39 +2860,19 @@
 				"value": {
 					"type": "array",
 					"of": {
-						"type": "union",
-						"of": [
-							{
-								"type": "object",
-								"attributes": {
-									"_key": {
-										"type": "objectAttribute",
-										"value": {
-											"type": "string"
-										}
-									}
-								},
-								"rest": {
-									"type": "inline",
-									"name": "internalLink"
-								}
-							},
-							{
-								"type": "object",
-								"attributes": {
-									"_key": {
-										"type": "objectAttribute",
-										"value": {
-											"type": "string"
-										}
-									}
-								},
-								"rest": {
-									"type": "inline",
-									"name": "externalLink"
+						"type": "object",
+						"attributes": {
+							"_key": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
 								}
 							}
-						]
+						},
+						"rest": {
+							"type": "inline",
+							"name": "mainNavigationItem"
+						}
 					}
 				},
 				"optional": false

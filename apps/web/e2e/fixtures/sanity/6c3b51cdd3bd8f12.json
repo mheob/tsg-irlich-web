@@ -124,8 +124,8 @@
 			"subtitle": "Blog",
 			"title": "News Übersicht"
 		},
-		"syncTags": ["s1:eOuqJg", "s1:lvB0iQ", "s1:NuVTmQ", "s1:b3a4dw", "s1:yrvRmQ", "s1:YSzUng"],
-		"ms": 11
+		"syncTags": ["s1:NuVTmQ", "s1:b3a4dw", "s1:yrvRmQ", "s1:YSzUng", "s1:eOuqJg", "s1:lvB0iQ"],
+		"ms": 8
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27newsOverview%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
 }
