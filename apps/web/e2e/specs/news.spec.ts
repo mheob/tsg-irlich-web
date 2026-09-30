@@ -3,11 +3,25 @@ import { expect, test } from '../support/test';
 
 test.describe('news', () => {
 	test('switches to a category with the combobox and back to all news', async ({ page }) => {
+		// Two page loads, two hydrations, a client-side navigation and two list animations. In the
+		// emulated WebKit of the local screenshot container that sometimes takes longer than the default
+		// 30 s, while every step passes; the list alone can sit in its enter transition for two seconds.
+		test.slow();
+
 		await page.goto('/news');
 		await waitForPage(page);
 
 		const combobox = page.getByRole('combobox', { name: 'News-Kategorie' });
 		await expect(combobox).toHaveValue('Alle News');
+
+		// `waitForPage` proves the App Router exists, not that this island is hydrated. On a slow runner
+		// WebKit gets to the server-rendered input first: the typed text lands in the DOM, and hydration
+		// then puts the selection back. Only a hydrated combobox opens its list, so opening it, retried
+		// until it works, doubles as the wait for hydration.
+		await expect(async () => {
+			await combobox.click();
+			await expect(page.getByRole('listbox')).toBeVisible({ timeout: 1000 });
+		}).toPass();
 
 		await combobox.fill('fu');
 		await page.getByRole('option', { name: /^Fußball, \d+ Artikel$/u }).click();
