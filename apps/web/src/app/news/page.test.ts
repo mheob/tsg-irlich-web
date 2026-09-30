@@ -95,6 +95,7 @@ function paginationParams(): Record<string, unknown> | undefined {
 describe('news overview page', () => {
 	afterEach(() => {
 		mockedSanityFetch.mockReset();
+		vi.mocked(notFound).mockReset();
 	});
 
 	describe('metadata', () => {
