@@ -127,6 +127,8 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 pnpm run extract-types && pnpm run typegen:sanity
 ```
 
+`typecheck` runs `tsc --noEmit --incremental false` in `apps/web` and `apps/studio` on purpose (WEB-348). TypeScript 7's incremental mode does not recheck the importers of a module whose types changed behind an `export *` re-export, and the generated Sanity types reach the web app exactly that way (`src/types/sanity.types.ts` re-exports `sanity.types.generated.ts`). After a typegen it reported success while tests no longer type-checked; a full check costs about one second more. `incremental: true` stays in the `tsconfig.json` files for Next.js and the editor.
+
 ## Environment & Configuration
 
 ### Required Environment Variables
