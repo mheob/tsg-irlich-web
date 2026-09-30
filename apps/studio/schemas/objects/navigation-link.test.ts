@@ -1,5 +1,5 @@
 import type { ValidationContext } from 'sanity';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import mainNavigationItem, { prepareMainNavigationItem } from './main-navigation-item';
 import navigationLink, {
@@ -68,6 +68,38 @@ describe('navigation link types', () => {
 			expect(
 				validateExternalUrl('https://www.neuwied.de', withParent({ linkType: 'external' })),
 			).toBe(true);
+		});
+
+		it.each(['www.neuwied.de', 'ftp://neuwied.de', 'mailto:info@tsg-irlich.de'])(
+			'refuses "%s" on an external link, since the menu only opens web pages',
+			(href) => {
+				expect(validateExternalUrl(href, withParent({ linkType: 'external' }))).toBe(
+					'Die URL ist ungültig.',
+				);
+			},
+		);
+
+		// The url field is hidden on an internal link. A stale, invalid value left there after switching
+		// the link type must not block publishing with an error the editor cannot see.
+		it('ignores a stale invalid url once the link is internal again', () => {
+			expect(validateExternalUrl('www.neuwied.de', withParent({ linkType: 'internal' }))).toBe(
+				true,
+			);
+		});
+
+		it('validates the url only through the link type aware check', () => {
+			const hrefField = (
+				navigationLink as unknown as {
+					fields: { name: string; validation?: (rule: unknown) => unknown }[];
+				}
+			).fields.find((field) => field.name === 'href');
+			const custom = vi.fn((validator: unknown) => validator);
+			const uri = vi.fn();
+
+			hrefField?.validation?.({ custom, uri });
+
+			expect(custom).toHaveBeenCalledWith(validateExternalUrl);
+			expect(uri).not.toHaveBeenCalled();
 		});
 
 		it('does not ask for a url on an internal link', () => {

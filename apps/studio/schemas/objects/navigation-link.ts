@@ -10,6 +10,9 @@ const MAX_TITLE_LENGTH = 20;
 const EXTERNAL_LINK_TYPE = 'external';
 const INTERNAL_LINK_TYPE = 'internal';
 
+/** The only protocols a menu entry may open. */
+const WEB_PROTOCOLS = new Set(['http:', 'https:']);
+
 /**
  * Whether a navigation link points outside the website. An entry without `linkType` (written before
  * the `main-navigation-items` migration) is an internal link.
@@ -38,14 +41,27 @@ function validatePageReference(value: unknown, context: ValidationContext): true
 }
 
 /**
- * Requires a URL for an external link.
+ * Requires a valid web URL for an external link, and ignores the hidden field of an internal one, so
+ * a stale value left there after switching the link type cannot block publishing.
  *
  * @param value - The URL.
  * @param context - The validation context, whose `parent` is the navigation link.
  * @returns `true`, or the error shown to the editor.
  */
 function validateExternalUrl(value: unknown, context: ValidationContext): true | string {
-	return !isExternalLink(context.parent) || value ? true : 'Bitte eine URL angeben';
+	if (!isExternalLink(context.parent)) {
+		return true;
+	}
+
+	if (!value) {
+		return 'Bitte eine URL angeben';
+	}
+
+	return typeof value === 'string' &&
+		URL.canParse(value) &&
+		WEB_PROTOCOLS.has(new URL(value).protocol)
+		? true
+		: 'Die URL ist ungültig.';
 }
 
 /**
@@ -106,10 +122,7 @@ const navigationLinkFields = [
 		name: 'href',
 		title: 'URL',
 		type: 'url',
-		validation: (Rule) => [
-			Rule.uri({ allowRelative: false, scheme: ['http', 'https'] }).error('Die URL ist ungültig.'),
-			Rule.custom(validateExternalUrl),
-		],
+		validation: (Rule) => Rule.custom(validateExternalUrl),
 	}),
 ];
 
