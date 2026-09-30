@@ -75,6 +75,36 @@ describe('mobile navigation', () => {
 		expect(getByRole('link', { name: 'Übersicht' })).not.toBeNull();
 	});
 
+	// The navigation lives in the root layout and survives a client-side navigation, so a group has
+	// to open when its page becomes the current one, not only when the menu first mounts.
+	it('expands a group once its page becomes the current one', () => {
+		const onNavigate = vi.fn();
+		const { getByRole, rerender } = renderWithUser(
+			<MobileNavigation entries={[VEREIN]} onNavigate={onNavigate} />,
+		);
+
+		expect(getByRole('button', { name: 'Verein' }).getAttribute('aria-expanded')).toBe('false');
+
+		rerender(
+			<MobileNavigation entries={[{ ...VEREIN, isActive: true }]} onNavigate={onNavigate} />,
+		);
+
+		expect(getByRole('button', { name: 'Verein' }).getAttribute('aria-expanded')).toBe('true');
+	});
+
+	it('leaves a group collapsed that the visitor closed while its page stays the current one', async () => {
+		const onNavigate = vi.fn();
+		const active = { ...VEREIN, isActive: true };
+		const { getByRole, rerender, user } = renderWithUser(
+			<MobileNavigation entries={[active]} onNavigate={onNavigate} />,
+		);
+
+		await user.click(getByRole('button', { name: 'Verein' }));
+		rerender(<MobileNavigation entries={[{ ...active }]} onNavigate={onNavigate} />);
+
+		expect(getByRole('button', { name: 'Verein' }).getAttribute('aria-expanded')).toBe('false');
+	});
+
 	it('reports every followed link, inside a group or not', async () => {
 		const { getByRole, onNavigate, user } = renderMobile();
 

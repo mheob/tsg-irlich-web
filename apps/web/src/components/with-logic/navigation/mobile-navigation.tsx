@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
@@ -25,9 +26,31 @@ function MobileLink({ link, onNavigate }: Readonly<MobileLinkProps>) {
 }
 
 function MobileGroup({ group, onNavigate }: Readonly<MobileGroupProps>) {
+	const [isOpen, setIsOpen] = useState(group.isActive);
+	const [wasActive, setWasActive] = useState(group.isActive);
+
+	// The navigation lives in the root layout and survives a client-side navigation, so the group
+	// opens when its page becomes the current one. Only then: a visitor who closed it keeps it closed.
+	if (group.isActive !== wasActive) {
+		setWasActive(group.isActive);
+
+		if (group.isActive) {
+			setIsOpen(true);
+		}
+	}
+
 	return (
-		<Collapsible defaultOpen={group.isActive}>
-			<CollapsibleTrigger className={cn(ITEM_CLASS_NAME, 'group/mobile-group justify-between')}>
+		<Collapsible
+			onOpenChange={(open: boolean) => {
+				setIsOpen(open);
+			}}
+			open={isOpen}
+		>
+			<CollapsibleTrigger
+				className={cn(ITEM_CLASS_NAME, 'group/mobile-group justify-between', {
+					'font-bold': group.isActive,
+				})}
+			>
 				{group.title}
 				<ChevronDown
 					aria-hidden="true"
