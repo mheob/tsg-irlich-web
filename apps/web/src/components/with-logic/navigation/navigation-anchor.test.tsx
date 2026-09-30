@@ -42,6 +42,46 @@ describe('navigation anchor', () => {
 		expect(link.getAttribute('rel')).toBe('noopener noreferrer');
 	});
 
+	// The dropdown shows a sub-text under the title. It is announced as the link's description, so the
+	// name stays the title a visitor looks for.
+	it('names a link after its title and describes it with its sub-text when asked to', () => {
+		const { getByRole } = renderWithUser(
+			<NavigationAnchor
+				link={{ ...INTERNAL, description: 'Alles über die TSG' }}
+				withDescription
+			/>,
+		);
+
+		const link = getByRole('link', { description: 'Alles über die TSG', name: 'Verein' });
+
+		expect(link.getAttribute('href')).toBe('/verein');
+	});
+
+	it('keeps the new-tab hint in the name of an external link with a sub-text', () => {
+		const { getByRole } = renderWithUser(
+			<NavigationAnchor
+				link={{ ...EXTERNAL, description: 'Die Stadt, zu der Irlich gehört' }}
+				withDescription
+			/>,
+		);
+
+		expect(
+			getByRole('link', {
+				description: 'Die Stadt, zu der Irlich gehört',
+				name: 'Stadt Neuwied (öffnet in neuem Tab)',
+			}).getAttribute('target'),
+		).toBe('_blank');
+	});
+
+	it('leaves the sub-text out unless it is asked for', () => {
+		const { getByRole, queryByText } = renderWithUser(
+			<NavigationAnchor link={{ ...INTERNAL, description: 'Alles über die TSG' }} />,
+		);
+
+		expect(getByRole('link', { name: 'Verein' }).getAttribute('aria-describedby')).toBeNull();
+		expect(queryByText('Alles über die TSG')).toBeNull();
+	});
+
 	it('forwards the props Base UI merges into its render element', async () => {
 		const onClick = vi.fn();
 		const { getByRole, user } = renderWithUser(

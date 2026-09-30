@@ -203,6 +203,32 @@ describe('desktop navigation', () => {
 		expect(getByRole('button', { name: 'Verein' }).getAttribute('aria-expanded')).toBe('false');
 	});
 
+	it('shows the sub-text of a panel link and announces it as its description', async () => {
+		const withDescription: NavigationEntry = {
+			...VEREIN,
+			links: [
+				{
+					description: 'So erreichst du uns',
+					href: '/kontakt',
+					isActive: false,
+					isExternal: false,
+					key: 'kontakt',
+					title: 'Kontakt',
+				},
+			],
+		};
+		const { getByRole, getByText, user } = renderDesktop([withDescription]);
+
+		await user.click(getByRole('button', { name: 'Verein' }));
+
+		expect(getByText('So erreichst du uns')).not.toBeNull();
+		expect(
+			getByRole('link', { description: 'So erreichst du uns', name: 'Kontakt' }).getAttribute(
+				'href',
+			),
+		).toBe('/kontakt');
+	});
+
 	it('closes the panel when one of its links is followed', async () => {
 		const { getByRole, queryByRole, user } = renderDesktop();
 

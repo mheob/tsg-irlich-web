@@ -49,14 +49,14 @@ function DesktopGroup({ group, onFocus }: Readonly<DesktopGroupProps>) {
 				{group.title}
 			</NavigationMenuTrigger>
 			<NavigationMenuContent>
-				<ul className="flex min-w-56 flex-col">
+				<ul className={cn('grid gap-1', group.hasTwoColumns ? 'w-xl grid-cols-2' : 'w-72')}>
 					{group.links.map((link) => (
 						<li key={link.key}>
 							<NavigationMenuLink
 								active={link.isActive}
 								className="flex items-center gap-1 rounded-sm px-3 py-2 text-foreground hover:bg-muted/40 data-active:bg-secondary/40"
 								closeOnClick
-								render={<NavigationAnchor link={link} />}
+								render={<NavigationAnchor link={link} withDescription />}
 							/>
 						</li>
 					))}
