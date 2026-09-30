@@ -1,6 +1,6 @@
 import process from 'node:process';
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import type * as envModule from '@/lib/env';
 

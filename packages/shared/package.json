@@ -11,12 +11,12 @@
 		"./*": "./src/*.ts"
 	},
 	"scripts": {
-		"lint": "oxlint",
-		"lint:fix": "oxlint --fix",
-		"lint:github": "oxlint --format=github",
-		"test": "vitest run",
-		"test:coverage": "vitest run --coverage",
-		"test:watch": "vitest",
+		"lint": "vp lint",
+		"lint:fix": "vp lint --fix",
+		"lint:github": "vp lint --format=github",
+		"test": "vp test run",
+		"test:coverage": "vp test run --coverage",
+		"test:watch": "vp test",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
@@ -31,11 +31,10 @@
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
 		"@vitejs/plugin-react": "^6.1.1",
-		"@vitest/coverage-v8": "^5.0.2",
+		"@vitest/coverage-v8": "catalog:",
 		"jsdom": "~30.0.1",
-		"oxlint": "^1.85.0",
-		"oxlint-tsgolint": "^7.0.2003",
 		"typescript": "^7.0.2",
-		"vitest": "^5.0.2"
+		"vite-plus": "catalog:",
+		"vitest": "catalog:"
 	}
 }

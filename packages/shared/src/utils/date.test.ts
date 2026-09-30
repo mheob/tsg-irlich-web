@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { MS_PER_SECOND, TIME_SPAN_IN_SECONDS, timeSpanInMilliSeconds } from './date';
 

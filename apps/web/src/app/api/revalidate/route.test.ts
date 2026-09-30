@@ -2,7 +2,7 @@ import { parseBody } from 'next-sanity/webhook';
 import type { ParsedBody } from 'next-sanity/webhook';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import type { NextRequest } from 'next/server';
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vite-plus/test';
 
 import { POST } from '@/app/api/revalidate/route';
 

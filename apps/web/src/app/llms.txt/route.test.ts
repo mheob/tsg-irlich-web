@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { GET } from '@/app/llms.txt/route';
 import type { client } from '@/lib/sanity/client';

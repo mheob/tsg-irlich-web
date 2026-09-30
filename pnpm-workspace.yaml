@@ -54,3 +54,19 @@ overrides:
   # Bounded to v7: jsdom (via the Sanity CLI) deep-imports undici v7 internals that v8 removed
   undici: "^7.29.0"
   uuid: ">=11.1.1"
+  vite@*: "catalog:"
+  vitest@*: "catalog:"
+
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@1.0.0
+  vitest: 5.0.1
+  vite-plus: 1.0.0
+  "@vitest/coverage-v8": 5.0.1
+
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: "*"
+    vitest: "*"

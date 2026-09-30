@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import NewsCategoryPage, { generateMetadata } from '@/app/news/[category]/page';
 import { ContactPersons } from '@/components/section/contact-persons';

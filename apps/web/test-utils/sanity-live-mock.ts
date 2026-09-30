@@ -1,5 +1,5 @@
-import { vi } from 'vitest';
-import type { MockedFunction } from 'vitest';
+import { vi } from 'vite-plus/test';
+import type { MockedFunction } from 'vite-plus/test';
 
 import { sanityFetch } from '@/lib/sanity/live';
 

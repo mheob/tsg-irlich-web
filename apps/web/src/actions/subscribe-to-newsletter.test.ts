@@ -1,5 +1,5 @@
 import { headers } from 'next/headers';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import type * as subscribeToNewsletterModule from '@/actions/subscribe-to-newsletter';
 import type * as cleverreachModule from '@/lib/cleverreach';

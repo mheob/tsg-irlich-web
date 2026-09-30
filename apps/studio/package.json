@@ -10,13 +10,13 @@
 		"deploy:schema": "sanity schema deploy",
 		"dev": "sanity dev",
 		"extract-types": "sanity schema extract --enforce-required-fields --force",
-		"lint": "oxlint",
-		"lint:fix": "oxlint --fix",
-		"lint:github": "oxlint --format=github",
+		"lint": "vp lint",
+		"lint:fix": "vp lint --fix",
+		"lint:github": "vp lint --format=github",
 		"start": "sanity start",
-		"test": "vitest run",
-		"test:coverage": "vitest run --coverage",
-		"test:watch": "vitest",
+		"test": "vp test run",
+		"test:coverage": "vp test run --coverage",
+		"test:watch": "vp test",
 		"typecheck": "tsc --noEmit --incremental false"
 	},
 	"dependencies": {
@@ -39,11 +39,10 @@
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
 		"@vitejs/plugin-react": "^6.1.1",
-		"@vitest/coverage-v8": "^5.0.2",
+		"@vitest/coverage-v8": "catalog:",
 		"jsdom": "~30.0.1",
-		"oxlint": "^1.85.0",
-		"oxlint-tsgolint": "^7.0.2003",
 		"typescript": "^7.0.2",
-		"vitest": "^5.0.2"
+		"vite-plus": "catalog:",
+		"vitest": "catalog:"
 	}
 }

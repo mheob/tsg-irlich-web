@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 import FeedbackPage, { metadata } from '@/app/kontakt/feedback/page';
 import { Hero } from '@/components/section/hero';

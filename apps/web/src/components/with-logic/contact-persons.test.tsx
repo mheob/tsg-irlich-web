@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 import type { SanityImage, SanityImageReference } from '@/types/image.types';
 import type { ContactPerson } from '@/types/sanity.types';
@@ -43,7 +43,7 @@ const PERSON_WITH_IMAGE: ContactPerson = {
 
 // Declared once at module scope, rather than as inline array literals at each call site, per the
 // `react-perf/jsx-no-new-array-as-prop` rule (still active for `.test.tsx` files despite the
-// `**/*.tsx` override in `oxlint.config.ts` — see `navigation.test.tsx`'s `renderNavigation` for
+// `**/*.tsx` override in `vite.config.ts` — see `navigation.test.tsx`'s `renderNavigation` for
 // the same pattern).
 const NO_IMAGE_LIST: ContactPerson[] = [BASE_PERSON];
 const WITH_IMAGE_LIST: ContactPerson[] = [PERSON_WITH_IMAGE];

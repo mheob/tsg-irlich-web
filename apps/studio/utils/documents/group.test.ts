@@ -1,6 +1,6 @@
 import { RiTeamLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { getGroupDocument } from './group';
 

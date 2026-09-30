@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig, type Plugin } from 'vitest/config';
+import { defineConfig, type Plugin } from 'vite-plus';
 
 const ASSET_PATTERN = /\.(?:avif|gif|jpe?g|png|svg|webp)$/u;
 

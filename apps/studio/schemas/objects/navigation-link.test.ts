@@ -1,5 +1,5 @@
 import type { ValidationContext } from 'sanity';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 import mainNavigationItem, { prepareMainNavigationItem } from './main-navigation-item';
 import navigationLink, {

@@ -1,5 +1,5 @@
 import type { SanityDocument } from 'sanity/migrate';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import migration, { parseAddress } from './index';
 

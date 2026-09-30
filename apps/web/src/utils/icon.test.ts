@@ -1,5 +1,5 @@
 import { SiFacebook, SiWhatsapp, SiYoutube } from '@icons-pack/react-simple-icons';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { getSocialMediaEntries } from '@/utils/icon';
 

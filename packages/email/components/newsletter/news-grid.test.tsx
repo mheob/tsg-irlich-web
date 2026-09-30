@@ -1,5 +1,5 @@
 import { render } from 'react-email';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { NewsGrid } from './news-grid';
 

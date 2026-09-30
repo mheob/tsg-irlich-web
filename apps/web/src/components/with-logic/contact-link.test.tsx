@@ -1,11 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../test-utils/render';
 import { ContactLink } from './contact-link';
 
 // Declared once at module scope rather than as an inline object literal in the JSX below, per the
 // `react-perf/jsx-no-new-object-as-prop` rule (still active for `.test.tsx` files despite the
-// `**/*.tsx` override in `oxlint.config.ts`).
+// `**/*.tsx` override in `vite.config.ts`).
 const MAILTO_HEADER = { subject: 'Hallo Welt', body: 'Bitte um Rückruf' };
 
 describe('the contact link', () => {

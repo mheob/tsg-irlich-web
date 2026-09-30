@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import PrivacyPage, { generateMetadata } from '@/app/(legal)/datenschutz/page';
 import { Hero } from '@/components/section/hero';

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import type * as utilsModule from '@/lib/sanity/utils';
 import type { SanityFileAsset, SanityImage } from '@/types/sanity.types';

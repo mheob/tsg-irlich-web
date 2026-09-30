@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { subscribeToNewsletter } from '@/actions/subscribe-to-newsletter';
 import type { NewsletterFormState } from '@/actions/subscribe-to-newsletter';
