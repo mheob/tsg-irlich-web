@@ -227,6 +227,8 @@ To refresh every fixture at once, delete `e2e/fixtures/sanity/*.json` and record
 - Assert what a user can observe — role, accessible name, text, URL — never a class name, never a `data-testid`, same rule as the unit tests.
 - Content assertions are pinned to the recorded fixtures, so prefer stable UI strings (navigation labels, section headings) over an article's title.
 - react-hook-form resets its fields when the form hydrates. Interact with a client-only control first (the receiver select does the job), then fill the text fields — otherwise WebKit loses the input.
+- The same holds for every server-rendered, controlled input, such as the news category combobox (WEB-347). `waitForPage` proves that the App Router exists, not that a given island is hydrated: text typed before hydration lands in the DOM, and hydration then puts the component's own state back. Use the control first in a way only a hydrated component answers, retried until it does — `news.spec.ts` opens the list inside `expect(async () => { … }).toPass()` — and type afterwards.
+- The emulated amd64 container on Apple Silicon runs WebKit several times slower than CI. A spec that loads pages, hydrates and animates several times can exceed the default 30 s there while every step passes; mark it `test.slow()` with the reason rather than raising the global timeout.
 
 ## Lighthouse and Speed Insights
 
