@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import NewsOverviewPage, { generateMetadata } from '@/app/news/page';
@@ -26,6 +27,12 @@ vi.hoisted(() => {
 
 // `defineLive` reads `SANITY_API_READ_TOKEN` at import time and would open a live connection.
 vi.mock(import('@/lib/sanity/live'), () => ({ sanityFetch: vi.fn() }));
+
+vi.mock(import('next/navigation'), () => ({
+	notFound: vi.fn(() => {
+		throw new Error('NEXT_NOT_FOUND');
+	}),
+}));
 
 const mockedSanityFetch = sanityFetchMock();
 
@@ -88,6 +95,7 @@ function paginationParams(): Record<string, unknown> | undefined {
 describe('news overview page', () => {
 	afterEach(() => {
 		mockedSanityFetch.mockReset();
+		vi.mocked(notFound).mockReset();
 	});
 
 	describe('metadata', () => {
@@ -154,6 +162,25 @@ describe('news overview page', () => {
 			await expect(NewsOverviewPage(routeProps())).resolves.toBeNull();
 		});
 
+		it.each([
+			['page 2 of nine articles', '2', 9],
+			['page 5 of twenty articles', '5', 20],
+			['page 2 without any article', '2', 0],
+		])('answers %s with not found', async (_name, seite, total) => {
+			mockSanity({ total });
+
+			await expect(NewsOverviewPage(routeProps(seite))).rejects.toThrow('NEXT_NOT_FOUND');
+			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
+		});
+
+		it('renders the last page that still holds an article', async () => {
+			mockSanity({ paginated: [{ _id: 'article-10' }], total: 10 });
+
+			const pagination = findElement(await NewsOverviewPage(routeProps('2')), LatestNewsPagination);
+
+			expect(pagination?.props).toMatchObject({ currentPage: 2, hasNextPage: false });
+		});
+
 		it('heads the page with its title and subtitle', async () => {
 			mockSanity();
 
@@ -199,7 +226,7 @@ describe('news overview page', () => {
 		});
 
 		it('shifts the window by six articles per page', async () => {
-			mockSanity();
+			mockSanity({ total: 10 });
 
 			await NewsOverviewPage(routeProps('2'));
 
@@ -207,7 +234,7 @@ describe('news overview page', () => {
 		});
 
 		it('reads the page number from the first value of a repeated parameter', async () => {
-			mockSanity();
+			mockSanity({ total: 16 });
 
 			await NewsOverviewPage(routeProps(['3', '7']));
 
