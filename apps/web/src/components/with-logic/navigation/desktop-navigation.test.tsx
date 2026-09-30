@@ -103,6 +103,20 @@ describe('desktop navigation', () => {
 		).toHaveLength(2);
 	});
 
+	// Base UI only closes on a focus that leaves the whole menu, so tabbing from the last link of a
+	// panel on to the next item of the bar would leave the panel open over the page.
+	it('closes the panel once the focus moves on to a plain link of the bar', async () => {
+		const { getByRole, queryByRole, user } = renderDesktop();
+
+		await user.click(getByRole('button', { name: 'Verein' }));
+		getByRole('link', { name: 'Angebot' }).focus();
+
+		await waitFor(() => {
+			expect(queryByRole('link', { name: 'Übersicht' })).toBeNull();
+		});
+		expect(getByRole('button', { name: 'Verein' }).getAttribute('aria-expanded')).toBe('false');
+	});
+
 	it('closes the panel when one of its links is followed', async () => {
 		const { getByRole, queryByRole, user } = renderDesktop();
 
