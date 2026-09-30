@@ -117,6 +117,33 @@ describe('desktop navigation', () => {
 		expect(getByRole('button', { name: 'Verein' }).getAttribute('aria-expanded')).toBe('false');
 	});
 
+	it('closes the panel once the focus moves on to the trigger of the next group', async () => {
+		const angebot: NavigationEntry = {
+			isActive: false,
+			key: 'angebot',
+			kind: 'group',
+			links: [
+				{
+					href: '/angebot',
+					isActive: false,
+					isExternal: false,
+					key: 'angebot-overview',
+					title: 'Übersicht Angebot',
+				},
+			],
+			title: 'Angebot',
+		};
+		const { getByRole, queryByRole, user } = renderDesktop([VEREIN, angebot, HOME]);
+
+		await user.click(getByRole('button', { name: 'Verein' }));
+		getByRole('button', { name: 'Angebot' }).focus();
+
+		await waitFor(() => {
+			expect(queryByRole('link', { name: 'Übersicht' })).toBeNull();
+		});
+		expect(getByRole('button', { name: 'Verein' }).getAttribute('aria-expanded')).toBe('false');
+	});
+
 	it('closes the panel when one of its links is followed', async () => {
 		const { getByRole, queryByRole, user } = renderDesktop();
 

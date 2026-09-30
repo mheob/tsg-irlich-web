@@ -35,7 +35,13 @@ function NavigationMenuPositioner({
 	);
 }
 
-function NavigationMenu({ align = 'start', children, className, ...props }: NavigationMenuProps) {
+function NavigationMenu({
+	align = 'start',
+	children,
+	className,
+	positionMethod,
+	...props
+}: NavigationMenuProps) {
 	return (
 		<NavigationMenuPrimitive.Root
 			className={cn('relative flex items-center', className)}
@@ -43,7 +49,7 @@ function NavigationMenu({ align = 'start', children, className, ...props }: Navi
 			{...props}
 		>
 			{children}
-			<NavigationMenuPositioner align={align} />
+			<NavigationMenuPositioner align={align} positionMethod={positionMethod} />
 		</NavigationMenuPrimitive.Root>
 	);
 }
@@ -118,7 +124,7 @@ function NavigationMenuLink({ className, ...props }: NavigationMenuPrimitive.Lin
 }
 
 type NavigationMenuProps = NavigationMenuPrimitive.Root.Props &
-	Pick<NavigationMenuPrimitive.Positioner.Props, 'align'>;
+	Pick<NavigationMenuPrimitive.Positioner.Props, 'align' | 'positionMethod'>;
 
 export {
 	NavigationMenu,

@@ -138,6 +138,39 @@ test.describe('navigation', () => {
 		await expect(trigger).toHaveAttribute('aria-expanded', 'false');
 	});
 
+	test('keeps the open panel under its trigger while the page scrolls', async ({
+		isMobile,
+		page,
+	}) => {
+		test.skip(isMobile, 'the desktop bar only exists from the lg breakpoint');
+
+		await page.goto('/');
+		await waitForPage(page);
+
+		const trigger = page
+			.getByRole('navigation', { name: 'Hauptnavigation' })
+			.getByRole('button', { name: 'Verein', exact: true });
+
+		await trigger.focus();
+		await page.keyboard.press('Enter');
+		await expect(page.getByRole('link', { name: 'Übersicht', exact: true })).toBeVisible();
+
+		// The header is fixed. A panel positioned against the document scrolls away with the page and
+		// only glides back once Floating UI and the position transition catch up, so the panel is
+		// measured right after the scroll, before either of them had a chance to hide the jump. The
+		// mobile menu's copy of "Übersicht" is hidden and has no box, hence the client rects filter.
+		const panelTop = await page.evaluate(() => {
+			window.scrollTo({ behavior: 'instant', top: 300 });
+
+			const overview = [...document.querySelectorAll('a')].find(
+				(link) => link.textContent === 'Übersicht' && link.getClientRects().length > 0,
+			);
+			return overview?.getBoundingClientRect().top ?? Number.NaN;
+		});
+
+		expect(panelTop).toBeGreaterThan(0);
+	});
+
 	test('expands the club group in the mobile menu and follows a sub-entry', async ({
 		isMobile,
 		page,

@@ -33,13 +33,14 @@ function DesktopLink({ link, onFocus }: Readonly<DesktopLinkProps>) {
 	);
 }
 
-function DesktopGroup({ group }: Readonly<DesktopGroupProps>) {
+function DesktopGroup({ group, onFocus }: Readonly<DesktopGroupProps>) {
 	return (
 		<NavigationMenuItem value={group.key}>
 			<NavigationMenuTrigger
 				className={cn(TOP_LEVEL_CLASS_NAME, 'data-popup-open:bg-secondary/40', {
 					'border-b-2 border-secondary': group.isActive,
 				})}
+				onFocus={onFocus}
 			>
 				{group.title}
 			</NavigationMenuTrigger>
@@ -65,11 +66,19 @@ function DesktopGroup({ group }: Readonly<DesktopGroupProps>) {
 // with "Übersicht" and the children, by hover, click or keyboard.
 function DesktopNavigation({ entries }: Readonly<DesktopNavigationProps>) {
 	// The open group is held here because Base UI only closes a panel on a focus that leaves the whole
-	// menu: tabbing from its last link on to the next plain item would otherwise leave it open.
+	// menu: tabbing from its last link on to the next item of the bar would otherwise leave it open.
 	const [openGroup, setOpenGroup] = useState<string | null>(null);
 
 	const closeOpenGroup = () => {
 		setOpenGroup(null);
+	};
+
+	// A trigger taking the focus closes every other group, but not its own: Escape hands the focus
+	// back to the trigger of the panel it closes.
+	const closeOtherGroups = (key: string) => {
+		if (openGroup !== key) {
+			setOpenGroup(null);
+		}
 	};
 
 	return (
@@ -79,13 +88,22 @@ function DesktopNavigation({ entries }: Readonly<DesktopNavigationProps>) {
 			onValueChange={(value: string | null) => {
 				setOpenGroup(value);
 			}}
+			// The bar sits in a fixed header. Positioned against the document, an open panel would scroll
+			// away with the page first and only glide back once its position transition caught up.
+			positionMethod="fixed"
 			render={<div />}
 			value={openGroup}
 		>
 			<NavigationMenuList className="space-x-3">
 				{entries.map((entry) =>
 					entry.kind === 'group' ? (
-						<DesktopGroup group={entry} key={entry.key} />
+						<DesktopGroup
+							group={entry}
+							key={entry.key}
+							onFocus={() => {
+								closeOtherGroups(entry.key);
+							}}
+						/>
 					) : (
 						<DesktopLink key={entry.link.key} link={entry.link} onFocus={closeOpenGroup} />
 					),
@@ -106,6 +124,7 @@ interface DesktopLinkProps {
 
 interface DesktopGroupProps {
 	group: NavigationGroupEntry;
+	onFocus: () => void;
 }
 
 export { DesktopNavigation };
