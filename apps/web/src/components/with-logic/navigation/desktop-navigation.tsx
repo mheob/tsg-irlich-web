@@ -22,7 +22,7 @@ const DESKTOP_MEDIA_QUERY = '(min-width: 64rem)';
 
 /** Shared by the bar's links and triggers, so a group looks like any other item until it opens. */
 const TOP_LEVEL_CLASS_NAME =
-	'flex h-16 items-center px-3 py-2 font-bold text-primary uppercase transition-colors hover:bg-secondary/40';
+	'flex h-16 items-center gap-1 px-3 py-2 font-bold text-primary uppercase transition-colors hover:bg-secondary/40';
 
 function DesktopLink({ link, onFocus }: Readonly<DesktopLinkProps>) {
 	return (
