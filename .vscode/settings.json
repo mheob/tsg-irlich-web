@@ -1,7 +1,7 @@
 {
 	"typescript.tsdk": "node_modules/typescript/lib",
 
-	// oxlint: the language server needs Node.js to evaluate `oxlint.config.ts`
+	// oxlint: the language server needs Node.js to evaluate `vite.config.ts`
 	"oxc.useExecPath": true,
 	"oxc.typeAware": true,
 
@@ -12,7 +12,8 @@
 	// Auto fix
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit",
-		"source.organizeImports": "never"
+		"source.organizeImports": "never",
+		"source.fixAll.oxc": "explicit"
 	},
 
 	// Silent the stylistic rules in you IDE, but still auto fix them
@@ -60,5 +61,21 @@
 	"sonarlint.connectedMode.project": {
 		"connectionId": "mheob",
 		"projectKey": "mheob_tsg-irlich-web"
-	}
+	},
+	"editor.defaultFormatter": "oxc.oxc-vscode",
+	"[javascript]": {
+		"editor.defaultFormatter": "oxc.oxc-vscode"
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "oxc.oxc-vscode"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "oxc.oxc-vscode"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "oxc.oxc-vscode"
+	},
+	"oxc.disableNestedConfig": true,
+	"oxc.fmt.disableNestedConfig": true,
+	"editor.formatOnSaveMode": "file"
 }

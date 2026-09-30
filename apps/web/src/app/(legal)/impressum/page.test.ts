@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import ImprintPage, { generateMetadata } from '@/app/(legal)/impressum/page';
 import { PortableText } from '@/components/ui/portable-text';

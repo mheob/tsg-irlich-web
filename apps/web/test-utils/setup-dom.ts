@@ -1,7 +1,7 @@
 import { cleanup } from '@testing-library/react';
 import { createElement, Fragment, useRef } from 'react';
 import type { ReactElement, ReactNode } from 'react';
-import { afterEach, vi } from 'vitest';
+import { afterEach, vi } from 'vite-plus/test';
 
 type MediaQueryListener = (event: MediaQueryListEvent) => void;
 

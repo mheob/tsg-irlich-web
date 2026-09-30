@@ -1,5 +1,5 @@
 import { useIsPresentationTool } from 'next-sanity/hooks';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../test-utils/render';
 import { DisableDraftMode } from './disable-draft-mode';

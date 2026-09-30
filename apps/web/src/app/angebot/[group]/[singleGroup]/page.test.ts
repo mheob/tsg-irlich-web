@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Children, isValidElement } from 'react';
 import type { ReactElement, ReactNode } from 'react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import SingleGroupsPage, { generateMetadata } from '@/app/angebot/[group]/[singleGroup]/page';
 import { ContactPersons } from '@/components/section/contact-persons';

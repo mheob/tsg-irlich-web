@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../test-utils/render';
 import { FeatureCard } from './feature-card';

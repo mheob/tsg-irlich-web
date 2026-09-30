@@ -1,6 +1,6 @@
 import { waitFor, within } from '@testing-library/react';
 import Image from 'next/image';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../test-utils/render';
 import { LightboxGallery, LightboxTrigger } from './lightbox';

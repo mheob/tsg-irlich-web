@@ -1,6 +1,6 @@
 import { at, set } from 'sanity/migrate';
 import type { SanityDocument } from 'sanity/migrate';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import migration, { toMainNavigationItem } from './index';
 

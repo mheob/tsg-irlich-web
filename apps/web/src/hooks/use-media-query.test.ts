@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/prefer-global-this */
 
 import { act, renderHook } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { createMatchMediaStub, dispatchMediaQueryChange } from '../../test-utils/setup-dom';
 import { useMediaQuery } from './use-media-query';

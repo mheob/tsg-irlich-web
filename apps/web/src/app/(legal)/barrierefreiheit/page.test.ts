@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import AccessibilityPage, { generateMetadata } from '@/app/(legal)/barrierefreiheit/page';
 import { Hero } from '@/components/section/hero';

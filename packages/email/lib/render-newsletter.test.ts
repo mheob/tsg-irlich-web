@@ -1,5 +1,5 @@
 import { pretty } from 'react-email';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { renderNewsletterHtml, renderNewsletterTemplate } from './render-newsletter';
 

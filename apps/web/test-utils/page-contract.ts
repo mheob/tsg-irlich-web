@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { expect, it } from 'vitest';
-import type { MockedFunction } from 'vitest';
+import { expect, it } from 'vite-plus/test';
+import type { MockedFunction } from 'vite-plus/test';
 
 /** The `image-<id>-<width>x<height>-<format>` shape `@sanity/image-url` requires. */
 const CONTRACT_ASSET_REF = 'image-abc123def456-800x600-jpg';

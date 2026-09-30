@@ -3,7 +3,7 @@
 
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import HomePage, { generateMetadata } from '@/app/page';
 import { ContactPersons } from '@/components/section/contact-persons';

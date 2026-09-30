@@ -1,5 +1,5 @@
 import { act, waitFor, within } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../../test-utils/render';
 import { createMatchMediaStub, dispatchMediaQueryChange } from '../../../../test-utils/setup-dom';

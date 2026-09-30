@@ -40,3 +40,4 @@ coverage
 
 # Temporary
 /__web
+.vitest/

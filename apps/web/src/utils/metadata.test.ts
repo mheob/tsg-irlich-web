@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import type { AnyImage } from '@/types/image.types';
 import type * as metadataModule from '@/utils/metadata';

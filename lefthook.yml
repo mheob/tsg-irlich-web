@@ -7,11 +7,11 @@ pre-commit:
   jobs:
     - name: format
       glob: "*"
-      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
+      run: pnpm exec vp fmt --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
     - name: lint
       glob: "*"
-      run: pnpm exec oxlint --fix --no-error-on-unmatched-pattern {staged_files}
+      run: pnpm exec vp lint --fix --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 
 pre-push:

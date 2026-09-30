@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { urlForImage, urlForImageMax } from '@/lib/sanity/utils';
 import { getGalleryImages, getInitials } from '@/utils/image';

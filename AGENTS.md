@@ -56,7 +56,7 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 
 - Built with **Turbo** for build orchestration and caching
 - **pnpm** as package manager with workspace support
-- Shared dependencies managed with explicit pinned versions
+- Every external dependency resolves through the default catalog in `pnpm-workspace.yaml`, and the manifests reference it with `catalog:`. `catalogMode: strict` makes `pnpm add` / `vp add` write new dependencies there; only workspace packages stay on `workspace:*`. The four Vite+ toolchain entries (`vite`, `vite-plus`, `vitest`, `@vitest/coverage-v8`) are re-pinned by `vp migrate`, not by hand
 - Node.js ^24.20.0 and pnpm 12.7.0 required
 
 ### Web App (Next.js)
@@ -168,18 +168,19 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 
 ### Code Quality Tools
 
-- **oxlint** with @mheob/oxlint-config (plus oxlint-tsgolint for type-aware rules)
-- **oxfmt** with @mheob/oxfmt-config
+- **Vite+** (`vite-plus`) bundles oxlint, oxfmt and Vitest: `vp lint`, `vp fmt` and `vp test` run them
+- **oxlint** with @mheob/oxlint-config (plus oxlint-tsgolint for type-aware rules), configured in the `lint` block of the root `vite.config.ts`. Vite+ reads no nested lint config, so package-specific rules are `lint.overrides` entries there
+- **oxfmt** with @mheob/oxfmt-config, configured in the `fmt` block of the root `vite.config.ts`
 - **Lefthook** for pre-commit hooks
 - **Commitizen** with czg for conventional commits
-- **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`); tests live next to their source (`foo.ts` → `foo.test.ts`)
-- Import `describe`/`it`/`expect`/`vi` explicitly from `vitest` — `globals` stays off
+- **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`); tests live next to their source (`foo.ts` → `foo.test.ts`). `vp test` at the root runs all four as projects through `test.projects` in the root `vite.config.ts`; coverage thresholds only apply per workspace, so gate on `pnpm run test:coverage`
+- Import `describe`/`it`/`expect`/`vi` explicitly from `vite-plus/test` (the `vite-plus/prefer-vite-plus-imports` lint rule enforces it) — `globals` stays off
 - `apps/web` splits into a `node` and a `dom` (jsdom) project; component and hook tests land in `dom` — see `apps/web/AGENTS.md`
 - End-to-end tests are Playwright, live in `apps/web/e2e` and are separated from Vitest by extension (`*.spec.ts` vs `*.test.ts`). They mock every outbound service in the Next.js process itself and run in their own CI workflow — see `apps/web/AGENTS.md` before touching them. That suite also carries the automated accessibility sweep: `@axe-core/playwright` checks every important route against WCAG 2.1 AA, tolerates only what `apps/web/e2e/support/axe-baseline.ts` lists, and writes its findings into GitHub's job summary. It carries the visual regression baselines as well: full-page screenshots of eight routes in both browser projects, committed under `apps/web/e2e/__screenshots__`. Baselines are pixel-comparable only against the platform that produced them, so the whole end-to-end job runs inside the pinned `mcr.microsoft.com/playwright` image and `pnpm --filter web run test:e2e:visual:update` regenerates them in that same container; outside Linux the visual specs skip themselves
 - Lab and field performance are covered outside the Vitest and Playwright suites. `@lhci/cli` scores five routes of a deployed Vercel preview on every pull request (`apps/web/lighthouserc.cjs`, `.github/workflows/lighthouse.yml`): accessibility, best practices and SEO are asserted at a perfect score, performance only warns because a shared CI runner moves it by around ten points between identical runs. `@vercel/speed-insights` sits in the root layout and reports the Core Web Vitals real visitors produce. See `apps/web/AGENTS.md` for both
 - `packages/email` runs entirely in the `node` environment and renders every component with `render()` from `react-email` to a plain HTML string — no `@testing-library/react`, no DOM. The newsletter template carries exactly two snapshots (the plain mailing and the CleverReach template), deliberately kept to that count since a full-document snapshot churns on any markup change; the suite freezes the clock with `vi.useFakeTimers()`/`vi.setSystemTime(...)` to a mid-year date before snapshotting, so the footer's `new Date().getFullYear()` doesn't drift the snapshot on New Year's Day
 - oxlint's vitest plugin warns (`pnpm run lint` still exits 0) when a `describe` title isn't lowercase or repeats an imported identifier, or a hook sits outside a `describe` block — the convention is kept repo-wide regardless
-- Test files, `test-utils/**` and `vitest.config.ts` are exempt from `sort-keys`, `no-magic-numbers`, `max-lines`, `max-lines-per-function` and `typescript/no-unsafe-type-assertion` in `oxlint.config.ts` — widen a single rule inline, never the override itself
+- Test files, `test-utils/**` and `vitest.config.ts` are exempt from `sort-keys`, `no-magic-numbers`, `max-lines`, `max-lines-per-function` and `typescript/no-unsafe-type-assertion` in the root `vite.config.ts` — widen a single rule inline, never the override itself
 - Mock external services at the `fetch` boundary, not the module boundary; Resend is planned as the one exception, mocked at the SDK level
 - `pnpm run test:coverage` writes `coverage/lcov.info` per workspace for CI/SonarQube. Every `vitest.config.ts` sets `coverage.include` so untested files count as uncovered instead of dropping out of the denominator — Vitest 4 removed `coverage.all`, and without `include` V8 only scores the files a test happened to import, which inflated every figure
 - Each `vitest.config.ts` carries `coverage.thresholds`, so `test:coverage` fails when coverage drops: `packages/shared` and `packages/email` at 100% everywhere, `apps/web` at 93% lines and statements / 88% functions / 85% branches (it reaches 94.3% / 89.6% / 87.0%), `apps/studio` at the level its schema tests currently reach (28% lines). They are a ratchet — raise them with every batch of new tests, never lower them to make a run pass

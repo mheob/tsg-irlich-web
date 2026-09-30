@@ -2,7 +2,7 @@ import { VisualEditing } from 'next-sanity/visual-editing';
 import type * as visualEditing from 'next-sanity/visual-editing';
 import type localFont from 'next/font/local';
 import { draftMode } from 'next/headers';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import RootLayout, { metadata } from '@/app/layout';
 import { JsonLd } from '@/components/ui/json-ld';
