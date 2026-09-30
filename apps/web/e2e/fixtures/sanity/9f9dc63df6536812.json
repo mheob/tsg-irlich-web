@@ -606,22 +606,22 @@
 			}
 		],
 		"syncTags": [
-			"s1:yx3Vpw",
-			"s1:Ik/M0w",
-			"s1:bmIwtw",
+			"s1:mCzbTw",
+			"s1:+YVtFA",
+			"s1:X4XzKA",
 			"s1:8Qkb8Q",
 			"s1:ycr7jw",
+			"s1:yx3Vpw",
+			"s1:uv+Zzg",
+			"s1:c5Grjg",
+			"s1:bmIwtw",
+			"s1:vJBgQg",
 			"s1:Fwy1kg",
 			"s1:GNFE5A",
 			"s1:SvG3tg",
-			"s1:uv+Zzg",
-			"s1:mCzbTw",
-			"s1:c5Grjg",
-			"s1:+YVtFA",
-			"s1:X4XzKA",
-			"s1:vJBgQg"
+			"s1:Ik/M0w"
 		],
-		"ms": 40
+		"ms": 42
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+%24category+in+categories%5B%5D-%3Eslug.current%5D%0A%09%7C+order%28publishedAt+desc%29+%5B%24start..%24end%5D+%7B%0A%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%7D%0A&%24category=%22fussball%22&%24end=8&%24start=0&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
 }

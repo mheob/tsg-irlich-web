@@ -101,6 +101,14 @@ test.describe('navigation', () => {
 			'_blank',
 		);
 
+		// The sub-texts from the studio are announced as descriptions; the names stay the titles.
+		await expect(overview).toHaveAccessibleDescription(
+			'Wer wir sind und wofür die TSG Irlich steht',
+		);
+		await expect(
+			page.getByRole('link', { exact: true, name: 'Kontakt' }),
+		).toHaveAccessibleDescription('Schreib uns eine Nachricht');
+
 		await overview.click();
 		await expect(page).toHaveURL('/verein');
 		await expect(overview).toBeHidden();
@@ -157,16 +165,14 @@ test.describe('navigation', () => {
 
 		// The header is fixed. A panel positioned against the document scrolls away with the page and
 		// only glides back once Floating UI and the position transition catch up, so the panel is
-		// measured right after the scroll, before either of them had a chance to hide the jump. The
-		// mobile menu's copy of "Übersicht" is hidden and has no box, hence the client rects filter.
-		const panelTop = await page.evaluate(() => {
-			window.scrollTo({ behavior: 'instant', top: 300 });
-
-			const overview = [...document.querySelectorAll('a')].find(
-				(link) => link.textContent === 'Übersicht' && link.getClientRects().length > 0,
-			);
-			return overview?.getBoundingClientRect().top ?? Number.NaN;
-		});
+		// measured right after the scroll, in the same task, before either of them had a chance to
+		// hide the jump.
+		const panelTop = await page
+			.getByRole('link', { exact: true, name: 'Übersicht' })
+			.evaluate((link) => {
+				window.scrollTo({ behavior: 'instant', top: 300 });
+				return link.getBoundingClientRect().top;
+			});
 
 		expect(panelTop).toBeGreaterThan(0);
 	});

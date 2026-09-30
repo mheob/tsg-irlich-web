@@ -120,8 +120,8 @@
 			],
 			"total": 188
 		},
-		"syncTags": ["s1:0IpYkw", "s1:GNFE5A"],
-		"ms": 229
+		"syncTags": ["s1:GNFE5A", "s1:0IpYkw"],
+		"ms": 185
 	},
 	"url": "/v2025-02-19/data/query/development?query=%7B%0A%09%22categories%22%3A+*%5B%0A%09%09_type+%3D%3D+%27news.category%27%0A%09%09%26%26+%28slug.current+%3D%3D+%24current+%7C%7C+count%28*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D%29+%3E+0%29%0A%09%5D+%7C+order%28title+asc%29+%7B%0A%09%09%22articleCount%22%3A+count%28*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D%29%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%2C%0A%09%22total%22%3A+count%28*%5B_type+%3D%3D+%27news.article%27%5D%29%0A%7D&%24current=%22senioren%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
 }

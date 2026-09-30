@@ -219,7 +219,7 @@
 			"title": "Impressum"
 		},
 		"syncTags": ["s1:OevtwA", "s1:fcrxxQ"],
-		"ms": 7
+		"ms": 11
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27imprint%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09%22contactForm%22%3A+contactForm+%7B%0A%09%09%09%22title%22%3A+link-%3Etitle%2C%0A%09%09%09%22link%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
 }
