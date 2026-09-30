@@ -149,21 +149,23 @@ type NavigationEntry =
 ### Desktop
 
 - `ui/navigation-menu.tsx` kommt über `shadcn add navigation-menu`. Wie AGENTS.md verlangt, werden die Klassen danach auf die der App übertragen.
-- Das `NavigationMenu`-Root ersetzt den heutigen Container `hidden lg:flex`.
+- Das `NavigationMenu`-Root ersetzt den heutigen Container `hidden lg:flex`. Base UI rendert das Root als `<nav>`, deshalb bekommt es `render={<div />}`. Sonst stünde ein zweites, unbenanntes `<nav>` im `<nav aria-label="Hauptnavigation">`.
+- Das Popup liegt in einem Portal am Ende von `<body>`, also außerhalb des Landmarks. Tests suchen die Links im Panel deshalb auf Seitenebene.
 - **Einfacher Eintrag:** `NavigationMenuLink` mit `render={<NavigationAnchor … />}` und `active`, das Erscheinungsbild wie heute (uppercase, bold, `text-primary`, `h-16`, `px-3`, Hover `bg-secondary/40`). Aktiv (`data-active`) zeigt er die Linie `border-b-2 border-secondary`.
 - **Gruppe:** `NavigationMenuTrigger` im selben Stil mit `ChevronDown` (lucide), der sich bei `data-popup-open` um 180° dreht. Eine aktive Gruppe bekommt dieselbe Linie über eine Klasse. `aria-current` gehört nicht auf den Button.
 - **Panel:** `NavigationMenuContent` mit einer Liste aus `NavigationMenuLink`, jeweils mit `closeOnClick` und `active`. Die Einträge sind normal geschrieben (keine Großbuchstaben), `text-foreground`, Hover `bg-muted/40`, aktiv `bg-secondary/40`.
 - **Popup:** Der Wrapper liefert Portal, Positioner und Popup. Das Popup hat einen weißen Hintergrund (`bg-background`), Schatten, einen kleinen Radius und sitzt linksbündig unter dem Trigger.
-- Hover und Tastatur (Enter oder Space öffnet, Pfeiltasten, Escape schließt und gibt den Fokus an den Trigger zurück) bringt Base UI mit, die Verzögerungen bleiben auf 50 ms.
+- Hover und Tastatur bringt Base UI mit: Enter, Space oder Pfeil nach unten öffnet, Tab führt ins Panel und hinter dem letzten Link wieder hinaus (das Panel schließt dabei), Escape schließt und gibt den Fokus an den Trigger zurück. Die Verzögerungen bleiben auf 50 ms.
 - Schrumpft die Leiste beim Scrollen, hängt der Positioner weiter am Trigger und wandert mit.
 
 ### Mobil
 
 - Das bestehende Verhalten bleibt unverändert: `inert` im geschlossenen Zustand, Escape mit Fokus-Rückgabe an den Toggle, Schließen beim Folgen eines Links.
-- **Einfacher Eintrag:** wie heute.
+- Die Einträge stehen in einer Liste (`<ul>`/`<li>`), heute sind es lose Links.
+- **Einfacher Eintrag:** sonst wie heute.
 - **Gruppe:** `Collapsible` mit `defaultOpen={group.isActive}`.
   - Der Trigger ist ein Button über die ganze Zeile, im Stil der heutigen Einträge, mit `ChevronDown`, der sich bei `data-panel-open` dreht. `aria-expanded` setzt Base UI.
-  - Das Panel enthält die Links der Gruppe eingerückt (`pl-6`). Zugeklappt ist es `hidden` und damit nicht fokussierbar.
+  - Das Panel enthält die Links der Gruppe eingerückt (`pl-6`). Es bleibt mit `keepMounted` im DOM und ist zugeklappt `hidden`: nicht fokussierbar, aber im server-gerenderten HTML, damit Crawler die Unterseiten finden. Die Desktop-Panels rendert Base UI erst beim Öffnen.
 - Der Kontakt-Button am Ende steht ohne `sm:hidden`.
 
 ### Externe Links
@@ -183,7 +185,7 @@ Die Wrapper sind nötig, weil die Utility `btn` selbst `display: inline-flex` se
 
 ### Unit (Vitest)
 
-- **`navigation-entries.test.ts`** (Projekt `node`) prüft:
+- **`navigation-entries.test.ts`** prüft (läuft wie alles unter `src/components/` im Projekt `dom`, braucht aber kein DOM):
   - interne und externe Links, `linkType: null` als intern,
   - dass Einträge und Unterpunkte ohne `href` oder `title` wegfallen,
   - dass eine Gruppe ohne verbleibende Unterpunkte zum Link wird,
@@ -210,8 +212,10 @@ Die Wrapper sind nötig, weil die Utility `btn` selbst `display: inline-flex` se
 - **`e2e/specs/navigation.spec.ts`:**
   - **Desktop:**
     - „Verein“ öffnet per Klick, „Übersicht“ führt zu `/verein`.
-    - Per Tastatur öffnet Enter auf dem Trigger das Panel, die Pfeiltaste erreicht einen Unterpunkt, Escape schließt es und gibt den Fokus an den Trigger zurück.
+    - Per Tastatur öffnet Enter auf dem Trigger das Panel, Tab erreicht „Übersicht“, Escape schließt es und gibt den Fokus an den Trigger zurück.
+    - Tab hinter dem letzten Link im Panel schließt es und landet auf „Angebot“.
     - Der externe Unterpunkt hat `target="_blank"`.
+    - Bei 1100 px Breite ist „Kontakt“ sichtbar und „Kontakt aufnehmen“ nicht, bei 1280 px umgekehrt. Bei 800 px steht „Kontakt aufnehmen“ im geöffneten Mobil-Menü.
   - **Mobil:** die Gruppe „Verein“ aufklappen und „Kontakt“ folgen.
   - Der bestehende Rundgang über die Desktop-Leiste bleibt unverändert, er klickt „Verein“ ohnehin nicht an.
   - Der bestehende Mobil-Test nutzt heute den Link „Verein“ (`a[href="/verein"]`), der mobil zum Gruppen-Trigger wird. Er stellt deshalb auf „Angebot“ (`/angebot`) um. Prüfung von `inert`, Fokus und Escape bleibt gleich.
