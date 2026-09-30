@@ -8,10 +8,12 @@ import {
 	newsArticlesPaginatedQuery,
 	newsArticlesQuery,
 	newsArticlesTotalQuery,
+	newsCategoriesQuery,
 } from '@/lib/sanity/queries/shared/news';
 
 import { findElement } from '../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../test-utils/sanity-live-mock';
+import { CategoryCombobox } from './_sections/category-combobox';
 import { LatestNews } from './_sections/latest-news';
 import { LatestNewsPagination } from './_sections/latest-news-pagination';
 // `src/lib/sanity/api.ts` asserts the project variables at import time, and the page reaches it
@@ -33,9 +35,14 @@ const OVERVIEW = {
 	subtitle: 'Alles Aktuelle',
 	title: 'News',
 };
+const CATEGORIES = {
+	categories: [{ articleCount: 71, slug: 'fussball', title: 'Fußball' }],
+	total: 95,
+};
 
 interface OverviewResults {
 	articles?: unknown[];
+	categories?: unknown;
 	page?: unknown;
 	paginated?: null | unknown[];
 	total?: number;
@@ -43,15 +50,17 @@ interface OverviewResults {
 
 function mockSanity({
 	articles = [],
+	categories = CATEGORIES,
 	page = OVERVIEW,
 	paginated = [],
 	total = 0,
 }: OverviewResults = {}): void {
-	// The four queries run inside one `Promise.all`, so keying on the query keeps the fixtures
+	// The queries run inside one `Promise.all`, so keying on the query keeps the fixtures
 	// independent of the order they resolve in.
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedSanityFetch.mockImplementation(async ({ query }) => {
 		if (query === newsOverviewPageQuery) return { data: page };
+		if (query === newsCategoriesQuery) return { data: categories };
 		if (query === newsArticlesTotalQuery) return { data: total };
 		if (query === newsArticlesQuery) return { data: articles };
 		if (query === newsArticlesPaginatedQuery) return { data: paginated };
@@ -151,6 +160,26 @@ describe('news overview page', () => {
 			const hero = findElement(await NewsOverviewPage(routeProps()), Hero);
 
 			expect(hero?.props).toMatchObject({ subTitle: 'Alles Aktuelle', title: 'News' });
+		});
+
+		it('offers every category next to the heading, with all news selected', async () => {
+			mockSanity();
+
+			const combobox = findElement(await NewsOverviewPage(routeProps()), CategoryCombobox);
+
+			expect(combobox?.props).toMatchObject(CATEGORIES);
+			expect(combobox?.props.currentSlug).toBeUndefined();
+		});
+
+		it('asks for the categories without a current one', async () => {
+			mockSanity();
+
+			await NewsOverviewPage(routeProps());
+
+			expect(mockedSanityFetch).toHaveBeenCalledWith({
+				params: { current: '' },
+				query: newsCategoriesQuery,
+			});
 		});
 
 		it('shows the latest articles above the paginated list', async () => {
