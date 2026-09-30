@@ -21,7 +21,7 @@
 		"test:e2e:visual:update": "./scripts/update-screenshots.sh",
 		"test:lighthouse": "lhci autorun",
 		"test:watch": "vitest",
-		"typecheck": "tsc --noEmit",
+		"typecheck": "tsc --noEmit --incremental false",
 		"typegen:routes": "next typegen && tsc --noEmit",
 		"typegen:sanity": "sanity typegen generate"
 	},

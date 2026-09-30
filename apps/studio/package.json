@@ -17,7 +17,7 @@
 		"test": "vitest run",
 		"test:coverage": "vitest run --coverage",
 		"test:watch": "vitest",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit --incremental false"
 	},
 	"dependencies": {
 		"@sanity/assist": "^6.2.1",
