@@ -88,10 +88,19 @@ A slug in Sanity only holds the **last** segment of the URL, so no link can be b
 
 The GROQ side lives in `src/lib/sanity/queries/index.ts`:
 
-- `internalLinkTarget` projects everything the resolver needs and is used wherever an `internalLink` **object field** is queried (the imprint contact form, the main navigation).
+- `internalLinkTarget` projects everything the resolver needs and is used wherever a page reference is queried as a field: the `internalLink` of the imprint contact form, and the `link` of every `mainNavigationItem` and `navigationLink` in the main navigation.
 - `blockContent` does the same for the `internalLink` **marks** of a portable text field and has to be applied to every `blockContent` that is rendered, including nested ones (`grid.items[]`, `imageCard.description`).
 
 The resolved target is added as `target` next to the untouched `link` reference, and empty arrays are coalesced, so that the query result still matches the generated schema types.
+
+## Main navigation
+
+`site-settings.mainNavigation` holds `mainNavigationItem` entries (title, `linkType`, a page `link` or an external `href`, optional `children` of type `navigationLink`), and `mainNavigationQuery` reads them. `src/components/with-logic/navigation/` renders them:
+
+- `getNavigationEntries` (`navigation-entries.ts`) is the only place that resolves hrefs and the active state. An entry with children becomes a group led by an "Übersicht" link to its own page, and inside a group only the link with the longest matching href is active. A missing `linkType` counts as internal.
+- `desktop-navigation.tsx` builds the bar on Base UI's `NavigationMenu` (`src/components/ui/navigation-menu.tsx`). Base UI renders the root as `<nav>`, so it gets `render={<div />}` inside the shell's landmark. The panel is portalled to the end of `<body>`, which puts its links outside the landmark: tests look for them on page level.
+- The bar holds the open group itself. Base UI only closes a panel when the focus leaves the whole menu, so the bar closes it when another item of the bar takes the focus, and below the `lg` breakpoint. The panels are positioned `fixed`, since the header is fixed.
+- `mobile-navigation.tsx` expands groups on Base UI's `Collapsible`. Their panels are `keepMounted`, so the pages behind them are in the server-rendered HTML while a collapsed panel stays `hidden`.
 
 ## Draft mode
 
