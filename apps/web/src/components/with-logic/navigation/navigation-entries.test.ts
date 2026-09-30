@@ -68,6 +68,7 @@ describe('navigation entries', () => {
 				{
 					kind: 'link',
 					link: {
+						description: null,
 						href: '/verein',
 						isActive: false,
 						isExternal: false,
@@ -83,6 +84,7 @@ describe('navigation entries', () => {
 				{
 					kind: 'link',
 					link: {
+						description: null,
 						href: 'https://www.neuwied.de',
 						isActive: false,
 						isExternal: true,
@@ -100,6 +102,7 @@ describe('navigation entries', () => {
 			expect(entry).toStrictEqual({
 				kind: 'link',
 				link: {
+					description: null,
 					href: '/verein',
 					isActive: false,
 					isExternal: false,
@@ -116,6 +119,7 @@ describe('navigation entries', () => {
 			expect(entry).toStrictEqual({
 				kind: 'link',
 				link: {
+					description: null,
 					href: 'https://www.neuwied.de',
 					isActive: false,
 					isExternal: true,
@@ -138,6 +142,63 @@ describe('navigation entries', () => {
 			);
 
 			expect(entries.map((entry) => asLink(entry).key)).toStrictEqual(['angebot']);
+		});
+	});
+
+	describe('dropdown texts and columns', () => {
+		it('passes the description of a sub-entry through', () => {
+			const entry = asGroup(
+				getNavigationEntries(
+					[item(VEREIN, [{ ...KONTAKT, description: 'So erreichst du uns' }])],
+					'/',
+				)[0],
+			);
+
+			expect(entry.links.map((link) => link.description)).toStrictEqual([
+				null,
+				'So erreichst du uns',
+			]);
+		});
+
+		it('titles and describes the overview with the fields of its item', () => {
+			const entry = asGroup(
+				getNavigationEntries(
+					[
+						{
+							...item(VEREIN, [KONTAKT]),
+							overviewDescription: 'Alles über die TSG',
+							overviewTitle: 'Unser Verein',
+						},
+					],
+					'/',
+				)[0],
+			);
+
+			expect(entry.links[0]).toMatchObject({
+				description: 'Alles über die TSG',
+				title: 'Unser Verein',
+			});
+		});
+
+		it.each([undefined, null, '', '   '])(
+			'falls back to "Übersicht" when the overview title is %j',
+			(overviewTitle) => {
+				const entry = asGroup(
+					getNavigationEntries([{ ...item(VEREIN, [KONTAKT]), overviewTitle }], '/')[0],
+				);
+
+				expect(entry.links[0]?.title).toBe('Übersicht');
+			},
+		);
+
+		it('renders a group in one column unless its item asks for two', () => {
+			const [oneColumn, twoColumns] = getNavigationEntries(
+				[item(VEREIN, [KONTAKT]), { ...item(NEWS, [FUSSBALL]), hasTwoColumns: true }],
+				'/',
+			);
+
+			expect(asGroup(oneColumn).hasTwoColumns).toBe(false);
+			expect(asGroup(twoColumns).hasTwoColumns).toBe(true);
 		});
 	});
 
@@ -168,11 +229,13 @@ describe('navigation entries', () => {
 			const [entry] = getNavigationEntries([item(VEREIN, [KONTAKT, NEUWIED])], '/');
 
 			expect(entry).toStrictEqual({
+				hasTwoColumns: false,
 				isActive: false,
 				key: 'verein',
 				kind: 'group',
 				links: [
 					{
+						description: null,
 						href: '/verein',
 						isActive: false,
 						isExternal: false,
@@ -180,6 +243,7 @@ describe('navigation entries', () => {
 						title: 'Übersicht',
 					},
 					{
+						description: null,
 						href: '/kontakt',
 						isActive: false,
 						isExternal: false,
@@ -187,6 +251,7 @@ describe('navigation entries', () => {
 						title: 'Kontakt',
 					},
 					{
+						description: null,
 						href: 'https://www.neuwied.de',
 						isActive: false,
 						isExternal: true,

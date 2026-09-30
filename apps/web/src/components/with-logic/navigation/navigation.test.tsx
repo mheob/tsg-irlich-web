@@ -14,24 +14,31 @@ const VEREIN: NavItem = {
 	children: [
 		{
 			_key: 'kontakt',
+			description: null,
 			href: null,
 			link: { _type: 'contact', category: null, slug: 'kontakt' },
 			linkType: 'internal',
 			title: 'Kontakt',
 		},
 	],
+	hasTwoColumns: null,
 	href: null,
 	link: { _type: 'aboutUs', category: null, slug: 'verein' },
 	linkType: 'internal',
+	overviewDescription: null,
+	overviewTitle: null,
 	title: 'Verein',
 };
 
 const ANGEBOT: NavItem = {
 	_key: 'angebot',
 	children: [],
+	hasTwoColumns: null,
 	href: null,
 	link: { _type: 'departmentsPage', category: null, slug: 'angebot' },
 	linkType: 'internal',
+	overviewDescription: null,
+	overviewTitle: null,
 	title: 'Angebot',
 };
 
@@ -39,9 +46,12 @@ const ANGEBOT: NavItem = {
 const UNRESOLVABLE: NavItem = {
 	_key: 'unresolvable',
 	children: [],
+	hasTwoColumns: null,
 	href: null,
 	link: { _type: 'contact', category: null, slug: null },
 	linkType: 'internal',
+	overviewDescription: null,
+	overviewTitle: null,
 	title: 'Kaputt',
 };
 

@@ -15,7 +15,10 @@ export const mainNavigationQuery = defineQuery(`
 	*[_type == 'site-settings'][0] {
 		mainNavigation[] {
 			${navigationLinkFields},
-			"children": coalesce(children[] { ${navigationLinkFields} }, [])
+			overviewTitle,
+			overviewDescription,
+			hasTwoColumns,
+			"children": coalesce(children[] { ${navigationLinkFields}, description }, [])
 		}
 	}
 `);

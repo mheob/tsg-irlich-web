@@ -7,6 +7,18 @@ const EXTERNAL_LINK_TYPE = 'external';
 const ROOT_PATH = '/';
 
 /**
+ * Treats an empty or blank text from the studio as missing, so an editor who cleared a field gets the
+ * default back rather than an empty label or sub-text.
+ *
+ * @param value - A text field as the query returns it.
+ * @returns The trimmed text, or `null` if nothing is left.
+ */
+function nonBlank(value: string | null | undefined): string | null {
+	const trimmed = value?.trim();
+	return trimmed === undefined || trimmed === '' ? null : trimmed;
+}
+
+/**
  * Whether `pathname` is the page `href` points at or a page below it. The home page only matches
  * itself, otherwise it would match everything.
  *
@@ -44,7 +56,14 @@ function toLink(data: NavigationLinkData): NavigationLink | undefined {
 		return undefined;
 	}
 
-	return { href, isActive: false, isExternal, key: data._key, title: data.title };
+	return {
+		description: nonBlank(data.description),
+		href,
+		isActive: false,
+		isExternal,
+		key: data._key,
+		title: data.title,
+	};
 }
 
 /**
@@ -88,12 +107,22 @@ function toEntry(item: NavigationItemData, pathname: string): NavigationEntry | 
 			: undefined;
 	}
 
+	// The overview leads to the item's own page; its title and sub-text come from the item's dropdown
+	// settings, not from the item itself, which labels the trigger.
 	const overview = parent
-		? [{ ...parent, key: `${parent.key}-overview`, title: OVERVIEW_TITLE }]
+		? [
+				{
+					...parent,
+					description: nonBlank(item.overviewDescription),
+					key: `${parent.key}-overview`,
+					title: nonBlank(item.overviewTitle) ?? OVERVIEW_TITLE,
+				},
+			]
 		: [];
 	const links = markLongestMatch([...overview, ...children], pathname);
 
 	return {
+		hasTwoColumns: item.hasTwoColumns === true,
 		isActive: links.some((link) => link.isActive),
 		key: item._key,
 		kind: 'group',
@@ -121,6 +150,7 @@ function getNavigationEntries(
 
 interface NavigationLinkData {
 	_key: string;
+	description?: string | null;
 	href: string | null;
 	link: InternalLinkTarget | null;
 	linkType: string | null;
@@ -129,9 +159,14 @@ interface NavigationLinkData {
 
 interface NavigationItemData extends NavigationLinkData {
 	children: readonly NavigationLinkData[];
+	hasTwoColumns?: boolean | null;
+	overviewDescription?: string | null;
+	overviewTitle?: string | null;
 }
 
 interface NavigationLink {
+	/** The sub-text the desktop dropdown shows under the title, if the editors wrote one. */
+	description: string | null;
 	href: string;
 	isActive: boolean;
 	isExternal: boolean;
@@ -145,6 +180,7 @@ interface NavigationLinkEntry {
 }
 
 interface NavigationGroupEntry {
+	hasTwoColumns: boolean;
 	isActive: boolean;
 	key: string;
 	kind: 'group';

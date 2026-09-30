@@ -8,28 +8,52 @@ import type { NavigationEntry } from './navigation-entries';
 
 const ANGEBOT: NavigationEntry = {
 	kind: 'link',
-	link: { href: '/angebot', isActive: true, isExternal: false, key: 'angebot', title: 'Angebot' },
+	link: {
+		description: null,
+		href: '/angebot',
+		isActive: true,
+		isExternal: false,
+		key: 'angebot',
+		title: 'Angebot',
+	},
 };
 
 const HOME: NavigationEntry = {
 	kind: 'link',
-	link: { href: '/', isActive: false, isExternal: false, key: 'home', title: 'Home' },
+	link: {
+		description: null,
+		href: '/',
+		isActive: false,
+		isExternal: false,
+		key: 'home',
+		title: 'Home',
+	},
 };
 
 const VEREIN: NavigationEntry = {
+	hasTwoColumns: false,
 	isActive: true,
 	key: 'verein',
 	kind: 'group',
 	links: [
 		{
+			description: null,
 			href: '/verein',
 			isActive: false,
 			isExternal: false,
 			key: 'verein-overview',
 			title: 'Übersicht',
 		},
-		{ href: '/kontakt', isActive: true, isExternal: false, key: 'kontakt', title: 'Kontakt' },
 		{
+			description: null,
+			href: '/kontakt',
+			isActive: true,
+			isExternal: false,
+			key: 'kontakt',
+			title: 'Kontakt',
+		},
+		{
+			description: null,
 			href: 'https://www.neuwied.de',
 			isActive: false,
 			isExternal: true,
@@ -129,11 +153,13 @@ describe('desktop navigation', () => {
 
 	it('closes the panel once the focus moves on to the trigger of the next group', async () => {
 		const angebot: NavigationEntry = {
+			hasTwoColumns: false,
 			isActive: false,
 			key: 'angebot',
 			kind: 'group',
 			links: [
 				{
+					description: null,
 					href: '/angebot',
 					isActive: false,
 					isExternal: false,

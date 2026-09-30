@@ -5,6 +5,7 @@ import { NavigationAnchor } from './navigation-anchor';
 import type { NavigationLink } from './navigation-entries';
 
 const INTERNAL: NavigationLink = {
+	description: null,
 	href: '/verein',
 	isActive: false,
 	isExternal: false,
@@ -13,6 +14,7 @@ const INTERNAL: NavigationLink = {
 };
 
 const EXTERNAL: NavigationLink = {
+	description: null,
 	href: 'https://www.neuwied.de',
 	isActive: false,
 	isExternal: true,

@@ -7,22 +7,38 @@ import type { NavigationEntry, NavigationGroupEntry } from './navigation-entries
 
 const ANGEBOT: NavigationEntry = {
 	kind: 'link',
-	link: { href: '/angebot', isActive: true, isExternal: false, key: 'angebot', title: 'Angebot' },
+	link: {
+		description: null,
+		href: '/angebot',
+		isActive: true,
+		isExternal: false,
+		key: 'angebot',
+		title: 'Angebot',
+	},
 };
 
 const VEREIN: NavigationGroupEntry = {
+	hasTwoColumns: false,
 	isActive: false,
 	key: 'verein',
 	kind: 'group',
 	links: [
 		{
+			description: null,
 			href: '/verein',
 			isActive: false,
 			isExternal: false,
 			key: 'verein-overview',
 			title: 'Übersicht',
 		},
-		{ href: '/kontakt', isActive: false, isExternal: false, key: 'kontakt', title: 'Kontakt' },
+		{
+			description: null,
+			href: '/kontakt',
+			isActive: false,
+			isExternal: false,
+			key: 'kontakt',
+			title: 'Kontakt',
+		},
 	],
 	title: 'Verein',
 };
