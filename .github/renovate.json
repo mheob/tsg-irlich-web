@@ -7,6 +7,20 @@
 			"description": "jsdom 30.1 moved the Blob internals that Vitest's URL.createObjectURL patch reads into a private field, which breaks every upload test on Vitest 4 and 5 alike. Drop this rule once vitest-dev/vitest#11336 is fixed (WEB-318).",
 			"matchPackageNames": ["jsdom"],
 			"allowedVersions": "<30.1.0"
+		},
+		{
+			"description": "vite-plus bundles Vitest, and `vp migrate` re-pins `vitest` and its lockstep packages to the bundled runner. Bumped on their own they would split Vitest between two copies (https://viteplus.dev/guide/upgrade-project#updating-the-vitest-pin).",
+			"matchPackageNames": ["vitest", "@vitest/coverage-v8"],
+			"enabled": false
+		},
+		{
+			"description": "vite-plus and the `vite` alias to its core ship together. Their own PR, because it needs `vp migrate` before merging.",
+			"matchPackageNames": ["vite-plus", "@voidzero-dev/vite-plus-core"],
+			"groupName": "vite-plus",
+			"groupSlug": "vite-plus",
+			"prBodyNotes": [
+				"Run `vp migrate` on this branch and commit the result, so `vitest` and `@vitest/coverage-v8` follow the runner the new release bundles."
+			]
 		}
 	]
 }
