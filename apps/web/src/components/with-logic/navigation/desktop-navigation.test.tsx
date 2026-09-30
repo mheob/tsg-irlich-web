@@ -1,7 +1,8 @@
-import { waitFor, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { act, waitFor, within } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { renderWithUser } from '../../../../test-utils/render';
+import { createMatchMediaStub, dispatchMediaQueryChange } from '../../../../test-utils/setup-dom';
 import { DesktopNavigation } from './desktop-navigation';
 import type { NavigationEntry } from './navigation-entries';
 
@@ -44,6 +45,15 @@ function renderDesktop(entries: NavigationEntry[] = [HOME, VEREIN, ANGEBOT]) {
 }
 
 describe('desktop navigation', () => {
+	// The bar only exists from the lg breakpoint on, and it closes its panels below it.
+	beforeEach(() => {
+		vi.stubGlobal('matchMedia', createMatchMediaStub(true));
+	});
+
+	afterEach(() => {
+		vi.stubGlobal('matchMedia', createMatchMediaStub(false));
+	});
+
 	it('renders plain entries as links and marks the active one with aria-current', () => {
 		const { getByRole } = renderDesktop();
 
@@ -141,6 +151,29 @@ describe('desktop navigation', () => {
 		await waitFor(() => {
 			expect(queryByRole('link', { name: 'Übersicht' })).toBeNull();
 		});
+		expect(getByRole('button', { name: 'Verein' }).getAttribute('aria-expanded')).toBe('false');
+	});
+
+	// Below lg the bar is hidden, so an open panel would float at the top left with nothing to anchor
+	// it. Closing the group also keeps the panel from coming back once the window grows again.
+	it('closes the panel when the viewport drops below lg, and keeps it closed when it grows again', async () => {
+		const { getByRole, queryByRole, user } = renderDesktop();
+		const desktop = globalThis.matchMedia('(min-width: 64rem)');
+
+		await user.click(getByRole('button', { name: 'Verein' }));
+		expect(queryByRole('link', { name: 'Übersicht' })).not.toBeNull();
+
+		act(() => {
+			dispatchMediaQueryChange(desktop, false);
+		});
+		await waitFor(() => {
+			expect(queryByRole('link', { name: 'Übersicht' })).toBeNull();
+		});
+
+		act(() => {
+			dispatchMediaQueryChange(desktop, true);
+		});
+		expect(queryByRole('link', { name: 'Übersicht' })).toBeNull();
 		expect(getByRole('button', { name: 'Verein' }).getAttribute('aria-expanded')).toBe('false');
 	});
 

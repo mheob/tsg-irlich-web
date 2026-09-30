@@ -171,6 +171,33 @@ test.describe('navigation', () => {
 		expect(panelTop).toBeGreaterThan(0);
 	});
 
+	test('closes the open panel when the window shrinks below lg', async ({ isMobile, page }) => {
+		test.skip(isMobile, 'the viewport is set by hand here; one browser project covers it');
+
+		await page.goto('/');
+		await waitForPage(page);
+
+		const trigger = page
+			.getByRole('navigation', { name: 'Hauptnavigation' })
+			.getByRole('button', { name: 'Verein', exact: true });
+		const overview = page.getByRole('link', { name: 'Übersicht', exact: true });
+
+		// Opened the way a tap on a tablet opens it: Safari neither focuses a button on a tap nor leaves a
+		// hover behind, so Base UI has no blur and no pointer leave to close the panel on by itself when
+		// the tablet turns and the bar disappears.
+		await trigger.dispatchEvent('click');
+		await expect(overview).toBeVisible();
+
+		// Below lg the bar is hidden, and a panel left open would float at the top left.
+		await page.setViewportSize({ height: 900, width: 800 });
+		await expect(overview).toBeHidden();
+
+		// Closing the group, not just hiding the panel, keeps it from coming back.
+		await page.setViewportSize({ height: 800, width: 1280 });
+		await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+		await expect(overview).toBeHidden();
+	});
+
 	test('expands the club group in the mobile menu and follows a sub-entry', async ({
 		isMobile,
 		page,

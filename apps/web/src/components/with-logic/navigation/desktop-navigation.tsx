@@ -12,9 +12,13 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 import { NavigationAnchor } from './navigation-anchor';
 import type { NavigationEntry, NavigationGroupEntry, NavigationLink } from './navigation-entries';
+
+/** Tailwind's `lg` breakpoint, from which on the bar is shown instead of the mobile menu. */
+const DESKTOP_MEDIA_QUERY = '(min-width: 64rem)';
 
 /** Shared by the bar's links and triggers, so a group looks like any other item until it opens. */
 const TOP_LEVEL_CLASS_NAME =
@@ -68,6 +72,14 @@ function DesktopNavigation({ entries }: Readonly<DesktopNavigationProps>) {
 	// The open group is held here because Base UI only closes a panel on a focus that leaves the whole
 	// menu: tabbing from its last link on to the next item of the bar would otherwise leave it open.
 	const [openGroup, setOpenGroup] = useState<string | null>(null);
+	const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
+
+	// Below lg the bar is hidden, so an open panel would float at the top left with nothing to anchor
+	// it. Closing the group rather than hiding the panel also keeps it from coming back once the window
+	// grows again.
+	if (!isDesktop && openGroup !== null) {
+		setOpenGroup(null);
+	}
 
 	const closeOpenGroup = () => {
 		setOpenGroup(null);
