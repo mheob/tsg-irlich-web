@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { stegaClean } from 'next-sanity';
+import { notFound } from 'next/navigation';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
@@ -51,6 +52,7 @@ export async function generateMetadata({
 export default async function NewsOverviewPage({ searchParams }: Readonly<PageProps<'/news'>>) {
 	const { seite } = await searchParams;
 	const currentPage = getPageNumber(seite);
+	const start = (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX;
 
 	const [
 		{ data: page },
@@ -63,10 +65,7 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 		sanityFetch({ query: newsArticlesTotalQuery }),
 		sanityFetch({ query: newsArticlesQuery }),
 		sanityFetch({
-			params: {
-				end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
-				start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
-			},
+			params: { end: start + ITEMS_PER_PAGE - 1, start },
 			query: newsArticlesPaginatedQuery,
 		}),
 		sanityFetch({ params: { current: '' }, query: newsCategoriesQuery }),
@@ -74,6 +73,10 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 
 	if (!page) {
 		return null;
+	}
+
+	if (currentPage > 1 && start >= totalArticles) {
+		notFound();
 	}
 
 	return (
