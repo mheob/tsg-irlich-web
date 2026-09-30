@@ -1,0 +1,644 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'news.article' && slug.current == $slug][0] {\n\t\t_updatedAt,\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == \"grid\" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t}\n",
+		"result": {
+			"_updatedAt": "2026-09-29T12:28:50Z",
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "984bdc9a7f50",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "cfd37f858137",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ed6e3a49d670",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG Irlich hat am vierten Spieltag der Kreisliga C einen echten Kraftakt vollbracht. Gegen die bis dahin noch ungeschlagene "
+								},
+								{
+									"_key": "034b9563e4d8",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "SG Weißenthurm II"
+								},
+								{
+									"_key": "7d8fb5973df6",
+									"_type": "span",
+									"marks": [],
+									"text": " drehte die #11fürIrlich einen "
+								},
+								{
+									"_key": "a5ea745d1679",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "1:3-Halbzeitrückstand "
+								},
+								{
+									"_key": "18f633449593",
+									"_type": "span",
+									"marks": [],
+									"text": "und feierte vor heimischer Kulisse einen umjubelten "
+								},
+								{
+									"_key": "f548117e3b4e",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "4:3-Erfolg"
+								},
+								{
+									"_key": "2a71efd9d865",
+									"_type": "span",
+									"marks": [],
+									"text": ". In einem intensiven Spiel mit viel Körperkontakt und zahlreichen Zweikämpfen bewies die Mannschaft große Moral. Den entscheidenden Treffer erzielte Co-Kapitän "
+								},
+								{
+									"_key": "4b41289e06f0",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dennis Marschke"
+								},
+								{
+									"_key": "b710d137ecbb",
+									"_type": "span",
+									"marks": [],
+									"text": " mit einem Freistoß."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "61449bf4178b",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "316462e12625",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4bfaf50bf8ad",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Frühe Führung durch Dennis Kari"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "db0fc0179993",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "27975471ba5f",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG erwischte einen Start nach Maß und ging bereits in der 6. Minute in Führung. "
+								},
+								{
+									"_key": "92b1ded0955c",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dennis Kari"
+								},
+								{
+									"_key": "54331db2a763",
+									"_type": "span",
+									"marks": [],
+									"text": " brachte die Irlicher mit seinem Treffer zum 1:0 früh auf Kurs."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "2002a3042f5d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "de07df53af90",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Gäste ließen sich von dem Rückstand allerdings nicht aus der Ruhe bringen und fanden zunehmend besser in die Begegnung. In der 16. Minute erzielte "
+								},
+								{
+									"_key": "9993a1e4b588",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Meron Rezene"
+								},
+								{
+									"_key": "e557ab3b80ae",
+									"_type": "span",
+									"marks": [],
+									"text": " den Ausgleich zum 1:1. Anschließend entwickelte sich die erwartet umkämpfte Partie. Beide Mannschaften schenkten sich in den Zweikämpfen nichts und suchten immer wieder den direkten Weg nach vorne."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "448bf2a1c833",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "d31823194aad",
+									"_type": "span",
+									"marks": [],
+									"text": "In dieser Phase präsentierte sich Weißenthurm vor dem Tor konsequenter. "
+								},
+								{
+									"_key": "65c23f428bfd",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Bedirhan Tekin"
+								},
+								{
+									"_key": "919c14954249",
+									"_type": "span",
+									"marks": [],
+									"text": " drehte das Spiel in der 25. Minute mit seinem Treffer zum 1:2. Nur sieben Minuten später erhöhte "
+								},
+								{
+									"_key": "0d22dec33d5b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Karim Hassanin"
+								},
+								{
+									"_key": "e388f43dedf4",
+									"_type": "span",
+									"marks": [],
+									"text": " auf 1:3."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "9deb36cc914e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ccec5798081d",
+									"_type": "span",
+									"marks": [],
+									"text": "Innerhalb kurzer Zeit hatte die TSG ihre frühe Führung aus der Hand gegeben. Bis zur Pause gelang es der Mannschaft nicht mehr, den Rückstand zu verkürzen. So ging es nach einer intensiven ersten Halbzeit mit einem 1:3 in die Kabinen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "a711bf394650",
+					"_type": "blockquote",
+					"author": "Co-Trainer Andy Pung",
+					"quote": "Nach dem 1:3 zur Halbzeit war klar, dass wir in der zweiten Hälfte eine deutliche Reaktion zeigen müssen."
+				},
+				{
+					"_key": "713a3f3e0c37",
+					"_type": "mainImage",
+					"alt": "Umkämpftes Duell: Bastian Kindler haut im Zweikampf alles rein",
+					"asset": {
+						"_ref": "image-0a24344ff0ed7148c061ec72ac5bd9aa08aa8d4a-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09608808074067895,
+						"left": 0,
+						"right": 0.25178635971863095,
+						"top": 0
+					},
+					"description": "Umkämpftes Duell: Bastian Kindler haut im Zweikampf alles rein",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6716990574693469,
+						"width": 0.6014124058164428,
+						"x": 0.30337531626212916,
+						"y": 0.48531987655350745
+					}
+				},
+				{
+					"_key": "56eb1a665ea9",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "dfec6e273c1e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c3529083e147",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "TSG zeigt nach der Pause ein anderes Gesicht"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "a1167350b576",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f94b5b755e6a",
+									"_type": "span",
+									"marks": [],
+									"text": "Trotz der schwierigen Ausgangslage gab sich die TSG keineswegs geschlagen. Nach dem Seitenwechsel erhöhte die Mannschaft den Druck und nahm die Zweikämpfe noch entschlossener an. Die TSG zeigte nun die passende Reaktion und arbeitete sich mit viel Einsatz zurück in die Partie."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "a2aa380300e1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9e5bd7e99a96",
+									"_type": "span",
+									"marks": [],
+									"text": "In der 63. Minute belohnte sich Irlich für die Leistungssteigerung. Außenbahnspieler "
+								},
+								{
+									"_key": "360d44e4885d",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Julius Petry"
+								},
+								{
+									"_key": "9ce07a35addc",
+									"_type": "span",
+									"marks": [],
+									"text": " erzielte den wichtigen Anschlusstreffer zum 2:3 und sorgte damit dafür, dass die Partie endgültig wieder offen war."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "967e7aa5b994",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4cfb11c2bd18",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Treffer gab der Mannschaft weiteren Auftrieb. Nur fünf Minuten später gelang der TSG tatsächlich der Ausgleich: "
+								},
+								{
+									"_key": "983dad583318",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Mehmet Capkur"
+								},
+								{
+									"_key": "95265e5a266e",
+									"_type": "span",
+									"marks": [],
+									"text": " traf in der 68. Minute zum 3:3 und brachte das Pappelstadion zum Jubeln. Die Mannschaft gab sich mit dem Unentschieden jedoch nicht zufrieden und drängte auf das nächste Tor."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "b5d7099c9cb3",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "4fc9ded8dbf3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "28ad99320e33",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Marschke entscheidet das Spiel per Freistoß"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "824c41f5f025",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "5257d7646e2d",
+									"_type": "span",
+									"marks": [],
+									"text": "In der Schlussphase blieb die Begegnung hart umkämpft. Beide Mannschaften investierten viel und führten die Zweikämpfe mit großer Intensität. Den entscheidenden Moment hatte schließlich die TSG."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "71468d443ee1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c33f76a92fa3",
+									"_type": "span",
+									"marks": [],
+									"text": "Co-Kapitän "
+								},
+								{
+									"_key": "dd1678cb5885",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dennis Marschke"
+								},
+								{
+									"_key": "b706cae7eda0",
+									"_type": "span",
+									"marks": [],
+									"text": " übernahm bei einem Freistoß die Verantwortung und verwandelte diesen zum viel umjubelten "
+								},
+								{
+									"_key": "1b9cbb63a069",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "4:3"
+								},
+								{
+									"_key": "a8d94c78300a",
+									"_type": "span",
+									"marks": [],
+									"text": ". "
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "d1fdde826e46",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "dc475d55d1df",
+									"_type": "span",
+									"marks": [],
+									"text": "In den verbleibenden Minuten verteidigte die TSG die Führung mit großem Einsatz. Gemeinsam brachte die Mannschaft den knappen Vorsprung über die Zeit und belohnte sich für eine beeindruckende zweite Halbzeit mit drei wichtigen Punkten gegen das Top-Team von der anderen Rhein-Seite."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "c97015912f2a",
+					"_type": "mainImage",
+					"alt": "Trifft per Freitoß: Co-Kapitän Dennis Marschke zum 4:3",
+					"asset": {
+						"_ref": "image-6003ad465fd7b67743dcc1fb52946b21eba482bc-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.04137125698557011,
+						"left": 0.0409264047599188,
+						"right": 0.056051380432062724,
+						"top": 0.01201101009258487
+					},
+					"description": "Trifft per Freitoß: Co-Kapitän Dennis Marschke zum 4:3",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8318458587038118,
+						"width": 0.8238385186420886,
+						"x": 0.49644118219478967,
+						"y": 0.47731253649178407
+					}
+				},
+				{
+					"_key": "1cfe3a2ba0e3",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "d37f1ac7aabf",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "b6b6acf1010f",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Starke Reaktion nach schwierigem erstem Durchgang"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "686c0e0cf666",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "b40e40e30531",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach dem zwischenzeitlichen 1:3 sah es zunächst nach der zweiten Niederlage in Folge aus. Doch das Team von Michael Lehmann und Andy Pung bewies Moral, kämpfte sich geschlossen zurück und drehte die Begegnung mit drei Treffern im zweiten Durchgang."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "8b48885af6d2",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "453ebcd87e9c",
+									"_type": "span",
+									"marks": [],
+									"text": "Co-Trainer "
+								},
+								{
+									"_key": "f0799c4a07fa",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Andy Pung"
+								},
+								{
+									"_key": "ab12d3393c78",
+									"_type": "span",
+									"marks": [],
+									"text": " zeigte sich nach dem Abpfiff entsprechend zufrieden:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "8bb80147b0e6",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e7e69da93ac0",
+									"_type": "span",
+									"marks": [],
+									"text": "„Nach dem 1:3 zur Halbzeit war klar, dass wir in der zweiten Hälfte eine deutliche Reaktion zeigen müssen. Die Jungs haben dann große Moral bewiesen, die Zweikämpfe angenommen und bis zum Schluss an den Sieg geglaubt. Gerade in einem so intensiven und körperbetonten Spiel einen Zwei-Tore-Rückstand noch zu drehen, spricht für den Charakter der Mannschaft. Dennis übernimmt beim Freistoß Verantwortung und belohnt uns mit dem Siegtor. Auf diese Mentalität können wir sehr stolz sein.“"
+								}
+							],
+							"markDefs": [],
+							"style": "blockquote"
+						}
+					]
+				},
+				{
+					"_key": "9c1f6a51613d",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "c50cc63167ad",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "95976e73e8e1",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Weiter geht´s: Lokal-Derby in Feldkirchen"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "7ec5d92c9520",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "5cc19ea92f5e",
+									"_type": "span",
+									"marks": [],
+									"text": "Weiter geht es für die TSG am "
+								},
+								{
+									"_key": "be4b49ccca0a",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Samstag"
+								},
+								{
+									"_key": "8d3e30507b55",
+									"_type": "span",
+									"marks": [],
+									"text": " mit dem „heißen“ Auswärtsspiel bei der "
+								},
+								{
+									"_key": "43ed0899eaf7",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "SG Feldkirchen II"
+								},
+								{
+									"_key": "ac908d7c0291",
+									"_type": "span",
+									"marks": [],
+									"text": ". Das Lokalderby wird um "
+								},
+								{
+									"_key": "5ce2c082b1fc",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "19 Uhr"
+								},
+								{
+									"_key": "0eb54de1b490",
+									"_type": "span",
+									"marks": [],
+									"text": " angepfiffen. Die Mannschaft freut sich über jede Irlicher Unterstützung vor Ort."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "senioren",
+					"title": "Senioren"
+				},
+				{
+					"slug": "fussball",
+					"title": "Fußball"
+				}
+			],
+			"excerpt": "Gegen die bis dahin noch ungeschlagene SG Weißenthurm II drehte die TSG einen 1:3-Rückstand und feierte vor heimischer Kulisse einen umjubelten 4:3-Erfolg.",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Spielmacher Marc Diether behauptet den Ball gegen mehrere Gegner",
+				"asset": {
+					"_ref": "image-54411da2474ba83b2bd4c6a50ea2190d4c6d5947-6000x4000-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.49820668946534313,
+					"width": 0.5248978230044209,
+					"x": 0.532029360246893,
+					"y": 0.5226874635082158
+				}
+			},
+			"meta": {
+				"metaDescription": "Gegen die bis dahin noch ungeschlagene SG Weißenthurm II drehte die TSG einen 1:3-Rückstand und feierte vor heimischer Kulisse einen umjubelten 4:3-Erfolg.",
+				"metaTitle": "TSG dreht 1:3-Rückstand gegen SG Weißenthurm II",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-09-04T13:15:53.118Z",
+			"slug": "Heimsieg-weissenthurm-ii",
+			"title": "TSG dreht 1:3-Rückstand gegen SG Weißenthurm II"
+		},
+		"syncTags": ["s1:uv+Zzg", "s1:Ik/M0w", "s1:c5Grjg", "s1:TR11KA"],
+		"ms": 17
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22Heimsieg-weissenthurm-ii%22&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+}

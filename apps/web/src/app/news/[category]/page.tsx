@@ -14,10 +14,11 @@ import {
 	newsArticlesTotalForCategoryQuery,
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
-import { newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
+import { newsCategoriesQuery, newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
 import { getPageMetadata } from '@/utils/metadata';
 
 import newsOverviewImage from '../_assets/news-overview.webp';
+import { CategoryCombobox } from '../_sections/category-combobox';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
 import { getPageNumber, getPaginatedPath } from '../_shared/utils';
 
@@ -72,19 +73,25 @@ export default async function NewsCategoryPage({
 
 	const { currentPage, end, start } = getCurrentPage(seite);
 
-	const [{ data: page }, { data: totalArticles }, { data: category }, { data: paginatedArticles }] =
-		await Promise.all([
-			sanityFetch({ query: newsOverviewCategoryPageQuery }),
-			sanityFetch({
-				params: { category: categoryParameter },
-				query: newsArticlesTotalForCategoryQuery,
-			}),
-			sanityFetch({ params: { slug: categoryParameter }, query: newsCategoryQuery }),
-			sanityFetch({
-				params: { category: categoryParameter, end, start },
-				query: newsArticlesPaginatedForCategoryQuery,
-			}),
-		]);
+	const [
+		{ data: page },
+		{ data: totalArticles },
+		{ data: category },
+		{ data: paginatedArticles },
+		{ data: categories },
+	] = await Promise.all([
+		sanityFetch({ query: newsOverviewCategoryPageQuery }),
+		sanityFetch({
+			params: { category: categoryParameter },
+			query: newsArticlesTotalForCategoryQuery,
+		}),
+		sanityFetch({ params: { slug: categoryParameter }, query: newsCategoryQuery }),
+		sanityFetch({
+			params: { category: categoryParameter, end, start },
+			query: newsArticlesPaginatedForCategoryQuery,
+		}),
+		sanityFetch({ params: { current: categoryParameter }, query: newsCategoriesQuery }),
+	]);
 
 	const isBeyondLastPage = currentPage > 1 && start >= totalArticles;
 	if (!page || !category || isBeyondLastPage) {
@@ -98,27 +105,33 @@ export default async function NewsCategoryPage({
 			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={category.title} />
 
 			<section className="container mx-auto py-10 md:py-28">
-				<SectionHeader
-					title={
-						<>
-							Aktuelles aus dem Bereich
-							{category.title && category.title.trim() !== '' && (
-								<>
-									{' '}
-									<span className="text-primary">{category.title.trim()}</span>
-								</>
-							)}
-						</>
-					}
-					className="pb-8 md:pb-14"
-					subTitle="News"
-					isCentered
-				>
-					{isEmpty ? page.content.emptyCategoryNotice : undefined}
-				</SectionHeader>
+				<div className="flex flex-col gap-6 pb-8 md:flex-row md:items-end md:justify-between md:pb-14">
+					<SectionHeader
+						title={
+							<>
+								Aktuelles aus dem Bereich
+								{category.title && category.title.trim() !== '' && (
+									<>
+										{' '}
+										<span className="text-primary">{category.title.trim()}</span>
+									</>
+								)}
+							</>
+						}
+						subTitle="News"
+					>
+						{isEmpty ? page.content.emptyCategoryNotice : undefined}
+					</SectionHeader>
+					{/* The titles end up in the input and its filter, where stega characters do not belong. */}
+					<CategoryCombobox
+						{...stegaClean(categories)}
+						className="w-full md:w-80 md:shrink-0"
+						currentSlug={categoryParameter}
+					/>
+				</div>
 
 				{isEmpty ? (
-					<div className="text-center md:text-start">
+					<div>
 						<ButtonLink render={<Link href="/news" />}>Alle News ansehen</ButtonLink>
 					</div>
 				) : (

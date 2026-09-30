@@ -11,10 +11,11 @@ import {
 	newsArticlesTotalForCategoryQuery,
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
-import { newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
+import { newsCategoriesQuery, newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
 
 import { findElement } from '../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../test-utils/sanity-live-mock';
+import { CategoryCombobox } from '../_sections/category-combobox';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
 // The open graph helper reaches the real Sanity client through `urlForImage`, and
 // `src/lib/sanity/api.ts` asserts its project variables at import time. `vi.hoisted` runs before
@@ -45,9 +46,14 @@ const OVERVIEW = {
 	},
 	subtitle: 'Alles aus dem Verein',
 };
+const CATEGORIES = {
+	categories: [{ articleCount: 12, slug: 'vereinsleben', title: 'Vereinsleben' }],
+	total: 95,
+};
 
 interface NewsResults {
 	articles?: null | unknown[];
+	categories?: unknown;
 	category?: unknown;
 	page?: unknown;
 	total?: number;
@@ -55,17 +61,19 @@ interface NewsResults {
 
 function mockSanity({
 	articles = [],
+	categories = CATEGORIES,
 	category = CATEGORY,
 	page = OVERVIEW,
 	total = 0,
 }: NewsResults = {}): void {
-	// The four queries run inside one `Promise.all`, so keying on the query keeps the fixtures
+	// The queries run inside one `Promise.all`, so keying on the query keeps the fixtures
 	// independent of the order they resolve in.
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedSanityFetch.mockImplementation(async ({ query }) => {
 		if (query === newsOverviewCategoryPageQuery) return { data: page };
 		if (query === newsArticlesTotalForCategoryQuery) return { data: total };
 		if (query === newsCategoryQuery) return { data: category };
+		if (query === newsCategoriesQuery) return { data: categories };
 		if (query === newsArticlesPaginatedForCategoryQuery) return { data: articles };
 		throw new Error(`unexpected query: ${query}`);
 	});
@@ -189,6 +197,25 @@ describe('news category page', () => {
 			expect(hero?.props).toMatchObject({
 				subTitle: 'Alles aus dem Verein',
 				title: 'Vereinsleben',
+			});
+		});
+
+		it('offers every category next to the heading, with the current one selected', async () => {
+			mockSanity();
+
+			const combobox = findElement(await NewsCategoryPage(routeProps()), CategoryCombobox);
+
+			expect(combobox?.props).toMatchObject({ ...CATEGORIES, currentSlug: 'vereinsleben' });
+		});
+
+		it('asks for the categories including the current one, even when it is empty', async () => {
+			mockSanity();
+
+			await NewsCategoryPage(routeProps());
+
+			expect(mockedSanityFetch).toHaveBeenCalledWith({
+				params: { current: 'vereinsleben' },
+				query: newsCategoriesQuery,
 			});
 		});
 

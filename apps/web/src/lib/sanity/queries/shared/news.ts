@@ -29,6 +29,25 @@ const newsArticlesPaginatedQuery = defineQuery(`
 
 const newsArticlesTotalQuery = defineQuery(`count(*[_type == "news.article"])`);
 
+/**
+ * Every category that holds at least one article, plus the one being shown even when it is empty,
+ * so the category combobox can preselect it.
+ *
+ * **IMPORTANT:** The param `current` is required: the slug of the category page, or an empty string
+ * on the overview.
+ */
+const newsCategoriesQuery = defineQuery(`{
+	"categories": *[
+		_type == 'news.category'
+		&& (slug.current == $current || count(*[_type == 'news.article' && references(^._id)]) > 0)
+	] | order(title asc) {
+		"articleCount": count(*[_type == 'news.article' && references(^._id)]),
+		"slug": slug.current,
+		title,
+	},
+	"total": count(*[_type == 'news.article'])
+}`);
+
 /** **IMPORTANT:** The params `slug` is required */
 const newsCategoryQuery = defineQuery(`
 	*[_type == 'news.category' && slug.current == $slug][0] {
@@ -43,5 +62,6 @@ export {
 	newsArticlesQuery,
 	newsArticlesPaginatedQuery,
 	newsArticlesTotalQuery,
+	newsCategoriesQuery,
 	newsCategoryQuery,
 };

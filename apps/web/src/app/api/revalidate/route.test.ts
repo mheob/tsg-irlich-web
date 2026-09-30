@@ -168,6 +168,7 @@ describe('sanity revalidation webhook', () => {
 		// whole route is revalidated instead.
 		expect(revalidatedPaths()).toStrictEqual([
 			'/news',
+			'/news/[category]',
 			'/news/[category]/[slug]',
 			'/angebot/[group]/[singleGroup]',
 		]);
@@ -185,7 +186,18 @@ describe('sanity revalidation webhook', () => {
 		},
 	);
 
-	it('adds the category page for a news category', async () => {
+	it.each(['news.article', 'news.category'])(
+		'revalidates every category page for a %s, since each one lists all categories and their counts',
+		async (type) => {
+			mockedParseBody.mockResolvedValue(parsed({ _type: type, slug: { current: 'senioren' } }));
+
+			await POST(REQUEST);
+
+			expect(mockedRevalidatePath).toHaveBeenCalledWith('/news/[category]', 'page');
+		},
+	);
+
+	it('revalidates the news routes for a news category', async () => {
 		mockedParseBody.mockResolvedValue(
 			parsed({ _type: 'news.category', slug: { current: 'vereinsleben' } }),
 		);
@@ -194,9 +206,9 @@ describe('sanity revalidation webhook', () => {
 
 		expect(revalidatedPaths()).toStrictEqual([
 			'/news',
+			'/news/[category]',
 			'/news/[category]/[slug]',
 			'/angebot/[group]/[singleGroup]',
-			'/news/vereinsleben',
 		]);
 	});
 

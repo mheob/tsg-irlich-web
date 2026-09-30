@@ -1,0 +1,556 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'news.article' && slug.current == $slug][0] {\n\t\t_updatedAt,\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == \"grid\" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t}\n",
+		"result": {
+			"_updatedAt": "2026-09-29T12:28:50Z",
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "65984faae14c",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "0b38df40e3e1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "5ba0050141ce",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Nach zwei Siegen zum Saisonauftakt musste die TSG Irlich am dritten Spieltag ihre erste Niederlage hinnehmen. Beim FV Engers III unterlag die TSG am Wasserturm mit 2:4 (1:2). Nach einer guten Anfangsphase und der frühen Führung verlor die TSG zunehmend den Zugriff auf die Partie. Der zwischenzeitliche Ausgleich in der zweiten Halbzeit hielt nur wenige Augenblicke."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "dba6439ea6c4",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9889f4258943",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Starke Anfangsphase: Kindler trifft erneut"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "5ac6bfa4ad6b",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "d4753277cab6",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG startete gut in die Begegnung, bestimmte das Spiel in der ersten halben Stunde klar und ging bereits in der 19. Minute in Führung. "
+								},
+								{
+									"_key": "98067dcdc6a6",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Niklas Kindler"
+								},
+								{
+									"_key": "7368694ae43e",
+									"_type": "span",
+									"marks": [],
+									"text": ", der schon beim Heimsieg gegen Oberbieber doppelt getroffen hatte, erzielte das 0:1 und setzte seine starke Form fort."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "ecad00460374",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "5958ac66aea9",
+									"_type": "span",
+									"marks": [],
+									"text": "In der Folge verpasste die TSG es mehrfach, die Führung auszubauen. Zu oft scheiterte die Offensiv-Abteilung am starken Engeres Keeper. Die Gastgeber, die erstmals im neuen schicken weißen Heim-Dress antraten, kamen in der 29. Minute nach einem langen Ball hinter die TSG-Abwehr durch "
+								},
+								{
+									"_key": "0621dcc4fd68",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Tobias Lenz"
+								},
+								{
+									"_key": "4dbb4e9d4591",
+									"_type": "span",
+									"marks": [],
+									"text": " zum Ausgleich. \""
+								},
+								{
+									"_key": "bb5968f2ad5f",
+									"_type": "span",
+									"marks": ["em"],
+									"text": "Aus dem Nichts"
+								},
+								{
+									"_key": "3639ed2ddcf9",
+									"_type": "span",
+									"marks": [],
+									"text": "\" könnte man sagen. Nur fünf Minuten später drehte Engers die Partie und stellte den Spielverlauf auf den Kopf: "
+								},
+								{
+									"_key": "ad7a7487370b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Lucas Klaßmann"
+								},
+								{
+									"_key": "8fe7bf7afa64",
+									"_type": "span",
+									"marks": [],
+									"text": " traf mit einem sehenswerten Sonntags-Schuss aus rund 40 Metern zum 2:1."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "28f42e27f86e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "367e674898d9",
+									"_type": "span",
+									"marks": [],
+									"text": "Dieser außergewöhnliche Treffer zeigte Wirkung bei der TSG. Irlich kam zwar weiterhin zu eigenen Möglichkeiten, fand anschließend aber nicht mehr richtig in das Spiel. Mit dem knappen 2:1-Rückstand ging es in die Halbzeitpause."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "f7c61bf03c6f",
+					"_type": "mainImage",
+					"alt": "Großer Jubel: Niklas Kindler jubelt nach seinem Tor mit seinen Mitspielern",
+					"asset": {
+						"_ref": "image-b9af979e6234d1f64499fbf4aa00a184b41b9fd9-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.04176964065293266,
+						"left": 0,
+						"right": 0.22277272185490526,
+						"top": 0.054481995403081636
+					},
+					"description": "Niklas Kindler (2.v.r.) bejubelt mit seinen Mitspielern den Führungstreffer",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.660395672831361,
+						"width": 0.6779479496365763,
+						"x": 0.38861363907254737,
+						"y": 0.4010242641738315
+					}
+				},
+				{
+					"_key": "e3ad2d2e5abc",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "28a59b24f802",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e592c154c24c",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "TSG verliert den Zugriff auf die Partie"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "962562845ed9",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "cbb6466ddfd2",
+									"_type": "span",
+									"marks": [],
+									"text": "Auch im zweiten Durchgang gelang es der TSG nur phasenweise, an die gute Anfangsphase anzuknüpfen. Die Mannschaft erspielte sich zwar weitere Chancen, brachte jedoch insgesamt nicht mehr genügend Ruhe und Kontrolle in ihr Spiel."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "b3fe7b702621",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9720f2989dda",
+									"_type": "span",
+									"marks": [],
+									"text": "Dennoch kämpfte sich das Team von Michael Lehmann und Andy Pung zurück: In der 72. Minute erzielte Kapitän "
+								},
+								{
+									"_key": "b8bc051040fe",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dominik Fleuth"
+								},
+								{
+									"_key": "a828ad5ff0b3",
+									"_type": "span",
+									"marks": [],
+									"text": " den umjubelten Ausgleich zum 2:2. Die Freude darüber währte allerdings nur kurz. Bereits zwei Minuten später stellte "
+								},
+								{
+									"_key": "bd8291116330",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Raphael Stephani"
+								},
+								{
+									"_key": "60947976e132",
+									"_type": "span",
+									"marks": [],
+									"text": " die Führung für den FVE wieder her und traf zum 3:2."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "69730aa68c19",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "126e8e0421e2",
+									"_type": "span",
+									"marks": [],
+									"text": "Spätestens nach diesem direkten Gegenschlag fand die TSG nicht mehr in die Begegnung zurück. Statt den eigenen Ausgleich als Wendepunkt zu nutzen, musste Irlich erneut einem Rückstand hinterherlaufen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "9559120bec20",
+					"_type": "blockquote",
+					"author": "ärgerte sich Trainer Michael Lehmann nach der Partie",
+					"quote": "Daraus müssen wir lernen und es im nächsten Spiel wieder besser machen."
+				},
+				{
+					"_key": "a0412f0284ce",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "c8f28ac662c8",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e62a9d16601f",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Engers entscheidet die Partie spät"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "6f7d3c973ca9",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1c12df57209c",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Schlussphase wurde zunehmend hektischer und war von einigen Karten geprägt. Engers musste die Partie nach einer Gelb-Roten Karte in der 84. Minute zunächst in Unterzahl fortsetzen. In der 90. Minute folgte ein weiterer Platzverweis gegen die Gastgeber."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "91d02fc5af99",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "fdaa53dfe231",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG versuchte noch einmal alles, konnte aus der personellen Überlegenheit aber kein Kapital schlagen. Tief in der langen Nachspielzeit sorgte "
+								},
+								{
+									"_key": "5b14f807042b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Natdanai Wester"
+								},
+								{
+									"_key": "49b60983ea81",
+									"_type": "span",
+									"marks": [],
+									"text": " in der 90.+8 Minute mit dem Treffer zum 4:2 für die endgültige Entscheidung."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "d18a81101896",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3d900ee1ae5c",
+									"_type": "span",
+									"marks": [],
+									"text": "So stand am Ende eine ärgerliche Niederlage für die TSG, die nach der frühen Führung und dem späteren Ausgleich durchaus die Möglichkeit hatte, etwas Zählbares vom Wasserturm mitzunehmen. An dieser Stelle Glückwunsch an den FVE III."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "4f2b4fd1e7db",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f73b88b0230b",
+									"_type": "span",
+									"marks": [],
+									"text": "Trainer "
+								},
+								{
+									"_key": "ef2c849f9d70",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Michael Lehmann"
+								},
+								{
+									"_key": "41a090b8d253",
+									"_type": "span",
+									"marks": [],
+									"text": " ordnete die Partie anschließend ein:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "1aecbcf61a49",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "881431ce03e6",
+									"_type": "span",
+									"marks": [],
+									"text": "„Wir sind gut in das Spiel gekommen und haben verdient die Führung erzielt. Nach dem Gegentreffer aus großer Entfernung haben wir allerdings zunehmend den Zugriff verloren. Auch nach unserem Ausgleich hatten wir eigentlich wieder alle Möglichkeiten, doch das direkte 3:2 war natürlich ein schwerer Rückschlag. Wir hatten weiterhin unsere Chancen, waren insgesamt aber nicht konsequent und ruhig genug. Daraus müssen wir lernen und es im nächsten Spiel wieder besser machen.“"
+								}
+							],
+							"markDefs": [],
+							"style": "blockquote"
+						}
+					]
+				},
+				{
+					"_key": "abb69751a68d",
+					"_type": "mainImage",
+					"alt": "Trifft zum Endstand: FVE-Angreifer Natandai Wester entscheidet die Partie spät.",
+					"asset": {
+						"_ref": "image-5cf14a1405c569bd4518c846b3848a7a1eb58d36-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.10169966933046735,
+						"left": 0.0823291505873588,
+						"right": 0.1949262701791467,
+						"top": 0.11441219034647145
+					},
+					"description": "Trifft zum Endstand: FVE-Angreifer Natandai Wester entscheidet die Partie spät.",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6676599943070571,
+						"width": 0.6476799806321476,
+						"x": 0.41948715367646955,
+						"y": 0.49545986142738574
+					}
+				},
+				{
+					"_key": "67659053f7da",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "e27931565703",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "8883341778c3",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Heimspiel gegen die SG Weißenthurm II"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "f031d5126ef7",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c9c0dee57ee2",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach der ersten Saisonniederlage möchte die TSG am "
+								},
+								{
+									"_key": "87c446300c9e",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Sonntag"
+								},
+								{
+									"_key": "7e2225cfe12c",
+									"_type": "span",
+									"marks": [],
+									"text": " wieder in die Erfolgsspur zurückkehren. Im heimischen "
+								},
+								{
+									"_key": "5acf975a6662",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Pappelstadion"
+								},
+								{
+									"_key": "71864e5d23d3",
+									"_type": "span",
+									"marks": [],
+									"text": " empfängt die TSG um "
+								},
+								{
+									"_key": "b6b6ba48beba",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "14:30 Uhr"
+								},
+								{
+									"_key": "ea8977f7320c",
+									"_type": "span",
+									"marks": [],
+									"text": " die "
+								},
+								{
+									"_key": "775137432e95",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "SG Weißenthurm II"
+								},
+								{
+									"_key": "dd2b72de53fc",
+									"_type": "span",
+									"marks": [],
+									"text": ". Die Gäste sind stark in die Saison gestartet und gelten als Favorit um die Meisterschaft. Die TSG erwartet somit eine schwere Aufgabe."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "989e35de045c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4ca0c4b426b3",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Gemeinsam mit der Unterstützung der Heim-Zuschauer soll die passende Reaktion auf das Spiel in Engers gelingen. Wir freuen uns auf ein spannendes Duell und euren Besuch im Pappelstadion!"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "senioren",
+					"title": "Senioren"
+				},
+				{
+					"slug": "fussball",
+					"title": "Fußball"
+				}
+			],
+			"excerpt": "Nach zwei Siegen musste die TSG Irlich am dritten Spieltag ihre erste Niederlage hinnehmen. Beim FV Engers III unterlag die TSG am Wasserturm mit 2:4 (1:2)",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Umkämpftes Spiel: Shakehandy nach einem Zweikampf in Engers",
+				"asset": {
+					"_ref": "image-22ac4007d7288149bf1f6e6a61f94dd8f5aea3ba-6000x4000-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.5859368349365794,
+					"width": 1,
+					"x": 0.5,
+					"y": 0.3692430447667489
+				}
+			},
+			"meta": {
+				"metaDescription": "Nach zwei Siegen musste die TSG Irlich am dritten Spieltag ihre erste Niederlage hinnehmen. Beim FV Engers III unterlag die TSG am Wasserturm mit 2:4 (1:2)",
+				"metaTitle": "TSG Irlich verliert 2:4 beim FV Engers III",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-08-28T15:39:00.000Z",
+			"slug": "tsg-verliert-in-engers",
+			"title": "Erste Saisonniederlage am Wasserturm – TSG verliert in Engers "
+		},
+		"syncTags": ["s1:osEgGw", "s1:c5Grjg", "s1:uv+Zzg", "s1:Ik/M0w"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22tsg-verliert-in-engers%22&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+}

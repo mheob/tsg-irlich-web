@@ -66,7 +66,7 @@ export function NewsArticlePreview({
 
 				<p className="line-clamp-3 h-[3lh] text-sm text-muted-foreground md:text-xl">{excerpt}</p>
 
-				<div className="flex gap-4">
+				<div className="flex flex-wrap gap-4">
 					{categories?.map((category) => (
 						<Link
 							className={badgeVariants({ size: 'sm' })}

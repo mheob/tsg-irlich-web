@@ -1,6 +1,46 @@
+import { waitForPage } from '../support/navigation';
 import { expect, test } from '../support/test';
 
 test.describe('news', () => {
+	test('switches to a category with the combobox and back to all news', async ({ page }) => {
+		await page.goto('/news');
+		await waitForPage(page);
+
+		const combobox = page.getByRole('combobox', { name: 'News-Kategorie' });
+		await expect(combobox).toHaveValue('Alle News');
+
+		await combobox.fill('fu');
+		await page.getByRole('option', { name: /^Fußball, \d+ Artikel$/u }).click();
+
+		await expect(page).toHaveURL('/news/fussball');
+		await waitForPage(page);
+		await expect(combobox).toHaveValue('Fußball');
+
+		await combobox.click();
+		await page.getByRole('option', { name: /^Alle News, \d+ Artikel$/u }).click();
+
+		await expect(page).toHaveURL('/news');
+	});
+
+	test('fits the overview into the viewport where the latest news split into two columns', async ({
+		isMobile,
+		page,
+	}) => {
+		test.skip(isMobile, 'the two-column layout starts at the desktop breakpoint');
+
+		// Tailwind's `lg` breakpoint: the narrowest width at which the article cards beside the lead
+		// article share their space with an image, which leaves the category badges the least room.
+		await page.setViewportSize({ height: 900, width: 1024 });
+		await page.goto('/news');
+		await waitForPage(page);
+
+		const { clientWidth, scrollWidth } = await page.evaluate(() => ({
+			clientWidth: document.documentElement.clientWidth,
+			scrollWidth: document.documentElement.scrollWidth,
+		}));
+		expect(scrollWidth).toBe(clientWidth);
+	});
+
 	test('opens an article from the overview and walks back up the breadcrumb', async ({ page }) => {
 		await page.goto('/news');
 

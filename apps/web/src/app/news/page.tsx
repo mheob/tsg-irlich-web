@@ -11,10 +11,12 @@ import {
 	newsArticlesPaginatedQuery,
 	newsArticlesQuery,
 	newsArticlesTotalQuery,
+	newsCategoriesQuery,
 } from '@/lib/sanity/queries/shared/news';
 import { getPageMetadata } from '@/utils/metadata';
 
 import newsOverviewImage from './_assets/news-overview.webp';
+import { CategoryCombobox } from './_sections/category-combobox';
 import { LatestNews } from './_sections/latest-news';
 import { LatestNewsPagination } from './_sections/latest-news-pagination';
 import { getPageNumber, getPaginatedPath } from './_shared/utils';
@@ -50,19 +52,25 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 	const { seite } = await searchParams;
 	const currentPage = getPageNumber(seite);
 
-	const [{ data: page }, { data: totalArticles }, { data: articles }, { data: paginatedArticles }] =
-		await Promise.all([
-			sanityFetch({ query: newsOverviewPageQuery }),
-			sanityFetch({ query: newsArticlesTotalQuery }),
-			sanityFetch({ query: newsArticlesQuery }),
-			sanityFetch({
-				params: {
-					end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
-					start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
-				},
-				query: newsArticlesPaginatedQuery,
-			}),
-		]);
+	const [
+		{ data: page },
+		{ data: totalArticles },
+		{ data: articles },
+		{ data: paginatedArticles },
+		{ data: categories },
+	] = await Promise.all([
+		sanityFetch({ query: newsOverviewPageQuery }),
+		sanityFetch({ query: newsArticlesTotalQuery }),
+		sanityFetch({ query: newsArticlesQuery }),
+		sanityFetch({
+			params: {
+				end: (currentPage - 1) * ITEMS_PER_PAGE + (ITEMS_PER_PAGE - 1) + START_INDEX,
+				start: (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX,
+			},
+			query: newsArticlesPaginatedQuery,
+		}),
+		sanityFetch({ params: { current: '' }, query: newsCategoriesQuery }),
+	]);
 
 	if (!page) {
 		return null;
@@ -73,7 +81,11 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
 
 			<section className="container mx-auto py-10 md:py-28">
-				<SectionHeader subTitle="News" title="Das Aktuellste von der TSG" isCentered />
+				<div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+					<SectionHeader subTitle="News" title="Das Aktuellste von der TSG" />
+					{/* The titles end up in the input and its filter, where stega characters do not belong. */}
+					<CategoryCombobox {...stegaClean(categories)} className="w-full md:w-80 md:shrink-0" />
+				</div>
 				<LatestNews articles={articles} />
 
 				<section className="mt-10 md:mt-28">
