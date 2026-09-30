@@ -703,22 +703,22 @@
 			}
 		],
 		"syncTags": [
-			"s1:ycr7jw",
+			"s1:Fwy1kg",
 			"s1:GNFE5A",
 			"s1:yx3Vpw",
+			"s1:bmIwtw",
+			"s1:vJBgQg",
+			"s1:8Qkb8Q",
+			"s1:ycr7jw",
+			"s1:SvG3tg",
 			"s1:uv+Zzg",
 			"s1:Ik/M0w",
 			"s1:xVTd2Q",
 			"s1:gDNQog",
 			"s1:+YVtFA",
-			"s1:Fwy1kg",
-			"s1:SvG3tg",
-			"s1:bmIwtw",
-			"s1:X4XzKA",
-			"s1:vJBgQg",
-			"s1:8Qkb8Q"
+			"s1:X4XzKA"
 		],
-		"ms": 19
+		"ms": 21
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+defined%28publishedAt%29%5D+%7C+order%28publishedAt+desc%29+%5B0..49%5D+%7B%0A%09%09title%2C%0A%09%09excerpt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A%09%09%22categoryTitle%22%3A+categories%5B0%5D-%3Etitle%2C%0A%09%09%22author%22%3A+author-%3E%7B+firstName%2C+lastName%2C+email+%7D%2C%0A%09%09publishedAt%2C%0A%09%09_updatedAt%0A%09%7D%0A&returnQuery=false"
 }

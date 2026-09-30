@@ -53,7 +53,7 @@ test.describe('navigation', () => {
 		// and `inert` is what keeps its links out of the tab order and out of the accessibility tree.
 		// Asking for the focus outright is the sharper check of the two: it also fails when only the
 		// tab order was patched up. Before this was fixed, the focus landed on an invisible link.
-		const collapsedLink = menu.locator('a[href="/verein"]');
+		const collapsedLink = menu.locator('a[href="/angebot"]');
 		await collapsedLink.evaluate((element: HTMLElement) => {
 			element.focus();
 		});
@@ -63,7 +63,7 @@ test.describe('navigation', () => {
 		await expect(toggle).toHaveAttribute('aria-expanded', 'true');
 
 		// Open, the same link takes the focus and can be reached by keyboard.
-		const link = menu.getByRole('link', { name: 'Verein', exact: true });
+		const link = menu.getByRole('link', { name: 'Angebot', exact: true });
 		await link.focus();
 		await expect(link).toBeFocused();
 
@@ -75,7 +75,120 @@ test.describe('navigation', () => {
 
 		await toggle.click();
 		await link.click();
+		await expect(page).toHaveURL('/angebot');
+	});
+
+	test('opens the club group on desktop and leads to its overview', async ({ isMobile, page }) => {
+		test.skip(isMobile, 'the desktop bar only exists from the lg breakpoint');
+
+		await page.goto('/');
+		await waitForPage(page);
+
+		const trigger = page
+			.getByRole('navigation', { name: 'Hauptnavigation' })
+			.getByRole('button', { name: 'Verein', exact: true });
+
+		await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+		await trigger.click();
+		await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+		// The panel is portalled to the end of `<body>`, outside the navigation landmark.
+		const overview = page.getByRole('link', { name: 'Übersicht', exact: true });
+
+		await expect(overview).toBeVisible();
+		await expect(page.getByRole('link', { name: /^Stadt Neuwied/u })).toHaveAttribute(
+			'target',
+			'_blank',
+		);
+
+		await overview.click();
 		await expect(page).toHaveURL('/verein');
+		await expect(overview).toBeHidden();
+	});
+
+	test('operates the club group by keyboard on desktop', async ({ isMobile, page }) => {
+		test.skip(isMobile, 'the desktop bar only exists from the lg breakpoint');
+
+		await page.goto('/');
+		await waitForPage(page);
+
+		const navigation = page.getByRole('navigation', { name: 'Hauptnavigation' });
+		const trigger = navigation.getByRole('button', { name: 'Verein', exact: true });
+
+		await trigger.focus();
+		await page.keyboard.press('Enter');
+		await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+		await page.keyboard.press('Tab');
+		await expect(page.getByRole('link', { name: 'Übersicht', exact: true })).toBeFocused();
+
+		// Escape closes the panel from inside it and hands the focus back to the trigger.
+		await page.keyboard.press('Escape');
+		await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+		await expect(trigger).toBeFocused();
+
+		// Tabbing past the last link leaves the panel, closes it and moves on through the bar.
+		await page.keyboard.press('Enter');
+		await page.keyboard.press('Tab');
+		await page.keyboard.press('Tab');
+		await page.keyboard.press('Tab');
+		await expect(page.getByRole('link', { name: /^Stadt Neuwied/u })).toBeFocused();
+		await page.keyboard.press('Tab');
+		await expect(navigation.getByRole('link', { name: 'Angebot', exact: true })).toBeFocused();
+		await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+	});
+
+	test('expands the club group in the mobile menu and follows a sub-entry', async ({
+		isMobile,
+		page,
+	}) => {
+		test.skip(!isMobile, 'the mobile menu only exists below the desktop breakpoint');
+
+		await page.goto('/');
+		await waitForPage(page);
+
+		const toggle = page.getByRole('button', { name: 'Menü' });
+		const menu = page.locator('#mobile-navigation');
+		const group = menu.getByRole('button', { name: 'Verein', exact: true });
+
+		await toggle.click();
+		await expect(group).toHaveAttribute('aria-expanded', 'false');
+		await expect(menu.getByRole('link', { name: 'Übersicht', exact: true })).toBeHidden();
+
+		await group.click();
+		await expect(group).toHaveAttribute('aria-expanded', 'true');
+
+		await menu.getByRole('link', { name: 'Kontakt', exact: true }).click();
+		await expect(page).toHaveURL('/kontakt');
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+	});
+
+	test('fits the contact button to the width of the bar', async ({ isMobile, page }) => {
+		test.skip(isMobile, 'the viewport is set by hand here; one browser project covers it');
+
+		const navigation = page.getByRole('navigation', { name: 'Hauptnavigation' });
+		const short = navigation.getByRole('link', { name: 'Kontakt', exact: true });
+		const long = navigation.getByRole('link', { name: 'Kontakt aufnehmen', exact: true });
+
+		// Between lg and xl the bar is tight, so the button shrinks to its short label.
+		await page.setViewportSize({ height: 800, width: 1100 });
+		await page.goto('/');
+		await waitForPage(page);
+		await expect(short).toBeVisible();
+		await expect(long).toBeHidden();
+
+		await page.setViewportSize({ height: 800, width: 1280 });
+		await expect(short).toBeHidden();
+		await expect(long).toBeVisible();
+
+		// Below lg it lives in the mobile menu, which used to hide it from 640 px on.
+		await page.setViewportSize({ height: 1000, width: 800 });
+		await page.getByRole('button', { name: 'Menü' }).click();
+		await expect(
+			page
+				.locator('#mobile-navigation')
+				.getByRole('link', { name: 'Kontakt aufnehmen', exact: true }),
+		).toBeVisible();
 	});
 
 	test('names every navigation landmark, so a landmark list can tell them apart', async ({

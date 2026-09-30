@@ -189,8 +189,8 @@
 			"slug": "senioren",
 			"title": "Senioren"
 		},
-		"syncTags": ["s1:3Z4N5A", "s1:uv+Zzg", "s1:c5Grjg", "s1:GNFE5A", "s1:Ik/M0w"],
-		"ms": 19
+		"syncTags": ["s1:GNFE5A", "s1:uv+Zzg", "s1:c5Grjg", "s1:3Z4N5A", "s1:Ik/M0w"],
+		"ms": 10
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%24groupType+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupType=%22group.soccer%22&%24slug=%221-mannschaft%22&returnQuery=false"
 }

@@ -943,24 +943,24 @@
 			}
 		],
 		"syncTags": [
-			"s1:pl5+PQ",
-			"s1:uv+Zzg",
-			"s1:c5Grjg",
-			"s1:X4XzKA",
-			"s1:Fwy1kg",
-			"s1:GNFE5A",
 			"s1:mCzbTw",
-			"s1:8Qkb8Q",
-			"s1:ycr7jw",
-			"s1:SvG3tg",
-			"s1:yx3Vpw",
 			"s1:PMMwPw",
+			"s1:X4XzKA",
+			"s1:GNFE5A",
+			"s1:yx3Vpw",
 			"s1:bmIwtw",
-			"s1:vJBgQg",
+			"s1:Fwy1kg",
+			"s1:SvG3tg",
+			"s1:uv+Zzg",
 			"s1:2TTE0Q",
-			"s1:+YVtFA"
+			"s1:ycr7jw",
+			"s1:pl5+PQ",
+			"s1:c5Grjg",
+			"s1:+YVtFA",
+			"s1:vJBgQg",
+			"s1:8Qkb8Q"
 		],
-		"ms": 40
+		"ms": 297
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+defined%28publishedAt%29%5D+%7C+order%28publishedAt+desc%29+%5B0..9999%5D+%7B%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A%09%09%22lastModified%22%3A+_updatedAt%0A%09%7D%0A&returnQuery=false"
 }

@@ -26,7 +26,7 @@
 			"title": "Angebote"
 		},
 		"syncTags": ["s1:ZEP+uQ"],
-		"ms": 2
+		"ms": 3
 	},
 	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27singleGroupPage%27%5D%5B0%5D&returnQuery=false"
 }

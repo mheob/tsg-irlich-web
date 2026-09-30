@@ -1,0 +1,98 @@
+{
+	"body": {
+		"result": {
+			"mainNavigation": [
+				{
+					"_key": "e67d3415723b",
+					"children": [],
+					"href": null,
+					"link": {
+						"_type": "home",
+						"category": null,
+						"slug": "home"
+					},
+					"linkType": "internal",
+					"title": "Home"
+				},
+				{
+					"_key": "3ec68f9c2d7e",
+					"children": [
+						{
+							"_key": "verein-kontakt",
+							"href": null,
+							"link": {
+								"_type": "contact",
+								"category": null,
+								"slug": "kontakt"
+							},
+							"linkType": "internal",
+							"title": "Kontakt"
+						},
+						{
+							"_key": "verein-neuwied",
+							"href": "https://www.neuwied.de",
+							"link": null,
+							"linkType": "external",
+							"title": "Stadt Neuwied"
+						}
+					],
+					"href": null,
+					"link": {
+						"_type": "aboutUs",
+						"category": null,
+						"slug": "verein"
+					},
+					"linkType": "internal",
+					"title": "Verein"
+				},
+				{
+					"_key": "908f94712108",
+					"children": [],
+					"href": null,
+					"link": {
+						"_type": "departmentsPage",
+						"category": null,
+						"slug": "angebot"
+					},
+					"linkType": "internal",
+					"title": "Angebot"
+				},
+				{
+					"_key": "e7ad8bed787c",
+					"children": [],
+					"href": null,
+					"link": {
+						"_type": "newsOverview",
+						"category": null,
+						"slug": "news"
+					},
+					"linkType": "internal",
+					"title": "Aktuelles"
+				},
+				{
+					"_key": "0f273d2b52be",
+					"children": [],
+					"href": null,
+					"link": {
+						"_type": "membership",
+						"category": null,
+						"slug": "mitgliedschaft"
+					},
+					"linkType": "internal",
+					"title": "Mitgliedschaft"
+				}
+			]
+		},
+		"syncTags": [
+			"s1:RTKmCw",
+			"s1:Mvlp1g",
+			"s1:DjTpKA",
+			"s1:fcrxxQ",
+			"s1:GHyXfA",
+			"s1:u8DZ7g",
+			"s1:SypkIg"
+		],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27site-settings%27%5D%5B0%5D+%7B%0A%09%09mainNavigation%5B%5D+%7B%0A%09%09%09%0A%09_key%2C%0A%09title%2C%0A%09linkType%2C%0A%09href%2C%0A%09%22link%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D%0A%2C%0A%09%09%09%22children%22%3A+coalesce%28children%5B%5D+%7B+%0A%09_key%2C%0A%09title%2C%0A%09linkType%2C%0A%09href%2C%0A%09%22link%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D%0A+%7D%2C+%5B%5D%29%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
+}
