@@ -2032,6 +2032,13 @@
 						"type": "string"
 					},
 					"optional": true
+				},
+				"description": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
 				}
 			}
 		}
@@ -2260,6 +2267,27 @@
 								"name": "navigationLink"
 							}
 						}
+					},
+					"optional": true
+				},
+				"overviewTitle": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"overviewDescription": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"hasTwoColumns": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
 					},
 					"optional": true
 				}

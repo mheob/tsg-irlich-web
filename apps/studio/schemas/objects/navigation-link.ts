@@ -10,6 +10,9 @@ const MAX_TITLE_LENGTH = 20;
 const EXTERNAL_LINK_TYPE = 'external';
 const INTERNAL_LINK_TYPE = 'internal';
 
+/** Two lines of the dropdown's sub-text; everything beyond is cut off on the desktop. */
+const MAX_DESCRIPTION_LENGTH = 90;
+
 /** The only protocols a menu entry may open. */
 const WEB_PROTOCOLS = new Set(['http:', 'https:']);
 
@@ -127,7 +130,20 @@ const navigationLinkFields = [
 ];
 
 const navigationLink = defineType({
-	fields: navigationLinkFields,
+	fields: [
+		...navigationLinkFields,
+		defineField({
+			description: 'Erscheint auf dem Desktop unter der Bezeichnung im Aufklappmenü.',
+			name: 'description',
+			rows: 2,
+			title: 'Beschreibung',
+			type: 'text',
+			validation: (Rule) =>
+				Rule.max(MAX_DESCRIPTION_LENGTH).warning(
+					`Die Beschreibung sollte nicht länger als ${MAX_DESCRIPTION_LENGTH} Zeichen sein, das Aufklappmenü zeigt höchstens zwei Zeilen`,
+				),
+		}),
+	],
 	icon: RiLinkM,
 	name: 'navigationLink',
 	preview: {
@@ -153,6 +169,7 @@ interface NavigationLinkPreview {
 export default navigationLink;
 export {
 	isExternalLink,
+	MAX_DESCRIPTION_LENGTH,
 	navigationLinkFields,
 	prepareNavigationLink,
 	validateExternalUrl,

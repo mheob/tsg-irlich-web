@@ -13,6 +13,16 @@ function withParent(parent?: Record<string, unknown>): ValidationContext {
 	return { parent } as unknown as ValidationContext;
 }
 
+interface SchemaField {
+	fieldset?: string;
+	hidden?: (context: { parent: unknown }) => boolean;
+	name: string;
+}
+
+function mainNavigationFields(): SchemaField[] {
+	return (mainNavigationItem as unknown as { fields: SchemaField[] }).fields;
+}
+
 function fieldNames(type: unknown): string[] {
 	return (type as { fields: { name: string }[] }).fields.map((field) => field.name);
 }
@@ -147,18 +157,48 @@ describe('navigation link types', () => {
 	});
 
 	describe('fields', () => {
-		it('gives a navigation link a title, a link type, a page and a url', () => {
-			expect(fieldNames(navigationLink)).toStrictEqual(['title', 'linkType', 'link', 'href']);
+		it('gives a navigation link a title, a link type, a page, a url and a description', () => {
+			expect(fieldNames(navigationLink)).toStrictEqual([
+				'title',
+				'linkType',
+				'link',
+				'href',
+				'description',
+			]);
 		});
 
-		it('adds the children to a main navigation item', () => {
+		it('adds the children and the dropdown settings to a main navigation item', () => {
 			expect(fieldNames(mainNavigationItem)).toStrictEqual([
 				'title',
 				'linkType',
 				'link',
 				'href',
 				'children',
+				'overviewTitle',
+				'overviewDescription',
+				'hasTwoColumns',
 			]);
 		});
+
+		it('groups the children and the dropdown settings in one fieldset', () => {
+			expect(
+				mainNavigationFields()
+					.filter((field) => field.fieldset === 'dropdown')
+					.map((field) => field.name),
+			).toStrictEqual(['children', 'overviewTitle', 'overviewDescription', 'hasTwoColumns']);
+		});
+
+		// The overview entry and the columns only exist once an item has children, so the fields
+		// stay out of the editor's way until then.
+		it.each(['overviewTitle', 'overviewDescription', 'hasTwoColumns'])(
+			'hides %s until the item has children',
+			(name) => {
+				const field = mainNavigationFields().find((candidate) => candidate.name === name);
+
+				expect(field?.hidden?.({ parent: {} })).toBe(true);
+				expect(field?.hidden?.({ parent: { children: [] } })).toBe(true);
+				expect(field?.hidden?.({ parent: { children: [{ _key: 'chronik' }] } })).toBe(false);
+			},
+		);
 	});
 });

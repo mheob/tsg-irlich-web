@@ -407,6 +407,7 @@ export type NavigationLink = {
     | PrivacyReference
     | ImprintReference;
   href?: string;
+  description?: string;
 };
 
 export type MetaFields = {
@@ -451,6 +452,9 @@ export type MainNavigationItem = {
       _key: string;
     } & NavigationLink
   >;
+  overviewTitle?: string;
+  overviewDescription?: string;
+  hasTwoColumns?: boolean;
 };
 
 export type InternalLink = {
