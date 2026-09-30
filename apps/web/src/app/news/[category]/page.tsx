@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { stegaClean } from 'next-sanity';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
+import { ButtonLink } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
 import { sanityFetch } from '@/lib/sanity/live';
 import {
@@ -84,9 +86,12 @@ export default async function NewsCategoryPage({
 			}),
 		]);
 
-	if (!page || !category) {
+	const isBeyondLastPage = currentPage > 1 && start >= totalArticles;
+	if (!page || !category || isBeyondLastPage) {
 		notFound();
 	}
+
+	const isEmpty = totalArticles === 0;
 
 	return (
 		<>
@@ -108,14 +113,22 @@ export default async function NewsCategoryPage({
 					className="pb-8 md:pb-14"
 					subTitle="News"
 					isCentered
-				/>
+				>
+					{isEmpty ? page.content.emptyCategoryNotice : undefined}
+				</SectionHeader>
 
-				{paginatedArticles && (
-					<LatestNewsPagination
-						articles={paginatedArticles}
-						currentPage={currentPage}
-						hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
-					/>
+				{isEmpty ? (
+					<div className="text-center md:text-start">
+						<ButtonLink render={<Link href="/news" />}>Alle News ansehen</ButtonLink>
+					</div>
+				) : (
+					paginatedArticles && (
+						<LatestNewsPagination
+							articles={paginatedArticles}
+							currentPage={currentPage}
+							hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
+						/>
+					)
 				)}
 			</section>
 

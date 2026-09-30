@@ -4,6 +4,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import NewsCategoryPage, { generateMetadata } from '@/app/news/[category]/page';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
+import { ButtonLink } from '@/components/ui/button';
+import { SectionHeader } from '@/components/ui/section-header';
 import {
 	newsArticlesPaginatedForCategoryQuery,
 	newsArticlesTotalForCategoryQuery,
@@ -37,7 +39,10 @@ const mockedSanityFetch = sanityFetchMock();
 
 const CATEGORY = { meta: undefined, slug: 'vereinsleben', title: 'Vereinsleben' };
 const OVERVIEW = {
-	content: { contactPersonsSection: { title: 'Ansprechpartner' } },
+	content: {
+		contactPersonsSection: { title: 'Ansprechpartner' },
+		emptyCategoryNotice: 'Hier gibt es noch keine Neuigkeiten.',
+	},
 	subtitle: 'Alles aus dem Verein',
 };
 
@@ -158,6 +163,24 @@ describe('news category page', () => {
 			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
 		});
 
+		it.each([
+			['page 5 of three articles', '5', 3],
+			['page 2 of nine articles', '2', 9],
+			['page 2 of an empty category', '2', 0],
+		])('answers %s with not found', async (_name, seite, total) => {
+			mockSanity({ total });
+
+			await expect(NewsCategoryPage(routeProps(seite))).rejects.toThrow('NEXT_NOT_FOUND');
+		});
+
+		it('renders the last page that still holds an article', async () => {
+			mockSanity({ articles: [{ _id: 'article-10' }], total: 10 });
+
+			const pagination = findElement(await NewsCategoryPage(routeProps('2')), LatestNewsPagination);
+
+			expect(pagination?.props).toMatchObject({ currentPage: 2, hasNextPage: false });
+		});
+
 		it('heads the page with the category title and the overview subtitle', async () => {
 			mockSanity();
 
@@ -178,7 +201,7 @@ describe('news category page', () => {
 		});
 
 		it('shifts the window by nine articles per page', async () => {
-			mockSanity();
+			mockSanity({ total: 19 });
 
 			await NewsCategoryPage(routeProps('3'));
 
@@ -186,7 +209,7 @@ describe('news category page', () => {
 		});
 
 		it('reads the page number from the first value of a repeated parameter', async () => {
-			mockSanity();
+			mockSanity({ total: 10 });
 
 			await NewsCategoryPage(routeProps(['2', '5']));
 
@@ -221,11 +244,31 @@ describe('news category page', () => {
 		});
 
 		it('leaves the pagination out when the article query returned nothing', async () => {
-			mockSanity({ articles: null });
+			mockSanity({ articles: null, total: 1 });
 
 			const page = await NewsCategoryPage(routeProps());
 
 			expect(findElement(page, LatestNewsPagination)).toBeUndefined();
+		});
+
+		it('explains below the heading that the category has no articles yet', async () => {
+			mockSanity({ articles: [], total: 0 });
+
+			const page = await NewsCategoryPage(routeProps());
+
+			expect(findElement(page, SectionHeader)?.props.children).toBe(
+				'Hier gibt es noch keine Neuigkeiten.',
+			);
+			expect(findElement(page, LatestNewsPagination)).toBeUndefined();
+		});
+
+		it('links an empty category to all news', async () => {
+			mockSanity({ articles: [], total: 0 });
+
+			const link = findElement(await NewsCategoryPage(routeProps()), ButtonLink);
+
+			expect(link?.props.children).toBe('Alle News ansehen');
+			expect(link?.props.render).toMatchObject({ props: { href: '/news' } });
 		});
 
 		it('lists the contact persons of the overview document', async () => {

@@ -14,9 +14,24 @@ const newsOverviewCategory = defineType({
 
 		// Content
 		defineField({
-			fields: [contactPersonsSectionField],
+			fields: [
+				defineField({
+					description:
+						'Steht unter der Überschrift, solange eine Kategorie noch keine Beiträge hat. Darunter verlinkt ein Button auf alle News.',
+					group: 'emptyCategory',
+					name: 'emptyCategoryNotice',
+					rows: 3,
+					title: 'Hinweis ohne Beiträge',
+					type: 'text',
+					validation: (Rule) => [Rule.required().error('Der Hinweis ist erforderlich')],
+				}),
+				contactPersonsSectionField,
+			],
 			group: 'content',
-			groups: [{ name: 'contactPersons', title: 'Ansprechpartner' }],
+			groups: [
+				{ name: 'emptyCategory', title: 'Keine Beiträge' },
+				{ name: 'contactPersons', title: 'Ansprechpartner' },
+			],
 			icon: RiLinksLine,
 			name: 'content',
 			title: 'Inhalte',
