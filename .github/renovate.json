@@ -9,6 +9,11 @@
 			"allowedVersions": "<30.1.0"
 		},
 		{
+			"description": "Every dependency lives in the pnpm catalog, whose entries are neither `dependencies` nor `devDependencies`. The `bump` strategy of mheob/renovate-config does not reach them, so Renovate would only refresh the lockfile; keep raising the ranges as before.",
+			"matchDepTypes": ["pnpm.catalog.default"],
+			"rangeStrategy": "bump"
+		},
+		{
 			"description": "vite-plus bundles Vitest, and `vp migrate` re-pins `vitest` and its lockstep packages to the bundled runner. Bumped on their own they would split Vitest between two copies (https://viteplus.dev/guide/upgrade-project#updating-the-vitest-pin).",
 			"matchPackageNames": ["vitest", "@vitest/coverage-v8"],
 			"enabled": false
