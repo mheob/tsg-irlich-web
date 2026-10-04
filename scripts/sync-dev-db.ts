@@ -1,4 +1,5 @@
 import { spawn } from 'node:child_process';
+import { once } from 'node:events';
 import { rm, stat } from 'node:fs/promises';
 import { text } from 'node:stream/consumers';
 
@@ -17,13 +18,12 @@ function spawnSanity(args: string[], stdout: 'inherit' | 'pipe') {
 	});
 }
 
+// `once` rejects when the child emits `error` first, for instance when `pnpm` cannot be spawned.
+// `close` reports a `null` code for a child that a signal ended, which counts as a failure.
 async function waitForExit(child: ReturnType<typeof spawnSanity>): Promise<number> {
-	return new Promise((resolve, reject) => {
-		child.on('error', reject);
-		child.on('close', (code) => {
-			resolve(code ?? 1);
-		});
-	});
+	const closeArgs: unknown[] = await once(child, 'close');
+	const [code] = closeArgs;
+	return typeof code === 'number' ? code : 1;
 }
 
 // The streams are inherited so the CLI writes straight to this terminal: it reports
