@@ -1,8 +1,3 @@
-// This script is executed directly by Node (`node scripts/sync-dev-db.ts`), which strips the
-// type annotations on the fly, and is never loaded through `require(esm)`, so top-level await
-// is safe here.
-// oxlint-disable node/no-top-level-await
-
 import { spawn } from 'node:child_process';
 import { rm, stat } from 'node:fs/promises';
 import { text } from 'node:stream/consumers';
