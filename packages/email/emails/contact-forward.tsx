@@ -42,7 +42,7 @@ export function ContactForwardEmail({
 				<Body className="m-auto bg-background px-2 font-sans">
 					<Preview>{`Von ${baseUrl} kommt eine Anfrage von ${contactName}.`}</Preview>
 
-					<Container className="mx-auto my-10 max-w-2xl rounded border border-solid border-border p-5">
+					<Container className="mx-auto my-10 max-w-2xl rounded-sm border border-solid border-border p-5">
 						<Section className="mt-[32px] flex justify-center">
 							<Img
 								alt="TSG Irlich Logo"

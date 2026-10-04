@@ -416,7 +416,7 @@ freezeRandom();
 
 const server = setupServer(...handlers);
 
-server.listen({ onUnhandledRequest: 'error' });
+server.listen({ onUnhandledFrame: 'error' });
 
 process.once('exit', () => {
 	server.close();
