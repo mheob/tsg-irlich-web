@@ -5,16 +5,22 @@ import { ButtonLink } from '@/components/ui/button';
 import { ContactLink } from '@/components/with-logic/contact-link';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { NewsArticleContentQueryResult } from '@/types/sanity.types';
-import { getLocaleDate } from '@/utils/time';
+import { getLastModified, getLocaleDate } from '@/utils/time';
 
 const AUTHOR_IMAGE_SIZE = 64;
 
 interface AuthorProps extends ComponentPropsWithoutRef<'section'> {
-	article: Pick<NonNullable<NewsArticleContentQueryResult>, 'author' | 'publishedAt'>;
+	article: Pick<
+		NonNullable<NewsArticleContentQueryResult>,
+		'_updatedAt' | 'author' | 'publishedAt'
+	>;
 }
 
 export function Author({ article, ...props }: Readonly<AuthorProps>) {
 	const authorImageSource = urlForImage(article.author.image, AUTHOR_IMAGE_SIZE);
+	const publishedDate = getLocaleDate(new Date(article.publishedAt));
+	const lastModified = getLastModified(article.publishedAt, article._updatedAt);
+	const lastModifiedDate = getLocaleDate(new Date(lastModified));
 
 	return (
 		<section {...props}>
@@ -38,7 +44,14 @@ export function Author({ article, ...props }: Readonly<AuthorProps>) {
 						{article.author.firstName} {article.author.lastName}
 					</div>
 
-					<time dateTime={article.publishedAt}>{getLocaleDate(new Date(article.publishedAt))}</time>
+					<time dateTime={article.publishedAt}>{publishedDate}</time>
+
+					{/* A change on the day of publication is part of publishing it, not an update. */}
+					{lastModifiedDate !== publishedDate && (
+						<div className="text-sm text-muted-foreground">
+							Aktualisiert am <time dateTime={lastModified}>{lastModifiedDate}</time>
+						</div>
+					)}
 				</div>
 			</div>
 

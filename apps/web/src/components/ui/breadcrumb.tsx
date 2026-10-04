@@ -7,7 +7,10 @@ import type { ComponentProps } from 'react';
 import { cn } from '@tsgi-web/shared';
 
 function Breadcrumb({ ...props }: ComponentProps<'nav'>) {
-	return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
+	// Deliberate deviation from the Shadcn template, which ships `aria-label="breadcrumb"`: this is
+	// the landmark's only accessible name and the site is German throughout. `shadcn add breadcrumb`
+	// overwrites it back to the English string, so it has to be set again after a refetch.
+	return <nav aria-label="Breadcrumb" data-slot="breadcrumb" {...props} />;
 }
 
 function BreadcrumbList({ className, ...props }: ComponentProps<'ol'>) {
@@ -49,12 +52,10 @@ function BreadcrumbLink({ className, render, ...props }: useRender.ComponentProp
 
 function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {
 	return (
-		<span // NOSONAR
+		<span
 			aria-current="page"
-			aria-disabled="true"
 			className={cn('font-normal', className)}
 			data-slot="breadcrumb-page"
-			role="presentation"
 			{...props}
 		/>
 	);

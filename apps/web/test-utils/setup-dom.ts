@@ -1,7 +1,7 @@
 import { cleanup } from '@testing-library/react';
 import { createElement, Fragment, useRef } from 'react';
 import type { ReactElement, ReactNode } from 'react';
-import { afterEach, vi } from 'vitest';
+import { afterEach, vi } from 'vite-plus/test';
 
 type MediaQueryListener = (event: MediaQueryListEvent) => void;
 
@@ -328,7 +328,7 @@ function setInView(value: boolean): void {
 
 interface MotionValueMock<T> {
 	get: () => T;
-	on: (event: 'change', callback: (value: T) => void) => () => void;
+	on: (event: 'change', listener: (value: T) => void) => () => void;
 	set: (value: T) => void;
 }
 
@@ -340,10 +340,10 @@ function createMotionValueMock<T>(initial: T): MotionValueMock<T> {
 		get: () => current,
 		// The `event` argument is intentionally unused: `on`'s type only ever admits `'change'`,
 		// which is the only event `number-ticker.tsx` subscribes to.
-		on: (_event, callback) => {
-			listeners.add(callback);
+		on: (_event, listener) => {
+			listeners.add(listener);
 			return () => {
-				listeners.delete(callback);
+				listeners.delete(listener);
 			};
 		},
 		set: (value) => {

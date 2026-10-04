@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig, type Plugin } from 'vitest/config';
+import { defineConfig, type Plugin } from 'vite-plus';
 
 const ASSET_PATTERN = /\.(?:avif|gif|jpe?g|png|svg|webp)$/u;
 
@@ -42,7 +42,7 @@ export default defineConfig({
 			// a regression fails the run while normal work does not. Raise them, never lower them.
 			// The remaining gap is a long tail of single branches plus a handful of spots the test
 			// harness cannot reach at all (see `AGENTS.md`).
-			thresholds: { branches: 83, functions: 84, lines: 92, statements: 92 },
+			thresholds: { branches: 85, functions: 88, lines: 93, statements: 93 },
 		},
 		projects: [
 			{

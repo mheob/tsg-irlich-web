@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
 	plugins: [react()],
@@ -17,7 +17,7 @@ export default defineConfig({
 			reportsDirectory: './coverage',
 			// A floor at the level the suite currently reaches, to keep it from slipping while the
 			// schemas are still largely untested. Raise it with every batch of new tests.
-			thresholds: { branches: 60, functions: 20, lines: 23, statements: 23 },
+			thresholds: { branches: 71, functions: 22, lines: 28, statements: 28 },
 		},
 		environment: 'jsdom',
 		exclude: ['dist/**', 'node_modules/**', '.sanity/**'],

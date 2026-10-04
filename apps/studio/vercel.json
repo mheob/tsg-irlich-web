@@ -1,0 +1,4 @@
+{
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"ignoreCommand": "[ -n \"$VERCEL_GIT_PREVIOUS_SHA\" ] || { echo \"No previous deployment, building\"; exit 1; }; turbo query affected --base=\"$VERCEL_GIT_PREVIOUS_SHA\" --packages studio --exit-code || exit 1"
+}

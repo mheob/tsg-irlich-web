@@ -56,8 +56,8 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 
 - Built with **Turbo** for build orchestration and caching
 - **pnpm** as package manager with workspace support
-- Shared dependencies managed with explicit pinned versions
-- Node.js ^24.20.0 and pnpm 11.24.0 required
+- Every external dependency resolves through the default catalog in `pnpm-workspace.yaml`, and the manifests reference it with `catalog:`. `catalogMode: strict` makes `pnpm add` / `vp add` write new dependencies there; only workspace packages stay on `workspace:*`. The four Vite+ toolchain entries (`vite`, `vite-plus`, `vitest`, `@vitest/coverage-v8`) are re-pinned by `vp migrate`, not by hand
+- Node.js ^24.20.0 and pnpm 12.7.0 required
 
 ### Web App (Next.js)
 
@@ -127,6 +127,8 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 pnpm run extract-types && pnpm run typegen:sanity
 ```
 
+`typecheck` runs `tsc --noEmit --incremental false` in `apps/web` and `apps/studio` on purpose (WEB-348). TypeScript 7's incremental mode does not recheck the importers of a module whose types changed behind an `export *` re-export, and the generated Sanity types reach the web app exactly that way (`src/types/sanity.types.ts` re-exports `sanity.types.generated.ts`). After a typegen it reported success while tests no longer type-checked; a full check costs about one second more. `incremental: true` stays in the `tsconfig.json` files for Next.js and the editor.
+
 ## Environment & Configuration
 
 ### Required Environment Variables
@@ -156,22 +158,32 @@ pnpm run extract-types && pnpm run typegen:sanity
 
 A new variable also has to be registered in the root `turbo.json` (`globalEnv` or the matching task), otherwise Turbo hides it from the build.
 
+### Deployment (Vercel)
+
+- Two Vercel projects deploy from this repository: `tsg-irlich-web` (Root Directory `apps/web`) and `tsg-irlich-web-studio` (`apps/studio`). `next` deploys to the `staging` environment, `main` to production.
+- A project builds only when a commit affects it. Vercel's "Skip unaffected projects" handles changes inside the workspace packages, but it treats every file outside them (`.claude/`, `.github/`, root docs) as a global change and builds everything. The `ignoreCommand` in each app's `vercel.json` closes that gap with `turbo query affected --base="$VERCEL_GIT_PREVIOUS_SHA" --packages <app> --exit-code || exit 1`, which follows the dependency graph and the global dependencies of `turbo.json`. Exit code 0 cancels the build, 1 runs it, and Vercel fails the deployment on any other code. That is why `|| exit 1` turns turbo's errors into a build. `VERCEL_GIT_PREVIOUS_SHA` is the commit of the last successful deployment on the branch, so it is empty on the first push and for as long as no deployment of the branch has succeeded. turbo would then exit with 2 and print a Git error that looks like a failure, so a guard in front of it (`[ -n "$VERCEL_GIT_PREVIOUS_SHA" ] || { echo "No previous deployment, building"; exit 1; };`) builds without calling turbo at all. Vercel caps the command at 256 characters.
+- A dependency between workspace packages has to be declared in the dependent package's `package.json`, otherwise neither mechanism sees it.
+- A deployment canceled by the `ignoreCommand` reports `success` for its Vercel check, but it creates no GitHub deployment and so no `deployment_status`. `E2E Preview` and `Lighthouse` therefore also trigger on `pull_request`, where their job skips itself: the skipped run satisfies the required check on a commit that deploys nothing. When the web app does deploy, the `deployment_status` run follows and is the one that counts.
+- To build a skipped deployment anyway, redeploy it in the dashboard with "Use project's Ignore Build Step" unchecked.
+
 ### Code Quality Tools
 
-- **oxlint** with @mheob/oxlint-config (plus oxlint-tsgolint for type-aware rules)
-- **oxfmt** with @mheob/oxfmt-config
+- **Vite+** (`vite-plus`) bundles oxlint, oxfmt and Vitest: `vp lint`, `vp fmt` and `vp test` run them
+- **oxlint** with @mheob/oxlint-config (plus oxlint-tsgolint for type-aware rules), configured in the `lint` block of the root `vite.config.ts`. Vite+ reads no nested lint config, so package-specific rules are `lint.overrides` entries there
+- **oxfmt** with @mheob/oxfmt-config, configured in the `fmt` block of the root `vite.config.ts`
 - **Lefthook** for pre-commit hooks
 - **Commitizen** with czg for conventional commits
-- **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`); tests live next to their source (`foo.ts` → `foo.test.ts`)
-- Import `describe`/`it`/`expect`/`vi` explicitly from `vitest` — `globals` stays off
+- **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`); tests live next to their source (`foo.ts` → `foo.test.ts`). `vp test` at the root runs all four as projects through `test.projects` in the root `vite.config.ts`; coverage thresholds only apply per workspace, so gate on `pnpm run test:coverage`
+- Import `describe`/`it`/`expect`/`vi` explicitly from `vite-plus/test` (the `vite-plus/prefer-vite-plus-imports` lint rule enforces it) — `globals` stays off
 - `apps/web` splits into a `node` and a `dom` (jsdom) project; component and hook tests land in `dom` — see `apps/web/AGENTS.md`
 - End-to-end tests are Playwright, live in `apps/web/e2e` and are separated from Vitest by extension (`*.spec.ts` vs `*.test.ts`). They mock every outbound service in the Next.js process itself and run in their own CI workflow — see `apps/web/AGENTS.md` before touching them. That suite also carries the automated accessibility sweep: `@axe-core/playwright` checks every important route against WCAG 2.1 AA, tolerates only what `apps/web/e2e/support/axe-baseline.ts` lists, and writes its findings into GitHub's job summary. It carries the visual regression baselines as well: full-page screenshots of eight routes in both browser projects, committed under `apps/web/e2e/__screenshots__`. Baselines are pixel-comparable only against the platform that produced them, so the whole end-to-end job runs inside the pinned `mcr.microsoft.com/playwright` image and `pnpm --filter web run test:e2e:visual:update` regenerates them in that same container; outside Linux the visual specs skip themselves
+- Lab and field performance are covered outside the Vitest and Playwright suites. `@lhci/cli` scores five routes of a deployed Vercel preview on every pull request (`apps/web/lighthouserc.cjs`, `.github/workflows/lighthouse.yml`): accessibility, best practices and SEO are asserted at a perfect score, performance only warns because a shared CI runner moves it by around ten points between identical runs. `@vercel/speed-insights` sits in the root layout and reports the Core Web Vitals real visitors produce. See `apps/web/AGENTS.md` for both
 - `packages/email` runs entirely in the `node` environment and renders every component with `render()` from `react-email` to a plain HTML string — no `@testing-library/react`, no DOM. The newsletter template carries exactly two snapshots (the plain mailing and the CleverReach template), deliberately kept to that count since a full-document snapshot churns on any markup change; the suite freezes the clock with `vi.useFakeTimers()`/`vi.setSystemTime(...)` to a mid-year date before snapshotting, so the footer's `new Date().getFullYear()` doesn't drift the snapshot on New Year's Day
 - oxlint's vitest plugin warns (`pnpm run lint` still exits 0) when a `describe` title isn't lowercase or repeats an imported identifier, or a hook sits outside a `describe` block — the convention is kept repo-wide regardless
-- Test files, `test-utils/**` and `vitest.config.ts` are exempt from `sort-keys`, `no-magic-numbers`, `max-lines`, `max-lines-per-function` and `typescript/no-unsafe-type-assertion` in `oxlint.config.ts` — widen a single rule inline, never the override itself
+- Test files, `test-utils/**` and `vitest.config.ts` are exempt from `sort-keys`, `no-magic-numbers`, `max-lines`, `max-lines-per-function` and `typescript/no-unsafe-type-assertion` in the root `vite.config.ts` — widen a single rule inline, never the override itself
 - Mock external services at the `fetch` boundary, not the module boundary; Resend is planned as the one exception, mocked at the SDK level
 - `pnpm run test:coverage` writes `coverage/lcov.info` per workspace for CI/SonarQube. Every `vitest.config.ts` sets `coverage.include` so untested files count as uncovered instead of dropping out of the denominator — Vitest 4 removed `coverage.all`, and without `include` V8 only scores the files a test happened to import, which inflated every figure
-- Each `vitest.config.ts` carries `coverage.thresholds`, so `test:coverage` fails when coverage drops: `packages/shared` and `packages/email` at 100% everywhere, `apps/web` at 92% lines and statements / 84% functions / 83% branches (it reaches 93.1% / 85.9% / 85.2%), `apps/studio` at the level its schema tests currently reach (23% lines). They are a ratchet — raise them with every batch of new tests, never lower them to make a run pass
+- Each `vitest.config.ts` carries `coverage.thresholds`, so `test:coverage` fails when coverage drops: `packages/shared` and `packages/email` at 100% everywhere, `apps/web` at 93% lines and statements / 88% functions / 85% branches (it reaches 94.3% / 89.6% / 87.0%), `apps/studio` at the level its schema tests currently reach (28% lines). They are a ratchet — raise them with every batch of new tests, never lower them to make a run pass
 - 100% is deliberately not the goal for `apps/web`. What is left is a long tail of single branches plus the import-time bindings in `lib/sanity/live.ts` and `lib/sanity/client.ts`. Covering those means testing the framework, not the app. The `async` mark component in `portable-text.tsx` used to be on that list — React cannot render one on the client, the tree suspends — until `renderPortableTextOnServer` in `portable-text.test.tsx` started rendering it through `renderToReadableStream` and putting the markup into the document; reach for the same trick for any other async component
 - Pure re-export barrels are excluded from coverage (`**/index.ts` in `packages/shared`) — they hold no executable statements, so V8 scores them 0% and importing one in a test would lift the number without testing anything. Do not copy that glob into `apps/web` or `apps/studio`: their `index.ts` files carry real logic (GROQ fragments, schema definitions, the desk structure) and must stay in the denominator. `packages/email` excludes `scripts/**` (a top-level-await build script that writes to `dist/`) and `newsletter-event.ts` (an interface declaration) for the same reason: V8 scores a file with no executable statements as 0% of 0, which leaves a red row in the table without changing any total
 
@@ -183,3 +195,14 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - **Type-safe server actions** with next-safe-action
 - **Form validation** with react-hook-form + Zod
 - **No `try`/`catch`/`finally` in components or hooks** - the React Compiler bails out on a `finally` block. Await with `settle()` from `@tsgi-web/shared` and branch on `outcome.ok` instead.
+
+<!-- BEGIN:turborepo-agent-rules -->
+
+# This is NOT the Turborepo you know
+
+Turborepo configuration, task behavior, and CLI commands can vary between installed versions and may differ from your training data. Resolve the `turbo` package from this file's directory or relevant workspace; in monorepos, it may not be visible from the repository root. For example, run `node -p "require.resolve('turbo/package.json')"` from a workspace that depends on `turbo`.
+
+Read `docs/README.md` inside that installed package first, then read the relevant pages from its `docs/` directory before changing Turborepo configuration or commands. Heed deprecation notices. These bundled docs match the installed package version and are available without network access.
+
+This block is written and re-added by `turbo` before repository-scoped commands when an AI agent is detected. In the Turborepo source repository, its template is defined in `crates/turborepo-cli/src/cli/agent_guidance.rs`. Removing the managed block while updates are enabled means a later qualifying invocation will add it again. Set `"agentGuidance": false` in the root `turbo.json` or `turbo.jsonc` to opt out; this does not remove an existing block. Keep the block committed with your work to avoid an uncommitted change on the next agent invocation.
+<!-- END:turborepo-agent-rules -->

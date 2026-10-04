@@ -1,0 +1,17 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "web",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["--filter", "web", "run", "dev"],
+			"port": 3000
+		},
+		{
+			"name": "studio",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["--filter", "studio", "run", "dev"],
+			"port": 3333
+		}
+	]
+}

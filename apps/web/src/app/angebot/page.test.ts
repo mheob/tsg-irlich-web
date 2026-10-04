@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import OfferPage, { generateMetadata } from '@/app/angebot/page';
 import { ContactPersons } from '@/components/section/contact-persons';
@@ -52,6 +52,7 @@ describe('offer page', () => {
 			build: buildPage,
 			fetchMock: mockedFetch,
 			generateMetadata,
+			path: '/angebot',
 			title: 'Angebot',
 		});
 	});

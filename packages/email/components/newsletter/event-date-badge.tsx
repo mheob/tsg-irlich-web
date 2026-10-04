@@ -9,6 +9,7 @@ export function EventDateBadge({ day, month, weekday }: Readonly<EventDateBadgeP
 		<table cellPadding={0} cellSpacing={0} role="presentation" width="56">
 			<tbody>
 				<tr>
+					{/* oxlint-disable-next-line jsx-a11y/control-has-associated-label */}
 					<td
 						align="center"
 						className="rounded-[8px] bg-secondary py-[8px]"

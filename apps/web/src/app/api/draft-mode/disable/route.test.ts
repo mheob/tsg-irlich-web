@@ -1,5 +1,5 @@
 import { draftMode } from 'next/headers';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { GET } from '@/app/api/draft-mode/disable/route';
 

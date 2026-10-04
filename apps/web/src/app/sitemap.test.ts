@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import sitemap from '@/app/sitemap';
 import type { client } from '@/lib/sanity/client';

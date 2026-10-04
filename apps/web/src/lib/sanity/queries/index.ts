@@ -1,4 +1,5 @@
 const contactPersons = /* groq */ `
+  _id,
   firstName,
   lastName,
   phone,

@@ -12,30 +12,29 @@
 		"build:preview": "email build",
 		"dev:email": "email dev --port 3001",
 		"export": "email export",
-		"lint": "oxlint",
-		"lint:fix": "oxlint --fix",
-		"lint:github": "oxlint --format=github",
-		"test": "vitest run",
-		"test:coverage": "vitest run --coverage",
-		"test:watch": "vitest"
+		"lint": "vp lint",
+		"lint:fix": "vp lint --fix",
+		"lint:github": "vp lint --format=github",
+		"test": "vp test run",
+		"test:coverage": "vp test run --coverage",
+		"test:watch": "vp test"
 	},
 	"dependencies": {
-		"@react-email/ui": "^6.9.3",
+		"@react-email/ui": "catalog:",
 		"@tsgi-web/shared": "workspace:*",
-		"react": "^19.2.8",
-		"react-dom": "^19.2.8",
-		"react-email": "^6.9.3"
+		"react": "catalog:",
+		"react-dom": "catalog:",
+		"react-email": "catalog:"
 	},
 	"devDependencies": {
-		"@react-email/render": "^2.1.0",
-		"@types/node": "^24.13.3",
-		"@types/react": "^19.2.18",
-		"@types/react-dom": "^19.2.5",
-		"@vitejs/plugin-react": "^6.1.0",
-		"@vitest/coverage-v8": "^4.1.11",
-		"oxlint": "^1.80.0",
-		"oxlint-tsgolint": "^7.0.2001",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.11"
+		"@react-email/render": "catalog:",
+		"@types/node": "catalog:",
+		"@types/react": "catalog:",
+		"@types/react-dom": "catalog:",
+		"@vitejs/plugin-react": "catalog:",
+		"@vitest/coverage-v8": "catalog:",
+		"typescript": "catalog:",
+		"vite-plus": "catalog:",
+		"vitest": "catalog:"
 	}
 }

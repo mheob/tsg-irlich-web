@@ -10,6 +10,7 @@ import { cn } from '@tsgi-web/shared';
 
 import { Hero } from '@/components/section/hero';
 import { Gallery } from '@/components/ui/gallery';
+import { JsonLd } from '@/components/ui/json-ld';
 import { LightboxGallery, LightboxTrigger } from '@/components/ui/lightbox';
 import { PortableText } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
@@ -23,8 +24,12 @@ import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import { urlForImage } from '@/lib/sanity/utils';
 import { getGalleryImages } from '@/utils/image';
+import { getPageMetadata } from '@/utils/metadata';
+import { getNewsArticleSchema } from '@/utils/structured-data';
+import { getLastModified } from '@/utils/time';
+import { getBaseUrl } from '@/utils/url';
 
-import { getOpenGraphImageOptions } from '../../_shared/utils';
+import { getArticlePath } from '../../_shared/utils';
 import { Author } from './_sections/author';
 import { Categories } from './_sections/categories';
 import { SocialMedia } from './_sections/social-media';
@@ -36,7 +41,7 @@ const CONTENT_IMAGE_SIZE = { height: 450, width: 800 };
 export async function generateMetadata({
 	params,
 }: Readonly<PageProps<'/news/[category]/[slug]'>>): Promise<Metadata> {
-	const { slug } = await params;
+	const { category, slug } = await params;
 
 	const { data: article } = await sanityFetch({
 		params: { slug },
@@ -48,22 +53,29 @@ export async function generateMetadata({
 		return {};
 	}
 
-	const description = article.meta?.metaDescription ?? article.excerpt ?? '';
-	const image = article.meta?.openGraphImage ?? article.featuredImage;
-	const images = image ? getOpenGraphImageOptions(image, article.title) : [];
-	const title = article.meta?.metaTitle ?? article.title ?? '';
+	const authorName = [article.author?.firstName, article.author?.lastName]
+		.filter(Boolean)
+		.join(' ');
 
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({
+		description: article.excerpt,
+		image: article.featuredImage,
+		meta: article.meta,
+		openGraph: {
+			authors: authorName ? [authorName] : undefined,
+			modifiedTime: getLastModified(article.publishedAt, article._updatedAt),
+			publishedTime: article.publishedAt,
+			type: 'article',
+		},
+		path: getArticlePath(article, category, slug),
+		title: article.title,
+	});
 }
 
 export default async function NewsArticlePage({
 	params,
 }: Readonly<PageProps<'/news/[category]/[slug]'>>) {
-	const { slug } = await params;
+	const { category, slug } = await params;
 
 	const [{ data: hero }, { data: article }, { data: socialMedia }, { data: sponsors }] =
 		await Promise.all([
@@ -78,9 +90,26 @@ export default async function NewsArticlePage({
 	}
 
 	const imageSource = urlForImage(article.featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
+	// Only the fields the structured data reads, cleaned of the stega encoding draft mode adds, which
+	// leaves the rendered article and its click-to-edit overlays alone.
+	const articleSchema = getNewsArticleSchema(
+		getBaseUrl(),
+		getArticlePath(article, category, slug),
+		stegaClean({
+			_updatedAt: article._updatedAt,
+			author: article.author,
+			excerpt: article.excerpt,
+			featuredImage: article.featuredImage,
+			meta: article.meta,
+			publishedAt: article.publishedAt,
+			title: article.title,
+		}),
+	);
 
 	return (
 		<>
+			<JsonLd data={articleSchema} />
+
 			<Hero
 				image={
 					article.featuredImage?.alt && imageSource

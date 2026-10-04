@@ -1,6 +1,7 @@
 {
 	"languages": {
 		"CSS": {
+			"format_on_save": "on",
 			"formatter": [{ "language_server": { "name": "oxfmt" } }],
 			"prettier": { "allowed": false }
 		},
@@ -84,13 +85,16 @@
 			"initialization_options": {
 				"settings": {
 					"typeAware": true,
-					"unusedDisableDirectives": "warn"
+					"unusedDisableDirectives": "warn",
+					"run": "onType",
+					"fixKind": "safe_fix"
 				}
 			}
 		},
 		"oxfmt": {
 			"initialization_options": {
 				"settings": {
+					"fmt.configPath": "./vite.config.ts",
 					"run": "onSave"
 				}
 			}

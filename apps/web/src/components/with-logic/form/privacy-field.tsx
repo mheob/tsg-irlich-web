@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import type { useForm } from 'react-hook-form';
 
 import { Checkbox } from '@/components/ui/checkbox';
@@ -10,16 +11,24 @@ interface PrivacyFieldProps {
 }
 
 export function PrivacyField({ form }: Readonly<PrivacyFieldProps>) {
+	// Base UI's `Checkbox.Root` renders a `span[role="checkbox"]` and moves the `id` `FormControl`
+	// hands it onto its own hidden `input`, so `FormLabel`'s `htmlFor` names that hidden input and
+	// never the control a user operates. `aria-labelledby` is the only wiring that reaches it.
+	const labelId = useId();
+
 	return (
 		<FormField
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Datenschutzbestimmungen</FormLabel>
 					<FormDescription>
-						{/* The label makes the text toggle the checkbox for pointer and keyboard alike */}
+						{/* The label makes the text toggle the checkbox for pointer and keyboard alike. Base UI's
+						    `Checkbox` is the control, the rule only recognizes native form elements */}
+						{/* oxlint-disable-next-line jsx-a11y/label-has-associated-control */}
 						<label className="flex max-w-full cursor-pointer gap-2">
 							<FormControl>
 								<Checkbox
+									aria-labelledby={labelId}
 									checked={field.value}
 									className="mt-0.5"
 									// oxlint-disable-next-line react/jsx-handler-names
@@ -29,7 +38,7 @@ export function PrivacyField({ form }: Readonly<PrivacyFieldProps>) {
 									ref={field.ref}
 								/>
 							</FormControl>
-							<span>
+							<span id={labelId}>
 								Ich akzeptiere die Datenschutzbestimmungen. Meine Daten werden nur für die Zwecke
 								verwendet, für die sie erhoben wurden.
 							</span>

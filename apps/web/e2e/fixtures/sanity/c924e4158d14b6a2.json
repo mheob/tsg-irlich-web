@@ -1,0 +1,658 @@
+{
+	"body": {
+		"result": {
+			"_updatedAt": "2026-09-29T12:28:50Z",
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "7f7dc66c0d12",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "f8aaa970bd10",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e108c0e7049b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Die TSG Irlich hat sich nach der knappen Derbyniederlage in Feldkirchen mit einem Heimsieg zurückgemeldet. Im Pappelstadion setzte sich die TSG verdient mit 4:1 (2:1) gegen den FC Rojava Neuwied durch. Nach einer noch trockenen ersten Halbzeit verwandelte der einsetzende Starkregen die Begegnung nach dem Seitenwechsel in eine echte Schlammschlacht. Die TSG nahm die schwierigen Bedingungen an und belohnte sich mit drei wichtigen Punkten"
+								},
+								{
+									"_key": "620f29b74d31",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "c85ae84bf687",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "665b4e26e405",
+									"_type": "span",
+									"marks": [],
+									"text": "Diesen Heimsieg widmet die Mannschaft ihrem Gastwirt "
+								},
+								{
+									"_key": "9ef2417788cd",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Frank Kaiser "
+								},
+								{
+									"_key": "939e643a9817",
+									"_type": "span",
+									"marks": [],
+									"text": "vom Pappelstübchen, der derzeit im Krankenhaus liegt: "
+								},
+								{
+									"_key": "5f0840326eaf",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Lieber Frank, die drei Punkte sind für dich! Wir wünschen dir als gesamte Mannschaft von Herzen gute Besserung, viel Kraft und hoffen, dich schon bald wieder gesund bei uns im Pappelstadion begrüßen zu dürfen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "81381b12e1e2",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9a7c1169eca4",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Kari bringt die TSG früh in Führung"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "aad41013ef67",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "328c71d5c96a",
+									"_type": "span",
+									"marks": [],
+									"text": "Bei zunächst trockenen Bedingungen fand die TSG gut in die Begegnung. Die Mannschaft war von Beginn an aufmerksam, suchte den Weg nach vorne und brachte die Gäste früh unter Druck."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "74cab31d847c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4c6c495435b4",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dennis Kari"
+								},
+								{
+									"_key": "19727c3c55a6",
+									"_type": "span",
+									"marks": [],
+									"text": " belohnte den guten Start und erzielte die Führung für die #11fürIrlich. Die TSG blieb anschließend spielbestimmend und erspielte sich weitere Möglichkeiten."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "944d25ef0353",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9acc7a19563a",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach einem Foulspiel im Strafraum zeigte Schiedsrichter Jörn Janssen auf den Punkt. "
+								},
+								{
+									"_key": "497f3935adba",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Justin Lehmann"
+								},
+								{
+									"_key": "140b3f732bf2",
+									"_type": "span",
+									"marks": [],
+									"text": " übernahm die Verantwortung, verlud den Torwart und verwandelte den fälligen Elfmeter sicher zum 2:0."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "f5222f88b7c6",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "5136d079520b",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Gäste gaben sich jedoch nicht geschlagen und kamen noch vor der Pause zurück in die Partie. Ein Freistoß aus rund 20 Metern landete im Irlicher Tor und brachte Rojava auf 2:1 heran. Mit diesem Ergebnis ging es nach einer umkämpften ersten Halbzeit in die Kabinen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "eb626b30b365",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "46e7e955e164",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3030b35591a4",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Starkregen verwandelt den Hartplatz"
+								}
+							],
+							"markDefs": [],
+							"style": "h2"
+						},
+						{
+							"_key": "4891b0a8a313",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e307bd8b18f1",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach dem Seitenwechsel änderten sich die Bedingungen innerhalb kürzester Zeit grundlegend. Starker Regen setzte ein und verwandelte den Hartplatz zunehmend in eine tiefe und matschige Spielfläche."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "83bf1083cbbe",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "eca270ae2fd2",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Ball lief kaum noch kontrolliert über den Boden. Selbst kurze Pässe blieben teilweise nach wenigen Metern im Schlamm liegen. Spielerische Lösungen wurden dadurch immer schwieriger, während Einsatz, Zweikampfstärke und der Wille, jeden zweiten Ball zu gewinnen, entscheidend wurden."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "19630d59e9e6",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a5ca2207d080",
+									"_type": "span",
+									"marks": [],
+									"text": "Die ohnehin körperbetonte Partie entwickelte sich endgültig zu einer Schlammschlacht. Beide Mannschaften mussten viel investieren, doch die TSG stellte sich zunehmend besser auf die schwierigen Verhältnisse ein. Statt sich von dem Wetter und dem immer schwerer bespielbaren Platz aus der Ruhe bringen zu lassen, nahm die Mannschaft den Kampf an und gewann wieder mehr Kontrolle über die Partie."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "29ec1b40cbfe",
+					"_type": "mainImage",
+					"alt": "Kapitän Justin Lehmann in einem Türkisen Trikot der TSG wie er bei leicht nassen Platz den Ball schießt ",
+					"asset": {
+						"_ref": "image-f69120db4363fd92b83d2d845b0fe161c067ba47-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.15080490449578782,
+						"left": 0,
+						"right": 0.1610365056857676,
+						"top": 0
+					},
+					"description": "Kapitän Justin Lehmann am Ball",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7410960046709484,
+						"width": 0.7277504379014098,
+						"x": 0.3638752189507049,
+						"y": 0.4546250729835683
+					}
+				},
+				{
+					"_key": "7c964d04728a",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "184c7cc4cd8c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "984b87d59958",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Fleuth sorgt per Handelfmeter für Erleichterung"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "ca0df55101a9",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e765a70eb7d3",
+									"_type": "span",
+									"marks": [],
+									"text": "In der zweiten Halbzeit bekam die TSG nach einem Handspiel im Strafraum erneut einen Elfmeter zugesprochen. Dieses Mal trat "
+								},
+								{
+									"_key": "b69cebf1b320",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dominik Fleuth"
+								},
+								{
+									"_key": "f72b832ec3c8",
+									"_type": "span",
+									"marks": [],
+									"text": " an. Auch er blieb vom Punkt souverän und erhöhte auf 3:1."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "4e69c43ec904",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "28fbb5d6a5cc",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Treffer gab der Mannschaft zusätzliche Sicherheit. Trotz des tiefen Bodens blieb Irlich konzentriert und ließ sich auch von der körperlichen Spielweise der Gäste nicht aus dem Konzept bringen. Die TSG verteidigte geschlossen und setzte nach Ballgewinnen immer wieder eigene Akzente."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "d8b0de8f11f4",
+					"_type": "blockquote",
+					"author": "Trainer Michael Lehmann",
+					"quote": "Mit dem Ergebnis bin ich zufrieden, mit unserer Leistung jedoch nur teilweise."
+				},
+				{
+					"_key": "d09c282df8ca",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "8765636a6a61",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "0cc20f218b99",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Kari schnürt den Doppelpack"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "3e5b1cc7bf5c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "5c6cd6a574b4",
+									"_type": "span",
+									"marks": [],
+									"text": "Den Schlusspunkt setzte erneut "
+								},
+								{
+									"_key": "09d08e5573ae",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Dennis Kari"
+								},
+								{
+									"_key": "bd3fe27f16fb",
+									"_type": "span",
+									"marks": [],
+									"text": ". Mit seinem zweiten Treffer des Tages sorgte der junge Stürmer für den "
+								},
+								{
+									"_key": "dac5913154d6",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "4:1-Endstand"
+								},
+								{
+									"_key": "65e7eaf4db8f",
+									"_type": "span",
+									"marks": [],
+									"text": " und krönte damit seine starke Leistung."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "74b0509f1c72",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e8990b279c53",
+									"_type": "span",
+									"marks": [],
+									"text": "In der verbleibenden Spielzeit ließ die TSG nichts mehr anbrennen. Die Mannschaft brachte die Führung unter schwierigen Bedingungen konzentriert über die Zeit und feierte nach dem Abpfiff einen verdienten Heimsieg."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "3dbf7e888add",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a7025bd8711a",
+									"_type": "span",
+									"marks": [],
+									"text": "Trainer "
+								},
+								{
+									"_key": "aebf0d587fb8",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Michael Lehmann"
+								},
+								{
+									"_key": "779d56e3a5f0",
+									"_type": "span",
+									"marks": [],
+									"text": " zeigte sich mit dem Ergebnis zufrieden, hätte von seiner Mannschaft insgesamt jedoch gerne eine bessere Leistung gesehen:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "d298d061eb45",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ad6f0a86fb9e",
+									"_type": "span",
+									"marks": [],
+									"text": "„Am Ende zählen die drei Punkte und darüber können wir uns natürlich freuen. Trotzdem war das heute sicherlich nicht unsere beste Leistung. Gerade in der ersten Halbzeit haben wir einige Dinge vermissen lassen und hätten insgesamt sauberer und konsequenter spielen müssen. Nach der Pause wurden die Bedingungen immer schwieriger, aber die Mannschaft hat den Kampf angenommen und das Spiel am Ende deutlich für sich entschieden. Mit dem Ergebnis bin ich zufrieden, mit unserer Leistung jedoch nur teilweise. Wir wissen, dass wir es besser können und müssen das in den kommenden Spielen wieder zeigen. Diesen Sieg widmen wir unserem Frank und wünschen ihm alle gemeinsam eine schnelle und vollständige Genesung.“"
+								}
+							],
+							"markDefs": [],
+							"style": "blockquote"
+						}
+					]
+				},
+				{
+					"_key": "9aed9a33178e",
+					"_type": "mainImage",
+					"alt": "Mehrere Spieler der TSG in einem Türkisen Trikot wie sie den Ball in einer Gruppe von Gegenspielern mit dunkel Blauen Trikots spielen.",
+					"asset": {
+						"_ref": "image-77e76b6da168acff5cf4a6229036e194780c3689-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.0573859371090166,
+						"left": 0.07740428726332473,
+						"right": 0.07918369616592988,
+						"top": 0.0787388439402786
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7330886646092252,
+						"width": 0.7046181221675425,
+						"x": 0.5177940890260514,
+						"y": 0.5453749270164316
+					}
+				},
+				{
+					"_key": "2ae3069d9bd6",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "e7f40c01dc1c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f67d1c5f033b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Drei Punkte trotz Luft nach oben"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "d106818d52e8",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "cdd8b728aa1f",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG verdiente sich den Heimsieg durch einen konzentrierteren Auftritt in der zweiten Halbzeit. Als der Regen einsetzte und der Platz zunehmend unter Wasser stand, passte sich die Mannschaft den Bedingungen an und überzeugte vor allem mit dem richtigen Einsatz."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "cf050f610437",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "90b82fd2b8ee",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach sechs absolvierten Ligaspielen steht die TSG nun bei "
+								},
+								{
+									"_key": "37cb128bdf81",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "zwölf Punkten"
+								},
+								{
+									"_key": "2bcbbe49d8ab",
+									"_type": "span",
+									"marks": [],
+									"text": " und kann auf einen insgesamt gelungenen Saisonstart zurückblicken."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "5cf2e9f06d29",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "06762a6439ba",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "25f843bfdba3",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Freitagabend in Bendorf-Sayn"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "69898895602e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1f83f465dfac",
+									"_type": "span",
+									"marks": [],
+									"text": "Bereits am heutigen "
+								},
+								{
+									"_key": "a153942d3a85",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Freitag"
+								},
+								{
+									"_key": "75bbb9190ee5",
+									"_type": "span",
+									"marks": [],
+									"text": " wartet die nächste Aufgabe auf die TSG. Um "
+								},
+								{
+									"_key": "dc287799ec61",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "20:15 Uhr"
+								},
+								{
+									"_key": "e57d92da53c8",
+									"_type": "span",
+									"marks": [],
+									"text": " gastiert die Irlicher Seniorenmannschaft bei der 3. Mannschaft des"
+								},
+								{
+									"_key": "e8c46a2caab6",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": " SC Bendorf-Sayn"
+								},
+								{
+									"_key": "21a5b408d7bb",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "cd3cbc5d73e8",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c800687de4a5",
+									"_type": "span",
+									"marks": [],
+									"text": "Dort möchte die Mannschaft spielerisch wieder zulegen, an die kämpferische Leistung aus der Schlammschlacht anknüpfen und die nächsten Punkte einfahren. Die TSG freut sich über jede Unterstützung beim Auswärtsspiel."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "848548668357",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a09a47e2bcce",
+									"_type": "span",
+									"marks": [],
+									"text": ""
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "senioren",
+					"title": "Senioren"
+				},
+				{
+					"slug": "fussball",
+					"title": "Fußball"
+				}
+			],
+			"excerpt": "Die TSG Irlich hat sich mit einem Heimsieg zurückgemeldet. Im Pappelstadion setzte sich die TSG mit 4:1 (2:1) gegen den FC Rojava Neuwied durch.",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Spieler der TSG in Türkisen Trikots wie sie durch den Regen und über den durchweichten Platz laufen",
+				"asset": {
+					"_ref": "image-ceffebe1ba7e9ee7595355f13b916231949399b1-6000x4000-jpg",
+					"_type": "reference"
+				}
+			},
+			"meta": {
+				"metaDescription": "Die TSG Irlich gewinnt im Pappelstadion mit 4:1 gegen Rojava Neuwied und holt trotz Starkregen drei wichtige Punkte, die das Team Frank Kaiser widmet.",
+				"metaTitle": "TSG Irlich gewinnt 4:1 gegen FC Rojava Neuwied",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-09-18T14:21:00.000Z",
+			"slug": "heimsieg-rojava-neuwied",
+			"title": "Heimsieg in der Schlammschlacht – drei Punkte für Frank! "
+		},
+		"syncTags": ["s1:c5Grjg", "s1:Ik/M0w", "s1:Y8IQWw", "s1:uv+Zzg"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22heimsieg-rojava-neuwied%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

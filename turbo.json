@@ -17,6 +17,7 @@
 		"VERCEL_OIDC_TOKEN",
 		"VERCEL_PROJECT_PRODUCTION_URL"
 	],
+	"globalPassThroughEnv": ["ENABLE_EXPERIMENTAL_COREPACK"],
 	"tasks": {
 		"@tsgi-web/email#build": {
 			"env": [
@@ -38,9 +39,15 @@
 			"persistent": true
 		},
 		"extract-types": {},
-		"lint": {},
-		"lint:fix": {},
-		"lint:github": {},
+		"lint": {
+			"inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/vite.config.ts"]
+		},
+		"lint:fix": {
+			"inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/vite.config.ts"]
+		},
+		"lint:github": {
+			"inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/vite.config.ts"]
+		},
 		"studio#build": {
 			"dependsOn": ["^build"],
 			"env": [

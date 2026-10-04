@@ -13,6 +13,11 @@ next-env.d.ts
 # Sanity
 # sanity.types.ts
 
+# Lighthouse
+# `.lighthouseci` is where `lhci` keeps the raw runs, `lighthouse-report` the reports it renders.
+.lighthouseci/
+lighthouse-report/
+
 # Playwright
 playwright-report/
 test-results/

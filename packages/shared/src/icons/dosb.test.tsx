@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vite-plus/test';
 
 import { DOSBIcon } from './dosb';
 import { DOSB_ICONS } from './dosb.types';
@@ -25,7 +25,7 @@ describe('rendering the dosb icon', () => {
 		expect(svg?.querySelector('title')).toBeNull();
 	});
 
-	// The 17 icons are distinguished only by SVG path data, which is unmaintainable to pin and
+	// The icons are distinguished only by SVG path data, which is unmaintainable to pin and
 	// breaks on any icon-set update. This asserts the narrower, stable fact instead: two different
 	// icon names actually render different markup, without pinning either one's geometry.
 	it('renders different markup for different icon names', () => {
@@ -39,9 +39,9 @@ describe('rendering the dosb icon', () => {
 		expect(screen.getByText('Z')).not.toBeNull();
 	});
 
-	// Every one of the 17 mapped names (read from dosb.types.ts, not retyped) must actually select a
-	// sub-component: a misspelled `icon === '…'` comparison or a renamed/removed sub-component would
-	// leave that one branch rendering an empty svg, which the earlier two-name spot check can't see.
+	// Every mapped name (read from dosb.types.ts, not retyped) must actually select a sub-component:
+	// a shape entry pointing at an empty or removed sub-component would leave that one icon rendering
+	// an empty svg, which the earlier two-name spot check can't see.
 	it.each(DOSB_ICONS)('renders non-empty svg markup for the %s icon', (name) => {
 		const { container } = render(<DOSBIcon icon={name} />);
 		const svg = container.querySelector('svg');

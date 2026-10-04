@@ -323,6 +323,7 @@ export function NamedImageInput(props: Readonly<NamedImageInputProps>): JSX.Elem
 									onKeyDown={handleKeyDown}
 									placeholder="Beschreibenden Dateinamen eingeben"
 									value={filename}
+									// oxlint-disable-next-line jsx-a11y/no-autofocus
 									autoFocus
 								/>
 								<Text size={1} muted>

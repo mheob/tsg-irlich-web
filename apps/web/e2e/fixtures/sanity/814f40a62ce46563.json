@@ -1,7 +1,328 @@
 {
 	"body": {
-		"query": "\n\t*[_type == 'news.article' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t}\n",
 		"result": [
+			{
+				"_id": "367c42ed-9920-4d1c-9b8e-a6ee731fb5f2",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "senioren",
+						"title": "Senioren"
+					},
+					{
+						"slug": "fussball",
+						"title": "Fußball"
+					}
+				],
+				"excerpt": "Die TSG Irlich musste am Freitagabend eine knappe Auswärtsniederlage hinnehmen. Bei der dritten Mannschaft des SC Bendorf-Sayn unterlag die TSG mit 0:1.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Spieler der TSG duellieren sich mit den Gastgebern aus Bendorf",
+					"asset": {
+						"_ref": "image-1e55f64e40bf64a42aa1dfa9aea29bdf7e4d52a8-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.0627241638168321,
+						"left": 0.0760712213604823,
+						"right": 0.07607122136048246,
+						"top": 0.16815414129618816
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4768537826340814,
+						"width": 0.8478575572790352,
+						"x": 0.4999999999999999,
+						"y": 0.60676453415631
+					}
+				},
+				"meta": {
+					"metaDescription": "TSG Irlich verliert beim SC Bendorf-Sayn III knapp mit 0:1. Ein individueller Fehler entscheidet das umkämpfte Auswärtsspiel nach der Pause.",
+					"metaTitle": "TSG Irlich verliert knapp mit 0:1 bei Bendorf-Sayn III",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-09-26T13:58:47.882Z",
+				"slug": "niederlage-bendorf",
+				"title": "Gebrauchter Abend in Bendorf – TSG unterliegt knapp"
+			},
+			{
+				"_id": "eb82e401-be72-4130-9966-5d82ed2a83e2",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "senioren",
+						"title": "Senioren"
+					},
+					{
+						"slug": "fussball",
+						"title": "Fußball"
+					}
+				],
+				"excerpt": "Die TSG Irlich hat sich mit einem Heimsieg zurückgemeldet. Im Pappelstadion setzte sich die TSG mit 4:1 (2:1) gegen den FC Rojava Neuwied durch.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Spieler der TSG in Türkisen Trikots wie sie durch den Regen und über den durchweichten Platz laufen",
+					"asset": {
+						"_ref": "image-ceffebe1ba7e9ee7595355f13b916231949399b1-6000x4000-jpg",
+						"_type": "reference"
+					}
+				},
+				"meta": {
+					"metaDescription": "Die TSG Irlich gewinnt im Pappelstadion mit 4:1 gegen Rojava Neuwied und holt trotz Starkregen drei wichtige Punkte, die das Team Frank Kaiser widmet.",
+					"metaTitle": "TSG Irlich gewinnt 4:1 gegen FC Rojava Neuwied",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-09-18T14:21:00.000Z",
+				"slug": "heimsieg-rojava-neuwied",
+				"title": "Heimsieg in der Schlammschlacht – drei Punkte für Frank! "
+			},
+			{
+				"_id": "e943a0c2-e57d-43cd-815f-00211b1e9657",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "senioren",
+						"title": "Senioren"
+					},
+					{
+						"slug": "fussball",
+						"title": "Fußball"
+					}
+				],
+				"excerpt": "Die TSG Irlich musste sich im Derby bei der SG Feldkirchen II mit 2:3 (0:2) geschlagen geben. Ein Gegentreffer nach einer Ecke entschied die Begegnung. ",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Ein Foto vom Sportplatz in Hüllenberg bei Sonnenuntergang",
+					"asset": {
+						"_ref": "image-6e9bdd2679f0a34509f33537ebae16ea8f86716b-5712x4284-jpg",
+						"_type": "reference"
+					}
+				},
+				"meta": {
+					"metaDescription": "TSG Irlich verliert das Derby bei SG Feldkirchen II knapp mit 2:3. Nach starkem Comeback entscheidet ein spätes Gegentor die Partie.",
+					"metaTitle": "TSG Irlich verliert Derby bei SG Feldkirchen II mit 2:3",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-09-12T13:47:00.000Z",
+				"slug": "derbyniederlage-feldkirchen",
+				"title": "TSG verliert umkämpftes Derby gegen Feldkirchen"
+			},
+			{
+				"_id": "8b45157a-a573-4fca-874c-e6a32f9bd2b2",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "senioren",
+						"title": "Senioren"
+					},
+					{
+						"slug": "fussball",
+						"title": "Fußball"
+					}
+				],
+				"excerpt": "Gegen die bis dahin noch ungeschlagene SG Weißenthurm II drehte die TSG einen 1:3-Rückstand und feierte vor heimischer Kulisse einen umjubelten 4:3-Erfolg.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Spielmacher Marc Diether behauptet den Ball gegen mehrere Gegner",
+					"asset": {
+						"_ref": "image-54411da2474ba83b2bd4c6a50ea2190d4c6d5947-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.49820668946534313,
+						"width": 0.5248978230044209,
+						"x": 0.532029360246893,
+						"y": 0.5226874635082158
+					}
+				},
+				"meta": {
+					"metaDescription": "Gegen die bis dahin noch ungeschlagene SG Weißenthurm II drehte die TSG einen 1:3-Rückstand und feierte vor heimischer Kulisse einen umjubelten 4:3-Erfolg.",
+					"metaTitle": "TSG dreht 1:3-Rückstand gegen SG Weißenthurm II",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-09-04T13:15:53.118Z",
+				"slug": "Heimsieg-weissenthurm-ii",
+				"title": "TSG dreht 1:3-Rückstand gegen SG Weißenthurm II"
+			},
+			{
+				"_id": "57fc9d1d-816f-40be-8795-2d1f37d682e1",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "senioren",
+						"title": "Senioren"
+					},
+					{
+						"slug": "fussball",
+						"title": "Fußball"
+					}
+				],
+				"excerpt": "Nach zwei Siegen musste die TSG Irlich am dritten Spieltag ihre erste Niederlage hinnehmen. Beim FV Engers III unterlag die TSG am Wasserturm mit 2:4 (1:2)",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Umkämpftes Spiel: Shakehandy nach einem Zweikampf in Engers",
+					"asset": {
+						"_ref": "image-22ac4007d7288149bf1f6e6a61f94dd8f5aea3ba-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5859368349365794,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.3692430447667489
+					}
+				},
+				"meta": {
+					"metaDescription": "Nach zwei Siegen musste die TSG Irlich am dritten Spieltag ihre erste Niederlage hinnehmen. Beim FV Engers III unterlag die TSG am Wasserturm mit 2:4 (1:2)",
+					"metaTitle": "TSG Irlich verliert 2:4 beim FV Engers III",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-08-28T15:39:00.000Z",
+				"slug": "tsg-verliert-in-engers",
+				"title": "Erste Saisonniederlage am Wasserturm – TSG verliert in Engers "
+			},
 			{
 				"_id": "428db24b-825b-4d9c-b185-75cddd8b3fd2",
 				"author": {
@@ -65,7 +386,7 @@
 				},
 				"meta": {
 					"metaDescription": "Die TSG Irlich hat auch ihr zweites Ligaspiel gewonnen. Gegen die Zweitvertretung des VfL Oberbieber setzte sich die TSG verdient mit 3:1 (1:0) durch.",
-					"metaTitle": null,
+					"metaTitle": "TSG Irlich feiert 3:1-Heimsieg gegen VfL Oberbieber II",
 					"openGraphImage": null
 				},
 				"publishedAt": "2026-08-21T15:07:27.430Z",
@@ -281,374 +602,25 @@
 				"publishedAt": "2026-05-29T13:08:00.000Z",
 				"slug": "spektakel-niederbieber",
 				"title": "Spektakel zum Saisonabschluss – TSG gewinnt 5:3 in Niederbieber"
-			},
-			{
-				"_id": "a3ba0cc3-908f-4a3d-b9b2-202c7156dc2b",
-				"author": {
-					"firstName": "Philipp",
-					"image": {
-						"_type": "extendedImage",
-						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
-						"asset": {
-							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
-							"_type": "reference"
-						},
-						"crop": {
-							"_type": "sanity.imageCrop",
-							"bottom": 0.09074985403286345,
-							"left": 0,
-							"right": 0.026691133539077486,
-							"top": 0
-						},
-						"hotspot": {
-							"_type": "sanity.imageHotspot",
-							"height": 0.6927356852875811,
-							"width": 0.6490937792297277,
-							"x": 0.510074160141839,
-							"y": 0.46890832100794233
-						}
-					},
-					"lastName": "Pfeiffer"
-				},
-				"categories": [
-					{
-						"slug": "senioren",
-						"title": "Senioren"
-					},
-					{
-						"slug": "fussball",
-						"title": "Fußball"
-					}
-				],
-				"excerpt": "Im letzten Heimspiel der Saison 25/26 trennte sich die TSG Irlich am vergangenen Sonntag mit 1:1 (0:0) vom SSV Heimbach-Weis II. Hier geht´s zum Spielbericht.",
-				"featuredImage": {
-					"_type": "mainImage",
-					"alt": "Im Duell: Max und Dominik kämpfen um den Ball",
-					"asset": {
-						"_ref": "image-acad7e29a78bdf9f5073be51b03f2943c56cea1c-6000x4000-jpg",
-						"_type": "reference"
-					},
-					"crop": {
-						"_type": "sanity.imageCrop",
-						"bottom": 0,
-						"left": 0,
-						"right": 0,
-						"top": 0
-					},
-					"hotspot": {
-						"_type": "sanity.imageHotspot",
-						"height": 0.47151555592626576,
-						"width": 0.7882503405899859,
-						"x": 0.495551477743487,
-						"y": 0.44261406289098343
-					}
-				},
-				"meta": {
-					"metaDescription": "TSG Irlich erkämpft sich trotz Ausfällen ein 1:1 gegen SSV Heimbach-Weis II und peilt zum Saisonfinale beim VfL Wied Niederbieber II 40 Punkte an.",
-					"metaTitle": "TSG Irlich erkämpft 1:1 gegen Heimbach-Weis II im Saisonfinale",
-					"openGraphImage": null
-				},
-				"publishedAt": "2026-05-23T12:42:00.000Z",
-				"slug": "punkteteilung-ssv-heimbach",
-				"title": "Punkteteilung im letzten Heimspiel gegen den SSV Heimbach-W. II"
-			},
-			{
-				"_id": "fe892325-94c0-43da-884f-a4525b60bcba",
-				"author": {
-					"firstName": "Philipp",
-					"image": {
-						"_type": "extendedImage",
-						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
-						"asset": {
-							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
-							"_type": "reference"
-						},
-						"crop": {
-							"_type": "sanity.imageCrop",
-							"bottom": 0.09074985403286345,
-							"left": 0,
-							"right": 0.026691133539077486,
-							"top": 0
-						},
-						"hotspot": {
-							"_type": "sanity.imageHotspot",
-							"height": 0.6927356852875811,
-							"width": 0.6490937792297277,
-							"x": 0.510074160141839,
-							"y": 0.46890832100794233
-						}
-					},
-					"lastName": "Pfeiffer"
-				},
-				"categories": [
-					{
-						"slug": "senioren",
-						"title": "Senioren"
-					},
-					{
-						"slug": "fussball",
-						"title": "Fußball"
-					}
-				],
-				"excerpt": "Die 1. Mannschaft der TSG Irlich hat ihre starke Form eindrucksvoll bestätigt und das Auswärtsspiel bei der SG Neuwied III klar mit 9:0 (3:0) gewonnen.",
-				"featuredImage": {
-					"_type": "mainImage",
-					"alt": "Im Duell: SG-Spieler im schwarzen Trikot gegen TSG-Stürmer Dennis Kari",
-					"asset": {
-						"_ref": "image-0225a3ca1499085fa0c2847c8c23deb4831db7f5-6000x4000-jpg",
-						"_type": "reference"
-					},
-					"crop": {
-						"_type": "sanity.imageCrop",
-						"bottom": 0.14680123446492618,
-						"left": 0,
-						"right": 0.12900714543887454,
-						"top": 0
-					},
-					"hotspot": {
-						"_type": "sanity.imageHotspot",
-						"height": 0.6263241304529151,
-						"width": 0.46172880696193724,
-						"x": 0.366989184530264,
-						"y": 0.48932354658436894
-					}
-				},
-				"meta": {
-					"metaDescription": "TSG Irlich feiert 9:0-Auswärtssieg bei SG Neuwied III, baut Siegesserie auf fünf Spiele aus und peilt im letzten Heimspiel die 40-Punkte-Marke an.",
-					"metaTitle": "TSG Irlich siegt 9:0 bei SG Neuwied III – fünfter Erfolg in Serie",
-					"openGraphImage": null
-				},
-				"publishedAt": "2026-05-16T16:27:34.558Z",
-				"slug": "kantersieg-neuwied",
-				"title": "TSG feiert 9:0-Kantersieg in Neuwied – fünfter Sieg in Folge!"
-			},
-			{
-				"_id": "8879540f-619f-4781-ade3-5dd871f5cc6e",
-				"author": {
-					"firstName": "Philipp",
-					"image": {
-						"_type": "extendedImage",
-						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
-						"asset": {
-							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
-							"_type": "reference"
-						},
-						"crop": {
-							"_type": "sanity.imageCrop",
-							"bottom": 0.09074985403286345,
-							"left": 0,
-							"right": 0.026691133539077486,
-							"top": 0
-						},
-						"hotspot": {
-							"_type": "sanity.imageHotspot",
-							"height": 0.6927356852875811,
-							"width": 0.6490937792297277,
-							"x": 0.510074160141839,
-							"y": 0.46890832100794233
-						}
-					},
-					"lastName": "Pfeiffer"
-				},
-				"categories": [
-					{
-						"slug": "senioren",
-						"title": "Senioren"
-					},
-					{
-						"slug": "fussball",
-						"title": "Fußball"
-					}
-				],
-				"excerpt": "Die TSG Irlich hat sich eindrucksvoll für die deutliche Hinspiel-Niederlage revanchiert und das Heimspiel gegen den CSV Neuwied II mit 1:0 gewonnen.",
-				"featuredImage": {
-					"_type": "mainImage",
-					"alt": "Ein Spieler des CSV Neuwied im schwarzen Trikot im Duell mit dem TSG Spieler im blauen Trikot.",
-					"asset": {
-						"_ref": "image-c55eec42155abe9626166767d4ea687d91c96609-6000x4000-jpg",
-						"_type": "reference"
-					},
-					"crop": {
-						"_type": "sanity.imageCrop",
-						"bottom": 0.09341896738677122,
-						"left": 0,
-						"right": 0.14146300775711074,
-						"top": 0.038702143631662356
-					},
-					"hotspot": {
-						"_type": "sanity.imageHotspot",
-						"height": 0.49553757611143556,
-						"width": 0.5587065921539193,
-						"x": 0.40124280590541345,
-						"y": 0.47597797981483014
-					}
-				},
-				"meta": {
-					"metaDescription": "TSG Irlich besiegt CSV Neuwied II mit 1:0 nach starker Defensivleistung, revanchiert sich fürs Hinspiel und reist selbstbewusst zur SG Neuwied III.",
-					"metaTitle": "TSG Irlich siegt 1:0 gegen CSV Neuwied II – Revanche gelungen",
-					"openGraphImage": null
-				},
-				"publishedAt": "2026-05-06T20:29:11.515Z",
-				"slug": "tsg-gewinnt-csv",
-				"title": "Revanche geglückt – TSG gewinnt 1:0 gegen CSV Neuwied II"
-			},
-			{
-				"_id": "59b3522a-9747-48eb-a9a1-493ac2fb7391",
-				"author": {
-					"firstName": "Philipp",
-					"image": {
-						"_type": "extendedImage",
-						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
-						"asset": {
-							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
-							"_type": "reference"
-						},
-						"crop": {
-							"_type": "sanity.imageCrop",
-							"bottom": 0.09074985403286345,
-							"left": 0,
-							"right": 0.026691133539077486,
-							"top": 0
-						},
-						"hotspot": {
-							"_type": "sanity.imageHotspot",
-							"height": 0.6927356852875811,
-							"width": 0.6490937792297277,
-							"x": 0.510074160141839,
-							"y": 0.46890832100794233
-						}
-					},
-					"lastName": "Pfeiffer"
-				},
-				"categories": [
-					{
-						"slug": "senioren",
-						"title": "Senioren"
-					},
-					{
-						"slug": "fussball",
-						"title": "Fußball"
-					}
-				],
-				"excerpt": "Die TSG Irlich hat am Sonntag ein echtes Ausrufezeichen gesetzt und das Auswärtsspiel beim VfL Oberbieber II klar mit 6:1 (1:1) gewonnen.",
-				"featuredImage": {
-					"_type": "mainImage",
-					"alt": "TSG-Stürmer Dennis Kari beim Torabschluss gegen den Keeper der Gastgeber",
-					"asset": {
-						"_ref": "image-715717dbb5ef480da03619d5858e22f8ec1b7287-6000x4000-jpg",
-						"_type": "reference"
-					},
-					"crop": {
-						"_type": "sanity.imageCrop",
-						"bottom": 0.07606973058637084,
-						"left": 0.12633803208496677,
-						"right": 0,
-						"top": 0
-					},
-					"hotspot": {
-						"_type": "sanity.imageHotspot",
-						"height": 0.48219200934189677,
-						"width": 0.6530152639919925,
-						"x": 0.6334556676953874,
-						"y": 0.4666360830761531
-					}
-				},
-				"meta": {
-					"metaDescription": "Die TSG Irlich hat am Sonntag ein echtes Ausrufezeichen gesetzt und das Auswärtsspiel beim VfL Oberbieber II klar mit 6:1 (1:1) gewonnen.",
-					"metaTitle": "TSG Irlich zerlegt VfL Oberbieber II mit 6:1 auswärts",
-					"openGraphImage": null
-				},
-				"publishedAt": "2026-05-02T13:58:00.000Z",
-				"slug": "auswaertssieg-oberbieber",
-				"title": "TSG dreht auf: Deutlicher 6:1-Auswärtssieg in Oberbieber"
-			},
-			{
-				"_id": "8c6075cb-87eb-47ff-9041-99702b81de10",
-				"author": {
-					"firstName": "Philipp",
-					"image": {
-						"_type": "extendedImage",
-						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
-						"asset": {
-							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
-							"_type": "reference"
-						},
-						"crop": {
-							"_type": "sanity.imageCrop",
-							"bottom": 0.09074985403286345,
-							"left": 0,
-							"right": 0.026691133539077486,
-							"top": 0
-						},
-						"hotspot": {
-							"_type": "sanity.imageHotspot",
-							"height": 0.6927356852875811,
-							"width": 0.6490937792297277,
-							"x": 0.510074160141839,
-							"y": 0.46890832100794233
-						}
-					},
-					"lastName": "Pfeiffer"
-				},
-				"categories": [
-					{
-						"slug": "senioren",
-						"title": "Senioren"
-					},
-					{
-						"slug": "fussball",
-						"title": "Fußball"
-					}
-				],
-				"excerpt": "Die TSG Irlich hat nach dem Auswärtssieg in Gladbach erneut nachgelegt und ihr Heimspiel gegen die SG Leutesdorf souverän mit 3:0 (1:0) gewonnen.",
-				"featuredImage": {
-					"_type": "mainImage",
-					"alt": "Ein Spieler der TSG beim Heimspiel gegen Leutesdorf mit seinem Gegenspieler in grün.",
-					"asset": {
-						"_ref": "image-8d81b35acb24c98834ad26bfd3a73d67134f60d7-6000x4000-jpg",
-						"_type": "reference"
-					},
-					"crop": {
-						"_type": "sanity.imageCrop",
-						"bottom": 0,
-						"left": 0,
-						"right": 0,
-						"top": 0
-					},
-					"hotspot": {
-						"_type": "sanity.imageHotspot",
-						"height": 0.46884644257235797,
-						"width": 0.8007062029082218,
-						"x": 0.4003531014541109,
-						"y": 0.25444157144048707
-					}
-				},
-				"meta": {
-					"metaDescription": "TSG Irlich gewinnt 3:0 gegen SG Leutesdorf, überzeugt mit starker Defensive, einem Doppelschlag nach der Pause und will Siegesserie ausbauen.",
-					"metaTitle": "TSG überzeugt beim 3:0-Heimsieg gegen die SG Leutesdorf",
-					"openGraphImage": null
-				},
-				"publishedAt": "2026-04-25T10:25:00.000Z",
-				"slug": "heimsieg-leutesdorf",
-				"title": "TSG überzeugt beim 3:0-Heimsieg gegen die SG Leutesdorf"
 			}
 		],
 		"syncTags": [
-			"s1:bmIwtw",
-			"s1:X4XzKA",
-			"s1:Fwy1kg",
+			"s1:SvG3tg",
 			"s1:yx3Vpw",
 			"s1:Ik/M0w",
-			"s1:c5Grjg",
+			"s1:bmIwtw",
 			"s1:vJBgQg",
-			"s1:ycr7jw",
-			"s1:GNFE5A",
-			"s1:pl5+PQ",
+			"s1:Fwy1kg",
 			"s1:uv+Zzg",
 			"s1:mCzbTw",
-			"s1:+YVtFA"
+			"s1:c5Grjg",
+			"s1:+YVtFA",
+			"s1:X4XzKA",
+			"s1:8Qkb8Q",
+			"s1:ycr7jw",
+			"s1:GNFE5A"
 		],
-		"ms": 42
+		"ms": 39
 	},
-	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+%24category+in+categories%5B%5D-%3Eslug.current%5D%0A%09%7C+order%28publishedAt+desc%29+%5B%24start..%24end%5D+%7B%0A%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%7D%0A&%24category=%22senioren%22&%24end=8&%24start=0&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+%24category+in+categories%5B%5D-%3Eslug.current%5D%0A%09%7C+order%28publishedAt+desc%29+%5B%24start..%24end%5D+%7B%0A%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%7D%0A&%24category=%22senioren%22&%24end=8&%24start=0&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
 }

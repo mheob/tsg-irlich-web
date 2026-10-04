@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { uploadToLinear } from '@/actions/upload-to-linear';
 
@@ -44,19 +44,6 @@ function buildImageFile(name: string, byteLength = 3): File {
 	return new File([new Uint8Array(byteLength)], name, { type: 'image/png' });
 }
 
-interface Deferred<T> {
-	promise: Promise<T>;
-	resolve: (value: T) => void;
-}
-
-function createDeferred<T>(): Deferred<T> {
-	let resolve!: (value: T) => void;
-	const promise = new Promise<T>((res) => {
-		resolve = res;
-	});
-	return { promise, resolve };
-}
-
 /**
  * Builds a drag event carrying the given files, the way a browser hands one to a drop zone.
  *
@@ -92,6 +79,17 @@ function buildPasteEvent(files: (File | null)[], type = 'image/png'): Event {
 describe('the screenshot upload', () => {
 	afterEach(() => {
 		mockedUploadToLinear.mockReset();
+	});
+
+	// jsdom applies no stylesheet, so this only pins the DOM side: the input stays in the tab order
+	// (no `tabIndex={-1}`, not disabled while there is room). Whether the CSS keeps it focusable —
+	// `display: none` would not — is checked in a real browser by `e2e/specs/feedback-form.spec.ts`.
+	it('reaches the file input with the keyboard', async () => {
+		const { getByLabelText, user } = renderUpload();
+
+		await user.tab();
+
+		expect(document.activeElement).toBe(getByLabelText(DROP_ZONE_LABEL));
 	});
 
 	it('uploads a selected image and shows it in the preview list', async () => {
@@ -143,7 +141,7 @@ describe('the screenshot upload', () => {
 	});
 
 	it('shows the pending state while the upload is running', async () => {
-		const deferred = createDeferred<Awaited<ReturnType<typeof uploadToLinear>>>();
+		const deferred = Promise.withResolvers<Awaited<ReturnType<typeof uploadToLinear>>>();
 		mockedUploadToLinear.mockReturnValue(deferred.promise);
 		const { findByRole, getByLabelText, queryByRole, user } = renderUpload();
 

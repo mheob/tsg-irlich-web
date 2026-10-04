@@ -26,6 +26,7 @@ pnpm run test:e2e:ui     # the same suite in Playwright's UI mode
 pnpm run test:e2e:visual # only the visual regression specs (skipped outside Linux)
 pnpm run test:e2e:visual:update  # regenerate the screenshot baselines in the Playwright container
 pnpm run e2e:record      # refresh the recorded Sanity fixtures from the real dataset
+pnpm run test:lighthouse # Lighthouse CI against LHCI_BASE_URL (a deployed preview in CI)
 ```
 
 ## Directory map
@@ -57,16 +58,49 @@ Rules for `sanityFetch`:
 
 Adding a previewable route also means adding a `mainDocuments` route and a `locations` entry in `apps/studio/plugins/presentation.ts`, and a `revalidatePath` entry in `src/app/api/revalidate/route.ts` for the affected document type.
 
+## Page metadata
+
+Every route builds its metadata with `getPageMetadata` from `src/utils/metadata.ts`, and a new route should too:
+
+- Next.js merges metadata shallowly, so a page that sets `openGraph` or `alternates` replaces the layout's object whole. The helper therefore repeats the site-wide open graph fields (`siteName`, `locale`, `type`) and the RSS alternate on every page, next to the canonical URL and `og:url` built from the `path` it is given.
+- The editors' `meta` object wins over the document's title, description and image; the page passes the document's own values as fallbacks.
+- The root layout's title template appends ` | TSG Irlich`. Most meta titles in the studio already name the club, so a title containing "Irlich" goes through as `absolute` instead.
+- The paginated news overviews point their canonical URL at the page they show (`?seite=N`, the first page without the parameter). An article points at its first category, like the sitemap and the feed, since it renders under any category segment.
+- The layout sets only `twitter.card`. Next.js fills in the X card's title, description and image from each page's open graph fields.
+
+## Structured data
+
+JSON-LD is typed with `schema-dts` and rendered by `JsonLd` (`src/components/ui/json-ld.tsx`), which escapes `<` so a string from the CMS cannot close the script element early. The builders are pure functions:
+
+- `src/utils/structured-data.ts`: `getSiteGraph` (the `SportsOrganization` and the `WebSite`, as one `@graph` in the root layout), `getNewsArticleSchema` (on the article page) and `getGroupSchema` (on a group page: a `SportsTeam` for the soccer groups, a `SportsOrganization` for every other group, with the club as `parentOrganization` and each venue it trains at as a `SportsActivityLocation`). The training times are deliberately not marked up: Google reads neither an `Event` without a fixed `startDate` nor an `eventSchedule`, and it excludes recurring opening-hours-like times from events. The club node carries the ID `<base URL>/#organization`, and every other node refers to it by that ID. The contact details come from `organizationQuery`, the same query the footer reads.
+- `src/utils/breadcrumb.ts`: `getBreadcrumbItems` derives the trail from the path, and `getBreadcrumbListSchema` describes it. It lives apart from the other builders because the breadcrumb is a client component, and `structured-data.ts` pulls in the Sanity image builder.
+- The article schema receives a `stegaClean` copy of just the fields it reads, so draft mode's invisible characters stay out of the JSON while the rendered article keeps its click-to-edit overlays.
+- `getLastModified` (`src/utils/time.ts`) never dates a change before the publication: editors often finish an article before its scheduled date. The article metadata, the JSON-LD and the visible "Aktualisiert am" line all go through it.
+
+## Crawlers and llms.txt
+
+- `src/app/robots.ts` allows every crawler, and names the AI crawlers the club lets in on purpose (search, training and user-triggered fetchers of OpenAI, Anthropic, Perplexity, Google, Apple and Common Crawl), with the reasoning in its doc comment. They share the one group with `*`: a crawler with a group of its own ignores the `*` group, so a `disallow` added there later would not reach it.
+- `src/app/llms.txt/route.ts` serves a Markdown summary for language models, following [llmstxt.org](https://llmstxt.org). The club description, contact details and every group with its meta description come from `llmsTxtQuery`. The departments come from `groupSections`, in the order the offer page shows them. It is served as `text/plain` so a browser shows it instead of downloading it.
+
 ## Internal links
 
 A slug in Sanity only holds the **last** segment of the URL, so no link can be built from the slug alone: news articles live below their category, groups below their department (which comes from the document type, not from a field) and the home page at the root. `getInternalHref` in `src/utils/links.ts` is the single place that knows those rules — never assemble a path from a slug by hand, and never render a link when it returns `undefined`.
 
 The GROQ side lives in `src/lib/sanity/queries/index.ts`:
 
-- `internalLinkTarget` projects everything the resolver needs and is used wherever an `internalLink` **object field** is queried (the imprint contact form, the main navigation).
+- `internalLinkTarget` projects everything the resolver needs and is used wherever a page reference is queried as a field: the `internalLink` of the imprint contact form, and the `link` of every `mainNavigationItem` and `navigationLink` in the main navigation.
 - `blockContent` does the same for the `internalLink` **marks** of a portable text field and has to be applied to every `blockContent` that is rendered, including nested ones (`grid.items[]`, `imageCard.description`).
 
 The resolved target is added as `target` next to the untouched `link` reference, and empty arrays are coalesced, so that the query result still matches the generated schema types.
+
+## Main navigation
+
+`site-settings.mainNavigation` holds `mainNavigationItem` entries (title, `linkType`, a page `link` or an external `href`, optional `children` of type `navigationLink` with an optional `description`), and `mainNavigationQuery` reads them. An item with children also carries the dropdown settings: `overviewTitle` and `overviewDescription` for the "Übersicht" entry, and `hasTwoColumns`. `src/components/with-logic/navigation/` renders them:
+
+- `getNavigationEntries` (`navigation-entries.ts`) is the only place that resolves hrefs and the active state. An entry with children becomes a group led by an "Übersicht" link to its own page, and inside a group only the link with the longest matching href is active. A missing `linkType` counts as internal.
+- `desktop-navigation.tsx` builds the bar on Base UI's `NavigationMenu` (`src/components/ui/navigation-menu.tsx`). A panel shows each link's sub-text under its title and lays the links out in two columns when `hasTwoColumns` is set. `NavigationAnchor` names such a link by its title (`aria-labelledby`) and describes it by the sub-text (`aria-describedby`), so tests keep finding it by its title. The mobile menu shows neither. Base UI renders the root as `<nav>`, so it gets `render={<div />}` inside the shell's landmark. The panel is portalled to the end of `<body>`, which puts its links outside the landmark: tests look for them on page level.
+- The bar holds the open group itself. Base UI only closes a panel when the focus leaves the whole menu, so the bar closes it when another item of the bar takes the focus, and below the `lg` breakpoint. The panels are positioned `fixed`, since the header is fixed.
+- `mobile-navigation.tsx` expands groups on Base UI's `Collapsible`. Their panels are `keepMounted`, so the pages behind them are in the server-rendered HTML while a collapsed panel stays `hidden`.
 
 ## Draft mode
 
@@ -75,6 +109,17 @@ The resolved target is added as `target` next to the untouched `link` reference,
 ## Environment variables
 
 Read them through `env('KEY')` from `@/lib/env` — never `process.env` directly. The helper validates a single variable lazily with Zod and caches it. A new variable has to be added to the schema in `src/lib/env.ts`, to `globalEnv` (or the matching task) in the root `turbo.json`, and to the list in the root `AGENTS.md`.
+
+## Fonts
+
+Inter, Oswald and Bebas Neue live in `src/app/_assets/fonts/<font>/`, each with its OFL license, and are loaded by `next/font/local` in the root layout. They used to come through `next/font/google`, which fetches them from Google on every build without a warm Turbopack cache. Google sometimes answers with `/l/font?kit=…&skey=…` URLs, and Turbopack then fails the build with "next/font/google queries have exactly one entry" ([vercel/next.js#99114](https://github.com/vercel/next.js/issues/99114)). The first deployment of a branch takes over Production's build cache, which Turbopack cannot reuse across Next.js versions, so it hit exactly those builds.
+
+- The files are the `latin` and `latin-ext` subsets Google serves, byte for byte, so the glyphs match what the site showed before.
+- The faces copy Google's CSS. Each variable file is declared once per weight (400, 700), so `font-medium` still renders at 400 and `font-semibold` at 700. Every subset carries Google's `unicode-range`, so only `latin` is preloaded and `latin-ext` is downloaded only by a page that contains one of its characters (ł, č, ő, …).
+- `next/font/local` declares the `latin` faces. The `latin-ext` faces sit in `src/app/_assets/fonts/latin-ext.css` and join the same families by name. `next/font/local` names a family after the variable it is assigned to (`inter`, `oswald`, `bebasNeue`), so renaming a variable means renaming the family in that file too.
+- The html element resolves the literal stacks in `globals.css` (`Inter, …`, `Oswald, …`), not the `next/font` variables on `<body>`. CSS matches family names case-insensitively, which is why `Inter` still finds the `inter` faces.
+- The fallback metrics are computed from the files now rather than taken from Google's metadata, which moves `size-adjust` by under one percent (Inter 107.89 % instead of 107.12 %). That only shows in the instant before the font swaps in.
+- A new weight or subset means downloading the file from the URL in Google's CSS (`https://fonts.googleapis.com/css2?family=…` with a current Chrome user agent), dropping it next to the others and adding the face.
 
 ## Forms and server actions
 
@@ -113,7 +158,7 @@ Playwright lives in `e2e/`, next to `src/`, and is separated from Vitest by exte
 | `e2e/specs` | the mocked suite — the one CI blocks on |
 | `e2e/preview` | the smoke suite that runs against a deployed preview with real content |
 | `e2e/mocks/preload.ts` | every server-side network mock plus the seeded `Math.random`, preloaded into the Next.js process |
-| `e2e/fixtures` | recorded Sanity responses plus the stub image every asset resolves to |
+| `e2e/fixtures` | recorded Sanity responses |
 | `e2e/__screenshots__` | the committed visual regression baselines, one folder per browser project |
 | `e2e/support/test.ts` | the extended `test` — import `test`/`expect` from here, never from `@playwright/test` |
 | `e2e/support/navigation.ts` | the shared page helpers (`waitForPage`, the two drill-downs) |
@@ -129,6 +174,7 @@ Two projects run every spec: `chromium` on a desktop viewport and `mobile-safari
 The pages render on the server, so `page.route` cannot see the requests that matter. `e2e/mocks/preload.ts` is preloaded with `NODE_OPTIONS='--import …'` (set by `playwright.config.ts`) before any application module is imported, and installs MSW over Sanity, CleverReach, Resend and Linear. It covers `next build` as well, because `generateStaticParams` queries Sanity while the pages are generated.
 
 - An outbound request nothing handles **fails the run** — deliberately, so a new integration cannot silently reach the real service. Add a branch to the resolver in `preload.ts` instead.
+- Every Sanity image is answered with a transparent PNG generated on the spot, in the proportions the real CDN would deliver for that URL: exactly `w` × `h` for `fit=crop`, otherwise those of the `rect` crop or of the original, whose dimensions are part of the asset's file name. The shape matters. A browser reserves an image's box from `width` and `height` only until the image has loaded, then switches to its natural proportions. The single 1 × 1 stub used before resized every image once it arrived and moved everything below it, and WebKit, which has no scroll anchoring, let a click aimed at the footer miss.
 - The newsletter mock decides its answer from the submitted address (`NEWSLETTER_SCENARIOS` in `preload.ts`); that is how a spec reaches the "already subscribed" path.
 - Only the browser-side requests are handled in `e2e/support/test.ts`: the `<SanityLive />` event stream and the analytics beacons. That file also turns off `scroll-behavior: smooth`, which otherwise moves elements out from under the pointer mid-click in WebKit.
 - `.env.e2e` is committed. Every credential in it is a dummy, because everything it names is intercepted; only the two public Sanity values are real, since the fixtures are keyed by the URLs they appear in.
@@ -144,8 +190,8 @@ Every run builds the app and starts its own server on port 3100. An already runn
 
 - The dynamic routes are reached by clicking through the overviews, never by a hard-coded slug, and are keyed in the baseline by their route template (`/news/[category]/[slug]`).
 - Every scan attaches its full axe result to the test, so the HTML report — and with it the artifact CI uploads — carries the detail. `AxeSummaryReporter` folds those attachments into one markdown table in GitHub's job summary; outside Actions it does nothing.
-- `KNOWN_VIOLATIONS` in `e2e/support/axe-baseline.ts` is the only way a violation is tolerated. The first sweep found four distinct defects and all of them were fixed; the list holds one entry today, `aria-toggle-field-name` on `/`, `/kontakt` and `/kontakt/feedback`, for the unnamed privacy checkbox that WEB-302 removes. That node only enters the accessibility tree after hydration, so the sweep saw it for the first time when the suite moved into the Playwright container — on a fast runner axe still measures before hydration and the entry is reported as stale instead. An entry is an exception that names its follow-up ticket, never a permission — anything unlisted fails the run. A baseline entry that stops firing is reported as stale in the job summary and belongs in the same commit as its fix.
-- `waitForPage` waits for the document title as well as for the chrome: after a client-side navigation the title lands a tick later, and axe reports the gap as `document-title`.
+- `KNOWN_VIOLATIONS` in `e2e/support/axe-baseline.ts` is the only way a violation is tolerated, and it is **empty**: every defect the sweep has found so far is fixed. An entry is an exception that names its follow-up ticket, never a permission — anything unlisted fails the run. A baseline entry that stops firing is reported as stale in the job summary and belongs in the same commit as its fix. The last entry to go was `aria-toggle-field-name` for the privacy checkbox, and WEB-302 corrected the reasoning that came with it: the `span[role="checkbox"]` is in the server-rendered markup, not something hydration adds, so the sweep never depended on timing to see it. What it depended on was the browser's own name computation — Base UI's checkbox is not a labelable element, so `FormLabel`'s `htmlFor` landed on the hidden `input` and the visible control was named only by whatever the engine chose to infer from the wrapping `<label>`. `PrivacyField` now sets `aria-labelledby` explicitly.
+- `waitForPage` waits for three things, and each one earns its place. The chrome, so the server-rendered content is in the DOM. The document title, because a client-side navigation swaps it a tick after the markup and axe reports the gap as `document-title`. And `window.next.router`, because everything before it is server-rendered and in place long before the client is — without that wait the sweep measured a hydrated tree on a slow runner and an unhydrated one on a fast one, which is how WEB-302's baseline entry came to carry a reason that did not hold.
 
 ### Visual regression
 
@@ -153,7 +199,7 @@ Every run builds the app and starts its own server on port 3100. An already runn
 
 The container ships its browsers under `/ms-playwright`, and two things have to name that path for a run to find them: `PLAYWRIGHT_BROWSERS_PATH` in the job's `env` (a container job's steps do not inherit the image's own `ENV`), and the same variable in the `test:e2e` task in the root `turbo.json` — the suite is started through Turbo, which passes on nothing it was not told about.
 
-**Baselines are Linux-only.** A screenshot is comparable against the platform that produced it and nothing else, so both CI and the local update path run inside the pinned container `mcr.microsoft.com/playwright:v1.62.1-noble`. Outside Linux `visual.spec.ts` skips itself, which keeps a macOS `pnpm run test:e2e` from writing baselines nobody can match. The image tag appears in `.github/workflows/e2e.yml` and in `apps/web/scripts/update-screenshots.sh`, and both have to be bumped together with `@playwright/test`.
+**Baselines are Linux-only.** A screenshot is comparable against the platform that produced it and nothing else, so both CI and the local update path run inside the pinned container `mcr.microsoft.com/playwright:v1.63.0-noble`. Outside Linux `visual.spec.ts` skips itself, which keeps a macOS `pnpm run test:e2e` from writing baselines nobody can match. The image tag appears in `.github/workflows/e2e.yml` and in `apps/web/scripts/update-screenshots.sh`, and both have to be bumped together with `@playwright/test`.
 
 #### Approving an intended design change
 
@@ -162,7 +208,7 @@ pnpm --filter web run test:e2e:visual:update   # needs a running Docker daemon
 git add apps/web/e2e/__screenshots__
 ```
 
-The script runs the visual suite with `--update-snapshots` in the container and writes the refreshed PNGs straight into the working tree. It pins everything CI pins — the image tag, `--platform linux/amd64` and the Node version from `.nvmrc` — because a baseline taken on another architecture is not the one CI compares against; on Apple Silicon that means an emulated run, so give it time. The repository is bind-mounted, but the workspace `node_modules` trees and `.next` are named volumes, so the host's macOS install is never overwritten and the second run starts warm. Review the diff before committing — a baseline update is a design change being approved, and it belongs in the same commit as the change that caused it.
+The script runs the visual suite with `--update-snapshots` in the container and writes the refreshed PNGs straight into the working tree. It pins everything CI pins — the image tag, `--platform linux/amd64` and the Node version from `.node-version` — because a baseline taken on another architecture is not the one CI compares against; on Apple Silicon that means an emulated run, so give it time. The repository is bind-mounted, but the workspace `node_modules` trees and `.next` are named volumes, so the host's macOS install is never overwritten and the second run starts warm. Review the diff before committing — a baseline update is a design change being approved, and it belongs in the same commit as the change that caused it.
 
 When a comparison fails in CI, the `playwright-report` artifact carries the expected, actual and diff PNG of every failure; that is the only way to judge the change from the outside.
 
@@ -174,11 +220,15 @@ When a comparison fails in CI, the `playwright-report` artifact carries the expe
 - The stub is deliberately not part of the shared `test` fixture in `e2e/support/test.ts`. The other suites should see the page the way a visitor does, animations included.
 - Only one region is masked, the footer's `©<year>`. Every date on a page is content and comes from the recorded fixtures; the copyright year comes from `new Date()` and would turn each New Year's Eve into a red suite.
 - `maxDiffPixelRatio` is 0.005 (`playwright.config.ts`). Everything runs in one pinned image, so the only expected difference is font antialiasing on a redrawn glyph — well under half a percent, and far below the footprint of any layout shift.
-- Fonts are loaded through `next/font/google`, which self-hosts them at build time. Nothing is fetched from Google at runtime, so a network hiccup cannot change a baseline.
+- The fonts are committed to the repository (see "Fonts" below), so neither the build nor a page load reaches Google and a network hiccup cannot change a baseline. The mocks no longer let `fonts.googleapis.com` or `fonts.gstatic.com` through.
 
 ### Fixtures
 
 `pnpm run e2e:record` runs the suite against the real dataset with a real read token from `.env.local` and writes every Sanity response to `e2e/fixtures/sanity/<hash>.json`, keyed by request path plus query string. Assertions may fail during a recording run — the fixtures are still written. Re-record after changing a GROQ query or adding a route, and commit the result.
+
+The `webServer` command deletes `.next/cache/fetch-cache` before it builds. Otherwise `next build` answers every query it already made in an earlier build from that cache, and the request never reaches `preload.ts`. A recording would then leave those fixtures out: after all fixtures were deleted for WEB-341, it wrote 41 of 56. A mocked run would render stale data even where a fixture is missing. The same holds inside the screenshot container, whose `.next` lives in a named volume. The Turbopack cache and `node_modules` stay warm. Only CI never needed this, because it starts without `.next`.
+
+To refresh every fixture at once, delete `e2e/fixtures/sanity/*.json` and record again. That also drops fixtures no page requests any more, for instance articles that have left the overview.
 
 ### Writing a spec
 
@@ -186,6 +236,41 @@ When a comparison fails in CI, the `playwright-report` artifact carries the expe
 - Assert what a user can observe — role, accessible name, text, URL — never a class name, never a `data-testid`, same rule as the unit tests.
 - Content assertions are pinned to the recorded fixtures, so prefer stable UI strings (navigation labels, section headings) over an article's title.
 - react-hook-form resets its fields when the form hydrates. Interact with a client-only control first (the receiver select does the job), then fill the text fields — otherwise WebKit loses the input.
+- The same holds for every server-rendered, controlled input, such as the news category combobox (WEB-347). `waitForPage` proves that the App Router exists, not that a given island is hydrated: text typed before hydration lands in the DOM, and hydration then puts the component's own state back. Use the control first in a way only a hydrated component answers, retried until it does — `news.spec.ts` opens the list inside `expect(async () => { … }).toPass()` — and type afterwards.
+- The emulated amd64 container on Apple Silicon runs WebKit several times slower than CI. A spec that loads pages, hydrates and animates several times can exceed the default 30 s there while every step passes; mark it `test.slow()` with the reason rather than raising the global timeout.
+
+## Lighthouse and Speed Insights
+
+Two different things measure the same subject. `@vercel/speed-insights` sits in the root layout next to `@vercel/analytics` and reports what real visitors actually experience (field data, Core Web Vitals from their own browsers). Lighthouse CI is the lab counterpart: one throttled synthetic run per pull request, which is what catches a regression before anyone lives through it.
+
+### Lighthouse CI
+
+`lighthouserc.cjs` configures it, `.github/workflows/lighthouse.yml` runs it on `deployment_status` — the same trigger as the preview end-to-end suite, and for the same reason: only a real deployment has the CDN, the image optimizer and the real payloads behind it. A local `next start` would score the runner rather than the site. The job needs `VERCEL_AUTOMATION_BYPASS_SECRET` and skips its run step without it, exactly like the preview suite.
+
+- **Five routes**, three runs each, median reported: `/`, `/verein`, `/angebot`, `/news`, `/kontakt` — the home page with its hero and counters, one prose page, one card overview, the news list and the form page. No dynamic route: a department or an article is only reachable through a slug that lives in the dataset, and Lighthouse takes URLs and nothing else. Those routes stay with Playwright, which clicks its way there.
+- **Accessibility, best practices and SEO are hard assertions at a perfect score.** They barely move between runs, so there is no reason to accept less. Best practices only holds because `https://tsg-irlich-*-mheobs-projects.vercel.app` is a CORS origin on the Sanity project: without it the Live Content API stream cannot connect from a preview, and `errors-in-console` catches the CORS failure plus three `<SanityLive> is attempting to reconnect`. A renamed Vercel project breaks that pattern and the assertion with it.
+- **Performance is a warning, never a failure**, and so are the LCP / TBT / CLS budgets underneath it. A GitHub runner shares its CPU with whatever else the machine is doing and the score swings about ten points between two identical runs; a gate on that flaps and gets muted.
+- `is-crawlable` is in `collect.settings.skipAudits`, not in the assertions: Vercel answers every preview with `X-Robots-Tag: noindex`, and the audit carries a third of the SEO category. An assertion set to `off` would not have helped — it stops the assertion but leaves the failing audit inside the category score, which is exactly how SEO landed at 0.66 on the first real run. What robots.txt serves is covered by `robots.ts` and its test.
+- `maxWaitForLoad` is 10 seconds instead of Lighthouse's 45. `<SanityLive />` keeps the Live Content API stream open for the lifetime of the page, and `@sanity/client` runs it through `fetch`, not a native `EventSource` — the only two kinds Lighthouse exempts from its network-quiet wait. So every page waits out the timeout, whatever it is set to: at 45 seconds that made each of the fifteen runs take about a minute. The observed load event lands within 1.5 seconds even on a cold preview. The "page loaded too slowly" warning stays in every report; `observedLoad` in the metrics audit tells a real timeout from this one. Blocking the stream with `blockedUrlPatterns` would end the wait cleanly, but SanityLive logs `is attempting to reconnect` as a console error, which fails best practices.
+- The reports are written to `apps/web/lighthouse-report` and leave CI as an artifact. Lighthouse CI's `temporary-public-storage` target is deliberately not used — it publishes every report to a bucket anyone with the link can read.
+- `@lhci/cli` drags three transitive packages that `pnpm run cve` flags high: `tmp`, `@puppeteer/browsers` and the `proxy-agent` its 3.x line wants. All three are pinned forward in `pnpm-workspace.yaml`, each with its advisory in a comment — the audit and `pnpm peers check` both stay clean.
+- The whole job is `continue-on-error: true` for now, like the preview suite. Flip it to blocking once a handful of pull requests have shown the three hard categories holding at 1.
+
+A `deployment_status` run cannot be replayed — GitHub cannot rebuild the event — so the workflow also takes a `workflow_dispatch` with a `url` input. That is how a deployment that is already up gets re-measured, and how production gets scored on demand.
+
+Run it locally against anything reachable:
+
+```bash
+LHCI_BASE_URL=http://localhost:3000 pnpm --filter web run test:lighthouse
+```
+
+The first real run against a preview scored accessibility 1.0, SEO 0.66 (before `is-crawlable` was skipped), best practices 0.96 and performance 0.77–0.84 with an LCP between 3.8s and 5.0s. A preview deployment is cold, so read the performance numbers as an upper bound on what production costs, not as production itself.
+
+A local run scores best practices at 0.96, and the gap is entirely local: `errors-in-console` picks up the Sanity live stream failing CORS against `localhost` plus the 404s for `/_vercel/insights/script.js` and `/_vercel/speed-insights/script.js`, none of which exist outside Vercel. Read a local number as a relative signal, never as the one CI asserts on.
+
+### Speed Insights
+
+`<SpeedInsights />` needs nothing but the Vercel project it is deployed to — no environment variable, no key. It ships a script and a beacon per page view, and the end-to-end suite drops both: `ANALYTICS` in `e2e/support/test.ts` covers `/_vercel/speed-insights/**` alongside the analytics patterns. A unit test that renders the root layout mocks the component away for the same reason the analytics one is mocked — its entry point is Next-internal client code a node test run cannot resolve.
 
 ## Gotchas
 

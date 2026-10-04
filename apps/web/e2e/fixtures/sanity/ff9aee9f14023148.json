@@ -1,0 +1,23 @@
+{
+	"body": {
+		"result": {
+			"meta": {
+				"metaDescription": "Unsere Damen vom Kurs „Frauengymnastik“ treffen sich einmal wöchentlich, um sich gemeinsam zu bewegen und fit zu halten. Hier findet ihr alle Neuigkeiten.",
+				"metaTitle": null,
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die Damen stehen in der Turnhalle Irlich",
+					"asset": {
+						"_ref": "image-5e53d2552b1ded5f085fef992dec094df166cef8-5712x4284-jpg",
+						"_type": "reference"
+					}
+				}
+			},
+			"slug": "frauengymnastik",
+			"title": "Frauengymnastik"
+		},
+		"syncTags": ["s1:greg5w"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.category%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%0A%09%7D%0A&%24slug=%22frauengymnastik%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

@@ -2,7 +2,7 @@ import { parseBody } from 'next-sanity/webhook';
 import type { ParsedBody } from 'next-sanity/webhook';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import type { NextRequest } from 'next/server';
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vite-plus/test';
 
 import { POST } from '@/app/api/revalidate/route';
 
@@ -166,11 +166,38 @@ describe('sanity revalidation webhook', () => {
 
 		// The article's category is no part of the payload, so its own URL cannot be built and the
 		// whole route is revalidated instead.
-		expect(revalidatedPaths()).toStrictEqual(['/news', '/news/[category]/[slug]']);
+		expect(revalidatedPaths()).toStrictEqual([
+			'/news',
+			'/news/[category]',
+			'/news/[category]/[slug]',
+			'/angebot/[group]/[singleGroup]',
+		]);
 		expect(mockedRevalidatePath).toHaveBeenCalledWith('/news/[category]/[slug]', 'page');
 	});
 
-	it('adds the category page for a news category', async () => {
+	it.each(['news.article', 'news.category'])(
+		'revalidates every group page for a %s, since each one shows the news of its category',
+		async (type) => {
+			mockedParseBody.mockResolvedValue(parsed({ _type: type, slug: { current: 'senioren' } }));
+
+			await POST(REQUEST);
+
+			expect(mockedRevalidatePath).toHaveBeenCalledWith('/angebot/[group]/[singleGroup]', 'page');
+		},
+	);
+
+	it.each(['news.article', 'news.category'])(
+		'revalidates every category page for a %s, since each one lists all categories and their counts',
+		async (type) => {
+			mockedParseBody.mockResolvedValue(parsed({ _type: type, slug: { current: 'senioren' } }));
+
+			await POST(REQUEST);
+
+			expect(mockedRevalidatePath).toHaveBeenCalledWith('/news/[category]', 'page');
+		},
+	);
+
+	it('revalidates the news routes for a news category', async () => {
 		mockedParseBody.mockResolvedValue(
 			parsed({ _type: 'news.category', slug: { current: 'vereinsleben' } }),
 		);
@@ -179,8 +206,9 @@ describe('sanity revalidation webhook', () => {
 
 		expect(revalidatedPaths()).toStrictEqual([
 			'/news',
+			'/news/[category]',
 			'/news/[category]/[slug]',
-			'/news/vereinsleben',
+			'/angebot/[group]/[singleGroup]',
 		]);
 	});
 

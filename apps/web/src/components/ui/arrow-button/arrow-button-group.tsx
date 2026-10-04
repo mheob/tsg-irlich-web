@@ -74,7 +74,8 @@ export function ArrowButtonGroup({
 							direction="left"
 							// A `<div>` has no role, and `aria-label`/`aria-disabled` are prohibited on one.
 							// The disabled direction stays a link for assistive technology — it just has no
-							// target and is not focusable.
+							// target and is not focusable. An `<a>` without `href` is no link, hence the role.
+							// oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
 							role="link"
 							size={size}
 							variant="ghost"
@@ -99,7 +100,8 @@ export function ArrowButtonGroup({
 							direction="right"
 							// A `<div>` has no role, and `aria-label`/`aria-disabled` are prohibited on one.
 							// The disabled direction stays a link for assistive technology — it just has no
-							// target and is not focusable.
+							// target and is not focusable. An `<a>` without `href` is no link, hence the role.
+							// oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
 							role="link"
 							size={size}
 							variant="secondary"

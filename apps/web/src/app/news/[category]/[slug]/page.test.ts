@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import NewsArticlePage, { generateMetadata } from '@/app/news/[category]/[slug]/page';
 import { Hero } from '@/components/section/hero';
 import { Gallery } from '@/components/ui/gallery';
+import { JsonLd } from '@/components/ui/json-ld';
 import { LightboxGallery } from '@/components/ui/lightbox';
 import { PortableText } from '@/components/ui/portable-text';
 import { Separator } from '@/components/ui/separator';
@@ -118,13 +119,13 @@ describe('news article page', () => {
 			mockSanity({
 				article: {
 					...ARTICLE,
-					meta: { metaDescription: 'Kurzfassung', metaTitle: 'Sommerfest · TSG Irlich' },
+					meta: { metaDescription: 'Kurzfassung', metaTitle: 'Sommerfest im Rückblick' },
 				},
 			});
 
 			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
 				description: 'Kurzfassung',
-				title: 'Sommerfest · TSG Irlich',
+				title: 'Sommerfest im Rückblick',
 			});
 		});
 
@@ -142,6 +143,70 @@ describe('news article page', () => {
 			const metadata = await generateMetadata(routeProps());
 
 			expect(metadata.openGraph?.images).toStrictEqual([]);
+		});
+
+		it('describes the article as one, with its author and dates', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					_updatedAt: '2026-06-03T08:00:00Z',
+					author: { firstName: 'Erika', lastName: 'Mustermann' },
+					publishedAt: '2026-06-01T18:00:00Z',
+				},
+			});
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.openGraph).toMatchObject({
+				authors: ['Erika Mustermann'],
+				modifiedTime: '2026-06-03T08:00:00Z',
+				publishedTime: '2026-06-01T18:00:00Z',
+				type: 'article',
+			});
+		});
+
+		it('never dates the last change before the publication', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					_updatedAt: '2026-05-28T08:00:00Z',
+					publishedAt: '2026-06-01T18:00:00Z',
+				},
+			});
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.openGraph).toMatchObject({ modifiedTime: '2026-06-01T18:00:00Z' });
+		});
+
+		it('names no author when the article has none', async () => {
+			mockSanity();
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.openGraph).toMatchObject({ authors: undefined });
+		});
+
+		it('points the canonical URL at the first category of the article', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					categories: [{ slug: 'fussball' }, { slug: 'vereinsleben' }],
+					slug: 'sommerfest',
+				},
+			});
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.alternates?.canonical).toBe('/news/fussball/sommerfest');
+		});
+
+		it('falls back to the requested category for the canonical URL', async () => {
+			mockSanity({ article: { ...ARTICLE, categories: null, slug: 'sommerfest' } });
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.alternates?.canonical).toBe('/news/vereinsleben/sommerfest');
 		});
 
 		it('looks the article up by its slug without stega encoding', async () => {
@@ -177,6 +242,28 @@ describe('news article page', () => {
 				image: { alt: 'Das Sommerfest' },
 				subTitle: 'Aktuelles',
 				title: 'News',
+			});
+		});
+
+		it('describes the article as structured data under its canonical URL', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					_updatedAt: '2026-06-03T08:00:00Z',
+					categories: [{ slug: 'fussball' }],
+					publishedAt: '2026-06-01T18:00:00Z',
+					slug: 'sommerfest',
+				},
+			});
+
+			const jsonLd = findElement(await NewsArticlePage(routeProps()), JsonLd);
+
+			expect(jsonLd?.props.data).toMatchObject({
+				'@type': 'NewsArticle',
+				dateModified: '2026-06-03T08:00:00Z',
+				datePublished: '2026-06-01T18:00:00Z',
+				headline: 'Sommerfest 2026',
+				mainEntityOfPage: 'http://localhost:3000/news/fussball/sommerfest',
 			});
 		});
 

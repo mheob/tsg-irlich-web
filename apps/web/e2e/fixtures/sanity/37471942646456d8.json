@@ -1,0 +1,513 @@
+{
+	"body": {
+		"result": {
+			"_updatedAt": "2026-09-29T14:06:53Z",
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "8614cf0abbf8",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "9696093e3383",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "29fae5a3ca0a",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Die TSG Irlich musste am Freitagabend eine knappe Auswärtsniederlage hinnehmen. Bei der dritten Mannschaft des SC Bendorf-Sayn unterlag die TSG mit 0:1 (0:0). In einer hitzigen und von vielen kleinen Nickligkeiten geprägten Begegnung kam auf beiden Seiten nur wenig Spielfluss zustande. Ein individueller Fehler kurz nach der Pause entschied letztlich eine Partie, die eigentlich keinen Sieger verdient gehabt hätte."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "68669ddcf2f0",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3fb2e8afb7fc",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Kampf statt Spielfluss"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "23f5936a8864",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "afb17e2b8e98",
+									"_type": "span",
+									"marks": [],
+									"text": "Von Beginn an entwickelte sich eine intensive und unruhige Begegnung. Der Ball befand sich häufig in der Luft, geordnete Kombinationen blieben dagegen selten. Statt spielerischer Lösungen bestimmten lange Bälle, zweite Bälle und zahlreiche Zweikämpfe das Geschehen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "fc94c588acfb",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9a61345ab4c3",
+									"_type": "span",
+									"marks": [],
+									"text": "Beide Mannschaften neutralisierten sich über weite Strecken. Besonders in der Offensive fehlten der TSG die Ideen und die nötige Genauigkeit, um sich klare Torchancen zu erspielen. Irlich versuchte zwar, nach vorne zu kommen, konnte die Angriffe jedoch nur selten konsequent zu Ende spielen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "1820fb770aef",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "18c5e7d150c4",
+									"_type": "span",
+									"marks": [],
+									"text": "Hinzu kamen immer wieder kleinere Unterbrechungen und Diskussionen. Dadurch entstand kaum ein Rhythmus, sodass sich die Begegnung zunehmend zu einem reinen Kampfspiel entwickelte."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "88d61953e5a7",
+					"_type": "mainImage",
+					"alt": "Ein Spieler der TSG, der Schiedsrichter und zwei Bendorfer Spieler stehen auf dem Feld",
+					"asset": {
+						"_ref": "image-ff1d8dfc9c83b77f60f3189629fd78c2a0d65a8a-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.18950704812745012,
+						"left": 0.1601499397062786,
+						"right": 0.1771658708000707,
+						"top": 0
+					},
+					"description": "Freitagabend in Bendorf: Viel Kampf und wenig Fußball",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5809492034364835,
+						"width": 0.6626841894936506,
+						"x": 0.49149203445310397,
+						"y": 0.5146801234464927
+					}
+				},
+				{
+					"_key": "70aea31010f1",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "e93af490501d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "74f79e2fd36b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Schwierige Aufgabe für den Schiedsrichter"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "cfc138f7d285",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "84857ec847cf",
+									"_type": "span",
+									"marks": [],
+									"text": "Auch für den Schiedsrichter war die Leitung der Partie keine einfache Aufgabe. Die vielen engen Zweikämpfe, Diskussionen und kleinen Provokationen machten es schwierig, Ruhe in das Spiel zu bringen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "030012ddec47",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "dd160f49dbea",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG beschäftigte sich dabei phasenweise zu sehr mit einzelnen Entscheidungen des Unparteiischen. Dadurch verlor die Mannschaft den Fokus auf das eigene Spiel und nahm die entscheidenden Zweikämpfe nicht konsequent genug an. Statt die Energie auf das Geschehen auf dem Platz zu richten, ließ sich Irlich zu häufig von den Begleitumständen ablenken."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "82bbefbd52db",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "62cf618009f5",
+									"_type": "span",
+									"marks": [],
+									"text": "Trotzdem blieb die Begegnung bis zur Pause torlos. Angesichts der wenigen klaren Chancen auf beiden Seiten entsprach das 0:0 dem Spielverlauf."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "f615f86dfb26",
+					"_type": "blockquote",
+					"author": "Trainer Michael Lehmann",
+					"quote": "Das war insgesamt ein gebrauchter Abend."
+				},
+				{
+					"_key": "a62170924b3c",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "1fc6b443c947",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a949a45bddbb",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Individueller Fehler führt zum Gegentor"
+								}
+							],
+							"markDefs": [],
+							"style": "h2"
+						},
+						{
+							"_key": "06378321ed41",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ac84f05261f2",
+									"_type": "span",
+									"marks": [],
+									"text": "Kurz nach dem Seitenwechsel fiel der einzige Treffer des Abends. In der "
+								},
+								{
+									"_key": "b5771020b2d5",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "48. Minute"
+								},
+								{
+									"_key": "fab2e4b7cabf",
+									"_type": "span",
+									"marks": [],
+									"text": " nutzte Bendorf-Sayn einen individuellen Fehler im Irlicher Spielaufbau aus. "
+								},
+								{
+									"_key": "451d6943e8a7",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Alexander Wagner"
+								},
+								{
+									"_key": "61c63a4365f8",
+									"_type": "span",
+									"marks": [],
+									"text": " nahm das Geschenk an und erzielte das "
+								},
+								{
+									"_key": "020dcaff41d1",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "1:0"
+								},
+								{
+									"_key": "4f419f6c13e2",
+									"_type": "span",
+									"marks": [],
+									"text": " für die Gastgeber."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "3397b0048786",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "94909b555c18",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Gegentreffer war besonders ärgerlich, da die TSG bis dahin defensiv nur wenig zugelassen hatte. Solche Fehler gehören allerdings zum Fußball und ändern nichts daran, dass sich die Mannschaft zuvor auf ihren sicheren Rückhalt verlassen konnte."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "7c0ae4b600e4",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "b0a53043592c",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach dem Rückstand versuchte Irlich, sich in die Partie zurückzukämpfen. Die Mannschaft erhöhte den Einsatz und suchte häufiger den Weg nach vorne. Der gewünschte Spielfluss stellte sich jedoch weiterhin nicht ein. Viele Bälle wurden früh verloren oder landeten erneut in der Luft, sodass echte Torchancen Mangelware blieben."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "fee364e577cf",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "92b947368b74",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Kein Glück in der Schlussphase"
+								}
+							],
+							"markDefs": [],
+							"style": "h2"
+						},
+						{
+							"_key": "7de6d546c97f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "214786df5cbe",
+									"_type": "span",
+									"marks": [],
+									"text": "In der Schlussphase warf die TSG noch einmal alles nach vorne. Der Wille zum Ausgleich war vorhanden, doch an diesem Abend fehlten die nötige Ruhe, Präzision und auch ein wenig Glück."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "07da288da8d6",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "d37e2fd37314",
+									"_type": "span",
+									"marks": [],
+									"text": "Bendorf-Sayn verteidigte den knappen Vorsprung und brachte das 1:0 über die Zeit. Für die TSG blieb am Ende die Erkenntnis, dass an diesem Abend nicht mehr möglich war."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "6702e9f30d06",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "d1c784fdf628",
+									"_type": "span",
+									"marks": [],
+									"text": "Trainer "
+								},
+								{
+									"_key": "255f68b8fbe3",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Michael Lehmann"
+								},
+								{
+									"_key": "feb164e0519c",
+									"_type": "span",
+									"marks": [],
+									"text": " fand nach der Partie deutliche Worte:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "212ef27cb92e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a38902b7194d",
+									"_type": "span",
+									"marks": [],
+									"text": "„Das war insgesamt ein gebrauchter Abend. Fußballerisch war von beiden Mannschaften wenig zu sehen und eigentlich ist das ein typisches 0:0-Spiel. Wir haben uns aber zu viel mit dem Schiedsrichter beschäftigt, waren dadurch nicht immer voll bei der Sache und sind nicht konsequent genug in die Zweikämpfe gekommen. Das Gegentor entsteht durch einen individuellen Fehler, den der Gegner direkt bestraft. Danach haben wir versucht, zurückzukommen, waren nach vorne aber nicht zwingend genug. Heute haben wir Lehrgeld bezahlt und müssen daraus lernen.“"
+								}
+							],
+							"markDefs": [],
+							"style": "blockquote"
+						}
+					]
+				},
+				{
+					"_key": "7b7e0458bfaf",
+					"_type": "mainImage",
+					"alt": "Die Spieler TSG Irlich besprechen sich nach dem Spiel im Kreis",
+					"asset": {
+						"_ref": "image-ce6af09547cadb946d287d0e2afc4eb534ff7140-4284x5712-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.20046024034773713,
+						"left": 0,
+						"right": 0,
+						"top": 0.26591664535924314
+					},
+					"description": "Getrübte Stimmung: Trainer Michael Lehmann nach Abpfiff mit seinem Team",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.45589363334185623,
+						"width": 0.9781806282014165,
+						"x": 0.5109096858992918,
+						"y": 0.5170459388050795
+					}
+				},
+				{
+					"_key": "afb49bd56f9c",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "977a000af185",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "fe462f4ede59",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Weiter geht´s: Derby-Heimspiel gegen Rodenbach"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "ec3f336844b4",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "72c7c54cc968",
+									"_type": "span",
+									"marks": [],
+									"text": "Am Sonntag empfängt die TSG den "
+								},
+								{
+									"_key": "3b7105147f73",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "TuS Rodenbach"
+								},
+								{
+									"_key": "9defe8ae4738",
+									"_type": "span",
+									"marks": [],
+									"text": " im heimischen Pappelstadion zum Lokal-Derby. Die Partie der beiden punktgleichen Teams wird um 14:30 Uhr von Schiedsrichter Egzon Mulliqi angepfiffen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "a8751be10f8e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c20395c8326a",
+									"_type": "span",
+									"marks": [],
+									"text": "Vor heimischer Kulisse möchte die TSG eine Reaktion zeigen und den Zuschauern wieder ein besseres Spiel bieten. Die Mannschaft freut sich auf eure Unterstützung im Pappelstadion!"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "senioren",
+					"title": "Senioren"
+				},
+				{
+					"slug": "fussball",
+					"title": "Fußball"
+				}
+			],
+			"excerpt": "Die TSG Irlich musste am Freitagabend eine knappe Auswärtsniederlage hinnehmen. Bei der dritten Mannschaft des SC Bendorf-Sayn unterlag die TSG mit 0:1.",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Spieler der TSG duellieren sich mit den Gastgebern aus Bendorf",
+				"asset": {
+					"_ref": "image-1e55f64e40bf64a42aa1dfa9aea29bdf7e4d52a8-4032x3024-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0.0627241638168321,
+					"left": 0.0760712213604823,
+					"right": 0.07607122136048246,
+					"top": 0.16815414129618816
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.4768537826340814,
+					"width": 0.8478575572790352,
+					"x": 0.4999999999999999,
+					"y": 0.60676453415631
+				}
+			},
+			"meta": {
+				"metaDescription": "TSG Irlich verliert beim SC Bendorf-Sayn III knapp mit 0:1. Ein individueller Fehler entscheidet das umkämpfte Auswärtsspiel nach der Pause.",
+				"metaTitle": "TSG Irlich verliert knapp mit 0:1 bei Bendorf-Sayn III",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-09-26T13:58:47.882Z",
+			"slug": "niederlage-bendorf",
+			"title": "Gebrauchter Abend in Bendorf – TSG unterliegt knapp"
+		},
+		"syncTags": ["s1:Ik/M0w", "s1:c5Grjg", "s1:QuxlbQ", "s1:uv+Zzg"],
+		"ms": 8
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22niederlage-bendorf%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

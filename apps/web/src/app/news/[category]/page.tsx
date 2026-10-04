@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { stegaClean } from 'next-sanity';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
+import { ButtonLink } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
 import { sanityFetch } from '@/lib/sanity/live';
 import {
@@ -12,11 +14,13 @@ import {
 	newsArticlesTotalForCategoryQuery,
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
-import { newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
+import { newsCategoriesQuery, newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
+import { getPageMetadata } from '@/utils/metadata';
 
 import newsOverviewImage from '../_assets/news-overview.webp';
+import { CategoryCombobox } from '../_sections/category-combobox';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
-import { getOpenGraphImageOptions } from '../_shared/utils';
+import { getPageNumber, getPaginatedPath } from '../_shared/utils';
 
 const START_INDEX = 0;
 const ITEMS_PER_PAGE = 9;
@@ -31,9 +35,7 @@ function getCurrentPage(page?: string | string[]): {
 	end: number;
 	start: number;
 } {
-	const pageString = Array.isArray(page) ? page[0] : page;
-	const parsed = Math.trunc(Number(pageString ?? '1'));
-	const currentPage = Number.isFinite(parsed) && parsed >= 1 ? Math.floor(parsed) : 1;
+	const currentPage = getPageNumber(page);
 	const start = (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX;
 	const end = start + (ITEMS_PER_PAGE - 1);
 	return { currentPage, end, start };
@@ -41,8 +43,10 @@ function getCurrentPage(page?: string | string[]): {
 
 export async function generateMetadata({
 	params,
+	searchParams,
 }: Readonly<PageProps<'/news/[category]'>>): Promise<Metadata> {
 	const { category: categoryParameter } = await params;
+	const { seite } = await searchParams;
 
 	const { data: category } = await sanityFetch({
 		params: { slug: categoryParameter },
@@ -53,16 +57,11 @@ export async function generateMetadata({
 		return {};
 	}
 
-	const description = category.meta?.metaDescription ?? '';
-	const image = category.meta?.openGraphImage;
-	const images = image ? getOpenGraphImageOptions(image, category.title) : [];
-	const title = category.meta?.metaTitle ?? category.title ?? '';
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({
+		meta: category.meta,
+		path: getPaginatedPath(`/news/${category.slug ?? categoryParameter}`, getPageNumber(seite)),
+		title: category.title,
+	});
 }
 
 export default async function NewsCategoryPage({
@@ -74,52 +73,75 @@ export default async function NewsCategoryPage({
 
 	const { currentPage, end, start } = getCurrentPage(seite);
 
-	const [{ data: page }, { data: totalArticles }, { data: category }, { data: paginatedArticles }] =
-		await Promise.all([
-			sanityFetch({ query: newsOverviewCategoryPageQuery }),
-			sanityFetch({
-				params: { category: categoryParameter },
-				query: newsArticlesTotalForCategoryQuery,
-			}),
-			sanityFetch({ params: { slug: categoryParameter }, query: newsCategoryQuery }),
-			sanityFetch({
-				params: { category: categoryParameter, end, start },
-				query: newsArticlesPaginatedForCategoryQuery,
-			}),
-		]);
+	const [
+		{ data: page },
+		{ data: totalArticles },
+		{ data: category },
+		{ data: paginatedArticles },
+		{ data: categories },
+	] = await Promise.all([
+		sanityFetch({ query: newsOverviewCategoryPageQuery }),
+		sanityFetch({
+			params: { category: categoryParameter },
+			query: newsArticlesTotalForCategoryQuery,
+		}),
+		sanityFetch({ params: { slug: categoryParameter }, query: newsCategoryQuery }),
+		sanityFetch({
+			params: { category: categoryParameter, end, start },
+			query: newsArticlesPaginatedForCategoryQuery,
+		}),
+		sanityFetch({ params: { current: categoryParameter }, query: newsCategoriesQuery }),
+	]);
 
-	if (!page || !category) {
+	const isBeyondLastPage = currentPage > 1 && start >= totalArticles;
+	if (!page || !category || isBeyondLastPage) {
 		notFound();
 	}
+
+	const isEmpty = totalArticles === 0;
 
 	return (
 		<>
 			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={category.title} />
 
 			<section className="container mx-auto py-10 md:py-28">
-				<SectionHeader
-					title={
-						<>
-							Aktuelles aus dem Bereich
-							{category.title && category.title.trim() !== '' && (
-								<>
-									{' '}
-									<span className="text-primary">{category.title.trim()}</span>
-								</>
-							)}
-						</>
-					}
-					className="pb-8 md:pb-14"
-					subTitle="News"
-					isCentered
-				/>
-
-				{paginatedArticles && (
-					<LatestNewsPagination
-						articles={paginatedArticles}
-						currentPage={currentPage}
-						hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
+				<div className="flex flex-col gap-6 pb-8 md:flex-row md:justify-between md:pb-14">
+					<SectionHeader
+						title={
+							<>
+								Aktuelles aus dem Bereich
+								{category.title && category.title.trim() !== '' && (
+									<>
+										{' '}
+										<span className="text-primary">{category.title.trim()}</span>
+									</>
+								)}
+							</>
+						}
+						subTitle="News"
+					>
+						{isEmpty ? page.content.emptyCategoryNotice : undefined}
+					</SectionHeader>
+					{/* The titles end up in the input and its filter, where stega characters do not belong. */}
+					<CategoryCombobox
+						{...stegaClean(categories)}
+						className="w-full md:w-80 md:shrink-0"
+						currentSlug={categoryParameter}
 					/>
+				</div>
+
+				{isEmpty ? (
+					<div>
+						<ButtonLink render={<Link href="/news" />}>Alle News ansehen</ButtonLink>
+					</div>
+				) : (
+					paginatedArticles && (
+						<LatestNewsPagination
+							articles={paginatedArticles}
+							currentPage={currentPage}
+							hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
+						/>
+					)
 				)}
 			</section>
 

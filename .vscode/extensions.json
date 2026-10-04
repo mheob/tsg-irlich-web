@@ -9,7 +9,8 @@
 		"mheob.vscode-snippets",
 		"sonarsource.sonarlint-vscode",
 		"quentiumyt.vscode-tailwindcss-directives",
-		"bradlc.vscode-tailwindcss"
+		"bradlc.vscode-tailwindcss",
+		"VoidZero.vite-plus-extension-pack"
 	],
 	"unwantedRecommendations": []
 }

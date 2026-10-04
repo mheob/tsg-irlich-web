@@ -14,6 +14,13 @@ interface WebhookBody {
 
 type RevalidateHandler = (slug?: string) => void;
 
+function revalidateNewsRoutes(): void {
+	revalidatePath('/news');
+	revalidatePath('/news/[category]', 'page');
+	revalidatePath('/news/[category]/[slug]', 'page');
+	revalidatePath('/angebot/[group]/[singleGroup]', 'page');
+}
+
 /**
  * One handler per group document type, because the department segment of the URL is derived from
  * the type and not from the slug of the group.
@@ -55,18 +62,11 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 		revalidatePath('/', 'layout');
 	},
 	// An article lives below its category, which the webhook payload does not carry, so the whole
-	// route has to be revalidated.
-	'news.article': () => {
-		revalidatePath('/news');
-		revalidatePath('/news/[category]/[slug]', 'page');
-	},
-	'news.category': (slug) => {
-		revalidatePath('/news');
-		revalidatePath('/news/[category]/[slug]', 'page');
-		if (slug) {
-			revalidatePath(`/news/${slug}`);
-		}
-	},
+	// route has to be revalidated. The same goes for the group pages, each of which shows the latest
+	// articles of the category assigned to it, and for the category pages, whose combobox lists every
+	// category with its article count.
+	'news.article': revalidateNewsRoutes,
+	'news.category': revalidateNewsRoutes,
 	newsOverview: () => {
 		revalidatePath('/news');
 	},

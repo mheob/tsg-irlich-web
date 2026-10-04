@@ -62,6 +62,7 @@ export type NewsOverviewCategory = {
   title: string;
   subtitle: string;
   content: {
+    emptyCategoryNotice: string;
     contactPersonsSection: ContactPersonsSection;
   };
 };
@@ -383,6 +384,32 @@ export type SimpleBlockContent = {
   }>;
 };
 
+export type NavigationLink = {
+  _type: "navigationLink";
+  title: string;
+  linkType: "internal" | "external";
+  link?:
+    | HomeReference
+    | AboutUsReference
+    | ContactReference
+    | DepartmentsPageReference
+    | GroupChildrenGymnasticsReference
+    | GroupCoursesReference
+    | GroupDanceReference
+    | GroupOtherSportsReference
+    | GroupSoccerReference
+    | GroupTaekwondoReference
+    | MembershipReference
+    | NewsArticleReference
+    | NewsCategoryReference
+    | NewsOverviewReference
+    | AccessibilityReference
+    | PrivacyReference
+    | ImprintReference;
+  href?: string;
+  description?: string;
+};
+
 export type MetaFields = {
   _type: "metaFields";
   metaTitle?: string;
@@ -395,6 +422,39 @@ export type MetaFields = {
     alt?: string;
     _type: "image";
   };
+};
+
+export type MainNavigationItem = {
+  _type: "mainNavigationItem";
+  title: string;
+  linkType: "internal" | "external";
+  link?:
+    | HomeReference
+    | AboutUsReference
+    | ContactReference
+    | DepartmentsPageReference
+    | GroupChildrenGymnasticsReference
+    | GroupCoursesReference
+    | GroupDanceReference
+    | GroupOtherSportsReference
+    | GroupSoccerReference
+    | GroupTaekwondoReference
+    | MembershipReference
+    | NewsArticleReference
+    | NewsCategoryReference
+    | NewsOverviewReference
+    | AccessibilityReference
+    | PrivacyReference
+    | ImprintReference;
+  href?: string;
+  children?: Array<
+    {
+      _key: string;
+    } & NavigationLink
+  >;
+  overviewTitle?: string;
+  overviewDescription?: string;
+  hasTwoColumns?: boolean;
 };
 
 export type InternalLink = {
@@ -481,7 +541,12 @@ export type SiteSettings = {
   meta?: MetaFields;
   metadataBase?: string;
   contact?: {
-    address: string;
+    postalAddress: {
+      street: string;
+      houseNumber: string;
+      zipCode?: string;
+      city: string;
+    };
     phone: string;
     email: string;
   };
@@ -490,12 +555,9 @@ export type SiteSettings = {
     cta: string;
   };
   mainNavigation: Array<
-    | ({
-        _key: string;
-      } & InternalLink)
-    | ({
-        _key: string;
-      } & ExternalLink)
+    {
+      _key: string;
+    } & MainNavigationItem
   >;
   legalNavigation?: Array<
     {
@@ -674,17 +736,24 @@ export type GroupAdmin = {
     | "Badminton"
     | "Bodenturnen"
     | "Cheerleading"
+    | "ElternKindTurnen"
     | "Fitness"
     | "Fussball"
+    | "Gehen"
     | "Gymnastik"
     | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
     | "Pilates"
+    | "Pokal"
     | "RopeSkipping"
     | "SportInGebaeuden"
     | "Sportakrobatik"
     | "StepAerobic"
     | "Taekwondo"
     | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
     | "Turnen"
     | "Wandern"
     | "Yoga";
@@ -702,6 +771,7 @@ export type GroupAdmin = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -909,17 +979,6 @@ export type NewsOverview = {
   };
 };
 
-export type NewsCategory = {
-  _id: string;
-  _type: "news.category";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  slug: Slug;
-  meta?: MetaFields;
-};
-
 export type GroupTaekwondo = {
   _id: string;
   _type: "group.taekwondo";
@@ -937,17 +996,24 @@ export type GroupTaekwondo = {
     | "Badminton"
     | "Bodenturnen"
     | "Cheerleading"
+    | "ElternKindTurnen"
     | "Fitness"
     | "Fussball"
+    | "Gehen"
     | "Gymnastik"
     | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
     | "Pilates"
+    | "Pokal"
     | "RopeSkipping"
     | "SportInGebaeuden"
     | "Sportakrobatik"
     | "StepAerobic"
     | "Taekwondo"
     | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
     | "Turnen"
     | "Wandern"
     | "Yoga";
@@ -965,6 +1031,7 @@ export type GroupTaekwondo = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -985,17 +1052,24 @@ export type GroupSoccer = {
     | "Badminton"
     | "Bodenturnen"
     | "Cheerleading"
+    | "ElternKindTurnen"
     | "Fitness"
     | "Fussball"
+    | "Gehen"
     | "Gymnastik"
     | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
     | "Pilates"
+    | "Pokal"
     | "RopeSkipping"
     | "SportInGebaeuden"
     | "Sportakrobatik"
     | "StepAerobic"
     | "Taekwondo"
     | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
     | "Turnen"
     | "Wandern"
     | "Yoga";
@@ -1013,6 +1087,7 @@ export type GroupSoccer = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -1033,17 +1108,24 @@ export type GroupOtherSports = {
     | "Badminton"
     | "Bodenturnen"
     | "Cheerleading"
+    | "ElternKindTurnen"
     | "Fitness"
     | "Fussball"
+    | "Gehen"
     | "Gymnastik"
     | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
     | "Pilates"
+    | "Pokal"
     | "RopeSkipping"
     | "SportInGebaeuden"
     | "Sportakrobatik"
     | "StepAerobic"
     | "Taekwondo"
     | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
     | "Turnen"
     | "Wandern"
     | "Yoga";
@@ -1061,6 +1143,7 @@ export type GroupOtherSports = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -1081,17 +1164,24 @@ export type GroupDance = {
     | "Badminton"
     | "Bodenturnen"
     | "Cheerleading"
+    | "ElternKindTurnen"
     | "Fitness"
     | "Fussball"
+    | "Gehen"
     | "Gymnastik"
     | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
     | "Pilates"
+    | "Pokal"
     | "RopeSkipping"
     | "SportInGebaeuden"
     | "Sportakrobatik"
     | "StepAerobic"
     | "Taekwondo"
     | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
     | "Turnen"
     | "Wandern"
     | "Yoga";
@@ -1109,6 +1199,7 @@ export type GroupDance = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -1129,17 +1220,24 @@ export type GroupCourses = {
     | "Badminton"
     | "Bodenturnen"
     | "Cheerleading"
+    | "ElternKindTurnen"
     | "Fitness"
     | "Fussball"
+    | "Gehen"
     | "Gymnastik"
     | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
     | "Pilates"
+    | "Pokal"
     | "RopeSkipping"
     | "SportInGebaeuden"
     | "Sportakrobatik"
     | "StepAerobic"
     | "Taekwondo"
     | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
     | "Turnen"
     | "Wandern"
     | "Yoga";
@@ -1157,6 +1255,7 @@ export type GroupCourses = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
 };
 
@@ -1177,17 +1276,24 @@ export type GroupChildrenGymnastics = {
     | "Badminton"
     | "Bodenturnen"
     | "Cheerleading"
+    | "ElternKindTurnen"
     | "Fitness"
     | "Fussball"
+    | "Gehen"
     | "Gymnastik"
     | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
     | "Pilates"
+    | "Pokal"
     | "RopeSkipping"
     | "SportInGebaeuden"
     | "Sportakrobatik"
     | "StepAerobic"
     | "Taekwondo"
     | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
     | "Turnen"
     | "Wandern"
     | "Yoga";
@@ -1205,7 +1311,19 @@ export type GroupChildrenGymnastics = {
       } & TrainingTime
     >;
   };
+  newsCategory?: NewsCategoryReference;
   isSportGroup: boolean;
+};
+
+export type NewsCategory = {
+  _id: string;
+  _type: "news.category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  meta?: MetaFields;
 };
 
 export type DepartmentsPage = {
@@ -1658,7 +1776,9 @@ export type AllSanitySchemaTypes =
   | Stats
   | SocialFields
   | SimpleBlockContent
+  | NavigationLink
   | MetaFields
+  | MainNavigationItem
   | InternalLink
   | ImageCard
   | ExternalLink
@@ -1688,13 +1808,13 @@ export type AllSanitySchemaTypes =
   | Privacy
   | Imprint
   | NewsOverview
-  | NewsCategory
   | GroupTaekwondo
   | GroupSoccer
   | GroupOtherSports
   | GroupDance
   | GroupCourses
   | GroupChildrenGymnastics
+  | NewsCategory
   | DepartmentsPage
   | Contact
   | TestimonialReference
@@ -1725,112 +1845,264 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
-// Source: src/lib/sanity/queries/main-navigation.ts
-// Variable: mainNavigationQuery
-// Query: *[_type == 'site-settings'][0] {		mainNavigation[] {			_key,			"link": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current },			title		}	}
-export type MainNavigationQueryResult = {
-  mainNavigation: Array<
+// Source: src/lib/sanity/queries/llms.ts
+// Variable: llmsTxtQuery
+// Query: {		"aboutUs": *[_type == 'aboutUs'][0].meta.metaDescription,		"contact": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },		"description": *[_type == 'home'][0].meta.metaDescription,		"groups": *[_type in [			'group.soccer',			'group.children-gymnastics',			'group.courses',			'group.taekwondo',			'group.dance',			'group.other-sports',		]] | order(sortOrder asc) {			_type,			"description": meta.metaDescription,			"slug": slug.current,			title,		},		"membership": *[_type == 'membership'][0].meta.metaDescription,	}
+export type LlmsTxtQueryResult = {
+  aboutUs: string | null;
+  contact: {
+    email: string;
+    phone: string;
+    postalAddress: {
+      street: string;
+      houseNumber: string;
+      zipCode?: string;
+      city: string;
+    };
+  } | null;
+  description: string | null;
+  groups: Array<
     | {
-        _key: string;
-        link: null;
-        title: null;
+        _type: "group.children-gymnastics";
+        description: string | null;
+        slug: string;
+        title: string;
       }
     | {
-        _key: string;
-        link:
-          | {
-              _type: "aboutUs";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "accessibility";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "contact";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "departmentsPage";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "group.children-gymnastics";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.courses";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.dance";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.other-sports";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.soccer";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "group.taekwondo";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "home";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "imprint";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "membership";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "news.article";
-              slug: string;
-              category: string | null;
-            }
-          | {
-              _type: "news.category";
-              slug: string;
-              category: null;
-            }
-          | {
-              _type: "newsOverview";
-              slug: string | null;
-              category: null;
-            }
-          | {
-              _type: "privacy";
-              slug: string | null;
-              category: null;
-            };
-        title: null;
+        _type: "group.courses";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+    | {
+        _type: "group.dance";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+    | {
+        _type: "group.other-sports";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+    | {
+        _type: "group.soccer";
+        description: string | null;
+        slug: string;
+        title: string;
+      }
+    | {
+        _type: "group.taekwondo";
+        description: string | null;
+        slug: string;
+        title: string;
       }
   >;
+  membership: string | null;
+};
+
+// Source: src/lib/sanity/queries/main-navigation.ts
+// Variable: mainNavigationQuery
+// Query: *[_type == 'site-settings'][0] {		mainNavigation[] {				_key,	title,	linkType,	href,	"link": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current },			overviewTitle,			overviewDescription,			hasTwoColumns,			"children": coalesce(children[] { 	_key,	title,	linkType,	href,	"link": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current }, description }, [])		}	}
+export type MainNavigationQueryResult = {
+  mainNavigation: Array<{
+    _key: string;
+    title: string;
+    linkType: "external" | "internal";
+    href: string | null;
+    link:
+      | {
+          _type: "aboutUs";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "accessibility";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "contact";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "departmentsPage";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "group.children-gymnastics";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.courses";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.dance";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.other-sports";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.soccer";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "group.taekwondo";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "home";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "imprint";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "membership";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "news.article";
+          slug: string;
+          category: string | null;
+        }
+      | {
+          _type: "news.category";
+          slug: string;
+          category: null;
+        }
+      | {
+          _type: "newsOverview";
+          slug: string | null;
+          category: null;
+        }
+      | {
+          _type: "privacy";
+          slug: string | null;
+          category: null;
+        }
+      | null;
+    overviewTitle: string | null;
+    overviewDescription: string | null;
+    hasTwoColumns: boolean | null;
+    children:
+      | Array<{
+          _key: string;
+          title: string;
+          linkType: "external" | "internal";
+          href: string | null;
+          link:
+            | {
+                _type: "aboutUs";
+                slug: string | null;
+                category: null;
+              }
+            | {
+                _type: "accessibility";
+                slug: string | null;
+                category: null;
+              }
+            | {
+                _type: "contact";
+                slug: string | null;
+                category: null;
+              }
+            | {
+                _type: "departmentsPage";
+                slug: string | null;
+                category: null;
+              }
+            | {
+                _type: "group.children-gymnastics";
+                slug: string;
+                category: null;
+              }
+            | {
+                _type: "group.courses";
+                slug: string;
+                category: null;
+              }
+            | {
+                _type: "group.dance";
+                slug: string;
+                category: null;
+              }
+            | {
+                _type: "group.other-sports";
+                slug: string;
+                category: null;
+              }
+            | {
+                _type: "group.soccer";
+                slug: string;
+                category: null;
+              }
+            | {
+                _type: "group.taekwondo";
+                slug: string;
+                category: null;
+              }
+            | {
+                _type: "home";
+                slug: string | null;
+                category: null;
+              }
+            | {
+                _type: "imprint";
+                slug: string | null;
+                category: null;
+              }
+            | {
+                _type: "membership";
+                slug: string | null;
+                category: null;
+              }
+            | {
+                _type: "news.article";
+                slug: string;
+                category: string | null;
+              }
+            | {
+                _type: "news.category";
+                slug: string;
+                category: null;
+              }
+            | {
+                _type: "newsOverview";
+                slug: string | null;
+                category: null;
+              }
+            | {
+                _type: "privacy";
+                slug: string | null;
+                category: null;
+              }
+            | null;
+          description: string | null;
+        }>
+      | Array<never>;
+  }>;
 } | null;
 
 // Source: src/lib/sanity/queries/pages/about-us.ts
 // Variable: aboutUsPageQuery
-// Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			introSection {				...,				intro {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }			},			chronicleSection {				...,				chronicleCategories[] {					...,					description {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }				}			},			visionSection {				...,				longVision {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }			},			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
+// Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			introSection {				...,				intro {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }			},			chronicleSection {				...,				chronicleCategories[] {					...,					description {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }				}			},			visionSection {				...,				longVision {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }			},			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type AboutUsPageQueryResult = {
   _id: string;
   _type: "aboutUs";
@@ -2285,6 +2557,7 @@ export type AboutUsPageQueryResult = {
       subtitle: string;
       intro?: string;
       contactPersons: Array<{
+        _id: string;
         firstName: string;
         lastName: string;
         phone: string | null;
@@ -2450,7 +2723,7 @@ export type AccessibilityPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/contact.ts
 // Variable: contactPageQuery
-// Query: *[_type == 'contact'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
+// Query: *[_type == 'contact'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type ContactPageQueryResult = {
   _id: string;
   _type: "contact";
@@ -2472,6 +2745,7 @@ export type ContactPageQueryResult = {
       subtitle: string;
       intro?: string;
       contactPersons: Array<{
+        _id: string;
         firstName: string;
         lastName: string;
         phone: string | null;
@@ -2487,7 +2761,7 @@ export type ContactPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/home.ts
 // Variable: homePageQuery
-// Query: *[_type == 'home'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
+// Query: *[_type == 'home'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type HomePageQueryResult = {
   _id: string;
   _type: "home";
@@ -2573,6 +2847,7 @@ export type HomePageQueryResult = {
       subtitle: string;
       intro?: string;
       contactPersons: Array<{
+        _id: string;
         firstName: string;
         lastName: string;
         phone: string | null;
@@ -2721,7 +2996,7 @@ export type ImprintPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/membership.ts
 // Variable: membershipPageQuery
-// Query: {		"membership": *[_type == 'membership'][0] {			...,			intro {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) },			downloadsSection {				...,				downloads[] {					...,					document {						...,						asset->					}				}			},			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		},		"pricingSection": *[_type == 'home'][0].content.pricingSection	}
+// Query: {		"membership": *[_type == 'membership'][0] {			...,			intro {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) },			downloadsSection {				...,				downloads[] {					...,					document {						...,						asset->					}				}			},			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		},		"pricingSection": *[_type == 'home'][0].content.pricingSection	}
 export type MembershipPageQueryResult = {
   membership: {
     _id: string;
@@ -2908,6 +3183,7 @@ export type MembershipPageQueryResult = {
       subtitle: string;
       intro?: string;
       contactPersons: Array<{
+        _id: string;
         firstName: string;
         lastName: string;
         phone: string | null;
@@ -2963,8 +3239,9 @@ export type NewsArticleHeroQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/news-article.ts
 // Variable: newsArticleContentQuery
-// Query: *[_type == 'news.article' && slug.current == $slug][0] {		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[] {			...,			_type == "blockContent" => {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) },			_type == "grid" => {				items[] {					...,					_type == "blockContent" => {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }				}			}		},		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		meta { metaTitle, metaDescription, openGraphImage},		publishedAt,		"slug": slug.current,		title,	}
+// Query: *[_type == 'news.article' && slug.current == $slug][0] {		_updatedAt,		author -> {			email,			firstName,			image,			lastName,			jobTitle,		},		body[] {			...,			_type == "blockContent" => {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) },			_type == "grid" => {				items[] {					...,					_type == "blockContent" => {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current } }  }, []) }, []) }				}			}		},		categories[] -> {			"slug": slug.current,			title		},		excerpt,		featuredImage,		meta { metaTitle, metaDescription, openGraphImage},		publishedAt,		"slug": slug.current,		title,	}
 export type NewsArticleContentQueryResult = {
+  _updatedAt: string;
   author: {
     email: string;
     firstName: string;
@@ -3320,7 +3597,7 @@ export type NewsArticleContentQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsOverviewCategoryPageQuery
-// Query: *[_type == 'newsOverviewCategory'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
+// Query: *[_type == 'newsOverviewCategory'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			},			emptyCategoryNotice		}	}
 export type NewsOverviewCategoryPageQueryResult = {
   _id: string;
   _type: "newsOverviewCategory";
@@ -3335,6 +3612,7 @@ export type NewsOverviewCategoryPageQueryResult = {
       subtitle: string;
       intro?: string;
       contactPersons: Array<{
+        _id: string;
         firstName: string;
         lastName: string;
         phone: string | null;
@@ -3345,6 +3623,7 @@ export type NewsOverviewCategoryPageQueryResult = {
         taskDescription: string | null;
       }>;
     };
+    emptyCategoryNotice: string;
   };
 } | null;
 
@@ -3388,7 +3667,7 @@ export type NewsArticlesTotalForCategoryQueryResult = number;
 
 // Source: src/lib/sanity/queries/pages/news-overview.ts
 // Variable: newsOverviewPageQuery
-// Query: *[_type == 'newsOverview'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
+// Query: *[_type == 'newsOverview'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type NewsOverviewPageQueryResult = {
   _id: string;
   _type: "newsOverview";
@@ -3405,6 +3684,7 @@ export type NewsOverviewPageQueryResult = {
       subtitle: string;
       intro?: string;
       contactPersons: Array<{
+        _id: string;
         firstName: string;
         lastName: string;
         phone: string | null;
@@ -3634,6 +3914,44 @@ export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
   taskDescription: string | null;
 }>;
 
+// Source: src/lib/sanity/queries/pages/offer-groups-group.ts
+// Variable: offerGroupsGroupPageNewsQuery
+// Query: *[_type == $groupType && slug.current == $slug][0].newsCategory-> {		_type,		title,		"slug": slug.current,		"articles": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {				_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,		}	}
+export type OfferGroupsGroupPageNewsQueryResult = {
+  _type: "news.category";
+  title: string;
+  slug: string;
+  articles: Array<{
+    _id: string;
+    publishedAt: string;
+    author: {
+      firstName: string;
+      lastName: string;
+      image: ExtendedImage;
+    };
+    categories: Array<{
+      title: string;
+      slug: string;
+    }>;
+    excerpt: string;
+    meta: {
+      metaTitle: string | null;
+      metaDescription: string | null;
+      openGraphImage: {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+      } | null;
+    } | null;
+    featuredImage: MainImage;
+    slug: string;
+    title: string;
+  }>;
+} | null;
+
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageQuery
 // Query: *[_type == 'groupsPage'][0]
@@ -3674,17 +3992,24 @@ export type OfferGroupsPageGroupsQueryResult = Array<
         | "Badminton"
         | "Bodenturnen"
         | "Cheerleading"
+        | "ElternKindTurnen"
         | "Fitness"
         | "Fussball"
+        | "Gehen"
         | "Gymnastik"
         | "Jujutsu"
+        | "Laufen"
+        | "Medaille"
         | "Pilates"
+        | "Pokal"
         | "RopeSkipping"
         | "Sportakrobatik"
         | "SportInGebaeuden"
         | "StepAerobic"
         | "Taekwondo"
         | "Tanzen"
+        | "Tischtennis"
+        | "Trainer"
         | "Turnen"
         | "Wandern"
         | "Yoga";
@@ -3739,8 +4064,9 @@ export type OfferGroupsPageGroupsQueryResult = Array<
 
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageContactPersonsQuery
-// Query: *[_type == 'person'][affiliations[0].role->email == $email] {		  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
+// Query: *[_type == 'person'][affiliations[0].role->email == $email] {		  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
 export type OfferGroupsPageContactPersonsQueryResult = Array<{
+  _id: string;
   firstName: string;
   lastName: string;
   phone: string | null;
@@ -3753,7 +4079,7 @@ export type OfferGroupsPageContactPersonsQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/pages/offer.ts
 // Variable: offerPageQuery
-// Query: *[_type == 'departmentsPage'][0] {	...,	content {		...,		contactPersonsSection {			...,			contactPersons[]-> {				  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,			}		}	}}
+// Query: *[_type == 'departmentsPage'][0] {	...,	content {		...,		contactPersonsSection {			...,			contactPersons[]-> {				  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,			}		}	}}
 export type OfferPageQueryResult = {
   _id: string;
   _type: "departmentsPage";
@@ -3780,6 +4106,7 @@ export type OfferPageQueryResult = {
       subtitle: string;
       intro?: string;
       contactPersons: Array<{
+        _id: string;
         firstName: string;
         lastName: string;
         phone: string | null;
@@ -4109,17 +4436,24 @@ export type GroupsQueryResult = Array<{
     | "Badminton"
     | "Bodenturnen"
     | "Cheerleading"
+    | "ElternKindTurnen"
     | "Fitness"
     | "Fussball"
+    | "Gehen"
     | "Gymnastik"
     | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
     | "Pilates"
+    | "Pokal"
     | "RopeSkipping"
     | "Sportakrobatik"
     | "SportInGebaeuden"
     | "StepAerobic"
     | "Taekwondo"
     | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
     | "Turnen"
     | "Wandern"
     | "Yoga";
@@ -4197,6 +4531,18 @@ export type NewsArticlesPaginatedQueryResult = Array<{
 export type NewsArticlesTotalQueryResult = number;
 
 // Source: src/lib/sanity/queries/shared/news.ts
+// Variable: newsCategoriesQuery
+// Query: {	"categories": *[		_type == 'news.category'		&& (slug.current == $current || count(*[_type == 'news.article' && references(^._id)]) > 0)	] | order(title asc) {		"articleCount": count(*[_type == 'news.article' && references(^._id)]),		"slug": slug.current,		title,	},	"total": count(*[_type == 'news.article'])}
+export type NewsCategoriesQueryResult = {
+  categories: Array<{
+    articleCount: number;
+    slug: string;
+    title: string;
+  }>;
+  total: number;
+};
+
+// Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsCategoryQuery
 // Query: *[_type == 'news.category' && slug.current == $slug][0] {		"slug": slug.current,		title,		meta { metaTitle, metaDescription, openGraphImage}	}
 export type NewsCategoryQueryResult = {
@@ -4214,6 +4560,23 @@ export type NewsCategoryQueryResult = {
       _type: "image";
     } | null;
   } | null;
+} | null;
+
+// Source: src/lib/sanity/queries/shared/organization.ts
+// Variable: organizationQuery
+// Query: *[_type == 'site-settings'][0] {		contact { email, phone, postalAddress },		socialFields,	}
+export type OrganizationQueryResult = {
+  contact: {
+    email: string;
+    phone: string;
+    postalAddress: {
+      street: string;
+      houseNumber: string;
+      zipCode?: string;
+      city: string;
+    };
+  } | null;
+  socialFields: SocialFields | null;
 } | null;
 
 // Source: src/lib/sanity/queries/shared/social-media.ts
@@ -4290,41 +4653,48 @@ export type SitemapGroupsQueryResult = Array<
 >;
 
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+declare global {
   interface SanityQueries {
-    '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_key,\n\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n },\n\t\t\ttitle\n\t\t}\n\t}\n': MainNavigationQueryResult;
-    '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
+    "\n\t{\n\t\t\"aboutUs\": *[_type == 'aboutUs'][0].meta.metaDescription,\n\t\t\"contact\": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },\n\t\t\"description\": *[_type == 'home'][0].meta.metaDescription,\n\t\t\"groups\": *[_type in [\n\t\t\t'group.soccer',\n\t\t\t'group.children-gymnastics',\n\t\t\t'group.courses',\n\t\t\t'group.taekwondo',\n\t\t\t'group.dance',\n\t\t\t'group.other-sports',\n\t\t]] | order(sortOrder asc) {\n\t\t\t_type,\n\t\t\t\"description\": meta.metaDescription,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"membership\": *[_type == 'membership'][0].meta.metaDescription,\n\t}\n": LlmsTxtQueryResult;
+    '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t\n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n }\n,\n\t\t\toverviewTitle,\n\t\t\toverviewDescription,\n\t\t\thasTwoColumns,\n\t\t\t"children": coalesce(children[] { \n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n }\n, description }, [])\n\t\t}\n\t}\n': MainNavigationQueryResult;
+    '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
     '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': AccessibilityPageQueryResult;
-    '\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
-    '\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
+    '\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
+    '\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
     "\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t}\n": HomePageTestimonialsQueryResult;
     '\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\t"title": link->title,\n\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n }\n\t\t}\n\t}\n': ImprintPageQueryResult;
-    '\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
+    '\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
     "\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
-    '\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == "blockContent" => { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == "grid" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "blockContent" => { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
-    '\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
+    '\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\t_updatedAt,\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == "blockContent" => { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == "grid" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "blockContent" => { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
+    '\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t},\n\t\t\temptyCategoryNotice\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
     '\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
     '\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
-    '\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
+    '\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
     "*[_type == 'singleGroupPage'][0]": OfferGroupsGroupPageQueryResult;
     "\n\t*[_type == $groupType && slug.current == $slug][0] {\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n": OfferGroupsGroupPageGroupsQueryResult;
     '\n\t*[\n\t\t_type == \'person\' &&\n\t\tdefined(affiliations[team->slug.current == $slug][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t"email": affiliations[team->slug.current == $slug][0].team->email,\n\t\t"role":  affiliations[team->slug.current == $slug][0].role->title,\n\t\t"team":  affiliations[team->slug.current == $slug][0].team->title,\n\t\t"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,\n\t}\n': OfferGroupsGroupPageContactPersonsQueryResult;
+    '\n\t*[_type == $groupType && slug.current == $slug][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"articles": *[_type == \'news.article\' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n': OfferGroupsGroupPageNewsQueryResult;
     "*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
     "\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\tfeaturedImage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
-    '\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
-    '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
+    '\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
+    '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
     '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tintroText { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': PrivacyPageQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName, email },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
     "\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
     '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
     '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
     'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
+    "{\n\t\"categories\": *[\n\t\t_type == 'news.category'\n\t\t&& (slug.current == $current || count(*[_type == 'news.article' && references(^._id)]) > 0)\n\t] | order(title asc) {\n\t\t\"articleCount\": count(*[_type == 'news.article' && references(^._id)]),\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t},\n\t\"total\": count(*[_type == 'news.article'])\n}": NewsCategoriesQueryResult;
     "\n\t*[_type == 'news.category' && slug.current == $slug][0] {\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n": NewsCategoryQueryResult;
+    "\n\t*[_type == 'site-settings'][0] {\n\t\tcontact { email, phone, postalAddress },\n\t\tsocialFields,\n\t}\n": OrganizationQueryResult;
     "*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
     "\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
     '\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
     "\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
   }
+}
+// Lets @sanity/client releases that predate the global registry read it too
+declare module "@sanity/client" {
+  interface SanityQueries extends globalThis.SanityQueries {}
 }

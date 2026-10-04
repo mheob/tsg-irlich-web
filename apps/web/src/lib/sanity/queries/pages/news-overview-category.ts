@@ -18,7 +18,8 @@ const newsOverviewCategoryPageQuery = defineQuery(`
 				contactPersons[]-> {
 					${contactPersons}
 				}
-			}
+			},
+			emptyCategoryNotice
 		}
 	}
 `);

@@ -10,7 +10,7 @@ export function Checkbox({ className, ...props }: ComponentPropsWithRef<typeof B
 	return (
 		<BaseCheckbox.Root
 			className={cn(
-				'peer grid size-4 shrink-0 place-content-center rounded-sm border border-primary shadow focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-checked:bg-primary data-checked:text-primary-foreground data-disabled:cursor-not-allowed data-disabled:opacity-50',
+				'peer grid size-4 shrink-0 place-content-center rounded-sm border border-primary shadow-sm focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-checked:bg-primary data-checked:text-primary-foreground data-disabled:cursor-not-allowed data-disabled:opacity-50',
 				className,
 			)}
 			{...props}

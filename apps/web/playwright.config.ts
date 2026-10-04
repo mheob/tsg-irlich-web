@@ -72,7 +72,12 @@ export default defineConfig({
 	webServer: {
 		// Always the production server: Next.js allows only one dev server per directory, so a dev
 		// server here would collide with the one a developer already has running.
-		command: `pnpm run build && pnpm exec next start --port ${E2E_PORT}`,
+		//
+		// `next build` answers every query it already made in an earlier build from
+		// `.next/cache/fetch-cache`, and such a request never reaches the mocks. A recording would
+		// then leave those fixtures out, and a mocked run would render stale data even where a
+		// fixture is missing. Clearing that cache sends every build query through the preload.
+		command: `rm -rf .next/cache/fetch-cache && pnpm run build && pnpm exec next start --port ${E2E_PORT}`,
 		env: {
 			...process.env,
 			E2E_MOCK: '1',

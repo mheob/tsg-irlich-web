@@ -1,5 +1,5 @@
 import type { StructureBuilder } from 'sanity/structure';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { getGroup, isExcludedDefaultListItem } from './index';
 

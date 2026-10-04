@@ -12,7 +12,7 @@ set -euo pipefail
 # would otherwise overwrite — the workspace `node_modules` trees and the Next.js build output — is a
 # named volume, so the host's macOS install stays untouched and the second run starts warm.
 
-readonly IMAGE='mcr.microsoft.com/playwright:v1.62.1-noble'
+readonly IMAGE='mcr.microsoft.com/playwright:v1.63.0-noble@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27'
 readonly VOLUME_PREFIX='tsg-irlich-e2e'
 # `pwuser` is the image's own unprivileged account and the same UID the CI job runs as, so Chromium
 # keeps its sandbox in both places.
@@ -55,16 +55,15 @@ exec docker run --rm --init \
 	--ipc=host \
 	--user "${CONTAINER_UID}" \
 	--env COREPACK_ENABLE_DOWNLOAD_PROMPT=0 \
-	--env npm_config_store_dir=/home/pwuser/.pnpm-store \
 	--env HOME=/home/pwuser \
 	--workdir /work \
 	--volume "${repo_root}:/work" \
 	"${volume_args[@]}" \
 	"${IMAGE}" \
 	bash -euc '
-		# The image ships its own Node, which is not the version `.nvmrc` pins and CI installs. It is
-		# unpacked into the home volume once and reused from there afterwards.
-		node_version="$(tr -d "v[:space:]" < /work/.nvmrc)"
+		# The image ships its own Node, which is not the version `.node-version` pins and CI installs. It
+		# is unpacked into the home volume once and reused from there afterwards.
+		node_version="$(tr -d "v[:space:]" < /work/.node-version)"
 		node_dir="${HOME}/.node/${node_version}"
 
 		if [ ! -x "${node_dir}/bin/node" ]; then
@@ -81,8 +80,16 @@ exec docker run --rm --init \
 		mkdir -p "${HOME}/.bin"
 		corepack enable --install-directory "${HOME}/.bin"
 
-		pnpm install --frozen-lockfile --ignore-scripts
+		# `--store-dir` as a flag, not as `npm_config_store_dir`: pnpm 11 does not read the npm-style
+		# environment config for this setting. Without it pnpm puts the store next to the project
+		# root, which is the bind-mounted working tree — a 500 MB directory appearing in `git status`
+		# on the host. `.gitignore` covers it as well, so a leak can never be committed.
+		pnpm install --frozen-lockfile --ignore-scripts --store-dir "${HOME}/.pnpm-store"
 		pnpm --filter web run typegen:routes
+		# The image optimizer keeps its results in `.next/cache/images`, which lives in a named volume
+		# and outlasts the build. CI starts without it, so a baseline taken from an image the mocks no
+		# longer serve could never be matched there.
+		rm -rf /work/apps/web/.next/cache/images
 		# Not `pnpm run … -- --update-snapshots`: the separator is forwarded verbatim, and Playwright
 		# reads everything after it as a positional test filter instead of as a flag.
 		pnpm --filter web exec playwright test --grep @visual --update-snapshots

@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"allowImportingTsExtensions": true,
 		"composite": false,
 		"jsx": "react-jsx",
 		"module": "preserve",

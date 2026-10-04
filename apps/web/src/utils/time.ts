@@ -29,3 +29,17 @@ export function getLocaleDate(
 	const dateObject = typeof date === 'string' ? new Date(date) : date;
 	return new Intl.DateTimeFormat(locale, getDateFormat(variant)).format(dateObject);
 }
+
+/**
+ * Tells when a published document last changed.
+ *
+ * Editors often finish a document before its scheduled publication, so the `_updatedAt` Sanity
+ * keeps can predate the publication — and a document is never modified before it is published.
+ *
+ * @param publishedAt - When the document was published.
+ * @param updatedAt - When the document was last saved.
+ * @returns The later of the two timestamps, unchanged.
+ */
+export function getLastModified(publishedAt: string, updatedAt: string): string {
+	return new Date(updatedAt) > new Date(publishedAt) ? updatedAt : publishedAt;
+}

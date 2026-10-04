@@ -56,6 +56,7 @@ This is a **monorepo** built with **Turbo** and **pnpm** containing:
 
 - **Turbo** for build orchestration and caching
 - **pnpm** for package management with workspace support
+- **Vite+** (`vp`) runs the bundled oxlint, oxfmt and Vitest, configured in the root `vite.config.ts`
 - **oxlint** with `@mheob/oxlint-config` (plus oxlint-tsgolint for type-aware rules)
 - **oxfmt** with `@mheob/oxfmt-config` for formatting
 - **Vitest** for unit tests, **Playwright** for end-to-end and accessibility tests
@@ -126,7 +127,7 @@ tsg-web/
 ### Prerequisites
 
 - **Node.js** ^24.20.0
-- **pnpm** 11.24.0 package manager
+- **pnpm** 12.7.0 package manager
 - **Git** for version control
 
 ### Installation

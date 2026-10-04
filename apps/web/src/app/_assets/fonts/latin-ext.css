@@ -1,0 +1,67 @@
+/*
+ * The `latin-ext` faces of the three fonts in the root layout. `next/font/local` declares the
+ * `latin` faces and names each family after the variable it is assigned to (`inter`, `oswald`,
+ * `bebasNeue`), so these faces join those families under the same names. The `unicode-range` keeps
+ * the browser from downloading a file unless the page contains one of its characters, such as the
+ * ł, č or ő in a name. Neither face is preloaded, just like with Google Fonts.
+ */
+
+@font-face {
+	font-display: swap;
+	font-family: inter;
+	font-style: normal;
+	font-weight: 400;
+	src: url('./inter/latin-ext.woff2') format('woff2');
+	unicode-range:
+		U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+		U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+		U+A720-A7FF;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: inter;
+	font-style: normal;
+	font-weight: 700;
+	src: url('./inter/latin-ext.woff2') format('woff2');
+	unicode-range:
+		U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+		U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+		U+A720-A7FF;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: oswald;
+	font-style: normal;
+	font-weight: 400;
+	src: url('./oswald/latin-ext.woff2') format('woff2');
+	unicode-range:
+		U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+		U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+		U+A720-A7FF;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: oswald;
+	font-style: normal;
+	font-weight: 700;
+	src: url('./oswald/latin-ext.woff2') format('woff2');
+	unicode-range:
+		U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+		U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+		U+A720-A7FF;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: bebasNeue;
+	font-style: normal;
+	font-weight: 400;
+	src: url('./bebas-neue/latin-ext.woff2') format('woff2');
+	unicode-range:
+		U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+		U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+		U+A720-A7FF;
+}

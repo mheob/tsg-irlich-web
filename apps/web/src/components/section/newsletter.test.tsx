@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { subscribeToNewsletter } from '@/actions/subscribe-to-newsletter';
 import type { NewsletterFormState } from '@/actions/subscribe-to-newsletter';
@@ -29,19 +29,6 @@ const ERROR_STATE: NewsletterFormState = {
 
 function renderNewsletter() {
 	return renderWithUser(<Newsletter />);
-}
-
-interface Deferred<T> {
-	promise: Promise<T>;
-	resolve: (value: T) => void;
-}
-
-function createDeferred<T>(): Deferred<T> {
-	let resolve!: (value: T) => void;
-	const promise = new Promise<T>((res) => {
-		resolve = res;
-	});
-	return { promise, resolve };
 }
 
 describe('newsletter', () => {
@@ -86,7 +73,7 @@ describe('newsletter', () => {
 	});
 
 	it('disables the email field and the submit button while the action is pending', async () => {
-		const deferred = createDeferred<NewsletterFormState>();
+		const deferred = Promise.withResolvers<NewsletterFormState>();
 		mockedSubscribeToNewsletter.mockReturnValue(deferred.promise);
 		const { findByRole, getByRole, user } = renderNewsletter();
 

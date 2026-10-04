@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 
 import { cn } from '@tsgi-web/shared';
 
-import { getOpenGraphImageOptions } from '@/app/news/_shared/utils';
 import { Hero } from '@/components/section/hero';
 import { PortableText } from '@/components/ui/portable-text';
 import { ContactLink } from '@/components/with-logic/contact-link';
@@ -12,6 +11,7 @@ import { client } from '@/lib/sanity/client';
 import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
 import type { ImprintPageQueryResult } from '@/types/sanity.types.generated';
 import { getInternalHref } from '@/utils/links';
+import { getPageMetadata } from '@/utils/metadata';
 
 import { textClassName } from '../_shared/class-names';
 import heroImage from '../_shared/hero.webp';
@@ -28,16 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	const description = page.meta?.metaDescription ?? '';
-	const image = page.meta?.openGraphImage;
-	const images = image ? getOpenGraphImageOptions(image, page.title) : [];
-	const title = page.meta?.metaTitle ?? page.title ?? '';
-
-	return {
-		description,
-		openGraph: { description, images, title },
-		title,
-	};
+	return getPageMetadata({ meta: page.meta, path: '/impressum', title: page.title });
 }
 
 export default async function ImprintPage() {

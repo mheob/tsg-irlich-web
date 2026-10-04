@@ -1,6 +1,6 @@
 import { RiTeamLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { getGroupDocument } from './group';
 
@@ -84,6 +84,43 @@ describe('group document preview', () => {
 		const result = prepareGroupPreview({ sortOrder: 1 });
 
 		expect(result.title).toBeUndefined();
+	});
+});
+
+interface NewsCategoryField {
+	readonly hidden?: boolean;
+	readonly name: string;
+	readonly to?: readonly { readonly type: string }[];
+	readonly type: string;
+}
+
+function getNewsCategoryField(isSportGroup?: boolean): NewsCategoryField | undefined {
+	const definition = getGroupDocument({
+		icon: RiTeamLine,
+		isSportGroup,
+		name: 'group.test',
+		title: 'Testgruppe',
+	});
+	return (definition as unknown as { fields: readonly NewsCategoryField[] }).fields.find(
+		(field) => field.name === 'newsCategory',
+	);
+}
+
+describe('group news category', () => {
+	// The web app dereferences this field to a `news.category` document, so any other target type
+	// would leave the group page without its news section.
+	it('references exactly one news category', () => {
+		const field = getNewsCategoryField(true);
+
+		expect(field).toMatchObject({ to: [{ type: 'news.category' }], type: 'reference' });
+	});
+
+	it('is shown for a sport group, which has a page of its own', () => {
+		expect(getNewsCategoryField(true)?.hidden).toBe(false);
+	});
+
+	it('is hidden for a non-sport group, which has no page to show the news on', () => {
+		expect(getNewsCategoryField(false)?.hidden).toBe(true);
 	});
 });
 

@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const alertVariants = cva(
-	'relative w-full rounded-lg border px-4 py-3 text-sm grid has-[>svg]:grid-cols-[--spacing(8)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-4 gap-y-0.5 items-start [&>svg]:size-8 [&>svg]:text-current',
+	'relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[--spacing(8)_1fr] has-[>svg]:gap-x-4 [&>svg]:size-8 [&>svg]:text-current',
 	{
 		defaultVariants: {
 			variant: 'default',
@@ -10,9 +10,9 @@ export const alertVariants = cva(
 			variant: {
 				default: 'bg-background text-foreground',
 				destructive:
-					'text-destructive-foreground border-destructive-foreground bg-destructive dark:border-destructive-foreground [&_svg]:text-current [&_p]:text-current',
+					'border-destructive-foreground bg-destructive text-destructive-foreground dark:border-destructive-foreground [&_p]:text-current [&_svg]:text-current',
 				success:
-					'text-success-foreground border-success-foreground bg-success dark:border-success-foreground [&_svg]:text-current [&_p]:text-current',
+					'border-success-foreground bg-success text-success-foreground dark:border-success-foreground [&_p]:text-current [&_svg]:text-current',
 			},
 		},
 	},

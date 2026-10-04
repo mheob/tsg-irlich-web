@@ -1,0 +1,321 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'news.article' && slug.current == $slug][0] {\n\t\t_updatedAt,\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == \"grid\" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == \"blockContent\" => { \n  ...,\n  \"text\": coalesce(text[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t}\n",
+		"result": {
+			"_updatedAt": "2026-09-29T12:28:50Z",
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "e88c4851c1b2",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "2885774262ff",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "c8a03b4ce736",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Am Pappelstadion rollen die Bagger an… Nein, soweit ist es noch nicht! Trotzdem gibt es gute Neuigkeiten für unser Vereinsheim in der Gotenstraße zu vermelden."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "5c0d6f508f43",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "494dfa6e1503",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Stadt Neuwied als Eigentümer des Vereinsheims und die "
+								},
+								{
+									"_key": "9e3295175a82",
+									"_type": "span",
+									"marks": ["f867d57fa83d"],
+									"text": "Stadtwerke Neuwied"
+								},
+								{
+									"_key": "26b27fbf73e8",
+									"_type": "span",
+									"marks": [],
+									"text": " (SWN) haben die Wärmeversorgung des Gebäudes umfassend modernisiert. Die Arbeiten fanden bereits im Mai und Juni nach Ende der Saison statt und waren damit optimal getaktet. Ausgeführt wurden sie unter anderem durch unseren Sponsor, die "
+								},
+								{
+									"_key": "1e7ee2662c64",
+									"_type": "span",
+									"marks": ["67a3ff1527fa"],
+									"text": "Firma Kessler"
+								},
+								{
+									"_key": "a1e8b80532ba",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "67a3ff1527fa",
+									"_type": "externalLink",
+									"href": "https://www.kessler-heizung.de/"
+								},
+								{
+									"_key": "f867d57fa83d",
+									"_type": "externalLink",
+									"href": "https://www.swn-neuwied.de/"
+								}
+							],
+							"style": "normal"
+						},
+						{
+							"_key": "96b0b6153895",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "55fdab4fc9bf",
+									"_type": "span",
+									"marks": [],
+									"text": "Hochmoderne Technik für TSG-Vereinshein"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "e4be9d270fb1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "494dfa6e1503",
+									"_type": "span",
+									"marks": [],
+									"text": "Im Rahmen des bestehenden "
+								},
+								{
+									"_key": "63b1683c4ec8",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Wärme-Contractings"
+								},
+								{
+									"_key": "5c19c68b4cd5",
+									"_type": "span",
+									"marks": [],
+									"text": " zwischen der Stadt Neuwied und den SWN wurde die technische Anlage im Vereinsheim auf einen zeitgemäßen und energieeffizienten Stand gebracht. Dazu gehören zwei moderne "
+								},
+								{
+									"_key": "37251611bb5a",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Buderus Luft-Wärmepumpen"
+								},
+								{
+									"_key": "db8552b8a6d6",
+									"_type": "span",
+									"marks": [],
+									"text": ", ein "
+								},
+								{
+									"_key": "41fbdf86f1e0",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Buderus Brennwert-Wärmeerzeuger"
+								},
+								{
+									"_key": "c3e533cc0adf",
+									"_type": "span",
+									"marks": [],
+									"text": " sowie eine "
+								},
+								{
+									"_key": "2a7193912e3a",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Solarthermieanlage "
+								},
+								{
+									"_key": "79db5ad674fe",
+									"_type": "span",
+									"marks": [],
+									"text": "mit fünf Sonnenkollektoren auf dem Dach. Zusätzlich wurden die Heizkörper mit neuen Ventilen ausgestattet und ein hydraulischer Abgleich durchgeführt."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "ddfb86b76f18",
+					"_type": "mainImage",
+					"alt": "Neue Wärmepumpen stehen am Sportplatz",
+					"asset": {
+						"_ref": "image-cf18a4114e8e56461a07d38b2fdd03594a9c27ae-5712x4284-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.038702143631662356,
+						"left": 0.04704404478871934,
+						"right": 0.05304966752770474,
+						"top": 0.017349236800400368
+					},
+					"description": "Hochmoderne Technik: Wärmepumpen sorgen für mehr Energie-Effizienz im Vereinsheim",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8051547251647343,
+						"width": 0.8578669285106777,
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"_key": "8a8aebad5c39",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "fc966be93145",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "36e364674dae",
+									"_type": "span",
+									"marks": [],
+									"text": "Nächste Schritte bereits in Planung"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "ec391f8b6f7c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a38b89902c08",
+									"_type": "span",
+									"marks": [],
+									"text": "Von der Modernisierung profitieren letztlich alle, die unser Vereinsheim am Pappelstadion nutzen. Eine moderne und effizientere Wärmeversorgung ist ein weiterer wichtiger Schritt, um unser Vereinsheim fit für die Zukunft zu machen. Und auch der nächste Schritt ist bereits im Blick: Mittelfristig ist die Installation einer "
+								},
+								{
+									"_key": "3a063f54e80e",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Photovoltaikanlage "
+								},
+								{
+									"_key": "41dea0026503",
+									"_type": "span",
+									"marks": [],
+									"text": "geplant. Diese könnte optimal mit den nun eingebauten Wärmepumpen kombiniert werden und die nachhaltige Energieversorgung des Vereinsheims weiter voranbringen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "0c40a79918bb",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e9930b1b8a49",
+									"_type": "span",
+									"marks": [],
+									"text": "Ein tolles Zeichen für die grüne Zukunft der Stadt Neuwied – und natürlich freuen wir uns, dass auch unser Vereinsheim davon profitiert. Vielen Dank an die Stadt Neuwied, die Stadtwerke Neuwied und alle beteiligten Unternehmen für die gute und zuverlässige Umsetzung der Arbeiten. Besonders schön ist, dass mit der Firma Kessler auch einer unserer Sponsoren an der Modernisierung beteiligt war."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "0aacae7565c1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e9930b1b8a49",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Unser Vereinsheim am Pappelstadion – gut gerüstet für die Zukunft!"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "verein",
+					"title": "Gesamtverein"
+				}
+			],
+			"excerpt": "Am Pappelstadion rollen die Bagger an… Nein, soweit ist es noch nicht! Trotzdem gibt es gute Neuigkeiten für unser Vereinsheim in der Gotenstraße zu vermelden.",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Die neuen Solar-Kollektoren auf dem Dach vom Vereinsheim",
+				"asset": {
+					"_ref": "image-90c50d085e1536919f93c0c85942ae20a857becc-4032x3024-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0.13212111101843357,
+					"left": 0,
+					"right": 0,
+					"top": 0.09208441070981734
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.49019934940362014,
+					"width": 0.8598688027570063,
+					"x": 0.5040037484926569,
+					"y": 0.5453749270164318
+				}
+			},
+			"meta": {
+				"metaDescription": "Am Pappelstadion rollen die Bagger an… Nein, soweit ist es noch nicht! Trotzdem gibt es gute Neuigkeiten für unser Vereinsheim in der Gotenstraße zu vermelden.",
+				"metaTitle": "TSG Irlich: Vereinsheim mit moderner Wärmetechnik",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-09-10T15:44:00.000Z",
+			"slug": "modernisierung-vereinsheim",
+			"title": "Modernisierung am Vereinsheim – fit für die Zukunft!"
+		},
+		"syncTags": ["s1:EU/JCA", "s1:Ik/M0w", "s1:+YVtFA"],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22modernisierung-vereinsheim%22&cacheMode=noStale&perspective=published&tag=next-loader.fetch"
+}

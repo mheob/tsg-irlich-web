@@ -163,6 +163,16 @@ export function getGroupDocument({ icon, isSportGroup = true, name, title }: Gro
 			}),
 
 			defineField({
+				description:
+					'Aus dieser Kategorie werden die drei neuesten News-Artikel auf der Gruppenseite angezeigt. Leer lassen, wenn keine Kategorie passt.',
+				hidden: !isSportGroup,
+				name: 'newsCategory',
+				title: 'News-Kategorie',
+				to: [{ type: 'news.category' }],
+				type: 'reference',
+			}),
+
+			defineField({
 				description: 'Ist diese Gruppe eine Sportgruppe?',
 				hidden: true,
 				initialValue: isSportGroup,

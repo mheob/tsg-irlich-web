@@ -58,12 +58,16 @@ const Blockquote: PortableTextComponent<PortableTextBlock> = ({ children }) => (
 
 function HeadingAnchorLink({ value }: Readonly<{ value: PortableTextBlock }>) {
 	return (
+		// The link is named by `title` on purpose: an `aria-label` would be folded into the name of the
+		// heading around it
+		// oxlint-disable-next-line jsx-a11y/control-has-associated-label
 		<a
 			className="absolute inset-y-0 inset-s-0 -ml-6 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
 			href={`#${value?._key}`}
 			title="Zum Abschnitt springen"
 		>
 			<svg
+				aria-hidden="true"
 				className="size-4"
 				fill="none"
 				stroke="currentColor"

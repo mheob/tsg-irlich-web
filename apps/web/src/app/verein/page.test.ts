@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import VereinPage, { generateMetadata } from '@/app/verein/page';
 import { ContactPersons } from '@/components/section/contact-persons';
@@ -69,14 +69,14 @@ describe('about us page', () => {
 		it('prefers the meta title and description over the page title', async () => {
 			mockedFetch.mockResolvedValue(
 				buildPage({
-					meta: { metaDescription: 'Alles über uns', metaTitle: 'TSG Irlich · Verein' },
+					meta: { metaDescription: 'Alles über uns', metaTitle: 'Unser Verein im Porträt' },
 				}),
 			);
 
 			await expect(generateMetadata()).resolves.toMatchObject({
 				description: 'Alles über uns',
-				openGraph: { description: 'Alles über uns', title: 'TSG Irlich · Verein' },
-				title: 'TSG Irlich · Verein',
+				openGraph: { description: 'Alles über uns', title: 'Unser Verein im Porträt' },
+				title: 'Unser Verein im Porträt',
 			});
 		});
 
@@ -87,6 +87,15 @@ describe('about us page', () => {
 				description: '',
 				title: 'Über uns',
 			});
+		});
+
+		it('points its canonical URL at the page', async () => {
+			mockedFetch.mockResolvedValue(buildPage());
+
+			const metadata = await generateMetadata();
+
+			expect(metadata.alternates?.canonical).toBe('/verein');
+			expect(metadata.openGraph).toMatchObject({ url: '/verein' });
 		});
 
 		it('has no open graph image when the document carries none', async () => {

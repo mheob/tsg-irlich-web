@@ -3,6 +3,8 @@
 import { RiMap2Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
+import { postalAddressFields } from '@/shared/fields/postal-address';
+
 import extendedImage from '../objects/extended-image';
 
 const venue = defineType({
@@ -63,44 +65,7 @@ const venue = defineType({
 					],
 				}),
 
-				defineField({
-					name: 'street',
-					title: 'Straße',
-					type: 'string',
-					validation: (Rule) => [
-						Rule.required().min(2).error('Die Straße muss mindestens 2 Zeichen lang sein'),
-						Rule.max(128).warning('Die Straße sollte nicht länger als 128 Zeichen sein'),
-					],
-				}),
-
-				defineField({
-					name: 'houseNumber',
-					title: 'Hausnummer',
-					type: 'string',
-					validation: (Rule) => [
-						Rule.required().min(1).error('Die Hausnummer muss mindestens 1 Zeichen lang sein'),
-						Rule.max(8).warning('Die Hausnummer sollte nicht länger als 8 Zeichen sein'),
-					],
-				}),
-
-				defineField({
-					name: 'zipCode',
-					title: 'Postleitzahl',
-					type: 'string',
-					validation: (Rule) => [
-						Rule.regex(/^\d{5}$/u).error('Die Postleitzahl muss aus genau 5 Zahlen bestehen'),
-					],
-				}),
-
-				defineField({
-					name: 'city',
-					title: 'Stadt',
-					type: 'string',
-					validation: (Rule) => [
-						Rule.required().min(3).error('Die Stadt muss mindestens 3 Zeichen lang sein'),
-						Rule.max(64).warning('Die Stadt sollte nicht länger als 64 Zeichen sein'),
-					],
-				}),
+				...postalAddressFields,
 			],
 			name: 'location',
 			title: 'Standort',

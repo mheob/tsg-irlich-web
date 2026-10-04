@@ -1,0 +1,481 @@
+{
+	"body": {
+		"result": {
+			"_updatedAt": "2026-09-29T14:07:11Z",
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "1a24b178c38c",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "c369e407ea6a",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "61fc0499f0c4",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Die TSG Irlich musste sich am 5.Spieltag im Derby bei der SG Feldkirchen II knapp mit 2:3 (0:2) geschlagen geben. Trotz des Fehlens mehrerer wichtiger Spieler hielt die TSG über die gesamte Spielzeit dagegen und kämpfte sich nach einem Zwei-Tore-Rückstand zurück ins Spiel. Am Ende entschied ein unglücklicher Gegentreffer nach einer Ecke die ausgeglichene Begegnung"
+								},
+								{
+									"_key": "f4572c276a20",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "9549a3d0bb00",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "2dcf6b32773a",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Chancen bleiben in der Anfangsphase ungenutzt"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "ada11e0e2a60",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1b24522c0035",
+									"_type": "span",
+									"marks": [],
+									"text": "Auf dem Hüllenberger Naturrasen entwickelte sich von Beginn an ein intensives und umkämpftes Derby. Beide Mannschaften suchten den Weg nach vorne und lieferten sich zahlreiche enge Zweikämpfe."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "692691e8c27f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4866d87b23b0",
+									"_type": "span",
+									"marks": [],
+									"text": "Obwohl die TSG auf mehrere wichtige Spieler verzichten musste, fand sie gut in die Partie und hielt gegen die Gastgeber jederzeit mit. Irlich erspielte sich bereits im ersten Durchgang Möglichkeiten, verpasste es jedoch, diese konsequent zu nutzen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "bfae2663c8c0",
+					"_type": "mainImage",
+					"alt": "TSG-Spieler im Duell mit dem Gegenpieler im roten Trikot",
+					"asset": {
+						"_ref": "image-b047da712c927377e29a6600373a36710af1182e-1122x1402-png",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.19833894791162862,
+						"left": 0,
+						"right": 0,
+						"top": 0.1244019436605481
+					},
+					"description": "Max Groo (li.) im Duell mit SVF-Angreifer Fabian Frings. Anm: KI-generiertes Bild",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5552043712514366,
+						"width": 0.9178751329888852,
+						"x": 0.4868013606589281,
+						"y": 0.439559433032847
+					}
+				},
+				{
+					"_key": "309750522123",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "234b3bc0b95d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "87f54d322aa2",
+									"_type": "span",
+									"marks": [],
+									"text": "Auf der anderen Seite präsentierte sich Feldkirchen vor dem Tor effizienter. In der 8. Minute brachte "
+								},
+								{
+									"_key": "148c964a1049",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Philipp Riedel"
+								},
+								{
+									"_key": "d97d02a6066c",
+									"_type": "span",
+									"marks": [],
+									"text": " die Gastgeber mit 1:0 in Führung. Die TSG ließ sich von dem frühen Rückstand nicht aus dem Konzept bringen und blieb im Spiel, musste in der 22. Minute jedoch den nächsten Gegentreffer hinnehmen. "
+								},
+								{
+									"_key": "4c9e49aef0d5",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Andres Felipe Molinares Linero"
+								},
+								{
+									"_key": "16481300c158",
+									"_type": "span",
+									"marks": [],
+									"text": " erhöhte auf 2:0."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "0ad56993e743",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "b1ecbb7944fe",
+									"_type": "span",
+									"marks": [],
+									"text": "Trotz des Rückstands blieb die TSG engagiert und spielte weiter mutig nach vorne. Noch vor der Pause hätte die TSG den wichtigen Anschlusstreffer erzielen können. Die vorhandenen Chancen blieben allerdings ungenutzt, sodass es mit 2:0 in die Kabinen ging."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "133fa21821f2",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "963d968cf370",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Doppelschlag bringt die TSG zurück"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "1cb4fdff954b",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "2b5e3b6979ef",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach dem Seitenwechsel zeigte das Team von Trainer Lehmann sofort, dass sie sich mit dem Ergebnis noch lange nicht abgefunden hatte. Die Mannschaft kam entschlossen aus der Kabine und belohnte sich bereits in der 49. Minute: "
+								},
+								{
+									"_key": "75891e2c9c04",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Niklas Kindler"
+								},
+								{
+									"_key": "c1f907daf333",
+									"_type": "span",
+									"marks": [],
+									"text": " traf zum 1:2 und brachte die TSG zurück in die Begegnung."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "27f59524474b",
+					"_type": "blockquote",
+					"author": "Trainer Michael Lehmann",
+					"quote": "Die Jungs haben bis zum Schluss alles gegeben und hätten sich heute mindestens einen Punkt, vielleicht sogar alle drei, verdient."
+				},
+				{
+					"_key": "f81309abfcb8",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "4e1cdaf0aec6",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4c39d0fa66be",
+									"_type": "span",
+									"marks": [],
+									"text": "Nur zwei Minuten später war der Rückstand vollständig aufgeholt. Nach einem Foulspiel im Strafraum trat "
+								},
+								{
+									"_key": "a342a7c9ed30",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Justin Lehmann"
+								},
+								{
+									"_key": "74a244d1ff7e",
+									"_type": "span",
+									"marks": [],
+									"text": " zum fälligen Elfmeter an. Er verlud den Torwart sehenswert und verwandelte in der 51. Minute sicher zum 2:2."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "1973628616d7",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "fbb0c46cf49a",
+									"_type": "span",
+									"marks": [],
+									"text": "Die TSG blieb anschließend auf Augenhöhe und investierte viel, um das Spiel vollständig zu drehen. Beide Mannschaften hatten ihre Möglichkeiten, sodass die Begegnung bis in die Schlussphase hinein in beide Richtungen kippen konnte."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "7a543e3d84cc",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "7a4dd7e079fb",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Unglückliches Gegentor entscheidet die Partie"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "ebbff45ee7b1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9d7b5b12c54e",
+									"_type": "span",
+									"marks": [],
+									"text": "In der 82. Minute fiel schließlich der entscheidende Treffer. Nach einer Ecke bekam die TSG den Ball nicht konsequent aus der Gefahrenzone. "
+								},
+								{
+									"_key": "38d814c0dbf1",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Maximo Drews"
+								},
+								{
+									"_key": "9f1534e001bf",
+									"_type": "span",
+									"marks": [],
+									"text": " kam unmittelbar vor dem Irlicher Tor an den Ball und musste diesen nur noch zum 3:2 über die Linie schieben. In den verbleibenden Minuten versuchte Irlich noch einmal alles, der erneute Ausgleich gelang jedoch nicht mehr."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "12514f5cb97e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "922896529840",
+									"_type": "span",
+									"marks": [],
+									"text": "So stand am Ende eine knappe und unglückliche Derbyniederlage. Die TSG hatte trotz der personellen Ausfälle über die gesamte Partie mitgehalten, eigene Chancen herausgespielt und nach der Pause große Moral bewiesen. Aufgrund des ausgeglichenen Spielverlaufs wäre mindestens ein Punkt verdient gewesen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "6993bffa3ab3",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "6885845423f3",
+									"_type": "span",
+									"marks": [],
+									"text": "Trainer "
+								},
+								{
+									"_key": "94a857757ed2",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Michael Lehmann"
+								},
+								{
+									"_key": "db6d9822c75d",
+									"_type": "span",
+									"marks": [],
+									"text": " ordnete die Leistung seiner Mannschaft nach dem Spiel ein:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "05b496c673c8",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "db6d9822c75d",
+									"_type": "span",
+									"marks": [],
+									"text": "„Natürlich ist die Niederlage sehr ärgerlich, weil wir hier trotz einiger wichtiger Ausfälle absolut auf Augenhöhe waren. Wir hatten schon in der ersten Halbzeit unsere Möglichkeiten und hätten selbst treffen können. Nach der Pause hat die Mannschaft eine starke Reaktion gezeigt. Das 3:2 fällt dann sehr unglücklich nach einer Ecke. Die Jungs haben bis zum Schluss alles gegeben und hätten sich heute mindestens einen Punkt, vielleicht sogar alle drei, verdient. Auf der gezeigten Leistung und der Moral können wir trotzdem aufbauen.“"
+								}
+							],
+							"markDefs": [],
+							"style": "blockquote"
+						},
+						{
+							"_key": "cd810901871b",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "292b6ecd37df",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Heimspiel gegen Rojava"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "7b2e0a3e766e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "3e0effa6e244",
+									"_type": "span",
+									"marks": [],
+									"text": "Am kommenden "
+								},
+								{
+									"_key": "d06780fe0de9",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Sonntag"
+								},
+								{
+									"_key": "e8d0f25ccbf9",
+									"_type": "span",
+									"marks": [],
+									"text": " empfängt die TSG den "
+								},
+								{
+									"_key": "08abe153aa37",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "FC Rojava Neuwied"
+								},
+								{
+									"_key": "3d3c89575377",
+									"_type": "span",
+									"marks": [],
+									"text": " im heimischen Pappelstadion. Der Anstoß erfolgt um "
+								},
+								{
+									"_key": "d8be2789f295",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "14:30 Uhr"
+								},
+								{
+									"_key": "4359b80ac520",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "a9a491d32065",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4d3c1be275e8",
+									"_type": "span",
+									"marks": [],
+									"text": "Nach der knappen Niederlage in Feldkirchen will die TSG vor heimischer Kulisse wieder punkten. Die Mannschaft freut sich über eure Unterstützung vor Ort!"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "senioren",
+					"title": "Senioren"
+				},
+				{
+					"slug": "fussball",
+					"title": "Fußball"
+				}
+			],
+			"excerpt": "Die TSG Irlich musste sich im Derby bei der SG Feldkirchen II mit 2:3 (0:2) geschlagen geben. Ein Gegentreffer nach einer Ecke entschied die Begegnung. ",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Ein Foto vom Sportplatz in Hüllenberg bei Sonnenuntergang",
+				"asset": {
+					"_ref": "image-6e9bdd2679f0a34509f33537ebae16ea8f86716b-5712x4284-jpg",
+					"_type": "reference"
+				}
+			},
+			"meta": {
+				"metaDescription": "TSG Irlich verliert das Derby bei SG Feldkirchen II knapp mit 2:3. Nach starkem Comeback entscheidet ein spätes Gegentor die Partie.",
+				"metaTitle": "TSG Irlich verliert Derby bei SG Feldkirchen II mit 2:3",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-09-12T13:47:00.000Z",
+			"slug": "derbyniederlage-feldkirchen",
+			"title": "TSG verliert umkämpftes Derby gegen Feldkirchen"
+		},
+		"syncTags": ["s1:uv+Zzg", "s1:Ik/M0w", "s1:/CWZMA", "s1:c5Grjg"],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22derbyniederlage-feldkirchen%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

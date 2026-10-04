@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 import type { client } from '@/lib/sanity/client';
 
@@ -18,14 +18,21 @@ const ADDRESS = 'Gotenstraße 20, 56567 Neuwied';
 // its target — see `src/components/with-logic/contact-link.test.tsx`.
 const CONTACT_LINK_NAME = 'Kontaktlink - tippen zum Anzeigen';
 
+const CONTACT = {
+	email: 'info@tsg-irlich.de',
+	phone: '+49 2631 76987',
+	postalAddress: { city: 'Neuwied', houseNumber: '20', street: 'Gotenstraße', zipCode: '56567' },
+};
+
 /**
  * Renders the footer, which is an async server component.
  *
- * @param socialMedia - The social media document the fetch resolves with.
+ * @param socialFields - The social media profiles of the site settings.
+ * @param contact - The contact details of the site settings.
  * @returns The render result.
  */
-async function renderFooter(socialMedia: unknown = null) {
-	mockedFetch.mockResolvedValue(socialMedia);
+async function renderFooter(socialFields: unknown = null, contact: unknown = CONTACT) {
+	mockedFetch.mockResolvedValue({ contact, socialFields });
 	return renderWithUser(await Footer());
 }
 
@@ -76,12 +83,30 @@ describe('the footer', () => {
 		expect(getByText(new RegExp(`©${currentYear} TSG Irlich`, 'u'))).not.toBeNull();
 	});
 
+	it('names its navigation landmark, which carries the legal links and the jump back to the top', async () => {
+		const { getByRole } = await renderFooter();
+
+		const navigation = getByRole('navigation', { name: 'Fußzeilennavigation' });
+
+		expect(navigation.querySelectorAll('a')).toHaveLength(4);
+	});
+
 	it('offers a jump back to the top of the page', async () => {
 		const { getByRole } = await renderFooter();
 
 		expect(getByRole('link', { name: 'zum Seitenanfang springen' }).getAttribute('href')).toBe(
 			'#top',
 		);
+	});
+
+	it('leaves out the address and the email link when the site settings carry none', async () => {
+		const { queryByText, queryAllByRole } = await renderFooter(null, {
+			email: null,
+			postalAddress: null,
+		});
+
+		expect(queryByText(ADDRESS)).toBeNull();
+		expect(queryAllByRole('button', { name: CONTACT_LINK_NAME })).toHaveLength(0);
 	});
 
 	it('lists the social media channels the document carries', async () => {

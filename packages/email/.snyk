@@ -1,0 +1,13 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.1
+ignore:
+  SNYK-JS-DEEPMERGE-19964053:
+    - '*':
+        reason: >-
+          deepmerge has no fixed version: 4.3.1 is the latest published release and every version
+          from 4.2.0 is affected (CVE-2026-93753). It reaches this project only through
+          html-to-text below @react-email/render, which merges its own options with its defaults;
+          the rendered mail content never passes through the merge. Revisit once deepmerge
+          publishes a patched release.
+        expires: 2026-10-26T00:00:00.000Z
+patch: {}
