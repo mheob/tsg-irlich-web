@@ -208,7 +208,7 @@ pnpm --filter web run test:e2e:visual:update   # needs a running Docker daemon
 git add apps/web/e2e/__screenshots__
 ```
 
-The script runs the visual suite with `--update-snapshots` in the container and writes the refreshed PNGs straight into the working tree. It pins everything CI pins — the image tag, `--platform linux/amd64` and the Node version from `.nvmrc` — because a baseline taken on another architecture is not the one CI compares against; on Apple Silicon that means an emulated run, so give it time. The repository is bind-mounted, but the workspace `node_modules` trees and `.next` are named volumes, so the host's macOS install is never overwritten and the second run starts warm. Review the diff before committing — a baseline update is a design change being approved, and it belongs in the same commit as the change that caused it.
+The script runs the visual suite with `--update-snapshots` in the container and writes the refreshed PNGs straight into the working tree. It pins everything CI pins — the image tag, `--platform linux/amd64` and the Node version from `.node-version` — because a baseline taken on another architecture is not the one CI compares against; on Apple Silicon that means an emulated run, so give it time. The repository is bind-mounted, but the workspace `node_modules` trees and `.next` are named volumes, so the host's macOS install is never overwritten and the second run starts warm. Review the diff before committing — a baseline update is a design change being approved, and it belongs in the same commit as the change that caused it.
 
 When a comparison fails in CI, the `playwright-report` artifact carries the expected, actual and diff PNG of every failure; that is the only way to judge the change from the outside.
 

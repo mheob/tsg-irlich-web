@@ -61,9 +61,9 @@ exec docker run --rm --init \
 	"${volume_args[@]}" \
 	"${IMAGE}" \
 	bash -euc '
-		# The image ships its own Node, which is not the version `.nvmrc` pins and CI installs. It is
-		# unpacked into the home volume once and reused from there afterwards.
-		node_version="$(tr -d "v[:space:]" < /work/.nvmrc)"
+		# The image ships its own Node, which is not the version `.node-version` pins and CI installs. It
+		# is unpacked into the home volume once and reused from there afterwards.
+		node_version="$(tr -d "v[:space:]" < /work/.node-version)"
 		node_dir="${HOME}/.node/${node_version}"
 
 		if [ ! -x "${node_dir}/bin/node" ]; then
