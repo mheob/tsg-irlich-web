@@ -84,7 +84,7 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
 
 			<section className="container mx-auto py-10 md:py-28">
-				<div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+				<div className="flex flex-col gap-6 md:flex-row md:justify-between">
 					<SectionHeader subTitle="News" title="Das Aktuellste von der TSG" />
 					{/* The titles end up in the input and its filter, where stega characters do not belong. */}
 					<CategoryCombobox {...stegaClean(categories)} className="w-full md:w-80 md:shrink-0" />

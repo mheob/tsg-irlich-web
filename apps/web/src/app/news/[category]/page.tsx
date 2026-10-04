@@ -105,7 +105,7 @@ export default async function NewsCategoryPage({
 			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={category.title} />
 
 			<section className="container mx-auto py-10 md:py-28">
-				<div className="flex flex-col gap-6 pb-8 md:flex-row md:items-end md:justify-between md:pb-14">
+				<div className="flex flex-col gap-6 pb-8 md:flex-row md:justify-between md:pb-14">
 					<SectionHeader
 						title={
 							<>
