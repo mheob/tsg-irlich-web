@@ -32,6 +32,10 @@ overrides:
   # @module-federation/dts-plugin (through the Sanity CLI's workbench) pins adm-zip 0.6.0, which
   # allocates whatever uncompressed size an archive declares (GHSA-7q85-xj36-vmfc); 0.6.1 fixes it
   adm-zip: "^0.6.1"
+  # get-uri (through proxy-agent, through @lhci/cli) pins basic-ftp ^5, whose directory-listing
+  # parser backtracks quadratically (GHSA-c475-qrg2-pj4r). Only 6.2.1 fixes it; 6.0's one breaking
+  # change turns off separate transfer hosts by default, and Lighthouse CI never fetches over FTP
+  basic-ftp: "^6.2.1"
   # cve-lite-cli pins better-sqlite3 12, whose install script runs the unmaintained
   # prebuild-install and prints Node's DEP0176 deprecation on every install. 13.x ships the
   # prebuilt bindings inside the package, so nothing is built at install time any more
