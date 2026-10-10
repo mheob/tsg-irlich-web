@@ -5,7 +5,7 @@ import { content, general, meta } from '@/shared/field-groups';
 import { addressField, emailField } from '@/shared/fields/contact';
 import { defaultHeroFields, getHiddenSlugField, introField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
-import { getSinglePagePreview } from '@/shared/previews';
+import { getSinglePagePreview } from '@/utils/previews';
 
 const imprintPage = defineType({
 	fields: [

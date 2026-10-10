@@ -8,8 +8,8 @@ import {
 	getHiddenSlugField,
 } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
-import { getSinglePagePreview } from '@/shared/previews';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
+import { getSinglePagePreview } from '@/utils/previews';
 
 const membershipPage = defineType({
 	fields: [

@@ -5,7 +5,7 @@ import { contact, general, meta } from '@/shared/field-groups';
 import { addressField, emailField, phoneField } from '@/shared/fields/contact';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
-import { getSinglePagePreview } from '@/shared/previews';
+import { getSinglePagePreview } from '@/utils/previews';
 
 const privacyPage = defineType({
 	fields: [
