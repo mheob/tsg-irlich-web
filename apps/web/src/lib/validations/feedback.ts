@@ -2,6 +2,19 @@
 
 import { z } from 'zod';
 
+/** The most screenshots the feedback form accepts, in the upload field and on the server. */
+const MAX_SCREENSHOTS = 5;
+
+// zod validates every element of an array before it checks the array's length, and reports each
+// failing element as an issue of its own without a cap (CVE-2023-54404). A huge payload would
+// therefore allocate one issue per element, so the length is checked first, and the element
+// schema behind the pipe only runs on an array that is short enough.
+const screenshotUrlsSchema = z
+	.custom<string[]>((value) => !Array.isArray(value) || value.length <= MAX_SCREENSHOTS, {
+		message: `Es können höchstens ${MAX_SCREENSHOTS} Screenshots angehängt werden`,
+	})
+	.pipe(z.array(z.string()));
+
 const feedbackFormSchema = z.object({
 	browser: z.enum(['chrome', 'firefox', 'edge', 'safari', 'other']).optional(),
 	description: z
@@ -17,7 +30,7 @@ const feedbackFormSchema = z.object({
 	privacy: z
 		.boolean({ message: 'Bitte akzeptiere die Datenschutzbestimmungen' })
 		.refine((value) => value),
-	screenshotUrls: z.array(z.string()).optional(),
+	screenshotUrls: screenshotUrlsSchema.optional(),
 	title: z
 		.string()
 		.min(5, 'Der Titel muss mindestens 5 Zeichen lang sein')
@@ -41,6 +54,7 @@ interface UploadResponse {
 }
 
 export {
+	MAX_SCREENSHOTS,
 	feedbackFormSchema,
 	type FeedbackFormValues,
 	type LinearIssueResponse,

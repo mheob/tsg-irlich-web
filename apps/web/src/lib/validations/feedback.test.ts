@@ -165,4 +165,45 @@ describe('the feedback form schema', () => {
 
 		expect(result.success).toBe(true);
 	});
+
+	it('accepts five screenshot URLs', () => {
+		const result = feedbackFormSchema.safeParse({
+			...MINIMAL_PAYLOAD,
+			screenshotUrls: Array.from({ length: 5 }, (_, index) => `https://example.com/${index}.png`),
+		});
+
+		expect(result.success).toBe(true);
+	});
+
+	it('rejects six screenshot URLs', () => {
+		const result = feedbackFormSchema.safeParse({
+			...MINIMAL_PAYLOAD,
+			screenshotUrls: Array.from({ length: 6 }, (_, index) => `https://example.com/${index}.png`),
+		});
+
+		expect(result.success).toBe(false);
+		expect(result.error?.issues[0]?.message).toBe(
+			'Es können höchstens 5 Screenshots angehängt werden',
+		);
+	});
+
+	it('rejects a screenshotUrls value that is not an array', () => {
+		const result = feedbackFormSchema.safeParse({
+			...MINIMAL_PAYLOAD,
+			screenshotUrls: 'https://example.com/a.png',
+		});
+
+		expect(result.success).toBe(false);
+	});
+
+	// zod reports every failing element of an array before it checks the array's length, without
+	// a cap (CVE-2023-54404), so a huge payload would allocate one issue per element (WEB-363).
+	it('rejects an oversized screenshotUrls array with a single issue', () => {
+		const result = feedbackFormSchema.safeParse({
+			...MINIMAL_PAYLOAD,
+			screenshotUrls: Array.from({ length: 10_000 }, () => 0),
+		});
+
+		expect(result.error?.issues).toHaveLength(1);
+	});
 });
