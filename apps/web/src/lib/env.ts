@@ -24,6 +24,9 @@ const schemas = {
 		(value) => (value === '' ? undefined : value),
 		z.string().min(1, 'Missing SANITY_API_READ_TOKEN').optional(),
 	),
+	// A robot token with the Editor role. Only the TSG-Echo render route writes with it.
+	SANITY_API_WRITE_TOKEN: z.string().min(1, 'Missing SANITY_API_WRITE_TOKEN'),
+	SANITY_ECHO_RENDER_SECRET: z.string().min(1, 'Missing SANITY_ECHO_RENDER_SECRET'),
 	SANITY_REVALIDATE_SECRET: z.string().min(1, 'Missing SANITY_REVALIDATE_SECRET'),
 	VERCEL_OIDC_TOKEN: z.string().optional(),
 	VERCEL_PROJECT_PRODUCTION_URL: z.string().optional(),
