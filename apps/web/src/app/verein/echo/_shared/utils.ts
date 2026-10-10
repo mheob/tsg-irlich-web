@@ -65,16 +65,17 @@ function getCoverUrl(cover: PageAsset | null | undefined, width: number): string
  *
  * @param page - The page image.
  * @param alt - Its alternative text.
+ * @param id - Its key in the book.
  * @returns The flipbook page, or `undefined` for an image without an asset.
  */
-function toFlipbookPage(page: PageAsset, alt: string): FlipbookPage | undefined {
+function toFlipbookPage(page: PageAsset, alt: string, id: string): FlipbookPage | undefined {
 	const image = toSanityImage(page);
 	const src = urlForImageMax(image, LARGEST_PAGE_WIDTH);
 	if (!src) {
 		return undefined;
 	}
 	const srcSet = PAGE_WIDTHS.map((width) => `${urlForImageMax(image, width)} ${width}w`).join(', ');
-	return { alt, src, srcSet };
+	return { alt, id, src, srcSet };
 }
 
 /**
@@ -85,7 +86,7 @@ function toFlipbookPage(page: PageAsset, alt: string): FlipbookPage | undefined 
  */
 function getFlipbookPages(pages: readonly EchoPageImage[]): FlipbookPage[] {
 	return pages.flatMap((image, index) => {
-		const page = toFlipbookPage(image, `Seite ${index + 1} von ${pages.length}`);
+		const page = toFlipbookPage(image, `Seite ${index + 1} von ${pages.length}`, image._key);
 		return page ? [page] : [];
 	});
 }
@@ -98,7 +99,9 @@ function getFlipbookPages(pages: readonly EchoPageImage[]): FlipbookPage[] {
  * @returns The cover, or `undefined` without an image.
  */
 function getCoverPage(cover?: PageAsset | null, title?: string | null): FlipbookPage | undefined {
-	return cover ? toFlipbookPage(cover, `Titelseite von ${title ?? 'TSG-Echo'}`) : undefined;
+	return cover
+		? toFlipbookPage(cover, `Titelseite von ${title ?? 'TSG-Echo'}`, 'cover')
+		: undefined;
 }
 
 /**

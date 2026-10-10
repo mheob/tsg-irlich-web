@@ -37,11 +37,8 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 	// The engine tears the book down when its children change identity, so the leaves are built once.
 	const leaves = useMemo(
 		() =>
-			pages.map((page, index) => (
-				// Two blank pages of a scan share one image, so the position is the key; the list never
-				// reorders.
-				// oxlint-disable-next-line react/no-array-index-key -- see above
-				<div key={index}>
+			pages.map((page) => (
+				<div key={page.id}>
 					<div className="size-full bg-white">
 						{/* The Sanity CDN delivers every width; the Next.js optimizer would re-encode each page. */}
 						{/* oxlint-disable-next-line nextjs/no-img-element -- see above */}

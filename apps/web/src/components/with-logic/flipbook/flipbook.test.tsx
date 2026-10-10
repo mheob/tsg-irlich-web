@@ -47,6 +47,7 @@ function bookProps(): Partial<HTMLFlipBookProps> {
 
 const PAGES = [1, 2, 3].map((n) => ({
 	alt: `Seite ${n} von 3`,
+	id: `page-${n}`,
 	src: `https://cdn.sanity.io/images/p/d/page-${n}.jpg?w=1600`,
 	srcSet: `https://cdn.sanity.io/images/p/d/page-${n}.jpg?w=800 800w`,
 }));
@@ -167,7 +168,7 @@ describe('the flipbook', () => {
 				label="TSG ECHO 2025 zum Durchblättern"
 				pageHeight={2000}
 				pageWidth={1414}
-				pages={[blank, blank]}
+				pages={[blank, { ...blank, id: 'another-blank' }]}
 			/>,
 		);
 

@@ -22,10 +22,13 @@ vi.mock(import('@gullabs/react-flipbook'), () => ({
 
 const COVER = {
 	alt: 'Titelseite von TSG ECHO 2025',
+	id: 'cover',
 	src: 'https://cdn.sanity.io/c.jpg',
 	srcSet: '',
 };
-const PAGES = [{ alt: 'Seite 1 von 1', src: 'https://cdn.sanity.io/p.jpg', srcSet: '' }];
+const PAGES = [
+	{ alt: 'Seite 1 von 1', id: 'page-1', src: 'https://cdn.sanity.io/p.jpg', srcSet: '' },
+];
 
 function lazyBook() {
 	return (

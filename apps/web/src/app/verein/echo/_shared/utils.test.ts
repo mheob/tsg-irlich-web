@@ -69,6 +69,16 @@ describe('tsg-echo issue helpers', () => {
 		]);
 	});
 
+	// Two blank pages of a scan share one image, so the flipbook keys its leaves by the array key.
+	it('keys every page by its array key, not by its image', () => {
+		const pages = getFlipbookPages([
+			{ ...pageImage('a'), _key: 'first' },
+			{ ...pageImage('a'), _key: 'second' },
+		]);
+
+		expect(pages.map((page) => page.id)).toStrictEqual(['first', 'second']);
+	});
+
 	it('offers every page in three widths and falls back to the largest', () => {
 		const [page] = getFlipbookPages([pageImage('a')]);
 
