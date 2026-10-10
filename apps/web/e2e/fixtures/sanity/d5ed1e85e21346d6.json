@@ -1,0 +1,8 @@
+{
+	"body": {
+		"result": 2,
+		"syncTags": ["s1:kLGmmg"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=count%28*%5B_type+%3D%3D+%27echo.issue%27+%26%26+render.status+%3D%3D+%27done%27+%26%26+defined%28slug.current%29+%26%26+count%28pages%29+%3E+0%5D%29&returnQuery=false"
+}

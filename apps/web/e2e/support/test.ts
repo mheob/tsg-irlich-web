@@ -14,11 +14,21 @@ const ANALYTICS = [
 	'**/va.vercel-scripts.com/**',
 ];
 
+/** The Sanity CDN's images, which the flipbook loads in the browser rather than through `next/image`. */
+const SANITY_IMAGES = 'https://cdn.sanity.io/images/**';
+
+/** The smallest valid PNG: one transparent pixel. */
+const BLANK_PNG = Buffer.from(
+	'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+	'base64',
+);
+
 /**
  * The base test with the browser-side noise silenced.
  *
  * MSW only covers the server, so the requests the browser makes on its own are handled here: the
- * live stream is answered with an empty one, the analytics and Speed Insights beacons are dropped.
+ * live stream is answered with an empty one, the analytics and Speed Insights beacons are dropped,
+ * and the TSG-Echo flipbook's page images get a blank pixel.
  */
 /**
  * The root element carries `scroll-behavior: smooth`, and an animated scroll moves an element out
@@ -48,6 +58,10 @@ const test = base.extend({
 
 		await page.route(LIVE_EVENTS, async (route) => {
 			await route.fulfill({ body: '', contentType: 'text/event-stream' });
+		});
+
+		await page.route(SANITY_IMAGES, async (route) => {
+			await route.fulfill({ body: BLANK_PNG, contentType: 'image/png' });
 		});
 
 		await Promise.all(
