@@ -27,8 +27,24 @@ function external(key: string, title: string, href: string | null): NavigationLi
 	return { _key: key, href, link: null, linkType: 'external', title };
 }
 
-function item(data: NavigationLinkData, children: NavigationLinkData[] = []): NavigationItemData {
-	return { ...data, children };
+function link(data: NavigationLinkData): NavigationItemData {
+	return { ...data, _type: 'mainNavigationLink', children: [] };
+}
+
+function menu(
+	key: string,
+	title: string | null,
+	children: NavigationLinkData[],
+): NavigationItemData {
+	return {
+		_key: key,
+		_type: 'mainNavigationMenu',
+		children,
+		href: null,
+		link: null,
+		linkType: null,
+		title,
+	};
 }
 
 /**
@@ -64,7 +80,7 @@ const NEUWIED = external('neuwied', 'Stadt Neuwied', 'https://www.neuwied.de');
 describe('navigation entries', () => {
 	describe('plain links', () => {
 		it('resolves an internal item through getInternalHref', () => {
-			expect(getNavigationEntries([item(VEREIN)], '/')).toStrictEqual([
+			expect(getNavigationEntries([link(VEREIN)], '/')).toStrictEqual([
 				{
 					kind: 'link',
 					link: {
@@ -80,7 +96,7 @@ describe('navigation entries', () => {
 		});
 
 		it('takes the href of an external item from the data and never marks it active', () => {
-			expect(getNavigationEntries([item(NEUWIED)], 'https://www.neuwied.de')).toStrictEqual([
+			expect(getNavigationEntries([link(NEUWIED)], 'https://www.neuwied.de')).toStrictEqual([
 				{
 					kind: 'link',
 					link: {
@@ -97,7 +113,7 @@ describe('navigation entries', () => {
 
 		// Before the `main-navigation-items` migration no entry carries a `linkType`.
 		it('treats an item without link type as internal', () => {
-			const [entry] = getNavigationEntries([item({ ...VEREIN, linkType: null })], '/');
+			const [entry] = getNavigationEntries([link({ ...VEREIN, linkType: null })], '/');
 
 			expect(entry).toStrictEqual({
 				kind: 'link',
@@ -114,7 +130,7 @@ describe('navigation entries', () => {
 
 		// Switching an entry to external in the studio leaves the hidden page reference behind.
 		it('follows the href of an external item even when a stale page reference is left over', () => {
-			const [entry] = getNavigationEntries([item({ ...NEUWIED, link: VEREIN.link })], '/verein');
+			const [entry] = getNavigationEntries([link({ ...NEUWIED, link: VEREIN.link })], '/verein');
 
 			expect(entry).toStrictEqual({
 				kind: 'link',
@@ -132,11 +148,11 @@ describe('navigation entries', () => {
 		it('drops items without a resolvable href or without a title', () => {
 			const entries = getNavigationEntries(
 				[
-					item(internal('no-slug', 'Kontakt', { slug: null, type: 'contact' })),
-					item({ ...VEREIN, _key: 'no-link', link: null }),
-					item(external('no-href', 'Leer', null)),
-					item({ ...VEREIN, _key: 'no-title', title: null }),
-					item(ANGEBOT),
+					link(internal('no-slug', 'Kontakt', { slug: null, type: 'contact' })),
+					link({ ...VEREIN, _key: 'no-link', link: null }),
+					link(external('no-href', 'Leer', null)),
+					link({ ...VEREIN, _key: 'no-title', title: null }),
+					link(ANGEBOT),
 				],
 				'/',
 			);
@@ -145,55 +161,49 @@ describe('navigation entries', () => {
 		});
 	});
 
+	describe('active state', () => {
+		it('matches the home page only exactly', () => {
+			const [onHome] = getNavigationEntries([link(HOME)], '/');
+			const [elsewhere] = getNavigationEntries([link(HOME)], '/verein');
+
+			expect(asLink(onHome).isActive).toBe(true);
+			expect(asLink(elsewhere).isActive).toBe(false);
+		});
+
+		it('marks an item active on a page below it', () => {
+			const [entry] = getNavigationEntries([link(ANGEBOT)], '/angebot/fussball');
+
+			expect(asLink(entry).isActive).toBe(true);
+		});
+
+		it('does not match a page that merely starts with the same letters', () => {
+			const [entry] = getNavigationEntries([link(NEWS)], '/newsletter');
+
+			expect(asLink(entry).isActive).toBe(false);
+		});
+	});
+
 	describe('dropdown texts and columns', () => {
-		it('passes the description of a sub-entry through', () => {
+		it('passes the description of a child through', () => {
 			const entry = asGroup(
 				getNavigationEntries(
-					[item(VEREIN, [{ ...KONTAKT, description: 'So erreichst du uns' }])],
+					[menu('verein', 'Verein', [VEREIN, { ...KONTAKT, description: 'So erreichst du uns' }])],
 					'/',
 				)[0],
 			);
 
-			expect(entry.links.map((link) => link.description)).toStrictEqual([
+			expect(entry.links.map((entryLink) => entryLink.description)).toStrictEqual([
 				null,
 				'So erreichst du uns',
 			]);
 		});
 
-		it('titles and describes the overview with the fields of its item', () => {
-			const entry = asGroup(
-				getNavigationEntries(
-					[
-						{
-							...item(VEREIN, [KONTAKT]),
-							overviewDescription: 'Alles über die TSG',
-							overviewTitle: 'Unser Verein',
-						},
-					],
-					'/',
-				)[0],
-			);
-
-			expect(entry.links[0]).toMatchObject({
-				description: 'Alles über die TSG',
-				title: 'Unser Verein',
-			});
-		});
-
-		it.each([undefined, null, '', '   '])(
-			'falls back to "Übersicht" when the overview title is %j',
-			(overviewTitle) => {
-				const entry = asGroup(
-					getNavigationEntries([{ ...item(VEREIN, [KONTAKT]), overviewTitle }], '/')[0],
-				);
-
-				expect(entry.links[0]?.title).toBe('Übersicht');
-			},
-		);
-
-		it('renders a group in one column unless its item asks for two', () => {
+		it('renders a menu in one column unless it asks for two', () => {
 			const [oneColumn, twoColumns] = getNavigationEntries(
-				[item(VEREIN, [KONTAKT]), { ...item(NEWS, [FUSSBALL]), hasTwoColumns: true }],
+				[
+					menu('verein', 'Verein', [KONTAKT]),
+					{ ...menu('news', 'Aktuelles', [FUSSBALL]), hasTwoColumns: true },
+				],
 				'/',
 			);
 
@@ -202,31 +212,13 @@ describe('navigation entries', () => {
 		});
 	});
 
-	describe('active state', () => {
-		it('matches the home page only exactly', () => {
-			const [onHome] = getNavigationEntries([item(HOME)], '/');
-			const [elsewhere] = getNavigationEntries([item(HOME)], '/verein');
-
-			expect(asLink(onHome).isActive).toBe(true);
-			expect(asLink(elsewhere).isActive).toBe(false);
-		});
-
-		it('marks an item active on a page below it', () => {
-			const [entry] = getNavigationEntries([item(ANGEBOT)], '/angebot/fussball');
-
-			expect(asLink(entry).isActive).toBe(true);
-		});
-
-		it('does not match a page that merely starts with the same letters', () => {
-			const [entry] = getNavigationEntries([item(NEWS)], '/newsletter');
-
-			expect(asLink(entry).isActive).toBe(false);
-		});
-	});
-
-	describe('groups', () => {
-		it('puts "Übersicht" for the parent page first, then the children in their order', () => {
-			const [entry] = getNavigationEntries([item(VEREIN, [KONTAKT, NEUWIED])], '/');
+	describe('menus', () => {
+		// WEB-371: a menu has no target of its own, so nothing is added in front of its children.
+		it('lists exactly its children, in their order', () => {
+			const [entry] = getNavigationEntries(
+				[menu('verein', 'Verein', [VEREIN, KONTAKT, NEUWIED])],
+				'/',
+			);
 
 			expect(entry).toStrictEqual({
 				hasTwoColumns: false,
@@ -239,8 +231,8 @@ describe('navigation entries', () => {
 						href: '/verein',
 						isActive: false,
 						isExternal: false,
-						key: 'verein-overview',
-						title: 'Übersicht',
+						key: 'verein',
+						title: 'Verein',
 					},
 					{
 						description: null,
@@ -263,68 +255,54 @@ describe('navigation entries', () => {
 			});
 		});
 
-		it('keeps the children but leaves out "Übersicht" when the parent page cannot be resolved', () => {
-			const [entry] = getNavigationEntries([item({ ...VEREIN, link: null }, [KONTAKT])], '/');
+		// Review focus 2.
+		it('drops a menu none of whose children can be resolved', () => {
+			const broken = internal('broken', 'Kaputt', { slug: null, type: 'contact' });
 
-			expect(asGroup(entry).links.map((link) => link.title)).toStrictEqual(['Kontakt']);
+			expect(getNavigationEntries([menu('verein', 'Verein', [broken])], '/')).toStrictEqual([]);
 		});
 
-		it('falls back to a plain link when none of the children can be resolved', () => {
+		it('drops a menu without a title, since its trigger would have no label', () => {
+			expect(getNavigationEntries([menu('verein', null, [KONTAKT])], '/')).toStrictEqual([]);
+		});
+
+		it('marks only the longest matching child active', () => {
 			const [entry] = getNavigationEntries(
-				[item(VEREIN, [internal('broken', 'Kaputt', { slug: null, type: 'contact' })])],
-				'/',
+				[menu('news', 'Aktuelles', [NEWS, FUSSBALL])],
+				'/news/fussball',
 			);
 
-			expect(entry.kind).toBe('link');
-		});
-
-		it('drops a group without a title, since its trigger would have no label', () => {
-			expect(
-				getNavigationEntries([item({ ...VEREIN, title: null }, [KONTAKT])], '/'),
-			).toStrictEqual([]);
-		});
-
-		it('marks only the longest matching link active, so a child beats "Übersicht"', () => {
-			const [entry] = getNavigationEntries([item(NEWS, [FUSSBALL])], '/news/fussball');
-
 			expect(asGroup(entry).isActive).toBe(true);
-			expect(asGroup(entry).links.map((link) => [link.title, link.isActive])).toStrictEqual([
-				['Übersicht', false],
+			expect(
+				asGroup(entry).links.map((entryLink) => [entryLink.title, entryLink.isActive]),
+			).toStrictEqual([
+				['Aktuelles', false],
 				['Fußball', true],
 			]);
 		});
 
-		it('marks "Übersicht" active on the parent page itself', () => {
-			const [entry] = getNavigationEntries([item(NEWS, [FUSSBALL])], '/news');
-
-			expect(asGroup(entry).links.map((link) => [link.title, link.isActive])).toStrictEqual([
-				['Übersicht', true],
-				['Fußball', false],
-			]);
-		});
-
-		it('marks the group active through a child that lives elsewhere', () => {
-			const [entry] = getNavigationEntries([item(VEREIN, [KONTAKT])], '/kontakt');
+		it('marks the menu active through any of its children', () => {
+			const [entry] = getNavigationEntries([menu('verein', 'Verein', [KONTAKT])], '/kontakt');
 
 			expect(asGroup(entry).isActive).toBe(true);
 		});
 
-		it('gives exactly one link aria-current when a child points at the parent page', () => {
-			const [entry] = getNavigationEntries(
-				[item(VEREIN, [{ ...VEREIN, _key: 'verein-copy', title: 'Über uns' }])],
-				'/verein',
-			);
-
-			expect(asGroup(entry).links.map((link) => [link.title, link.isActive])).toStrictEqual([
-				['Übersicht', true],
-				['Über uns', false],
-			]);
-		});
-
-		it('leaves the group inactive when none of its links matches', () => {
-			const [entry] = getNavigationEntries([item(VEREIN, [KONTAKT])], '/angebot');
+		it('leaves the menu inactive when none of its children matches', () => {
+			const [entry] = getNavigationEntries([menu('verein', 'Verein', [KONTAKT])], '/angebot');
 
 			expect(asGroup(entry).isActive).toBe(false);
+		});
+	});
+
+	// Review focus 1: production keeps the old type until the operator migrates at the release.
+	describe('entries not migrated yet', () => {
+		it('renders an old entry as a link, also when it still has children', () => {
+			const [entry] = getNavigationEntries(
+				[{ ...VEREIN, _type: 'mainNavigationItem', children: [KONTAKT] }],
+				'/',
+			);
+
+			expect(asLink(entry)).toMatchObject({ href: '/verein', title: 'Verein' });
 		});
 	});
 });

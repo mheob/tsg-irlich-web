@@ -88,16 +88,24 @@ A slug in Sanity only holds the **last** segment of the URL, so no link can be b
 
 The GROQ side lives in `src/lib/sanity/queries/index.ts`:
 
-- `internalLinkTarget` projects everything the resolver needs and is used wherever a page reference is queried as a field: the `internalLink` of the imprint contact form, and the `link` of every `mainNavigationItem` and `navigationLink` in the main navigation.
+- `internalLinkTarget` projects everything the resolver needs and is used wherever a page reference is queried as a field: the `internalLink` of the imprint contact form, and the `link` of every `mainNavigationLink` and `navigationLink` in the main navigation.
 - `blockContent` does the same for the `internalLink` **marks** of a portable text field and has to be applied to every `blockContent` that is rendered, including nested ones (`grid.items[]`, `imageCard.description`).
 
 The resolved target is added as `target` next to the untouched `link` reference, and empty arrays are coalesced, so that the query result still matches the generated schema types.
 
 ## Main navigation
 
-`site-settings.mainNavigation` holds `mainNavigationItem` entries (title, `linkType`, a page `link` or an external `href`, optional `children` of type `navigationLink` with an optional `description`), and `mainNavigationQuery` reads them. An item with children also carries the dropdown settings: `overviewTitle` and `overviewDescription` for the "Übersicht" entry, and `hasTwoColumns`. `src/components/with-logic/navigation/` renders them:
+`site-settings.mainNavigation` holds two kinds of first-level entries (WEB-371):
 
-- `getNavigationEntries` (`navigation-entries.ts`) is the only place that resolves hrefs and the active state. An entry with children becomes a group led by an "Übersicht" link to its own page, and inside a group only the link with the longest matching href is active. A missing `linkType` counts as internal.
+- a `mainNavigationLink` (title, `linkType`, a page `link` or an external `href`), and
+- a `mainNavigationMenu` (title, `children` of type `navigationLink` with an optional `description`, and `hasTwoColumns`).
+
+`mainNavigationQuery` reads them with their `_type`. `src/components/with-logic/navigation/` renders them:
+
+- `getNavigationEntries` (`navigation-entries.ts`) is the only place that resolves hrefs and the active state.
+  - A menu becomes a group of exactly its children. There is no automatic "Übersicht" entry; the page belongs into the menu as a child.
+  - A menu none of whose children resolves is dropped. Every other type becomes a link, including a `mainNavigationItem` from before the migration.
+  - Inside a group only the link with the longest matching href is active. A missing `linkType` counts as internal.
 - `desktop-navigation.tsx` builds the bar on Base UI's `NavigationMenu` (`src/components/ui/navigation-menu.tsx`). A panel shows each link's sub-text under its title and lays the links out in two columns when `hasTwoColumns` is set. `NavigationAnchor` names such a link by its title (`aria-labelledby`) and describes it by the sub-text (`aria-describedby`), so tests keep finding it by its title. The mobile menu shows neither. Base UI renders the root as `<nav>`, so it gets `render={<div />}` inside the shell's landmark. The panel is portalled to the end of `<body>`, which puts its links outside the landmark: tests look for them on page level.
 - The bar holds the open group itself. Base UI only closes a panel when the focus leaves the whole menu, so the bar closes it when another item of the bar takes the focus, and below the `lg` breakpoint. The panels are positioned `fixed`, since the header is fixed.
 - `mobile-navigation.tsx` expands groups on Base UI's `Collapsible`. Their panels are `keepMounted`, so the pages behind them are in the server-rendered HTML while a collapsed panel stays `hidden`.
@@ -255,6 +263,8 @@ When a comparison fails in CI, the `playwright-report` artifact carries the expe
 The `webServer` command deletes `.next/cache/fetch-cache` before it builds. Otherwise `next build` answers every query it already made in an earlier build from that cache, and the request never reaches `preload.ts`. A recording would then leave those fixtures out: after all fixtures were deleted for WEB-341, it wrote 41 of 56. A mocked run would render stale data even where a fixture is missing. The same holds inside the screenshot container, whose `.next` lives in a named volume. The Turbopack cache and `node_modules` stay warm. Only CI never needed this, because it starts without `.next`.
 
 To refresh every fixture at once, delete `e2e/fixtures/sanity/*.json` and record again. That also drops fixtures no page requests any more, for instance articles that have left the overview.
+
+One fixture is maintained by hand: the main menu (the file whose `body.result` holds `mainNavigation`). `navigation.spec.ts` needs the test menu from WEB-343, "Verein" with "Übersicht", "Kontakt" and the external "Stadt Neuwied", which `development` no longer holds. A recording overwrites it with today's menu, so restore it from git afterwards. If the menu query changes, its key changes too: move the old body to the new file name in the new shape rather than recording it (WEB-371).
 
 ### Writing a spec
 

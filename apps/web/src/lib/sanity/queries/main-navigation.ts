@@ -2,7 +2,7 @@ import { defineQuery } from 'next-sanity';
 
 import { internalLinkTarget } from '@/lib/sanity/queries';
 
-/** The fields a main navigation item and each of its children share. */
+/** The fields a first-level entry and each child of a menu share. */
 const navigationLinkFields = /* groq */ `
 	_key,
 	title,
@@ -14,9 +14,8 @@ const navigationLinkFields = /* groq */ `
 export const mainNavigationQuery = defineQuery(`
 	*[_type == 'site-settings'][0] {
 		mainNavigation[] {
+			_type,
 			${navigationLinkFields},
-			overviewTitle,
-			overviewDescription,
 			hasTwoColumns,
 			"children": coalesce(children[] { ${navigationLinkFields}, description }, [])
 		}

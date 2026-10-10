@@ -1,7 +1,6 @@
 import type { ValidationContext } from 'sanity';
 import { describe, expect, it, vi } from 'vite-plus/test';
 
-import mainNavigationItem, { prepareMainNavigationItem } from './main-navigation-item';
 import navigationLink, {
 	isExternalLink,
 	prepareNavigationLink,
@@ -11,16 +10,6 @@ import navigationLink, {
 
 function withParent(parent?: Record<string, unknown>): ValidationContext {
 	return { parent } as unknown as ValidationContext;
-}
-
-interface SchemaField {
-	fieldset?: string;
-	hidden?: (context: { parent: unknown }) => boolean;
-	name: string;
-}
-
-function mainNavigationFields(): SchemaField[] {
-	return (mainNavigationItem as unknown as { fields: SchemaField[] }).fields;
 }
 
 function fieldNames(type: unknown): string[] {
@@ -134,26 +123,6 @@ describe('navigation link types', () => {
 				}),
 			).toStrictEqual({ subtitle: 'https://www.neuwied.de', title: 'Stadt Neuwied' });
 		});
-
-		it('counts the children of a main navigation item in singular and plural', () => {
-			expect(
-				prepareMainNavigationItem({ children: [{}], linkType: 'internal', title: 'Verein' }),
-			).toStrictEqual({ subtitle: 'Interne Seite · 1 Unterpunkt', title: 'Verein' });
-			expect(
-				prepareMainNavigationItem({
-					children: [{}, {}, {}],
-					linkType: 'internal',
-					title: 'Verein',
-				}),
-			).toStrictEqual({ subtitle: 'Interne Seite · 3 Unterpunkte', title: 'Verein' });
-		});
-
-		it('leaves the child count out when a main navigation item has none', () => {
-			expect(prepareMainNavigationItem({ linkType: 'internal', title: 'Home' })).toStrictEqual({
-				subtitle: 'Interne Seite',
-				title: 'Home',
-			});
-		});
 	});
 
 	describe('fields', () => {
@@ -166,39 +135,5 @@ describe('navigation link types', () => {
 				'description',
 			]);
 		});
-
-		it('adds the children and the dropdown settings to a main navigation item', () => {
-			expect(fieldNames(mainNavigationItem)).toStrictEqual([
-				'title',
-				'linkType',
-				'link',
-				'href',
-				'children',
-				'overviewTitle',
-				'overviewDescription',
-				'hasTwoColumns',
-			]);
-		});
-
-		it('groups the children and the dropdown settings in one fieldset', () => {
-			expect(
-				mainNavigationFields()
-					.filter((field) => field.fieldset === 'dropdown')
-					.map((field) => field.name),
-			).toStrictEqual(['children', 'overviewTitle', 'overviewDescription', 'hasTwoColumns']);
-		});
-
-		// The overview entry and the columns only exist once an item has children, so the fields
-		// stay out of the editor's way until then.
-		it.each(['overviewTitle', 'overviewDescription', 'hasTwoColumns'])(
-			'hides %s until the item has children',
-			(name) => {
-				const field = mainNavigationFields().find((candidate) => candidate.name === name);
-
-				expect(field?.hidden?.({ parent: {} })).toBe(true);
-				expect(field?.hidden?.({ parent: { children: [] } })).toBe(true);
-				expect(field?.hidden?.({ parent: { children: [{ _key: 'chronik' }] } })).toBe(false);
-			},
-		);
 	});
 });

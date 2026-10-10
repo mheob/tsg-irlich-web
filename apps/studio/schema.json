@@ -2166,7 +2166,7 @@
 		}
 	},
 	{
-		"name": "mainNavigationItem",
+		"name": "mainNavigationMenu",
 		"type": "type",
 		"value": {
 			"type": "object",
@@ -2175,7 +2175,59 @@
 					"type": "objectAttribute",
 					"value": {
 						"type": "string",
-						"value": "mainNavigationItem"
+						"value": "mainNavigationMenu"
+					}
+				},
+				"title": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"children": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "array",
+						"of": {
+							"type": "object",
+							"attributes": {
+								"_key": {
+									"type": "objectAttribute",
+									"value": {
+										"type": "string"
+									}
+								}
+							},
+							"rest": {
+								"type": "inline",
+								"name": "navigationLink"
+							}
+						}
+					},
+					"optional": true
+				},
+				"hasTwoColumns": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "mainNavigationLink",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "mainNavigationLink"
 					}
 				},
 				"title": {
@@ -2287,49 +2339,6 @@
 					"type": "objectAttribute",
 					"value": {
 						"type": "string"
-					},
-					"optional": true
-				},
-				"children": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "array",
-						"of": {
-							"type": "object",
-							"attributes": {
-								"_key": {
-									"type": "objectAttribute",
-									"value": {
-										"type": "string"
-									}
-								}
-							},
-							"rest": {
-								"type": "inline",
-								"name": "navigationLink"
-							}
-						}
-					},
-					"optional": true
-				},
-				"overviewTitle": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					},
-					"optional": true
-				},
-				"overviewDescription": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					},
-					"optional": true
-				},
-				"hasTwoColumns": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "boolean"
 					},
 					"optional": true
 				}
@@ -2906,19 +2915,39 @@
 				"value": {
 					"type": "array",
 					"of": {
-						"type": "object",
-						"attributes": {
-							"_key": {
-								"type": "objectAttribute",
-								"value": {
-									"type": "string"
+						"type": "union",
+						"of": [
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "mainNavigationLink"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "mainNavigationMenu"
 								}
 							}
-						},
-						"rest": {
-							"type": "inline",
-							"name": "mainNavigationItem"
-						}
+						]
 					}
 				},
 				"optional": false

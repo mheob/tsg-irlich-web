@@ -1,9 +1,7 @@
 import { getInternalHref, type InternalLinkTarget } from '@/utils/links';
 
-/** Label of the link a group adds for its own page, ahead of its children. */
-const OVERVIEW_TITLE = 'Übersicht';
-
 const EXTERNAL_LINK_TYPE = 'external';
+const MENU_TYPE = 'mainNavigationMenu';
 const ROOT_PATH = '/';
 
 /**
@@ -68,7 +66,8 @@ function toLink(data: NavigationLinkData): NavigationLink | undefined {
 
 /**
  * Marks the link with the longest matching href active and every other one inactive, so that on
- * `/verein/chronik` only "Chronik" is active and not "Übersicht" as well. A tie goes to the first.
+ * `/verein/chronik` only "Chronik" is active and not "Über uns" on `/verein` as well. A tie goes to
+ * the first.
  *
  * @param links - The links of one group.
  * @param pathname - The current path.
@@ -84,46 +83,28 @@ function markLongestMatch(links: NavigationLink[], pathname: string): Navigation
 }
 
 /**
- * Builds the entry for one item of the main navigation.
+ * Turns a menu into a group of its children. A menu has no target of its own (WEB-371).
  *
- * @param item - One item of the query result.
+ * @param item - The menu, with its title already checked.
  * @param pathname - The current path.
- * @returns A group if at least one child resolves, a plain link otherwise, or `undefined` if the
- *   item can be neither.
+ * @returns The group, or `undefined` when none of its children can be rendered.
  */
-function toEntry(item: NavigationItemData, pathname: string): NavigationEntry | undefined {
-	if (!item.title) {
+function toGroup(
+	item: NavigationItemData & { title: string },
+	pathname: string,
+): NavigationEntry | undefined {
+	const links = markLongestMatch(
+		item.children
+			.map((child) => toLink(child))
+			.filter((entryLink): entryLink is NavigationLink => entryLink !== undefined),
+		pathname,
+	);
+	if (links.length === 0) {
 		return undefined;
 	}
-
-	const parent = toLink(item);
-	const children = item.children
-		.map((child) => toLink(child))
-		.filter((link): link is NavigationLink => link !== undefined);
-
-	if (children.length === 0) {
-		return parent
-			? { kind: 'link', link: { ...parent, isActive: isCurrent(parent, pathname) } }
-			: undefined;
-	}
-
-	// The overview leads to the item's own page; its title and sub-text come from the item's dropdown
-	// settings, not from the item itself, which labels the trigger.
-	const overview = parent
-		? [
-				{
-					...parent,
-					description: nonBlank(item.overviewDescription),
-					key: `${parent.key}-overview`,
-					title: nonBlank(item.overviewTitle) ?? OVERVIEW_TITLE,
-				},
-			]
-		: [];
-	const links = markLongestMatch([...overview, ...children], pathname);
-
 	return {
 		hasTwoColumns: item.hasTwoColumns === true,
-		isActive: links.some((link) => link.isActive),
+		isActive: links.some((entryLink) => entryLink.isActive),
 		key: item._key,
 		kind: 'group',
 		links,
@@ -132,8 +113,29 @@ function toEntry(item: NavigationItemData, pathname: string): NavigationEntry | 
 }
 
 /**
+ * Turns one entry of the main menu into what both menus render. A menu becomes a group, anything
+ * else a link, including an old `mainNavigationItem` that was not migrated yet.
+ *
+ * @param item - The entry from `mainNavigationQuery`.
+ * @param pathname - The current path.
+ * @returns The entry, or `undefined` when it cannot be rendered.
+ */
+function toEntry(item: NavigationItemData, pathname: string): NavigationEntry | undefined {
+	if (!item.title) {
+		return undefined;
+	}
+	if (item._type === MENU_TYPE) {
+		return toGroup({ ...item, title: item.title }, pathname);
+	}
+	const target = toLink(item);
+	return target
+		? { kind: 'link', link: { ...target, isActive: isCurrent(target, pathname) } }
+		: undefined;
+}
+
+/**
  * Turns the main navigation from Sanity into what both menus render: resolved hrefs, the active
- * state, and a group with its "Übersicht" link wherever an item has children.
+ * state, and a group for every menu.
  *
  * @param items - `mainNavigation` from `mainNavigationQuery`.
  * @param pathname - The current path from `usePathname()`.
@@ -158,10 +160,9 @@ interface NavigationLinkData {
 }
 
 interface NavigationItemData extends NavigationLinkData {
+	_type: string;
 	children: readonly NavigationLinkData[];
 	hasTwoColumns?: boolean | null;
-	overviewDescription?: string | null;
-	overviewTitle?: string | null;
 }
 
 interface NavigationLink {
@@ -190,7 +191,7 @@ interface NavigationGroupEntry {
 
 type NavigationEntry = NavigationGroupEntry | NavigationLinkEntry;
 
-export { getNavigationEntries, OVERVIEW_TITLE };
+export { getNavigationEntries };
 export type {
 	NavigationEntry,
 	NavigationGroupEntry,

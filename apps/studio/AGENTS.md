@@ -108,6 +108,15 @@ The editors then review the intros in the release and publish it as a whole. Arc
 
 **Privacy.** An uploaded asset is public on `cdn.sanity.io` from the moment of the upload, even while its document waits in the release. Its URL is not guessable, but the dataset is no place for test copies of real issues: try the script with synthetic PDFs.
 
+## Main menu
+
+`site-settings.mainNavigation` holds two kinds of first-level entries, which "Hinzufügen" offers by name (WEB-371):
+
+- `mainNavigationLink` ("Link"): a title and a target, a page or an external URL, with no children.
+- `mainNavigationMenu` ("Menü"): a title, at least one child (`navigationLink`, with an optional sub-text for the desktop dropdown) and "Zweispaltig". A menu has no target of its own; the page belongs into it as a child.
+
+The migration `main-navigation-menus` turned the earlier `mainNavigationItem` entries into these. An entry with children became a menu, and its former target became the first child, titled like the old "Übersicht" link. It is idempotent and runs like every migration here, `development` first.
+
 ## Content migrations
 
 A schema change that moves existing data comes with a migration in `migrations/<id>/index.ts` (`defineMigration` from `sanity/migrate`), next to a test for its pure parts. `sanity migration run` does a dry run by default and needs both the project and the dataset:

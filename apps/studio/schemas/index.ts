@@ -24,7 +24,8 @@ import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
 import imageCard from './objects/image-card';
 import internalLink from './objects/internal-link';
-import mainNavigationItem from './objects/main-navigation-item';
+import mainNavigationLink from './objects/main-navigation-link';
+import mainNavigationMenu from './objects/main-navigation-menu';
 import metFields from './objects/meta';
 import navigationLink from './objects/navigation-link';
 import simpleBlockContent from './objects/simple-block-content';
@@ -85,7 +86,8 @@ export const schemaTypes = [
 	externalLink,
 	imageCard,
 	internalLink,
-	mainNavigationItem,
+	mainNavigationLink,
+	mainNavigationMenu,
 	metFields,
 	navigationLink,
 	simpleBlockContent,
