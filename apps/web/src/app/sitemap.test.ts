@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 import sitemap from '@/app/sitemap';
 import type { client } from '@/lib/sanity/client';
 import {
+	sitemapEchoIssuesQuery,
 	sitemapGroupsQuery,
 	sitemapNewsArticlesQuery,
 	sitemapNewsCategoriesQuery,
@@ -29,10 +30,16 @@ const GROUP = { _type: 'group.soccer', lastModified: '2026-01-01T10:00:00Z', slu
 interface SanityResults {
 	articles?: unknown[];
 	categories?: unknown[];
+	echoIssues?: unknown[];
 	groups?: unknown[];
 }
 
-function mockSanity({ articles = [], categories = [], groups = [] }: SanityResults): void {
+function mockSanity({
+	articles = [],
+	categories = [],
+	echoIssues = [],
+	groups = [],
+}: SanityResults): void {
 	// The three queries run inside one `Promise.all`, so keying on the query keeps the fixtures
 	// readable and independent of the order they resolve in.
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
@@ -40,6 +47,7 @@ function mockSanity({ articles = [], categories = [], groups = [] }: SanityResul
 		if (query === sitemapNewsArticlesQuery) return articles;
 		if (query === sitemapNewsCategoriesQuery) return categories;
 		if (query === sitemapGroupsQuery) return groups;
+		if (query === sitemapEchoIssuesQuery) return echoIssues;
 		throw new Error(`unexpected query: ${query}`);
 	});
 }
@@ -61,6 +69,7 @@ describe(sitemap, () => {
 			'http://localhost:3000/angebot',
 			'http://localhost:3000/news',
 			'http://localhost:3000/verein',
+			'http://localhost:3000/verein/echo',
 			'http://localhost:3000/kontakt',
 			'http://localhost:3000/kontakt/feedback',
 			'http://localhost:3000/mitgliedschaft',
@@ -143,6 +152,23 @@ describe(sitemap, () => {
 		const entries = await urls({ articles: [{ ...ARTICLE, ...overrides }] });
 
 		expect(entries.some((url) => url.includes('sommerfest'))).toBe(false);
+	});
+
+	it('lists a tsg-echo issue below the archive', async () => {
+		const entries = await urls({
+			echoIssues: [{ lastModified: '2026-10-10T10:00:00Z', slug: 'tsg-echo-2025' }],
+		});
+
+		expect(entries).toContain('http://localhost:3000/verein/echo/tsg-echo-2025');
+	});
+
+	// Review focus 1: no finished issue, no entry beyond the archive.
+	it('lists only the archive without any finished issue', async () => {
+		const entries = await urls({ echoIssues: [] });
+
+		expect(entries.filter((url) => url.includes('/verein/echo'))).toStrictEqual([
+			'http://localhost:3000/verein/echo',
+		]);
 	});
 
 	it('orders dynamic entries after the static ones', async () => {

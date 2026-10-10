@@ -2,27 +2,30 @@ import type { MetadataRoute } from 'next';
 
 import { client } from '@/lib/sanity/client';
 import {
+	sitemapEchoIssuesQuery,
 	sitemapGroupsQuery,
 	sitemapNewsArticlesQuery,
 	sitemapNewsCategoriesQuery,
 } from '@/lib/sanity/queries/sitemap';
 import type {
+	SitemapEchoIssuesQueryResult,
 	SitemapGroupsQueryResult,
 	SitemapNewsArticlesQueryResult,
 	SitemapNewsCategoriesQueryResult,
 } from '@/types/sanity.types';
 import { groupSections } from '@/utils/groups';
-import { getInternalHref } from '@/utils/links';
+import { ECHO_OVERVIEW_PATH, getEchoIssuePath, getInternalHref } from '@/utils/links';
 import { getBaseUrl } from '@/utils/url';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const baseUrl = getBaseUrl();
 
 	// Fetch dynamic content from Sanity
-	const [newsArticles, newsCategories, groups] = await Promise.all([
+	const [newsArticles, newsCategories, groups, echoIssues] = await Promise.all([
 		client.fetch<SitemapNewsArticlesQueryResult>(sitemapNewsArticlesQuery),
 		client.fetch<SitemapNewsCategoriesQueryResult>(sitemapNewsCategoriesQuery),
 		client.fetch<SitemapGroupsQueryResult>(sitemapGroupsQuery),
+		client.fetch<SitemapEchoIssuesQueryResult>(sitemapEchoIssuesQuery),
 	]);
 
 	// Static pages
@@ -46,6 +49,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			changeFrequency: 'monthly',
 			priority: 0.7,
 			url: `${baseUrl}/verein`,
+		},
+		{
+			changeFrequency: 'monthly',
+			priority: 0.6,
+			url: `${baseUrl}${ECHO_OVERVIEW_PATH}`,
 		},
 		{
 			changeFrequency: 'monthly',
@@ -123,11 +131,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			url: `${baseUrl}/news/${article.category}/${article.slug}`,
 		}));
 
+	// TSG-Echo issues (e.g., /verein/echo/tsg-echo-2025)
+	const echoIssuePages: MetadataRoute.Sitemap = echoIssues.map((echoIssue) => ({
+		changeFrequency: 'yearly' as const,
+		lastModified: new Date(echoIssue.lastModified),
+		priority: 0.4,
+		url: `${baseUrl}${getEchoIssuePath(echoIssue.slug)}`,
+	}));
+
 	return [
 		...staticPages,
 		...groupCategoryPages,
 		...groupPages,
 		...newsCategoryPages,
 		...newsArticlePages,
+		...echoIssuePages,
 	];
 }

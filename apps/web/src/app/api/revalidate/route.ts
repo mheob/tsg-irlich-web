@@ -6,6 +6,7 @@ import type { NextRequest } from 'next/server';
 
 import { env } from '@/lib/env';
 import { groupSections } from '@/utils/groups';
+import { ECHO_OVERVIEW_PATH } from '@/utils/links';
 
 interface WebhookBody {
 	_type: string;
@@ -48,6 +49,15 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	},
 	departmentsPage: () => {
 		revalidatePath('/angebot');
+	},
+	// An issue appears in the archive and has its own page. The slug of an earlier version is not
+	// in the payload, so the whole issue route is revalidated.
+	'echo.issue': () => {
+		revalidatePath(ECHO_OVERVIEW_PATH);
+		revalidatePath(`${ECHO_OVERVIEW_PATH}/[slug]`, 'page');
+	},
+	echoOverview: () => {
+		revalidatePath(ECHO_OVERVIEW_PATH);
 	},
 	home: () => {
 		revalidatePath('/');
