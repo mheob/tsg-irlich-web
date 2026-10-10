@@ -2,7 +2,14 @@ import { describe, expect, it, vi } from 'vite-plus/test';
 
 import type { client } from '@/lib/sanity/client';
 
-import { getCoverPage, getFlipbookPages, getIssueYear, getPageSize, getPdfDownload } from './utils';
+import {
+	getCoverPage,
+	getCoverUrl,
+	getFlipbookPages,
+	getIssueYear,
+	getPageSize,
+	getPdfDownload,
+} from './utils';
 import type { EchoPageImage } from './utils';
 
 // `@sanity/image-url` reads the project and the dataset from the client's config to build a URL.
@@ -74,6 +81,14 @@ describe('tsg-echo issue helpers', () => {
 
 	it('names the cover after the issue', () => {
 		expect(getCoverPage(pageImage('a'), 'TSG ECHO 2025')?.alt).toBe('Titelseite von TSG ECHO 2025');
+	});
+
+	it('builds the cover in the width a card asks for', () => {
+		expect(getCoverUrl({ _type: 'image', asset: pageImage('a').asset }, 600)).toContain('w=600');
+	});
+
+	it('has no cover URL without an asset', () => {
+		expect(getCoverUrl({ _type: 'image', asset: null }, 600)).toBeUndefined();
 	});
 
 	it('has no cover without an image', () => {

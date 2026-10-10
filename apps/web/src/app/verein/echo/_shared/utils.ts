@@ -39,6 +39,28 @@ function getPdfDownload(pdf?: EchoPdf | null): PdfDownload | undefined {
 }
 
 /**
+ * A projected page image in the shape the URL builder takes. The projection may carry a `null`
+ * asset, which the builder does not accept.
+ *
+ * @param page - The projected page image.
+ * @returns The image, or `undefined` without an asset.
+ */
+function toSanityImage(page?: PageAsset | null): SanityPageImage | undefined {
+	return page?.asset ? { _type: 'image', asset: page.asset } : undefined;
+}
+
+/**
+ * The URL of a cover in the width a card shows it in.
+ *
+ * @param cover - The first page image.
+ * @param width - The width in pixels.
+ * @returns The URL, or `undefined` without an asset.
+ */
+function getCoverUrl(cover: PageAsset | null | undefined, width: number): string | undefined {
+	return urlForImageMax(toSanityImage(cover), width);
+}
+
+/**
  * One page image in the three widths the CDN delivers.
  *
  * @param page - The page image.
@@ -46,8 +68,7 @@ function getPdfDownload(pdf?: EchoPdf | null): PdfDownload | undefined {
  * @returns The flipbook page, or `undefined` for an image without an asset.
  */
 function toFlipbookPage(page: EchoPageImage, alt: string): FlipbookPage | undefined {
-	// The projection may carry a `null` asset, which the image URL builder does not take.
-	const image = page.asset ? ({ _type: 'image', asset: page.asset } as const) : undefined;
+	const image = toSanityImage(page);
 	const src = urlForImageMax(image, LARGEST_PAGE_WIDTH);
 	if (!src) {
 		return undefined;
@@ -100,6 +121,15 @@ function getPageSize(pageSize?: { height?: number | null; width?: number | null 
 
 type EchoIssue = NonNullable<EchoIssueQueryResult>;
 type EchoPageImage = NonNullable<EchoIssue['pages']>[number];
+
+/** What the URL builder needs of a page image, which a cover projection also carries. */
+type PageAsset = Pick<EchoPageImage, '_type' | 'asset'>;
+
+/** A page image whose asset is known to exist. */
+interface SanityPageImage {
+	_type: 'image';
+	asset: NonNullable<EchoPageImage['asset']>;
+}
 /**
  * The projected PDF asset. Its fields are optional, because a download must not break on an asset
  * whose upload never finished, whatever the generated type promises.
@@ -115,5 +145,5 @@ interface PdfDownload {
 	size: string;
 }
 
-export { getCoverPage, getFlipbookPages, getIssueYear, getPageSize, getPdfDownload };
+export { getCoverPage, getCoverUrl, getFlipbookPages, getIssueYear, getPageSize, getPdfDownload };
 export type { EchoPageImage, EchoPdf, PdfDownload };
