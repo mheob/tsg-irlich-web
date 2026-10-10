@@ -3,6 +3,7 @@ import type { Mock } from 'vite-plus/test';
 
 import type { RenderedPage } from '@tsgi-web/pdf-pages';
 
+import { RenderError } from './render-error';
 import { claimRender, runRender } from './render-issue';
 import type { RenderDependencies, RenderJob } from './render-issue';
 import type { EchoRenderState, EchoRenderStore, WriteOutcome } from './render-store';
@@ -17,7 +18,14 @@ const JOB: RenderJob = {
 };
 
 function state(overrides: Partial<EchoRenderState> = {}): EchoRenderState {
-	return { id: JOB.id, pdfRef: PDF_REF, renderSource: PDF_REF, rev: 'rev-1', ...overrides };
+	return {
+		id: JOB.id,
+		pdfRef: PDF_REF,
+		renderSource: PDF_REF,
+		renderStartedAt: JOB.startedAt,
+		rev: 'rev-1',
+		...overrides,
+	};
 }
 
 function page(index: number, text = `Text ${index}`): RenderedPage {
@@ -33,6 +41,10 @@ async function* pagesOf(...pages: RenderedPage[]): AsyncGenerator<RenderedPage> 
 
 function rejectInvalidPdf(): never {
 	throw new Error('Invalid PDF structure.');
+}
+
+function rejectPasswordProtected(): never {
+	throw Object.assign(new Error('No password given'), { name: 'PasswordException' });
 }
 
 function rejectWithLongMessage(): never {
@@ -87,6 +99,7 @@ function deps(
 		now: () => 0,
 		renderPages: () => pagesOf(page(1), page(2)),
 		store,
+		wait: vi.fn<RenderDependencies['wait']>().mockResolvedValue(),
 		...overrides,
 	};
 }
@@ -193,7 +206,9 @@ describe('running a render', () => {
 		expect(outcome).toBe('failed');
 		expect(store.fail).toHaveBeenCalledWith(
 			state(),
-			expect.objectContaining({ error: 'Invalid PDF structure.' }),
+			expect.objectContaining({
+				error: 'Die Seiten konnten nicht erzeugt werden: Invalid PDF structure.',
+			}),
 		);
 		expect(store.finish).not.toHaveBeenCalled();
 	});
@@ -202,7 +217,7 @@ describe('running a render', () => {
 		const store = createStore([state()]);
 		const downloadPdf = vi
 			.fn<RenderDependencies['downloadPdf']>()
-			.mockRejectedValue(new Error('Die PDF konnte nicht geladen werden (HTTP 404).'));
+			.mockRejectedValue(new RenderError('Die PDF konnte nicht geladen werden (HTTP 404).'));
 
 		await runRender(JOB, deps(store, { downloadPdf }));
 
@@ -225,7 +240,42 @@ describe('running a render', () => {
 		expect(store.finish).not.toHaveBeenCalled();
 		expect(store.fail).toHaveBeenCalledWith(
 			state(),
-			expect.objectContaining({ error: 'upload failed' }),
+			expect.objectContaining({ error: 'Die Seiten konnten nicht erzeugt werden: upload failed' }),
+		);
+	});
+
+	// Review focus 1: an editor has to understand the message.
+	it('explains a password-protected PDF', async () => {
+		const store = createStore([state()]);
+
+		await runRender(JOB, deps(store, { renderPages: rejectPasswordProtected }));
+
+		expect(store.fail).toHaveBeenCalledWith(
+			state(),
+			expect.objectContaining({ error: 'Die PDF ist passwortgeschützt.' }),
+		);
+	});
+
+	// A scan has no text layer; the field stays empty instead of listing page headings.
+	it('leaves the text empty for a scan without a text layer', async () => {
+		const store = createStore([state()]);
+
+		await runRender(JOB, deps(store, { renderPages: () => pagesOf(page(1, ''), page(2, '')) }));
+
+		expect(store.finish).toHaveBeenCalledWith(
+			state(),
+			expect.objectContaining({ extractedText: '', pageCount: 2 }),
+		);
+	});
+
+	it('only lists the pages that carry text', async () => {
+		const store = createStore([state()]);
+
+		await runRender(JOB, deps(store, { renderPages: () => pagesOf(page(1, ''), page(2)) }));
+
+		expect(store.finish).toHaveBeenCalledWith(
+			state(),
+			expect.objectContaining({ extractedText: '--- Seite 2 ---\nText 2' }),
 		);
 	});
 
@@ -287,6 +337,24 @@ describe('running a render', () => {
 		expect(store.finish).not.toHaveBeenCalled();
 	});
 
+	// Review focus 3, and an editor clicking "Seiten neu erzeugen" while a run is busy.
+	it('discards the result when a newer run claimed the same PDF meanwhile', async () => {
+		const store = createStore([state({ renderStartedAt: '2026-10-10T10:05:00.000Z' })]);
+
+		await expect(runRender(JOB, deps(store))).resolves.toBe('discarded');
+		expect(store.finish).not.toHaveBeenCalled();
+	});
+
+	// Publishing deletes the draft and copies its claim into the published document.
+	it('writes into the published document when the draft was published during the run', async () => {
+		const published = state({ id: 'echo-2025' });
+		const store = createStore([null, published]);
+
+		await expect(runRender(JOB, deps(store))).resolves.toBe('done');
+		expect(store.read.mock.calls.map(([id]) => id)).toStrictEqual([JOB.id, 'echo-2025']);
+		expect(store.finish).toHaveBeenCalledWith(published, expect.anything());
+	});
+
 	it('discards the result when the document was deleted during the run', async () => {
 		const store = createStore([null]);
 
@@ -304,6 +372,29 @@ describe('running a render', () => {
 			'rev-1',
 			'rev-2',
 		]);
+	});
+
+	it('waits longer before every retry', async () => {
+		const store = createStore([state()], ['conflict', 'conflict', 'conflict']);
+		const dependencies = deps(store);
+
+		await runRender(JOB, dependencies);
+
+		expect(vi.mocked(dependencies.wait).mock.calls).toStrictEqual([[1000], [2000]]);
+	});
+
+	// Review focus 1: a Sanity outage while writing back must not leave the run pending.
+	it('records the failure when writing the result breaks', async () => {
+		const store = createStore([state()]);
+		store.finish.mockRejectedValueOnce(new Error('Sanity antwortet nicht'));
+
+		await expect(runRender(JOB, deps(store))).resolves.toBe('failed');
+		expect(store.fail).toHaveBeenCalledWith(
+			state(),
+			expect.objectContaining({
+				error: 'Die Seiten konnten nicht erzeugt werden: Sanity antwortet nicht',
+			}),
+		);
 	});
 
 	it('gives up after three conflicts', async () => {

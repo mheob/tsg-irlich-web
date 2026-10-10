@@ -3,14 +3,37 @@ import { settle } from '@tsgi-web/shared';
 
 import { getPdfHash, getPdfUrl } from './asset-url';
 import type { DatasetLocation } from './asset-url';
+import { RenderError } from './render-error';
 import type { EchoPage, EchoRenderState, EchoRenderStore, WriteOutcome } from './render-store';
 
 /** Ends a run before Vercel's `maxDuration` (800 s) cuts it off without a trace. */
 const TIME_BUDGET_MS = 750_000;
 const MAX_WRITE_ATTEMPTS = 3;
+/** The pause before the second write attempt; it doubles for every further one. */
+const RETRY_DELAY_MS = 1000;
+const BACKOFF_FACTOR = 2;
+const DRAFTS_PREFIX = 'drafts.';
 const MAX_ERROR_LENGTH = 500;
 const PAGE_NUMBER_DIGITS = 3;
 const SHORT_HASH_LENGTH = 8;
+
+/**
+ * Explains a rejection reason in German. The pipeline's own errors already do; pdf.js and Sanity
+ * speak English, so their message is prefixed.
+ *
+ * @param error - Whatever was thrown.
+ * @returns The explanation.
+ */
+function explainError(error: unknown): string {
+	if (error instanceof RenderError) {
+		return error.message;
+	}
+	if (error instanceof Error && error.name === 'PasswordException') {
+		return 'Die PDF ist passwortgeschützt.';
+	}
+	const message = error instanceof Error ? error.message : String(error);
+	return `Die Seiten konnten nicht erzeugt werden: ${message}`;
+}
 
 /**
  * Turns a rejection reason into the message editors see in `render.error`.
@@ -19,8 +42,7 @@ const SHORT_HASH_LENGTH = 8;
  * @returns The message, at most 500 characters long.
  */
 function describeError(error: unknown): string {
-	const message = error instanceof Error ? error.message : String(error);
-	return message.slice(0, MAX_ERROR_LENGTH);
+	return explainError(error).slice(0, MAX_ERROR_LENGTH);
 }
 
 /**
@@ -63,12 +85,15 @@ async function collectPages(
 	const texts: string[] = [];
 	for await (const page of deps.renderPages(bytes)) {
 		if (deps.now() > run.deadline) {
-			throw new Error(
+			throw new RenderError(
 				'Zeitlimit überschritten: Die PDF konnte nicht vollständig verarbeitet werden.',
 			);
 		}
 		pages.push(await uploadPage(page, run.prefix, deps.store));
-		texts.push(`--- Seite ${page.index} ---\n${page.text}`);
+		// A scan has no text layer; its pages leave `extractedText` empty instead of adding headings.
+		if (page.text) {
+			texts.push(`--- Seite ${page.index} ---\n${page.text}`);
+		}
 	}
 	return { pages, texts };
 }
@@ -90,35 +115,73 @@ async function renderAll(
 	const hash = getPdfHash(job.pdfRef);
 	const url = getPdfUrl(job.pdfRef, deps.location);
 	if (hash === undefined || url === undefined) {
-		throw new Error(`Ungültige PDF-Referenz ${job.pdfRef}`);
+		throw new RenderError(`Ungültige PDF-Referenz ${job.pdfRef}`);
 	}
 	const bytes = await deps.downloadPdf(url);
 	const prefix = `echo-${hash.slice(0, SHORT_HASH_LENGTH)}`;
 	const { pages, texts } = await collectPages(bytes, deps, { deadline, prefix });
 	if (pages.length === 0) {
-		throw new Error('Die PDF enthält keine Seiten.');
+		throw new RenderError('Die PDF enthält keine Seiten.');
 	}
 	return { extractedText: texts.join('\n\n'), pageCount: pages.length, pages };
 }
 
 /**
- * Writes a result against a freshly read revision, retrying when an editor saved in between.
+ * Whether a document still belongs to the run: same PDF, and no newer run has claimed it since.
+ *
+ * @param state - The document as read now.
+ * @param job - The run.
+ * @returns `true` while the run owns the document.
+ */
+function isOwnedBy(state: EchoRenderState, job: RenderJob): boolean {
+	return state.pdfRef === job.pdfRef && state.renderStartedAt === job.startedAt;
+}
+
+/**
+ * Reads the document the run has to write to. Publishing a draft deletes it and copies its claim
+ * into the published document, so that one is tried when the draft is gone.
+ *
+ * @param job - The run.
+ * @param store - The Sanity side.
+ * @returns The document, or `null` when it is gone or a newer run owns it.
+ */
+async function readOwnedState(
+	job: RenderJob,
+	store: EchoRenderStore,
+): Promise<EchoRenderState | null> {
+	const state = await store.read(job.id);
+	if (state) {
+		return isOwnedBy(state, job) ? state : null;
+	}
+	if (!job.id.startsWith(DRAFTS_PREFIX)) {
+		return null;
+	}
+	const published = await store.read(job.id.slice(DRAFTS_PREFIX.length));
+	return published && isOwnedBy(published, job) ? published : null;
+}
+
+/**
+ * Writes a result against a freshly read revision, retrying with a growing pause when an editor
+ * saved in between.
  *
  * @param job - The job.
- * @param store - The Sanity side.
+ * @param deps - The store to write to and the clock to wait with.
  * @param write - Performs the write for a given state.
- * @returns `written`, `discarded` when a newer run owns the document, or `conflict`.
+ * @returns `written`, `discarded` when the document is gone or a newer run owns it, or `conflict`.
  */
 async function writeResult(
 	job: RenderJob,
-	store: EchoRenderStore,
+	deps: RenderDependencies,
 	write: (state: EchoRenderState) => Promise<WriteOutcome>,
 ): Promise<'discarded' | WriteOutcome> {
 	for (let attempt = 0; attempt < MAX_WRITE_ATTEMPTS; attempt++) {
+		if (attempt > 0) {
+			// oxlint-disable-next-line no-await-in-loop -- the retries have to wait one after the other
+			await deps.wait(RETRY_DELAY_MS * BACKOFF_FACTOR ** (attempt - 1));
+		}
 		// oxlint-disable-next-line no-await-in-loop -- every retry has to read the revision again
-		const state = await store.read(job.id);
-		// Deleted, or a new PDF arrived: a newer run owns the document now.
-		if (!state || state.pdfRef !== job.pdfRef) {
+		const state = await readOwnedState(job, deps.store);
+		if (!state) {
 			return 'discarded';
 		}
 		// oxlint-disable-next-line no-await-in-loop -- see above
@@ -127,6 +190,26 @@ async function writeResult(
 		}
 	}
 	return 'conflict';
+}
+
+/**
+ * Writes a failed run, so that the document never stays `pending`.
+ *
+ * @param job - The job.
+ * @param deps - The dependencies.
+ * @param failure - The message and the end time.
+ * @returns `failed`, `discarded` or `conflict`.
+ * @throws {unknown} When Sanity cannot take even the failure; the route logs it.
+ */
+async function recordFailure(
+	job: RenderJob,
+	deps: RenderDependencies,
+	failure: { error: string; finishedAt: string },
+): Promise<RenderOutcome> {
+	const written = await writeResult(job, deps, async (state) =>
+		deps.store.fail(state, { ...failure, startedAt: job.startedAt }),
+	);
+	return written === 'written' ? 'failed' : written;
 }
 
 /**
@@ -172,19 +255,19 @@ async function runRender(job: RenderJob, deps: RenderDependencies): Promise<Rend
 	const deadline = deps.now() + TIME_BUDGET_MS;
 	const rendered = await settle(renderAll(job, deps, deadline));
 	const finishedAt = new Date(deps.now()).toISOString();
-	const { startedAt } = job;
-
-	if (rendered.ok) {
-		const written = await writeResult(job, deps.store, async (state) =>
-			deps.store.finish(state, { ...rendered.value, finishedAt, startedAt }),
-		);
-		return written === 'written' ? 'done' : written;
+	if (!rendered.ok) {
+		return recordFailure(job, deps, { error: describeError(rendered.error), finishedAt });
 	}
-	const error = describeError(rendered.error);
-	const written = await writeResult(job, deps.store, async (state) =>
-		deps.store.fail(state, { error, finishedAt, startedAt }),
+
+	const finished = await settle(
+		writeResult(job, deps, async (state) =>
+			deps.store.finish(state, { ...rendered.value, finishedAt, startedAt: job.startedAt }),
+		),
 	);
-	return written === 'written' ? 'failed' : written;
+	if (!finished.ok) {
+		return recordFailure(job, deps, { error: describeError(finished.error), finishedAt });
+	}
+	return finished.value === 'written' ? 'done' : finished.value;
 }
 
 type ClaimOutcome =
@@ -205,6 +288,8 @@ interface RenderDependencies {
 	now: () => number;
 	renderPages: (bytes: Uint8Array) => AsyncIterable<RenderedPage>;
 	store: EchoRenderStore;
+	/** Pauses between write attempts. */
+	wait: (ms: number) => Promise<void>;
 }
 
 export { claimRender, runRender };

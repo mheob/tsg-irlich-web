@@ -6,6 +6,7 @@ export const echoRenderStateQuery = defineQuery(`
 		_id,
 		_rev,
 		"pdfRef": pdf.asset._ref,
-		"renderSource": render.source
+		"renderSource": render.source,
+		"renderStartedAt": render.startedAt
 	}
 `);

@@ -1,12 +1,15 @@
+import { setTimeout as sleep } from 'node:timers/promises';
+
 import { parseBody } from 'next-sanity/webhook';
 import { after } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { z } from 'zod';
 
-import { renderPdfPages } from '@tsgi-web/pdf-pages';
+import { settle } from '@tsgi-web/shared';
 
 import { FILE_ASSET_REF } from '@/lib/echo/asset-url';
 import { downloadPdf } from '@/lib/echo/download-pdf';
+import { renderPdfPagesWithData } from '@/lib/echo/pdfjs-data';
 import { claimRender, runRender } from '@/lib/echo/render-issue';
 import type { ClaimOutcome, RenderJob } from '@/lib/echo/render-issue';
 import { createRenderStore } from '@/lib/echo/render-store';
@@ -31,21 +34,29 @@ const STATUS_CODES: Record<ClaimOutcome['status'], number> = {
 };
 
 /**
- * Renders a claimed document once the response has been sent, and logs how the run ended.
+ * Renders a claimed document once the response has been sent, and logs how the run ended. A run
+ * that throws could not even record its failure, so the log is the only trace of it.
  *
  * @param job - The claimed job.
  * @param store - The store the claim went through.
  */
 function scheduleRender(job: RenderJob, store: EchoRenderStore): void {
 	after(async () => {
-		const outcome = await runRender(job, {
-			downloadPdf,
-			location: { dataset, projectId },
-			now: Date.now,
-			renderPages: renderPdfPages,
-			store,
-		});
-		console.info(`[echo/render] ${job.id}: ${outcome}`);
+		const outcome = await settle(
+			runRender(job, {
+				downloadPdf,
+				location: { dataset, projectId },
+				now: Date.now,
+				renderPages: renderPdfPagesWithData,
+				store,
+				wait: sleep,
+			}),
+		);
+		if (outcome.ok) {
+			console.info(`[echo/render] ${job.id}: ${outcome.value}`);
+		} else {
+			console.error(`[echo/render] ${job.id}: error`, outcome.error);
+		}
 	});
 }
 

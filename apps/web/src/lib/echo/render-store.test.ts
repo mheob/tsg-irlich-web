@@ -9,6 +9,7 @@ const STATE: EchoRenderState = {
 	id: 'drafts.echo-2025',
 	pdfRef: 'file-8c3211369d3d2da0c150d50d7cb5bca911b15f5e-pdf',
 	renderSource: null,
+	renderStartedAt: null,
 	rev: 'rev-1',
 };
 
@@ -64,7 +65,13 @@ function createFakeClient(
 describe('echo render store', () => {
 	it('reads the render state of a document', async () => {
 		const { client, fake } = createFakeClient({
-			fetchResult: { _id: STATE.id, _rev: 'rev-1', pdfRef: STATE.pdfRef, renderSource: null },
+			fetchResult: {
+				_id: STATE.id,
+				_rev: 'rev-1',
+				pdfRef: STATE.pdfRef,
+				renderSource: null,
+				renderStartedAt: null,
+			},
 		});
 
 		const state = await createRenderStore(client).read(STATE.id);

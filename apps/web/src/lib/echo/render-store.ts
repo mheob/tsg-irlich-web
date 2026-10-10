@@ -93,6 +93,7 @@ function createRenderStore(client: SanityClient): EchoRenderStore {
 						id: result._id,
 						pdfRef: result.pdfRef,
 						renderSource: result.renderSource,
+						renderStartedAt: result.renderStartedAt,
 						rev: result._rev,
 					}
 				: null;
@@ -113,6 +114,8 @@ interface EchoRenderState {
 	id: string;
 	pdfRef: string | null;
 	renderSource: string | null;
+	/** The claim token: the `startedAt` of the run that claimed the document last. */
+	renderStartedAt: string | null;
 	rev: string;
 }
 

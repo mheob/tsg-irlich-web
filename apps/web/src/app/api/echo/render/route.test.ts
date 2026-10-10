@@ -4,9 +4,8 @@ import { after } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vite-plus/test';
 
-import { renderPdfPages } from '@tsgi-web/pdf-pages';
-
 import { POST } from '@/app/api/echo/render/route';
+import { renderPdfPagesWithData } from '@/lib/echo/pdfjs-data';
 import { claimRender, runRender } from '@/lib/echo/render-issue';
 
 // The signature check belongs to next-sanity; mocking it makes "is the signature valid" an input.
@@ -26,8 +25,8 @@ vi.mock(import('@/lib/sanity/api'), () => ({
 	projectId: 'j4rxwl5m',
 	studioUrl: undefined,
 }));
-// Keeps the native canvas binding out of this test.
-vi.mock(import('@tsgi-web/pdf-pages'), () => ({ renderPdfPages: vi.fn() }));
+// Keeps pdf.js and the native canvas binding out of this test.
+vi.mock(import('@/lib/echo/pdfjs-data'), () => ({ renderPdfPagesWithData: vi.fn() }));
 
 const mockedParseBody = vi.mocked(parseBody);
 const mockedAfter = vi.mocked(after);
@@ -108,9 +107,26 @@ describe('echo render webhook', () => {
 			JOB,
 			expect.objectContaining({
 				location: { dataset: 'development', projectId: 'j4rxwl5m' },
-				renderPages: renderPdfPages,
+				renderPages: renderPdfPagesWithData,
 			}),
 		);
+		expect(mockedRun.mock.calls.at(0)?.[1].wait).toBeTypeOf('function');
+	});
+
+	// Review focus 1: when Sanity cannot even take the failure, the log is the only trace left.
+	it('logs a run that could not be written back', async () => {
+		mockedParseBody.mockResolvedValue(signed({ _id: JOB.id, pdfRef: PDF_REF }));
+		mockedClaim.mockResolvedValue({ job: JOB, status: 'claimed' });
+		const failure = new Error('Sanity antwortet nicht');
+		mockedRun.mockRejectedValue(failure);
+		const log = vi.spyOn(console, 'error').mockReturnValue();
+
+		await POST(REQUEST);
+		const task = mockedAfter.mock.calls.at(0)?.at(0);
+		await (task as () => Promise<void>)();
+
+		expect(log).toHaveBeenCalledWith(`[echo/render] ${JOB.id}: error`, failure);
+		log.mockRestore();
 	});
 
 	it('answers 409 to a delivery that lost the race, so Sanity retries it', async () => {
