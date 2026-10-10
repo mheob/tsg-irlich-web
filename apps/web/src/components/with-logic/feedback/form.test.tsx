@@ -35,6 +35,27 @@ function privacyCheckbox(getByRole: RenderWithUserResult['getByRole']): HTMLElem
 	return getByRole('checkbox', { name: /^Ich akzeptiere die Datenschutzbestimmungen/u });
 }
 
+/**
+ * Fills a text field the way a user pasting into it would: a click to focus it, then the whole
+ * value as one `paste`. None of the form's text fields reacts to single keystrokes, so
+ * react-hook-form ends up with the same value `user.type` would leave. `user.type` dispatches
+ * several events per character instead, each wrapped in `act()` and followed by a timer tick; for
+ * the 104 characters of title and description that was most of a test's runtime, and under V8
+ * coverage in a busy parallel run it pushed three of these tests past the 5 s timeout.
+ *
+ * @param user - The render result's `user`.
+ * @param field - The text field to fill.
+ * @param text - The value to paste.
+ */
+async function fillIn(
+	user: RenderWithUserResult['user'],
+	field: HTMLElement,
+	text: string,
+): Promise<void> {
+	await user.click(field);
+	await user.paste(text);
+}
+
 describe('the feedback form', () => {
 	afterEach(() => {
 		mockedCreateLinearIssue.mockReset();
@@ -95,14 +116,19 @@ describe('the feedback form', () => {
 		expect(queryByLabelText(/^Gerät/u)).not.toBeNull();
 	});
 
+	// The longest walk through the form: two text fields, two Base UI selects, the e-mail field, the
+	// checkbox and the submit button. Opening a select costs a floating-ui layout pass over jsdom's
+	// `getComputedStyle`, so the selects take most of the time. The case runs in about 0.6 s on its
+	// own and up to six times that in a full coverage run with every worker busy, which leaves the
+	// default 5 s too little headroom. A hang still fails it, only later.
 	it('calls the action exactly once with the whole payload on a valid submission and shows the confirmation', async () => {
 		mockedCreateLinearIssue.mockResolvedValue({
 			data: { issueId: 'issue-1', issueIdentifier: 'TSG-42' },
 		});
 		const { findByRole, getByLabelText, getByRole, user } = renderForm();
 
-		await user.type(getByLabelText('Titel'), VALID_TITLE);
-		await user.type(getByLabelText('Beschreibung'), VALID_DESCRIPTION);
+		await fillIn(user, getByLabelText('Titel'), VALID_TITLE);
+		await fillIn(user, getByLabelText('Beschreibung'), VALID_DESCRIPTION);
 
 		await user.click(getByLabelText('Browser'));
 		await user.click(await findByRole('option', { name: 'Firefox' }));
@@ -110,7 +136,7 @@ describe('the feedback form', () => {
 		await user.click(getByLabelText('Betriebssystem'));
 		await user.click(await findByRole('option', { name: 'macOS' }));
 
-		await user.type(getByLabelText(/^E-Mail/u), 'max@mustermann.de');
+		await fillIn(user, getByLabelText(/^E-Mail/u), 'max@mustermann.de');
 		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Feedback senden' }));
@@ -130,14 +156,14 @@ describe('the feedback form', () => {
 			title: VALID_TITLE,
 			type: 'bug',
 		});
-	});
+	}, 15_000);
 
 	it("renders the action's server error to the user", async () => {
 		mockedCreateLinearIssue.mockResolvedValue({ serverError: 'Der Server hat ein Problem.' });
 		const { findByRole, findByText, getByLabelText, getByRole, user } = renderForm();
 
-		await user.type(getByLabelText('Titel'), VALID_TITLE);
-		await user.type(getByLabelText('Beschreibung'), VALID_DESCRIPTION);
+		await fillIn(user, getByLabelText('Titel'), VALID_TITLE);
+		await fillIn(user, getByLabelText('Beschreibung'), VALID_DESCRIPTION);
 		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Feedback senden' }));
@@ -151,8 +177,8 @@ describe('the feedback form', () => {
 		mockedCreateLinearIssue.mockReturnValue(deferred.promise);
 		const { findByRole, getByLabelText, getByRole, user } = renderForm();
 
-		await user.type(getByLabelText('Titel'), VALID_TITLE);
-		await user.type(getByLabelText('Beschreibung'), VALID_DESCRIPTION);
+		await fillIn(user, getByLabelText('Titel'), VALID_TITLE);
+		await fillIn(user, getByLabelText('Beschreibung'), VALID_DESCRIPTION);
 		await user.click(privacyCheckbox(getByRole));
 
 		await user.click(getByRole('button', { name: 'Feedback senden' }));
