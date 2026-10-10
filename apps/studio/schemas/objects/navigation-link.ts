@@ -70,33 +70,28 @@ function validateExternalUrl(value: unknown, context: ValidationContext): true |
 /**
  * Builds the list preview of a navigation link.
  *
- * @param selection - The selected fields, plus the number of children of a main navigation item.
- * @returns The title and a subtitle naming the target and, if there are any, the children.
+ * @param selection - The selected fields.
+ * @returns The title and a subtitle naming the target.
  */
 function prepareNavigationLink(selection: NavigationLinkSelection): NavigationLinkPreview {
-	const { childCount = 0, href, linkType, title } = selection;
-	const target = linkType === EXTERNAL_LINK_TYPE ? href : 'Interne Seite';
-
-	if (childCount === 0) {
-		return { subtitle: target, title };
-	}
-
-	const children = childCount === 1 ? '1 Unterpunkt' : `${childCount} Unterpunkte`;
-	return { subtitle: target ? `${target} · ${children}` : children, title };
+	const { href, linkType, title } = selection;
+	return { subtitle: linkType === EXTERNAL_LINK_TYPE ? href : 'Interne Seite', title };
 }
 
+const navigationTitleField = defineField({
+	name: 'title',
+	title: 'Bezeichnung',
+	type: 'string',
+	validation: (Rule) => [
+		Rule.required().error('Die Bezeichnung ist erforderlich'),
+		Rule.max(MAX_TITLE_LENGTH).warning(
+			`Die Bezeichnung sollte nicht länger als ${MAX_TITLE_LENGTH} Zeichen sein`,
+		),
+	],
+});
+
 const navigationLinkFields = [
-	defineField({
-		name: 'title',
-		title: 'Bezeichnung',
-		type: 'string',
-		validation: (Rule) => [
-			Rule.required().error('Die Bezeichnung ist erforderlich'),
-			Rule.max(MAX_TITLE_LENGTH).warning(
-				`Die Bezeichnung sollte nicht länger als ${MAX_TITLE_LENGTH} Zeichen sein`,
-			),
-		],
-	}),
+	navigationTitleField,
 	defineField({
 		initialValue: INTERNAL_LINK_TYPE,
 		name: 'linkType',
@@ -155,7 +150,6 @@ const navigationLink = defineType({
 });
 
 interface NavigationLinkSelection {
-	childCount?: number;
 	href?: string;
 	linkType?: string;
 	title?: string;
@@ -171,6 +165,7 @@ export {
 	isExternalLink,
 	MAX_DESCRIPTION_LENGTH,
 	navigationLinkFields,
+	navigationTitleField,
 	prepareNavigationLink,
 	validateExternalUrl,
 	validatePageReference,
