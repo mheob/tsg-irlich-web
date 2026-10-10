@@ -49,6 +49,9 @@ describe('the lazily loaded flipbook', () => {
 	});
 
 	it('replaces the cover with the book in the browser', async () => {
+		// Load the chunk first: under a full parallel coverage run its first import alone outlasted
+		// `findByRole`'s one second, while the lazy boundary itself resolves at once from the cache.
+		await import('./flipbook');
 		const { findByRole, queryByAltText } = renderWithUser(lazyBook());
 
 		await findByRole('button', { name: 'Nächste Seite' });
