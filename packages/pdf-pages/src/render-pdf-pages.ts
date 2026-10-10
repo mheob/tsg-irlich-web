@@ -1,3 +1,6 @@
+import { access } from 'node:fs/promises';
+import path from 'node:path';
+
 import { createCanvas } from '@napi-rs/canvas';
 import type { Canvas, SKRSContext2D } from '@napi-rs/canvas';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
@@ -9,12 +12,53 @@ import type { PDFDocumentProxy, PDFPageProxy, PageViewport } from 'pdfjs-dist/le
 // oxlint-disable-next-line import/no-unassigned-import -- imported for that side effect only
 import 'pdfjs-dist/legacy/build/pdf.worker.mjs';
 
+/** A file every complete pdf.js data directory carries. */
+const PROBE_FILE = path.join('wasm', 'openjpeg.wasm');
+
 const DEFAULT_MAX_EDGE = 2000;
 const DEFAULT_QUALITY = 85;
 const FIRST_PAGE = 1;
 const ORIGIN = 0;
 const PAPER = '#ffffff';
 const UNIT_SCALE = 1;
+
+/**
+ * Finds the pdfjs-dist directory next to this package. `process.getBuiltinModule` keeps bundlers
+ * from rewriting the lookup (Turbopack turns `require.resolve` into a module id), which is also
+ * why a Next.js route passes `dataDir` itself.
+ *
+ * @returns The absolute path of the pdfjs-dist package.
+ */
+function getDefaultDataDir(): string {
+	const { createRequire } = process.getBuiltinModule('module');
+	return path.dirname(createRequire(import.meta.url).resolve('pdfjs-dist/package.json'));
+}
+
+/**
+ * Points pdf.js at its WebAssembly decoders, standard fonts, CMaps and ICC profiles, which it reads
+ * from disk at runtime. Without the decoders it skips CCITT, JBIG2 and JPEG 2000 images silently,
+ * which is how black-and-white scans are stored, and the page comes out blank.
+ *
+ * @param dataDir - The pdfjs-dist directory.
+ * @returns The `getDocument` options for the data files.
+ * @throws {Error} When the directory does not hold the pdf.js data files.
+ */
+async function getDataOptions(dataDir: string): Promise<PdfjsDataOptions> {
+	const found = await access(path.join(dataDir, PROBE_FILE)).then(
+		() => true,
+		() => false,
+	);
+	if (!found) {
+		throw new Error(`Die Daten von pdf.js fehlen unter ${dataDir}.`);
+	}
+	const folder = (name: string): string => `${path.join(dataDir, name)}${path.sep}`;
+	return {
+		cMapUrl: folder('cmaps'),
+		iccUrl: folder('iccs'),
+		standardFontDataUrl: folder('standard_fonts'),
+		wasmUrl: folder('wasm'),
+	};
+}
 
 /**
  * Tells text items apart from the marked-content markers pdf.js can mix into a page's text.
@@ -80,7 +124,7 @@ function fitViewport(page: PDFPageProxy, maxEdge: number): PageViewport {
 async function renderPage(
 	pdf: PDFDocumentProxy,
 	index: number,
-	settings: Required<RenderOptions>,
+	settings: RenderSettings,
 ): Promise<RenderedPage> {
 	const page = await pdf.getPage(index);
 	const viewport = fitViewport(page, settings.maxEdge);
@@ -112,11 +156,12 @@ async function* renderPdfPages(
 	bytes: Uint8Array,
 	options: RenderOptions = {},
 ): AsyncGenerator<RenderedPage> {
-	const settings: Required<RenderOptions> = {
+	const settings: RenderSettings = {
 		maxEdge: options.maxEdge ?? DEFAULT_MAX_EDGE,
 		quality: options.quality ?? DEFAULT_QUALITY,
 	};
-	const loadingTask = getDocument({ data: new Uint8Array(bytes), verbosity: 0 });
+	const data = await getDataOptions(options.dataDir ?? getDefaultDataDir());
+	const loadingTask = getDocument({ ...data, data: new Uint8Array(bytes), verbosity: 0 });
 
 	try {
 		const pdf = await loadingTask.promise;
@@ -132,6 +177,8 @@ async function* renderPdfPages(
 }
 
 interface RenderOptions {
+	/** The pdfjs-dist directory with the data files. Default: resolved next to this package. */
+	dataDir?: string;
 	/** The longest edge of every image in pixels. Default: 2000. */
 	maxEdge?: number;
 	/** The JPEG quality from 0 to 100. Default: 85. */
@@ -147,6 +194,10 @@ interface RenderedPage {
 	text: string;
 	width: number;
 }
+
+type RenderSettings = Required<Omit<RenderOptions, 'dataDir'>>;
+
+type PdfjsDataOptions = Record<'cMapUrl' | 'iccUrl' | 'standardFontDataUrl' | 'wasmUrl', string>;
 
 interface PaperCanvas {
 	canvas: Canvas;

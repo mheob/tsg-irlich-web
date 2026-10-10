@@ -2,6 +2,7 @@ import { createCanvas, loadImage } from '@napi-rs/canvas';
 import { describe, expect, it } from 'vite-plus/test';
 
 import { createFixturePdf } from '../test-utils/create-fixture-pdf';
+import { createScanPdf } from '../test-utils/create-scan-pdf';
 import { renderPdfPages } from './render-pdf-pages';
 import type { RenderOptions, RenderedPage } from './render-pdf-pages';
 
@@ -85,6 +86,21 @@ describe('pdf page rendering', () => {
 		expect(Math.min(...pixel.subarray(0, 3))).toBeGreaterThanOrEqual(245);
 	});
 
+	// Black-and-white scans are CCITT or JBIG2 encoded, which pdf.js only decodes with its WebAssembly
+	// modules. Without them it skips the image silently and the page comes out blank.
+	it('draws a black-and-white scan', async () => {
+		const pdf = await createScanPdf();
+		const { height, jpeg, width } = await renderFirstPage(pdf, { maxEdge: 200 });
+		const image = await loadImage(Buffer.from(jpeg));
+		const canvas = createCanvas(width, height);
+		const context = canvas.getContext('2d');
+		context.drawImage(image, 0, 0);
+
+		const pixel = context.getImageData(width / 2, height / 2, 1, 1).data;
+
+		expect(Math.max(...pixel.subarray(0, 3))).toBeLessThanOrEqual(10);
+	});
+
 	it('extracts the text of every page', async () => {
 		const pdf = await createFixturePdf(['Seite eins', 'Seite zwei']);
 
@@ -99,6 +115,15 @@ describe('pdf page rendering', () => {
 		const { text } = await renderFirstPage(pdf);
 
 		expect(text).toBe('Zeile eins\nZeile zwei');
+	});
+
+	// Without its data files pdf.js would skip scans silently; a missing directory has to fail loudly.
+	it('rejects a data directory without the pdf.js files', async () => {
+		const pdf = await createFixturePdf(['Daten']);
+
+		await expect(collect(renderPdfPages(pdf, { dataDir: '/nicht/vorhanden' }))).rejects.toThrow(
+			'Die Daten von pdf.js fehlen unter /nicht/vorhanden',
+		);
 	});
 
 	it('rejects bytes that are not a PDF', async () => {
