@@ -29,11 +29,14 @@ function getIssueYear(releaseDate?: string | null): string {
  * The URL a visitor gets for an asset: the CDN's own, or the archive path's, which tells search
  * engines to stay away.
  *
+ * `indexable` is the issue's own field, not a behaviour switch: two functions instead would split
+ * every helper that links an asset, hence the NOSONAR for S2301.
+ *
  * @param url - The CDN URL.
  * @param indexable - Whether search engines may find the issue.
  * @returns The URL to link.
  */
-function linkAsset(url: string, indexable: boolean): string {
+function linkAsset(url: string, indexable: boolean /* NOSONAR */): string {
 	return indexable ? url : toArchiveUrl(url);
 }
 
