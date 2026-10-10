@@ -30,7 +30,7 @@ const UNIT_SCALE = 1;
  * @returns The absolute path of the pdfjs-dist package.
  */
 function getDefaultDataDir(): string {
-	const { createRequire } = process.getBuiltinModule('module');
+	const { createRequire } = process.getBuiltinModule('node:module');
 	return path.dirname(createRequire(import.meta.url).resolve('pdfjs-dist/package.json'));
 }
 
@@ -166,8 +166,9 @@ async function* renderPdfPages(
 	try {
 		const pdf = await loadingTask.promise;
 		for (let index = FIRST_PAGE; index <= pdf.numPages; index++) {
-			// oxlint-disable-next-line no-await-in-loop -- one page at a time keeps a single canvas in memory
-			yield await renderPage(pdf, index, settings);
+			// One page at a time keeps a single canvas in memory, so the await stays in the loop.
+			// oxlint-disable-next-line no-await-in-loop -- see above
+			yield await renderPage(pdf, index, settings); // NOSONAR
 		}
 	} finally {
 		// pdf.js 6 dropped `PDFDocumentProxy.destroy()`; the loading task tears down the document
