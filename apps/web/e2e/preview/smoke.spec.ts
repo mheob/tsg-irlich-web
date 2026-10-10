@@ -60,6 +60,29 @@ test.describe('preview smoke', () => {
 		expect(feed.status()).toBe(200);
 	});
 
+	// WEB-367: the archive path has to carry the proxy's header on the platform itself, not just under
+	// `next start`. Previews already get Vercel's own `X-Robots-Tag: noindex`, so the test looks for
+	// `nofollow`, which only the proxy sends.
+	test('serves the files of the echo archive with their own noindex header', async ({ page }) => {
+		await page.goto('/verein/echo');
+		const src =
+			(await page
+				.getByRole('img', { name: /^Titelseite von /u })
+				.first()
+				.getAttribute('src')) ?? '';
+		const file =
+			/(?:cdn\.sanity\.io%2Fimages%2F[^%]+%2F[^%]+%2F|\/echo-archiv\/images\/)(?<file>[^%?&]+)/u.exec(
+				src,
+			)?.groups?.file;
+		test.skip(!file, 'No TSG-Echo issue in this dataset');
+
+		const response = await page.request.get(`/echo-archiv/images/${file}?w=100`);
+
+		expect(response.status()).toBe(200);
+		expect(response.headers()['content-type']).toMatch(/^image\//u);
+		expect(response.headers()['x-robots-tag']).toContain('nofollow');
+	});
+
 	test('serves robots.txt and llms.txt for crawlers and language models', async ({ page }) => {
 		const robots = await page.request.get('/robots.txt');
 		const llms = await page.request.get('/llms.txt');
