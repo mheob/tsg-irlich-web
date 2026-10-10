@@ -24,7 +24,7 @@ function getDownloadFileUrl(
 	if (!downloadAsset?.url || !downloadAsset.originalFilename) {
 		return '#!';
 	}
-	return `${downloadAsset.url}?dl=${downloadAsset.originalFilename}`;
+	return `${downloadAsset.url}?dl=${encodeURIComponent(downloadAsset.originalFilename)}`;
 }
 
 /**

@@ -487,6 +487,9 @@ importers:
         specifier: 'catalog:'
         version: 4.6.5
     devDependencies:
+      '@tsgi-web/pdf-pages':
+        specifier: workspace:*
+        version: link:../../packages/pdf-pages
       '@types/react':
         specifier: 'catalog:'
         version: 19.3.0

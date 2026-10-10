@@ -19,6 +19,15 @@ describe('archive urls', () => {
 		).toBe('/echo-archiv/files/9f8e.pdf?dl=1980%20-%20TSG%20Irlich%20-%203.Echo.pdf');
 	});
 
+	// An encoded download name must survive the move below the archive path unchanged.
+	it('keeps an already encoded download name as it is', () => {
+		expect(
+			toArchiveUrl(
+				'https://cdn.sanity.io/files/j4rxwl5m/production/9f8e.pdf?dl=a%20%26%20b%20%231.pdf',
+			),
+		).toBe('/echo-archiv/files/9f8e.pdf?dl=a%20%26%20b%20%231.pdf');
+	});
+
 	// Review focus 3.
 	it.each([
 		['a relative path', '/verein/echo'],

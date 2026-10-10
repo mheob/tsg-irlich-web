@@ -78,7 +78,21 @@ describe('building a download link for a file asset', () => {
 		} as SanityFileAsset;
 
 		expect(getDownloadFileUrl(asset)).toBe(
-			'https://cdn.sanity.io/files/test-project/test-dataset/abc123.pdf?dl=Broschüre.pdf',
+			'https://cdn.sanity.io/files/test-project/test-dataset/abc123.pdf?dl=Brosch%C3%BCre.pdf',
+		);
+	});
+
+	// Review focus 3: editors upload PDFs under any name, and an unencoded `&` or `#` cut the URL.
+	it('encodes the original filename in the download parameter', async () => {
+		const { getDownloadFileUrl } = await loadWithEnv<UtilsModule>('@/lib/sanity/utils', SANITY_ENV);
+
+		const asset = {
+			originalFilename: 'Jahresrückblick & Termine #1.pdf',
+			url: 'https://cdn.sanity.io/files/x/y/z.pdf',
+		} as SanityFileAsset;
+
+		expect(getDownloadFileUrl(asset)).toBe(
+			'https://cdn.sanity.io/files/x/y/z.pdf?dl=Jahresr%C3%BCckblick%20%26%20Termine%20%231.pdf',
 		);
 	});
 });

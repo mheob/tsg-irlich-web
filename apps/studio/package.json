@@ -10,6 +10,7 @@
 		"deploy:schema": "sanity schema deploy",
 		"dev": "sanity dev",
 		"extract-types": "sanity schema extract --enforce-required-fields --force",
+		"import:echo": "sanity exec scripts/import-echo.ts --with-user-token --",
 		"lint": "vp lint",
 		"lint:fix": "vp lint --fix",
 		"lint:github": "vp lint --format=github",
@@ -36,6 +37,7 @@
 		"zod": "catalog:"
 	},
 	"devDependencies": {
+		"@tsgi-web/pdf-pages": "workspace:*",
 		"@types/react": "catalog:",
 		"@types/react-dom": "catalog:",
 		"@vitejs/plugin-react": "catalog:",
