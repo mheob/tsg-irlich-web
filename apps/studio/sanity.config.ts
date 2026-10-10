@@ -1,9 +1,11 @@
 import { defineConfig } from 'sanity';
 
+import { RegenerateEchoPagesAction } from './actions/regenerate-echo-pages';
 import { Logo } from './components/logo';
 import { dataset, projectId } from './env';
 import { getPlugins } from './plugins';
 import { schemaTypes } from './schemas';
+import echoIssue from './schemas/documents/echo.issue';
 
 // Define the actions that should be available for singleton documents
 const singletonActions = new Set(['publish', 'discardChanges', 'restore']);
@@ -16,10 +18,15 @@ export default defineConfig({
 	document: {
 		// For singleton types, filter out actions that are not explicitly included
 		// In the `singletonActions` list defined above
-		actions: (input, context) =>
-			singletonTypes.has(context.schemaType)
-				? input.filter(({ action }) => action && singletonActions.has(action))
-				: input,
+		actions: (input, context) => {
+			if (singletonTypes.has(context.schemaType)) {
+				return input.filter(({ action }) => action && singletonActions.has(action));
+			}
+			if (context.schemaType === echoIssue.name) {
+				return [...input, RegenerateEchoPagesAction];
+			}
+			return input;
+		},
 	},
 	form: {
 		// Disable the default for file assets
