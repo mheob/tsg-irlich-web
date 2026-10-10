@@ -12,6 +12,11 @@ describe('tsg-echo queries', () => {
 		expect(finishedEchoIssue).toContain("render.status == 'done'");
 	});
 
+	// Between a PDF swap and the render claiming it, `done` still describes the previous PDF.
+	it('only shows pages rendered from the current PDF', () => {
+		expect(finishedEchoIssue).toContain('render.source == pdf.asset._ref');
+	});
+
 	it.each([
 		['the total', echoIssuesTotalQuery],
 		['the list', echoIssuesQuery],

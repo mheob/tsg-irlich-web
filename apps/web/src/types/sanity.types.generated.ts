@@ -2898,12 +2898,12 @@ export type EchoOverviewPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/echo.ts
 // Variable: echoIssuesTotalQuery
-// Query: count(*[_type == 'echo.issue' && render.status == 'done' && defined(slug.current) && count(pages) > 0])
+// Query: count(*[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0])
 export type EchoIssuesTotalQueryResult = number;
 
 // Source: src/lib/sanity/queries/pages/echo.ts
 // Variable: echoIssuesQuery
-// Query: *[_type == 'echo.issue' && render.status == 'done' && defined(slug.current) && count(pages) > 0] | order(releaseDate desc) [$start...$end] {			_id,	title,	"slug": slug.current,	releaseDate,	intro,	"cover": pages[0] { _type, asset },	"pdf": pdf.asset-> { originalFilename, size, url }	}
+// Query: *[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0] | order(releaseDate desc) [$start...$end] {			_id,	title,	"slug": slug.current,	releaseDate,	intro,	"cover": pages[0] { _type, asset },	"pdf": pdf.asset-> { originalFilename, size, url }	}
 export type EchoIssuesQueryResult = Array<{
   _id: string;
   title: string;
@@ -2923,7 +2923,7 @@ export type EchoIssuesQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/pages/echo.ts
 // Variable: echoIssueQuery
-// Query: *[_type == 'echo.issue' && render.status == 'done' && defined(slug.current) && count(pages) > 0 && slug.current == $slug][0] {			_id,	title,	"slug": slug.current,	releaseDate,	intro,	"cover": pages[0] { _type, asset },	"pdf": pdf.asset-> { originalFilename, size, url },		meta { metaTitle, metaDescription, openGraphImage},		"pages": pages[] { _key, _type, asset },		"pageSize": pages[0].asset->metadata.dimensions { height, width }	}
+// Query: *[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0 && slug.current == $slug][0] {			_id,	title,	"slug": slug.current,	releaseDate,	intro,	"cover": pages[0] { _type, asset },	"pdf": pdf.asset-> { originalFilename, size, url },		meta { metaTitle, metaDescription, openGraphImage},		"pages": pages[] { _key, _type, asset },		"pageSize": pages[0].asset->metadata.dimensions { height, width }	}
 export type EchoIssueQueryResult = {
   _id: string;
   title: string;
@@ -2964,7 +2964,7 @@ export type EchoIssueQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/echo.ts
 // Variable: echoIssueSlugsQuery
-// Query: *[_type == 'echo.issue' && render.status == 'done' && defined(slug.current) && count(pages) > 0].slug.current
+// Query: *[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0].slug.current
 export type EchoIssueSlugsQueryResult = Array<string>;
 
 // Source: src/lib/sanity/queries/pages/home.ts
@@ -4897,7 +4897,7 @@ export type SitemapGroupsQueryResult = Array<
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapEchoIssuesQuery
-// Query: *[_type == 'echo.issue' && render.status == 'done' && defined(slug.current) && count(pages) > 0] {		"slug": slug.current,		"lastModified": _updatedAt	}
+// Query: *[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0] {		"slug": slug.current,		"lastModified": _updatedAt	}
 export type SitemapEchoIssuesQueryResult = Array<{
   slug: string;
   lastModified: string;
@@ -4913,10 +4913,10 @@ declare global {
     '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': AccessibilityPageQueryResult;
     '\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
     "\n\t*[_type == 'echoOverview'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t\tintro,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n": EchoOverviewPageQueryResult;
-    "count(*[_type == 'echo.issue' && render.status == 'done' && defined(slug.current) && count(pages) > 0])": EchoIssuesTotalQueryResult;
-    '\n\t*[_type == \'echo.issue\' && render.status == \'done\' && defined(slug.current) && count(pages) > 0] | order(releaseDate desc) [$start...$end] {\n\t\t\n\t_id,\n\ttitle,\n\t"slug": slug.current,\n\treleaseDate,\n\tintro,\n\t"cover": pages[0] { _type, asset },\n\t"pdf": pdf.asset-> { originalFilename, size, url }\n\n\t}\n': EchoIssuesQueryResult;
-    '\n\t*[_type == \'echo.issue\' && render.status == \'done\' && defined(slug.current) && count(pages) > 0 && slug.current == $slug][0] {\n\t\t\n\t_id,\n\ttitle,\n\t"slug": slug.current,\n\treleaseDate,\n\tintro,\n\t"cover": pages[0] { _type, asset },\n\t"pdf": pdf.asset-> { originalFilename, size, url }\n,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\t"pages": pages[] { _key, _type, asset },\n\t\t"pageSize": pages[0].asset->metadata.dimensions { height, width }\n\t}\n': EchoIssueQueryResult;
-    "*[_type == 'echo.issue' && render.status == 'done' && defined(slug.current) && count(pages) > 0].slug.current": EchoIssueSlugsQueryResult;
+    "count(*[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0])": EchoIssuesTotalQueryResult;
+    '\n\t*[_type == \'echo.issue\' && render.status == \'done\' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0] | order(releaseDate desc) [$start...$end] {\n\t\t\n\t_id,\n\ttitle,\n\t"slug": slug.current,\n\treleaseDate,\n\tintro,\n\t"cover": pages[0] { _type, asset },\n\t"pdf": pdf.asset-> { originalFilename, size, url }\n\n\t}\n': EchoIssuesQueryResult;
+    '\n\t*[_type == \'echo.issue\' && render.status == \'done\' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0 && slug.current == $slug][0] {\n\t\t\n\t_id,\n\ttitle,\n\t"slug": slug.current,\n\treleaseDate,\n\tintro,\n\t"cover": pages[0] { _type, asset },\n\t"pdf": pdf.asset-> { originalFilename, size, url }\n,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\t"pages": pages[] { _key, _type, asset },\n\t\t"pageSize": pages[0].asset->metadata.dimensions { height, width }\n\t}\n': EchoIssueQueryResult;
+    "*[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0].slug.current": EchoIssueSlugsQueryResult;
     '\n\t*[_type == \'home\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': HomePageQueryResult;
     "\n\t*[_type == 'home'][0].content.testimonialSection.testimonials[]-> {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\timage,\n\t\tquote,\n\t\trole,\n\t}\n": HomePageTestimonialsQueryResult;
     '\n\t*[_type == \'imprint\'][0] {\n\t\t...,\n\t\t"contactForm": contactForm {\n\t\t\t"title": link->title,\n\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n }\n\t\t}\n\t}\n': ImprintPageQueryResult;
@@ -4949,7 +4949,7 @@ declare global {
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
     '\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
     "\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
-    "\n\t*[_type == 'echo.issue' && render.status == 'done' && defined(slug.current) && count(pages) > 0] {\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapEchoIssuesQueryResult;
+    "\n\t*[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0] {\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapEchoIssuesQueryResult;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too
