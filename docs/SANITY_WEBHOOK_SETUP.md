@@ -163,13 +163,13 @@ revalidateTag('news');
 
 A second webhook, separate from the revalidation one, makes the web app render the pages of a TSG-Echo issue as soon as an editor uploads its PDF.
 
-1. Create a robot token in sanity.io/manage → **API** → **Tokens** with the **Editor** role and store it in Vercel as `SANITY_API_WRITE_TOKEN` (Production and Preview).
-2. Generate a secret (see step 1 above) and store it in Vercel as `SANITY_ECHO_RENDER_SECRET`.
+1. Create a robot token in sanity.io/manage → **API** → **Tokens** with the **Editor** role and store it in Vercel as `SANITY_API_WRITE_TOKEN`, as a sensitive variable for every environment that renders: Preview and Staging now, Production with the release.
+2. Generate a secret (see step 1 above) and store it in Vercel as `SANITY_ECHO_RENDER_SECRET`, for the same environments. A sensitive value cannot be read back, so paste it into the webhook's **Secret** field right away.
 3. Create the webhook, once per environment:
    - **Name**: `TSG-Echo Seiten erzeugen (<environment>)`
    - **URL**: `https://www.tsg-irlich.de/api/echo/render` (production) or the staging domain
    - **Dataset**: `production` (or the dataset of the environment)
-   - **Trigger on**: ✅ Create, ✅ Update
+   - **Trigger on**: ✅ Create, ✅ Update. Both are required. Replacing the PDF updates an existing document, so without Update a new PDF is never rendered. Creating a draft and "Seiten neu erzeugen" on a published issue still work without it, because both create a new draft, which makes the gap easy to miss.
    - **Drafts**: ✅ enabled — editors upload the PDF into a draft and generate the intro before they publish
    - **Filter**:
 
@@ -185,9 +185,11 @@ A second webhook, separate from the revalidation one, makes the web app render t
 
    - **HTTP method**: `POST`
    - **Secret**: the value of `SANITY_ECHO_RENDER_SECRET`
-   - **Staging only**: add the header `x-vercel-protection-bypass` with the project's "Protection Bypass for Automation" secret, because preview deployments sit behind Vercel's SSO.
+   - **Preview and staging only**: add the header `x-vercel-protection-bypass` with the project's "Protection Bypass for Automation" secret, because those deployments sit behind Vercel's SSO.
 
 The filter compares states, not changes: the route sets `render.source` to the PDF when it claims a document, so neither its own write-back nor publishing the draft (which carries `render.source` along) triggers a second run. "Seiten neu erzeugen" in the studio removes `render` and hands the document back to the route.
+
+When two deliveries race for the same document, the one that loses the claim is answered `409`. Sanity retries no 4xx answer except 429, so the attempts log lists it as undeliverable; that is expected, because the delivery that won renders the PDF.
 
 The projection deliberately carries no URL. The route builds the CDN URL from the asset reference itself, so a crafted payload cannot make it fetch another host.
 
