@@ -9,6 +9,7 @@ const echoIssueCard = /* groq */ `
 	"slug": slug.current,
 	releaseDate,
 	intro,
+	"indexable": coalesce(indexable, true),
 	"cover": pages[0] { _type, asset },
 	"pdf": pdf.asset-> { originalFilename, size, url }
 `;

@@ -16,6 +16,7 @@ function issue(year: number) {
 	return {
 		_id: `echo-${year}`,
 		cover: { _type: 'image', asset: { _ref: 'image-abc-1414x2000-jpg', _type: 'reference' } },
+		indexable: true,
 		intro: null,
 		pdf: null,
 		releaseDate: `${year}-04-01`,
@@ -49,5 +50,15 @@ describe('the issue grid', () => {
 		);
 
 		expect(getByRole('link', { name: 'Weiter' }).getAttribute('href')).toBe('?seite=2');
+	});
+
+	it('shows the cover of a hidden issue through the archive path', () => {
+		const { getByAltText } = renderWithUser(
+			<IssueGrid currentPage={1} issues={[{ ...issue(1984), indexable: false }]} />,
+		);
+
+		expect(getByAltText('Titelseite von TSG ECHO 1984').getAttribute('src')).toMatch(
+			/^\/echo-archiv\/images\//u,
+		);
 	});
 });

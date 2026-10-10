@@ -118,4 +118,45 @@ describe('tsg-echo issue helpers', () => {
 	it('falls back to an A4 page without dimensions', () => {
 		expect(getPageSize(null)).toStrictEqual({ height: 2000, width: 1414 });
 	});
+
+	describe('for an issue search engines must not find', () => {
+		it('links every width of every page through the archive path', () => {
+			const [page] = getFlipbookPages([pageImage('a')], false);
+
+			expect(page.src).toMatch(/^\/echo-archiv\/images\/a-1414x2000\.jpg\?/u);
+			expect(
+				page.srcSet.split(', ').every((entry) => entry.startsWith('/echo-archiv/images/')),
+			).toBe(true);
+		});
+
+		it('links the cover of the flipbook and of the cards through the archive path', () => {
+			expect(getCoverPage(pageImage('a'), 'TSG ECHO 1984 Nr. 1', false)?.src).toMatch(
+				/^\/echo-archiv\/images\//u,
+			);
+			expect(getCoverUrl(pageImage('a'), 600, false)).toMatch(/^\/echo-archiv\/images\/.*w=600/u);
+		});
+
+		it('offers the pdf through the archive path with its file name', () => {
+			expect(
+				getPdfDownload(
+					{
+						originalFilename: 'tsg-echo-1984-1.pdf',
+						size: 1_048_576,
+						url: 'https://cdn.sanity.io/files/p/d/abc.pdf',
+					},
+					false,
+				),
+			).toStrictEqual({
+				href: '/echo-archiv/files/abc.pdf?dl=tsg-echo-1984-1.pdf',
+				size: '1.00 MB',
+			});
+		});
+	});
+
+	// Review focus 1: today's issues, whose projection says `indexable: true`.
+	it('keeps the cdn urls for an issue search engines may find', () => {
+		const [page] = getFlipbookPages([pageImage('a')], true);
+
+		expect(page.src).toMatch(/^https:\/\/cdn\.sanity\.io\/images\//u);
+	});
 });

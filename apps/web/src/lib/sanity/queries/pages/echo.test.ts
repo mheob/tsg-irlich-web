@@ -17,6 +17,18 @@ describe('tsg-echo queries', () => {
 		expect(finishedEchoIssue).toContain('render.source == pdf.asset._ref');
 	});
 
+	// Review focus 1: no document has the field yet, and every one of them must stay findable.
+	it.each([
+		['the list', echoIssuesQuery],
+		['the issue page', echoIssueQuery],
+	])('treats a missing field on %s as findable', (_label, query) => {
+		expect(query).toContain('"indexable": coalesce(indexable, true)');
+	});
+
+	it('leaves unfindable issues out of the sitemap', () => {
+		expect(sitemapEchoIssuesQuery).toContain('indexable != false');
+	});
+
 	it.each([
 		['the total', echoIssuesTotalQuery],
 		['the list', echoIssuesQuery],

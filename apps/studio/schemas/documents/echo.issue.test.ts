@@ -17,7 +17,9 @@ function prepare(selection: EchoIssueSelection): PreviewValue {
 	);
 }
 
-function field(name: string): { readOnly?: boolean; group?: string } | undefined {
+function field(
+	name: string,
+): { description?: string; group?: string; readOnly?: boolean } | undefined {
 	return (
 		echoIssue.fields as unknown as { group?: string; name: string; readOnly?: boolean }[]
 	).find((candidate) => candidate.name === name);
@@ -98,6 +100,22 @@ describe('echo issue fields', () => {
 	// Editors must never edit what the render route writes; the route treats these as its own.
 	it.each(['pages', 'extractedText', 'render'])('keeps %s read-only in the pages group', (name) => {
 		expect(field(name)).toMatchObject({ group: 'pages', readOnly: true });
+	});
+
+	// WEB-367: the import switches it off for old issues; everything that exists today stays on.
+	it('keeps an issue findable by default', () => {
+		expect(field('indexable')).toMatchObject({
+			group: 'general',
+			initialValue: true,
+			title: 'In Suchmaschinen auffindbar',
+			type: 'boolean',
+		});
+	});
+
+	// Sanity serves an asset under a content-hash URL that stays live, so switching an issue off
+	// after it was public cannot pull files a search engine already has.
+	it('tells editors to switch an issue off before it is first published', () => {
+		expect(field('indexable')?.description).toContain('vor dem ersten Veröffentlichen');
 	});
 
 	it('lets editors write the intro in the general group', () => {

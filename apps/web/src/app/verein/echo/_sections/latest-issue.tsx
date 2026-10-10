@@ -18,14 +18,14 @@ const COVER_WIDTH = 800;
  */
 function LatestIssue({ issue }: Readonly<LatestIssueProps>) {
 	const href = getEchoIssuePath(issue.slug);
-	const cover = getCoverUrl(issue.cover, COVER_WIDTH);
-	const download = getPdfDownload(issue.pdf);
+	const cover = getCoverUrl(issue.cover, COVER_WIDTH, issue.indexable);
+	const download = getPdfDownload(issue.pdf, issue.indexable);
 
 	return (
 		<article className="mt-10 grid gap-6 rounded-xl bg-background md:mt-16 md:grid-cols-[2fr_3fr] md:gap-12">
 			{cover && (
 				<Link className="relative block aspect-[1/1.414] overflow-hidden rounded-xl" href={href}>
-					{/* The LCP element of the page. */}
+					{/* The LCP element of the page. The optimizer would serve a hidden issue's cover without the noindex header. */}
 					<Image
 						alt={`Titelseite von ${issue.title}`}
 						className="object-cover"
@@ -33,6 +33,7 @@ function LatestIssue({ issue }: Readonly<LatestIssueProps>) {
 						preload
 						sizes="(min-width: 48rem) 40vw, 100vw"
 						src={cover}
+						unoptimized={!issue.indexable}
 					/>
 				</Link>
 			)}

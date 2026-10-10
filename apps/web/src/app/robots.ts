@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 
+import { ARCHIVE_PATH } from '@/lib/echo/archive-url';
 import { getBaseUrl } from '@/utils/url';
 
 /**
@@ -16,9 +17,11 @@ import { getBaseUrl } from '@/utils/url';
  * - Apple: `Applebot-Extended` (training of Apple's foundation models; it does not crawl itself)
  * - Common Crawl: `CCBot` (the open web corpus many models are trained on)
  *
- * `*` already allows them, so naming them changes nothing today. It records the decision, and it
- * keeps every crawler in one group: a crawler with a group of its own ignores the `*` group, so a
- * `disallow` added there later would silently not reach it.
+ * They have a group of their own for one exception: the files of old TSG-Echo issues below
+ * `/echo-archiv/` (WEB-367), which carry phone numbers, addresses and photos of children. Search
+ * engines get that path through `*` and its `X-Robots-Tag: noindex`; AI crawlers document
+ * robots.txt as their opt-out instead. A crawler with a group of its own ignores the `*` group, so
+ * a `disallow` added to `*` later has to be added to this group as well.
  */
 const AI_CRAWLERS = [
 	'GPTBot',
@@ -39,7 +42,10 @@ export default function robots(): MetadataRoute.Robots {
 
 	return {
 		host: baseUrl,
-		rules: [{ allow: '/', userAgent: ['*', ...AI_CRAWLERS] }],
+		rules: [
+			{ allow: '/', userAgent: '*' },
+			{ allow: '/', disallow: `${ARCHIVE_PATH}/`, userAgent: AI_CRAWLERS },
+		],
 		sitemap: `${baseUrl}/sitemap.xml`,
 	};
 }

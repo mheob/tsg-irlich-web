@@ -54,6 +54,7 @@ function buildIssue(overrides: Partial<EchoIssue> = {}): EchoIssue {
 	return {
 		_id: 'echo-2025',
 		cover: page('a'),
+		indexable: true,
 		intro: 'Ein Rückblick auf das Vereinsjahr.',
 		meta: null,
 		pageSize: { height: 2000, width: 1414 },
@@ -152,6 +153,44 @@ describe('a tsg-echo issue page', () => {
 		});
 		expect(findElement(result, ButtonLink)).toBeUndefined();
 		expect(findElements<ComponentProps<'p'>>(result, 'p')).toHaveLength(0);
+	});
+
+	describe('an issue search engines must not find', () => {
+		it('serves its pages and its pdf through the archive path', async () => {
+			mockedFetch.mockResolvedValue(
+				buildIssue({
+					indexable: false,
+					pdf: {
+						originalFilename: 'tsg-echo-1984-1.pdf',
+						size: 1_048_576,
+						url: 'https://cdn.sanity.io/files/p/d/abc.pdf',
+					},
+				}),
+			);
+
+			const result = await EchoIssuePage(props());
+
+			expect(findElement(result, FlipbookLazy)?.props.pages[0]?.src).toMatch(/^\/echo-archiv\//u);
+			expect(findElement(result, ButtonLink)?.props.href).toMatch(/^\/echo-archiv\/files\//u);
+		});
+
+		it('keeps search engines and the cover image out of its metadata', async () => {
+			mockedFetch.mockResolvedValue(buildIssue({ indexable: false }));
+
+			const metadata = await generateMetadata(props());
+
+			expect(metadata.robots).toStrictEqual({ follow: false, index: false });
+			expect(metadata.openGraph?.images).toStrictEqual([]);
+		});
+	});
+
+	// Review focus 1.
+	it('leaves a findable issue to search engines', async () => {
+		mockedFetch.mockResolvedValue(buildIssue({ indexable: true }));
+
+		const metadata = await generateMetadata(props());
+
+		expect(metadata.robots).toBeUndefined();
 	});
 
 	describe('metadata', () => {

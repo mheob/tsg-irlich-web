@@ -15,6 +15,7 @@ vi.mock(import('@/lib/sanity/client'), () => ({
 const ISSUE = {
 	_id: 'echo-2025',
 	cover: { _type: 'image', asset: { _ref: 'image-abc-1414x2000-jpg', _type: 'reference' } },
+	indexable: true,
 	intro: 'Ein Rückblick auf das Vereinsjahr.',
 	pdf: {
 		originalFilename: 'tsg-echo-2025.pdf',
@@ -60,5 +61,14 @@ describe('the newest issue', () => {
 		const { queryByRole } = renderWithUser(<LatestIssue issue={{ ...ISSUE, pdf: null }} />);
 
 		expect(queryByRole('link', { name: /PDF herunterladen/u })).toBeNull();
+	});
+
+	// Review focus 5: /_next/image would serve the cover without the noindex header.
+	it('shows the cover of a hidden issue through the archive path', () => {
+		const { getByAltText } = renderWithUser(<LatestIssue issue={{ ...ISSUE, indexable: false }} />);
+
+		expect(getByAltText('Titelseite von TSG ECHO 2025').getAttribute('src')).toMatch(
+			/^\/echo-archiv\/images\//u,
+		);
 	});
 });

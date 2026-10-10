@@ -68,3 +68,19 @@ test.describe('a tsg-echo issue', () => {
 		});
 	}
 });
+
+test.describe('the tsg-echo archive files', () => {
+	test.skip(({ isMobile }) => isMobile, 'A request without a page is the same in every project.');
+
+	for (const [kind, path] of [
+		['an image', '/echo-archiv/images/0a1b2c-1414x2000.jpg?w=800'],
+		['a pdf', '/echo-archiv/files/0a1b2c.pdf?dl=tsg-echo.pdf'],
+	] as const) {
+		test(`serves ${kind} with noindex`, async ({ request }) => {
+			const response = await request.get(path);
+
+			expect(response.status()).toBe(200);
+			expect(response.headers()['x-robots-tag']).toBe('noindex, nofollow');
+		});
+	}
+});

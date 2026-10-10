@@ -1,4 +1,5 @@
 import type { FlipbookPage } from '@/components/with-logic/flipbook/types';
+import { toArchiveUrl } from '@/lib/echo/archive-url';
 import { getDownloadFileUrl, getFileSize, urlForImageMax } from '@/lib/sanity/utils';
 import type { EchoIssueQueryResult } from '@/types/sanity.types';
 
@@ -25,17 +26,33 @@ function getIssueYear(releaseDate?: string | null): string {
 }
 
 /**
+ * The URL a visitor gets for an asset: the CDN's own, or the archive path's, which tells search
+ * engines to stay away.
+ *
+ * `indexable` is the issue's own field, not a behaviour switch: two functions instead would split
+ * every helper that links an asset, hence the NOSONAR for S2301.
+ *
+ * @param url - The CDN URL.
+ * @param indexable - Whether search engines may find the issue.
+ * @returns The URL to link.
+ */
+function linkAsset(url: string, indexable: boolean): string {
+	return indexable ? url : toArchiveUrl(url); // NOSONAR
+}
+
+/**
  * The download of an issue's PDF, with its size for the button label.
  *
  * @param pdf - The projected PDF asset.
+ * @param indexable - Whether search engines may find the issue; default true.
  * @returns The link and the size, or `undefined` when the asset cannot be downloaded.
  */
-function getPdfDownload(pdf?: EchoPdf | null): PdfDownload | undefined {
+function getPdfDownload(pdf?: EchoPdf | null, indexable = true): PdfDownload | undefined {
 	if (!pdf?.url || !pdf.originalFilename) {
 		return undefined;
 	}
 	const href = getDownloadFileUrl({ originalFilename: pdf.originalFilename, url: pdf.url });
-	return { href, size: getFileSize(pdf.size ?? undefined) };
+	return { href: linkAsset(href, indexable), size: getFileSize(pdf.size ?? undefined) };
 }
 
 /**
@@ -54,39 +71,51 @@ function toSanityImage(page?: PageAsset | null): SanityPageImage | undefined {
  *
  * @param cover - The first page image.
  * @param width - The width in pixels.
+ * @param indexable - Whether search engines may find the issue; default true.
  * @returns The URL, or `undefined` without an asset.
  */
-function getCoverUrl(cover: PageAsset | null | undefined, width: number): string | undefined {
-	return urlForImageMax(toSanityImage(cover), width);
+function getCoverUrl(
+	cover: PageAsset | null | undefined,
+	width: number,
+	indexable = true,
+): string | undefined {
+	const url = urlForImageMax(toSanityImage(cover), width);
+	return url && linkAsset(url, indexable);
 }
 
 /**
  * One page image in the three widths the CDN delivers.
  *
  * @param page - The page image.
- * @param alt - Its alternative text.
- * @param id - Its key in the book.
+ * @param leaf - What the page needs besides its image.
+ * @param leaf.alt - Its alternative text.
+ * @param leaf.id - Its key in the book.
+ * @param leaf.indexable - Whether search engines may find the issue.
  * @returns The flipbook page, or `undefined` for an image without an asset.
  */
-function toFlipbookPage(page: PageAsset, alt: string, id: string): FlipbookPage | undefined {
+function toFlipbookPage(page: PageAsset, { alt, id, indexable }: Leaf): FlipbookPage | undefined {
 	const image = toSanityImage(page);
 	const src = urlForImageMax(image, LARGEST_PAGE_WIDTH);
 	if (!src) {
 		return undefined;
 	}
-	const srcSet = PAGE_WIDTHS.map((width) => `${urlForImageMax(image, width)} ${width}w`).join(', ');
-	return { alt, id, src, srcSet };
+	const srcSet = PAGE_WIDTHS.map(
+		(width) => `${linkAsset(urlForImageMax(image, width) ?? '', indexable)} ${width}w`,
+	).join(', ');
+	return { alt, id, src: linkAsset(src, indexable), srcSet };
 }
 
 /**
  * Every page of an issue, named after its position.
  *
  * @param pages - The rendered page images, cover first.
+ * @param indexable - Whether search engines may find the issue; default true.
  * @returns The flipbook pages.
  */
-function getFlipbookPages(pages: readonly EchoPageImage[]): FlipbookPage[] {
+function getFlipbookPages(pages: readonly EchoPageImage[], indexable = true): FlipbookPage[] {
 	return pages.flatMap((image, index) => {
-		const page = toFlipbookPage(image, `Seite ${index + 1} von ${pages.length}`, image._key);
+		const alt = `Seite ${index + 1} von ${pages.length}`;
+		const page = toFlipbookPage(image, { alt, id: image._key, indexable });
 		return page ? [page] : [];
 	});
 }
@@ -96,12 +125,16 @@ function getFlipbookPages(pages: readonly EchoPageImage[]): FlipbookPage[] {
  *
  * @param cover - The first page image.
  * @param title - The issue's title.
+ * @param indexable - Whether search engines may find the issue; default true.
  * @returns The cover, or `undefined` without an image.
  */
-function getCoverPage(cover?: PageAsset | null, title?: string | null): FlipbookPage | undefined {
-	return cover
-		? toFlipbookPage(cover, `Titelseite von ${title ?? 'TSG-Echo'}`, 'cover')
-		: undefined;
+function getCoverPage(
+	cover?: PageAsset | null,
+	title?: string | null,
+	indexable = true,
+): FlipbookPage | undefined {
+	const alt = `Titelseite von ${title ?? 'TSG-Echo'}`;
+	return cover ? toFlipbookPage(cover, { alt, id: 'cover', indexable }) : undefined;
 }
 
 /**
@@ -124,6 +157,13 @@ type EchoPageImage = NonNullable<EchoIssue['pages']>[number];
 
 /** What the URL builder needs of a page image, which a cover projection also carries. */
 type PageAsset = Pick<EchoPageImage, '_type' | 'asset'>;
+
+/** What a flipbook page needs besides its image. */
+interface Leaf {
+	alt: string;
+	id: string;
+	indexable: boolean;
+}
 
 /** A page image whose asset is known to exist. */
 interface SanityPageImage {
