@@ -36,8 +36,8 @@ function getIssueYear(releaseDate?: string | null): string {
  * @param indexable - Whether search engines may find the issue.
  * @returns The URL to link.
  */
-function linkAsset(url: string, indexable: boolean /* NOSONAR */): string {
-	return indexable ? url : toArchiveUrl(url);
+function linkAsset(url: string, indexable: boolean): string {
+	return indexable ? url : toArchiveUrl(url); // NOSONAR
 }
 
 /**
