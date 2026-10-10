@@ -9,6 +9,7 @@ import {
 	getIssueYear,
 	getPageSize,
 	getPdfDownload,
+	toSanityImage,
 } from './utils';
 import type { EchoPageImage } from './utils';
 
@@ -85,6 +86,10 @@ describe('tsg-echo issue helpers', () => {
 
 	it('builds the cover in the width a card asks for', () => {
 		expect(getCoverUrl({ _type: 'image', asset: pageImage('a').asset }, 600)).toContain('w=600');
+	});
+
+	it('hands the image builder only a page with an asset', () => {
+		expect(toSanityImage({ _type: 'image', asset: null })).toBeUndefined();
 	});
 
 	it('has no cover URL without an asset', () => {

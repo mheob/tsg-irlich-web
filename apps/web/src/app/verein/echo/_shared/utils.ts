@@ -67,7 +67,7 @@ function getCoverUrl(cover: PageAsset | null | undefined, width: number): string
  * @param alt - Its alternative text.
  * @returns The flipbook page, or `undefined` for an image without an asset.
  */
-function toFlipbookPage(page: EchoPageImage, alt: string): FlipbookPage | undefined {
+function toFlipbookPage(page: PageAsset, alt: string): FlipbookPage | undefined {
 	const image = toSanityImage(page);
 	const src = urlForImageMax(image, LARGEST_PAGE_WIDTH);
 	if (!src) {
@@ -97,10 +97,7 @@ function getFlipbookPages(pages: readonly EchoPageImage[]): FlipbookPage[] {
  * @param title - The issue's title.
  * @returns The cover, or `undefined` without an image.
  */
-function getCoverPage(
-	cover?: EchoPageImage | null,
-	title?: string | null,
-): FlipbookPage | undefined {
+function getCoverPage(cover?: PageAsset | null, title?: string | null): FlipbookPage | undefined {
 	return cover ? toFlipbookPage(cover, `Titelseite von ${title ?? 'TSG-Echo'}`) : undefined;
 }
 
@@ -145,5 +142,13 @@ interface PdfDownload {
 	size: string;
 }
 
-export { getCoverPage, getCoverUrl, getFlipbookPages, getIssueYear, getPageSize, getPdfDownload };
+export {
+	getCoverPage,
+	getCoverUrl,
+	getFlipbookPages,
+	getIssueYear,
+	getPageSize,
+	getPdfDownload,
+	toSanityImage,
+};
 export type { EchoPageImage, EchoPdf, PdfDownload };
