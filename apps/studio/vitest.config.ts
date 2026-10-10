@@ -11,7 +11,7 @@ export default defineConfig({
 			// import are scored, so an untested file drops out of the denominator instead of
 			// counting as uncovered. `index.ts` files stay in: in this workspace they define
 			// schemas and the desk structure rather than only re-exporting.
-			include: ['{actions,lib,plugins,schemas,scripts,structure,utils}/**/*.{ts,tsx}'],
+			include: ['{actions,lib,migrations,plugins,schemas,scripts,structure,utils}/**/*.{ts,tsx}'],
 			provider: 'v8',
 			reporter: ['text', 'html', 'lcov'],
 			reportsDirectory: './coverage',
