@@ -37,8 +37,11 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 	// The engine tears the book down when its children change identity, so the leaves are built once.
 	const leaves = useMemo(
 		() =>
-			pages.map((page) => (
-				<div key={page.src}>
+			pages.map((page, index) => (
+				// Two blank pages of a scan share one image, so the position is the key; the list never
+				// reorders.
+				// oxlint-disable-next-line react/no-array-index-key -- see above
+				<div key={index}>
 					<div className="size-full bg-white">
 						{/* The Sanity CDN delivers every width; the Next.js optimizer would re-encode each page. */}
 						{/* oxlint-disable-next-line nextjs/no-img-element -- see above */}
@@ -57,22 +60,35 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 		[pages],
 	);
 
-	const syncSpread = (snapshot: BookSnapshot): void => {
-		setSpread({ pageCount: snapshot.pageCount, visiblePages: snapshot.visiblePages });
-	};
-	const showPrevious = (): void => {
-		book.current?.flipPrev();
-	};
-	const showNext = (): void => {
-		book.current?.flipNext();
-	};
-
 	const isAtStart = spread.visiblePages.includes(0);
 	const isAtEnd = spread.visiblePages.includes(spread.pageCount - 1);
 
+	const syncSpread = (snapshot: BookSnapshot): void => {
+		setSpread({ pageCount: snapshot.pageCount, visiblePages: snapshot.visiblePages });
+	};
+	// Turning a phone swaps a spread for a single page without a page turn, so no `flip` follows.
+	const syncOrientation = (): void => {
+		const engine = book.current?.pageFlip();
+		if (engine) {
+			setSpread({ pageCount: engine.getPageCount(), visiblePages: engine.getVisiblePages() });
+		}
+	};
+	// The buttons stay focusable at the ends: a disabled one would drop the keyboard focus.
+	const showPrevious = (): void => {
+		if (!isAtStart) {
+			book.current?.flipPrev();
+		}
+	};
+	const showNext = (): void => {
+		if (!isAtEnd) {
+			book.current?.flipNext();
+		}
+	};
+
 	return (
 		<>
-			<div className="aspect-(--echo-page) w-full md:aspect-(--echo-spread)">
+			{/* The engine shows single pages below twice `MIN_PAGE_WIDTH`, so the box switches there. */}
+			<div className="aspect-(--echo-page) w-full @min-[480px]:aspect-(--echo-spread)">
 				<HTMLFlipBook
 					aria-label={label}
 					autoSize
@@ -83,6 +99,7 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 					liveRegion={false}
 					maxWidth={pageWidth}
 					minWidth={MIN_PAGE_WIDTH}
+					onChangeOrientation={syncOrientation}
 					onLoaded={syncSpread}
 					onPageChange={syncSpread}
 					ref={book}
@@ -98,10 +115,9 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 			</div>
 			<div className="flex h-12 items-center justify-center gap-4">
 				<ArrowButton
+					aria-disabled={isAtStart}
 					aria-label="Vorherige Seite"
-					data-disabled={isAtStart}
 					direction="left"
-					disabled={isAtStart}
 					onClick={showPrevious}
 					size="size-6"
 					variant="ghost"
@@ -110,10 +126,9 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 					{describeSpread(spread.visiblePages, spread.pageCount)}
 				</p>
 				<ArrowButton
+					aria-disabled={isAtEnd}
 					aria-label="Nächste Seite"
-					data-disabled={isAtEnd}
 					direction="right"
-					disabled={isAtEnd}
 					onClick={showNext}
 					size="size-6"
 					variant="secondary"

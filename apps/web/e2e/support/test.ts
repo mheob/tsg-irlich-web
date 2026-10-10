@@ -1,4 +1,5 @@
 import { test as base } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 /** The Live Content API stream `<SanityLive />` opens from the browser. */
 const LIVE_EVENTS = '**/data/live/events/**';
@@ -52,6 +53,19 @@ const DISABLE_SMOOTH_SCROLL = `
 	}
 `;
 
+/**
+ * Answers the Sanity CDN's images with a blank pixel. The shared fixture installs it on every page;
+ * a context a spec opens itself has to call it.
+ *
+ * @param page - The page whose image requests are answered.
+ * @returns Nothing.
+ */
+async function stubSanityImages(page: Page): Promise<void> {
+	await page.route(SANITY_IMAGES, async (route) => {
+		await route.fulfill({ body: BLANK_PNG, contentType: 'image/png' });
+	});
+}
+
 const test = base.extend({
 	page: async ({ page }, use) => {
 		await page.addInitScript(DISABLE_SMOOTH_SCROLL);
@@ -60,9 +74,7 @@ const test = base.extend({
 			await route.fulfill({ body: '', contentType: 'text/event-stream' });
 		});
 
-		await page.route(SANITY_IMAGES, async (route) => {
-			await route.fulfill({ body: BLANK_PNG, contentType: 'image/png' });
-		});
+		await stubSanityImages(page);
 
 		await Promise.all(
 			ANALYTICS.map(async (pattern) => {
@@ -77,4 +89,4 @@ const test = base.extend({
 });
 
 export { expect } from '@playwright/test';
-export { test };
+export { stubSanityImages, test };

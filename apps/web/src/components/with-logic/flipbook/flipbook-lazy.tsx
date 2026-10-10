@@ -66,16 +66,19 @@ function FlipbookLazy({ cover, ...props }: Readonly<FlipbookLazyProps>) {
 
 	const placeholder = (
 		<>
-			<div className="flex aspect-(--echo-page) w-full justify-center md:aspect-(--echo-spread)">
+			{/* A spread starts with the cover alone on its right half, against the spine. */}
+			<div className="flex aspect-(--echo-page) min-h-0 w-full justify-center @min-[480px]:aspect-(--echo-spread) @min-[480px]:justify-end">
 				{cover && (
-					// The same CDN image the book shows first; see `flipbook.tsx` for why it is no `next/image`.
-					// oxlint-disable-next-line nextjs/no-img-element -- see above
-					<img
-						alt={cover.alt}
-						className="h-full object-contain"
-						src={cover.src}
-						srcSet={cover.srcSet}
-					/>
+					<div className="aspect-(--echo-page) h-full">
+						{/* The same CDN image the book shows first; see `flipbook.tsx` for why it is no `next/image`. */}
+						{/* oxlint-disable-next-line nextjs/no-img-element -- see above */}
+						<img
+							alt={cover.alt}
+							className="size-full object-contain"
+							src={cover.src}
+							srcSet={cover.srcSet}
+						/>
+					</div>
 				)}
 			</div>
 			<div className="h-12" />
@@ -83,7 +86,8 @@ function FlipbookLazy({ cover, ...props }: Readonly<FlipbookLazyProps>) {
 	);
 
 	return (
-		<div className="flex flex-col gap-6" style={style}>
+		// The container query of the boxes follows this width, which is also the engine's.
+		<div className="@container flex w-full max-w-5xl flex-col gap-6" style={style}>
 			{isClient ? (
 				<Suspense fallback={placeholder}>
 					<Flipbook {...props} />

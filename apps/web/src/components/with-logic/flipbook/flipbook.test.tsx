@@ -1,4 +1,9 @@
-import type { BookSnapshot, FlipBookHandle, HTMLFlipBookProps } from '@gullabs/react-flipbook';
+import type {
+	BookSnapshot,
+	FlipBookHandle,
+	HTMLFlipBookProps,
+	PageFlip,
+} from '@gullabs/react-flipbook';
 import { act } from '@testing-library/react';
 import { forwardRef, useImperativeHandle } from 'react';
 import type { ForwardedRef } from 'react';
@@ -10,6 +15,7 @@ import { Flipbook } from './flipbook';
 const book = vi.hoisted(() => ({
 	flipNext: vi.fn(() => true),
 	flipPrev: vi.fn(() => true),
+	pageFlip: vi.fn<() => PageFlip | null>(() => null),
 	render: vi.fn<(props: HTMLFlipBookProps) => void>(),
 }));
 
@@ -104,8 +110,24 @@ describe('the flipbook', () => {
 		act(() => bookProps().onLoaded?.(snapshot([0])));
 
 		expect(getByText('Seite 1 von 3')).toHaveProperty('ariaLive', 'polite');
-		expect(getByRole('button', { name: 'Vorherige Seite' })).toHaveProperty('disabled', true);
-		expect(getByRole('button', { name: 'Nächste Seite' })).toHaveProperty('disabled', false);
+		expect(getByRole('button', { name: 'Vorherige Seite' }).getAttribute('aria-disabled')).toBe(
+			'true',
+		);
+		expect(getByRole('button', { name: 'Nächste Seite' }).getAttribute('aria-disabled')).toBe(
+			'false',
+		);
+	});
+
+	// A natively disabled button would drop the keyboard focus to the page at either end.
+	it('keeps a blocked button focusable but lets it do nothing', async () => {
+		const { getByRole, user } = renderBook();
+		act(() => bookProps().onLoaded?.(snapshot([0])));
+		const previous = getByRole('button', { name: 'Vorherige Seite' });
+
+		await user.click(previous);
+
+		expect(previous).toHaveProperty('disabled', false);
+		expect(book.flipPrev).not.toHaveBeenCalled();
 	});
 
 	it('follows the book to the last spread and blocks the way forward', () => {
@@ -113,8 +135,43 @@ describe('the flipbook', () => {
 		act(() => bookProps().onPageChange?.(snapshot([1, 2])));
 
 		expect(getByText('Seiten 2–3 von 3')).toBeDefined();
-		expect(getByRole('button', { name: 'Nächste Seite' })).toHaveProperty('disabled', true);
-		expect(getByRole('button', { name: 'Vorherige Seite' })).toHaveProperty('disabled', false);
+		expect(getByRole('button', { name: 'Nächste Seite' }).getAttribute('aria-disabled')).toBe(
+			'true',
+		);
+		expect(getByRole('button', { name: 'Vorherige Seite' }).getAttribute('aria-disabled')).toBe(
+			'false',
+		);
+	});
+
+	// Review focus 4: turning a phone swaps a spread for a single page without a page turn.
+	it('re-reads what is on screen when the book changes its orientation', () => {
+		const { getByText } = renderBook();
+		act(() => bookProps().onPageChange?.(snapshot([1, 2])));
+		book.pageFlip.mockReturnValue({
+			getPageCount: () => 3,
+			getVisiblePages: () => [1],
+		} as unknown as PageFlip);
+
+		act(() => bookProps().onChangeOrientation?.({ orientation: 'portrait' }));
+
+		expect(getByText('Seite 2 von 3')).toBeDefined();
+	});
+
+	// Sanity stores identical uploads once, so two blank pages of a scan share one image URL.
+	it('keeps two identical pages apart', () => {
+		const error = vi.spyOn(console, 'error');
+		const [blank] = PAGES;
+
+		renderWithUser(
+			<Flipbook
+				label="TSG ECHO 2025 zum Durchblättern"
+				pageHeight={2000}
+				pageWidth={1414}
+				pages={[blank, blank]}
+			/>,
+		);
+
+		expect(error).not.toHaveBeenCalled();
 	});
 
 	it('turns the book with its own buttons', async () => {
