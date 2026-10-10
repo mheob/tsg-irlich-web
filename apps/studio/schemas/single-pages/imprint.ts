@@ -5,6 +5,7 @@ import { content, general, meta } from '@/shared/field-groups';
 import { addressField, emailField } from '@/shared/fields/contact';
 import { defaultHeroFields, getHiddenSlugField, introField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { getSinglePagePreview } from '@/shared/previews';
 
 const imprintPage = defineType({
 	fields: [
@@ -116,9 +117,7 @@ const imprintPage = defineType({
 	groups: [general, meta, content],
 	icon: RiSettings5Line,
 	name: 'imprint',
-	preview: {
-		prepare: () => ({ title: 'Impressum' }),
-	},
+	preview: getSinglePagePreview('Impressum'),
 	title: 'Impressum',
 	type: 'document',
 });

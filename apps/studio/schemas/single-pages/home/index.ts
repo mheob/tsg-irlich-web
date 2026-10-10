@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { content, general, meta } from '@/shared/field-groups';
 import { defaultPageSectionFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { getSinglePagePreview } from '@/shared/previews';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
 import { visionField } from '@/shared/sections/vision';
@@ -59,9 +60,7 @@ const homePage = defineType({
 	groups: [general, meta, content],
 	icon: RiBookletLine,
 	name: 'home',
-	preview: {
-		prepare: () => ({ title: 'Home' }),
-	},
+	preview: getSinglePagePreview('Home'),
 	title: 'Home',
 	type: 'document',
 });

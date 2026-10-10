@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { content, general, meta } from '@/shared/field-groups';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { getSinglePagePreview } from '@/shared/previews';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 
 const contactPage = defineType({
@@ -42,9 +43,7 @@ const contactPage = defineType({
 	groups: [general, meta, content],
 	icon: RiBookletLine,
 	name: 'contact',
-	preview: {
-		prepare: () => ({ title: 'Kontakt' }),
-	},
+	preview: getSinglePagePreview('Kontakt'),
 	title: 'Kontakt',
 	type: 'document',
 });

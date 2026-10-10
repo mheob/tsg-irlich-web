@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { general, meta } from '@/shared/field-groups';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { getSinglePagePreview } from '@/shared/previews';
 
 const echoOverviewPage = defineType({
 	fields: [
@@ -26,9 +27,7 @@ const echoOverviewPage = defineType({
 	groups: [general, meta],
 	icon: RiBookOpenLine,
 	name: 'echoOverview',
-	preview: {
-		prepare: () => ({ title: 'TSG-Echo Übersicht' }),
-	},
+	preview: getSinglePagePreview('TSG-Echo Übersicht'),
 	title: 'TSG-Echo Übersicht',
 	type: 'document',
 });

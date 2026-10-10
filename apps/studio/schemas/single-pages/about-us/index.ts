@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { content, general, meta } from '@/shared/field-groups';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { getSinglePagePreview } from '@/shared/previews';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
 
@@ -38,9 +39,7 @@ const aboutUsPage = defineType({
 	groups: [general, meta, content],
 	icon: RiBookletLine,
 	name: 'aboutUs',
-	preview: {
-		prepare: () => ({ title: 'Über uns' }),
-	},
+	preview: getSinglePagePreview('Über uns'),
 	title: 'Über uns',
 	type: 'document',
 });

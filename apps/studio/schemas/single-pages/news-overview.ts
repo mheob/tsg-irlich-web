@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { content, general, meta } from '@/shared/field-groups';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { getSinglePagePreview } from '@/shared/previews';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 
 const newsOverviewPage = defineType({
@@ -32,9 +33,7 @@ const newsOverviewPage = defineType({
 	groups: [general, meta, content],
 	icon: RiBookletLine,
 	name: 'newsOverview',
-	preview: {
-		prepare: () => ({ title: 'News Übersicht' }),
-	},
+	preview: getSinglePagePreview('News Übersicht'),
 	title: 'News Übersicht',
 	type: 'document',
 });
