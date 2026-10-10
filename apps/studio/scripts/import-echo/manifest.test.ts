@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vite-plus/test';
 
-import { parseManifest, toDocumentId } from './manifest';
+import { parseManifest, parseManifestText, toDocumentId } from './manifest';
 
 const ENTRY = {
 	datei: '1979 Erste Exemplare/1979_01.pdf',
@@ -89,6 +89,19 @@ describe('the manifest', () => {
 	it('rejects two entries that give the same slug', () => {
 		expect(() => parseManifest([ENTRY, { ...ENTRY, datei: '1979_02.pdf' }])).toThrow(
 			'Doppelte Slugs (aus dem Titel) in der manifest.json: tsg-echo-1979-nr-1',
+		);
+	});
+});
+
+describe('the manifest file', () => {
+	it('parses the text of manifest.json', () => {
+		expect(parseManifestText(JSON.stringify([ENTRY]))[0]?.documentId).toBe('echo-archiv-1979-01');
+	});
+
+	// Sonar S8707: JSON.parse quotes the start of the text, which would print a wrongly named file.
+	it('refuses a file that is no json without quoting it', () => {
+		expect(() => parseManifestText('-----BEGIN PRIVATE KEY-----')).toThrow(
+			/^Die manifest\.json ist kein gültiges JSON\.$/u,
 		);
 	});
 });

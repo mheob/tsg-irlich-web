@@ -7,7 +7,8 @@ import { slugify } from '@/utils/strings';
 const ID_PREFIX = 'echo-archiv-';
 const PDF_EXTENSION = /\.pdf$/iu;
 const NON_ID_CHARACTERS = /[^a-z0-9]+/gu;
-const EDGE_DASHES = /^-+|-+$/gu;
+// NON_ID_CHARACTERS leaves at most one dash at either end, so one is enough here.
+const EDGE_DASHES = /^-|-$/gu;
 
 const KEY_LABELS: Record<UniqueKey, string> = {
 	documentId: 'Dokument-IDs (aus dem Dateinamen)',
@@ -113,6 +114,33 @@ function parseManifest(json: unknown): IssuePlan[] {
 	return plans;
 }
 
+/**
+ * Parses JSON without quoting it. `JSON.parse` puts the start of the text into its error, which for
+ * a wrongly named file could be anything, so the message says only that it is no JSON.
+ *
+ * @param text - The file's content.
+ * @returns The parsed value.
+ * @throws {Error} For text that is no JSON.
+ */
+function readJson(text: string): unknown {
+	try {
+		return JSON.parse(text);
+	} catch {
+		throw new Error('Die manifest.json ist kein gültiges JSON.');
+	}
+}
+
+/**
+ * Reads the text of `manifest.json`.
+ *
+ * @param text - The file's content.
+ * @returns The plans.
+ * @throws {Error} For text that is no JSON, or an invalid manifest.
+ */
+function parseManifestText(text: string): IssuePlan[] {
+	return parseManifest(readJson(text));
+}
+
 type UniqueKey = 'documentId' | 'slug';
 
 interface IssuePlan {
@@ -125,5 +153,5 @@ interface IssuePlan {
 	title: string;
 }
 
-export { parseManifest, toDocumentId };
+export { parseManifest, parseManifestText, toDocumentId };
 export type { IssuePlan };

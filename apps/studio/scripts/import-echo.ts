@@ -1,7 +1,9 @@
 import { readFile } from 'node:fs/promises';
+import os from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { fileURLToPath } from 'node:url';
 
 import { getCliClient } from 'sanity/cli';
 
@@ -9,16 +11,19 @@ import { renderPdfPages } from '@tsgi-web/pdf-pages';
 
 import { createArchiveStore } from './import-echo/archive-store';
 import { checkIntroAccess, draftIntro } from './import-echo/intro';
-import { parseManifest } from './import-echo/manifest';
+import { parseManifestText } from './import-echo/manifest';
 import { parseImportOptions } from './import-echo/options';
 import { isSuccessful, runImport, summarize } from './import-echo/run-import';
 
 // The releases API needs 2025-02-19 or later.
 const API_VERSION = '2026-10-01';
 
-const options = parseImportOptions(process.argv.slice(2), process.env);
+const options = parseImportOptions(process.argv.slice(2), process.env, {
+	home: os.homedir(),
+	repository: fileURLToPath(new URL('../../..', import.meta.url)),
+});
 const { apiKey } = options;
-const plans = parseManifest(JSON.parse(await readFile(options.manifest, 'utf8')));
+const plans = parseManifestText(await readFile(options.manifest, 'utf8'));
 const client = getCliClient({ apiVersion: API_VERSION }).withConfig({
 	dataset: options.dataset,
 	useCdn: false,

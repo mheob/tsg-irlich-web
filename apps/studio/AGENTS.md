@@ -67,7 +67,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 
 `scripts/import-echo.ts` imports the old issues once into the Content Release "TSG-Echo-Archiv" (id `tsg-echo-archiv`, WEB-354). The modules under `scripts/import-echo/` take their collaborators as arguments and are tested without Sanity, pdf.js or the network.
 
-**Input.** The PDFs live in a folder **outside the repository**, next to a `manifest.json` with one entry per issue. `datei` is relative to the folder, and the list comes from WEB-353:
+**Input.** The PDFs live in a folder in the home directory and **outside the repository** (the script refuses anything else), next to a `manifest.json` with one entry per issue. `datei` is relative to the folder, and the list comes from WEB-353:
 
 ```json
 [
@@ -86,7 +86,7 @@ pnpm --filter studio run import:echo --dataset development --folder ~/echo-archi
 ANTHROPIC_API_KEY=… pnpm --filter studio run import:echo --dataset development --folder ~/echo-archiv --no-dry-run
 ```
 
-`--no-intro` imports without intros and without a key. `--manifest <file>` reads another list. `--release <id>` fills another release than `tsg-echo-archiv`; a later run needs one once the first release is published or archived. `sanity exec --with-user-token` writes as the logged-in user, so run `pnpm exec sanity login` first. `ANTHROPIC_API_KEY` only ever comes from the shell. It does not belong in `.env`, Vercel or `turbo.json`.
+`--no-intro` imports without intros and without a key. `--manifest <file>` reads another `.json` list inside the folder; nothing outside it is read, and a file that is no JSON is not quoted in the error. `--release <id>` fills another release than `tsg-echo-archiv`; a later run needs one once the first release is published or archived. `sanity exec --with-user-token` writes as the logged-in user, so run `pnpm exec sanity login` first. `ANTHROPIC_API_KEY` only ever comes from the shell. It does not belong in `.env`, Vercel or `turbo.json`.
 
 **What it writes.** Per issue:
 
