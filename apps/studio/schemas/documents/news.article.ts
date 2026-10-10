@@ -9,6 +9,12 @@ import { slugField, titleField } from '@/shared/fields/general';
 import { authorField, metaField } from '@/shared/fields/meta';
 import { formatDate } from '@/utils/time';
 
+/**
+ * Below the 10 a page title gets through `preview.select`, so pages rank above news in the studio
+ * search, also when picking the target of a link (WEB-369).
+ */
+const TITLE_SEARCH_WEIGHT = 5;
+
 const newsArticle = defineType({
 	fields: [
 		// General
@@ -21,7 +27,7 @@ const newsArticle = defineType({
 			validation: (Rule) => Rule.required().error('Es muss ein Datum ausgewählt werden.'),
 		}),
 
-		titleField,
+		defineField({ ...titleField, options: { search: { weight: TITLE_SEARCH_WEIGHT } } }),
 		slugField,
 
 		defineField({

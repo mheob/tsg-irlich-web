@@ -7,6 +7,7 @@ import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
 import { visionField } from '@/shared/sections/vision';
+import { getSinglePagePreview } from '@/utils/previews';
 
 import {
 	contactPersons,
@@ -59,9 +60,7 @@ const homePage = defineType({
 	groups: [general, meta, content],
 	icon: RiBookletLine,
 	name: 'home',
-	preview: {
-		prepare: () => ({ title: 'Home' }),
-	},
+	preview: getSinglePagePreview('Home'),
 	title: 'Home',
 	type: 'document',
 });

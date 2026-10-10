@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { general, meta } from '@/shared/field-groups';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { getSinglePagePreview } from '@/utils/previews';
 
 const accessibilityPage = defineType({
 	fields: [
@@ -28,9 +29,7 @@ const accessibilityPage = defineType({
 	groups: [general, meta, { name: 'content', title: 'Barrierefreiheit' }],
 	icon: RiWheelchairLine,
 	name: 'accessibility',
-	preview: {
-		prepare: () => ({ title: 'Barrierefreiheit' }),
-	},
+	preview: getSinglePagePreview('Barrierefreiheit'),
 	title: 'Barrierefreiheit',
 	type: 'document',
 });

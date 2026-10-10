@@ -5,6 +5,7 @@ import { content, general, meta } from '@/shared/field-groups';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
+import { getSinglePagePreview } from '@/utils/previews';
 
 const newsOverviewPage = defineType({
 	fields: [
@@ -32,9 +33,7 @@ const newsOverviewPage = defineType({
 	groups: [general, meta, content],
 	icon: RiBookletLine,
 	name: 'newsOverview',
-	preview: {
-		prepare: () => ({ title: 'News Übersicht' }),
-	},
+	preview: getSinglePagePreview('News Übersicht'),
 	title: 'News Übersicht',
 	type: 'document',
 });

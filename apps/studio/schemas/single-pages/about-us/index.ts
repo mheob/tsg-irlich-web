@@ -6,6 +6,7 @@ import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
+import { getSinglePagePreview } from '@/utils/previews';
 
 import { chronicle, contactPersons, intro, stats, vision } from './_groups';
 import { chronicleField } from './chronicle';
@@ -38,9 +39,7 @@ const aboutUsPage = defineType({
 	groups: [general, meta, content],
 	icon: RiBookletLine,
 	name: 'aboutUs',
-	preview: {
-		prepare: () => ({ title: 'Über uns' }),
-	},
+	preview: getSinglePagePreview('Über uns'),
 	title: 'Über uns',
 	type: 'document',
 });

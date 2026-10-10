@@ -5,6 +5,7 @@ import { contact, general, meta } from '@/shared/field-groups';
 import { addressField, emailField, phoneField } from '@/shared/fields/contact';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { getSinglePagePreview } from '@/utils/previews';
 
 const privacyPage = defineType({
 	fields: [
@@ -41,9 +42,7 @@ const privacyPage = defineType({
 	groups: [general, meta, contact, { name: 'content', title: 'Erklärung' }],
 	icon: RiSettings5Line,
 	name: 'privacy',
-	preview: {
-		prepare: () => ({ title: 'Datenschutzerklärung' }),
-	},
+	preview: getSinglePagePreview('Datenschutzerklärung'),
 	title: 'Datenschutzerklärung',
 	type: 'document',
 });

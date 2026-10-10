@@ -9,6 +9,7 @@ import {
 } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
+import { getSinglePagePreview } from '@/utils/previews';
 
 const membershipPage = defineType({
 	fields: [
@@ -58,9 +59,7 @@ const membershipPage = defineType({
 	groups: [general, meta, content],
 	icon: RiBookletLine,
 	name: 'membership',
-	preview: {
-		prepare: () => ({ title: 'Mitgliedschaft' }),
-	},
+	preview: getSinglePagePreview('Mitgliedschaft'),
 	title: 'Mitgliedschaft',
 	type: 'document',
 });
