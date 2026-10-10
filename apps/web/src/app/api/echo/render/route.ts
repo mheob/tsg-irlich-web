@@ -23,8 +23,9 @@ const payloadSchema = z.object({
 	pdfRef: z.string().regex(FILE_ASSET_REF),
 });
 
-// 409 makes Sanity retry the delivery, which then sees `duplicate`. Every other non-claim has
-// nothing left to do, so it must not be retried.
+// A delivery that lost the race for the claim gets 409. It needs no retry, because the winner
+// renders the PDF, and Sanity retries no 4xx except 429 anyway; its attempts log lists the
+// delivery as undeliverable. Every other outcome has nothing left to do and answers 200.
 const STATUS_CODES: Record<ClaimOutcome['status'], number> = {
 	claimed: 202,
 	conflict: 409,

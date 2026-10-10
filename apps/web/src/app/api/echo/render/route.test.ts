@@ -129,7 +129,7 @@ describe('echo render webhook', () => {
 		log.mockRestore();
 	});
 
-	it('answers 409 to a delivery that lost the race, so Sanity retries it', async () => {
+	it('answers 409 to a delivery that lost the race for the claim', async () => {
 		mockedParseBody.mockResolvedValue(signed({ _id: JOB.id, pdfRef: PDF_REF }));
 		mockedClaim.mockResolvedValue({ status: 'conflict' });
 
