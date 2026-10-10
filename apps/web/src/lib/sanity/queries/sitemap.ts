@@ -51,12 +51,12 @@ const sitemapGroupsQuery = defineQuery(`
 `);
 
 /**
- * Query to get every finished TSG-Echo issue for the sitemap
+ * Query to get every finished and findable TSG-Echo issue for the sitemap
  *
- * @returns The slug and the last modification date of every finished issue
+ * @returns The slug and the last modification date of every finished and findable issue
  */
 const sitemapEchoIssuesQuery = defineQuery(`
-	*[${finishedEchoIssue}] {
+	*[${finishedEchoIssue} && indexable != false] {
 		"slug": slug.current,
 		"lastModified": _updatedAt
 	}

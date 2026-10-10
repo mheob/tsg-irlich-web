@@ -82,6 +82,15 @@ const echoIssue = defineType({
 				'Zwei bis drei Sätze zur Ausgabe. Die KI-Anweisung „Intro erzeugen“ schlägt einen Text aus dem Inhalt der Ausgabe vor.',
 			rows: 4,
 		}),
+		defineField({
+			description:
+				'Aus: Die Ausgabe bleibt auf der Website lesbar, Suchmaschinen finden aber weder die Seite noch ihre Dateien. Gedacht für ältere Ausgaben mit Namen, Kontaktdaten oder Fotos von Kindern.',
+			group: 'general',
+			initialValue: true,
+			name: 'indexable',
+			title: 'In Suchmaschinen auffindbar',
+			type: 'boolean',
+		}),
 		metaField,
 		defineField({
 			description: 'Wird automatisch aus der PDF erzeugt.',

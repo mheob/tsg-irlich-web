@@ -100,6 +100,16 @@ describe('echo issue fields', () => {
 		expect(field(name)).toMatchObject({ group: 'pages', readOnly: true });
 	});
 
+	// WEB-367: the import switches it off for old issues; everything that exists today stays on.
+	it('keeps an issue findable by default', () => {
+		expect(field('indexable')).toMatchObject({
+			group: 'general',
+			initialValue: true,
+			title: 'In Suchmaschinen auffindbar',
+			type: 'boolean',
+		});
+	});
+
 	it('lets editors write the intro in the general group', () => {
 		expect(field('intro')).toMatchObject({ group: 'general' });
 		expect(field('intro')?.readOnly).toBeUndefined();

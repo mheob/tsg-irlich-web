@@ -54,6 +54,7 @@ function buildIssue(overrides: Partial<EchoIssue> = {}): EchoIssue {
 	return {
 		_id: 'echo-2025',
 		cover: page('a'),
+		indexable: true,
 		intro: 'Ein Rückblick auf das Vereinsjahr.',
 		meta: null,
 		pageSize: { height: 2000, width: 1414 },
