@@ -15,6 +15,13 @@ describe('pdf file validation', () => {
 		expect(validatePdfFile({ asset: { _ref: 'file-abc-pdf' } })).toBe(true);
 	});
 
+	// The stored value only carries the asset reference, whose suffix is the file extension.
+	it('rejects a reference to another file type', () => {
+		expect(validatePdfFile({ asset: { _ref: 'file-abc-docx' } })).toBe(
+			'Nur PDF-Dateien sind erlaubt',
+		);
+	});
+
 	it('rejects any other mime type', () => {
 		expect(validatePdfFile({ asset: { mimeType: 'image/png' } })).toBe(
 			'Nur PDF-Dateien sind erlaubt',

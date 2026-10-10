@@ -2,12 +2,17 @@ import { RiBookOpenLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
+import { timeSpanInMilliSeconds } from '@tsgi-web/shared';
+
 import { general, meta, pages } from '@/shared/field-groups';
 import { introField, slugField, titleField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { validatePdfFile } from '@/shared/fields/pdf';
 
 const YEAR_LENGTH = 4;
+/** Longer than the render route's `maxDuration` of 800 s: a run still pending then was cut off. */
+const STALE_AFTER_MINUTES = 15;
+const STALE_AFTER_MS = timeSpanInMilliSeconds('minute') * STALE_AFTER_MINUTES;
 
 const STATUS_LABELS: Record<string, string> = {
 	done: 'Seiten fertig',
@@ -16,15 +21,34 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 /**
+ * Where the page generation stands, in words for the editors.
+ *
+ * @param render - The `render.status` and `render.startedAt`, if any run has started.
+ * @returns The label, e.g. `Seiten fertig`.
+ */
+function getRenderLabel(render: { startedAt?: string; status?: string }): string {
+	if (!render.status) {
+		return 'Noch keine Seiten';
+	}
+	const startedAt = render.startedAt ? Date.parse(render.startedAt) : Number.NaN;
+	if (render.status === 'pending' && Date.now() - startedAt > STALE_AFTER_MS) {
+		return 'Abgebrochen – „Seiten neu erzeugen“';
+	}
+	return STATUS_LABELS[render.status] ?? render.status;
+}
+
+/**
  * The subtitle of an issue in lists: its year and where the page generation stands.
  *
  * @param releaseDate - The release date as `YYYY-MM-DD`.
- * @param status - The `render.status`, if any run has started.
+ * @param render - The `render.status` and `render.startedAt`, if any run has started.
  * @returns The subtitle, e.g. `2025 · Seiten fertig`.
  */
-function getSubtitle(releaseDate?: string, status?: string): string {
-	const state = status ? (STATUS_LABELS[status] ?? status) : 'Noch keine Seiten';
-	return [releaseDate?.slice(0, YEAR_LENGTH), state].filter(Boolean).join(' · ');
+function getSubtitle(
+	releaseDate: string | undefined,
+	render: { startedAt?: string; status?: string },
+): string {
+	return [releaseDate?.slice(0, YEAR_LENGTH), getRenderLabel(render)].filter(Boolean).join(' · ');
 }
 
 const echoIssue = defineType({
@@ -118,17 +142,20 @@ const echoIssue = defineType({
 		prepare: ({
 			media,
 			releaseDate,
+			startedAt,
 			status,
 			title,
 		}: {
 			media?: PreviewValue['media'];
 			releaseDate?: string;
+			startedAt?: string;
 			status?: string;
 			title?: string;
-		}) => ({ media, subtitle: getSubtitle(releaseDate, status), title }),
+		}) => ({ media, subtitle: getSubtitle(releaseDate, { startedAt, status }), title }),
 		select: {
 			media: 'pages.0.asset',
 			releaseDate: 'releaseDate',
+			startedAt: 'render.startedAt',
 			status: 'render.status',
 			title: 'title',
 		},

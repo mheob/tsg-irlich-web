@@ -1,11 +1,12 @@
 import type { PreviewValue } from 'sanity';
-import { describe, expect, it } from 'vite-plus/test';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import echoIssue from './echo.issue';
 
 interface EchoIssueSelection {
 	readonly media?: PreviewValue['media'];
 	readonly releaseDate?: string;
+	readonly startedAt?: string;
 	readonly status?: string;
 	readonly title?: string;
 }
@@ -23,6 +24,10 @@ function field(name: string): { readOnly?: boolean; group?: string } | undefined
 }
 
 describe('echo issue preview', () => {
+	afterEach(() => {
+		vi.useRealTimers();
+	});
+
 	it('shows the year and that the pages are ready', () => {
 		expect(
 			prepare({ releaseDate: '2025-04-01', status: 'done', title: 'TSG ECHO 2025' }),
@@ -37,6 +42,35 @@ describe('echo issue preview', () => {
 		expect(prepare({ releaseDate: '2025-04-01', status: 'pending', title: 'X' }).subtitle).toBe(
 			'2025 · Seiten werden erzeugt',
 		);
+	});
+
+	// `maxDuration` is 800 s; a run still pending after that was cut off by the platform.
+	it('flags a run that stayed pending longer than the route may run', () => {
+		vi.useFakeTimers();
+		vi.setSystemTime(new Date('2026-10-10T10:20:00.000Z'));
+
+		const { subtitle } = prepare({
+			releaseDate: '2025-04-01',
+			startedAt: '2026-10-10T10:00:00.000Z',
+			status: 'pending',
+			title: 'X',
+		});
+
+		expect(subtitle).toBe('2025 · Abgebrochen – „Seiten neu erzeugen“');
+	});
+
+	it('still shows a recent run as being generated', () => {
+		vi.useFakeTimers();
+		vi.setSystemTime(new Date('2026-10-10T10:01:00.000Z'));
+
+		const { subtitle } = prepare({
+			releaseDate: '2025-04-01',
+			startedAt: '2026-10-10T10:00:00.000Z',
+			status: 'pending',
+			title: 'X',
+		});
+
+		expect(subtitle).toBe('2025 · Seiten werden erzeugt');
 	});
 
 	it('flags a failed run', () => {
