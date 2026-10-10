@@ -27,6 +27,7 @@
 	},
 	"dependencies": {
 		"@base-ui/react": "catalog:",
+		"@gullabs/react-flipbook": "catalog:",
 		"@hookform/resolvers": "catalog:",
 		"@icons-pack/react-simple-icons": "catalog:",
 		"@sanity/client": "catalog:",

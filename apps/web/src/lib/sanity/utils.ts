@@ -18,7 +18,9 @@ const BYTES_PER_KB = 1024;
  * // url: "https://cdn.sanity.io/files/yourProjectId/yourDataset/yourFileId.pdf?dl=custom-filename.pdf"
  * ```
  */
-function getDownloadFileUrl(downloadAsset?: null | SanityFileAsset): string {
+function getDownloadFileUrl(
+	downloadAsset?: null | Pick<SanityFileAsset, 'originalFilename' | 'url'>,
+): string {
 	if (!downloadAsset?.url || !downloadAsset.originalFilename) {
 		return '#!';
 	}

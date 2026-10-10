@@ -166,7 +166,7 @@ export default defineConfig({
 					'react/jsx-no-literals': 'off',
 					'react/only-export-components': [
 						'warn',
-						{ allowExportNames: ['generateMetadata', 'metadata'] },
+						{ allowExportNames: ['generateMetadata', 'generateStaticParams', 'metadata'] },
 					],
 					'typescript/no-misused-promises': 'off',
 					'typescript/no-unnecessary-condition': 'off',

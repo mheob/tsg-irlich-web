@@ -1,5 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
+import { finishedEchoIssue } from '@/lib/sanity/queries';
+
 /**
  * Query to get all news articles for the sitemap
  *
@@ -48,4 +50,21 @@ const sitemapGroupsQuery = defineQuery(`
 	}
 `);
 
-export { sitemapNewsArticlesQuery, sitemapNewsCategoriesQuery, sitemapGroupsQuery };
+/**
+ * Query to get every finished TSG-Echo issue for the sitemap
+ *
+ * @returns The slug and the last modification date of every finished issue
+ */
+const sitemapEchoIssuesQuery = defineQuery(`
+	*[${finishedEchoIssue}] {
+		"slug": slug.current,
+		"lastModified": _updatedAt
+	}
+`);
+
+export {
+	sitemapEchoIssuesQuery,
+	sitemapNewsArticlesQuery,
+	sitemapNewsCategoriesQuery,
+	sitemapGroupsQuery,
+};

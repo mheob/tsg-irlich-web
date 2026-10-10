@@ -8,7 +8,7 @@ import { metaField } from '@/shared/fields/meta';
 const echoOverviewPage = defineType({
 	fields: [
 		// (hidden)
-		getHiddenSlugField('tsg-echo'),
+		getHiddenSlugField('echo'),
 
 		// General
 		...defaultHeroFields,

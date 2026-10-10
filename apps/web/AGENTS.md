@@ -118,6 +118,18 @@ The resolved target is added as `target` next to the untouched `link` reference,
 - pdf.js reads its WebAssembly decoders, standard fonts, CMaps and ICC profiles from disk. Without the decoders it skips CCITT, JBIG2 and JPEG 2000 images silently, which is how black-and-white scans are stored. A bundle cannot resolve `pdfjs-dist` by name (Turbopack rewrites `require.resolve` to a module id and keeps externals under a hashed name in `.next/node_modules`), so `src/lib/echo/pdfjs-data.ts` builds the path from `process.cwd()` into the pnpm store, and `outputFileTracingIncludes` ships exactly that directory. A wrong path fails every run with "Die Daten von pdf.js fehlen unter …".
 - `src/lib/sanity/write-client.ts` writes with `SANITY_API_WRITE_TOKEN` and `perspective: 'raw'`, because the webhook fires for drafts.
 
+## TSG-Echo pages
+
+`/verein/echo` lists the issues, `/verein/echo/[slug]` shows one of them. Both read through `client.fetch` and are not previewable.
+
+- Only finished issues exist for the website: `finishedEchoIssue` in `src/lib/sanity/queries/index.ts` (`render.status == 'done'`, a slug, at least one page) filters the total, the list, the issue page, the static params and the sitemap. A failed run keeps the pages of the previous PDF, so nothing may bypass it.
+- The archive shows the newest issue as a wide card and the others as a grid of 12 per page (`?seite=`, helpers in `src/utils/pagination.ts`, shared with `/news`). Without a finished issue it shows "Noch keine Ausgaben online.", which is what production shows until the archive import.
+- `src/components/with-logic/flipbook/` wraps `@gullabs/react-flipbook`. `FlipbookLazy` renders the cover in the reserved box on the server and loads the library only in the browser through `React.lazy`. `next/dynamic`'s placeholder cannot receive the cover. The box has the aspect ratio of a page or, from a 480 px wide box up, of a spread. That is where the engine switches (twice `MIN_PAGE_WIDTH`), so the box follows a container query, not a viewport breakpoint. In a spread the cover sits on the right half, as in the book, so nothing shifts when the book arrives; `e2e/specs/echo.spec.ts` measures that at three widths. The book is at most `max-w-5xl` wide, so a spread and its controls fit a laptop screen.
+- The previous/next buttons use `aria-disabled` at the ends, never `disabled`, which would drop the keyboard focus. The indicator also re-reads the visible pages on `onChangeOrientation`, because turning a phone swaps a spread for a single page without a page turn.
+- The page images are plain `<img srcSet>` from the Sanity CDN in 800, 1200 and 1600 px. The Next.js image optimizer would bill a transformation for every page of every issue. The covers go through `next/image`.
+- The e2e suite answers `cdn.sanity.io/images/**` in the browser with a blank pixel (`e2e/support/test.ts`), because the flipbook's `<img>` tags bypass the server-side mocks. The box of every page and of the cover is fixed by the book's aspect ratio, so the stub's shape cannot move anything. The fixtures come from synthetic issues in `development` — never record real issues, the fixtures are public.
+- The revalidation webhook handles `echo.issue` (the archive and the whole issue route, since the payload does not carry a former slug) and `echoOverview` (the archive).
+
 ## Environment variables
 
 Read them through `env('KEY')` from `@/lib/env` — never `process.env` directly. The helper validates a single variable lazily with Zod and caches it. A new variable has to be added to the schema in `src/lib/env.ts`, to `globalEnv` (or the matching task) in the root `turbo.json`, and to the list in the root `AGENTS.md`.
@@ -198,7 +210,7 @@ Every run builds the app and starts its own server on port 3100. An already runn
 
 ### Accessibility (axe)
 
-`e2e/specs/accessibility.spec.ts` runs `@axe-core/playwright` over fourteen routes — the ten that render without a slug plus one department, one group, one news category and one article — in both browser projects. The rule sets are WCAG 2.1 level A and AA (`wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`); `best-practice` and the experimental tags stay out, because a suite that blocks on advice gets muted.
+`e2e/specs/accessibility.spec.ts` runs `@axe-core/playwright` over sixteen routes — the eleven that render without a slug plus one department, one group, one news category, one article and one TSG-Echo issue — in both browser projects. The rule sets are WCAG 2.1 level A and AA (`wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`); `best-practice` and the experimental tags stay out, because a suite that blocks on advice gets muted.
 
 - The dynamic routes are reached by clicking through the overviews, never by a hard-coded slug, and are keyed in the baseline by their route template (`/news/[category]/[slug]`).
 - Every scan attaches its full axe result to the test, so the HTML report — and with it the artifact CI uploads — carries the detail. `AxeSummaryReporter` folds those attachments into one markdown table in GitHub's job summary; outside Actions it does nothing.
@@ -207,7 +219,7 @@ Every run builds the app and starts its own server on port 3100. An already runn
 
 ### Visual regression
 
-`e2e/specs/visual.spec.ts` takes a full-page screenshot of eight routes — `/`, `/verein`, `/angebot`, `/news`, `/mitgliedschaft`, `/kontakt` plus one department and one news article — in both browser projects, and compares it against the baseline committed under `e2e/__screenshots__/<project>/`. The three legal pages are deliberately left out: they are the same prose layout three times over and would only add baselines to re-approve on every typography change.
+`e2e/specs/visual.spec.ts` takes a full-page screenshot of nine routes — `/`, `/verein`, `/verein/echo`, `/angebot`, `/news`, `/mitgliedschaft`, `/kontakt` plus one department and one news article — in both browser projects, and compares it against the baseline committed under `e2e/__screenshots__/<project>/`. The three legal pages are deliberately left out: they are the same prose layout three times over and would only add baselines to re-approve on every typography change.
 
 The container ships its browsers under `/ms-playwright`, and two things have to name that path for a run to find them: `PLAYWRIGHT_BROWSERS_PATH` in the job's `env` (a container job's steps do not inherit the image's own `ENV`), and the same variable in the `test:e2e` task in the root `turbo.json` — the suite is started through Turbo, which passes on nothing it was not told about.
 

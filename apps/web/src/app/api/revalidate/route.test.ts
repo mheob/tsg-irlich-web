@@ -94,6 +94,7 @@ describe('sanity revalidation webhook', () => {
 		['aboutUs', ['/verein']],
 		['contact', ['/kontakt']],
 		['departmentsPage', ['/angebot']],
+		['echoOverview', ['/verein/echo']],
 		['home', ['/']],
 		['imprint', ['/impressum']],
 		['membership', ['/mitgliedschaft']],
@@ -106,6 +107,19 @@ describe('sanity revalidation webhook', () => {
 		await POST(REQUEST);
 
 		expect(revalidatedPaths()).toStrictEqual(expected);
+	});
+
+	it('revalidates the archive and every issue page for a tsg-echo issue', async () => {
+		mockedParseBody.mockResolvedValue(
+			parsed({ _type: 'echo.issue', slug: { current: 'tsg-echo-2025' } }),
+		);
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
+			['/verein/echo'],
+			['/verein/echo/[slug]', 'page'],
+		]);
 	});
 
 	it.each([

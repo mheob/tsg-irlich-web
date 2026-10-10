@@ -109,6 +109,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **Groups** (`_type: "group"`): `/angebot` and `/angebot/[slug]`
 - **Person** (`_type: "person"`): `/verein`
 - **Testimonial** (`_type: "testimonial"`): Homepage `/`
+- **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before. A webhook with a type filter needs both types in it.
 - **Settings/Navigation**: All pages (layout revalidation)
 
 ## Troubleshooting

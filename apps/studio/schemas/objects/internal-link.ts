@@ -5,6 +5,7 @@ import { defineField } from 'sanity';
 const INTERNAL_LINK_TARGETS: { type: string }[] = [
 	{ type: 'home' },
 	{ type: 'aboutUs' },
+	{ type: 'echoOverview' },
 	{ type: 'contact' },
 	{ type: 'departmentsPage' },
 	{ type: 'group.children-gymnastics' },

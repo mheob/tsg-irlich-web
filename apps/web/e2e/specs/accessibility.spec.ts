@@ -3,6 +3,7 @@ import {
 	firstDrillDown,
 	openFirstArticle,
 	openFirstDepartment,
+	openNewestEchoIssue,
 	waitForPage,
 } from '../support/navigation';
 import { expect, test } from '../support/test';
@@ -15,6 +16,7 @@ import { expect, test } from '../support/test';
 const STATIC_ROUTES = [
 	'/',
 	'/verein',
+	'/verein/echo',
 	'/angebot',
 	'/news',
 	'/mitgliedschaft',
@@ -71,5 +73,13 @@ test.describe('accessibility', () => {
 		await waitForPage(page);
 
 		await expectNoAxeViolations(page, testInfo, '/news/[category]');
+	});
+
+	test('meets WCAG 2.1 AA on a tsg-echo issue', async ({ page }, testInfo) => {
+		await openNewestEchoIssue(page);
+		// The book replaces the server-rendered cover once its chunk has loaded.
+		await page.getByRole('button', { name: 'Nächste Seite' }).waitFor();
+
+		await expectNoAxeViolations(page, testInfo, '/verein/echo/[slug]');
 	});
 });

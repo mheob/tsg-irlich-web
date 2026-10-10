@@ -44,4 +44,20 @@ const blockContent = /* groq */ `
   "text": coalesce(text[] { ..., ${markDefsWithLinks} }, [])
 `;
 
-export { blockContent, contactPersons, featuredImage, internalLinkTarget, markDefsWithLinks, meta };
+/**
+ * A TSG-Echo issue the website shows: its pages are rendered from the PDF it carries now, and it has
+ * a slug. Pending, failed and never-rendered issues stay off the site, which also hides the pages a
+ * failed run keeps from the previous PDF. So does an issue whose PDF was swapped and not yet claimed
+ * by a render, whose `done` still describes the previous PDF.
+ */
+const finishedEchoIssue = /* groq */ `_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0`;
+
+export {
+	blockContent,
+	contactPersons,
+	featuredImage,
+	finishedEchoIssue,
+	internalLinkTarget,
+	markDefsWithLinks,
+	meta,
+};

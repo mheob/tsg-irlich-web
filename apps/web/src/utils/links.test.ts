@@ -71,4 +71,14 @@ describe('resolving internal link targets', () => {
 	it('leaves a news article with a null category unresolved', () => {
 		expect(getInternalHref({ _type: 'news.article', category: null, slug: 'x' })).toBeUndefined();
 	});
+
+	it('resolves the TSG-Echo archive below the club page', () => {
+		expect(getInternalHref({ _type: 'echoOverview', slug: 'echo' })).toBe('/verein/echo');
+	});
+
+	it('resolves a TSG-Echo issue below the archive', () => {
+		expect(getInternalHref({ _type: 'echo.issue', slug: 'tsg-echo-2025' })).toBe(
+			'/verein/echo/tsg-echo-2025',
+		);
+	});
 });

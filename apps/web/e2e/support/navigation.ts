@@ -69,3 +69,18 @@ export async function openFirstArticle(page: Page): Promise<void> {
 	await expect(page).toHaveURL(/\/news\/[^/]+\/[^/]+/u);
 	await waitForPage(page);
 }
+
+/**
+ * Opens the newest TSG-Echo issue from the archive. Reached by clicking, like every dynamic route,
+ * so a re-recorded dataset with other issues still works.
+ *
+ * @param page - The page to navigate.
+ * @returns Nothing.
+ */
+export async function openNewestEchoIssue(page: Page): Promise<void> {
+	await page.goto('/verein/echo');
+	await waitForPage(page);
+	await page.getByRole('link', { name: 'Durchblättern' }).click();
+	await expect(page).toHaveURL(/\/verein\/echo\/[^/]+$/u);
+	await waitForPage(page);
+}

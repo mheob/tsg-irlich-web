@@ -1,0 +1,28 @@
+{
+	"body": {
+		"result": [
+			{
+				"_id": "38b07669-0b69-4116-b1a6-c767ca4f23dd",
+				"cover": {
+					"_type": "image",
+					"asset": {
+						"_ref": "image-efd56d8530ac7a803058f11c9826eaf7328fda47-1413x2000-jpg",
+						"_type": "reference"
+					}
+				},
+				"intro": "Synthetische Testausgabe für automatisierte Tests.",
+				"pdf": {
+					"originalFilename": "tsg-echo-testausgabe-2025.pdf",
+					"size": 1712,
+					"url": "https://cdn.sanity.io/files/j4rxwl5m/development/940f367bea3437a6398db703a41e06d841ae4791.pdf"
+				},
+				"releaseDate": "2025-04-01",
+				"slug": "tsg-echo-testausgabe-2025",
+				"title": "TSG ECHO Testausgabe 2025"
+			}
+		],
+		"syncTags": ["s1:kLGmmg", "s1:4n8KCQ"],
+		"ms": 6
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27echo.issue%27+%26%26+render.status+%3D%3D+%27done%27+%26%26+render.source+%3D%3D+pdf.asset._ref+%26%26+defined%28slug.current%29+%26%26+count%28pages%29+%3E+0%5D+%7C+order%28releaseDate+desc%29+%5B%24start...%24end%5D+%7B%0A%09%09%0A%09_id%2C%0A%09title%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09releaseDate%2C%0A%09intro%2C%0A%09%22cover%22%3A+pages%5B0%5D+%7B+_type%2C+asset+%7D%2C%0A%09%22pdf%22%3A+pdf.asset-%3E+%7B+originalFilename%2C+size%2C+url+%7D%0A%0A%09%7D%0A&%24end=1&%24start=0&returnQuery=false"
+}

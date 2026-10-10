@@ -1,0 +1,28 @@
+{
+	"body": {
+		"result": {
+			"intro": [
+				{
+					"_key": "intro1",
+					"_type": "block",
+					"children": [
+						{
+							"_key": "intro1s",
+							"_type": "span",
+							"marks": [],
+							"text": "Synthetisches Archiv für automatisierte Tests, ohne echten Vereinsinhalt."
+						}
+					],
+					"markDefs": [],
+					"style": "normal"
+				}
+			],
+			"meta": null,
+			"subtitle": "Vereinsgeschichte zum Durchblättern",
+			"title": "TSG-Echo"
+		},
+		"syncTags": ["s1:7SFKSw"],
+		"ms": 2
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27echoOverview%27%5D%5B0%5D+%7B%0A%09%09title%2C%0A%09%09subtitle%2C%0A%09%09intro%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%0A%09%7D%0A&returnQuery=false"
+}
