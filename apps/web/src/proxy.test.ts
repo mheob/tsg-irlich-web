@@ -26,6 +26,7 @@ describe('the archive proxy', () => {
 			'https://cdn.sanity.io/images/j4rxwl5m/production/0a1b2c-1414x2000.jpg?w=800',
 		);
 		expect(response.headers.get('x-robots-tag')).toBe('noindex, nofollow');
+		expect(response.headers.get('x-content-type-options')).toBe('nosniff');
 	});
 
 	it('answers anything else below the archive path with 404', () => {

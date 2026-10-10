@@ -23,6 +23,7 @@ export function proxy(request: NextRequest): NextResponse {
 		? NextResponse.rewrite(target)
 		: new NextResponse(null, { status: NOT_FOUND });
 	response.headers.set('X-Robots-Tag', ARCHIVE_ROBOTS_TAG);
+	response.headers.set('X-Content-Type-Options', 'nosniff');
 	return response;
 }
 
