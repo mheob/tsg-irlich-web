@@ -41,6 +41,10 @@ describe('excluded default list items', () => {
 		expect(isExcludedDefaultListItem('news.article')).toBe(false);
 	});
 
+	it('excludes the echo issue, which has its own desk entry', () => {
+		expect(isExcludedDefaultListItem('echo.issue')).toBe(false);
+	});
+
 	it('does not exclude a type with no dedicated place', () => {
 		expect(isExcludedDefaultListItem('some-unlisted-type')).toBe(true);
 	});
@@ -61,6 +65,24 @@ describe('desk group resolution', () => {
 			.map((call) => call.args[0]);
 
 		expect(documentTypes).toStrictEqual(['news.article', 'news.category']);
+	});
+
+	it('resolves the echo group to the issue list, newest release first', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		getGroup(structureBuilder, 'echo');
+
+		const lists = calls
+			.filter((call) => call.method === 'documentTypeList')
+			.map((call) => call.args[0]);
+		const orderings = calls
+			.filter((call) => call.method === 'defaultOrdering')
+			.map((call) => call.args[0]);
+		const titles = calls.filter((call) => call.method === 'title').map((call) => call.args[0]);
+
+		expect(lists).toStrictEqual(['echo.issue']);
+		expect(orderings).toStrictEqual([[{ direction: 'desc', field: 'releaseDate' }]]);
+		expect(titles).toContain('TSG-Echo');
 	});
 
 	it('resolves the settings group when called directly with a known group name', () => {

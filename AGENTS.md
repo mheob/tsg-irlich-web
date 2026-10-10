@@ -12,6 +12,7 @@ TSG Irlich website - a Next.js application with Sanity CMS for a German sports c
 - **apps/web**: Next.js 16 frontend with App Router, TypeScript, Tailwind CSS, Shadcn UI
 - **apps/studio**: Sanity Studio CMS for content management
 - **packages/email**: React Email templates for transactional emails
+- **packages/pdf-pages**: Renders PDF pages to images for the TSG-Echo flipbook
 - **packages/shared**: Shared utilities and types
 
 ## Development Commands
@@ -82,7 +83,7 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 
 ### Sanity CMS Integration
 
-- **Content types**: Groups (sports departments), News, People, Testimonials
+- **Content types**: Groups (sports departments), News, People, Testimonials, TSG-Echo issues
 - **GROQ queries** in `src/lib/sanity/queries/`
 - **Type generation** from Sanity schema to TypeScript
 - **Image optimization** with next/image and Sanity image URLs
@@ -152,6 +153,8 @@ pnpm run extract-types && pnpm run typegen:sanity
 - `NEXT_PUBLIC_SANITY_STUDIO_URL`
 - `RESEND_API_KEY`,
 - `SANITY_API_READ_TOKEN`
+- `SANITY_API_WRITE_TOKEN`
+- `SANITY_ECHO_RENDER_SECRET`
 - `SANITY_REVALIDATE_SECRET`
 - `VERCEL_OIDC_TOKEN`
 - `VERCEL_PROJECT_PRODUCTION_URL`
@@ -173,7 +176,7 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - **oxfmt** with @mheob/oxfmt-config, configured in the `fmt` block of the root `vite.config.ts`
 - **Lefthook** for pre-commit hooks
 - **Commitizen** with czg for conventional commits
-- **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`); tests live next to their source (`foo.ts` → `foo.test.ts`). `vp test` at the root runs all four as projects through `test.projects` in the root `vite.config.ts`; coverage thresholds only apply per workspace, so gate on `pnpm run test:coverage`
+- **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`, `packages/pdf-pages`); tests live next to their source (`foo.ts` → `foo.test.ts`). `vp test` at the root runs all five as projects through `test.projects` in the root `vite.config.ts`; coverage thresholds only apply per workspace, so gate on `pnpm run test:coverage`
 - Import `describe`/`it`/`expect`/`vi` explicitly from `vite-plus/test` (the `vite-plus/prefer-vite-plus-imports` lint rule enforces it) — `globals` stays off
 - `apps/web` splits into a `node` and a `dom` (jsdom) project; component and hook tests land in `dom` — see `apps/web/AGENTS.md`
 - End-to-end tests are Playwright, live in `apps/web/e2e` and are separated from Vitest by extension (`*.spec.ts` vs `*.test.ts`). They mock every outbound service in the Next.js process itself and run in their own CI workflow — see `apps/web/AGENTS.md` before touching them. That suite also carries the automated accessibility sweep: `@axe-core/playwright` checks every important route against WCAG 2.1 AA, tolerates only what `apps/web/e2e/support/axe-baseline.ts` lists, and writes its findings into GitHub's job summary. It carries the visual regression baselines as well: full-page screenshots of eight routes in both browser projects, committed under `apps/web/e2e/__screenshots__`. Baselines are pixel-comparable only against the platform that produced them, so the whole end-to-end job runs inside the pinned `mcr.microsoft.com/playwright` image and `pnpm --filter web run test:e2e:visual:update` regenerates them in that same container; outside Linux the visual specs skip themselves
@@ -183,7 +186,7 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - Test files, `test-utils/**` and `vitest.config.ts` are exempt from `sort-keys`, `no-magic-numbers`, `max-lines`, `max-lines-per-function` and `typescript/no-unsafe-type-assertion` in the root `vite.config.ts` — widen a single rule inline, never the override itself
 - Mock external services at the `fetch` boundary, not the module boundary; Resend is planned as the one exception, mocked at the SDK level
 - `pnpm run test:coverage` writes `coverage/lcov.info` per workspace for CI/SonarQube. Every `vitest.config.ts` sets `coverage.include` so untested files count as uncovered instead of dropping out of the denominator — Vitest 4 removed `coverage.all`, and without `include` V8 only scores the files a test happened to import, which inflated every figure
-- Each `vitest.config.ts` carries `coverage.thresholds`, so `test:coverage` fails when coverage drops: `packages/shared` and `packages/email` at 100% everywhere, `apps/web` at 93% lines and statements / 88% functions / 85% branches (it reaches 94.3% / 89.6% / 87.0%), `apps/studio` at the level its schema tests currently reach (28% lines). They are a ratchet — raise them with every batch of new tests, never lower them to make a run pass
+- Each `vitest.config.ts` carries `coverage.thresholds`, so `test:coverage` fails when coverage drops: `packages/shared`, `packages/email` and `packages/pdf-pages` at 100% everywhere, `apps/web` at 93% lines and statements / 88% functions / 85% branches (it reaches 94.7% / 90.2% / 87.8%), `apps/studio` at the level its schema tests currently reach (30% lines). They are a ratchet — raise them with every batch of new tests, never lower them to make a run pass
 - 100% is deliberately not the goal for `apps/web`. What is left is a long tail of single branches plus the import-time bindings in `lib/sanity/live.ts` and `lib/sanity/client.ts`. Covering those means testing the framework, not the app. The `async` mark component in `portable-text.tsx` used to be on that list — React cannot render one on the client, the tree suspends — until `renderPortableTextOnServer` in `portable-text.test.tsx` started rendering it through `renderToReadableStream` and putting the markup into the document; reach for the same trick for any other async component
 - Pure re-export barrels are excluded from coverage (`**/index.ts` in `packages/shared`) — they hold no executable statements, so V8 scores them 0% and importing one in a test would lift the number without testing anything. Do not copy that glob into `apps/web` or `apps/studio`: their `index.ts` files carry real logic (GROQ fragments, schema definitions, the desk structure) and must stay in the denominator. `packages/email` excludes `scripts/**` (a top-level-await build script that writes to `dist/`) and `newsletter-event.ts` (an interface declaration) for the same reason: V8 scores a file with no executable statements as 0% of 0, which leaves a red row in the table without changing any total
 

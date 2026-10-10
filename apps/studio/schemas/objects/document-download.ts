@@ -1,6 +1,7 @@
 import { defineField } from 'sanity';
 
 import { titleField } from '@/shared/fields/general';
+import { validatePdfFile } from '@/shared/fields/pdf';
 import { getFieldWithoutGroup } from '@/utils/fields';
 
 const documentDownloadField = defineField({
@@ -17,17 +18,7 @@ const documentDownloadField = defineField({
 			type: 'file',
 			validation: (Rule) => [
 				Rule.required().error('Dokument ist erforderlich'),
-				Rule.custom((file) => {
-					if (!file) {
-						return true;
-					}
-
-					// oxlint-disable-next-line typescript/no-unsafe-type-assertion
-					const asset = file.asset as { mimeType?: string } | undefined;
-					return asset?.mimeType && asset.mimeType !== 'application/pdf'
-						? 'Nur PDF-Dateien sind erlaubt'
-						: true;
-				}),
+				Rule.custom(validatePdfFile),
 			],
 		}),
 	],

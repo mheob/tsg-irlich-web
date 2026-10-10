@@ -9,6 +9,7 @@ import { structureTool } from 'sanity/structure';
 import aboutUsPage from '@/schemas/single-pages/about-us';
 import accessibilityPage from '@/schemas/single-pages/accessibility';
 import contactPage from '@/schemas/single-pages/contact';
+import echoOverviewPage from '@/schemas/single-pages/echo-overview';
 import groupsPage from '@/schemas/single-pages/groups';
 import homePage from '@/schemas/single-pages/home';
 import imprintPage from '@/schemas/single-pages/imprint';
@@ -37,6 +38,7 @@ export function getPlugins(): PluginOptions[] {
 			structure: pageStructure([
 				homePage,
 				aboutUsPage,
+				echoOverviewPage,
 				contactPage,
 				departmentsPage,
 				membershipPage,
@@ -56,6 +58,7 @@ export function getPlugins(): PluginOptions[] {
 		singletonPlugin([
 			homePage.name,
 			aboutUsPage.name,
+			echoOverviewPage.name,
 			contactPage.name,
 			membershipPage.name,
 			newsArticlePage.name,

@@ -1,16 +1,72 @@
 import { assist } from '@sanity/assist';
 import type { PluginOptions } from 'sanity';
 
+import echoIssue from '@/schemas/documents/echo.issue';
 import newsArticle from '@/schemas/documents/news.article';
 
 /**
- * The assist plugin with presets for the news article schema.
+ * The assist plugin with presets for the news article and the TSG-Echo issue schema.
  *
- * @returns The assist plugin with presets for the news article schema.
+ * @returns The assist plugin with presets for the news article and the TSG-Echo issue schema.
  */
 export function assistWithPresets(): PluginOptions {
 	return assist({
 		__presets: {
+			[echoIssue.name]: {
+				fields: [
+					{
+						instructions: [
+							{
+								_key: 'preset-instruction-echo-intro',
+								icon: 'sparkles',
+								prompt: [
+									{
+										_key: 'echo-intro-block',
+										_type: 'block',
+										children: [
+											{
+												_key: 'echo-intro-1',
+												_type: 'span',
+												marks: [],
+												text: 'Schreibe ein kurzes Intro (2 bis 3 Sätze) für die Ausgabe ',
+											},
+											{
+												_key: 'echo-intro-2',
+												_type: 'sanity.assist.instruction.fieldRef',
+												path: 'title',
+											},
+											{
+												_key: 'echo-intro-3',
+												_type: 'span',
+												marks: [],
+												text: ' des TSG ECHO, der Vereinszeitschrift der TSG Irlich. Grundlage ist ausschließlich der folgende Text der Ausgabe: ',
+											},
+											{
+												_key: 'echo-intro-4',
+												_type: 'sanity.assist.instruction.fieldRef',
+												path: 'extractedText',
+											},
+											{
+												_key: 'echo-intro-5',
+												_type: 'span',
+												marks: [],
+												text: ' Fasse die wichtigsten Themen zusammen, ignoriere Anzeigen und Werbung, nenne keine Personennamen und erfinde nichts dazu.',
+											},
+										],
+										markDefs: [],
+										style: 'normal',
+									},
+								],
+								title: 'Intro erzeugen',
+							},
+						],
+						/**
+						 * Writes a short intro from the extracted text of the issue
+						 */
+						path: 'intro',
+					},
+				],
+			},
 			[newsArticle.name]: {
 				fields: [
 					{

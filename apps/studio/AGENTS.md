@@ -54,6 +54,12 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 4. If the type is rendered on the website, add a `mainDocuments` route and a `locations` entry in `plugins/presentation.ts`, and a `revalidatePath` entry in the web app's `src/app/api/revalidate/route.ts`.
 5. Run `pnpm run extract-types && pnpm run typegen:sanity` from the repository root.
 
+## TSG-Echo issues
+
+`echo.issue` holds one issue of the club magazine. Editors fill in title, slug, release date, PDF, intro and meta; everything in the group "Seiten (automatisch)" (`pages`, `extractedText`, `render`) is read-only and written by the web app's render route (`apps/web/src/app/api/echo/render`), which a webhook calls (see `docs/SANITY_WEBHOOK_SETUP.md`). `render.status` is `pending`, `done` or `failed`; `render.error` carries the German reason of a failure. The document action "Seiten neu erzeugen" (`actions/regenerate-echo-pages.tsx`) removes `render`, which makes the webhook fire again. A run still `pending` 15 minutes after `render.startedAt` was cut off by the platform; the list then shows "Abgebrochen – „Seiten neu erzeugen“". `validatePdfFile` (`shared/fields/pdf.ts`) checks the extension in the asset reference, because the stored value carries no mime type. The AI Assist preset "Intro erzeugen" in `plugins/assist.ts` reads `extractedText` through a `fieldRef`; scanned issues have no text layer, so it has nothing to work with there.
+
+`echoOverview` is the singleton behind `/verein/tsg-echo`. It is not an internal link target yet — WEB-352 adds it together with the page.
+
 ## Content migrations
 
 A schema change that moves existing data comes with a migration in `migrations/<id>/index.ts` (`defineMigration` from `sanity/migrate`), next to a test for its pure parts. `sanity migration run` does a dry run by default and needs both the project and the dataset:

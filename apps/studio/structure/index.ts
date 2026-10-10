@@ -1,5 +1,6 @@
 import {
 	RiArticleLine,
+	RiBookOpenLine,
 	RiOpenaiLine,
 	RiParentLine,
 	RiSettings5Line,
@@ -8,7 +9,7 @@ import {
 import type { DocumentDefinition } from 'sanity';
 import type { ListItemBuilder, StructureBuilder } from 'sanity/structure';
 
-type DocumentGroup = 'groups' | 'news' | 'persons' | 'settings' | 'single-pages';
+type DocumentGroup = 'echo' | 'groups' | 'news' | 'persons' | 'settings' | 'single-pages';
 
 /**
  * Returns the group for the news.
@@ -25,6 +26,26 @@ function getGroupNews(S: StructureBuilder): ListItemBuilder[] {
 				S.list()
 					.title('News')
 					.items([S.documentTypeListItem('news.article'), S.documentTypeListItem('news.category')]),
+			),
+	];
+}
+
+/**
+ * Returns the group for the TSG-Echo issues, newest release first.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the TSG-Echo issues.
+ */
+function getGroupEcho(S: StructureBuilder): ListItemBuilder[] {
+	return [
+		S.listItem()
+			.title('TSG-Echo')
+			.id('echo')
+			.icon(RiBookOpenLine)
+			.child(
+				S.documentTypeList('echo.issue')
+					.title('TSG-Echo')
+					.defaultOrdering([{ direction: 'desc', field: 'releaseDate' }]),
 			),
 	];
 }
@@ -164,6 +185,7 @@ function isExcludedDefaultListItem(id?: string): boolean {
 	return ![
 		'assist.instruction.context',
 		'author',
+		'echo.issue',
 		'group.admin',
 		'group.children-gymnastics',
 		'group.courses',
@@ -194,6 +216,9 @@ function getGroup(
 	typeDefinitionArray?: DocumentDefinition[],
 ): ListItemBuilder[] {
 	switch (name) {
+		case 'echo': {
+			return getGroupEcho(S);
+		}
 		case 'news': {
 			return getGroupNews(S);
 		}

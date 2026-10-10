@@ -34,6 +34,7 @@
 		"@tailwindcss/postcss": "catalog:",
 		"@tailwindcss/typography": "catalog:",
 		"@tsgi-web/email": "workspace:*",
+		"@tsgi-web/pdf-pages": "workspace:*",
 		"@tsgi-web/shared": "workspace:*",
 		"@vercel/analytics": "catalog:",
 		"@vercel/speed-insights": "catalog:",
