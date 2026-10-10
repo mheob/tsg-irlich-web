@@ -45,6 +45,10 @@ describe('excluded default list items', () => {
 		expect(isExcludedDefaultListItem('echo.issue')).toBe(false);
 	});
 
+	it('excludes the media plugin folder, which is managed in the media tool', () => {
+		expect(isExcludedDefaultListItem('media.folder')).toBe(false);
+	});
+
 	it('does not exclude a type with no dedicated place', () => {
 		expect(isExcludedDefaultListItem('some-unlisted-type')).toBe(true);
 	});
