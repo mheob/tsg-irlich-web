@@ -7,6 +7,9 @@ interface BreadcrumbItem {
 	path: string;
 }
 
+/** Segments the club writes differently from their humanised slug. */
+const SEGMENT_NAMES: Record<string, string> = { echo: 'TSG-Echo' };
+
 /**
  * Derives the breadcrumb trail of a page from its path.
  *
@@ -21,7 +24,7 @@ interface BreadcrumbItem {
 function getBreadcrumbItems(pathname: string, currentPage?: string): BreadcrumbItem[] {
 	const segments = pathname.split('/').filter(Boolean);
 	const items = segments.map((segment, index) => ({
-		name: capitalizeWords(segment),
+		name: SEGMENT_NAMES[segment] ?? capitalizeWords(segment),
 		path: `/${segments.slice(0, index + 1).join('/')}`,
 	}));
 	const page = items.pop();

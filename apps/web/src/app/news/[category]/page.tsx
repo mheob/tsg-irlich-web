@@ -16,11 +16,11 @@ import {
 } from '@/lib/sanity/queries/pages/news-overview-category';
 import { newsCategoriesQuery, newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
 import { getPageMetadata } from '@/utils/metadata';
+import { getPageNumber, getPaginatedPath } from '@/utils/pagination';
 
 import newsOverviewImage from '../_assets/news-overview.webp';
 import { CategoryCombobox } from '../_sections/category-combobox';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
-import { getPageNumber, getPaginatedPath } from '../_shared/utils';
 
 const START_INDEX = 0;
 const ITEMS_PER_PAGE = 9;

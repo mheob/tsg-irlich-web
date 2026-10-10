@@ -22,6 +22,15 @@ describe('the breadcrumb trail', () => {
 	it('is only the home page for the home page', () => {
 		expect(getBreadcrumbItems('/')).toStrictEqual([{ name: 'Home', path: '/' }]);
 	});
+
+	it('spells the TSG-Echo segment the way the club writes it', () => {
+		expect(getBreadcrumbItems('/verein/echo/tsg-echo-2025', 'TSG ECHO 2025')).toStrictEqual([
+			{ name: 'Home', path: '/' },
+			{ name: 'Verein', path: '/verein' },
+			{ name: 'TSG-Echo', path: '/verein/echo' },
+			{ name: 'TSG ECHO 2025', path: '/verein/echo/tsg-echo-2025' },
+		]);
+	});
 });
 
 describe('the breadcrumb structured data', () => {

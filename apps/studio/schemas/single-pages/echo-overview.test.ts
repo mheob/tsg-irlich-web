@@ -17,9 +17,9 @@ function field(name: string): OverviewField | undefined {
 }
 
 describe('echo overview page', () => {
-	// WEB-352 serves the archive at /verein/tsg-echo; editors must not be able to move it.
-	it('fixes its slug to tsg-echo', () => {
-		expect(field('slug')).toMatchObject({ initialValue: { current: 'tsg-echo' }, readOnly: true });
+	// The archive lives at /verein/echo; editors must not be able to move it.
+	it('fixes its slug to echo', () => {
+		expect(field('slug')).toMatchObject({ initialValue: { current: 'echo' }, readOnly: true });
 	});
 
 	it('offers the hero, the intro and the meta fields', () => {
