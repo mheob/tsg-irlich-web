@@ -19,4 +19,13 @@ ignore:
           the rendered mail content never passes through the merge. Revisit once deepmerge
           publishes a patched release.
         expires: 2026-10-26T00:00:00.000Z
+  SNYK-JS-ZOD-20510278:
+    - '*':
+        reason: >-
+          zod has no fixed version: 4.6.5 is the latest published release and every version up to
+          it is affected (CVE-2023-54404); the upstream fix, colinhacks/zod#6475, was closed
+          unmerged. The only array schema that parses outside input is the feedback form's
+          screenshotUrls, whose length is checked before zod validates a single element (WEB-363).
+          Revisit once zod publishes a patched release.
+        expires: 2026-11-10T00:00:00.000Z
 patch: {}
