@@ -26,6 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `group.*`, …) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -61,6 +62,51 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 `indexable` ("In Suchmaschinen auffindbar", initially on) decides whether search engines may find an issue. Off, the website marks its page `noindex, nofollow`, leaves it out of the sitemap and serves its files through `/echo-archiv` with `X-Robots-Tag: noindex` (WEB-367). The import of the old issues switches it off. It only fully works if it is off before an issue is first published: Sanity serves every asset under a content-hash URL that stays live, so a PDF or a page image that was public once stays reachable at its old CDN address, and uploading the same file again gives the same URL.
 
 `echoOverview` is the singleton behind `/verein/echo`, with the fixed slug `echo`. It is an internal link target, so the "Verein" menu can link the archive; the web app resolves it by type, not by slug (`getHrefForType` in `apps/web/src/utils/links.ts`).
+
+## TSG-Echo archive import
+
+`scripts/import-echo.ts` imports the old issues once into the Content Release "TSG-Echo-Archiv" (id `tsg-echo-archiv`, WEB-354). The modules under `scripts/import-echo/` take their collaborators as arguments and are tested without Sanity, pdf.js or the network.
+
+**Input.** The PDFs live in a folder **outside the repository**, next to a `manifest.json` with one entry per issue. `datei` is relative to the folder, and the list comes from WEB-353:
+
+```json
+[
+	{
+		"datei": "1979 Erste Exemplare/1979_01.pdf",
+		"titel": "TSG ECHO 1979 Nr. 1",
+		"erscheinungsdatum": "1979-03-01"
+	}
+]
+```
+
+**Running it.** A dry run is the default. It renders every PDF locally and checks what already exists, but writes nothing and drafts no intro:
+
+```bash
+pnpm --filter studio run import:echo --dataset development --folder ~/echo-archiv
+ANTHROPIC_API_KEY=… pnpm --filter studio run import:echo --dataset development --folder ~/echo-archiv --no-dry-run
+```
+
+`--no-intro` imports without intros and without a key. `--manifest <file>` reads another list. `sanity exec --with-user-token` writes as the logged-in user, so run `pnpm exec sanity login` first. `ANTHROPIC_API_KEY` only ever comes from the shell. It does not belong in `.env`, Vercel or `turbo.json`.
+
+**What it writes.** Per issue:
+
+- the PDF as `<slug>.pdf`
+- every page as `echo-<hash>-seite-<nnn>.jpg`
+- a version `versions.tsg-echo-archiv.echo-archiv-<file name>` with `indexable: false` and a finished `render` whose `source` is the PDF, so the render webhook skips it
+
+The intro is a draft from the cover, the next two pages and the text layer. The prompt forbids names and contact data. An issue whose intro could not be drafted is imported without one and listed at the end.
+
+**Reruns.** The id comes from the file name. A rerun skips every issue that exists as published document, draft or version in the release, and imports an interrupted issue again. Sanity deduplicates its assets by content hash. A release that is no longer open (published, scheduled, archived) is refused before anything is uploaded.
+
+**Before publishing.** Every run ends by checking that no `echo.issue` before 2013 is indexable, in any version. It exits with 1 if one is, or if an issue failed. The same check in Vision, perspective `raw`:
+
+```groq
+*[_type == "echo.issue" && releaseDate < "2013-01-01" && indexable != false]._id
+```
+
+The editors then review the intros in the release and publish it as a whole. To start over before publishing, archive the release in the studio, which deletes its versions.
+
+**Privacy.** An uploaded asset is public on `cdn.sanity.io` from the moment of the upload, even while its document waits in the release. Its URL is not guessable, but the dataset is no place for test copies of real issues: try the script with synthetic PDFs.
 
 ## Content migrations
 
