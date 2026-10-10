@@ -88,16 +88,24 @@ A slug in Sanity only holds the **last** segment of the URL, so no link can be b
 
 The GROQ side lives in `src/lib/sanity/queries/index.ts`:
 
-- `internalLinkTarget` projects everything the resolver needs and is used wherever a page reference is queried as a field: the `internalLink` of the imprint contact form, and the `link` of every `mainNavigationItem` and `navigationLink` in the main navigation.
+- `internalLinkTarget` projects everything the resolver needs and is used wherever a page reference is queried as a field: the `internalLink` of the imprint contact form, and the `link` of every `mainNavigationLink` and `navigationLink` in the main navigation.
 - `blockContent` does the same for the `internalLink` **marks** of a portable text field and has to be applied to every `blockContent` that is rendered, including nested ones (`grid.items[]`, `imageCard.description`).
 
 The resolved target is added as `target` next to the untouched `link` reference, and empty arrays are coalesced, so that the query result still matches the generated schema types.
 
 ## Main navigation
 
-`site-settings.mainNavigation` holds `mainNavigationItem` entries (title, `linkType`, a page `link` or an external `href`, optional `children` of type `navigationLink` with an optional `description`), and `mainNavigationQuery` reads them. An item with children also carries the dropdown settings: `overviewTitle` and `overviewDescription` for the "Übersicht" entry, and `hasTwoColumns`. `src/components/with-logic/navigation/` renders them:
+`site-settings.mainNavigation` holds two kinds of first-level entries (WEB-371):
 
-- `getNavigationEntries` (`navigation-entries.ts`) is the only place that resolves hrefs and the active state. An entry with children becomes a group led by an "Übersicht" link to its own page, and inside a group only the link with the longest matching href is active. A missing `linkType` counts as internal.
+- a `mainNavigationLink` (title, `linkType`, a page `link` or an external `href`), and
+- a `mainNavigationMenu` (title, `children` of type `navigationLink` with an optional `description`, and `hasTwoColumns`).
+
+`mainNavigationQuery` reads them with their `_type`. `src/components/with-logic/navigation/` renders them:
+
+- `getNavigationEntries` (`navigation-entries.ts`) is the only place that resolves hrefs and the active state.
+  - A menu becomes a group of exactly its children. There is no automatic "Übersicht" entry; the page belongs into the menu as a child.
+  - A menu none of whose children resolves is dropped. Every other type becomes a link, including a `mainNavigationItem` from before the migration.
+  - Inside a group only the link with the longest matching href is active. A missing `linkType` counts as internal.
 - `desktop-navigation.tsx` builds the bar on Base UI's `NavigationMenu` (`src/components/ui/navigation-menu.tsx`). A panel shows each link's sub-text under its title and lays the links out in two columns when `hasTwoColumns` is set. `NavigationAnchor` names such a link by its title (`aria-labelledby`) and describes it by the sub-text (`aria-describedby`), so tests keep finding it by its title. The mobile menu shows neither. Base UI renders the root as `<nav>`, so it gets `render={<div />}` inside the shell's landmark. The panel is portalled to the end of `<body>`, which puts its links outside the landmark: tests look for them on page level.
 - The bar holds the open group itself. Base UI only closes a panel when the focus leaves the whole menu, so the bar closes it when another item of the bar takes the focus, and below the `lg` breakpoint. The panels are positioned `fixed`, since the header is fixed.
 - `mobile-navigation.tsx` expands groups on Base UI's `Collapsible`. Their panels are `keepMounted`, so the pages behind them are in the server-rendered HTML while a collapsed panel stays `hidden`.

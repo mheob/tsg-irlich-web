@@ -11,7 +11,16 @@ type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
 
 const VEREIN: NavItem = {
 	_key: 'verein',
+	_type: 'mainNavigationMenu',
 	children: [
+		{
+			_key: 'ueber-uns',
+			description: null,
+			href: null,
+			link: { _type: 'aboutUs', category: null, slug: 'verein' },
+			linkType: 'internal',
+			title: 'Über uns',
+		},
 		{
 			_key: 'kontakt',
 			description: null,
@@ -21,37 +30,33 @@ const VEREIN: NavItem = {
 			title: 'Kontakt',
 		},
 	],
-	hasTwoColumns: null,
+	hasTwoColumns: false,
 	href: null,
-	link: { _type: 'aboutUs', category: null, slug: 'verein' },
-	linkType: 'internal',
-	overviewDescription: null,
-	overviewTitle: null,
+	link: null,
+	linkType: null,
 	title: 'Verein',
 };
 
 const ANGEBOT: NavItem = {
 	_key: 'angebot',
+	_type: 'mainNavigationLink',
 	children: [],
 	hasTwoColumns: null,
 	href: null,
 	link: { _type: 'departmentsPage', category: null, slug: 'angebot' },
 	linkType: 'internal',
-	overviewDescription: null,
-	overviewTitle: null,
 	title: 'Angebot',
 };
 
 // `getInternalHref` returns `undefined` for a target without slug; the entry is dropped.
 const UNRESOLVABLE: NavItem = {
 	_key: 'unresolvable',
+	_type: 'mainNavigationLink',
 	children: [],
 	hasTwoColumns: null,
 	href: null,
 	link: { _type: 'contact', category: null, slug: null },
 	linkType: 'internal',
-	overviewDescription: null,
-	overviewTitle: null,
 	title: 'Kaputt',
 };
 
@@ -213,7 +218,7 @@ describe('navigation', () => {
 
 		await user.click(toggle);
 		await user.click(menu.getByRole('button', { name: 'Verein' }));
-		await user.click(menu.getByRole('link', { name: 'Übersicht' }));
+		await user.click(menu.getByRole('link', { name: 'Über uns' }));
 		expect(toggle.getAttribute('aria-expanded')).toBe('false');
 		expect(mobileMenu(container).hasAttribute('inert')).toBe(true);
 	});
