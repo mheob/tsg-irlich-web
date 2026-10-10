@@ -50,10 +50,10 @@ SANITY_REVALIDATE_SECRET="your-generated-secret"
    - ✅ Update
    - ✅ Delete
 
-   **Filter** (optional, to track only specific documents):
+   **Filter** (optional, to track only specific documents). Every type the route handles has to be in it, `site-settings` above all: the menu and the footer data live there, and without it a menu change waits out the layout's 12-hour cache.
 
    ```groq
-   _type in ["news", "group", "person", "testimonial", "settings", "navigation"]
+   _type in ["aboutUs", "contact", "departmentsPage", "echo.issue", "echoOverview", "group.children-gymnastics", "group.courses", "group.dance", "group.other-sports", "group.soccer", "group.taekwondo", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
    ```
 
    **Projection** (what is sent to the webhook):
@@ -110,7 +110,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **Person** (`_type: "person"`): `/verein`
 - **Testimonial** (`_type: "testimonial"`): Homepage `/`
 - **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before. A webhook with a type filter needs both types in it.
-- **Settings/Navigation**: All pages (layout revalidation)
+- **Site settings** (`_type: "site-settings"`, the menu and the footer data): all pages (layout revalidation). The root layout tags its two fetches `site-settings`, so the tag revalidation reaches them too.
 
 ## Troubleshooting
 
