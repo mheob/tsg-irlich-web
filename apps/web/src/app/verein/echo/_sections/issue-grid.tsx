@@ -17,11 +17,12 @@ const COVER_WIDTH = 600;
  * @returns The card.
  */
 function IssueCard({ issue }: Readonly<{ issue: EchoIssue }>) {
-	const cover = getCoverUrl(issue.cover, COVER_WIDTH);
+	const cover = getCoverUrl(issue.cover, COVER_WIDTH, issue.indexable);
 
 	return (
 		<Link className="group flex flex-col gap-3" href={getEchoIssuePath(issue.slug)}>
 			<div className="relative aspect-[1/1.414] overflow-hidden rounded-xl bg-background">
+				{/* The optimizer would serve a hidden issue's cover without the noindex header. */}
 				{cover && (
 					<Image
 						alt={`Titelseite von ${issue.title}`}
@@ -29,6 +30,7 @@ function IssueCard({ issue }: Readonly<{ issue: EchoIssue }>) {
 						fill
 						sizes="(min-width: 64rem) 25vw, (min-width: 48rem) 33vw, 50vw"
 						src={cover}
+						unoptimized={!issue.indexable}
 					/>
 				)}
 			</div>

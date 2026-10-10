@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { Hero } from '@/components/section/hero';
@@ -91,6 +92,17 @@ export default async function EchoOverviewPage({
 						hasNextPage={start + ITEMS_PER_PAGE < total}
 						issues={issues}
 					/>
+				)}
+
+				{latest && (
+					<p className="mx-auto mt-16 max-w-3xl text-center text-sm md:text-base">
+						Du findest dich in einer älteren Ausgabe wieder und möchtest das nicht? Dann melde dich
+						über unser{' '}
+						<Link className="underline" href="/kontakt">
+							Kontaktformular
+						</Link>
+						.
+					</p>
 				)}
 			</section>
 

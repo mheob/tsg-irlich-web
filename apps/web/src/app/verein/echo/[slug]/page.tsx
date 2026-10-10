@@ -36,13 +36,16 @@ export async function generateMetadata({
 		return {};
 	}
 
-	return getPageMetadata({
+	const metadata = getPageMetadata({
 		description: issue.intro,
-		image: toSanityImage(issue.cover),
+		image: issue.indexable ? toSanityImage(issue.cover) : undefined,
 		meta: issue.meta,
 		path: getEchoIssuePath(slug),
 		title: issue.title,
 	});
+
+	// WEB-353: old issues stay readable but out of search engines, together with their files.
+	return issue.indexable ? metadata : { ...metadata, robots: { follow: false, index: false } };
 }
 
 export default async function EchoIssuePage({
@@ -55,7 +58,7 @@ export default async function EchoIssuePage({
 		notFound();
 	}
 
-	const download = getPdfDownload(issue.pdf);
+	const download = getPdfDownload(issue.pdf, issue.indexable);
 	const pageSize = getPageSize(issue.pageSize);
 
 	return (
@@ -70,11 +73,11 @@ export default async function EchoIssuePage({
 				{issue.intro && <p className="max-w-3xl text-center text-lg md:text-xl">{issue.intro}</p>}
 
 				<FlipbookLazy
-					cover={getCoverPage(issue.cover, issue.title)}
+					cover={getCoverPage(issue.cover, issue.title, issue.indexable)}
 					label={`${issue.title} zum Durchblättern`}
 					pageHeight={pageSize.height}
 					pageWidth={pageSize.width}
-					pages={getFlipbookPages(issue.pages)}
+					pages={getFlipbookPages(issue.pages, issue.indexable)}
 				/>
 
 				{download && (

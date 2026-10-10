@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { ComponentProps } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
@@ -175,6 +176,15 @@ describe('the tsg-echo archive', () => {
 		expect(
 			paragraphs.some((element) => element.props.children === 'Noch keine Ausgaben online.'),
 		).toBe(true);
+		expect(findElements(page, Link).map((element) => element.props.href)).not.toContain('/kontakt');
+	});
+
+	it('tells readers how to have themselves removed from an issue', async () => {
+		mockArchive({ issues: YEARS.map((year) => issue(year)) });
+
+		const page = await EchoOverviewPage(props());
+
+		expect(findElements(page, Link).map((element) => element.props.href)).toContain('/kontakt');
 	});
 
 	it('shows no grid when the newest issue is the only one', async () => {
