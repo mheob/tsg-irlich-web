@@ -44,4 +44,19 @@ const blockContent = /* groq */ `
   "text": coalesce(text[] { ..., ${markDefsWithLinks} }, [])
 `;
 
-export { blockContent, contactPersons, featuredImage, internalLinkTarget, markDefsWithLinks, meta };
+/**
+ * A TSG-Echo issue the website shows: its pages are rendered and it has a slug. Pending, failed and
+ * never-rendered issues stay off the site, which also hides the pages a failed run keeps from the
+ * previous PDF.
+ */
+const finishedEchoIssue = /* groq */ `_type == 'echo.issue' && render.status == 'done' && defined(slug.current) && count(pages) > 0`;
+
+export {
+	blockContent,
+	contactPersons,
+	featuredImage,
+	finishedEchoIssue,
+	internalLinkTarget,
+	markDefsWithLinks,
+	meta,
+};
