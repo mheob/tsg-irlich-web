@@ -2,6 +2,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useId } from 'react';
 
 import { Label } from '@/components/ui/label';
+import { MAX_SCREENSHOTS } from '@/lib/validations/feedback';
 
 import { FormItem } from '../form';
 import { ScreenshotUpload } from './screenshot-upload';
@@ -30,7 +31,7 @@ export function ScreenshotsField({
 			<ScreenshotUpload
 				disabled={isSubmitting}
 				inputId={inputId}
-				maxFiles={5}
+				maxFiles={MAX_SCREENSHOTS}
 				onChange={setScreenshotUrls}
 				value={screenshotUrls}
 			/>
