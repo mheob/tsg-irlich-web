@@ -156,6 +156,11 @@ catalog:
   jsdom: ^30.1.2
   msw: ^3.0.2
 
+  # PDF pages: rendering and text extraction for the TSG-Echo, plus pdf-lib for the test fixtures
+  "@napi-rs/canvas": ^1.0.10
+  pdf-lib: ^1.17.1
+  pdfjs-dist: ^6.4.299
+
 peerDependencyRules:
   allowAny:
     - vite

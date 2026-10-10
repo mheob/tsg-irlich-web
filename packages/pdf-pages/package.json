@@ -1,0 +1,32 @@
+{
+	"name": "@tsgi-web/pdf-pages",
+	"version": "0.1.0",
+	"private": true,
+	"description": "Renders the pages of a PDF to JPEG images and extracts their text.",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"scripts": {
+		"lint": "vp lint",
+		"lint:fix": "vp lint --fix",
+		"lint:github": "vp lint --format=github",
+		"test": "vp test run",
+		"test:coverage": "vp test run --coverage",
+		"test:watch": "vp test",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@napi-rs/canvas": "catalog:",
+		"pdfjs-dist": "catalog:"
+	},
+	"devDependencies": {
+		"@mheob/tsconfig": "catalog:",
+		"@types/node": "catalog:",
+		"@vitest/coverage-v8": "catalog:",
+		"pdf-lib": "catalog:",
+		"typescript": "catalog:",
+		"vite-plus": "catalog:",
+		"vitest": "catalog:"
+	}
+}

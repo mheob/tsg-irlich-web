@@ -50,6 +50,7 @@ function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureReso
 			.title('Base')
 			.items([
 				...getGroup(S, 'news'),
+				...getGroup(S, 'echo'),
 				...getGroup(S, 'single-pages', typeDefinitionArray),
 				S.divider(),
 				...getGroup(S, 'persons'),

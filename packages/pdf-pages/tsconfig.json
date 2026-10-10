@@ -1,0 +1,9 @@
+{
+	"extends": "@mheob/tsconfig/esm",
+	"compilerOptions": {
+		"lib": ["DOM", "ES2023"],
+		"noEmit": true,
+		"types": ["node"]
+	},
+	"include": ["src", "test-utils", "vitest.config.ts"]
+}

@@ -106,6 +106,18 @@ The resolved target is added as `target` next to the untouched `link` reference,
 
 `/api/draft-mode/enable` validates the studio's preview secret and turns Next.js draft mode on, `/api/draft-mode/disable` turns it off again. The root layout renders `<VisualEditing />` and the "Vorschau beenden" link only while draft mode is enabled. Draft content needs `SANITY_API_READ_TOKEN`; it is read at import time in `src/lib/sanity/live.ts`, so a missing token fails the build.
 
+## TSG-Echo render route
+
+`POST /api/echo/render` renders the PDF of an `echo.issue` into page images and text. The webhook and its filter are described in `docs/SANITY_WEBHOOK_SETUP.md`.
+
+- `route.ts` checks the signature (`SANITY_ECHO_RENDER_SECRET`), claims the document and answers `202`; the rendering itself runs in `after()` with `maxDuration = 800`. The 52 pages of the largest scan take about 23 s on Vercel. A run that throws could not even record its failure and is logged with `console.error`.
+- `src/lib/echo/render-issue.ts` (`claimRender`, `runRender`) holds the logic and only talks to the `EchoRenderStore` interface; `render-store.ts` is the Sanity adapter. Every write is guarded by `ifRevisionId`. `render.startedAt` is the claim token: a result is thrown away when the document was deleted, got a new PDF or was claimed by a newer run. When the draft was published during the run, the result goes into the published document. A conflicting write is retried twice, after 1 s and 2 s, and a write-back that breaks still records `failed`, so a document never stays `pending` while the function lives.
+- Errors the pipeline explains itself are `RenderError`s and reach `render.error` as they are; everything else (pdf.js, Sanity) is prefixed with "Die Seiten konnten nicht erzeugt werden:".
+- The PDF URL is built from the asset reference (`src/lib/echo/asset-url.ts`), never taken from the payload — a URL from a request would be an SSRF.
+- `@tsgi-web/pdf-pages` needs `serverExternalPackages: ['@napi-rs/canvas', 'pdfjs-dist']` in `next.config.ts`; Turbopack cannot bundle the native canvas binding. The package imports the pdf.js worker statically, otherwise output tracing would leave it out of the function.
+- pdf.js reads its WebAssembly decoders, standard fonts, CMaps and ICC profiles from disk. Without the decoders it skips CCITT, JBIG2 and JPEG 2000 images silently, which is how black-and-white scans are stored. A bundle cannot resolve `pdfjs-dist` by name (Turbopack rewrites `require.resolve` to a module id and keeps externals under a hashed name in `.next/node_modules`), so `src/lib/echo/pdfjs-data.ts` builds the path from `process.cwd()` into the pnpm store, and `outputFileTracingIncludes` ships exactly that directory. A wrong path fails every run with "Die Daten von pdf.js fehlen unter …".
+- `src/lib/sanity/write-client.ts` writes with `SANITY_API_WRITE_TOKEN` and `perspective: 'raw'`, because the webhook fires for drafts.
+
 ## Environment variables
 
 Read them through `env('KEY')` from `@/lib/env` — never `process.env` directly. The helper validates a single variable lazily with Zod and caches it. A new variable has to be added to the schema in `src/lib/env.ts`, to `globalEnv` (or the matching task) in the root `turbo.json`, and to the list in the root `AGENTS.md`.

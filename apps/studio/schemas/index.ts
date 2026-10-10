@@ -1,6 +1,7 @@
 // oxlint-disable import/max-dependencies
 
 import author from './documents/author';
+import echoIssue from './documents/echo.issue';
 import groupAdmin from './documents/group.admin';
 import groupChildrenGymnastics from './documents/group.children-gymnastics';
 import groupCourses from './documents/group.courses';
@@ -39,6 +40,7 @@ import spacer from './sections/spacer';
 import aboutUsPage from './single-pages/about-us';
 import accessibilityPage from './single-pages/accessibility';
 import contactPage from './single-pages/contact';
+import echoOverviewPage from './single-pages/echo-overview';
 import groupsPage from './single-pages/groups';
 import homePage from './single-pages/home';
 import imprintPage from './single-pages/imprint';
@@ -55,6 +57,7 @@ export const schemaTypes = [
 	// Documents
 	newsArticle,
 	newsCategory,
+	echoIssue,
 
 	author,
 	person,
@@ -103,6 +106,7 @@ export const schemaTypes = [
 	accessibilityPage,
 	contactPage,
 	departmentsPage,
+	echoOverviewPage,
 	groupsPage,
 	homePage,
 	imprintPage,

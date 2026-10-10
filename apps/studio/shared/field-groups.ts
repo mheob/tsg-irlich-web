@@ -28,9 +28,14 @@ const meta = {
 	title: 'Meta information',
 };
 
+const pages = {
+	name: 'pages',
+	title: 'Seiten (automatisch)',
+};
+
 const personal = {
 	name: 'personal',
 	title: 'Persönliches',
 };
 
-export { additionalInformation, contact, content, excerpt, general, meta, personal };
+export { additionalInformation, contact, content, excerpt, general, meta, pages, personal };

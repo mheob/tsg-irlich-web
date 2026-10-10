@@ -159,6 +159,38 @@ fetch(url, {
 revalidateTag('news');
 ```
 
+## TSG-Echo page rendering
+
+A second webhook, separate from the revalidation one, makes the web app render the pages of a TSG-Echo issue as soon as an editor uploads its PDF.
+
+1. Create a robot token in sanity.io/manage → **API** → **Tokens** with the **Editor** role and store it in Vercel as `SANITY_API_WRITE_TOKEN` (Production and Preview).
+2. Generate a secret (see step 1 above) and store it in Vercel as `SANITY_ECHO_RENDER_SECRET`.
+3. Create the webhook, once per environment:
+   - **Name**: `TSG-Echo Seiten erzeugen (<environment>)`
+   - **URL**: `https://www.tsg-irlich.de/api/echo/render` (production) or the staging domain
+   - **Dataset**: `production` (or the dataset of the environment)
+   - **Trigger on**: ✅ Create, ✅ Update
+   - **Drafts**: ✅ enabled — editors upload the PDF into a draft and generate the intro before they publish
+   - **Filter**:
+
+     ```groq
+     _type == "echo.issue" && defined(pdf.asset) && (!defined(render.source) || render.source != pdf.asset._ref)
+     ```
+
+   - **Projection**:
+
+     ```groq
+     { _id, "pdfRef": pdf.asset._ref }
+     ```
+
+   - **HTTP method**: `POST`
+   - **Secret**: the value of `SANITY_ECHO_RENDER_SECRET`
+   - **Staging only**: add the header `x-vercel-protection-bypass` with the project's "Protection Bypass for Automation" secret, because preview deployments sit behind Vercel's SSO.
+
+The filter compares states, not changes: the route sets `render.source` to the PDF when it claims a document, so neither its own write-back nor publishing the draft (which carries `render.source` along) triggers a second run. "Seiten neu erzeugen" in the studio removes `render` and hands the document back to the route.
+
+The projection deliberately carries no URL. The route builds the CDN URL from the asset reference itself, so a crafted payload cannot make it fetch another host.
+
 ## Further Reading
 
 - [Next.js On-Demand Revalidation](https://nextjs.org/docs/app/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation)
