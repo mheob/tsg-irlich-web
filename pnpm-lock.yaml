@@ -535,6 +535,9 @@ importers:
       '@tsgi-web/email':
         specifier: workspace:*
         version: link:../../packages/email
+      '@tsgi-web/pdf-pages':
+        specifier: workspace:*
+        version: link:../../packages/pdf-pages
       '@tsgi-web/shared':
         specifier: workspace:*
         version: link:../../packages/shared
