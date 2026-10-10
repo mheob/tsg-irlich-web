@@ -10,4 +10,13 @@ ignore:
           glob patterns from this repository's own configuration and never outside input. Revisit
           once braces publishes a patched release.
         expires: 2026-10-26T00:00:00.000Z
+  SNYK-JS-ZOD-20510278:
+    - '*':
+        reason: >-
+          zod has no fixed version: 4.6.5 is the latest published release and every version up to
+          it is affected (CVE-2023-54404); the upstream fix, colinhacks/zod#6475, was closed
+          unmerged. The studio is a static single-page app: zod runs in the Sanity CLI and in the
+          editor's own browser, and no outside input reaches a server through it. Revisit once zod
+          publishes a patched release.
+        expires: 2026-11-10T00:00:00.000Z
 patch: {}
