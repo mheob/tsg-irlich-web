@@ -68,9 +68,6 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	membership: () => {
 		revalidatePath('/mitgliedschaft');
 	},
-	navigation: () => {
-		revalidatePath('/', 'layout');
-	},
 	// An article lives below its category, which the webhook payload does not carry, so the whole
 	// route has to be revalidated. The same goes for the group pages, each of which shows the latest
 	// articles of the category assigned to it, and for the category pages, whose combobox lists every
@@ -91,7 +88,8 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	privacy: () => {
 		revalidatePath('/datenschutz');
 	},
-	settings: () => {
+	// The menu and the footer data, rendered by the root layout on every page.
+	'site-settings': () => {
 		revalidatePath('/', 'layout');
 	},
 	testimonial: () => {

@@ -111,6 +111,20 @@ describe('the root layout', () => {
 		});
 	});
 
+	// WEB-370: the revalidation webhook tags its run with the document type, so both fetches of the
+	// layout carry the `site-settings` tag; without it a menu change waited out the 12 hours.
+	it('tags both of its fetches with the site settings', async () => {
+		mockDraftMode(false);
+		mockedFetch.mockResolvedValue({ mainNavigation: [] });
+
+		await RootLayout({ children: null });
+
+		expect(mockedFetch.mock.calls.map((call) => call[2])).toStrictEqual([
+			{ next: { revalidate: 43_200, tags: ['site-settings'] } },
+			{ next: { tags: ['site-settings'] } },
+		]);
+	});
+
 	it('hands the navigation the items it fetched', async () => {
 		mockDraftMode(false);
 		mockedFetch.mockResolvedValue({ mainNavigation: [NAV_ITEM] });

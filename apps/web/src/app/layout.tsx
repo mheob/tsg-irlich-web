@@ -84,6 +84,8 @@ const inter = localFont({
 
 // oxlint-disable-next-line no-magic-numbers
 const NAVIGATION_REVALIDATE_SECONDS = 60 * 60 * 12;
+/** The revalidation webhook tags its run with the document type; both layout fetches read it. */
+const SITE_SETTINGS_TAG = 'site-settings';
 
 export const metadata: Metadata = {
 	alternates: { types: FEED_ALTERNATES },
@@ -111,11 +113,17 @@ export default async function RootLayout({
 			.fetch<MainNavigationQueryResult>(
 				mainNavigationQuery,
 				{},
-				{ next: { revalidate: NAVIGATION_REVALIDATE_SECONDS } },
+				{ next: { revalidate: NAVIGATION_REVALIDATE_SECONDS, tags: [SITE_SETTINGS_TAG] } },
 			)
 			.catch(() => null),
 		// Missing structured data must not take the page down with it.
-		client.fetch<OrganizationQueryResult>(organizationQuery).catch(() => null),
+		client
+			.fetch<OrganizationQueryResult>(
+				organizationQuery,
+				{},
+				{ next: { tags: [SITE_SETTINGS_TAG] } },
+			)
+			.catch(() => null),
 	]);
 
 	const navItems = mainNavigationQueryResults?.mainNavigation ?? EMPTY_ARRAY;

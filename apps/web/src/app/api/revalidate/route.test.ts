@@ -122,15 +122,16 @@ describe('sanity revalidation webhook', () => {
 		]);
 	});
 
-	it.each([
-		['navigation', '/'],
-		['settings', '/'],
-	])('revalidates the whole layout for %s', async (type, path) => {
-		mockedParseBody.mockResolvedValue(parsed({ _type: type }));
+	// WEB-370: the menu and the footer data live in `site-settings`, and the root layout renders them
+	// on every page. The handler used to be keyed `navigation` and `settings`, which no document is
+	// called, so a menu change only reached the home page.
+	it('revalidates the whole layout for the site settings', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'site-settings' }));
 
 		await POST(REQUEST);
 
-		expect(mockedRevalidatePath).toHaveBeenCalledWith(path, 'layout');
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/', 'layout']]);
+		expect(mockedRevalidateTag).toHaveBeenCalledWith('site-settings', 'max');
 	});
 
 	it('revalidates every page a person appears on', async () => {
