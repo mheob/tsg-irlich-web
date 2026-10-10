@@ -11,6 +11,7 @@
   - A Next.js external rewrite proxies those paths to the Sanity CDN of the configured project and dataset.
   - `headers()` adds `X-Robots-Tag: noindex, nofollow`.
   - On Vercel this runs in the CDN without a function, so the 4.5 MB response limit of functions does not apply to the up to 20 MB PDFs.
+  - **Amended during Task 5:** Next.js drops the `headers()` of an external rewrite. `resolve-routes` returns `resHeaders: null` for it, so neither `next start` nor `next dev` sent the header. The rewrite therefore moved to `src/proxy.ts` (`NextResponse.rewrite` to the CDN URL from `toCdnUrl`, plus `X-Robots-Tag`), whose headers Next.js keeps on an external rewrite. `next.config.ts` is unchanged. The platform still does the forwarding, so no file passes through a function.
 - The issue page of a non-indexable issue sets `robots: noindex, nofollow` and no cover as open graph image. The sitemap leaves it out.
 - The archive page shows a takedown hint that links to `/kontakt`.
 

@@ -1,5 +1,3 @@
-// Imported by `next.config.ts`, so it uses relative imports only and nothing server-only.
-
 /** The path the website serves Sanity assets under when search engines must not index them. */
 const ARCHIVE_PATH = '/echo-archiv';
 
@@ -27,43 +25,29 @@ function toArchiveUrl(url: string): string {
 	return `${ARCHIVE_PATH}/${asset.groups.kind}/${asset.groups.file}${parsed.search}`;
 }
 
-/**
- * The external rewrite that proxies the archive path to the Sanity CDN. On Vercel the CDN does the
- * proxying, so the response size limit of functions does not apply.
- *
- * @param target - The Sanity project and dataset; without either there is nothing to proxy to.
- * @param target.dataset - The dataset the website reads.
- * @param target.projectId - The Sanity project.
- * @returns The rewrite, or none.
- */
-function getArchiveRewrites({ dataset, projectId }: SanityTarget): ArchiveRewrite[] {
-	if (!dataset || !projectId) {
-		return [];
-	}
-	return [
-		{
-			destination: `https://${SANITY_CDN_HOST}/:kind/${projectId}/${dataset}/:file`,
-			source: `${ARCHIVE_PATH}/:kind(images|files)/:file`,
-		},
-	];
-}
+/** `/echo-archiv/<kind>/<file>`: one asset of one kind, with a plain file name. */
+const ARCHIVE_ASSET_PATH = /^\/echo-archiv\/(?<kind>images|files)\/(?<file>[\w-]+\.[a-z0-9]+)$/u;
 
 /**
- * The headers of every archive response. `x-vercel-enable-rewrite-caching` opts projects created
- * before 2026-04-06 into caching external rewrites.
+ * The Sanity CDN URL behind an archive path, so the proxy can hand the request on.
  *
- * @returns The header rule for the archive path.
+ * @param pathname - The requested path.
+ * @param search - The requested query string, `?` included, or an empty string.
+ * @param target - The Sanity project and dataset the website reads.
+ * @param target.dataset - The dataset.
+ * @param target.projectId - The project.
+ * @returns The CDN URL, or `undefined` for anything that is not one archive asset.
  */
-function getArchiveHeaders(): ArchiveHeaders[] {
-	return [
-		{
-			headers: [
-				{ key: 'X-Robots-Tag', value: 'noindex, nofollow' },
-				{ key: 'x-vercel-enable-rewrite-caching', value: '1' },
-			],
-			source: `${ARCHIVE_PATH}/:path*`,
-		},
-	];
+function toCdnUrl(
+	pathname: string,
+	search: string,
+	{ dataset, projectId }: SanityTarget,
+): string | undefined {
+	const asset = ARCHIVE_ASSET_PATH.exec(pathname);
+	if (!asset?.groups || !dataset || !projectId) {
+		return undefined;
+	}
+	return `https://${SANITY_CDN_HOST}/${asset.groups.kind}/${projectId}/${dataset}/${asset.groups.file}${search}`;
 }
 
 interface SanityTarget {
@@ -71,15 +55,8 @@ interface SanityTarget {
 	projectId?: string;
 }
 
-interface ArchiveRewrite {
-	destination: string;
-	source: string;
-}
+/** What every archive response tells search engines. */
+const ARCHIVE_ROBOTS_TAG = 'noindex, nofollow';
 
-interface ArchiveHeaders {
-	headers: { key: string; value: string }[];
-	source: string;
-}
-
-export { ARCHIVE_PATH, getArchiveHeaders, getArchiveRewrites, toArchiveUrl };
-export type { ArchiveHeaders, ArchiveRewrite };
+export { ARCHIVE_PATH, ARCHIVE_ROBOTS_TAG, toArchiveUrl, toCdnUrl };
+export type { SanityTarget };

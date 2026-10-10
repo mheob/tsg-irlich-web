@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test';
 
-import { getArchiveHeaders, getArchiveRewrites, toArchiveUrl } from './archive-url';
+import { toArchiveUrl, toCdnUrl } from './archive-url';
 
 const IMAGE =
 	'https://cdn.sanity.io/images/j4rxwl5m/development/0a1b2c-1414x2000.jpg?w=800&fit=max&q=85';
@@ -30,33 +30,35 @@ describe('archive urls', () => {
 	});
 });
 
-describe('the archive rewrite', () => {
-	it('proxies both asset kinds to the configured project and dataset', () => {
-		expect(getArchiveRewrites({ dataset: 'production', projectId: 'j4rxwl5m' })).toStrictEqual([
-			{
-				destination: 'https://cdn.sanity.io/:kind/j4rxwl5m/production/:file',
-				source: '/echo-archiv/:kind(images|files)/:file',
-			},
-		]);
+describe('the cdn url behind an archive path', () => {
+	const TARGET = { dataset: 'production', projectId: 'j4rxwl5m' };
+
+	it('points an archive image back at the Sanity CDN with its parameters', () => {
+		expect(toCdnUrl('/echo-archiv/images/0a1b2c-1414x2000.jpg', '?w=800', TARGET)).toBe(
+			'https://cdn.sanity.io/images/j4rxwl5m/production/0a1b2c-1414x2000.jpg?w=800',
+		);
+	});
+
+	it('points an archive pdf back at the Sanity CDN with its download name', () => {
+		expect(toCdnUrl('/echo-archiv/files/9f8e.pdf', '?dl=test.pdf', TARGET)).toBe(
+			'https://cdn.sanity.io/files/j4rxwl5m/production/9f8e.pdf?dl=test.pdf',
+		);
+	});
+
+	it.each([
+		['another kind of asset', '/echo-archiv/videos/a.mp4'],
+		['a nested path', '/echo-archiv/images/a/b.jpg'],
+		['a path that climbs up', '/echo-archiv/images/..'],
+		['the bare prefix', '/echo-archiv'],
+	])('knows nothing behind %s', (_label, path) => {
+		expect(toCdnUrl(path, '', TARGET)).toBeUndefined();
 	});
 
 	// Review focus 4.
 	it.each([
 		['without a project', { dataset: 'production' }],
 		['without a dataset', { projectId: 'j4rxwl5m' }],
-	])('builds nothing %s', (_label, target) => {
-		expect(getArchiveRewrites(target)).toStrictEqual([]);
-	});
-
-	it('tells search engines to skip everything below the archive path', () => {
-		expect(getArchiveHeaders()).toStrictEqual([
-			{
-				headers: [
-					{ key: 'X-Robots-Tag', value: 'noindex, nofollow' },
-					{ key: 'x-vercel-enable-rewrite-caching', value: '1' },
-				],
-				source: '/echo-archiv/:path*',
-			},
-		]);
+	])('knows nothing %s', (_label, target) => {
+		expect(toCdnUrl('/echo-archiv/images/a-1x1.jpg', '', target)).toBeUndefined();
 	});
 });
