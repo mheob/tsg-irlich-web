@@ -57,7 +57,7 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 - Built with **Turbo** for build orchestration and caching
 - **pnpm** as package manager with workspace support
 - Every external dependency resolves through the default catalog in `pnpm-workspace.yaml`, and the manifests reference it with `catalog:`. `catalogMode: strict` makes `pnpm add` / `vp add` write new dependencies there; only workspace packages stay on `workspace:*`. The four Vite+ toolchain entries (`vite`, `vite-plus`, `vitest`, `@vitest/coverage-v8`) are re-pinned by `vp migrate`, not by hand
-- Node.js ^24.20.0 and pnpm 12.7.0 required
+- Node.js ^24.20.0 and pnpm 12.10.1 required
 
 ### Web App (Next.js)
 

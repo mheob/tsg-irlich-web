@@ -14,6 +14,9 @@ interface NewsletterFooterProps {
 }
 
 export function NewsletterFooter({ baseUrl, socials }: Readonly<NewsletterFooterProps>) {
+	// An e-mail is rendered once to static HTML and never re-renders, so the year cannot change
+	// between two renders.
+	// oxlint-disable-next-line react/purity
 	const currentYear = new Date().getFullYear();
 
 	return (

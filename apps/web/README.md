@@ -20,7 +20,7 @@ This is the main web application for the TSG Irlich website, featuring:
 ### Prerequisites
 
 - **Node.js** ^24.20.0
-- **pnpm** 12.7.0 (package manager)
+- **pnpm** 12.10.1 (package manager)
 - Environment variables configured (see [Environment Variables](#environment-variables))
 
 ### Installation
