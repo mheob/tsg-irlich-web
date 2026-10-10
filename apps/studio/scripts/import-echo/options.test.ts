@@ -19,6 +19,7 @@ describe('the import options', () => {
 			dryRun: true,
 			folder: path.resolve('/tmp/echo'),
 			manifest: path.resolve('/tmp/echo/manifest.json'),
+			releaseId: 'tsg-echo-archiv',
 		});
 	});
 
@@ -61,6 +62,19 @@ describe('the import options', () => {
 	it('requires a key for a real run with intros', () => {
 		expect(() => parseImportOptions([...BASE, '--no-dry-run'], {})).toThrow(
 			'ANTHROPIC_API_KEY fehlt. Ohne Intros importieren: --no-intro.',
+		);
+	});
+
+	// Final review I3: a later run needs its own release once the first one is published or archived.
+	it('takes another release id', () => {
+		expect(parseImportOptions([...BASE, '--release', 'tsg-echo-archiv-2'], {}).releaseId).toBe(
+			'tsg-echo-archiv-2',
+		);
+	});
+
+	it('rejects a release id a document id cannot carry', () => {
+		expect(() => parseImportOptions([...BASE, '--release', 'echo.archiv'], {})).toThrow(
+			'--release darf nur Buchstaben, Ziffern, - und _ enthalten.',
 		);
 	});
 

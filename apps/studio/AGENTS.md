@@ -86,7 +86,7 @@ pnpm --filter studio run import:echo --dataset development --folder ~/echo-archi
 ANTHROPIC_API_KEY=… pnpm --filter studio run import:echo --dataset development --folder ~/echo-archiv --no-dry-run
 ```
 
-`--no-intro` imports without intros and without a key. `--manifest <file>` reads another list. `sanity exec --with-user-token` writes as the logged-in user, so run `pnpm exec sanity login` first. `ANTHROPIC_API_KEY` only ever comes from the shell. It does not belong in `.env`, Vercel or `turbo.json`.
+`--no-intro` imports without intros and without a key. `--manifest <file>` reads another list. `--release <id>` fills another release than `tsg-echo-archiv`; a later run needs one once the first release is published or archived. `sanity exec --with-user-token` writes as the logged-in user, so run `pnpm exec sanity login` first. `ANTHROPIC_API_KEY` only ever comes from the shell. It does not belong in `.env`, Vercel or `turbo.json`.
 
 **What it writes.** Per issue:
 
@@ -94,9 +94,9 @@ ANTHROPIC_API_KEY=… pnpm --filter studio run import:echo --dataset development
 - every page as `echo-<hash>-seite-<nnn>.jpg`
 - a version `versions.tsg-echo-archiv.echo-archiv-<file name>` with `indexable: false` and a finished `render` whose `source` is the PDF, so the render webhook skips it
 
-The intro is a draft from the cover, the next two pages and the text layer. The prompt forbids names and contact data. An issue whose intro could not be drafted is imported without one and listed at the end.
+The intro is a draft from the cover, the next two pages and the text layer (`claude-sonnet-5-5`). The prompt forbids names and contact data. Before a real run with intros, the script asks the API once whether the key may use the model, and stops before anything is written if it may not. A busy API (429, 5xx, 529) gets two more attempts per issue, as long as `retry-after` asks. An answer that stopped early (`max_tokens`, `refusal`) counts as failed. An issue whose intro still could not be drafted is imported without one and listed at the end. A rerun skips it, so its intro is written in the studio.
 
-**Reruns.** The id comes from the file name. A rerun skips every issue that exists as published document, draft or version in the release, and imports an interrupted issue again. Sanity deduplicates its assets by content hash. A release that is no longer open (published, scheduled, archived) is refused before anything is uploaded.
+**Reruns.** The id comes from the file name. A rerun skips every issue that exists as published document, draft or version in the release, and imports an interrupted issue again. Sanity deduplicates its assets by content hash. A release that is no longer open (published, scheduled, archived) is refused before anything is uploaded; the message names `--release <neue-id>`.
 
 **Before publishing.** Every run ends by checking that no `echo.issue` before 2013 is indexable, in any version. It exits with 1 if one is, or if an issue failed. The same check in Vision, perspective `raw`:
 
@@ -104,7 +104,7 @@ The intro is a draft from the cover, the next two pages and the text layer. The 
 *[_type == "echo.issue" && releaseDate < "2013-01-01" && indexable != false]._id
 ```
 
-The editors then review the intros in the release and publish it as a whole. To start over before publishing, archive the release in the studio, which deletes its versions.
+The editors then review the intros in the release and publish it as a whole. Archiving the release in the studio discards its versions, but the archived release keeps its id. To start over, run again with `--release <neue-id>`.
 
 **Privacy.** An uploaded asset is public on `cdn.sanity.io` from the moment of the upload, even while its document waits in the release. Its URL is not guessable, but the dataset is no place for test copies of real issues: try the script with synthetic PDFs.
 

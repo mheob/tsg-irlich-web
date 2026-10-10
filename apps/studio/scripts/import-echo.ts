@@ -1,13 +1,14 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { setTimeout as delay } from 'node:timers/promises';
 
 import { getCliClient } from 'sanity/cli';
 
 import { renderPdfPages } from '@tsgi-web/pdf-pages';
 
 import { createArchiveStore } from './import-echo/archive-store';
-import { draftIntro } from './import-echo/intro';
+import { checkIntroAccess, draftIntro } from './import-echo/intro';
 import { parseManifest } from './import-echo/manifest';
 import { parseImportOptions } from './import-echo/options';
 import { isSuccessful, runImport, summarize } from './import-echo/run-import';
@@ -30,14 +31,17 @@ console.log(
 const report = await runImport(
 	plans,
 	{
-		draftIntro: apiKey ? async (input) => draftIntro(input, { apiKey, fetch }) : undefined,
+		checkIntro: apiKey ? async () => checkIntroAccess({ apiKey, fetch }) : undefined,
+		draftIntro: apiKey
+			? async (input) => draftIntro(input, { apiKey, fetch, wait: async (ms) => delay(ms) })
+			: undefined,
 		log: (line) => {
 			console.log(line);
 		},
 		now: () => new Date(),
 		readPdf: async (file) => new Uint8Array(await readFile(path.join(options.folder, file))),
 		renderPages: (bytes) => renderPdfPages(bytes),
-		store: createArchiveStore(client),
+		store: createArchiveStore(client, options.releaseId),
 	},
 	{ dryRun: options.dryRun },
 );

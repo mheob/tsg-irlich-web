@@ -28,7 +28,7 @@ describe('the archive store', () => {
 	it('creates the release with its fixed id, title and description', async () => {
 		const { client, fake } = createFakeClient();
 
-		await createArchiveStore(client).createRelease();
+		await createArchiveStore(client, 'tsg-echo-archiv').createRelease();
 
 		expect(fake.releases.create).toHaveBeenCalledWith({
 			metadata: {
@@ -43,7 +43,7 @@ describe('the archive store', () => {
 
 	it('reads the release state, and nothing for a missing release', async () => {
 		const { client, fake } = createFakeClient();
-		const store = createArchiveStore(client);
+		const store = createArchiveStore(client, 'tsg-echo-archiv');
 
 		await expect(store.getReleaseState()).resolves.toBeUndefined();
 		fake.releases.get.mockResolvedValue({ state: 'published' });
@@ -58,7 +58,7 @@ describe('the archive store', () => {
 			'versions.tsg-echo-archiv.echo-archiv-1979-02',
 		]);
 
-		const existing = await createArchiveStore(client).findExisting([
+		const existing = await createArchiveStore(client, 'tsg-echo-archiv').findExisting([
 			'echo-archiv-1979-01',
 			'echo-archiv-1979-02',
 			'echo-archiv-1979-03',
@@ -88,7 +88,7 @@ describe('the archive store', () => {
 		const { client, fake } = createFakeClient(['echo-1984']);
 
 		await expect(
-			createArchiveStore(client).findIndexableBefore('2013-01-01'),
+			createArchiveStore(client, 'tsg-echo-archiv').findIndexableBefore('2013-01-01'),
 		).resolves.toStrictEqual(['echo-1984']);
 		expect(fake.fetch).toHaveBeenCalledWith(
 			'*[_type == "echo.issue" && releaseDate < $cutoff && indexable != false]._id',
@@ -101,7 +101,10 @@ describe('the archive store', () => {
 		const { client, fake } = createFakeClient();
 		const document = { _type: 'echo.issue', title: 'X' } as EchoIssueDocument;
 
-		await createArchiveStore(client).createVersion('echo-archiv-1979-01', document);
+		await createArchiveStore(client, 'tsg-echo-archiv').createVersion(
+			'echo-archiv-1979-01',
+			document,
+		);
 
 		expect(fake.createVersion).toHaveBeenCalledWith({
 			document,
@@ -112,7 +115,7 @@ describe('the archive store', () => {
 
 	it('uploads a pdf and a page with their content types and names', async () => {
 		const { client, fake } = createFakeClient();
-		const store = createArchiveStore(client);
+		const store = createArchiveStore(client, 'tsg-echo-archiv');
 
 		await expect(store.uploadPdf(new Uint8Array([1]), 'tsg-echo-1979-nr-1.pdf')).resolves.toBe(
 			'asset-id',
@@ -128,5 +131,32 @@ describe('the archive store', () => {
 			contentType: 'image/jpeg',
 			filename: 'echo-8c321136-seite-001.jpg',
 		});
+	});
+
+	// Final review I3: a published or archived release needs a second one for a later run.
+	it('works against another release id', async () => {
+		const { client, fake } = createFakeClient(['versions.tsg-echo-archiv-2.echo-archiv-1979-01']);
+		const store = createArchiveStore(client, 'tsg-echo-archiv-2');
+
+		await expect(store.findExisting(['echo-archiv-1979-01'])).resolves.toStrictEqual(
+			new Set(['echo-archiv-1979-01']),
+		);
+		await store.createRelease();
+		await store.createVersion('echo-archiv-1979-01', { _type: 'echo.issue' } as EchoIssueDocument);
+		await store.getReleaseState();
+		expect(fake.fetch.mock.calls[0]?.[1]).toStrictEqual({
+			ids: [
+				'echo-archiv-1979-01',
+				'drafts.echo-archiv-1979-01',
+				'versions.tsg-echo-archiv-2.echo-archiv-1979-01',
+			],
+		});
+		expect(fake.releases.create).toHaveBeenCalledWith(
+			expect.objectContaining({ releaseId: 'tsg-echo-archiv-2' }),
+		);
+		expect(fake.createVersion).toHaveBeenCalledWith(
+			expect.objectContaining({ releaseId: 'tsg-echo-archiv-2' }),
+		);
+		expect(fake.releases.get).toHaveBeenCalledWith({ releaseId: 'tsg-echo-archiv-2' });
 	});
 });

@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto';
 
 import { describe, expect, it, vi } from 'vite-plus/test';
 
-import { buildIntroRequest, draftIntro } from './intro';
+import { buildIntroRequest, checkIntroAccess, draftIntro } from './intro';
 import type { IntroInput } from './intro';
 
 // Made up per run, so no key-shaped literal sits in the repository.
@@ -26,8 +26,11 @@ const INPUT: IntroInput = {
  * @returns The spy.
  */
 function answer(status: number, body: unknown) {
-	return vi.fn<typeof fetch>().mockResolvedValue(Response.json(body, { status }));
+	return vi.fn<typeof globalThis.fetch>().mockResolvedValue(Response.json(body, { status }));
 }
+
+const DONE = { content: [{ text: 'Ein Intro.', type: 'text' }], stop_reason: 'end_turn' };
+const wait = vi.fn<(ms: number) => Promise<void>>().mockResolvedValue();
 
 describe('the intro request', () => {
 	it('shows the model the cover and the next two pages as jpeg images', () => {
@@ -53,7 +56,7 @@ describe('the intro request', () => {
 	it('uses the configured model and forbids names and contact data', () => {
 		const request = buildIntroRequest(INPUT);
 
-		expect(request).toMatchObject({ max_tokens: 400, model: 'claude-sonnet-5-5' });
+		expect(request).toMatchObject({ max_tokens: 2000, model: 'claude-sonnet-5-5' });
 		expect(request.system).toContain('Nenne keine Namen von Personen');
 		expect(request.system).toContain('Telefonnummern');
 	});
@@ -94,9 +97,12 @@ describe('the intro request', () => {
 
 describe('drafting an intro', () => {
 	it('posts the request with the key and api version and returns the trimmed text', async () => {
-		const fetch = answer(200, { content: [{ text: ' Ein Intro. ', type: 'text' }] });
+		const fetch = answer(200, {
+			content: [{ text: ' Ein Intro. ', type: 'text' }],
+			stop_reason: 'end_turn',
+		});
 
-		await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch })).resolves.toBe('Ein Intro.');
+		await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch, wait })).resolves.toBe('Ein Intro.');
 		expect(fetch).toHaveBeenCalledWith('https://api.anthropic.com/v1/messages', {
 			body: JSON.stringify(buildIntroRequest(INPUT)),
 			headers: {
@@ -111,16 +117,111 @@ describe('drafting an intro', () => {
 	it('names the status of a failed request', async () => {
 		const fetch = answer(401, { error: { type: 'authentication_error' } });
 
-		await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch })).rejects.toThrow(
+		await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch, wait })).rejects.toThrow(
 			'Die Anthropic-API antwortete mit 401.',
 		);
 	});
 
 	it('refuses an answer without text', async () => {
-		const fetch = answer(200, { content: [{ text: '  ', type: 'text' }] });
+		const fetch = answer(200, { content: [{ text: '  ', type: 'text' }], stop_reason: 'end_turn' });
 
-		await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch })).rejects.toThrow(
+		await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch, wait })).rejects.toThrow(
 			'Die Anthropic-API lieferte kein Intro.',
+		);
+	});
+
+	// Final review I1: a cut-off sentence must never reach the editors as a finished draft.
+	it.each(['max_tokens', 'refusal'])(
+		'refuses an answer that stopped with %s',
+		async (stopReason) => {
+			const fetch = answer(200, {
+				content: [{ text: 'Die Ausgabe berichtet über', type: 'text' }],
+				stop_reason: stopReason,
+			});
+
+			await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch, wait })).rejects.toThrow(
+				`Die Anthropic-API brach das Intro ab (${stopReason}).`,
+			);
+		},
+	);
+});
+
+// Final review I2: a busy API must not cost an intro, and a bad key must stop the run.
+describe('retrying a busy api', () => {
+	it.each([429, 500, 503, 529])('tries again after a %i', async (status) => {
+		const fetch = vi
+			.fn<typeof globalThis.fetch>()
+			.mockResolvedValueOnce(Response.json({}, { status }))
+			.mockResolvedValue(Response.json(DONE));
+		wait.mockClear();
+
+		await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch, wait })).resolves.toBe('Ein Intro.');
+		expect(fetch).toHaveBeenCalledTimes(2);
+		expect(wait).toHaveBeenCalledWith(1000);
+	});
+
+	it('waits as long as retry-after says', async () => {
+		const busy = Response.json({}, { headers: { 'retry-after': '7' }, status: 429 });
+		const fetch = vi
+			.fn<typeof globalThis.fetch>()
+			.mockResolvedValueOnce(busy)
+			.mockResolvedValue(Response.json(DONE));
+		wait.mockClear();
+
+		await draftIntro(INPUT, { apiKey: API_KEY, fetch, wait });
+
+		expect(wait).toHaveBeenCalledWith(7000);
+	});
+
+	it('gives up after three attempts, waiting longer each time', async () => {
+		const fetch = vi
+			.fn<typeof globalThis.fetch>()
+			.mockResolvedValue(Response.json({}, { status: 529 }));
+		wait.mockClear();
+
+		await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch, wait })).rejects.toThrow(
+			'Die Anthropic-API antwortete mit 529.',
+		);
+		expect(fetch).toHaveBeenCalledTimes(3);
+		expect(wait.mock.calls).toStrictEqual([[1000], [2000]]);
+	});
+
+	it('does not retry a request the api rejects', async () => {
+		const fetch = answer(400, { error: { type: 'invalid_request_error' } });
+
+		await expect(draftIntro(INPUT, { apiKey: API_KEY, fetch, wait })).rejects.toThrow(
+			'Die Anthropic-API antwortete mit 400.',
+		);
+		expect(fetch).toHaveBeenCalledOnce();
+	});
+});
+
+describe('checking the key before the run', () => {
+	it('asks the models endpoint for the intro model with the key', async () => {
+		const fetch = answer(200, { id: 'claude-sonnet-5-5' });
+
+		await expect(checkIntroAccess({ apiKey: API_KEY, fetch })).resolves.toBeUndefined();
+		expect(fetch).toHaveBeenCalledWith('https://api.anthropic.com/v1/models/claude-sonnet-5-5', {
+			headers: {
+				'anthropic-version': '2023-06-01',
+				'content-type': 'application/json',
+				'x-api-key': API_KEY,
+			},
+			method: 'GET',
+		});
+	});
+
+	it.each([
+		[
+			401,
+			'Der Anthropic-Key wird abgelehnt (401). Key prüfen oder ohne Intros importieren: --no-intro.',
+		],
+		[403, 'Der Anthropic-Key darf das Modell claude-sonnet-5-5 nicht nutzen (403).'],
+		[404, 'Das Modell claude-sonnet-5-5 gibt es für diesen Key nicht (404).'],
+		[529, 'Die Anthropic-API antwortete mit 529.'],
+	])('explains a %i', async (status, message) => {
+		await expect(checkIntroAccess({ apiKey: API_KEY, fetch: answer(status, {}) })).rejects.toThrow(
+			message,
 		);
 	});
 });

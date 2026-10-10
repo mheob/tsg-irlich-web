@@ -48,6 +48,7 @@ type DraftIntro = NonNullable<ImportDependencies['draftIntro']>;
 
 /** The dependencies with spies where a test looks at the calls. */
 interface FakeDeps extends ImportDependencies {
+	checkIntro?: Mock<() => Promise<void>>;
 	draftIntro?: Mock<DraftIntro>;
 	log: Mock<ImportDependencies['log']>;
 	readPdf: Mock<ImportDependencies['readPdf']>;
@@ -193,7 +194,7 @@ describe('an import run', () => {
 			const deps = createDeps({ store: createStore(releaseIn(state)) });
 
 			await expect(runImport([SCAN], deps, { dryRun: false })).rejects.toThrow(
-				`Der Release „TSG-Echo-Archiv“ ist ${state} und nimmt keine Ausgaben mehr auf.`,
+				`Der Release „TSG-Echo-Archiv“ ist ${state} und nimmt keine Ausgaben mehr auf. Einen neuen Release legt --release <neue-id> an.`,
 			);
 			expect(deps.store.uploadPdf).not.toHaveBeenCalled();
 		},
@@ -282,6 +283,30 @@ describe('an import run', () => {
 		expect(deps.store.findIndexableBefore).toHaveBeenCalledWith('2013-01-01');
 		expect(report.indexableBefore).toStrictEqual(['echo-1984']);
 		expect(isSuccessful(report)).toBe(false);
+	});
+});
+
+// Final review I2: a refused key would import every issue without an intro.
+describe('the intro key check', () => {
+	it('runs before anything is created or uploaded and stops the run', async () => {
+		const checkIntro = vi
+			.fn<() => Promise<void>>()
+			.mockRejectedValue(new Error('Der Anthropic-Key wird abgelehnt (401).'));
+		const deps = createDeps({ checkIntro });
+
+		await expect(runImport([SCAN], deps, { dryRun: false })).rejects.toThrow(
+			'Der Anthropic-Key wird abgelehnt (401).',
+		);
+		expect(deps.store.createRelease).not.toHaveBeenCalled();
+		expect(deps.store.uploadPdf).not.toHaveBeenCalled();
+	});
+
+	it('is left out of a dry run, which drafts nothing', async () => {
+		const checkIntro = vi.fn<() => Promise<void>>().mockResolvedValue();
+
+		await runImport([SCAN], createDeps({ checkIntro }), { dryRun: true });
+
+		expect(checkIntro).not.toHaveBeenCalled();
 	});
 });
 

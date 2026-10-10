@@ -46,7 +46,7 @@ async function prepareRelease(deps: ImportDependencies, dryRun: boolean): Promis
 	}
 	if (state !== 'active') {
 		throw new Error(
-			`Der Release „${RELEASE_TITLE}“ ist ${state} und nimmt keine Ausgaben mehr auf.`,
+			`Der Release „${RELEASE_TITLE}“ ist ${state} und nimmt keine Ausgaben mehr auf. Einen neuen Release legt --release <neue-id> an.`,
 		);
 	}
 }
@@ -240,13 +240,17 @@ async function processIssue(plan: IssuePlan, run: ImportRun): Promise<void> {
  * @param deps - Everything the run talks to.
  * @param options - Whether this is a dry run.
  * @returns What happened to every issue, and every indexable issue before 2013.
- * @throws {Error} When the release exists but no longer takes versions.
+ * @throws {Error} When the intro key is refused, or the release exists but no longer takes
+ *   versions; both before anything is written.
  */
 async function runImport(
 	plans: readonly IssuePlan[],
 	deps: ImportDependencies,
 	options: { dryRun: boolean },
 ): Promise<ImportReport> {
+	if (!options.dryRun && deps.checkIntro) {
+		await deps.checkIntro();
+	}
 	await prepareRelease(deps, options.dryRun);
 	const existing = await deps.store.findExisting(plans.map((plan) => plan.documentId));
 	const report: ImportReport = {
@@ -312,6 +316,8 @@ interface PageTarget {
 }
 
 interface ImportDependencies {
+	/** Checks the intro key once before a real run; left out with `--no-intro`. */
+	checkIntro?: () => Promise<void>;
 	/** Drafts an intro; left out with `--no-intro` and in a dry run. */
 	draftIntro?: (input: IntroInput) => Promise<string>;
 	log: (line: string) => void;

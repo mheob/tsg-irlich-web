@@ -1,6 +1,7 @@
 import type { IssuePlan } from './manifest';
 
-const RELEASE_ID = 'tsg-echo-archiv';
+/** The release a run fills unless `--release` names another one. */
+const DEFAULT_RELEASE_ID = 'tsg-echo-archiv';
 const RELEASE_TITLE = 'TSG-Echo-Archiv';
 const RELEASE_DESCRIPTION =
 	'Die alten Ausgaben 1979–2012 aus dem Import (WEB-354). Intros prüfen, dann den Release veröffentlichen.';
@@ -121,7 +122,7 @@ interface EchoIssueDocument {
 export {
 	ARCHIVE_CUTOFF,
 	RELEASE_DESCRIPTION,
-	RELEASE_ID,
+	DEFAULT_RELEASE_ID,
 	RELEASE_TITLE,
 	buildIssueDocument,
 	toPageEntry,
