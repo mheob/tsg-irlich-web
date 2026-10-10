@@ -37,25 +37,26 @@ const singletonPlugin = definePlugin((types: string[]) => ({
  */
 function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureResolver {
 	return (S) => {
-		// The default root list items (except custom ones)
-		const defaultListItems = S.documentTypeListItems()
-			.filter(
+		// The middle block: the custom groups plus the default root list items (except custom ones),
+		// all sorted by title
+		const middleListItems = [
+			...getGroup(S, 'persons'),
+			...getGroup(S, 'groups'),
+			...getGroup(S, 'echo'),
+			...S.documentTypeListItems().filter(
 				(listItem) =>
 					!typeDefinitionArray.some((singleton) => singleton.name === listItem.getId()) &&
 					isExcludedDefaultListItem(listItem.getId()),
-			)
-			.toSorted((a, b) => a.getTitle()?.localeCompare(b.getTitle() ?? '') ?? 0);
+			),
+		].toSorted((a, b) => a.getTitle()?.localeCompare(b.getTitle() ?? '') ?? 0);
 
 		return S.list()
 			.title('Base')
 			.items([
 				...getGroup(S, 'news'),
-				...getGroup(S, 'echo'),
 				...getGroup(S, 'single-pages', typeDefinitionArray),
 				S.divider(),
-				...getGroup(S, 'persons'),
-				...getGroup(S, 'groups'),
-				...defaultListItems,
+				...middleListItems,
 				S.divider(),
 				...getGroup(S, 'settings'),
 			]);

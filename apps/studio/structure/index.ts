@@ -194,6 +194,7 @@ function isExcludedDefaultListItem(id?: string): boolean {
 		'group.soccer',
 		'group.taekwondo',
 		'honoraryMember',
+		'media.folder',
 		'media.tag',
 		'news.article',
 		'news.category',
