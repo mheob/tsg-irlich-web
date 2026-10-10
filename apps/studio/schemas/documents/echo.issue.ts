@@ -84,7 +84,7 @@ const echoIssue = defineType({
 		}),
 		defineField({
 			description:
-				'Aus: Die Ausgabe bleibt auf der Website lesbar, Suchmaschinen finden aber weder die Seite noch ihre Dateien. Gedacht für ältere Ausgaben mit Namen, Kontaktdaten oder Fotos von Kindern.',
+				'Aus: Die Ausgabe bleibt auf der Website lesbar, Suchmaschinen finden aber weder die Seite noch ihre Dateien. Gedacht für ältere Ausgaben mit Namen, Kontaktdaten oder Fotos von Kindern. Vollständig wirkt es nur, wenn es vor dem ersten Veröffentlichen aus ist: Dateien, die schon öffentlich waren, bleiben unter ihrer alten Adresse erreichbar.',
 			group: 'general',
 			initialValue: true,
 			name: 'indexable',

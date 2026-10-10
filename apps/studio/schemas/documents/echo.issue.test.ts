@@ -17,7 +17,9 @@ function prepare(selection: EchoIssueSelection): PreviewValue {
 	);
 }
 
-function field(name: string): { readOnly?: boolean; group?: string } | undefined {
+function field(
+	name: string,
+): { description?: string; group?: string; readOnly?: boolean } | undefined {
 	return (
 		echoIssue.fields as unknown as { group?: string; name: string; readOnly?: boolean }[]
 	).find((candidate) => candidate.name === name);
@@ -108,6 +110,12 @@ describe('echo issue fields', () => {
 			title: 'In Suchmaschinen auffindbar',
 			type: 'boolean',
 		});
+	});
+
+	// Sanity serves an asset under a content-hash URL that stays live, so switching an issue off
+	// after it was public cannot pull files a search engine already has.
+	it('tells editors to switch an issue off before it is first published', () => {
+		expect(field('indexable')?.description).toContain('vor dem ersten Veröffentlichen');
 	});
 
 	it('lets editors write the intro in the general group', () => {
