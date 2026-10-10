@@ -111,7 +111,8 @@ const siteSettings = defineType({
 
 		// Navigation
 		defineField({
-			description: 'Seiten und/oder Links für die Hauptnavigation hinzufügen',
+			description:
+				'Links und Menüs der Hauptnavigation. Ein Link führt direkt zu einer Seite oder URL, ein Menü öffnet ein Aufklappmenü mit Unterpunkten.',
 			group: 'navigation',
 			name: 'mainNavigation',
 			of: [{ type: 'mainNavigationLink' }, { type: 'mainNavigationMenu' }],

@@ -264,6 +264,8 @@ The `webServer` command deletes `.next/cache/fetch-cache` before it builds. Othe
 
 To refresh every fixture at once, delete `e2e/fixtures/sanity/*.json` and record again. That also drops fixtures no page requests any more, for instance articles that have left the overview.
 
+One fixture is maintained by hand: the main menu (the file whose `body.result` holds `mainNavigation`). `navigation.spec.ts` needs the test menu from WEB-343, "Verein" with "Übersicht", "Kontakt" and the external "Stadt Neuwied", which `development` no longer holds. A recording overwrites it with today's menu, so restore it from git afterwards. If the menu query changes, its key changes too: move the old body to the new file name in the new shape rather than recording it (WEB-371).
+
 ### Writing a spec
 
 - Import `test` and `expect` from `../support/test`.
