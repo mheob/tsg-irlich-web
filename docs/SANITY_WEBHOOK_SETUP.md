@@ -125,7 +125,10 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before. A webhook with a type filter needs both types in it.
 - **Site settings** (`_type: "site-settings"`, the menu and the footer data): all pages (layout revalidation). The root layout tags its two fetches `site-settings`, so the tag revalidation reaches them too.
 
-The route expires the document type's tag with `revalidateTag(type, { expire: 0 })`, not with the `max` profile. `max` only marks the data stale: the first visit after a change is still rendered from the old data while it refetches in the background, and Vercel keeps that render as the page until the next revalidation. On staging a menu change therefore only showed up after the following one.
+Two settings keep the render the webhook triggers from caching old content again. Each one alone made a menu change on staging show up only one change late:
+
+- **The server client reads from the API, not the API CDN** (`useCdn: false` in `apps/web/src/lib/sanity/client.ts`). In a measurement on 11 October 2026 the API answered with the new content after about 1 s, the API CDN only after 11 to 60 s. `parseBody` waits 3 s before the route revalidates, which covers the API but not the CDN, so the render fetched the old content and Next.js cached it for another 12 hours. The pages are cached by Next.js anyway and only fetch when they are revalidated, so the CDN saved next to nothing. `sanityFetch` is not affected: it queries the CDN with `cacheMode: 'noStale'`, which was current after about 3 s.
+- **The route expires the document type's tag** with `revalidateTag(type, { expire: 0 })`, not with the `max` profile. `max` only marks the data stale: the first visit after a change is still rendered from the old data while it refetches in the background, and Vercel keeps that render as the page until the next revalidation. Next.js recommends `{ expire: 0 }` for webhooks, which cannot call `updateTag`.
 
 ## Troubleshooting
 
@@ -141,7 +144,7 @@ The route expires the document type's tag with `revalidateTag(type, { expire: 0 
 
 ### Webhook Successful but No Update
 
-- ✅ Compare the page with the content that was current one change earlier. If it shows that state, a render was served stale data; check that the route still expires tags with `{ expire: 0 }` (see Revalidation Logic)
+- ✅ Compare the page with the content that was current one change earlier. If it shows that state, a render was served stale data; check that the server client still has `useCdn: false` and the route still expires tags with `{ expire: 0 }` (see Revalidation Logic)
 - ✅ Check cache headers: `Cache-Control`, `CDN-Cache-Control`
 - ✅ Search for "revalidated" in Vercel Logs
 - ✅ Clear browser cache (Cmd+Shift+R / Ctrl+Shift+R)

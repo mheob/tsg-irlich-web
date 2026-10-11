@@ -19,5 +19,9 @@ export const client = createClient({
 		logger: console,
 		studioUrl,
 	},
-	useCdn: true,
+	// The pages are cached by Next.js and only refetched when the revalidation webhook fires, so the
+	// API CDN saves next to nothing here. It does keep serving the old content for up to a minute
+	// after a change, longer than the webhook's 3 s wait, and the render the webhook triggers would
+	// cache that old content again. `sanityFetch` (`live.ts`) uses the CDN with `noStale` itself.
+	useCdn: false,
 });
