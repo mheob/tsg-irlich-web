@@ -125,6 +125,8 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before. A webhook with a type filter needs both types in it.
 - **Site settings** (`_type: "site-settings"`, the menu and the footer data): all pages (layout revalidation). The root layout tags its two fetches `site-settings`, so the tag revalidation reaches them too.
 
+The route expires the document type's tag with `revalidateTag(type, { expire: 0 })`, not with the `max` profile. `max` only marks the data stale: the first visit after a change is still rendered from the old data while it refetches in the background, and Vercel keeps that render as the page until the next revalidation. On staging a menu change therefore only showed up after the following one.
+
 ## Troubleshooting
 
 ### Webhook Fails (Status 401)
@@ -139,6 +141,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 
 ### Webhook Successful but No Update
 
+- ✅ Compare the page with the content that was current one change earlier. If it shows that state, a render was served stale data; check that the route still expires tags with `{ expire: 0 }` (see Revalidation Logic)
 - ✅ Check cache headers: `Cache-Control`, `CDN-Cache-Control`
 - ✅ Search for "revalidated" in Vercel Logs
 - ✅ Clear browser cache (Cmd+Shift+R / Ctrl+Shift+R)
@@ -173,8 +176,8 @@ fetch(url, {
 	next: { tags: ['news', 'group'] },
 });
 
-// Revalidation in the API route
-revalidateTag('news');
+// Revalidation in the API route: expire at once, since a webhook cannot use updateTag
+revalidateTag('news', { expire: 0 });
 ```
 
 ## TSG-Echo page rendering
