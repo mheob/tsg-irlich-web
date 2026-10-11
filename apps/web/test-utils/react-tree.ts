@@ -1,4 +1,4 @@
-import { isValidElement } from 'react';
+import { Children, isValidElement } from 'react';
 import type { ElementType, ReactElement, ReactNode } from 'react';
 
 /**
@@ -39,4 +39,17 @@ function findElement<P>(node: ReactNode, type: ElementType<P>): ReactElement<P> 
 	return findElements(node, type)[0];
 }
 
-export { findElement, findElements };
+/**
+ * Lists the component or tag of every top-level element a page renders, in order. Unlike
+ * `findElements`, this shows where one section sits relative to another.
+ *
+ * @param tree - The awaited return value of a page, usually a fragment around its sections.
+ * @returns The type of every element directly inside it; `null` and `false` children are skipped.
+ */
+function sectionTypes(tree: ReactElement<{ children?: ReactNode }>): ElementType[] {
+	return Children.toArray(tree.props.children).flatMap((child) =>
+		isValidElement(child) ? [child.type as ElementType] : [],
+	);
+}
+
+export { findElement, findElements, sectionTypes };

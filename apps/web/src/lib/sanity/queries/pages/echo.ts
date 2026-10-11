@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { finishedEchoIssue, meta } from '@/lib/sanity/queries';
+import { contactPersons, finishedEchoIssue, meta } from '@/lib/sanity/queries';
 
 /** What a card, the issue page and its download button need of an issue. */
 const echoIssueCard = /* groq */ `
@@ -21,6 +21,19 @@ export const echoOverviewPageQuery = defineQuery(`
 		subtitle,
 		intro,
 		${meta}
+	}
+`);
+
+/**
+ * The contact persons of the news overview. The archive and every issue page show the same section
+ * as `/news`, so the editors maintain it in one place.
+ */
+export const echoContactPersonsQuery = defineQuery(`
+	*[_type == 'newsOverview'][0].content.contactPersonsSection {
+		...,
+		contactPersons[]-> {
+			${contactPersons}
+		}
 	}
 `);
 

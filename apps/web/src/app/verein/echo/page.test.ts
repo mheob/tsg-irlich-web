@@ -4,15 +4,19 @@ import type { ComponentProps } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import EchoOverviewPage, { generateMetadata } from '@/app/verein/echo/page';
+import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
+import { Newsletter } from '@/components/section/newsletter';
 import type { client } from '@/lib/sanity/client';
 import {
+	echoContactPersonsQuery,
 	echoIssuesQuery,
 	echoIssuesTotalQuery,
 	echoOverviewPageQuery,
 } from '@/lib/sanity/queries/pages/echo';
+import type { EchoContactPersonsQueryResult } from '@/types/sanity.types';
 
-import { findElement, findElements } from '../../../../test-utils/react-tree';
+import { findElement, findElements, sectionTypes } from '../../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../../test-utils/sanity-client-mock';
 import { IssueGrid } from './_sections/issue-grid';
 import { LatestIssue } from './_sections/latest-issue';
@@ -39,6 +43,13 @@ const PAGE = {
 	title: 'TSG-Echo',
 };
 
+const CONTACT_PERSONS: NonNullable<EchoContactPersonsQueryResult> = {
+	contactPersons: [],
+	intro: 'Fragen zum TSG-Echo?',
+	subtitle: 'Ansprechpartner',
+	title: 'Wir sind für dich da',
+};
+
 /**
  * An issue of the given year, as far as the archive reads it.
  *
@@ -62,6 +73,7 @@ interface ArchiveIssue {
 }
 
 interface Archive {
+	contactPersons?: EchoContactPersonsQueryResult;
 	issues?: ArchiveIssue[];
 	page?: typeof PAGE | null;
 }
@@ -70,13 +82,19 @@ interface Archive {
  * Answers the page, the total and every slice of the newest-first list from one array.
  *
  * @param archive - What the dataset holds.
+ * @param archive.contactPersons - The contact persons section of the news overview.
  * @param archive.issues - The finished issues, newest first.
  * @param archive.page - The archive's own document.
  */
-function mockArchive({ issues = [], page = PAGE }: Archive): void {
+function mockArchive({
+	contactPersons = CONTACT_PERSONS,
+	issues = [],
+	page = PAGE,
+}: Archive): void {
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedFetch.mockImplementation(async (query: string, params?: Record<string, unknown>) => {
 		if (query === echoOverviewPageQuery) return page;
+		if (query === echoContactPersonsQuery) return contactPersons;
 		if (query === echoIssuesTotalQuery) return issues.length;
 		if (query === echoIssuesQuery) return issues.slice(Number(params?.start), Number(params?.end));
 		throw new Error(`unexpected query: ${query}`);
@@ -198,6 +216,24 @@ describe('the tsg-echo archive', () => {
 		const page = await EchoOverviewPage(props());
 
 		expect(findElement(page, IssueGrid)).toBeUndefined();
+	});
+
+	it('shows the contact persons of the news overview right before the newsletter', async () => {
+		mockArchive({});
+
+		const page = await EchoOverviewPage(props());
+
+		expect(findElement(page, ContactPersons)?.props).toMatchObject(CONTACT_PERSONS);
+		expect(sectionTypes(page).slice(-2)).toStrictEqual([ContactPersons, Newsletter]);
+	});
+
+	it('leaves the contact persons out when the news overview has none', async () => {
+		mockArchive({ contactPersons: null });
+
+		const page = await EchoOverviewPage(props());
+
+		expect(findElement(page, ContactPersons)).toBeUndefined();
+		expect(findElement(page, Newsletter)).toBeDefined();
 	});
 
 	describe('metadata', () => {

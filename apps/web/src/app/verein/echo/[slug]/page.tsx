@@ -1,13 +1,22 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { ButtonLink } from '@/components/ui/button';
 import { FlipbookLazy } from '@/components/with-logic/flipbook/flipbook-lazy';
 import { client } from '@/lib/sanity/client';
-import { echoIssueQuery, echoIssueSlugsQuery } from '@/lib/sanity/queries/pages/echo';
-import type { EchoIssueQueryResult, EchoIssueSlugsQueryResult } from '@/types/sanity.types';
+import {
+	echoContactPersonsQuery,
+	echoIssueQuery,
+	echoIssueSlugsQuery,
+} from '@/lib/sanity/queries/pages/echo';
+import type {
+	EchoContactPersonsQueryResult,
+	EchoIssueQueryResult,
+	EchoIssueSlugsQueryResult,
+} from '@/types/sanity.types';
 import { getEchoIssuePath } from '@/utils/links';
 import { getPageMetadata } from '@/utils/metadata';
 
@@ -52,7 +61,10 @@ export default async function EchoIssuePage({
 	params,
 }: Readonly<PageProps<'/verein/echo/[slug]'>>) {
 	const { slug } = await params;
-	const issue = await client.fetch<EchoIssueQueryResult>(echoIssueQuery, { slug });
+	const [issue, contactPersons] = await Promise.all([
+		client.fetch<EchoIssueQueryResult>(echoIssueQuery, { slug }),
+		client.fetch<EchoContactPersonsQueryResult>(echoContactPersonsQuery),
+	]);
 
 	if (!issue?.pages?.length) {
 		notFound();
@@ -86,6 +98,8 @@ export default async function EchoIssuePage({
 					</ButtonLink>
 				)}
 			</section>
+
+			{contactPersons && <ContactPersons {...contactPersons} />}
 
 			<Newsletter />
 		</>

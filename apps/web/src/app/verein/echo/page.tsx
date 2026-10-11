@@ -2,16 +2,19 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { PortableText } from '@/components/ui/portable-text';
 import { client } from '@/lib/sanity/client';
 import {
+	echoContactPersonsQuery,
 	echoIssuesQuery,
 	echoIssuesTotalQuery,
 	echoOverviewPageQuery,
 } from '@/lib/sanity/queries/pages/echo';
 import type {
+	EchoContactPersonsQueryResult,
 	EchoIssuesQueryResult,
 	EchoIssuesTotalQueryResult,
 	EchoOverviewPageQueryResult,
@@ -54,11 +57,12 @@ export default async function EchoOverviewPage({
 	const currentPage = getPageNumber(seite);
 	const start = (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX;
 
-	const [page, total, [latest], issues] = await Promise.all([
+	const [page, total, [latest], issues, contactPersons] = await Promise.all([
 		client.fetch<EchoOverviewPageQueryResult>(echoOverviewPageQuery),
 		client.fetch<EchoIssuesTotalQueryResult>(echoIssuesTotalQuery),
 		client.fetch<EchoIssuesQueryResult>(echoIssuesQuery, { end: START_INDEX, start: 0 }),
 		client.fetch<EchoIssuesQueryResult>(echoIssuesQuery, { end: start + ITEMS_PER_PAGE, start }),
+		client.fetch<EchoContactPersonsQueryResult>(echoContactPersonsQuery),
 	]);
 
 	if (!page) {
@@ -107,6 +111,8 @@ export default async function EchoOverviewPage({
 					</p>
 				)}
 			</section>
+
+			{contactPersons && <ContactPersons {...contactPersons} />}
 
 			<Newsletter />
 		</>
