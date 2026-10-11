@@ -178,7 +178,7 @@ describe('news overview page', () => {
 
 			const pagination = findElement(await NewsOverviewPage(routeProps('2')), LatestNewsPagination);
 
-			expect(pagination?.props).toMatchObject({ currentPage: 2, hasNextPage: false });
+			expect(pagination?.props).toMatchObject({ currentPage: 2, totalArticles: 10 });
 		});
 
 		it('heads the page with its title and subtitle', async () => {
@@ -241,20 +241,18 @@ describe('news overview page', () => {
 			expect(paginationParams()).toMatchObject({ end: 20, start: 15 });
 		});
 
-		it('offers a next page while articles are left', async () => {
+		it('paginates the overview by six articles after the latest three', async () => {
 			mockSanity({ paginated: [{ _id: 'article-1' }], total: 10 });
 
 			const pagination = findElement(await NewsOverviewPage(routeProps()), LatestNewsPagination);
 
-			expect(pagination?.props).toMatchObject({ currentPage: 1, hasNextPage: true });
-		});
-
-		it('offers no next page on the last one', async () => {
-			mockSanity({ paginated: [{ _id: 'article-1' }], total: 9 });
-
-			const pagination = findElement(await NewsOverviewPage(routeProps()), LatestNewsPagination);
-
-			expect(pagination?.props.hasNextPage).toBe(false);
+			expect(pagination?.props).toMatchObject({
+				basePath: '/news',
+				currentPage: 1,
+				perPage: 6,
+				startIndex: 3,
+				totalArticles: 10,
+			});
 		});
 
 		it('leaves the pagination out when the paginated query returned nothing', async () => {

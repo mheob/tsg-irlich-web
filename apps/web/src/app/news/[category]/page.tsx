@@ -138,8 +138,13 @@ export default async function NewsCategoryPage({
 					paginatedArticles && (
 						<LatestNewsPagination
 							articles={paginatedArticles}
+							// The route parameter, not the document's slug: stega would mark that one in
+							// draft mode, and the markers would end up in every page link.
+							basePath={`/news/${categoryParameter}`}
 							currentPage={currentPage}
-							hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
+							perPage={ITEMS_PER_PAGE}
+							startIndex={START_INDEX}
+							totalArticles={totalArticles}
 						/>
 					)
 				)}
