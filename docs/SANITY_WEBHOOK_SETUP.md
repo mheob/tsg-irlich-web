@@ -1,6 +1,6 @@
 # Sanity Webhook Setup for On-Demand Revalidation
 
-This guide describes how to set up Sanity Webhooks so that changes are immediately available in the production Next.js app on Vercel.
+This guide describes how to set up Sanity Webhooks so that changes are immediately available in the Next.js app on Vercel. Production and staging each read their own dataset, so each needs its own revalidation webhook.
 
 ## 1. Generate Revalidation Secret
 
@@ -21,8 +21,10 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 3. Add the following variable:
    - **Name**: `SANITY_REVALIDATE_SECRET`
    - **Value**: The generated secret from step 1
-   - **Environment**: Production, Preview, Development (select all)
+   - **Environment**: Production, Preview, Staging and Development (select all)
 4. Click **Save**
+
+The variable is a single entry for every environment, so both revalidation webhooks sign with the same secret. It is stored as sensitive and cannot be read back. To create a further webhook later, copy the secret from an existing one through the Webhooks API (see step 4), or rotate it in Vercel and in every webhook at once.
 
 ## 3. Set Local Environment Variable (optional)
 
@@ -34,23 +36,28 @@ SANITY_REVALIDATE_SECRET="your-generated-secret"
 
 ## 4. Set Up Webhook in Sanity
 
+Create the webhook once per environment:
+
+| Name                             | URL                                         | Dataset       |
+| -------------------------------- | ------------------------------------------- | ------------- |
+| `Vercel Production Revalidation` | `https://tsg-irlich.de/api/revalidate`      | `production`  |
+| `Vercel Staging Revalidation`    | `https://next.tsg-irlich.de/api/revalidate` | `development` |
+
+Without the staging webhook, every content change on staging that is not read through `sanityFetch` waits out its time-based cache, the menu for 12 hours. Both webhooks share every setting below except name, URL and dataset, and the staging one additionally needs the bypass header.
+
 1. Go to your Sanity project: <https://www.sanity.io/manage>
 2. Select your project
 3. Navigate to **API** → **Webhooks**
 4. Click **Create webhook**
 5. Configure the webhook:\
-   **Name**: `Vercel Production Revalidation`
-
-   **URL**: `https://your-domain.com/api/revalidate`
-
-   **Dataset**: Your dataset (e.g., `production`)
+   **Name**, **URL**, **Dataset**: from the table above
 
    **Trigger on**:
    - ✅ Create
    - ✅ Update
    - ✅ Delete
 
-   **Filter** (optional, to track only specific documents). Every type the route handles has to be in it, `site-settings` above all: the menu and the footer data live there, and without it a menu change waits out the layout's 12-hour cache.
+   **Filter** (optional, to track only specific documents). Every type the route handles has to be in it, `site-settings` above all: the menu and the footer data live there, and without it a menu change waits out the layout's 12-hour cache. The filter lives in Sanity, not in the repository, so adding or renaming a type in the route's `REVALIDATION_MAP` means updating the filter of **both** webhooks too. Until October 2026 the production filter still listed `settings`, `navigation` and `group`, which no document is called, and menu changes never fired it.
 
    ```groq
    _type in ["aboutUs", "contact", "departmentsPage", "echo.issue", "echoOverview", "group.children-gymnastics", "group.courses", "group.dance", "group.other-sports", "group.soccer", "group.taekwondo", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
@@ -71,7 +78,11 @@ SANITY_REVALIDATE_SECRET="your-generated-secret"
 
    **API version**: v2021-06-07 (or newer)
 
+   **Staging only**: add the header `x-vercel-protection-bypass` with the project's "Protection Bypass for Automation" secret, because staging sits behind Vercel's SSO. Without it the request never reaches the route.
+
 6. Click **Save**
+
+The webhooks can also be read and changed through the [Webhooks API](https://www.sanity.io/docs/http-reference/webhooks) (`/hooks/projects/<projectId>`), for example from a script run with `pnpm exec sanity exec <script> --with-user-token` in `apps/studio`. A `GET` returns `secret` and `headers` in clear text, so never print a response unfiltered.
 
 ## 5. Test the Webhook
 
@@ -80,6 +91,8 @@ SANITY_REVALIDATE_SECRET="your-generated-secret"
 3. Check in Sanity under **API** → **Webhooks** → **Deliveries**:
    - Status should be `200 OK`
    - Response should contain `{"revalidated": true, ...}`
+
+The same log is available from the command line: `pnpm exec sanity hook logs "Vercel Staging Revalidation" --detailed` in `apps/studio`. A type that never shows up there although editors change it is missing from the filter.
 
 ## 6. Restart Vercel Deployment (one-time)
 
@@ -117,8 +130,12 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 ### Webhook Fails (Status 401)
 
 - ✅ Secret in Vercel and Sanity are identical
-- ✅ Environment variable is available in Production
+- ✅ Environment variable is available in Production and Staging
 - ✅ Redeployed after environment variable change
+
+### Staging Webhook Fails (Status 401 with an HTML body)
+
+- ✅ The `x-vercel-protection-bypass` header is set and matches the project's current bypass secret. An HTML answer comes from Vercel's SSO wall, not from the route.
 
 ### Webhook Successful but No Update
 
