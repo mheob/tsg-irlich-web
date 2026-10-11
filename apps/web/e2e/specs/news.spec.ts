@@ -55,6 +55,40 @@ test.describe('news', () => {
 		expect(scrollWidth).toBe(clientWidth);
 	});
 
+	// Only the first page: the recorded fixtures hold no query for a later one.
+	test('shows how many articles and pages the overview holds', async ({ page }) => {
+		await page.goto('/news');
+		await waitForPage(page);
+
+		const pagination = page.getByRole('navigation', { name: 'Seiten' });
+
+		await expect(page.getByText(/^Artikel 4–9 von \d+$/u)).toBeVisible();
+		await expect(pagination.getByRole('link', { name: 'Seite 1' })).toHaveAttribute(
+			'aria-current',
+			'page',
+		);
+		await expect(pagination.getByRole('link', { name: 'Nächste Seite' })).toHaveAttribute(
+			'href',
+			'/news?seite=2',
+		);
+		await expect(pagination.getByRole('link', { name: 'Vorherige Seite' })).toHaveCount(0);
+	});
+
+	test('fits the page links of a long overview onto a narrow phone', async ({ page }) => {
+		// The narrowest common phone: both arrows and all seven slots have to share 343 px.
+		await page.setViewportSize({ height: 812, width: 375 });
+		await page.goto('/news');
+		await waitForPage(page);
+
+		const pagination = page.getByRole('navigation', { name: 'Seiten' });
+		// The first page of more than seven: pages 1 to 5, an ellipsis and the last page.
+		await expect(pagination.getByRole('link', { name: /^Seite \d+$/u })).toHaveCount(6);
+
+		const box = await pagination.getByRole('list').boundingBox();
+		expect(box?.x).toBeGreaterThanOrEqual(0);
+		expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(375);
+	});
+
 	test('opens an article from the overview and walks back up the breadcrumb', async ({ page }) => {
 		await page.goto('/news');
 

@@ -65,7 +65,7 @@ Every route builds its metadata with `getPageMetadata` from `src/utils/metadata.
 - Next.js merges metadata shallowly, so a page that sets `openGraph` or `alternates` replaces the layout's object whole. The helper therefore repeats the site-wide open graph fields (`siteName`, `locale`, `type`) and the RSS alternate on every page, next to the canonical URL and `og:url` built from the `path` it is given.
 - The editors' `meta` object wins over the document's title, description and image; the page passes the document's own values as fallbacks.
 - The root layout's title template appends ` | TSG Irlich`. Most meta titles in the studio already name the club, so a title containing "Irlich" goes through as `absolute` instead.
-- The paginated news overviews point their canonical URL at the page they show (`?seite=N`, the first page without the parameter). An article points at its first category, like the sitemap and the feed, since it renders under any category segment.
+- The paginated news overviews point their canonical URL at the page they show (`?seite=N`, the first page without the parameter). Their page links come from `OverviewPagination` (`src/components/ui/pagination/`, also used by the TSG-Echo archive), which links every page by that same path. Its `PaginationLink` keeps shadcn's structure but renders a plain `next/link` instead of shadcn's `Button`, which would announce every page as a button (WEB-280). An article points at its first category, like the sitemap and the feed, since it renders under any category segment.
 - The layout sets only `twitter.card`. Next.js fills in the X card's title, description and image from each page's open graph fields.
 
 ## Structured data

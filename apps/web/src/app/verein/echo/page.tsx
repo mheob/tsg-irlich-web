@@ -89,8 +89,10 @@ export default async function EchoOverviewPage({
 				{issues.length > 0 && (
 					<IssueGrid
 						currentPage={currentPage}
-						hasNextPage={start + ITEMS_PER_PAGE < total}
 						issues={issues}
+						perPage={ITEMS_PER_PAGE}
+						startIndex={START_INDEX}
+						totalIssues={total}
 					/>
 				)}
 

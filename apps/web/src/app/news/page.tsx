@@ -96,8 +96,11 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 					{paginatedArticles && (
 						<LatestNewsPagination
 							articles={paginatedArticles}
+							basePath="/news"
 							currentPage={currentPage}
-							hasNextPage={START_INDEX + currentPage * ITEMS_PER_PAGE < totalArticles}
+							perPage={ITEMS_PER_PAGE}
+							startIndex={START_INDEX}
+							totalArticles={totalArticles}
 						/>
 					)}
 				</section>

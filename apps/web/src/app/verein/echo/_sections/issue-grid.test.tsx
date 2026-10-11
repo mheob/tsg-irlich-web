@@ -25,10 +25,13 @@ function issue(year: number) {
 	} as unknown as EchoIssuesQueryResult[number];
 }
 
+// Twelve issues per page after the newest one, which the wide card above the grid shows.
+const PAGE = { perPage: 12, startIndex: 1 };
+
 describe('the issue grid', () => {
 	it('lists every issue with its year, linked to its page', () => {
 		const { getByRole, getByText } = renderWithUser(
-			<IssueGrid currentPage={1} issues={[issue(2012), issue(2011)]} />,
+			<IssueGrid {...PAGE} currentPage={1} issues={[issue(2012), issue(2011)]} totalIssues={3} />,
 		);
 
 		expect(getByRole('heading', { name: 'Alle Ausgaben' })).toBeDefined();
@@ -39,22 +42,32 @@ describe('the issue grid', () => {
 	});
 
 	it('needs no pagination for a single page', () => {
-		const { queryByRole } = renderWithUser(<IssueGrid currentPage={1} issues={[issue(2012)]} />);
-
-		expect(queryByRole('link', { name: 'Weiter' })).toBeNull();
-	});
-
-	it('leads to the next page when there is one', () => {
-		const { getByRole } = renderWithUser(
-			<IssueGrid currentPage={1} hasNextPage issues={[issue(2012)]} />,
+		const { queryByRole } = renderWithUser(
+			<IssueGrid {...PAGE} currentPage={1} issues={[issue(2012)]} totalIssues={13} />,
 		);
 
-		expect(getByRole('link', { name: 'Weiter' }).getAttribute('href')).toBe('?seite=2');
+		expect(queryByRole('navigation', { name: 'Seiten' })).toBeNull();
+	});
+
+	it('leads to the next page of the archive when there is one', () => {
+		const { getByRole, getByText } = renderWithUser(
+			<IssueGrid {...PAGE} currentPage={1} issues={[issue(2012)]} totalIssues={14} />,
+		);
+
+		expect(getByRole('link', { name: 'Nächste Seite' }).getAttribute('href')).toBe(
+			'/verein/echo?seite=2',
+		);
+		expect(getByText('Ausgaben 2–13 von 14')).not.toBeNull();
 	});
 
 	it('shows the cover of a hidden issue through the archive path', () => {
 		const { getByAltText } = renderWithUser(
-			<IssueGrid currentPage={1} issues={[{ ...issue(1984), indexable: false }]} />,
+			<IssueGrid
+				{...PAGE}
+				currentPage={1}
+				issues={[{ ...issue(1984), indexable: false }]}
+				totalIssues={2}
+			/>,
 		);
 
 		expect(getByAltText('Titelseite von TSG ECHO 1984').getAttribute('src')).toMatch(

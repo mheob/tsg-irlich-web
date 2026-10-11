@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ArrowButtonGroup } from '@/components/ui/arrow-button';
+import { OverviewPagination } from '@/components/ui/pagination';
 import type { EchoIssuesQueryResult } from '@/types/sanity.types';
-import { getEchoIssuePath } from '@/utils/links';
+import { ECHO_OVERVIEW_PATH, getEchoIssuePath } from '@/utils/links';
 
 import { getCoverUrl, getIssueYear } from '../_shared/utils';
 
@@ -45,11 +45,19 @@ function IssueCard({ issue }: Readonly<{ issue: EchoIssue }>) {
  *
  * @param props - The grid's props.
  * @param props.currentPage - The page of the archive, from 1.
- * @param props.hasNextPage - Whether another page follows.
  * @param props.issues - The issues of this page.
+ * @param props.perPage - The issues per page.
+ * @param props.startIndex - The index of the first issue in the grid; the newest one sits above it.
+ * @param props.totalIssues - The number of finished issues, the newest one included.
  * @returns The grid.
  */
-function IssueGrid({ currentPage, hasNextPage = false, issues }: Readonly<IssueGridProps>) {
+function IssueGrid({
+	currentPage,
+	issues,
+	perPage,
+	startIndex,
+	totalIssues,
+}: Readonly<IssueGridProps>) {
 	return (
 		<section className="mt-10 md:mt-28">
 			<h2 className="pb-8 text-xl md:pb-14 md:text-4xl">Alle Ausgaben</h2>
@@ -61,17 +69,15 @@ function IssueGrid({ currentPage, hasNextPage = false, issues }: Readonly<IssueG
 				))}
 			</ul>
 
-			{(hasNextPage || currentPage > 1) && (
-				<div className="mt-8 lg:mt-14">
-					<ArrowButtonGroup
-						hrefNext={`?seite=${currentPage + 1}`}
-						hrefPrev={`?seite=${currentPage - 1}`}
-						isDisabledNext={!hasNextPage}
-						isDisabledPrevious={currentPage === 1}
-						type="link"
-					/>
-				</div>
-			)}
+			<OverviewPagination
+				basePath={ECHO_OVERVIEW_PATH}
+				className="mt-8 lg:mt-14"
+				currentPage={currentPage}
+				itemLabel="Ausgaben"
+				perPage={perPage}
+				startIndex={startIndex}
+				totalItems={totalIssues}
+			/>
 		</section>
 	);
 }
@@ -80,8 +86,10 @@ type EchoIssue = EchoIssuesQueryResult[number];
 
 interface IssueGridProps {
 	currentPage: number;
-	hasNextPage?: boolean;
 	issues: EchoIssuesQueryResult;
+	perPage: number;
+	startIndex: number;
+	totalIssues: number;
 }
 
 export { IssueGrid };

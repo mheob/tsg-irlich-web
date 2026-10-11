@@ -1,33 +1,37 @@
-import { ArrowButtonGroup } from '@/components/ui/arrow-button';
 import { NewsArticleGrid } from '@/components/ui/news-article-grid';
+import { OverviewPagination } from '@/components/ui/pagination';
 import type { NewsArticlesQueryResult } from '@/types/sanity.types';
 
 interface LatestNewsPaginationProps {
 	articles: NewsArticlesQueryResult;
+	basePath: string;
 	currentPage: number;
-	hasNextPage?: boolean;
+	perPage: number;
+	startIndex: number;
+	totalArticles: number;
 }
 
 export function LatestNewsPagination({
 	articles,
+	basePath,
 	currentPage,
-	hasNextPage = false,
+	perPage,
+	startIndex,
+	totalArticles,
 }: Readonly<LatestNewsPaginationProps>) {
 	return (
 		<>
 			<NewsArticleGrid articles={articles} />
 
-			{(hasNextPage || currentPage > 1) && (
-				<div className="mt-8 lg:mt-14">
-					<ArrowButtonGroup
-						hrefNext={`?seite=${currentPage + 1}`}
-						hrefPrev={`?seite=${currentPage - 1}`}
-						isDisabledNext={!hasNextPage}
-						isDisabledPrevious={currentPage === 1}
-						type="link"
-					/>
-				</div>
-			)}
+			<OverviewPagination
+				basePath={basePath}
+				className="mt-8 lg:mt-14"
+				currentPage={currentPage}
+				itemLabel="Artikel"
+				perPage={perPage}
+				startIndex={startIndex}
+				totalItems={totalArticles}
+			/>
 		</>
 	);
 }
