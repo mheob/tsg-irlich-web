@@ -1,3 +1,4 @@
+import type { StaticImageData } from 'next/image';
 import { notFound } from 'next/navigation';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
@@ -153,6 +154,17 @@ describe('department page', () => {
 			const hero = findElement(await GroupsPage(routeProps()), Hero);
 
 			expect(hero?.props).toMatchObject({ subTitle: 'Alle Gruppen', title: 'Angebot Fußball' });
+		});
+
+		it('shows the full-width hero image of the department, not its card image', async () => {
+			mockSanity();
+
+			const hero = findElement(await GroupsPage(routeProps('taekwondo')), Hero);
+			// The asset stub of the Vitest config resolves an image import to its path.
+			const src = (hero?.props.image?.src as StaticImageData | undefined)?.src;
+
+			expect(hero?.props.image?.alt).toBe('Taekwondo');
+			expect(src).toContain('/groups/hero/taekwondo.webp');
 		});
 
 		it('asks for the groups of the current department', async () => {

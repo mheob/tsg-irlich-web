@@ -1,3 +1,4 @@
+import type { StaticImageData } from 'next/image';
 import { describe, expect, it } from 'vite-plus/test';
 
 import type * as groupsModule from '@/utils/groups';
@@ -29,26 +30,12 @@ describe('looking up the current department', () => {
 });
 
 describe('resolving a group image', () => {
-	it('returns the matching image object using the default path', async () => {
+	it('returns the matching image object for a department slug', async () => {
 		const { getGroupImage, groupSections } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
 
 		const soccerSection = groupSections[0];
 
 		expect(getGroupImage('/angebot/fussball')).toBe(soccerSection.image);
-	});
-
-	it('returns the matching image object using the path production actually passes', async () => {
-		const { getGroupImage, groupSections } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
-
-		const soccerSection = groupSections[0];
-
-		expect(getGroupImage('fussball', '/angebot/')).toBe(soccerSection.image);
-	});
-
-	it('does not match when the path is missing its trailing separator', async () => {
-		const { fallbackImage, getGroupImage } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
-
-		expect(getGroupImage('fussball', '/angebot')).toBe(fallbackImage);
 	});
 
 	it('falls back to the fallback image for an unknown group', async () => {
@@ -102,6 +89,18 @@ describe('the offer group sections themselves', () => {
 
 		for (const section of groupSections) {
 			expect(section.image.alt.length).toBeGreaterThan(0);
+		}
+	});
+
+	it('gives every entry a hero image of its own with a non-empty alt text', async () => {
+		const { groupSections } = await loadWithEnv<GroupsModule>('@/utils/groups', {});
+
+		for (const section of groupSections) {
+			// The asset stub of the Vitest config resolves an image import to its path.
+			const { src } = section.heroImage.src as StaticImageData;
+
+			expect(section.heroImage.alt.length).toBeGreaterThan(0);
+			expect(src).toContain(`/groups/hero/${section.slug.replace('/angebot/', '')}.webp`);
 		}
 	});
 

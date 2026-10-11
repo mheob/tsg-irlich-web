@@ -242,6 +242,17 @@ describe('single group page', () => {
 			expect(jsonLd?.props.data).toMatchObject({ '@type': 'SportsOrganization' });
 		});
 
+		it('crops the featured image to the landscape format of the hero', async () => {
+			mockSanity();
+
+			const hero = findElement(await SingleGroupsPage(routeProps()), Hero);
+			// The page hands the hero a Sanity URL, never a static import.
+			const { searchParams } = new URL(hero?.props.image?.src as string);
+
+			expect(searchParams.get('w')).toBe('1920');
+			expect(searchParams.get('h')).toBe('600');
+		});
+
 		it('leaves the hero without an image when the featured image has no alt text', async () => {
 			mockSanity({ group: { ...GROUP, featuredImage: { asset: { _ref: ASSET_REF } } } });
 
