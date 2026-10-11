@@ -82,12 +82,15 @@ describe('sanity revalidation webhook', () => {
 		});
 	});
 
-	it('tags every revalidation with the document type', async () => {
+	// WEB-373: with the `max` profile the first render after the webhook was still served the old
+	// data (stale-while-revalidate), and Vercel kept that render as the page. A menu change on
+	// staging only showed up after the next change. The webhook has to expire the tag at once.
+	it('expires the document type tag immediately', async () => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: 'testimonial' }));
 
 		await POST(REQUEST);
 
-		expect(mockedRevalidateTag).toHaveBeenCalledWith('testimonial', 'max');
+		expect(mockedRevalidateTag.mock.calls).toStrictEqual([['testimonial', { expire: 0 }]]);
 	});
 
 	it.each([
@@ -131,7 +134,7 @@ describe('sanity revalidation webhook', () => {
 		await POST(REQUEST);
 
 		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/', 'layout']]);
-		expect(mockedRevalidateTag).toHaveBeenCalledWith('site-settings', 'max');
+		expect(mockedRevalidateTag).toHaveBeenCalledWith('site-settings', { expire: 0 });
 	});
 
 	it('revalidates every page a person appears on', async () => {
@@ -242,7 +245,7 @@ describe('sanity revalidation webhook', () => {
 		await POST(REQUEST);
 
 		expect(revalidatedPaths()).toStrictEqual(['/']);
-		expect(mockedRevalidateTag).toHaveBeenCalledWith('somethingNew', 'max');
+		expect(mockedRevalidateTag).toHaveBeenCalledWith('somethingNew', { expire: 0 });
 	});
 
 	it('answers a parse failure with its message', async () => {

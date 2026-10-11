@@ -114,7 +114,10 @@ function revalidateByType(body: WebhookBody): void {
 			revalidatePath('/');
 		});
 	handler(slug);
-	revalidateTag(body._type, 'max');
+	// Expire, don't mark stale: with the `max` profile the first render after the webhook is served
+	// the old data while it refetches, and Vercel keeps that render as the page until the next
+	// revalidation. `updateTag` would do the same, but only works in Server Actions.
+	revalidateTag(body._type, { expire: 0 });
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse | Response> {

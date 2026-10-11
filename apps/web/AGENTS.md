@@ -48,7 +48,7 @@ pnpm run test:lighthouse # Lighthouse CI against LHCI_BASE_URL (a deployed previ
 There are two fetchers, and the choice matters:
 
 - **`sanityFetch` from `@/lib/sanity/live`** — used by the news routes. It serves published content normally and switches to drafts with stega encoding while draft mode is on, and `<SanityLive />` in the root layout revalidates it on content changes. Use it for every route that should be previewable in the studio's presentation tool.
-- **`client.fetch` from `@/lib/sanity/client`** — used by the remaining routes, the sitemap and the RSS feed. It takes an explicit result type and its own `next.revalidate` options.
+- **`client.fetch` from `@/lib/sanity/client`** — used by the remaining routes, the sitemap and the RSS feed. It takes an explicit result type and its own `next.revalidate` options. Its client reads from the API with `useCdn: false` on purpose (WEB-373): the API CDN kept serving old content for up to a minute after a change, so the render the revalidation webhook triggers cached that old content again. Do not switch it back to the CDN; `docs/SANITY_WEBHOOK_SETUP.md` has the measurements.
 
 Rules for `sanityFetch`:
 
