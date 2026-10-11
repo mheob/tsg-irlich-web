@@ -56,7 +56,7 @@ Rules for `sanityFetch`:
 - The result type is inferred from the query, so do not pass a generic — queries have to be written with `defineQuery` and the types regenerated with `pnpm run typegen:sanity`.
 - When stega may be active, strings are branded and can no longer be compared to literals or assigned to literal unions. Call `stegaClean()` on exactly the value that needs it (see the grid columns in `src/app/news/[category]/[slug]/page.tsx`) instead of cleaning whole page data, otherwise the click-to-edit overlays disappear.
 
-Adding a previewable route also means adding a `mainDocuments` route and a `locations` entry in `apps/studio/plugins/presentation.ts`, and a `revalidatePath` entry in `src/app/api/revalidate/route.ts` for the affected document type.
+Adding a previewable route also means adding a `mainDocuments` route and a `locations` entry in `apps/studio/plugins/presentation.ts`, and a `revalidatePath` entry in `src/app/api/revalidate/route.ts` for the affected document type. A new or renamed type in that route also has to go into the type filter of both revalidation webhooks, production and staging, which live in Sanity rather than in the repository (`docs/SANITY_WEBHOOK_SETUP.md`). Otherwise the webhook never fires for it.
 
 ## Page metadata
 
