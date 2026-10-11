@@ -19,7 +19,7 @@ import type {
 	OfferGroupsPageGroupsQueryResult,
 	OfferGroupsPageQueryResult,
 } from '@/types/sanity.types.generated';
-import { getCurrentDepartment, getGroupImage, getOGImage } from '@/utils/groups';
+import { getCurrentDepartment, getOGImage } from '@/utils/groups';
 import { getPageMetadata } from '@/utils/metadata';
 
 import { Groups } from './_sections/groups';
@@ -72,7 +72,7 @@ export default async function GroupsPage({ params }: PageProps<'/angebot/[group]
 	return (
 		<>
 			<Hero
-				image={getGroupImage(group, '/angebot/')}
+				image={currentDepartment.heroImage}
 				subTitle={page.subtitle}
 				title={`${page.title} ${currentDepartment?.title ?? ''}`.trim()}
 			/>

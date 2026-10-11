@@ -4,6 +4,12 @@ import type { ImageProps } from 'next/image';
 import type { DosbIconName } from '@tsgi-web/shared/icons/dosb.types';
 
 import soccerImage from '@/images/angebot/groups/fussball.webp';
+import soccerHeroImage from '@/images/angebot/groups/hero/fussball.webp';
+import gymnasticHeroImage from '@/images/angebot/groups/hero/kinderturnen.webp';
+import coursesHeroImage from '@/images/angebot/groups/hero/kurse.webp';
+import taekwondoHeroImage from '@/images/angebot/groups/hero/taekwondo.webp';
+import danceHeroImage from '@/images/angebot/groups/hero/tanzen.webp';
+import otherSportsHeroImage from '@/images/angebot/groups/hero/weitere-sportarten.webp';
 import gymnasticImage from '@/images/angebot/groups/kinderturnen.webp';
 import coursesImage from '@/images/angebot/groups/kurse.webp';
 import taekwondoImage from '@/images/angebot/groups/taekwondo.webp';
@@ -20,6 +26,8 @@ interface OfferGroupImage {
 
 interface GroupSection {
 	_type: string;
+	/** The full-width image of the department page; the card image is far too small for it. */
+	heroImage: OfferGroupImage;
 	icon: DosbIconName;
 	image: OfferGroupImage;
 	slug: string;
@@ -34,6 +42,10 @@ const fallbackImage: OfferGroupImage = {
 const groupSections: GroupSection[] = [
 	{
 		_type: 'group.soccer',
+		heroImage: {
+			alt: 'Fußball',
+			src: soccerHeroImage,
+		},
 		icon: 'Fussball',
 		image: {
 			alt: 'Fußball',
@@ -44,6 +56,10 @@ const groupSections: GroupSection[] = [
 	},
 	{
 		_type: 'group.children-gymnastics',
+		heroImage: {
+			alt: 'Kinderturnen',
+			src: gymnasticHeroImage,
+		},
 		icon: 'Turnen',
 		image: {
 			alt: 'Kinderturnen',
@@ -54,6 +70,10 @@ const groupSections: GroupSection[] = [
 	},
 	{
 		_type: 'group.courses',
+		heroImage: {
+			alt: 'Kurse',
+			src: coursesHeroImage,
+		},
 		icon: 'StepAerobic',
 		image: {
 			alt: 'Kurse',
@@ -64,6 +84,10 @@ const groupSections: GroupSection[] = [
 	},
 	{
 		_type: 'group.taekwondo',
+		heroImage: {
+			alt: 'Taekwondo',
+			src: taekwondoHeroImage,
+		},
 		icon: 'Taekwondo',
 		image: {
 			alt: 'Taekwondo',
@@ -74,6 +98,10 @@ const groupSections: GroupSection[] = [
 	},
 	{
 		_type: 'group.dance',
+		heroImage: {
+			alt: 'Tanzen',
+			src: danceHeroImage,
+		},
 		icon: 'Tanzen',
 		image: {
 			alt: 'Tanzen',
@@ -84,6 +112,10 @@ const groupSections: GroupSection[] = [
 	},
 	{
 		_type: 'group.other-sports',
+		heroImage: {
+			alt: 'Weitere Sportarten',
+			src: otherSportsHeroImage,
+		},
 		icon: 'Fitness',
 		image: {
 			alt: 'Weitere Sportarten',
@@ -106,8 +138,8 @@ function getOGImage(group: string): OpenGraph['images'] {
 	};
 }
 
-function getGroupImage(group: string, path = ''): GroupSection['image'] {
-	const groupSection = groupSections.find((section) => section.slug === `${path}${group}`);
+function getGroupImage(slug: string): GroupSection['image'] {
+	const groupSection = groupSections.find((section) => section.slug === slug);
 	return groupSection?.image ?? fallbackImage;
 }
 

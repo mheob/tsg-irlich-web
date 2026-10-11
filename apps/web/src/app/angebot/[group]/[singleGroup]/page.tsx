@@ -29,7 +29,7 @@ import { Main } from './_sections/main';
 import { News } from './_sections/news';
 import { Training } from './_sections/training';
 
-const IMAGE_SIZE = { height: 1920, width: 600 };
+const IMAGE_SIZE = { height: 600, width: 1920 };
 
 export async function generateMetadata({
 	params,

@@ -13,6 +13,7 @@ vi.hoisted(() => {
 
 const DEPARTMENT = {
 	_type: 'group.soccer',
+	heroImage: { alt: 'Fußball', src: '/hero/fussball.webp' },
 	icon: 'Fussball',
 	image: { alt: 'Fußball', src: '/fussball.webp' },
 	slug: '/angebot/fussball',
