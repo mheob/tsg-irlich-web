@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../../test-utils/render';
 import { ArrowButton, ArrowElement, ArrowLink } from './arrow-button';
-import { ArrowButtonGroup } from './arrow-button-group';
 
 // Which arrow a direction picks is only visible through the icon `lucide-react` renders, and that
 // difference lives in a class name — so the cases below pin that each direction renders exactly one
@@ -72,76 +71,5 @@ describe('arrow element', () => {
 		expect(getByLabelText('Weiter').tagName).toBe('DIV');
 		expect(queryByRole('button')).toBeNull();
 		expect(queryByRole('link')).toBeNull();
-	});
-});
-
-describe('arrow button group', () => {
-	it('offers a button for each direction', () => {
-		const { getByRole } = renderWithUser(<ArrowButtonGroup />);
-
-		expect(getByRole('button', { name: 'Zurück' })).not.toBeNull();
-		expect(getByRole('button', { name: 'Weiter' })).not.toBeNull();
-	});
-
-	it('disables the buttons it was told to disable', () => {
-		const { getByRole } = renderWithUser(<ArrowButtonGroup isDisabledPrevious />);
-
-		expect((getByRole('button', { name: 'Zurück' }) as HTMLButtonElement).disabled).toBe(true);
-		expect((getByRole('button', { name: 'Weiter' }) as HTMLButtonElement).disabled).toBe(false);
-	});
-
-	it('links both directions when it was given targets', () => {
-		const { getByRole } = renderWithUser(
-			<ArrowButtonGroup hrefNext="/news?seite=3" hrefPrev="/news?seite=1" type="link" />,
-		);
-
-		expect(getByRole('link', { name: 'Zurück' }).getAttribute('href')).toBe('/news?seite=1');
-		expect(getByRole('link', { name: 'Weiter' }).getAttribute('href')).toBe('/news?seite=3');
-	});
-
-	// A disabled direction stays a link for assistive technology — announced as disabled — but it
-	// carries no target and is not focusable, so it can never be followed.
-	it('drops the target of a disabled direction instead of pointing nowhere', () => {
-		const { getByRole } = renderWithUser(
-			<ArrowButtonGroup
-				hrefNext="/news?seite=3"
-				hrefPrev="/news?seite=1"
-				type="link"
-				isDisabledPrevious
-			/>,
-		);
-
-		const previous = getByRole('link', { name: 'Zurück' });
-
-		expect(previous.getAttribute('aria-disabled')).toBe('true');
-		expect(previous.getAttribute('href')).toBeNull();
-		expect(getByRole('link', { name: 'Weiter' }).getAttribute('href')).toBe('/news?seite=3');
-	});
-
-	it('drops the target of the next direction when that one is disabled', () => {
-		const { getByRole } = renderWithUser(
-			<ArrowButtonGroup
-				hrefNext="/news?seite=3"
-				hrefPrev="/news?seite=1"
-				type="link"
-				isDisabledNext
-			/>,
-		);
-
-		const next = getByRole('link', { name: 'Weiter' });
-
-		expect(next.getAttribute('aria-disabled')).toBe('true');
-		expect(next.getAttribute('href')).toBeNull();
-		expect(getByRole('link', { name: 'Zurück' }).getAttribute('href')).toBe('/news?seite=1');
-	});
-
-	it('renders as the given element instead of a div when render is set', () => {
-		const { getByRole } = renderWithUser(
-			<ArrowButtonGroup render={<nav aria-label="Blättern" />} />,
-		);
-
-		const group = getByRole('navigation', { name: 'Blättern' });
-		expect(group.tagName).toBe('NAV');
-		expect(group.querySelectorAll('button')).toHaveLength(2);
 	});
 });

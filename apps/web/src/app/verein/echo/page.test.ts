@@ -136,7 +136,12 @@ describe('the tsg-echo archive', () => {
 		expect(grid?.props.issues.map((entry) => entry.title)).toStrictEqual(
 			YEARS.slice(1, 13).map((year) => `TSG ECHO ${year}`),
 		);
-		expect(grid?.props.hasNextPage).toBe(true);
+		expect(grid?.props).toMatchObject({
+			currentPage: 1,
+			perPage: 12,
+			startIndex: 1,
+			totalIssues: 20,
+		});
 	});
 
 	it('continues with the remaining issues on the second page', async () => {
@@ -145,7 +150,7 @@ describe('the tsg-echo archive', () => {
 		const grid = findElement(await EchoOverviewPage(props('2')), IssueGrid);
 
 		expect(grid?.props.issues).toHaveLength(7);
-		expect(grid?.props).toMatchObject({ currentPage: 2, hasNextPage: false });
+		expect(grid?.props).toMatchObject({ currentPage: 2, totalIssues: 20 });
 	});
 
 	// Review focus 3.
