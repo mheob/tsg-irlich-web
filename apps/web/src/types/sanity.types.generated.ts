@@ -2916,6 +2916,26 @@ export type EchoOverviewPageQueryResult = {
 } | null;
 
 // Source: src/lib/sanity/queries/pages/echo.ts
+// Variable: echoContactPersonsQuery
+// Query: *[_type == 'newsOverview'][0].content.contactPersonsSection {		...,		contactPersons[]-> {			  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,		}	}
+export type EchoContactPersonsQueryResult = {
+  title: string;
+  subtitle: string;
+  intro?: string;
+  contactPersons: Array<{
+    _id: string;
+    firstName: string;
+    lastName: string;
+    phone: string | null;
+    image: ExtendedImage;
+    contactAs: "both" | "email" | "phone" | "whatsapp";
+    email: string | null;
+    role: string | null;
+    taskDescription: string | null;
+  }>;
+} | null;
+
+// Source: src/lib/sanity/queries/pages/echo.ts
 // Variable: echoIssuesTotalQuery
 // Query: count(*[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0])
 export type EchoIssuesTotalQueryResult = number;
@@ -4934,6 +4954,7 @@ declare global {
     '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': AccessibilityPageQueryResult;
     '\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
     "\n\t*[_type == 'echoOverview'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t\tintro,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n": EchoOverviewPageQueryResult;
+    '\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection {\n\t\t...,\n\t\tcontactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t}\n\t}\n': EchoContactPersonsQueryResult;
     "count(*[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0])": EchoIssuesTotalQueryResult;
     '\n\t*[_type == \'echo.issue\' && render.status == \'done\' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0] | order(releaseDate desc) [$start...$end] {\n\t\t\n\t_id,\n\ttitle,\n\t"slug": slug.current,\n\treleaseDate,\n\tintro,\n\t"indexable": coalesce(indexable, true),\n\t"cover": pages[0] { _type, asset },\n\t"pdf": pdf.asset-> { originalFilename, size, url }\n\n\t}\n': EchoIssuesQueryResult;
     '\n\t*[_type == \'echo.issue\' && render.status == \'done\' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0 && slug.current == $slug][0] {\n\t\t\n\t_id,\n\ttitle,\n\t"slug": slug.current,\n\treleaseDate,\n\tintro,\n\t"indexable": coalesce(indexable, true),\n\t"cover": pages[0] { _type, asset },\n\t"pdf": pdf.asset-> { originalFilename, size, url }\n,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\t"pages": pages[] { _key, _type, asset },\n\t\t"pageSize": pages[0].asset->metadata.dimensions { height, width }\n\t}\n': EchoIssueQueryResult;

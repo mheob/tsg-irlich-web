@@ -101,7 +101,6 @@ describe('sanity revalidation webhook', () => {
 		['home', ['/']],
 		['imprint', ['/impressum']],
 		['membership', ['/mitgliedschaft']],
-		['newsOverview', ['/news']],
 		['privacy', ['/datenschutz']],
 		['testimonial', ['/']],
 	])('revalidates %s at %j', async (type, expected) => {
@@ -120,6 +119,18 @@ describe('sanity revalidation webhook', () => {
 		await POST(REQUEST);
 
 		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
+			['/verein/echo'],
+			['/verein/echo/[slug]', 'page'],
+		]);
+	});
+
+	it('revalidates the tsg-echo pages along with the news overview, whose contact persons they show', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'newsOverview' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
+			['/news'],
 			['/verein/echo'],
 			['/verein/echo/[slug]', 'page'],
 		]);
@@ -151,6 +162,8 @@ describe('sanity revalidation webhook', () => {
 			'/verein',
 		]);
 		expect(mockedRevalidatePath).toHaveBeenCalledWith('/angebot', 'layout');
+		// The about page and the tsg-echo pages below it.
+		expect(mockedRevalidatePath).toHaveBeenCalledWith('/verein', 'layout');
 	});
 
 	it('revalidates the group department, its overview and the group itself', async () => {

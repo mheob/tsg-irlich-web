@@ -39,6 +39,15 @@ const GROUP_REVALIDATION_MAP: Record<string, RevalidateHandler> = Object.fromEnt
 	]),
 );
 
+/**
+ * The archive and every issue page. The slug of an earlier version of an issue is not in the
+ * payload, so the whole issue route is revalidated.
+ */
+function revalidateEchoRoutes(): void {
+	revalidatePath(ECHO_OVERVIEW_PATH);
+	revalidatePath(`${ECHO_OVERVIEW_PATH}/[slug]`, 'page');
+}
+
 const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	...GROUP_REVALIDATION_MAP,
 	aboutUs: () => {
@@ -50,12 +59,8 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	departmentsPage: () => {
 		revalidatePath('/angebot');
 	},
-	// An issue appears in the archive and has its own page. The slug of an earlier version is not
-	// in the payload, so the whole issue route is revalidated.
-	'echo.issue': () => {
-		revalidatePath(ECHO_OVERVIEW_PATH);
-		revalidatePath(`${ECHO_OVERVIEW_PATH}/[slug]`, 'page');
-	},
+	// An issue appears in the archive and has its own page.
+	'echo.issue': revalidateEchoRoutes,
 	echoOverview: () => {
 		revalidatePath(ECHO_OVERVIEW_PATH);
 	},
@@ -74,8 +79,10 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	// category with its article count.
 	'news.article': revalidateNewsRoutes,
 	'news.category': revalidateNewsRoutes,
+	// The TSG-Echo pages show the contact persons of the news overview.
 	newsOverview: () => {
 		revalidatePath('/news');
+		revalidateEchoRoutes();
 	},
 	person: () => {
 		revalidatePath('/');
@@ -83,7 +90,8 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 		revalidatePath('/kontakt');
 		revalidatePath('/news');
 		revalidatePath('/mitgliedschaft');
-		revalidatePath('/verein');
+		// The about page and the TSG-Echo pages below it.
+		revalidatePath('/verein', 'layout');
 	},
 	privacy: () => {
 		revalidatePath('/datenschutz');

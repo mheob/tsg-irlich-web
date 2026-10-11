@@ -120,7 +120,8 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 
 - **News** (`_type: "news"`): `/news` and `/news/[slug]`
 - **Groups** (`_type: "group"`): `/angebot` and `/angebot/[slug]`
-- **Person** (`_type: "person"`): `/verein`
+- **Person** (`_type: "person"`): every page that shows contact persons, among them `/verein` with the TSG-Echo pages below it (layout revalidation)
+- **News overview** (`_type: "newsOverview"`): `/news` and the TSG-Echo pages, which show its contact persons
 - **Testimonial** (`_type: "testimonial"`): Homepage `/`
 - **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before. A webhook with a type filter needs both types in it.
 - **Site settings** (`_type: "site-settings"`, the menu and the footer data): all pages (layout revalidation). The root layout tags its two fetches `site-settings`, so the tag revalidation reaches them too.

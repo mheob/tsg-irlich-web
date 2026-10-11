@@ -5,13 +5,16 @@ import EchoIssuePage, {
 	generateMetadata,
 	generateStaticParams,
 } from '@/app/verein/echo/[slug]/page';
+import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
+import { Newsletter } from '@/components/section/newsletter';
 import { ButtonLink } from '@/components/ui/button';
 import { FlipbookLazy } from '@/components/with-logic/flipbook/flipbook-lazy';
 import type { client } from '@/lib/sanity/client';
-import type { EchoIssueQueryResult } from '@/types/sanity.types';
+import { echoContactPersonsQuery, echoIssueQuery } from '@/lib/sanity/queries/pages/echo';
+import type { EchoContactPersonsQueryResult, EchoIssueQueryResult } from '@/types/sanity.types';
 
-import { findElement, findElements } from '../../../../../test-utils/react-tree';
+import { findElement, findElements, sectionTypes } from '../../../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../../../test-utils/sanity-client-mock';
 import type { EchoPageImage } from '../_shared/utils';
 
@@ -29,6 +32,13 @@ vi.mock(import('next/navigation'), () => ({
 }));
 
 const mockedFetch = clientFetchMock();
+
+const CONTACT_PERSONS: NonNullable<EchoContactPersonsQueryResult> = {
+	contactPersons: [],
+	intro: 'Fragen zum TSG-Echo?',
+	subtitle: 'Ansprechpartner',
+	title: 'Wir sind für dich da',
+};
 
 /**
  * A rendered page image.
@@ -81,6 +91,24 @@ function props(slug = 'tsg-echo-2025'): PageProps<'/verein/echo/[slug]'> {
 	return { params: Promise.resolve({ slug }), searchParams: Promise.resolve({}) };
 }
 
+/**
+ * Answers the issue and the contact persons of the news overview.
+ *
+ * @param issue - What the issue query finds.
+ * @param contactPersons - The contact persons section of the news overview.
+ */
+function mockIssue(
+	issue: EchoIssue | null,
+	contactPersons: EchoContactPersonsQueryResult = CONTACT_PERSONS,
+): void {
+	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
+	mockedFetch.mockImplementation(async (query: string) => {
+		if (query === echoIssueQuery) return issue;
+		if (query === echoContactPersonsQuery) return contactPersons;
+		throw new Error(`unexpected query: ${query}`);
+	});
+}
+
 type EchoIssue = NonNullable<EchoIssueQueryResult>;
 
 describe('a tsg-echo issue page', () => {
@@ -99,13 +127,13 @@ describe('a tsg-echo issue page', () => {
 
 	// Review focus 2: unfinished, unpublished or renamed issues are not found by the query.
 	it('answers an unknown or unfinished issue with 404', async () => {
-		mockedFetch.mockResolvedValue(null);
+		mockIssue(null);
 
 		await expect(EchoIssuePage(props())).rejects.toThrow('NEXT_NOT_FOUND');
 	});
 
 	it('heads the page with the title and the year', async () => {
-		mockedFetch.mockResolvedValue(buildIssue());
+		mockIssue(buildIssue());
 
 		const hero = findElement(await EchoIssuePage(props()), Hero);
 
@@ -113,7 +141,7 @@ describe('a tsg-echo issue page', () => {
 	});
 
 	it('hands the flipbook every page, its cover and its name', async () => {
-		mockedFetch.mockResolvedValue(buildIssue());
+		mockIssue(buildIssue());
 
 		const book = findElement(await EchoIssuePage(props()), FlipbookLazy);
 
@@ -131,7 +159,7 @@ describe('a tsg-echo issue page', () => {
 	});
 
 	it('offers the PDF with its size', async () => {
-		mockedFetch.mockResolvedValue(buildIssue());
+		mockIssue(buildIssue());
 
 		const button = findElement(await EchoIssuePage(props()), ButtonLink);
 
@@ -143,7 +171,7 @@ describe('a tsg-echo issue page', () => {
 
 	// Review focus 5.
 	it('still renders without page size, PDF and intro', async () => {
-		mockedFetch.mockResolvedValue(buildIssue({ intro: null, pageSize: null, pdf: null }));
+		mockIssue(buildIssue({ intro: null, pageSize: null, pdf: null }));
 
 		const result = await EchoIssuePage(props());
 
@@ -155,9 +183,27 @@ describe('a tsg-echo issue page', () => {
 		expect(findElements<ComponentProps<'p'>>(result, 'p')).toHaveLength(0);
 	});
 
+	it('shows the contact persons of the news overview right before the newsletter', async () => {
+		mockIssue(buildIssue());
+
+		const result = await EchoIssuePage(props());
+
+		expect(findElement(result, ContactPersons)?.props).toMatchObject(CONTACT_PERSONS);
+		expect(sectionTypes(result).slice(-2)).toStrictEqual([ContactPersons, Newsletter]);
+	});
+
+	it('leaves the contact persons out when the news overview has none', async () => {
+		mockIssue(buildIssue(), null);
+
+		const result = await EchoIssuePage(props());
+
+		expect(findElement(result, ContactPersons)).toBeUndefined();
+		expect(findElement(result, Newsletter)).toBeDefined();
+	});
+
 	describe('an issue search engines must not find', () => {
 		it('serves its pages and its pdf through the archive path', async () => {
-			mockedFetch.mockResolvedValue(
+			mockIssue(
 				buildIssue({
 					indexable: false,
 					pdf: {
@@ -175,7 +221,7 @@ describe('a tsg-echo issue page', () => {
 		});
 
 		it('keeps search engines and the cover image out of its metadata', async () => {
-			mockedFetch.mockResolvedValue(buildIssue({ indexable: false }));
+			mockIssue(buildIssue({ indexable: false }));
 
 			const metadata = await generateMetadata(props());
 
@@ -186,7 +232,7 @@ describe('a tsg-echo issue page', () => {
 
 	// Review focus 1.
 	it('leaves a findable issue to search engines', async () => {
-		mockedFetch.mockResolvedValue(buildIssue({ indexable: true }));
+		mockIssue(buildIssue({ indexable: true }));
 
 		const metadata = await generateMetadata(props());
 
@@ -195,13 +241,13 @@ describe('a tsg-echo issue page', () => {
 
 	describe('metadata', () => {
 		it('is empty for an unknown issue', async () => {
-			mockedFetch.mockResolvedValue(null);
+			mockIssue(null);
 
 			await expect(generateMetadata(props())).resolves.toStrictEqual({});
 		});
 
 		it('describes the issue by its intro, shows its cover and points at its page', async () => {
-			mockedFetch.mockResolvedValue(buildIssue());
+			mockIssue(buildIssue());
 
 			const metadata = await generateMetadata(props());
 
