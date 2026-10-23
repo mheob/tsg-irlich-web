@@ -367,7 +367,7 @@ catalogs:
       version: 5.0.3
     zod:
       specifier: ^4.6.5
-      version: 4.6.5
+      version: 4.6.6
 
 overrides:
   '@puppeteer/browsers': ^3.2.1
@@ -485,7 +485,7 @@ importers:
         version: 6.5.3(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       zod:
         specifier: 'catalog:'
-        version: 4.6.5
+        version: 4.6.6
     devDependencies:
       '@tsgi-web/pdf-pages':
         specifier: workspace:*
@@ -525,7 +525,7 @@ importers:
         version: 3.2.2(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@hookform/resolvers':
         specifier: 'catalog:'
-        version: 5.9.1(@standard-schema/spec@1.1.0)(ajv@8.20.0)(react-hook-form@7.89.0(@types/react@19.3.0)(react@19.3.0))(valibot@1.5.0(typescript@7.0.2))(zod@4.6.5)
+        version: 5.9.1(@standard-schema/spec@1.1.0)(ajv@8.20.0)(react-hook-form@7.89.0(@types/react@19.3.0)(react@19.3.0))(valibot@1.5.0(typescript@7.0.2))(zod@4.6.6)
       '@icons-pack/react-simple-icons':
         specifier: 'catalog:'
         version: 13.15.1(react@19.3.0)
@@ -594,7 +594,7 @@ importers:
         version: 4.3.3
       zod:
         specifier: 'catalog:'
-        version: 4.6.5
+        version: 4.6.6
     devDependencies:
       '@axe-core/playwright':
         specifier: 'catalog:'
@@ -3635,6 +3635,7 @@ packages:
   '@sanity/ui@4.4.0':
     resolution: {integrity: sha512-1xEHO8jRbRi2SBpmznPJV82oYDpUR/Am2ZGb8+IkF0sgCfnWhZlDKwvSBYppujrOFj4+WifORpHs2I7hs0Odtw==}
     engines: {node: '>=22.12'}
+    deprecated: Class names collide with @sanity/ui 4.4.4 (shipped in sanity@6.19.0) when both load on one page, breaking styles. Upgrade to @sanity/ui@^4.4.4.
     peerDependencies:
       react: ^19.2
       react-dom: ^19.2
@@ -8605,8 +8606,8 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zod@4.6.5:
-    resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
+  zod@4.6.6:
+    resolution: {integrity: sha512-4UmzQUF5fxvfcYHlbjBmejU+w+hbDnWFx4aS8kBx7nPBHcO2SqPbpAG8snbdg+Xse4pRefR98hgjFgIMCI/UhA==}
 
   zustand@5.0.15:
     resolution: {integrity: sha512-MpSEjRiBkA9crSYeOUH32rJC7SVqAbm0Fqcqge/bUi2PPoLcBWKOsG+C8mevmpr8TwXHBVkChbbJiyvkE+i/3A==}
@@ -9981,7 +9982,7 @@ snapshots:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.89.0(@types/react@19.3.0)(react@19.3.0)
 
-  '@hookform/resolvers@5.9.1(@standard-schema/spec@1.1.0)(ajv@8.20.0)(react-hook-form@7.89.0(@types/react@19.3.0)(react@19.3.0))(valibot@1.5.0(typescript@7.0.2))(zod@4.6.5)':
+  '@hookform/resolvers@5.9.1(@standard-schema/spec@1.1.0)(ajv@8.20.0)(react-hook-form@7.89.0(@types/react@19.3.0)(react@19.3.0))(valibot@1.5.0(typescript@7.0.2))(zod@4.6.6)':
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.89.0(@types/react@19.3.0)(react@19.3.0)
@@ -9989,7 +9990,7 @@ snapshots:
       '@standard-schema/spec': 1.1.0
       ajv: 8.20.0
       valibot: 1.5.0(typescript@7.0.2)
-      zod: 4.6.5
+      zod: 4.6.6
 
   '@icons-pack/react-simple-icons@13.15.1(react@19.3.0)':
     dependencies:
@@ -11192,7 +11193,7 @@ snapshots:
       react-is: 19.3.0
       semver: 7.8.5
       vite: '@voidzero-dev/vite-plus-core@1.1.0(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1)'
-      zod: 4.6.5
+      zod: 4.6.6
     optionalDependencies:
       sanity: 6.18.0(9b25ed194680eb84a1f2b1471c18d8a0)
     transitivePeerDependencies:
@@ -11253,7 +11254,7 @@ snapshots:
       react-is: 19.3.0
       semver: 7.8.5
       vite: '@voidzero-dev/vite-plus-core@1.1.0(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1)'
-      zod: 4.6.5
+      zod: 4.6.6
     optionalDependencies:
       sanity: 6.18.0(e01ae23e5f6f9371d7c79e9a5a07800d)
     transitivePeerDependencies:
@@ -11308,7 +11309,7 @@ snapshots:
       rxjs: 7.8.2
       vite: '@voidzero-dev/vite-plus-core@1.1.0(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1)'
       wrap-ansi: 9.0.2
-      zod: 4.6.5
+      zod: 4.6.6
     transitivePeerDependencies:
       - '@arethetypeswrong/core'
       - '@noble/hashes'
@@ -11398,7 +11399,7 @@ snapshots:
       which: 6.0.1
       wrap-ansi: 9.0.2
       yaml: 2.9.1
-      zod: 4.6.5
+      zod: 4.6.6
     transitivePeerDependencies:
       - '@arethetypeswrong/core'
       - '@babel/core'
@@ -11505,7 +11506,7 @@ snapshots:
       which: 6.0.1
       wrap-ansi: 9.0.2
       yaml: 2.9.1
-      zod: 4.6.5
+      zod: 4.6.6
     transitivePeerDependencies:
       - '@arethetypeswrong/core'
       - '@babel/core'
@@ -12192,7 +12193,7 @@ snapshots:
       semver: 7.8.5
       tar: 7.5.22
       vite: '@voidzero-dev/vite-plus-core@1.1.0(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1)'
-      zod: 4.6.5
+      zod: 4.6.6
     transitivePeerDependencies:
       - '@arethetypeswrong/core'
       - '@noble/hashes'
@@ -17652,7 +17653,7 @@ snapshots:
 
   zod@3.25.76: {}
 
-  zod@4.6.5: {}
+  zod@4.6.6: {}
 
   zustand@5.0.15(@types/react@19.3.0)(immer@11.1.18)(react@19.3.0)(use-sync-external-store@1.7.0(react@19.3.0)):
     optionalDependencies:
