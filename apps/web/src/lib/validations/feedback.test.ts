@@ -196,8 +196,8 @@ describe('the feedback form schema', () => {
 		expect(result.success).toBe(false);
 	});
 
-	// zod reports every failing element of an array before it checks the array's length, without
-	// a cap (CVE-2023-54404), so a huge payload would allocate one issue per element (WEB-363).
+	// Guards CVE-2023-54404 (WEB-363): zod has to reject the length before it parses the elements,
+	// or a huge payload allocates one issue per element.
 	it('rejects an oversized screenshotUrls array with a single issue', () => {
 		const result = feedbackFormSchema.safeParse({
 			...MINIMAL_PAYLOAD,
