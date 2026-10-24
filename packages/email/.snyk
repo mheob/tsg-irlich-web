@@ -9,5 +9,5 @@ ignore:
           html-to-text below @react-email/render, which merges its own options with its defaults;
           the rendered mail content never passes through the merge. Revisit once deepmerge
           publishes a patched release.
-        expires: 2026-10-26T00:00:00.000Z
+        expires: 2026-11-16T00:00:00.000Z
 patch: {}

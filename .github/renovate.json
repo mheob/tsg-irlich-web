@@ -21,6 +21,11 @@
 			"prBodyNotes": [
 				"Run `vp migrate` on this branch and commit the result, so `vitest` and `@vitest/coverage-v8` follow the runner the new release bundles."
 			]
+		},
+		{
+			"description": "axe-core 4.14 checks `label-content-name-mismatch` (WCAG 2.5.3) by default, and ContactLink's accessible name does not contain its visible text, so the accessibility sweep fails on every page. Drop this rule once WEB-381 fixes ContactLink.",
+			"matchPackageNames": ["@axe-core/playwright"],
+			"allowedVersions": "<4.14.0"
 		}
 	]
 }

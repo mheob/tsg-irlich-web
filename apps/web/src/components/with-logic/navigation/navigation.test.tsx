@@ -72,14 +72,14 @@ function renderNavigation(navItems: NavItem[] = NAV_ITEMS) {
  *
  * @param container - The element to search within.
  * @returns The element the mobile menu toggle controls.
- * @throws {Error} If no element matches the toggle's `aria-controls`.
+ * @throws {TypeError} If no element matches the toggle's `aria-controls`.
  */
 function mobileMenu(container: HTMLElement): HTMLElement {
 	const menuId = container.querySelector('button[aria-controls]')?.getAttribute('aria-controls');
 	const menu = menuId ? container.querySelector(`#${menuId}`) : null;
 
 	if (!(menu instanceof HTMLElement)) {
-		throw new Error("no element matches the mobile menu toggle's aria-controls");
+		throw new TypeError("no element matches the mobile menu toggle's aria-controls");
 	}
 
 	return menu;
