@@ -14,6 +14,7 @@
 		"lint": "vp lint",
 		"lint:fix": "vp lint --fix",
 		"lint:github": "vp lint --format=github",
+		"migrate:departments": "sanity exec scripts/migrate-departments.ts --with-user-token --",
 		"start": "sanity start",
 		"test": "vp test run",
 		"test:coverage": "vp test run --coverage",

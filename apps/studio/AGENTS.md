@@ -26,7 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import, the department migration) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -124,6 +124,35 @@ The migration `main-navigation-menus` turned the earlier `mainNavigationItem` en
 - **Slugs.** A department slug is unique among the departments (Sanity's default slug check). A group slug is unique only within its department, so two departments may each have a group "herren" (`isGroupSlugUniqueInDepartment` in `schemas/documents/group.ts` checks in the raw perspective, so drafts and release versions of other groups count).
 - **Slug history.** `previousSlugs` on a department and `previousPaths` on a group (`<department slug>/<group slug>`) keep the old addresses so the website can redirect them. The publish action (`actions/publish-with-slug-history.tsx`, wired up for both types in `sanity.config.ts`) wraps the default "Veröffentlichen" and adds the previously published value whenever the slug, or the department of a group, has changed. That is the only thing that fills the fields. Publishing through a release, scheduled publishing or the API does not, so the editors enter the old value by hand there; the field description says so. The action never stalls publishing: if the lookup of the department slugs fails or takes longer than five seconds, the document is published anyway and a toast names the field to fill in.
 - **Desk.** "Abteilungen" lists the departments by `sortOrder`. "Gruppen" lists the same departments, also by `sortOrder` (without an ordering Sanity sorts by last update, so an edited department would jump to the top), and each one opens its groups (`getGroupsOfDepartmentList` in `structure/index.ts`, a filter on `department._ref`, ordered by `sortOrder`). The departments come from the documents, so a new department needs no change in the desk. "Neu" inside a department uses the `group-by-department` template from `structure/templates.ts`, which presets the department. `sanity.config.ts` appends that template to `schema.templates` after the singleton filter.
+
+## Department migration
+
+`scripts/migrate-departments.ts` moves a dataset from the `group.*` types and the hard-coded departments to `department` documents and the one `group` type (WEB-384). It is a one-off: once `production` is migrated, a follow-up deletes the script, its images, the `migrate:departments` script and this section. The modules under `scripts/migrate-departments/` take the store as an argument and are tested against an in-memory dataset (`test-utils/fake-store.ts`).
+
+**Running it.** A dry run is the default. It reads everything and writes nothing, then prints the counts, the paths after the migration and the problems, and exits with 1 on any problem:
+
+```bash
+pnpm --filter studio run migrate:departments --dataset development              # dry run
+pnpm --filter studio run migrate:departments --dataset development --probe      # writes two test documents
+pnpm --filter studio run migrate:departments --dataset development --no-dry-run # migrates
+```
+
+Everything but the dry run writes, so it needs the user's OK first. `sanity exec --with-user-token` writes as the logged-in user, so run `pnpm exec sanity login` first. Migrate `development` first, then `production`.
+
+**What a real run does**, in this order. Every step skips what is done already, so a second run writes nothing:
+
+1. uploads the card, hero and open graph image of every missing department from `scripts/migrate-departments/images/` (Sanity deduplicates assets by content hash)
+2. creates the six departments `department-<slug>` from `seeds.ts`: title, slug, icon, `sortOrder` 10 to 60, `isTeamSport` for Fußball only, the images with the title as alt text, a copy of the groups page stats, and the persons the department page lists today (role email `fussball@tsg-irlich.de` for Fußball, `breitensport@tsg-irlich.de` for the others). An existing department is left alone, so a rerun never overwrites what the editors changed.
+3. replaces every `group.<x>` except `group.admin`, published and draft, by a `group` with the same id and a reference to its department. Sanity cannot change a type by patch, so each swap is one transaction (delete, then create), which keeps the references of persons and news valid.
+4. turns `affiliations[].department` of every person, published and draft, into a reference, guarded by `ifRevisionID`. An `admin` affiliation loses its department and its group and keeps the role.
+5. deletes the `group.admin` documents, published and draft. One that something still references stays and is reported.
+6. removes `groupsPage.content.stats`
+
+A real run then checks the dataset: no `group.*` document left, every `group` under a department, no department string in an affiliation, six published departments, each with a card image. A legacy type, a department string or a `group` the migration does not know is reported, never guessed.
+
+**Probe.** `--probe` runs only the type swap on two documents of its own, `migration-probe-target` (a `group.soccer`) and `migration-probe-referrer` (a person whose first affiliation references it). It swaps the target to `group`, checks that the reference still resolves, deletes both and prints `Probe: ok` or the message Sanity rejected the swap with. Run it before the first real run on a dataset.
+
+**Paths.** A run lists `/angebot/<abteilung>` and `/angebot/<abteilung>/<gruppe>` for every published department and group after the migration, which are the pages that exist before it. Keep the list of the dry run to check those pages after the rollout.
 
 ## Content migrations
 
