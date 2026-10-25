@@ -8,6 +8,7 @@ import {
 	CONTACT_PERSON_IDS,
 	GROUPS_PAGE_STATS,
 	LEGACY_PERSONS,
+	ORPHANED_GROUPS,
 	createProductionFixture,
 	legacyGroup,
 	ref,
@@ -41,7 +42,7 @@ describe('a dry run', () => {
 		expect([...lake.entries()]).toStrictEqual(before);
 	});
 
-	it('counts six departments, 32 groups, two deletions and every person with a department string', async () => {
+	it('counts six departments, the groups from 2024, 32 groups, two deletions and every person with a department string', async () => {
 		const { store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
 
 		const report = await runMigration(store, { dryRun: true });
@@ -50,6 +51,7 @@ describe('a dry run', () => {
 			deleted: 2,
 			departments: 6,
 			groups: 11 + 4 + 4 + 3 + 4 + 6,
+			orphanedGroups: ORPHANED_GROUPS.length,
 			persons: LEGACY_PERSONS.length,
 			problems: [],
 		});
@@ -147,13 +149,15 @@ describe('a real run', () => {
 			},
 			{ _key: 'c2', _type: 'affiliation', role: ref('role-trainer') },
 		]);
-		expect(store.deleteDocument.mock.calls.map(([id]) => id)).toStrictEqual([
-			'admin-vorstand',
-			'admin-pr-team',
-		]);
+		const adminDeletions = store.deleteDocument.mock.calls
+			.map(([id], index) => ({
+				id,
+				order: store.deleteDocument.mock.invocationCallOrder[index],
+			}))
+			.filter(({ id }) => id.startsWith('admin-'));
+		expect(adminDeletions.map(({ id }) => id)).toStrictEqual(['admin-vorstand', 'admin-pr-team']);
 		const lastPatch = Math.max(...store.patchAffiliations.mock.invocationCallOrder);
-		const firstDeletion = Math.min(...store.deleteDocument.mock.invocationCallOrder);
-		expect(firstDeletion).toBeGreaterThan(lastPatch);
+		expect(Math.min(...adminDeletions.map(({ order }) => order))).toBeGreaterThan(lastPatch);
 	});
 
 	it('removes the stats from the groups page', async () => {
@@ -176,6 +180,7 @@ describe('a real run', () => {
 			deleted: 0,
 			departments: 0,
 			groups: 0,
+			orphanedGroups: 0,
 			persons: 0,
 			problems: [],
 		});
@@ -234,16 +239,15 @@ describe('the problems of a run', () => {
 		expect(report.persons).toBe(0);
 	});
 
-	// Development and production hold `group` documents from 2024 whose department is a string.
-	it('report a group without a department reference and list no path for it', async () => {
-		const { store } = createFakeStore([
-			{ _id: 'old-group', _type: 'group', department: 'soccer', title: '2. Mannschaft' },
-		]);
+	// A draft the current studio creates has no department until the editor picks one.
+	it('report a group without department and list no path for it, but keep it', async () => {
+		const { store } = createFakeStore([{ _id: 'drafts.new-group', _type: 'group', title: 'Neu' }]);
 
-		const report = await runMigration(store, { dryRun: true });
+		const report = await runMigration(store, { dryRun: false });
 
-		expect(report.problems).toContain('Gruppe old-group („2. Mannschaft“) hat keine Abteilung.');
+		expect(report.problems).toContain('Gruppe drafts.new-group („Neu“) hat keine Abteilung.');
 		expect(report.paths).toHaveLength(6);
+		expect(store.deleteDocument).not.toHaveBeenCalled();
 	});
 
 	it('report a group without slug', async () => {
@@ -319,11 +323,114 @@ describe('the problems of a run', () => {
 	});
 });
 
+describe('the groups left from 2024', () => {
+	it('are deleted, published and draft, before the first type swap', async () => {
+		const { lake, store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
+
+		await runMigration(store, { dryRun: false });
+
+		for (const { _id } of ORPHANED_GROUPS) {
+			expect(lake.has(_id)).toBe(false);
+		}
+		const deletions = store.deleteDocument.mock.calls.map(([id]) => id);
+		expect(deletions.slice(0, 3)).toStrictEqual(ORPHANED_GROUPS.map(({ _id }) => _id));
+		const lastOrphanDeletion = store.deleteDocument.mock.invocationCallOrder[2];
+		expect(lastOrphanDeletion).toBeLessThan(Math.min(...store.swapType.mock.invocationCallOrder));
+	});
+
+	it('stay untouched in a dry run', async () => {
+		const { lake, store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
+
+		const report = await runMigration(store, { dryRun: true });
+
+		expect(report.orphanedGroups).toBe(3);
+		expect(ORPHANED_GROUPS.filter(({ _id }) => !lake.has(_id))).toStrictEqual([]);
+	});
+
+	it('stay with a problem while something references them', async () => {
+		const { lake, store } = createFakeStore([
+			...ORPHANED_GROUPS,
+			{ _id: 'news-9', _type: 'news.article', team: ref('old-2-mannschaft') },
+		]);
+
+		const report = await runMigration(store, { dryRun: false });
+
+		expect(report.problems).toContain(
+			'Die alte Gruppe old-2-mannschaft ohne Abteilungsverweis bleibt bestehen, weil noch news-9 auf sie verweist.',
+		);
+		expect(lake.has('old-2-mannschaft')).toBe(true);
+		expect(lake.has('drafts.old-2-mannschaft')).toBe(true);
+		expect(report.orphanedGroups).toBe(1);
+	});
+});
+
+describe('the release versions', () => {
+	const versions = [
+		{ ...legacyGroup('group.soccer', 'mannschaft-1'), _id: 'versions.r1.soccer-mannschaft-1' },
+		{
+			_id: 'versions.r1.person-dancer',
+			_type: 'person',
+			affiliations: [{ _key: 'd1', department: 'dance' }],
+		},
+		{ _id: 'versions.r1.groupsPage', _type: 'groupsPage', content: { stats: GROUPS_PAGE_STATS } },
+	];
+
+	it('are reported and left alone', async () => {
+		const { lake, store } = createFakeStore(
+			[...createProductionFixture(), ...versions],
+			CONTACT_PERSON_IDS,
+		);
+
+		const report = await runMigration(store, { dryRun: false });
+
+		expect(report.problems).toStrictEqual(
+			versions.map(
+				({ _id, _type }) =>
+					`Version ${_id} („${_type}“) liegt in einem Release und wird nicht migriert. Den Release vorher veröffentlichen oder verwerfen.`,
+			),
+		);
+		expect(versions.map(({ _id }) => lake.get(_id)?._type)).toStrictEqual([
+			'group.soccer',
+			'person',
+			'groupsPage',
+		]);
+		expect(lake.get('versions.r1.groupsPage')?.content).toStrictEqual({ stats: GROUPS_PAGE_STATS });
+		expect(report).toMatchObject({ groups: 32, persons: LEGACY_PERSONS.length });
+	});
+
+	it('get no path', async () => {
+		const { store } = createFakeStore(
+			[...createProductionFixture(), ...versions],
+			CONTACT_PERSON_IDS,
+		);
+
+		const { paths } = await runMigration(store, { dryRun: true });
+
+		expect(paths).toHaveLength(6 + 32);
+	});
+});
+
+describe('the images of a dry run', () => {
+	it('are reported when a file is missing', async () => {
+		const { store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS, [
+			'fussball-hero.webp',
+		]);
+
+		const report = await runMigration(store, { dryRun: true });
+
+		expect(report.problems).toStrictEqual([
+			'Das Bild fussball-hero.webp fehlt in scripts/migrate-departments/images.',
+		]);
+		expect(store.hasImage).toHaveBeenCalledTimes(18);
+	});
+});
+
 describe('the summary of a run', () => {
 	const report = {
 		deleted: 2,
 		departments: 6,
 		groups: 32,
+		orphanedGroups: 44,
 		paths: ['/angebot/fussball', '/angebot/fussball/1-mannschaft'],
 		persons: 42,
 		problems: [],
@@ -333,6 +440,7 @@ describe('the summary of a run', () => {
 		expect(summarize(report, [], true)).toStrictEqual([
 			'Probelauf, geschrieben wurde nichts. Ein echter Lauf würde:',
 			'  Abteilungen angelegt: 6',
+			'  Alte Gruppen ohne Abteilungsverweis gelöscht: 44',
 			'  Gruppen umgestellt: 32',
 			'  Personen angepasst: 42',
 			'  Administration-Gruppen gelöscht: 2',

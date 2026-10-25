@@ -134,8 +134,19 @@ const OTHER_PERSONS: FakeDocument[] = [
 ];
 
 /**
+ * `group` documents left from the 2024 schema: a department string (published and draft), or no
+ * department but `isSportGroup`.
+ */
+const ORPHANED_GROUPS: FakeDocument[] = [
+	{ _id: 'old-2-mannschaft', _type: 'group', department: 'soccer', title: '2. Mannschaft' },
+	{ _id: 'drafts.old-2-mannschaft', _type: 'group', department: 'soccer', title: '2. Mannschaft' },
+	{ _id: 'old-vorstand', _type: 'group', isSportGroup: false, title: 'Vorstand' },
+];
+
+/**
  * A dataset shaped like `production` before the migration: 32 sport groups, two administration
- * groups, persons with department strings, a news article about a team and the groups page stats.
+ * groups, `group` documents left from 2024, persons with department strings, a news article about
+ * a team and the groups page stats.
  *
  * @returns The documents.
  */
@@ -143,6 +154,7 @@ function createProductionFixture(): FakeDocument[] {
 	return [
 		...SPORT_GROUPS,
 		...ADMIN_GROUPS,
+		...ORPHANED_GROUPS,
 		...LEGACY_PERSONS,
 		...OTHER_PERSONS,
 		{
@@ -164,6 +176,7 @@ export {
 	CONTACT_PERSON_IDS,
 	GROUPS_PAGE_STATS,
 	LEGACY_PERSONS,
+	ORPHANED_GROUPS,
 	createProductionFixture,
 	legacyGroup,
 	ref,

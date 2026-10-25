@@ -81,6 +81,40 @@ describe('the migration store', () => {
 		},
 	);
 
+	// The 2024 groups differ from the current ones in `department` and `isSportGroup`.
+	it('reads the groups with their raw department and sport group flag', async () => {
+		const { client, fake } = createFakeClient();
+
+		await createSanityMigrationStore(client, IMAGE_FOLDER).fetchGroups();
+
+		expect(fake.fetch).toHaveBeenCalledWith(
+			'*[_type == "group"]{_id, department, isSportGroup, "slug": slug.current, title}',
+			{},
+			{ perspective: 'raw' },
+		);
+	});
+
+	it('finds the release versions of every type the migration touches', async () => {
+		const { client, fake } = createFakeClient([{ _id: 'versions.r1.person-a', _type: 'person' }]);
+
+		await expect(
+			createSanityMigrationStore(client, IMAGE_FOLDER).fetchReleaseVersions(),
+		).resolves.toStrictEqual([{ _id: 'versions.r1.person-a', _type: 'person' }]);
+		expect(fake.fetch).toHaveBeenCalledWith(
+			'*[_id in path("versions.**") && (_type in ["department", "group", "groupsPage", "person"] || string::startsWith(_type, "group."))]{_id, _type}',
+			{},
+			{ perspective: 'raw' },
+		);
+	});
+
+	it('tells whether the image folder holds a file', async () => {
+		const { client } = createFakeClient();
+		const store = createSanityMigrationStore(client, IMAGE_FOLDER);
+
+		await expect(store.hasImage('fussball-card.webp')).resolves.toBe(true);
+		await expect(store.hasImage('schwimmen-card.webp')).resolves.toBe(false);
+	});
+
 	it('finds every referrer of a document in the raw perspective', async () => {
 		const { client, fake } = createFakeClient();
 
@@ -166,13 +200,13 @@ describe('the migration store', () => {
 		]);
 	});
 
-	it('removes the stats from every version of the groups page in one transaction', async () => {
+	it('removes the stats from the published groups page and its draft in one transaction', async () => {
 		const { client, fake, steps } = createFakeClient(['groupsPage', 'drafts.groupsPage']);
 
 		await createSanityMigrationStore(client, IMAGE_FOLDER).unsetGroupsPageStats();
 
 		expect(fake.fetch).toHaveBeenCalledWith(
-			'*[_type == "groupsPage" && defined(content.stats)]._id',
+			'*[_type == "groupsPage" && defined(content.stats) && !(_id in path("versions.**"))]._id',
 			{},
 			{ perspective: 'raw' },
 		);

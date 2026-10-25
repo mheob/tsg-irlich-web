@@ -45,13 +45,21 @@ describe('the verification', () => {
 		).resolves.toStrictEqual(['Dokument soccer-a-jugend hat noch den alten Typ „group.soccer“.']);
 	});
 
-	it('finds a group without department', async () => {
+	it('finds a group whose department is still a string', async () => {
 		await expect(
 			problemsIn([
 				...DEPARTMENTS,
 				{ _id: 'group-x', _type: 'group', department: 'soccer', title: 'X' },
 			]),
-		).resolves.toStrictEqual(['Gruppe group-x („X“) hat keine Abteilung.']);
+		).resolves.toStrictEqual([
+			'Gruppe group-x („X“) nennt die Abteilung noch als Text („soccer“).',
+		]);
+	});
+
+	it('finds a group without department', async () => {
+		await expect(
+			problemsIn([...DEPARTMENTS, { _id: 'drafts.group-y', _type: 'group', title: 'Y' }]),
+		).resolves.toStrictEqual(['Gruppe drafts.group-y („Y“) hat keine Abteilung.']);
 	});
 
 	it('finds an affiliation that names its department as text', async () => {
@@ -70,12 +78,22 @@ describe('the verification', () => {
 	});
 
 	// A draft does not count: the website only shows published departments.
-	it('finds fewer than six published departments', async () => {
+	it('finds a seeded department that is not published', async () => {
 		const [first, ...rest] = DEPARTMENTS;
 		const draftOnly = { ...first, _id: `drafts.${first._id}` };
 
 		await expect(problemsIn([draftOnly, ...rest])).resolves.toStrictEqual([
-			'Nur 5 von 6 Abteilungen sind veröffentlicht.',
+			'Abteilung department-fussball fehlt oder ist nicht veröffentlicht.',
+		]);
+	});
+
+	// Six departments are not enough when one of them is not a seeded one.
+	it('finds a seeded department that is missing next to another department', async () => {
+		const [, ...rest] = DEPARTMENTS;
+		const other = { ...DEPARTMENTS[0], _id: 'department-schwimmen' };
+
+		await expect(problemsIn([other, ...rest])).resolves.toStrictEqual([
+			'Abteilung department-fussball fehlt oder ist nicht veröffentlicht.',
 		]);
 	});
 

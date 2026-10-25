@@ -1,62 +1,97 @@
 import { buildDepartmentDocument, migrateAffiliations, toGroupDocument } from './build';
 import type { Affiliation, LegacyGroupDocument, StatsItem } from './build';
-import { ADMIN_LEGACY_TYPE, DEPARTMENT_SEEDS } from './seeds';
+import { isOrphanedGroup, isReleaseVersion, toPublishedId } from './documents';
+import { collectPaths } from './paths';
+import { ADMIN_LEGACY_TYPE, DEPARTMENT_SEEDS, SEED_BY_LEGACY_TYPE } from './seeds';
 import type { DepartmentImages, DepartmentSeed } from './seeds';
-import type { DepartmentSummary, GroupSummary, MigrationStore, PersonDocument } from './store';
+import type {
+	DepartmentSummary,
+	DocumentStub,
+	GroupSummary,
+	MigrationStore,
+	PersonDocument,
+} from './store';
 import { findGroupsWithoutDepartment } from './verify';
 
-const DRAFTS_PREFIX = 'drafts.';
-const OFFER_PATH = '/angebot';
 /** Stands in for an asset id in a dry run, which uploads nothing. */
 const DRY_RUN_ASSET_PREFIX = 'probelauf-';
+const IMAGE_FOLDER = 'scripts/migrate-departments/images';
 
-const SEED_BY_LEGACY_TYPE: ReadonlyMap<string, DepartmentSeed> = new Map(
-	DEPARTMENT_SEEDS.map((seed) => [seed.legacyType, seed]),
-);
 const DEPARTMENT_ID_BY_LEGACY: ReadonlyMap<string, string> = new Map(
 	DEPARTMENT_SEEDS.map((seed) => [seed.legacyAffiliation, seed.id]),
 );
 
 /**
- * Whether an id is the published one, not a draft.
+ * Leaves out the versions in content releases, which the migration does not touch.
  *
- * @param id - The document id.
- * @returns `false` for `drafts.<id>`.
+ * @param documents - Documents of the raw perspective.
+ * @returns The published documents and the drafts.
  */
-function isPublished(id: string): boolean {
-	return !id.startsWith(DRAFTS_PREFIX);
+function withoutReleaseVersions<Document extends { _id: string }>(
+	documents: readonly Document[],
+): Document[] {
+	return documents.filter(({ _id }) => !isReleaseVersion(_id));
 }
 
 /**
- * The published id behind a draft id.
- *
- * @param id - A published or draft id.
- * @returns The published id.
- */
-function toPublishedId(id: string): string {
-	return isPublished(id) ? id : id.slice(DRAFTS_PREFIX.length);
-}
-
-/**
- * Reads everything the migration decides on, before anything is written.
+ * Reads everything the migration decides on, before anything is written. Release versions are kept
+ * apart: the migration reports them instead of touching them.
  *
  * @param store - The Sanity side.
  * @returns The dataset as it is now.
  */
 async function readSnapshot(store: MigrationStore): Promise<Snapshot> {
-	const [departments, groups, legacyGroups, persons, stats] = await Promise.all([
+	const [departments, groups, legacyGroups, persons, stats, versions] = await Promise.all([
 		store.fetchDepartments(),
 		store.fetchGroups(),
 		store.fetchLegacyGroups(),
 		store.fetchPersons(),
 		store.fetchGroupsPageStats(),
+		store.fetchReleaseVersions(),
 	]);
-	return { departments, groups, legacyGroups, persons, stats };
+	return {
+		departments: withoutReleaseVersions(departments),
+		groups: withoutReleaseVersions(groups),
+		legacyGroups: withoutReleaseVersions(legacyGroups),
+		persons: withoutReleaseVersions(persons),
+		stats,
+		versions,
+	};
 }
 
 /**
- * Step 1: uploads the images of the departments that are missing. A dry run uploads nothing and
- * uses placeholders.
+ * One problem per release version: the migration cannot change a release, and publishing it
+ * afterwards would bring back the old shape.
+ *
+ * @param versions - The release versions of the types the migration touches.
+ * @returns The problems.
+ */
+function describeReleaseVersions(versions: readonly DocumentStub[]): string[] {
+	return versions.map(
+		({ _id, _type }) =>
+			`Version ${_id} („${_type}“) liegt in einem Release und wird nicht migriert. Den Release vorher veröffentlichen oder verwerfen.`,
+	);
+}
+
+/**
+ * Uploads one image, or in a dry run checks that the file is there and returns a placeholder.
+ *
+ * @param run - The store, the mode and the report.
+ * @param fileName - The file in the image folder.
+ * @returns The asset id, or the placeholder.
+ */
+async function uploadImage(run: MigrationRun, fileName: string): Promise<string> {
+	if (!run.dryRun) {
+		return run.store.uploadImage(fileName);
+	}
+	if (!(await run.store.hasImage(fileName))) {
+		run.report.problems.push(`Das Bild ${fileName} fehlt in ${IMAGE_FOLDER}.`);
+	}
+	return `${DRY_RUN_ASSET_PREFIX}${fileName}`;
+}
+
+/**
+ * Step 1: uploads the images of the departments that are missing. A dry run uploads nothing.
  *
  * @param run - The store, the mode and the report.
  * @param seeds - The departments to create.
@@ -66,16 +101,14 @@ async function uploadImages(
 	run: MigrationRun,
 	seeds: readonly DepartmentSeed[],
 ): Promise<{ assetIds: DepartmentImages; seed: DepartmentSeed }[]> {
-	const upload = async (fileName: string): Promise<string> =>
-		run.dryRun ? `${DRY_RUN_ASSET_PREFIX}${fileName}` : run.store.uploadImage(fileName);
 	const uploaded: { assetIds: DepartmentImages; seed: DepartmentSeed }[] = [];
 	for (const seed of seeds) {
 		// oxlint-disable-next-line no-await-in-loop -- one upload at a time keeps the failure point obvious
-		const card = await upload(seed.images.card);
+		const card = await uploadImage(run, seed.images.card);
 		// oxlint-disable-next-line no-await-in-loop -- see above
-		const hero = await upload(seed.images.hero);
+		const hero = await uploadImage(run, seed.images.hero);
 		// oxlint-disable-next-line no-await-in-loop -- see above
-		const openGraph = await upload(seed.images.openGraph);
+		const openGraph = await uploadImage(run, seed.images.openGraph);
 		uploaded.push({ assetIds: { card, hero, openGraph }, seed });
 	}
 	return uploaded;
@@ -125,7 +158,89 @@ async function createDepartments(run: MigrationRun, snapshot: Snapshot): Promise
 }
 
 /**
- * Step 3: swaps every legacy group except the administration for a `group` with the same id.
+ * Finds the documents that something still references once the run is through, and reports each.
+ *
+ * @param run - The store and the report.
+ * @param publishedIds - The published ids to delete.
+ * @param guard - Who still references an id, and how to report it.
+ * @returns The published ids that must not be deleted.
+ */
+async function findReferenced(
+	run: MigrationRun,
+	publishedIds: readonly string[],
+	guard: DeletionGuard,
+): Promise<Set<string>> {
+	const referenced = new Set<string>();
+	for (const id of publishedIds) {
+		// oxlint-disable-next-line no-await-in-loop -- one query per document
+		const referrers = await guard.referrersOf(id);
+		if (referrers.length > 0) {
+			referenced.add(id);
+			run.report.problems.push(guard.describe(id, referrers));
+		}
+	}
+	return referenced;
+}
+
+/**
+ * Deletes documents, published and draft, unless something still references them. A referenced
+ * one stays, with a problem, so a deletion cannot fail halfway.
+ *
+ * @param run - The store, the mode and the report.
+ * @param documents - The documents to delete.
+ * @param guard - Who still references an id, and how to report it.
+ * @returns The ids deleted, or in a dry run the ids a real run would delete.
+ */
+async function deleteUnreferenced(
+	run: MigrationRun,
+	documents: readonly { _id: string }[],
+	guard: DeletionGuard,
+): Promise<Set<string>> {
+	const publishedIds = [...new Set(documents.map(({ _id }) => toPublishedId(_id)))];
+	const referenced = await findReferenced(run, publishedIds, guard);
+	const deleted = new Set<string>();
+	for (const { _id } of documents.filter(
+		(document) => !referenced.has(toPublishedId(document._id)),
+	)) {
+		if (!run.dryRun) {
+			// oxlint-disable-next-line no-await-in-loop -- one deletion at a time
+			await run.store.deleteDocument(_id);
+		}
+		deleted.add(_id);
+	}
+	return deleted;
+}
+
+/**
+ * Step 3: deletes the `group` documents left from the 2024 schema (see `isOrphanedGroup`). They
+ * have no department to go to, and no page on the website.
+ *
+ * @param run - The store, the mode and the report.
+ * @param groups - Every `group`, published and draft.
+ * @returns The ids of the deleted groups.
+ */
+async function deleteOrphanedGroups(
+	run: MigrationRun,
+	groups: readonly GroupSummary[],
+): Promise<Set<string>> {
+	const deleted = await deleteUnreferenced(
+		run,
+		groups.filter((group) => isOrphanedGroup(group)),
+		{
+			describe: (id, referrers) =>
+				`Die alte Gruppe ${id} ohne Abteilungsverweis bleibt bestehen, weil noch ${referrers.join(', ')} auf sie verweist.`,
+			referrersOf: async (id) => {
+				const referrers = await run.store.fetchReferrers(id);
+				return referrers.map(({ _id }) => _id);
+			},
+		},
+	);
+	run.report.orphanedGroups = deleted.size;
+	return deleted;
+}
+
+/**
+ * Step 4: swaps every legacy group except the administration for a `group` with the same id.
  *
  * @param run - The store, the mode and the report.
  * @param legacyGroups - Every `group.<x>` document, published and draft.
@@ -180,7 +295,7 @@ function inspectAffiliations(
 }
 
 /**
- * Step 4: turns the department strings of every person into references, `ifRevisionID` guarded.
+ * Step 5: turns the department strings of every person into references, `ifRevisionID` guarded.
  *
  * @param run - The store, the mode and the report.
  * @param persons - Every person, published and draft.
@@ -227,36 +342,7 @@ async function findRemainingReferrers(
 }
 
 /**
- * Finds the administration groups that are still referenced once the persons are migrated, and
- * reports each of them.
- *
- * @param run - The store and the report.
- * @param publishedIds - The published ids of the administration groups.
- * @param personsByTeam - The persons per group after the migration.
- * @returns The published ids that must not be deleted.
- */
-async function findBlockedAdminGroups(
-	run: MigrationRun,
-	publishedIds: readonly string[],
-	personsByTeam: ReadonlyMap<string, string[]>,
-): Promise<Set<string>> {
-	const blocked = new Set<string>();
-	for (const id of publishedIds) {
-		// oxlint-disable-next-line no-await-in-loop -- one query per administration group
-		const referrers = await findRemainingReferrers(run.store, id, personsByTeam);
-		if (referrers.length > 0) {
-			blocked.add(id);
-			run.report.problems.push(
-				`Die Administration-Gruppe ${id} bleibt bestehen, weil noch ${referrers.join(', ')} auf sie verweist.`,
-			);
-		}
-	}
-	return blocked;
-}
-
-/**
- * Step 5: deletes the administration groups, published and draft. One that is still referenced
- * stays, with a problem, so the deletion cannot fail halfway.
+ * Step 6: deletes the administration groups, published and draft, once no person points at them.
  *
  * @param run - The store, the mode and the report.
  * @param legacyGroups - Every `group.<x>` document, published and draft.
@@ -267,20 +353,20 @@ async function deleteAdminGroups(
 	legacyGroups: readonly LegacyGroupDocument[],
 	personsByTeam: ReadonlyMap<string, string[]>,
 ): Promise<void> {
-	const adminGroups = legacyGroups.filter(({ _type }) => _type === ADMIN_LEGACY_TYPE);
-	const publishedIds = [...new Set(adminGroups.map(({ _id }) => toPublishedId(_id)))];
-	const blocked = await findBlockedAdminGroups(run, publishedIds, personsByTeam);
-	for (const group of adminGroups.filter(({ _id }) => !blocked.has(toPublishedId(_id)))) {
-		if (!run.dryRun) {
-			// oxlint-disable-next-line no-await-in-loop -- one deletion at a time
-			await run.store.deleteDocument(group._id);
-		}
-		run.report.deleted += 1;
-	}
+	const deleted = await deleteUnreferenced(
+		run,
+		legacyGroups.filter(({ _type }) => _type === ADMIN_LEGACY_TYPE),
+		{
+			describe: (id, referrers) =>
+				`Die Administration-Gruppe ${id} bleibt bestehen, weil noch ${referrers.join(', ')} auf sie verweist.`,
+			referrersOf: async (id) => findRemainingReferrers(run.store, id, personsByTeam),
+		},
+	);
+	run.report.deleted = deleted.size;
 }
 
 /**
- * Step 6: removes the shared stats from the groups page, now that every department has a copy.
+ * Step 7: removes the shared stats from the groups page, now that every department has a copy.
  *
  * @param run - The store and the mode.
  * @param stats - The stats of the groups page, `null` when they are gone already.
@@ -295,109 +381,20 @@ async function removeGroupsPageStats(
 }
 
 /**
- * The published departments once the run is through: the existing ones and the ones it creates.
+ * Runs the seven steps in their order.
  *
+ * @param run - The store, the mode and the report.
  * @param snapshot - The dataset before the run.
- * @param problems - Where a department without slug is reported.
- * @returns The departments by sort order.
+ * @returns The `group` documents of the snapshot that are left after the run.
  */
-function departmentsAfter(snapshot: Snapshot, problems: string[]): PathDepartment[] {
-	const existing = snapshot.departments.filter(({ _id }) => isPublished(_id));
-	const existingIds = new Set(existing.map(({ _id }) => _id));
-	const created = DEPARTMENT_SEEDS.filter(({ id }) => !existingIds.has(id));
-	const departments: PathDepartment[] = created.map(({ id, slug, sortOrder }) => ({
-		id,
-		slug,
-		sortOrder,
-	}));
-	for (const department of existing) {
-		if (department.slug) {
-			departments.push({
-				id: department._id,
-				slug: department.slug,
-				sortOrder: department.sortOrder ?? Number.MAX_SAFE_INTEGER,
-			});
-		} else {
-			problems.push(`Abteilung ${department._id} hat keinen Slug und bekommt keinen Pfad.`);
-		}
-	}
-	return departments.toSorted(
-		(first, second) => first.sortOrder - second.sortOrder || first.slug.localeCompare(second.slug),
-	);
-}
-
-/**
- * The published groups once the run is through: the swapped legacy groups and the existing
- * `group` documents with a department.
- *
- * @param snapshot - The dataset before the run.
- * @returns The groups.
- */
-function groupsAfter(snapshot: Snapshot): GroupSummary[] {
-	const swapped = snapshot.legacyGroups
-		.filter(({ _id, _type }) => isPublished(_id) && SEED_BY_LEGACY_TYPE.has(_type))
-		.map((group) => ({
-			_id: group._id,
-			departmentId: SEED_BY_LEGACY_TYPE.get(group._type)?.id,
-			slug: group.slug?.current,
-			title: group.title,
-		}));
-	const existing = snapshot.groups.filter(
-		({ _id, departmentId }) => isPublished(_id) && departmentId,
-	);
-	return [...swapped, ...existing];
-}
-
-/**
- * The paths of the group pages of one department, by slug.
- *
- * @param department - The department.
- * @param groups - Every published group after the run.
- * @param problems - Where a group without slug is reported.
- * @returns The paths.
- */
-function groupPathsOf(
-	department: PathDepartment,
-	groups: readonly GroupSummary[],
-	problems: string[],
-): string[] {
-	const slugs: string[] = [];
-	for (const group of groups.filter(({ departmentId }) => departmentId === department.id)) {
-		if (group.slug) {
-			slugs.push(group.slug);
-		} else {
-			problems.push(
-				`Gruppe ${group._id} („${group.title ?? ''}“) hat keinen Slug und bekommt keinen Pfad.`,
-			);
-		}
-	}
-	return slugs
-		.toSorted((first, second) => first.localeCompare(second))
-		.map((slug) => `${OFFER_PATH}/${department.slug}/${slug}`);
-}
-
-/**
- * Every page the website serves for a department or a group after the run, which is every page it
- * served before.
- *
- * @param snapshot - The dataset before the run.
- * @param problems - Where a document without path is reported.
- * @returns `/angebot/<department>` and `/angebot/<department>/<group>`, department by department.
- */
-function collectPaths(snapshot: Snapshot, problems: string[]): string[] {
-	const departments = departmentsAfter(snapshot, problems);
-	const groups = groupsAfter(snapshot);
-	const departmentIds = new Set(departments.map(({ id }) => id));
-	for (const group of groups.filter(({ departmentId }) => !departmentIds.has(departmentId ?? ''))) {
-		problems.push(
-			`Gruppe ${group._id} verweist auf die Abteilung ${group.departmentId ?? ''}, die es nicht gibt.`,
-		);
-	}
-	const paths: string[] = [];
-	for (const department of departments) {
-		paths.push(`${OFFER_PATH}/${department.slug}`, ...groupPathsOf(department, groups, problems));
-	}
-	return paths;
+async function runSteps(run: MigrationRun, snapshot: Snapshot): Promise<GroupSummary[]> {
+	await createDepartments(run, snapshot);
+	const deletedGroups = await deleteOrphanedGroups(run, snapshot.groups);
+	await swapGroups(run, snapshot.legacyGroups);
+	const personsByTeam = await patchPersons(run, snapshot.persons);
+	await deleteAdminGroups(run, snapshot.legacyGroups, personsByTeam);
+	await removeGroupsPageStats(run, snapshot.stats);
+	return snapshot.groups.filter(({ _id }) => !deletedGroups.has(_id));
 }
 
 /**
@@ -416,16 +413,20 @@ async function runMigration(
 	const snapshot = await readSnapshot(store);
 	const run: MigrationRun = {
 		dryRun: options.dryRun,
-		report: { deleted: 0, departments: 0, groups: 0, paths: [], persons: 0, problems: [] },
+		report: {
+			deleted: 0,
+			departments: 0,
+			groups: 0,
+			orphanedGroups: 0,
+			paths: [],
+			persons: 0,
+			problems: describeReleaseVersions(snapshot.versions),
+		},
 		store,
 	};
-	await createDepartments(run, snapshot);
-	await swapGroups(run, snapshot.legacyGroups);
-	const personsByTeam = await patchPersons(run, snapshot.persons);
-	await deleteAdminGroups(run, snapshot.legacyGroups, personsByTeam);
-	await removeGroupsPageStats(run, snapshot.stats);
-	run.report.problems.push(...findGroupsWithoutDepartment(snapshot.groups));
-	run.report.paths = collectPaths(snapshot, run.report.problems);
+	const groups = await runSteps(run, snapshot);
+	run.report.problems.push(...findGroupsWithoutDepartment(groups));
+	run.report.paths = collectPaths({ ...snapshot, groups }, run.report.problems);
 	return run.report;
 }
 
@@ -445,6 +446,7 @@ function summarize(
 	return [
 		dryRun ? 'Probelauf, geschrieben wurde nichts. Ein echter Lauf würde:' : 'Geschrieben:',
 		`  Abteilungen angelegt: ${report.departments}`,
+		`  Alte Gruppen ohne Abteilungsverweis gelöscht: ${report.orphanedGroups}`,
 		`  Gruppen umgestellt: ${report.groups}`,
 		`  Personen angepasst: ${report.persons}`,
 		`  Administration-Gruppen gelöscht: ${report.deleted}`,
@@ -461,12 +463,15 @@ interface Snapshot {
 	legacyGroups: LegacyGroupDocument[];
 	persons: PersonDocument[];
 	stats: StatsItem[] | null;
+	/** The release versions of the types the migration touches, which it leaves alone. */
+	versions: DocumentStub[];
 }
 
-interface PathDepartment {
-	id: string;
-	slug: string;
-	sortOrder: number;
+interface DeletionGuard {
+	/** The problem to report for a document that something still references. */
+	describe: (id: string, referrers: readonly string[]) => string;
+	/** The ids of the documents that point at a published id once the run is through. */
+	referrersOf: (id: string) => Promise<string[]>;
 }
 
 interface MigrationRun {
@@ -482,6 +487,8 @@ interface MigrationReport {
 	departments: number;
 	/** Legacy groups swapped for a `group`, published and draft. */
 	groups: number;
+	/** `group` documents left from the 2024 schema that were deleted, published and draft. */
+	orphanedGroups: number;
 	/** The pages of every published department and group after the run. */
 	paths: string[];
 	/** Persons whose affiliations were migrated, published and draft. */

@@ -1,7 +1,10 @@
 import { createReadStream } from 'node:fs';
+import { access } from 'node:fs/promises';
 import path from 'node:path';
 
 import type { SanityClient } from 'sanity';
+
+import { settle } from '@tsgi-web/shared';
 
 import type {
 	Affiliation,
@@ -16,17 +19,19 @@ const PUBLISHED = { perspective: 'published' } as const;
 
 const LEGACY_GROUPS_QUERY = /* groq */ '*[string::startsWith(_type, "group.")]';
 const GROUPS_QUERY =
-	/* groq */ '*[_type == "group"]{_id, "departmentId": department._ref, "slug": slug.current, title}';
+	/* groq */ '*[_type == "group"]{_id, department, isSportGroup, "slug": slug.current, title}';
 const DEPARTMENTS_QUERY =
 	/* groq */ '*[_type == "department"]{_id, "cardImageAssetId": cardImage.asset._ref, "slug": slug.current, sortOrder}';
 const PERSONS_QUERY = /* groq */ '*[_type == "person"]{_id, _rev, affiliations}';
 const GROUPS_PAGE_STATS_QUERY = /* groq */ '*[_type == "groupsPage"][0].content.stats';
 const GROUPS_PAGES_WITH_STATS_QUERY =
-	/* groq */ '*[_type == "groupsPage" && defined(content.stats)]._id';
+	/* groq */ '*[_type == "groupsPage" && defined(content.stats) && !(_id in path("versions.**"))]._id';
 // The filter and the order of `offerGroupsPageContactPersonsQuery` in the web app.
 const CONTACT_PERSON_IDS_QUERY =
 	/* groq */ "*[_type == 'person'][affiliations[0].role->email == $email]._id";
 const REFERRERS_QUERY = /* groq */ '*[references($id)]{_id, _type}';
+const RELEASE_VERSIONS_QUERY =
+	/* groq */ '*[_id in path("versions.**") && (_type in ["department", "group", "groupsPage", "person"] || string::startsWith(_type, "group."))]{_id, _type}';
 
 /**
  * The Sanity side of the department migration. Reads that decide what to write go through the raw
@@ -55,6 +60,11 @@ function createSanityMigrationStore(client: SanityClient, imageFolder: string): 
 			client.fetch<LegacyGroupDocument[]>(LEGACY_GROUPS_QUERY, {}, RAW),
 		fetchPersons: async () => client.fetch<PersonDocument[]>(PERSONS_QUERY, {}, RAW),
 		fetchReferrers: async (id) => client.fetch<DocumentStub[]>(REFERRERS_QUERY, { id }, RAW),
+		fetchReleaseVersions: async () => client.fetch<DocumentStub[]>(RELEASE_VERSIONS_QUERY, {}, RAW),
+		hasImage: async (fileName) => {
+			const found = await settle(access(path.join(imageFolder, fileName)));
+			return found.ok;
+		},
 		patchAffiliations: async (id, rev, affiliations) => {
 			await client.patch(id).ifRevisionId(rev).set({ affiliations }).commit();
 		},
@@ -91,8 +101,10 @@ interface DepartmentSummary {
 /** A `group` document as the migration needs to know it. */
 interface GroupSummary {
 	_id: string;
-	/** `undefined` or `null` when `department` is no reference. */
-	departmentId?: string | null;
+	/** A reference; a string or nothing in a group left from the 2024 schema. */
+	department?: { _ref?: string | null } | string | null;
+	/** Only set in a group left from the 2024 schema. */
+	isSportGroup?: boolean | null;
 	slug?: string | null;
 	title?: string | null;
 }
@@ -128,11 +140,15 @@ interface MigrationStore {
 	fetchPersons: () => Promise<PersonDocument[]>;
 	/** Every document, published and draft, that references the given id. */
 	fetchReferrers: (id: string) => Promise<DocumentStub[]>;
+	/** Every release version (`versions.<release>.<id>`) of a type the migration touches. */
+	fetchReleaseVersions: () => Promise<DocumentStub[]>;
+	/** Whether the image folder holds the file. Reads the disk only. */
+	hasImage: (fileName: string) => Promise<boolean>;
 	/** Sets the affiliations, unless the person changed since `rev`. */
 	patchAffiliations: (id: string, rev: string, affiliations: Affiliation[]) => Promise<void>;
 	/** Replaces a document by one of another type with the same id, in one transaction. */
 	swapType: (legacyId: string, next: NewDocument) => Promise<void>;
-	/** Removes `content.stats` from the groups page, published and draft. */
+	/** Removes `content.stats` from the groups page, published and draft, not from a release. */
 	unsetGroupsPageStats: () => Promise<void>;
 	/** Uploads a file of the image folder and returns the asset id. */
 	uploadImage: (fileName: string) => Promise<string>;

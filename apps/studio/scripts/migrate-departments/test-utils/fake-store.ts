@@ -3,7 +3,7 @@ import { vi } from 'vite-plus/test';
 import type { Mock } from 'vite-plus/test';
 
 import type { Affiliation, StatsItem } from '../build';
-import type { MigrationStore, NewDocument } from '../store';
+import type { GroupSummary, MigrationStore, NewDocument } from '../store';
 
 /** Any document of the in-memory dataset. */
 interface FakeDocument {
@@ -25,6 +25,9 @@ const WRITE_METHODS = [
 	'unsetGroupsPageStats',
 	'uploadImage',
 ] as const satisfies readonly (keyof MigrationStore)[];
+
+/** The types whose release versions the migration reports, like the store's query. */
+const MIGRATED_TYPES = /^(?:department|group|groupsPage|person|group\..+)$/u;
 
 interface Reference {
 	_ref?: string;
@@ -57,11 +60,13 @@ function referencesId(document: FakeDocument, id: string): boolean {
  *
  * @param documents - The documents the dataset starts with.
  * @param contactPersonIds - The person ids per role email.
+ * @param missingImages - The image files the folder lacks; every other one is there.
  * @returns The store and the dataset.
  */
 function createFakeStore(
 	documents: readonly FakeDocument[],
 	contactPersonIds: Readonly<Record<string, string[]>> = {},
+	missingImages: readonly string[] = [],
 ): { lake: Map<string, FakeDocument>; store: FakeStore } {
 	const lake = new Map(documents.map((document) => [document._id, structuredClone(document)]));
 	let revision = 0;
@@ -93,7 +98,8 @@ function createFakeStore(
 		fetchGroups: vi.fn<MigrationStore['fetchGroups']>(async () =>
 			ofType('group').map((group) => ({
 				_id: group._id,
-				departmentId: refOf(group.department),
+				department: group.department as GroupSummary['department'],
+				isSportGroup: (group.isSportGroup as boolean | undefined) ?? null,
 				slug: (group.slug as { current?: string } | undefined)?.current ?? null,
 				title: (group.title as string | undefined) ?? null,
 			})),
@@ -117,6 +123,14 @@ function createFakeStore(
 				.filter((document) => referencesId(document, id))
 				.map(({ _id, _type }) => ({ _id, _type })),
 		),
+		fetchReleaseVersions: vi.fn<MigrationStore['fetchReleaseVersions']>(async () =>
+			all()
+				.filter(({ _id, _type }) => _id.startsWith('versions.') && MIGRATED_TYPES.test(_type))
+				.map(({ _id, _type }) => ({ _id, _type })),
+		),
+		hasImage: vi.fn<MigrationStore['hasImage']>(
+			async (fileName) => !missingImages.includes(fileName),
+		),
 		patchAffiliations: vi.fn<MigrationStore['patchAffiliations']>(async (id, rev, affiliations) => {
 			const person = lake.get(id);
 			if (!person || (person._rev ?? 'rev-0') !== rev) {
@@ -129,7 +143,7 @@ function createFakeStore(
 			write(next);
 		}),
 		unsetGroupsPageStats: vi.fn<MigrationStore['unsetGroupsPageStats']>(async () => {
-			for (const page of ofType('groupsPage')) {
+			for (const page of ofType('groupsPage').filter(({ _id }) => !_id.startsWith('versions.'))) {
 				const { stats: _stats, ...content } = page.content as Record<string, unknown>;
 				write({ ...page, content });
 			}

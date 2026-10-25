@@ -20,8 +20,17 @@ describe('the migration options', () => {
 		});
 	});
 
-	it('runs only the probe with --probe', () => {
-		expect(parseMigrationOptions(['--dataset', 'development', '--probe']).probe).toBe(true);
+	it('runs only the probe with --probe --no-dry-run', () => {
+		expect(
+			parseMigrationOptions(['--dataset', 'development', '--probe', '--no-dry-run']),
+		).toStrictEqual({ dataset: 'development', dryRun: false, probe: true });
+	});
+
+	// The probe writes, so it must never pass for a dry run.
+	it('requires --no-dry-run for the probe', () => {
+		expect(() => parseMigrationOptions(['--dataset', 'development', '--probe'])).toThrow(
+			'--probe legt zwei Testdokumente an und löscht sie wieder, braucht also --no-dry-run.',
+		);
 	});
 
 	it('requires the dataset', () => {

@@ -89,6 +89,11 @@ const DEPARTMENT_SEEDS: readonly DepartmentSeed[] = (
 	] satisfies SeedDefinition[]
 ).map((definition, index) => toSeed(definition, index));
 
+/** The department of every legacy group type, e.g. `group.soccer` → Fußball. */
+const SEED_BY_LEGACY_TYPE: ReadonlyMap<string, DepartmentSeed> = new Map(
+	DEPARTMENT_SEEDS.map((seed) => [seed.legacyType, seed]),
+);
+
 interface SeedDefinition {
 	/** The role email whose holders the department page lists as contact persons today. */
 	contactEmail: string;
@@ -116,5 +121,5 @@ interface DepartmentImages {
 	openGraph: string;
 }
 
-export { ADMIN_LEGACY_AFFILIATION, ADMIN_LEGACY_TYPE, DEPARTMENT_SEEDS };
+export { ADMIN_LEGACY_AFFILIATION, ADMIN_LEGACY_TYPE, DEPARTMENT_SEEDS, SEED_BY_LEGACY_TYPE };
 export type { DepartmentImages, DepartmentSeed };
