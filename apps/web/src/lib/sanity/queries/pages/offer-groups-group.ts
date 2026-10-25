@@ -11,11 +11,14 @@ const groupRedirectTarget = /* groq */ `{
 }`;
 
 /**
- * Filters a group that can be a redirect target: it has a department with a slug, and only its
- * published version counts, so a redirect never points at an address nobody has published yet.
+ * Filters a group that can be a redirect target: it has a slug of its own and a department with a
+ * slug, and it is no draft. A group without a slug would win the `[0]` of its candidate and then be
+ * rejected as an incomplete address, which hides a complete group behind it. Which versions are
+ * visible at all is the perspective's decision, see `departmentRedirectQuery`.
  */
 const publishedGroupWithDepartment = /* groq */ `
 	_type == 'group' &&
+	defined(slug.current) &&
 	defined(department->slug.current) &&
 	!(_id in path('drafts.**'))
 `;
@@ -110,7 +113,7 @@ const groupNewsQuery = defineQuery(`
  * Query to find where a group that used to have an address lives today
  *
  * Each candidate covers one way a group address goes out of date, and the most recently changed
- * group wins within a candidate:
+ * group wins within a candidate, with the id breaking a tie so every request answers the same:
  *
  * - `inDepartment`: only the department changed its slug, so the group still has `$slug`.
  * - `byPreviousPath`: the group changed its slug or its department, which recorded the address.
@@ -126,11 +129,11 @@ const groupRedirectQuery = defineQuery(`{
 		${publishedGroupWithDepartment} &&
 		slug.current == $slug &&
 		$department in department->previousSlugs
-	] | order(_updatedAt desc) [0] ${groupRedirectTarget},
+	] | order(_updatedAt desc, _id asc) [0] ${groupRedirectTarget},
 	"byPreviousPath": *[
 		${publishedGroupWithDepartment} &&
 		($department + "/" + $slug) in previousPaths
-	] | order(_updatedAt desc) [0] ${groupRedirectTarget},
+	] | order(_updatedAt desc, _id asc) [0] ${groupRedirectTarget},
 	"byDepartmentHistory": *[
 		${publishedGroupWithDepartment} &&
 		count(previousPaths[
@@ -139,7 +142,7 @@ const groupRedirectQuery = defineQuery(`{
 				*[${departmentOfUrl}].slug.current + *[${departmentOfUrl}].previousSlugs[]
 			)
 		]) > 0
-	] | order(_updatedAt desc) [0] ${groupRedirectTarget},
+	] | order(_updatedAt desc, _id asc) [0] ${groupRedirectTarget},
 }`);
 
 /**

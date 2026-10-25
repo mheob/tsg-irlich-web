@@ -20,6 +20,7 @@ const CONTENT = {
 	},
 	departments: [
 		{
+			description: null,
 			groups: [
 				{
 					_type: 'group',
@@ -40,6 +41,7 @@ const CONTENT = {
 			title: 'Fußball',
 		},
 		{
+			description: 'Hip-Hop\nund Showtanz für alle Altersklassen.',
 			groups: [
 				{
 					_type: 'group',
@@ -118,6 +120,20 @@ describe('llms.txt', () => {
 		);
 	});
 
+	it('describes the overview link of a department with its meta description on one line', async () => {
+		const text = await llmsTxt();
+
+		expect(text).toContain(
+			'- [Alle Gruppen: Tanzen](http://localhost:3000/angebot/tanzen): Hip-Hop und Showtanz für alle Altersklassen.',
+		);
+	});
+
+	it('leaves the overview link of a department without a meta description bare', async () => {
+		const text = await llmsTxt();
+
+		expect(text).toContain('- [Alle Gruppen: Fußball](http://localhost:3000/angebot/fussball)\n');
+	});
+
 	it('links the club pages and the machine-readable indexes', async () => {
 		const text = await llmsTxt();
 
@@ -168,7 +184,7 @@ describe('llms.txt', () => {
 	it('lists a department without groups by its overview alone', async () => {
 		const text = await llmsTxt({
 			...CONTENT,
-			departments: [{ groups: [], slug: 'kurse', title: 'Kurse' }],
+			departments: [{ description: null, groups: [], slug: 'kurse', title: 'Kurse' }],
 		});
 
 		expect(text).toContain(

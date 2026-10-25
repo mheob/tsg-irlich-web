@@ -148,6 +148,34 @@ describe('page metadata', () => {
 		});
 	});
 
+	// An image object the editors started but never gave a file has no URL, and it must not hide the
+	// image of the document, or the page would have no preview image at all.
+	it('falls back to the document image when the meta image has no file', async () => {
+		const { getPageMetadata } = await loadMetadata();
+
+		const metadata = getPageMetadata({
+			image: buildImage({ alt: 'Dokumentbild' }),
+			meta: { openGraphImage: buildImage({ alt: 'Meta-Bild', asset: undefined }) },
+			path: '/angebot/fussball',
+			title: 'Fußball',
+		});
+
+		expect(metadata.openGraph).toMatchObject({ images: { alt: 'Dokumentbild' } });
+	});
+
+	it('has no image when neither the meta image nor the document image has a file', async () => {
+		const { getPageMetadata } = await loadMetadata();
+
+		const metadata = getPageMetadata({
+			image: buildImage({ asset: undefined }),
+			meta: { openGraphImage: buildImage({ asset: undefined }) },
+			path: '/angebot/fussball',
+			title: 'Fußball',
+		});
+
+		expect(metadata.openGraph).toMatchObject({ images: [] });
+	});
+
 	it('has an empty description and no image when nothing provides them', async () => {
 		const { getPageMetadata } = await loadMetadata();
 

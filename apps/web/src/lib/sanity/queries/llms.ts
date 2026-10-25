@@ -7,8 +7,8 @@ import { defineQuery } from 'next-sanity';
  * linked through the slug of their department.
  *
  * @returns The club description, the contact details, the descriptions of the club and membership
- * pages, and every department in the order the offer shows them, each with its groups and their
- * meta descriptions
+ * pages, and every department in the order the offer shows them, each with its own meta description
+ * and its groups with theirs
  */
 const llmsTxtQuery = defineQuery(`
 	{
@@ -16,6 +16,7 @@ const llmsTxtQuery = defineQuery(`
 		"contact": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },
 		"departments": *[_type == 'department' && defined(slug.current)] | order(sortOrder asc) {
 			title,
+			"description": meta.metaDescription,
 			"slug": slug.current,
 			"groups": *[_type == 'group' && department._ref == ^._id] | order(sortOrder asc) {
 				_type,

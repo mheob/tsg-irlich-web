@@ -54,7 +54,11 @@ function buildDepartment(
 	return [
 		`## ${department.title}`,
 		'',
-		link(`Alle Gruppen: ${department.title}`, `${baseUrl}${departmentHref}`),
+		link(
+			`Alle Gruppen: ${department.title}`,
+			`${baseUrl}${departmentHref}`,
+			department.description,
+		),
 		...entries,
 		'',
 	];

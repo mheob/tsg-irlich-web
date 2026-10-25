@@ -97,7 +97,8 @@ interface PageMetadataOptions {
 /**
  * Builds the metadata of a content page.
  *
- * The editors' `meta` object wins over the document's own title, description and image. Every page
+ * The editors' `meta` object wins over the document's own title, description and image, as long as
+ * it provides one: an open graph image without a file falls back to the document's image. Every page
  * gets its canonical URL, the RSS feed and the complete site-wide open graph fields.
  *
  * @param options - The page's document parts and canonical path.
@@ -119,7 +120,10 @@ function getPageMetadata({
 }: PageMetadataOptions): Metadata {
 	const pageTitle = meta?.metaTitle ?? title ?? '';
 	const pageDescription = meta?.metaDescription ?? description ?? '';
-	const openGraphImage = meta?.openGraphImage ?? image;
+	// The first image that has a file wins: an image object without one has no URL, and taking it
+	// because it is set would leave the page without a preview image.
+	const openGraphImage =
+		getOpenGraphImageOptions(meta?.openGraphImage, title) ?? getOpenGraphImageOptions(image, title);
 
 	return {
 		alternates: { canonical: path, types: FEED_ALTERNATES },
@@ -127,7 +131,7 @@ function getPageMetadata({
 		openGraph: {
 			...SITE_OPEN_GRAPH,
 			description: pageDescription,
-			images: getOpenGraphImageOptions(openGraphImage, title) ?? [],
+			images: openGraphImage ?? [],
 			title: pageTitle,
 			url: path,
 			...openGraph,

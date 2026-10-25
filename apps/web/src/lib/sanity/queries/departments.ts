@@ -54,13 +54,17 @@ export const departmentPageQuery = defineQuery(`
 /**
  * Query to find the current slug of a department that used to have another one
  *
- * Drafts are left out, so a redirect never points at a slug nobody has published yet.
+ * The perspective decides which versions are candidates: visitors read the published one, so a
+ * redirect never points at a slug nobody has published yet. The id filter only matters where a draft
+ * shows up under its own id, as in the `raw` perspective. Two departments may list the same former
+ * slug, so the most recently updated one wins and the id breaks a tie, which makes every request
+ * answer the same.
  *
  * @param slug - The slug that no department uses any more
  * @returns The current slug of the department that used to have it, or `null` when none did
  */
 export const departmentRedirectQuery = defineQuery(`
-	*[_type == 'department' && $slug in previousSlugs && !(_id in path('drafts.**'))][0].slug.current
+	*[_type == 'department' && $slug in previousSlugs && !(_id in path('drafts.**'))] | order(_updatedAt desc, _id asc)[0].slug.current
 `);
 
 /**
