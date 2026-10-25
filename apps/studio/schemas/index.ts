@@ -1,6 +1,7 @@
 // oxlint-disable import/max-dependencies
 
 import author from './documents/author';
+import department from './documents/department';
 import echoIssue from './documents/echo.issue';
 import groupAdmin from './documents/group.admin';
 import groupChildrenGymnastics from './documents/group.children-gymnastics';
@@ -65,6 +66,7 @@ export const schemaTypes = [
 	honoraryMember,
 	role,
 
+	department,
 	groupAdmin,
 	groupChildrenGymnastics,
 	groupCourses,
