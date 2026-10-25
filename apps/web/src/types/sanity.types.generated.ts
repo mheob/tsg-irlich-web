@@ -1587,6 +1587,86 @@ export type DepartmentCardsQueryResult = Array<{
   title: string;
 }>;
 
+// Source: src/lib/sanity/queries/departments.ts
+// Variable: departmentPageQuery
+// Query: *[_type == 'department' && slug.current == $slug][0] {		_id,		title,		intro,		cardImage,		heroImage,		meta { metaTitle, metaDescription, openGraphImage},		stats,		"groups": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {			featuredImage,			icon,			overviewTitle,			"slug": slug.current,			title,		},		"contactPersons": contactPersons[]-> {			  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,		},	}
+export type DepartmentPageQueryResult = {
+  _id: string;
+  title: string;
+  intro: string | null;
+  cardImage: ExtendedImage;
+  heroImage: ExtendedImage | null;
+  meta: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    openGraphImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+  stats: Array<
+    {
+      _key: string;
+    } & Stats
+  > | null;
+  groups: Array<{
+    featuredImage: ExtendedImage;
+    icon:
+      | "Badminton"
+      | "Bodenturnen"
+      | "Cheerleading"
+      | "ElternKindTurnen"
+      | "Fitness"
+      | "Fussball"
+      | "Gehen"
+      | "Gymnastik"
+      | "Jujutsu"
+      | "Laufen"
+      | "Medaille"
+      | "Pilates"
+      | "Pokal"
+      | "RopeSkipping"
+      | "Sportakrobatik"
+      | "SportInGebaeuden"
+      | "StepAerobic"
+      | "Taekwondo"
+      | "Tanzen"
+      | "Tischtennis"
+      | "Trainer"
+      | "Turnen"
+      | "Wandern"
+      | "Yoga";
+    overviewTitle: string | null;
+    slug: string;
+    title: string;
+  }>;
+  contactPersons: Array<{
+    _id: string;
+    firstName: string;
+    lastName: string;
+    phone: string | null;
+    image: ExtendedImage;
+    contactAs: "both" | "email" | "phone" | "whatsapp";
+    email: string | null;
+    role: string | null;
+    taskDescription: string | null;
+  }> | null;
+} | null;
+
+// Source: src/lib/sanity/queries/departments.ts
+// Variable: departmentRedirectQuery
+// Query: *[_type == 'department' && $slug in previousSlugs && !(_id in path('drafts.**'))][0].slug.current
+export type DepartmentRedirectQueryResult = string | null;
+
+// Source: src/lib/sanity/queries/departments.ts
+// Variable: departmentSlugsQuery
+// Query: *[_type == 'department' && defined(slug.current)].slug.current
+export type DepartmentSlugsQueryResult = Array<string>;
+
 // Source: src/lib/sanity/queries/echo.ts
 // Variable: echoRenderStateQuery
 // Query: *[_id == $id][0] {		_id,		_rev,		"pdfRef": pdf.asset._ref,		"renderSource": render.source,		"renderStartedAt": render.startedAt	}
@@ -3797,131 +3877,6 @@ export type OfferGroupsPageQueryResult = {
   };
 } | null;
 
-// Source: src/lib/sanity/queries/pages/offer-groups.ts
-// Variable: offerGroupsPageGroupsQuery
-// Query: *[_type == $groupType][] | order(sortOrder asc) {		icon,		featuredImage,		overviewTitle,		'slug': slug.current,		title,	}
-export type OfferGroupsPageGroupsQueryResult = Array<
-  | {
-      icon:
-        | "Badminton"
-        | "Bodenturnen"
-        | "Cheerleading"
-        | "ElternKindTurnen"
-        | "Fitness"
-        | "Fussball"
-        | "Gehen"
-        | "Gymnastik"
-        | "Jujutsu"
-        | "Laufen"
-        | "Medaille"
-        | "Pilates"
-        | "Pokal"
-        | "RopeSkipping"
-        | "Sportakrobatik"
-        | "SportInGebaeuden"
-        | "StepAerobic"
-        | "Taekwondo"
-        | "Tanzen"
-        | "Tischtennis"
-        | "Trainer"
-        | "Turnen"
-        | "Wandern"
-        | "Yoga";
-      featuredImage: ExtendedImage;
-      overviewTitle: string | null;
-      slug: string;
-      title: string;
-    }
-  | {
-      icon: null;
-      featuredImage: MainImage;
-      overviewTitle: null;
-      slug: string;
-      title: string;
-    }
-  | {
-      icon: null;
-      featuredImage: null;
-      overviewTitle: null;
-      slug: null;
-      title: null;
-    }
-  | {
-      icon: null;
-      featuredImage: null;
-      overviewTitle: null;
-      slug: null;
-      title: string;
-    }
-  | {
-      icon: null;
-      featuredImage: null;
-      overviewTitle: null;
-      slug: null;
-      title: string | null;
-    }
-  | {
-      icon: null;
-      featuredImage: null;
-      overviewTitle: null;
-      slug: string;
-      title: string;
-    }
-  | {
-      icon: null;
-      featuredImage: null;
-      overviewTitle: null;
-      slug: string | null;
-      title: string;
-    }
-  | {
-      icon:
-        | "Badminton"
-        | "Bodenturnen"
-        | "Cheerleading"
-        | "ElternKindTurnen"
-        | "Fitness"
-        | "Fussball"
-        | "Gehen"
-        | "Gymnastik"
-        | "Jujutsu"
-        | "Laufen"
-        | "Medaille"
-        | "Pilates"
-        | "Pokal"
-        | "RopeSkipping"
-        | "Sportakrobatik"
-        | "SportInGebaeuden"
-        | "StepAerobic"
-        | "Taekwondo"
-        | "Tanzen"
-        | "Tischtennis"
-        | "Trainer"
-        | "Turnen"
-        | "Wandern"
-        | "Yoga";
-      featuredImage: null;
-      overviewTitle: null;
-      slug: string;
-      title: string;
-    }
->;
-
-// Source: src/lib/sanity/queries/pages/offer-groups.ts
-// Variable: offerGroupsPageContactPersonsQuery
-// Query: *[_type == 'person'][affiliations[0].role->email == $email] {		  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,	}
-export type OfferGroupsPageContactPersonsQueryResult = Array<{
-  _id: string;
-  firstName: string;
-  lastName: string;
-  phone: string | null;
-  image: ExtendedImage;
-  contactAs: "both" | "email" | "phone" | "whatsapp";
-  email: string | null;
-  role: string | null;
-  taskDescription: string | null;
-}>;
-
 // Source: src/lib/sanity/queries/pages/offer.ts
 // Variable: offerPageQuery
 // Query: *[_type == 'departmentsPage'][0] {	...,	content {		...,		contactPersonsSection {			...,			contactPersons[]-> {				  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,			}		}	}}
@@ -4442,6 +4397,9 @@ export type SitemapEchoIssuesQueryResult = Array<{
 declare global {
   interface SanityQueries {
     "\n\t*[_type == 'department' && defined(slug.current)] | order(sortOrder asc) {\n\t\t_id,\n\t\tcardImage,\n\t\ticon,\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t}\n": DepartmentCardsQueryResult;
+    '\n\t*[_type == \'department\' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t"groups": *[_type == \'group\' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t"slug": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t"contactPersons": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n': DepartmentPageQueryResult;
+    "\n\t*[_type == 'department' && $slug in previousSlugs && !(_id in path('drafts.**'))][0].slug.current\n": DepartmentRedirectQueryResult;
+    "\n\t*[_type == 'department' && defined(slug.current)].slug.current\n": DepartmentSlugsQueryResult;
     '\n\t*[_id == $id][0] {\n\t\t_id,\n\t\t_rev,\n\t\t"pdfRef": pdf.asset._ref,\n\t\t"renderSource": render.source,\n\t\t"renderStartedAt": render.startedAt\n\t}\n': EchoRenderStateQueryResult;
     "\n\t{\n\t\t\"aboutUs\": *[_type == 'aboutUs'][0].meta.metaDescription,\n\t\t\"contact\": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },\n\t\t\"description\": *[_type == 'home'][0].meta.metaDescription,\n\t\t\"groups\": *[_type in [\n\t\t\t'group.soccer',\n\t\t\t'group.children-gymnastics',\n\t\t\t'group.courses',\n\t\t\t'group.taekwondo',\n\t\t\t'group.dance',\n\t\t\t'group.other-sports',\n\t\t]] | order(sortOrder asc) {\n\t\t\t_type,\n\t\t\t\"description\": meta.metaDescription,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"membership\": *[_type == 'membership'][0].meta.metaDescription,\n\t}\n": LlmsTxtQueryResult;
     '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_type,\n\t\t\t\n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n,\n\t\t\thasTwoColumns,\n\t\t\t"children": coalesce(children[] { \n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n, description }, [])\n\t\t}\n\t}\n': MainNavigationQueryResult;
@@ -4469,8 +4427,6 @@ declare global {
     '\n\t*[\n\t\t_type == \'person\' &&\n\t\tdefined(affiliations[team->slug.current == $slug][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t"email": affiliations[team->slug.current == $slug][0].team->email,\n\t\t"role":  affiliations[team->slug.current == $slug][0].role->title,\n\t\t"team":  affiliations[team->slug.current == $slug][0].team->title,\n\t\t"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,\n\t}\n': OfferGroupsGroupPageContactPersonsQueryResult;
     '\n\t*[_type == $groupType && slug.current == $slug][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"articles": *[_type == \'news.article\' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n': OfferGroupsGroupPageNewsQueryResult;
     "*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
-    "\n\t*[_type == $groupType][] | order(sortOrder asc) {\n\t\ticon,\n\t\tfeaturedImage,\n\t\toverviewTitle,\n\t\t'slug': slug.current,\n\t\ttitle,\n\t}\n": OfferGroupsPageGroupsQueryResult;
-    '\n\t*[_type == \'person\'][affiliations[0].role->email == $email] {\n\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t}\n': OfferGroupsPageContactPersonsQueryResult;
     '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
     '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tintroText { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': PrivacyPageQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName, email },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;

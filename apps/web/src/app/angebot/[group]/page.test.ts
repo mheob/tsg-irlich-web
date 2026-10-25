@@ -1,60 +1,117 @@
-import type { StaticImageData } from 'next/image';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
+import type { ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
-import GroupsPage, { generateMetadata } from '@/app/angebot/[group]/page';
+import DepartmentPage, { generateMetadata, generateStaticParams } from '@/app/angebot/[group]/page';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Stats } from '@/components/section/stats';
-import type { client } from '@/lib/sanity/client';
 import {
-	offerGroupsPageContactPersonsQuery,
-	offerGroupsPageGroupsQuery,
-	offerGroupsPageQuery,
-} from '@/lib/sanity/queries/pages/offer-groups';
+	departmentPageQuery,
+	departmentRedirectQuery,
+	departmentSlugsQuery,
+} from '@/lib/sanity/queries/departments';
+import { offerGroupsPageQuery } from '@/lib/sanity/queries/pages/offer-groups';
+import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
 
 import { findElement } from '../../../../test-utils/react-tree';
-import { clientFetchMock } from '../../../../test-utils/sanity-client-mock';
+import { sanityFetchMock } from '../../../../test-utils/sanity-live-mock';
 import { Groups } from './_sections/groups';
+// `src/lib/sanity/api.ts` asserts the project variables at import time, and the page reaches it
+// through `urlForImage`. `vi.hoisted` runs before the imports are evaluated; `globalThis` because
+// the `node:process` binding is not initialized yet at that point.
+vi.hoisted(() => {
+	globalThis.process.env.NEXT_PUBLIC_SANITY_DATASET = 'test-dataset';
+	globalThis.process.env.NEXT_PUBLIC_SANITY_PROJECT_ID = 'test-project';
+});
 
-vi.mock(import('@/lib/sanity/client'), () => ({
-	client: {
-		config: () => ({ dataset: 'test-dataset', projectId: 'test-project' }),
-		fetch: vi.fn(),
-	} as unknown as typeof client,
-}));
+// `defineLive` reads `SANITY_API_READ_TOKEN` at import time and would open a live connection.
+vi.mock(import('@/lib/sanity/live'), () => ({ sanityFetch: vi.fn() }));
 
+// Both helpers end the render by throwing, like they do in Next.js.
 vi.mock(import('next/navigation'), () => ({
 	notFound: vi.fn(() => {
 		throw new Error('NEXT_NOT_FOUND');
 	}),
+	permanentRedirect: vi.fn(() => {
+		throw new Error('NEXT_REDIRECT');
+	}),
 }));
 
-const mockedFetch = clientFetchMock();
+const mockedSanityFetch = sanityFetchMock();
 
-const PAGE = {
-	content: {
-		contactPersonsSection: { title: 'Ansprechpartner' },
-		groupsSection: { title: 'Unsere Gruppen' },
-		stats: [{ label: 'Gruppen', value: 12 }],
-	},
-	metaDescription: undefined,
-	subtitle: 'Alle Gruppen',
-	title: 'Angebot',
-};
+/** The `image-<id>-<width>x<height>-<format>` shape `@sanity/image-url` requires. */
+const HERO_ASSET = 'image-heroaaa111-800x600-jpg';
+const CARD_ASSET = 'image-cardbbb222-800x600-jpg';
+const OPEN_GRAPH_ASSET = 'image-ogccc333-800x600-jpg';
 
-interface GroupResults {
-	contactPersons?: null | unknown[];
-	groups?: unknown[];
-	page?: unknown;
+function sanityImage(alt: string, asset?: string): Record<string, unknown> {
+	return {
+		_type: 'extendedImage',
+		alt,
+		...(asset && { asset: { _ref: asset, _type: 'reference' } }),
+	};
 }
 
-function mockSanity({ contactPersons = [], groups = [], page = PAGE }: GroupResults = {}): void {
+const STATS = [{ _key: 'teams', _type: 'stats', title: 'Teams', value: 11 }];
+
+const PERSONS = [
+	{ _id: 'person-2', firstName: 'Zoe' },
+	{ _id: 'person-1', firstName: 'Anna' },
+];
+
+const GROUPS = [
+	{ featuredImage: sanityImage('Herren', CARD_ASSET), slug: 'herren', title: 'Herren' },
+	{ featuredImage: sanityImage('Damen', CARD_ASSET), slug: 'damen', title: 'Damen' },
+];
+
+const DEPARTMENT = {
+	_id: 'department-fussball',
+	cardImage: sanityImage('Kachelbild Fußball', CARD_ASSET),
+	contactPersons: PERSONS,
+	groups: GROUPS,
+	heroImage: sanityImage('Hero Fußball', HERO_ASSET),
+	intro: 'Fußball in Irlich',
+	meta: null,
+	stats: STATS,
+	title: 'Fußball',
+};
+
+const GROUPS_PAGE = {
+	content: {
+		contactPersonsSection: { subtitle: 'Wir helfen', title: 'Ansprechpartner' },
+		groupsSection: {
+			intro: 'Gemeinsames Intro',
+			subtitle: 'Alle Gruppen',
+			title: 'Unsere Gruppen',
+		},
+	},
+	metaDescription: 'Gemeinsame Beschreibung',
+	subtitle: 'Wir bieten dir',
+	title: 'Bereich:',
+};
+
+interface SanityResults {
+	department?: unknown;
+	groupsPage?: unknown;
+	redirect?: null | string;
+	slugs?: string[];
+}
+
+// The queries run inside one `Promise.all`, so keying on the query keeps the fixtures independent
+// of the order they resolve in.
+function mockSanity({
+	department = DEPARTMENT,
+	groupsPage = GROUPS_PAGE,
+	redirect = null,
+	slugs = [],
+}: SanityResults = {}): void {
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
-	mockedFetch.mockImplementation(async (query: string) => {
-		if (query === offerGroupsPageQuery) return page;
-		if (query === offerGroupsPageGroupsQuery) return groups;
-		if (query === offerGroupsPageContactPersonsQuery) return contactPersons;
+	mockedSanityFetch.mockImplementation(async ({ query }) => {
+		if (query === departmentPageQuery) return { data: department };
+		if (query === offerGroupsPageQuery) return { data: groupsPage };
+		if (query === departmentRedirectQuery) return { data: redirect };
+		if (query === departmentSlugsQuery) return { data: slugs };
 		throw new Error(`unexpected query: ${query}`);
 	});
 }
@@ -65,23 +122,61 @@ function routeProps(group = 'fussball'): PageProps<'/angebot/[group]'> {
 }
 
 /**
- * Reads the parameters a given query was called with.
+ * Lists the queries the page sent to Sanity so far.
  *
- * @param query - The query to look for among the recorded calls.
- * @returns The parameters of that call, or `undefined` when it never ran.
+ * @returns The queries, in the order they were sent.
  */
-function paramsOf(query: string): Record<string, unknown> | undefined {
-	return mockedFetch.mock.calls.find(([called]) => called === query)?.[1];
+function queriesSent(): string[] {
+	return mockedSanityFetch.mock.calls.map(([{ query }]) => query);
+}
+
+async function renderPage(
+	department: Record<string, unknown> = {},
+	group = 'fussball',
+): Promise<ReactNode> {
+	mockSanity({ department: { ...DEPARTMENT, ...department } });
+	return DepartmentPage(routeProps(group));
 }
 
 describe('department page', () => {
 	afterEach(() => {
-		mockedFetch.mockReset();
+		mockedSanityFetch.mockReset();
+		vi.mocked(notFound).mockClear();
+		vi.mocked(permanentRedirect).mockClear();
+	});
+
+	describe('static params', () => {
+		it('pre-renders every department by its slug', async () => {
+			mockSanity({ slugs: ['fussball', 'tanzen'] });
+
+			await expect(generateStaticParams()).resolves.toStrictEqual([
+				{ group: 'fussball' },
+				{ group: 'tanzen' },
+			]);
+		});
+
+		it('reads the published slugs without stega encoding', async () => {
+			mockSanity();
+
+			await generateStaticParams();
+
+			expect(mockedSanityFetch).toHaveBeenCalledWith({
+				perspective: 'published',
+				query: departmentSlugsQuery,
+				stega: false,
+			});
+		});
 	});
 
 	describe('metadata', () => {
-		it('is empty when the document is missing', async () => {
-			mockSanity({ page: null });
+		it('is empty when the department does not exist', async () => {
+			mockSanity({ department: null });
+
+			await expect(generateMetadata(routeProps('gibt-es-nicht'))).resolves.toStrictEqual({});
+		});
+
+		it('is empty when the shared page is missing', async () => {
+			mockSanity({ groupsPage: null });
 
 			await expect(generateMetadata(routeProps())).resolves.toStrictEqual({});
 		});
@@ -90,15 +185,16 @@ describe('department page', () => {
 			mockSanity();
 
 			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
+				openGraph: { title: 'Fußball bei der TSG Irlich' },
 				title: { absolute: 'Fußball bei der TSG Irlich' },
 			});
 		});
 
-		it('falls back to a generic title for an unknown department', async () => {
-			mockSanity();
+		it('prefers the meta title of the department', async () => {
+			mockSanity({ department: { ...DEPARTMENT, meta: { metaTitle: 'Fußball in Irlich' } } });
 
-			await expect(generateMetadata(routeProps('gibt-es-nicht'))).resolves.toMatchObject({
-				title: { absolute: 'Sport bei der TSG Irlich' },
+			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
+				title: { absolute: 'Fußball in Irlich' },
 			});
 		});
 
@@ -110,127 +206,233 @@ describe('department page', () => {
 			expect(metadata.alternates?.canonical).toBe('/angebot/fussball');
 		});
 
-		it('takes the description from the document', async () => {
-			mockSanity({ page: { ...PAGE, metaDescription: 'Alle Fußballgruppen' } });
+		it('takes the description from the shared page', async () => {
+			mockSanity();
 
 			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
-				description: 'Alle Fußballgruppen',
-				openGraph: { description: 'Alle Fußballgruppen' },
+				description: 'Gemeinsame Beschreibung',
+				openGraph: { description: 'Gemeinsame Beschreibung' },
 			});
 		});
 
-		it('uses an empty description when the document has none', async () => {
-			mockSanity();
+		it('prefers the meta description of the department', async () => {
+			mockSanity({
+				department: { ...DEPARTMENT, meta: { metaDescription: 'Alles rund um den Fußball' } },
+			});
 
-			await expect(generateMetadata(routeProps())).resolves.toMatchObject({ description: '' });
+			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
+				description: 'Alles rund um den Fußball',
+			});
 		});
 
-		it('shows the department image as the open graph image', async () => {
+		it('shows the card image as the open graph image', async () => {
 			mockSanity();
 
 			const metadata = await generateMetadata(routeProps());
 
-			expect(metadata.openGraph?.images).toBeDefined();
+			expect(metadata.openGraph?.images).toMatchObject({
+				alt: 'Kachelbild Fußball',
+				height: 630,
+				width: 1200,
+			});
+		});
+
+		it('prefers the open graph image from the meta fields', async () => {
+			mockSanity({
+				department: {
+					...DEPARTMENT,
+					meta: {
+						openGraphImage: {
+							_type: 'image',
+							alt: 'Open Graph Bild',
+							asset: { _ref: OPEN_GRAPH_ASSET, _type: 'reference' },
+						},
+					},
+				},
+			});
+
+			const metadata = await generateMetadata(routeProps());
+
+			expect(metadata.openGraph?.images).toMatchObject({ alt: 'Open Graph Bild' });
+		});
+
+		it('asks Sanity for strings without stega encoding', async () => {
+			mockSanity();
+
+			await generateMetadata(routeProps());
+
+			expect(
+				mockedSanityFetch.mock.calls.map(([options]) => [options.query, options.stega]),
+			).toStrictEqual([
+				[departmentPageQuery, false],
+				[offerGroupsPageQuery, false],
+			]);
+		});
+
+		it('looks the department up by the slug of the URL', async () => {
+			mockSanity();
+
+			await generateMetadata(routeProps('tanzen'));
+
+			expect(mockedSanityFetch).toHaveBeenCalledWith({
+				params: { slug: 'tanzen' },
+				query: departmentPageQuery,
+				stega: false,
+			});
 		});
 	});
 
-	describe('rendering', () => {
-		it('gives up for an unknown department', async () => {
-			mockSanity();
+	describe('hero', () => {
+		it('heads the page with the shared title and the department', async () => {
+			const hero = findElement(await renderPage(), Hero);
 
-			await expect(GroupsPage(routeProps('gibt-es-nicht'))).rejects.toThrow('NEXT_NOT_FOUND');
-			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
+			expect(hero?.props).toMatchObject({ subTitle: 'Wir bieten dir', title: 'Bereich: Fußball' });
 		});
 
-		it('gives up when the document is missing', async () => {
-			mockSanity({ page: null });
+		it('shows the hero image of the department', async () => {
+			const image = findElement(await renderPage(), Hero)?.props.image;
 
-			await expect(GroupsPage(routeProps())).rejects.toThrow('NEXT_NOT_FOUND');
+			expect(image?.alt).toBe('Hero Fußball');
+			expect(image?.src).toContain('heroaaa111');
 		});
 
-		it('heads the page with the document title and the department', async () => {
-			mockSanity();
+		it('crops the image to the full width of the hero', async () => {
+			const image = findElement(await renderPage(), Hero)?.props.image;
 
-			const hero = findElement(await GroupsPage(routeProps()), Hero);
-
-			expect(hero?.props).toMatchObject({ subTitle: 'Alle Gruppen', title: 'Angebot Fußball' });
+			expect(image?.src).toContain('w=1920');
+			expect(image?.src).toContain('h=600');
 		});
 
-		it('shows the full-width hero image of the department, not its card image', async () => {
-			mockSanity();
+		it('falls back to the card image when the department has no hero image', async () => {
+			const image = findElement(await renderPage({ heroImage: null }), Hero)?.props.image;
 
-			const hero = findElement(await GroupsPage(routeProps('taekwondo')), Hero);
-			// The asset stub of the Vitest config resolves an image import to its path.
-			const src = (hero?.props.image?.src as StaticImageData | undefined)?.src;
-
-			expect(hero?.props.image?.alt).toBe('Taekwondo');
-			expect(src).toContain('/groups/hero/taekwondo.webp');
+			expect(image?.alt).toBe('Kachelbild Fußball');
+			expect(image?.src).toContain('cardbbb222');
 		});
 
-		it('asks for the groups of the current department', async () => {
-			mockSanity();
+		it('falls back to the card image when the hero image has no asset', async () => {
+			const hero = findElement(await renderPage({ heroImage: sanityImage('Leer') }), Hero);
 
-			await GroupsPage(routeProps('taekwondo'));
-
-			expect(paramsOf(offerGroupsPageGroupsQuery)).toStrictEqual({
-				groupType: 'group.taekwondo',
-			});
+			expect(hero?.props.image?.alt).toBe('Kachelbild Fußball');
+			expect(hero?.props.image?.src).toContain('cardbbb222');
 		});
 
-		it('asks for the soccer department contact on the soccer page', async () => {
-			mockSanity();
+		it('falls back to the offer image when neither image has an asset', async () => {
+			const hero = findElement(
+				await renderPage({ cardImage: sanityImage('Leer'), heroImage: sanityImage('Auch leer') }),
+				Hero,
+			);
 
-			await GroupsPage(routeProps());
-
-			expect(paramsOf(offerGroupsPageContactPersonsQuery)).toMatchObject({
-				email: 'fussball@tsg-irlich.de',
-			});
+			expect(hero?.props.image).toStrictEqual(OFFER_FALLBACK_IMAGE);
 		});
 
-		it('asks for the mass sport contact on every other department page', async () => {
-			mockSanity();
+		it('describes the image with the department title when it has no alt text', async () => {
+			const hero = findElement(await renderPage({ heroImage: sanityImage('', HERO_ASSET) }), Hero);
 
-			await GroupsPage(routeProps('tanzen'));
-
-			expect(paramsOf(offerGroupsPageContactPersonsQuery)).toMatchObject({
-				email: 'breitensport@tsg-irlich.de',
-			});
+			expect(hero?.props.image).toMatchObject({ alt: 'Fußball' });
 		});
+	});
 
-		it('hands the groups section the department and its groups', async () => {
-			mockSanity({ groups: [{ _id: 'group-1', title: 'Herren 1' }] });
-
-			const groups = findElement(await GroupsPage(routeProps()), Groups);
+	describe('groups section', () => {
+		it('hands the section the department and its groups', async () => {
+			const groups = findElement(await renderPage(), Groups);
 
 			expect(groups?.props).toMatchObject({
-				currentDepartment: { _type: 'group.soccer' },
-				groups: [{ _id: 'group-1' }],
+				departmentSlug: 'fussball',
+				departmentTitle: 'Fußball',
+				groups: [{ slug: 'herren' }, { slug: 'damen' }],
+				subtitle: 'Alle Gruppen',
 				title: 'Unsere Gruppen',
 			});
 		});
 
-		it('lists the contact persons the query returned', async () => {
-			mockSanity({ contactPersons: [{ _id: 'person-1' }] });
+		it('shows the intro of the department', async () => {
+			const groups = findElement(await renderPage(), Groups);
 
-			const persons = findElement(await GroupsPage(routeProps()), ContactPersons);
-
-			expect(persons?.props.contactPersons).toMatchObject([{ _id: 'person-1' }]);
+			expect(groups?.props.intro).toBe('Fußball in Irlich');
 		});
 
-		it('falls back to no contact persons when the query returned nothing', async () => {
-			mockSanity({ contactPersons: null });
+		it('shows the shared intro when the department has none', async () => {
+			const groups = findElement(await renderPage({ intro: null }), Groups);
 
-			const persons = findElement(await GroupsPage(routeProps()), ContactPersons);
+			expect(groups?.props.intro).toBe('Gemeinsames Intro');
+		});
+	});
 
-			expect(persons?.props.contactPersons).toStrictEqual([]);
+	describe('statistics', () => {
+		it('shows the statistics of the department', async () => {
+			const stats = findElement(await renderPage(), Stats);
+
+			expect(stats?.props.stats).toStrictEqual(STATS);
 		});
 
-		it('shows the statistics of the document', async () => {
-			mockSanity();
-
-			const stats = findElement(await GroupsPage(routeProps()), Stats);
-
-			expect(stats?.props.stats).toMatchObject([{ label: 'Gruppen' }]);
+		it.each([
+			['none', null],
+			['an empty list', []],
+		])('renders no statistics band for %s', async (_description, stats) => {
+			expect(findElement(await renderPage({ stats }), Stats)).toBeUndefined();
 		});
+	});
+
+	describe('contact persons', () => {
+		it('lists the persons in the order of the department', async () => {
+			const persons = findElement(await renderPage(), ContactPersons);
+
+			expect(persons?.props).toMatchObject({
+				contactPersons: [{ _id: 'person-2' }, { _id: 'person-1' }],
+				title: 'Ansprechpartner',
+			});
+		});
+
+		it.each([
+			['none', null],
+			['an empty list', []],
+		])('renders no contact block for %s', async (_description, contactPersons) => {
+			expect(findElement(await renderPage({ contactPersons }), ContactPersons)).toBeUndefined();
+		});
+	});
+
+	describe('unknown slug', () => {
+		it('redirects permanently from a former slug to the current one', async () => {
+			mockSanity({ department: null, redirect: 'tanzen' });
+
+			await expect(DepartmentPage(routeProps('alt-tanzen'))).rejects.toThrow('NEXT_REDIRECT');
+			expect(vi.mocked(permanentRedirect)).toHaveBeenCalledWith('/angebot/tanzen');
+			expect(vi.mocked(notFound)).not.toHaveBeenCalled();
+		});
+
+		it('looks the former slug up without stega encoding', async () => {
+			mockSanity({ department: null, redirect: 'tanzen' });
+
+			await expect(DepartmentPage(routeProps('alt-tanzen'))).rejects.toThrow();
+
+			expect(mockedSanityFetch).toHaveBeenCalledWith({
+				params: { slug: 'alt-tanzen' },
+				query: departmentRedirectQuery,
+				stega: false,
+			});
+		});
+
+		it('answers a slug no department ever had with 404', async () => {
+			mockSanity({ department: null });
+
+			await expect(DepartmentPage(routeProps('gibt-es-nicht'))).rejects.toThrow('NEXT_NOT_FOUND');
+			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
+			expect(vi.mocked(permanentRedirect)).not.toHaveBeenCalled();
+		});
+
+		// Review focus 3: the current owner of a slug wins over the department that used to have it.
+		it('never looks up a redirect for a slug a department uses today', async () => {
+			await renderPage({}, 'fussball');
+
+			expect(queriesSent()).not.toContain(departmentRedirectQuery);
+			expect(vi.mocked(permanentRedirect)).not.toHaveBeenCalled();
+		});
+	});
+
+	it('gives up when the shared page is missing', async () => {
+		mockSanity({ groupsPage: null });
+
+		await expect(DepartmentPage(routeProps())).rejects.toThrow('NEXT_NOT_FOUND');
 	});
 });

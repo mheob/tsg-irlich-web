@@ -1,17 +1,27 @@
+import { stegaClean } from 'next-sanity';
+
 import { cn } from '@tsgi-web/shared';
 
 import { GroupCard } from '@/components/ui/group-card';
 import { SectionHeader } from '@/components/ui/section-header';
-import type { GroupsPage, Groups as GroupsType } from '@/types/sanity.types';
-import type { GroupSection } from '@/utils/groups';
+import type { DepartmentPageQueryResult, GroupsPage } from '@/types/sanity.types';
+import { getInternalHref } from '@/utils/links';
 
 import styles from './groups.module.css';
 
-type GroupsProps = GroupsPage['content']['groupsSection'] &
-	GroupsType & { currentDepartment?: GroupSection };
+type DepartmentGroup = NonNullable<DepartmentPageQueryResult>['groups'][number];
+
+type GroupsProps = GroupsPage['content']['groupsSection'] & {
+	departmentSlug: string;
+	departmentTitle: string;
+	// The icon is a plain string here, because `sanityFetch` brands every string as one that may carry
+	// stega characters. The card gets it cleaned.
+	groups: (Omit<DepartmentGroup, 'icon'> & { icon: string })[];
+};
 
 export function Groups({
-	currentDepartment,
+	departmentSlug,
+	departmentTitle,
 	groups,
 	intro,
 	subtitle,
@@ -23,13 +33,7 @@ export function Groups({
 				<SectionHeader
 					title={
 						<>
-							{title}
-							{currentDepartment?.title && currentDepartment.title.trim() !== '' && (
-								<>
-									{' '}
-									<span className="text-primary">{currentDepartment.title.trim()}</span>
-								</>
-							)}
+							{title} <span className="text-primary">{departmentTitle}</span>
 						</>
 					}
 					subTitle={subtitle}
@@ -40,17 +44,20 @@ export function Groups({
 				</SectionHeader>
 
 				<div className="my-6 grid grid-cols-1 gap-4 md:mt-24 md:grid-cols-2 md:gap-7 xl:grid-cols-3">
-					{groups?.map(({ featuredImage, slug, ...group }) =>
-						// A group without a slug, or outside a department, has no page to link to
-						slug && currentDepartment ? (
+					{groups.map(({ featuredImage, icon, slug, ...group }) => {
+						const href = getInternalHref({ _type: 'group', department: departmentSlug, slug });
+
+						// A group whose department has no slug has no page to link to
+						return href ? (
 							<GroupCard
 								{...group}
-								href={`${currentDepartment.slug}/${slug}`}
+								href={href}
+								icon={stegaClean(icon)}
 								image={featuredImage}
 								key={slug}
 							/>
-						) : null,
-					)}
+						) : null;
+					})}
 				</div>
 			</div>
 		</section>

@@ -1,3 +1,4 @@
+import type { LivePerspective } from 'next-sanity/live';
 import { vi } from 'vite-plus/test';
 import type { MockedFunction } from 'vite-plus/test';
 
@@ -6,6 +7,7 @@ import { sanityFetch } from '@/lib/sanity/live';
 /** A `sanityFetch` call as the previewable routes make it. */
 type SanityFetch = (options: {
 	params?: Record<string, unknown>;
+	perspective?: LivePerspective;
 	query: string;
 	stega?: boolean;
 }) => Promise<{ data: unknown }>;
