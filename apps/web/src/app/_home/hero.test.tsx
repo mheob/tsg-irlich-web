@@ -6,10 +6,6 @@ import type { SocialMediaQueryResult } from '@/types/sanity.types';
 import { renderWithUser } from '../../../test-utils/render';
 import { Hero } from './hero';
 
-// Until the visitor interacts with it, every `ContactLink` reports this generic name instead of
-// its target — see `src/components/with-logic/contact-link.test.tsx`.
-const CONTACT_LINK_NAME = 'Kontaktlink - tippen zum Anzeigen';
-
 function buildSocialMedia(fields: Record<string, string>): SocialMediaQueryResult {
 	// The generated result type carries the document meta fields as well.
 	return fields as unknown as SocialMediaQueryResult;
@@ -64,6 +60,8 @@ describe('the hero of the home page', () => {
 
 		const navigation = getByRole('navigation', { name: 'Social Media' });
 
-		expect(within(navigation).getAllByRole('button', { name: CONTACT_LINK_NAME })).toHaveLength(2);
+		expect(within(navigation).getAllByRole('button')).toHaveLength(2);
+		expect(within(navigation).getByRole('button', { name: 'facebook' })).not.toBeNull();
+		expect(within(navigation).getByRole('button', { name: 'instagram' })).not.toBeNull();
 	});
 });
