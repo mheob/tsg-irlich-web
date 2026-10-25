@@ -23,6 +23,16 @@ const INTERNAL_LINK_TARGETS: { type: string }[] = [
 	{ type: 'imprint' },
 ];
 
+/**
+ * Builds the list preview of an internal link, e.g. an entry of the legal menu.
+ *
+ * @param selection - The selected fields.
+ * @returns The title of the linked page and a subtitle naming the link type.
+ */
+function prepareInternalLink(selection: InternalLinkSelection): InternalLinkPreview {
+	return { subtitle: 'Interne Seite', title: selection.title ?? 'Keine Seite ausgewählt' };
+}
+
 const internalLink = defineField({
 	fields: [
 		{
@@ -36,9 +46,22 @@ const internalLink = defineField({
 	],
 	icon: LinkIcon,
 	name: 'internalLink',
+	preview: {
+		prepare: prepareInternalLink,
+		select: { title: 'link.title' },
+	},
 	title: 'Internal Link',
 	type: 'object',
 });
+
+interface InternalLinkSelection {
+	title?: string;
+}
+
+interface InternalLinkPreview {
+	subtitle: string;
+	title: string;
+}
 
 export default internalLink;
 export { INTERNAL_LINK_TARGETS };
