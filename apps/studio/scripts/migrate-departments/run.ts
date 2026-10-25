@@ -1,7 +1,14 @@
 import { buildDepartmentDocument, migrateAffiliations, toGroupDocument } from './build';
 import type { Affiliation, LegacyGroupDocument, StatsItem } from './build';
-import { isOrphanedGroup, isReleaseVersion, toPublishedId } from './documents';
+import {
+	isOrphanedGroup,
+	isPublished,
+	isReleaseVersion,
+	toNewGroupId,
+	toPublishedId,
+} from './documents';
 import { collectPaths } from './paths';
+import { isAffiliationList, referencesId, rewriteDocumentReferences } from './references';
 import { ADMIN_LEGACY_TYPE, DEPARTMENT_SEEDS, SEED_BY_LEGACY_TYPE } from './seeds';
 import type { DepartmentImages, DepartmentSeed } from './seeds';
 import type {
@@ -10,12 +17,15 @@ import type {
 	GroupSummary,
 	MigrationStore,
 	PersonDocument,
+	RawDocument,
 } from './store';
 import { findGroupsWithoutDepartment } from './verify';
 
 /** Stands in for an asset id in a dry run, which uploads nothing. */
 const DRY_RUN_ASSET_PREFIX = 'probelauf-';
 const IMAGE_FOLDER = 'scripts/migrate-departments/images';
+
+const LEGACY_TYPE_PREFIX = 'group.';
 
 const DEPARTMENT_ID_BY_LEGACY: ReadonlyMap<string, string> = new Map(
 	DEPARTMENT_SEEDS.map((seed) => [seed.legacyAffiliation, seed.id]),
@@ -34,6 +44,31 @@ function withoutReleaseVersions<Document extends { _id: string }>(
 }
 
 /**
+ * The legacy groups the migration moves, each with its department: every `group.<x>` with a known
+ * type. `group.admin` and unknown types have no department and stay out.
+ *
+ * @param legacyGroups - Every `group.<x>` document, published and draft.
+ * @returns The groups with their seeds.
+ */
+function migratableGroups(legacyGroups: readonly LegacyGroupDocument[]): MigratableGroup[] {
+	return legacyGroups.flatMap((group) => {
+		const seed = SEED_BY_LEGACY_TYPE.get(group._type);
+		return seed ? [{ group, seed }] : [];
+	});
+}
+
+/**
+ * Every release version once, by id.
+ *
+ * @param lists - Release versions from several reads.
+ * @returns The versions, each once.
+ */
+function uniqueVersions(...lists: readonly (readonly DocumentStub[])[]): DocumentStub[] {
+	const byId = new Map(lists.flat().map(({ _id, _type }) => [_id, { _id, _type }]));
+	return [...byId.values()];
+}
+
+/**
  * Reads everything the migration decides on, before anything is written. Release versions are kept
  * apart: the migration reports them instead of touching them.
  *
@@ -49,13 +84,29 @@ async function readSnapshot(store: MigrationStore): Promise<Snapshot> {
 		store.fetchGroupsPageStats(),
 		store.fetchReleaseVersions(),
 	]);
+	const current = withoutReleaseVersions(legacyGroups);
+	const newIdByLegacy = new Map(
+		migratableGroups(current).map(({ group }) => [
+			toPublishedId(group._id),
+			toNewGroupId(toPublishedId(group._id)),
+		]),
+	);
+	const referring =
+		newIdByLegacy.size > 0 ? await store.fetchReferringDocuments([...newIdByLegacy.keys()]) : [];
 	return {
 		departments: withoutReleaseVersions(departments),
 		groups: withoutReleaseVersions(groups),
-		legacyGroups: withoutReleaseVersions(legacyGroups),
+		legacyGroups: current,
+		newIdByLegacy,
 		persons: withoutReleaseVersions(persons),
+		referrers: withoutReleaseVersions(referring).filter(
+			({ _type }) => !_type.startsWith(LEGACY_TYPE_PREFIX),
+		),
 		stats,
-		versions,
+		versions: uniqueVersions(
+			versions,
+			referring.filter(({ _id }) => isReleaseVersion(_id)),
+		),
 	};
 }
 
@@ -240,118 +291,220 @@ async function deleteOrphanedGroups(
 }
 
 /**
- * Step 4: swaps every legacy group except the administration for a `group` with the same id.
+ * Step 4: creates the `group` for every legacy group under its new id, the published ones first,
+ * then the drafts. A group that exists already is left alone; an unknown legacy type is reported.
  *
  * @param run - The store, the mode and the report.
- * @param legacyGroups - Every `group.<x>` document, published and draft.
+ * @param snapshot - The dataset before the run.
  */
-async function swapGroups(
-	run: MigrationRun,
-	legacyGroups: readonly LegacyGroupDocument[],
-): Promise<void> {
-	for (const group of legacyGroups.filter(({ _type }) => _type !== ADMIN_LEGACY_TYPE)) {
-		const seed = SEED_BY_LEGACY_TYPE.get(group._type);
-		if (seed) {
-			if (!run.dryRun) {
-				// oxlint-disable-next-line no-await-in-loop -- one transaction at a time
-				await run.store.swapType(group._id, toGroupDocument(group, seed.id));
-			}
-			run.report.groups += 1;
-		} else {
-			run.report.problems.push(
-				`Unbekannter Gruppentyp „${group._type}“ bei ${group._id}: nicht umgestellt.`,
-			);
+async function createGroups(run: MigrationRun, snapshot: Snapshot): Promise<void> {
+	for (const { _id, _type } of snapshot.legacyGroups.filter(
+		(group) => group._type !== ADMIN_LEGACY_TYPE && !SEED_BY_LEGACY_TYPE.has(group._type),
+	)) {
+		run.report.problems.push(`Unbekannter Gruppentyp „${_type}“ bei ${_id}: nicht umgestellt.`);
+	}
+	const existing = new Set(snapshot.groups.map(({ _id }) => _id));
+	const migratable = migratableGroups(snapshot.legacyGroups);
+	const ordered = [
+		...migratable.filter(({ group }) => isPublished(group._id)),
+		...migratable.filter(({ group }) => !isPublished(group._id)),
+	];
+	for (const { group, seed } of ordered.filter(
+		(entry) => !existing.has(toNewGroupId(entry.group._id)),
+	)) {
+		if (!run.dryRun) {
+			// oxlint-disable-next-line no-await-in-loop -- one write at a time
+			await run.store.createOrReplace(toGroupDocument(group, seed.id));
 		}
+		run.report.groups += 1;
 	}
 }
 
 /**
- * Notes which groups a person points at after the migration, and finds every department string the
- * migration does not know.
+ * The affiliations of a person, when they have the shape the studio stores: every entry an object
+ * with a `_key`.
  *
- * @param person - The person.
- * @param affiliations - Its affiliations after the migration.
- * @param personsByTeam - The persons per group, which this adds the person to.
+ * @param document - Any document.
+ * @returns The affiliations, or `undefined` for another type or another shape.
+ */
+function affiliationsOf(document: Readonly<Record<string, unknown>>): Affiliation[] | undefined {
+	const { _type, affiliations } = document;
+	return _type === 'person' && isAffiliationList(affiliations) ? affiliations : undefined;
+}
+
+/**
+ * Finds every department string the migration does not know in a person.
+ *
+ * @param document - The document after the migration.
  * @returns The problems, one per unknown department string.
  */
-function inspectAffiliations(
-	person: PersonDocument,
-	affiliations: readonly Affiliation[],
-	personsByTeam: Map<string, string[]>,
-): string[] {
-	const problems: string[] = [];
-	for (const affiliation of affiliations) {
-		const teamId = affiliation.team?._ref;
-		if (teamId) {
-			personsByTeam.set(teamId, [...(personsByTeam.get(teamId) ?? []), person._id]);
-		}
-		if (typeof affiliation.department === 'string') {
-			problems.push(
-				`Person ${person._id}: unbekannte Abteilung „${affiliation.department}“ in der Zugehörigkeit ${affiliation._key}, nicht umgestellt.`,
-			);
-		}
-	}
-	return problems;
+function findUnknownDepartments(document: Record<string, unknown>): string[] {
+	return (affiliationsOf(document) ?? []).flatMap(({ _key, department }) =>
+		typeof department === 'string'
+			? [
+					`Person ${String(document._id)}: unbekannte Abteilung „${department}“ in der Zugehörigkeit ${_key}, nicht umgestellt.`,
+				]
+			: [],
+	);
 }
 
 /**
- * Step 5: turns the department strings of every person into references, `ifRevisionID` guarded.
+ * The top-level fields a migration changed. Unchanged parts keep their identity, so a comparison
+ * by identity finds exactly the changed ones.
+ *
+ * @param before - The document as read.
+ * @param after - The document after the migration.
+ * @returns The changed fields with their new values.
+ */
+function changedFields(
+	before: Readonly<Record<string, unknown>>,
+	after: Readonly<Record<string, unknown>>,
+): Record<string, unknown> {
+	return Object.fromEntries(Object.entries(after).filter(([key, value]) => before[key] !== value));
+}
+
+/**
+ * Migrates one document in memory: the affiliations of a person, then every reference to a legacy
+ * group, wherever it sits.
+ *
+ * @param document - The document as read.
+ * @param newIdByLegacy - The new id per published legacy id.
+ * @returns The document after the migration and what changed in it.
+ */
+function migrateDocument(
+	document: RawDocument,
+	newIdByLegacy: ReadonlyMap<string, string>,
+): MigratedDocument {
+	const affiliations = migrateAffiliations(affiliationsOf(document), DEPARTMENT_ID_BY_LEGACY);
+	const withAffiliations = affiliations ? { ...document, affiliations } : document;
+	const after = rewriteDocumentReferences(withAffiliations, newIdByLegacy);
+	return {
+		affiliationsMigrated: affiliations !== undefined,
+		after,
+		fields: changedFields(document, after),
+		referencesRewritten: after !== withAffiliations,
+	};
+}
+
+/**
+ * Every document step 5 looks at: each person, and each document that references a legacy group.
+ * A referrer is read whole, so it replaces the partial person of the same id.
+ *
+ * @param snapshot - The dataset before the run.
+ * @returns The documents, each once.
+ */
+function collectCandidates(snapshot: Snapshot): RawDocument[] {
+	const byId = new Map<string, RawDocument>();
+	for (const document of [...snapshot.persons, ...snapshot.referrers]) {
+		byId.set(document._id, document);
+	}
+	return [...byId.values()];
+}
+
+/**
+ * Counts what a migrated document changes.
+ *
+ * @param report - The report of the run.
+ * @param migrated - The migrated document.
+ */
+function countChanges(report: MigrationReport, migrated: MigratedDocument): void {
+	report.persons += migrated.affiliationsMigrated ? 1 : 0;
+	report.rewritten += migrated.referencesRewritten ? 1 : 0;
+}
+
+/**
+ * Step 5: points every reference to a legacy group at its new id and turns the department strings
+ * of every person into references, in one patch per document, `ifRevisionID` guarded. The
+ * references keep every other attribute (`_key`, `_weak`, …).
  *
  * @param run - The store, the mode and the report.
- * @param persons - Every person, published and draft.
- * @returns The ids of the persons that still point at a group after the migration, per group.
+ * @param snapshot - The dataset before the run.
+ * @returns Every patched document as it is after the patch, by id.
  */
-async function patchPersons(
+async function rewriteDocuments(
 	run: MigrationRun,
-	persons: readonly PersonDocument[],
-): Promise<Map<string, string[]>> {
-	const personsByTeam = new Map<string, string[]>();
-	for (const person of persons) {
-		const migrated = migrateAffiliations(person.affiliations, DEPARTMENT_ID_BY_LEGACY);
-		run.report.problems.push(
-			...inspectAffiliations(person, migrated ?? person.affiliations ?? [], personsByTeam),
-		);
-		if (migrated) {
+	snapshot: Snapshot,
+): Promise<Map<string, Record<string, unknown>>> {
+	const afterById = new Map<string, Record<string, unknown>>();
+	for (const document of collectCandidates(snapshot)) {
+		const migrated = migrateDocument(document, snapshot.newIdByLegacy);
+		run.report.problems.push(...findUnknownDepartments(migrated.after));
+		if (Object.keys(migrated.fields).length > 0) {
 			if (!run.dryRun) {
 				// oxlint-disable-next-line no-await-in-loop -- one patch at a time
-				await run.store.patchAffiliations(person._id, person._rev, migrated);
+				await run.store.patchDocument(document._id, document._rev, migrated.fields);
 			}
-			run.report.persons += 1;
+			afterById.set(document._id, migrated.after);
 		}
+		countChanges(run.report, migrated);
 	}
-	return personsByTeam;
+	return afterById;
 }
 
 /**
- * Who still points at an administration group once the persons are migrated: the persons that
- * kept it as their group, and every other document that references it.
+ * Who still points at a document once step 5 is through: every referrer, unless its patched
+ * version no longer references the id. In a real run the patched documents are gone from the
+ * referrers already; in a dry run the patched versions stand in for the patches.
  *
  * @param store - The Sanity side.
- * @param id - The published id of the administration group.
- * @param personsByTeam - The persons per group after the migration.
+ * @param id - The published id of the document to delete.
+ * @param afterById - The documents step 5 patched, as they are after the patch.
  * @returns The ids of the documents in the way of the deletion.
  */
 async function findRemainingReferrers(
 	store: MigrationStore,
 	id: string,
-	personsByTeam: ReadonlyMap<string, string[]>,
+	afterById: ReadonlyMap<string, Record<string, unknown>>,
 ): Promise<string[]> {
 	const referrers = await store.fetchReferrers(id);
-	const others = referrers.filter(({ _type }) => _type !== 'person').map(({ _id }) => _id);
-	return [...new Set([...(personsByTeam.get(id) ?? []), ...others])];
+	return referrers
+		.filter(({ _id }) => {
+			const after = afterById.get(_id);
+			return after === undefined || referencesId(after, id);
+		})
+		.map(({ _id }) => _id);
 }
 
 /**
- * Step 6: deletes the administration groups, published and draft, once no person points at them.
+ * Step 6: deletes the legacy `group.<x>` documents that moved to a new id, the drafts first, once
+ * nothing references them any more.
+ *
+ * @param run - The store, the mode and the report.
+ * @param snapshot - The dataset before the run.
+ * @param afterById - The documents step 5 patched, as they are after the patch.
+ */
+async function deleteLegacyGroups(
+	run: MigrationRun,
+	snapshot: Snapshot,
+	afterById: ReadonlyMap<string, Record<string, unknown>>,
+): Promise<void> {
+	const moved = migratableGroups(snapshot.legacyGroups).map(({ group }) => group);
+	const deleted = await deleteUnreferenced(
+		run,
+		[
+			...moved.filter(({ _id }) => !isPublished(_id)),
+			...moved.filter(({ _id }) => isPublished(_id)),
+		],
+		{
+			describe: (id, referrers) =>
+				`Die Gruppe ${id} (alter Typ) bleibt bestehen, weil noch ${referrers.join(', ')} auf sie verweist.`,
+			referrersOf: async (id) => findRemainingReferrers(run.store, id, afterById),
+		},
+	);
+	run.report.legacyDeleted = deleted.size;
+}
+
+/**
+ * Step 7: deletes the administration groups, published and draft, once no person points at them.
  *
  * @param run - The store, the mode and the report.
  * @param legacyGroups - Every `group.<x>` document, published and draft.
- * @param personsByTeam - The persons per group after the migration.
+ * @param afterById - The documents step 5 patched, as they are after the patch.
  */
 async function deleteAdminGroups(
 	run: MigrationRun,
 	legacyGroups: readonly LegacyGroupDocument[],
-	personsByTeam: ReadonlyMap<string, string[]>,
+	afterById: ReadonlyMap<string, Record<string, unknown>>,
 ): Promise<void> {
 	const deleted = await deleteUnreferenced(
 		run,
@@ -359,14 +512,14 @@ async function deleteAdminGroups(
 		{
 			describe: (id, referrers) =>
 				`Die Administration-Gruppe ${id} bleibt bestehen, weil noch ${referrers.join(', ')} auf sie verweist.`,
-			referrersOf: async (id) => findRemainingReferrers(run.store, id, personsByTeam),
+			referrersOf: async (id) => findRemainingReferrers(run.store, id, afterById),
 		},
 	);
 	run.report.deleted = deleted.size;
 }
 
 /**
- * Step 7: removes the shared stats from the groups page, now that every department has a copy.
+ * Step 8: removes the shared stats from the groups page, now that every department has a copy.
  *
  * @param run - The store and the mode.
  * @param stats - The stats of the groups page, `null` when they are gone already.
@@ -381,7 +534,7 @@ async function removeGroupsPageStats(
 }
 
 /**
- * Runs the seven steps in their order.
+ * Runs the eight steps in their order.
  *
  * @param run - The store, the mode and the report.
  * @param snapshot - The dataset before the run.
@@ -390,9 +543,10 @@ async function removeGroupsPageStats(
 async function runSteps(run: MigrationRun, snapshot: Snapshot): Promise<GroupSummary[]> {
 	await createDepartments(run, snapshot);
 	const deletedGroups = await deleteOrphanedGroups(run, snapshot.groups);
-	await swapGroups(run, snapshot.legacyGroups);
-	const personsByTeam = await patchPersons(run, snapshot.persons);
-	await deleteAdminGroups(run, snapshot.legacyGroups, personsByTeam);
+	await createGroups(run, snapshot);
+	const afterById = await rewriteDocuments(run, snapshot);
+	await deleteLegacyGroups(run, snapshot, afterById);
+	await deleteAdminGroups(run, snapshot.legacyGroups, afterById);
 	await removeGroupsPageStats(run, snapshot.stats);
 	return snapshot.groups.filter(({ _id }) => !deletedGroups.has(_id));
 }
@@ -417,10 +571,12 @@ async function runMigration(
 			deleted: 0,
 			departments: 0,
 			groups: 0,
+			legacyDeleted: 0,
 			orphanedGroups: 0,
 			paths: [],
 			persons: 0,
 			problems: describeReleaseVersions(snapshot.versions),
+			rewritten: 0,
 		},
 		store,
 	};
@@ -447,8 +603,10 @@ function summarize(
 		dryRun ? 'Probelauf, geschrieben wurde nichts. Ein echter Lauf würde:' : 'Geschrieben:',
 		`  Abteilungen angelegt: ${report.departments}`,
 		`  Alte Gruppen ohne Abteilungsverweis gelöscht: ${report.orphanedGroups}`,
-		`  Gruppen umgestellt: ${report.groups}`,
+		`  Gruppen unter neuer ID angelegt: ${report.groups}`,
+		`  Dokumente mit umgeschriebenen Verweisen: ${report.rewritten}`,
 		`  Personen angepasst: ${report.persons}`,
+		`  Gruppen des alten Typs gelöscht: ${report.legacyDeleted}`,
 		`  Administration-Gruppen gelöscht: ${report.deleted}`,
 		`Pfade nach der Migration (${report.paths.length}):`,
 		...report.paths,
@@ -461,10 +619,27 @@ interface Snapshot {
 	departments: DepartmentSummary[];
 	groups: GroupSummary[];
 	legacyGroups: LegacyGroupDocument[];
+	/** The new id per published id of every legacy group the migration moves. */
+	newIdByLegacy: ReadonlyMap<string, string>;
 	persons: PersonDocument[];
+	/** Every document that references a legacy group the migration moves, without the legacy groups. */
+	referrers: RawDocument[];
 	stats: StatsItem[] | null;
-	/** The release versions of the types the migration touches, which it leaves alone. */
+	/** The release versions the migration leaves alone: of its own types, or referencing a legacy group. */
 	versions: DocumentStub[];
+}
+
+interface MigratableGroup {
+	group: LegacyGroupDocument;
+	seed: DepartmentSeed;
+}
+
+interface MigratedDocument {
+	after: Record<string, unknown>;
+	affiliationsMigrated: boolean;
+	/** The changed top-level fields, the payload of the patch. */
+	fields: Record<string, unknown>;
+	referencesRewritten: boolean;
 }
 
 interface DeletionGuard {
@@ -485,8 +660,10 @@ interface MigrationReport {
 	deleted: number;
 	/** Departments created. */
 	departments: number;
-	/** Legacy groups swapped for a `group`, published and draft. */
+	/** `group` documents created under the new ids, published and draft. */
 	groups: number;
+	/** Legacy `group.<x>` documents deleted after the move, published and draft. */
+	legacyDeleted: number;
 	/** `group` documents left from the 2024 schema that were deleted, published and draft. */
 	orphanedGroups: number;
 	/** The pages of every published department and group after the run. */
@@ -494,6 +671,8 @@ interface MigrationReport {
 	/** Persons whose affiliations were migrated, published and draft. */
 	persons: number;
 	problems: string[];
+	/** Documents whose references to legacy groups were rewritten, published and draft. */
+	rewritten: number;
 }
 
 export { runMigration, summarize };

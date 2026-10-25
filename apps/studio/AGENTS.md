@@ -132,26 +132,26 @@ The migration `main-navigation-menus` turned the earlier `mainNavigationItem` en
 **Running it.** A dry run is the default. It reads everything and writes nothing, checks that every image file is there, then prints the counts, the paths after the migration and the problems, and exits with 1 on any problem:
 
 ```bash
-pnpm --filter studio run migrate:departments --dataset development                      # dry run
-pnpm --filter studio run migrate:departments --dataset development --probe --no-dry-run # writes two test documents
-pnpm --filter studio run migrate:departments --dataset development --no-dry-run         # migrates
+pnpm --filter studio run migrate:departments --dataset development              # dry run
+pnpm --filter studio run migrate:departments --dataset development --no-dry-run # migrates
 ```
 
-Everything but the dry run writes, so it needs the user's OK first; `--probe` without `--no-dry-run` is refused. `sanity exec --with-user-token` writes as the logged-in user, so run `pnpm exec sanity login` first. Migrate `development` first, then `production`.
+The real run writes and deletes, so it needs the user's OK first, and the rollout exports the dataset before it (`pnpm exec sanity dataset export <dataset> <file>.tar.gz`). `sanity exec --with-user-token` writes as the logged-in user, so run `pnpm exec sanity login` first. Migrate `development` first, then `production`.
+
+**New ids.** Sanity never changes the `_type` of an id, not even by deleting and creating it in one transaction (the probe on `development` was rejected with `immutable attribute "_type" may not be modified`). So every `group.<x>` document `<id>` moves to a `group` document `group-<id>`, its draft to `drafts.group-<id>`, and every reference to the old id is rewritten before the old document goes.
 
 **What a real run does**, in this order. Every step skips what is done already, so a second run writes nothing:
 
 1. uploads the card, hero and open graph image of every missing department from `scripts/migrate-departments/images/` (Sanity deduplicates assets by content hash)
 2. creates the six departments `department-<slug>` from `seeds.ts`: title, slug, icon, `sortOrder` 10 to 60, `isTeamSport` for Fußball only, the images with the title as alt text, a copy of the groups page stats, and the persons the department page lists today (role email `fussball@tsg-irlich.de` for Fußball, `breitensport@tsg-irlich.de` for the others). An existing department is left alone, so a rerun never overwrites what the editors changed.
-3. deletes every `group` left from the 2024 schema, which used the same type name, published and draft: one whose `department` is a string, or that has none but still carries `isSportGroup`. One that something references stays and is reported. These deletions cannot be undone, so the rollout exports the dataset first (`pnpm exec sanity dataset export <dataset>`).
-4. replaces every `group.<x>` except `group.admin`, published and draft, by a `group` with the same id and a reference to its department. Sanity cannot change a type by patch, so each swap is one transaction (delete, then create), which keeps the references of persons and news valid.
-5. turns `affiliations[].department` of every person, published and draft, into a reference, guarded by `ifRevisionID`. An `admin` affiliation loses its department and its group and keeps the role.
-6. deletes the `group.admin` documents, published and draft. One that something still references stays and is reported.
-7. removes `groupsPage.content.stats`
+3. deletes every `group` left from the 2024 schema, which used the same type name, published and draft: one whose `department` is a string, or that has none but still carries `isSportGroup`. One that something references stays and is reported.
+4. creates the `group` under its new id for every `group.<x>` except `group.admin`, the published ones first, then the drafts (a draft-only group gets only the draft). It keeps `_createdAt` and every content field, drops `_rev`, `_updatedAt` and `isSportGroup`, and references the department.
+5. rewrites, in every document that references an old id (persons, news, anything else, published and draft), each such reference to the new id, wherever it sits in the document. `_key` and `_weak` stay, and a pending `_strengthenOnPublish` names the type `group`. A person gets this in the same patch as its affiliations: `affiliations[].department` becomes a reference, and an `admin` affiliation loses its department and its group and keeps the role. Every patch is guarded by `ifRevisionID`.
+6. deletes the old `group.<x>` documents, the drafts first, once nothing references them any more. A release version that still references one is not patched but reported, and the old document stays.
+7. deletes the `group.admin` documents, published and draft. One that something still references stays and is reported.
+8. removes `groupsPage.content.stats`
 
-A real run then checks the dataset: no `group.*` document left, every `group` under a department reference, no department string in an affiliation, each of the six `department-<slug>` published, every department with a card image. A legacy type, a department string or a `group` the migration does not know is reported, never guessed. Versions in a content release (`versions.<release>.<id>`) of these types are not migrated either but reported, so publish or discard such a release before the run.
-
-**Probe.** `--probe` runs only the type swap on two documents of its own, `migration-probe-target` (a `group.soccer`) and `migration-probe-referrer` (a person whose first affiliation references it). It swaps the target to `group`, checks that the reference still resolves, deletes both and prints `Probe: ok` or the message Sanity rejected the swap with. Run it before the first real run on a dataset.
+A real run then checks the dataset: no `group.*` document left, every `group` under a department reference, no department string in an affiliation, every affiliation's group a `group` and its department a `department`, each of the six `department-<slug>` published, every department with a card image. A legacy type, a department string or a `group` the migration does not know is reported, never guessed. Versions in a content release (`versions.<release>.<id>`) of these types, or ones that reference an old group, are not migrated either but reported, so publish or discard such a release before the run.
 
 **Paths.** A run lists `/angebot/<abteilung>` and `/angebot/<abteilung>/<gruppe>` for every published department and group after the migration, which are the pages that exist before it. Keep the list of the dry run to check those pages after the rollout.
 

@@ -2,6 +2,8 @@ import { departmentIdOf } from './documents';
 import { DEPARTMENT_SEEDS } from './seeds';
 import type { GroupSummary, MigrationStore, PersonDocument } from './store';
 
+const DRAFTS_PREFIX = 'drafts.';
+
 /**
  * Finds every `group` without a department reference: one whose department is still a string, or
  * one without department. It has no place on the website and no list in the desk.
@@ -38,8 +40,48 @@ function findDepartmentStrings(persons: readonly PersonDocument[]): string[] {
 }
 
 /**
+ * Whether a reference resolves among the given ids. A weak reference may point at a document that
+ * only exists as a draft.
+ *
+ * @param ids - The ids of every document of the expected type, published and draft.
+ * @param id - The referenced, published id.
+ * @returns `true` when the published document or its draft exists.
+ */
+function resolves(ids: ReadonlySet<string>, id: string): boolean {
+	return ids.has(id) || ids.has(`${DRAFTS_PREFIX}${id}`);
+}
+
+/**
+ * Finds every affiliation whose group or department reference points at a document of another
+ * type, or at nothing, for instance at a legacy group the migration left behind.
+ *
+ * @param persons - Every person, published and draft.
+ * @param targets - The ids of every group and every department.
+ * @returns One German problem per wrong reference.
+ */
+function findWrongTargets(persons: readonly PersonDocument[], targets: ReferenceTargets): string[] {
+	const problems: string[] = [];
+	for (const { _id, affiliations } of persons) {
+		for (const { _key, department, team } of affiliations ?? []) {
+			if (team?._ref && !resolves(targets.groups, team._ref)) {
+				problems.push(
+					`Person ${_id}: Die Zugehörigkeit ${_key} verweist als Gruppe auf ${team._ref}, das keine Gruppe ist.`,
+				);
+			}
+			if (typeof department === 'object' && !resolves(targets.departments, department._ref)) {
+				problems.push(
+					`Person ${_id}: Die Zugehörigkeit ${_key} verweist als Abteilung auf ${department._ref}, das keine Abteilung ist.`,
+				);
+			}
+		}
+	}
+	return problems;
+}
+
+/**
  * Checks the dataset after a real run: no legacy type left, every group under a department, no
- * department string left in an affiliation, every seeded department published with a card image.
+ * department string left in an affiliation, every affiliation pointing at a group and a department,
+ * every seeded department published with a card image.
  *
  * @param store - The Sanity side.
  * @returns The problems in German, empty when the migration is complete.
@@ -56,6 +98,10 @@ async function verifyMigration(store: MigrationStore): Promise<string[]> {
 		...legacyGroups.map(({ _id, _type }) => `Dokument ${_id} hat noch den alten Typ „${_type}“.`),
 		...findGroupsWithoutDepartment(groups),
 		...findDepartmentStrings(persons),
+		...findWrongTargets(persons, {
+			departments: departmentIds,
+			groups: new Set(groups.map(({ _id }) => _id)),
+		}),
 		...DEPARTMENT_SEEDS.filter(({ id }) => !departmentIds.has(id)).map(
 			({ id }) => `Abteilung ${id} fehlt oder ist nicht veröffentlicht.`,
 		),
@@ -63,6 +109,11 @@ async function verifyMigration(store: MigrationStore): Promise<string[]> {
 			.filter(({ cardImageAssetId }) => !cardImageAssetId)
 			.map(({ _id }) => `Abteilung ${_id} hat kein Kachelbild.`),
 	];
+}
+
+interface ReferenceTargets {
+	departments: ReadonlySet<string>;
+	groups: ReadonlySet<string>;
 }
 
 export { findGroupsWithoutDepartment, verifyMigration };

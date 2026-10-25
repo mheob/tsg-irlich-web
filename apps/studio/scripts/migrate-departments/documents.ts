@@ -2,6 +2,7 @@ import type { GroupSummary } from './store';
 
 const DRAFTS_PREFIX = 'drafts.';
 const VERSIONS_PREFIX = 'versions.';
+const NEW_GROUP_PREFIX = 'group-';
 /** `versions.<release id>.<published id>`; a release id carries no dot. */
 const VERSION_ID = /^versions\.[^.]+\./u;
 
@@ -39,6 +40,18 @@ function toPublishedId(id: string): string {
 }
 
 /**
+ * The id a legacy `group.<x>` document moves to. Sanity never changes the `_type` of an id, so
+ * the `group` gets an id of its own: `<id>` becomes `group-<id>`, its draft `drafts.group-<id>`.
+ *
+ * @param id - The published or draft id of the legacy group.
+ * @returns The id of the `group` that replaces it.
+ */
+function toNewGroupId(id: string): string {
+	const newId = `${NEW_GROUP_PREFIX}${toPublishedId(id)}`;
+	return id.startsWith(DRAFTS_PREFIX) ? `${DRAFTS_PREFIX}${newId}` : newId;
+}
+
+/**
  * The department a `group` references.
  *
  * @param group - The group.
@@ -65,4 +78,11 @@ function isOrphanedGroup(group: GroupSummary): boolean {
 	return !departmentIdOf(group) && group.isSportGroup !== undefined && group.isSportGroup !== null;
 }
 
-export { departmentIdOf, isOrphanedGroup, isPublished, isReleaseVersion, toPublishedId };
+export {
+	departmentIdOf,
+	isOrphanedGroup,
+	isPublished,
+	isReleaseVersion,
+	toNewGroupId,
+	toPublishedId,
+};

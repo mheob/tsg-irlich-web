@@ -6,6 +6,7 @@ import {
 	isOrphanedGroup,
 	isPublished,
 	isReleaseVersion,
+	toNewGroupId,
 	toPublishedId,
 } from './documents';
 
@@ -24,6 +25,13 @@ describe('a document id', () => {
 		['versions.rABC123.group-1', 'group-1'],
 	])('%s belongs to the published id %s', (id, publishedId) => {
 		expect(toPublishedId(id)).toBe(publishedId);
+	});
+
+	it.each([
+		['9150a863', 'group-9150a863'],
+		['drafts.9150a863', 'drafts.group-9150a863'],
+	])('%s moves to %s as a group', (id, newId) => {
+		expect(toNewGroupId(id)).toBe(newId);
 	});
 
 	it('names a release version as such', () => {

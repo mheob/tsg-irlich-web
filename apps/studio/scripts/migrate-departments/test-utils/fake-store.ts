@@ -20,8 +20,7 @@ type FakeStore = { [Method in keyof MigrationStore]: Mock<MigrationStore[Method]
 const WRITE_METHODS = [
 	'createOrReplace',
 	'deleteDocument',
-	'patchAffiliations',
-	'swapType',
+	'patchDocument',
 	'unsetGroupsPageStats',
 	'uploadImage',
 ] as const satisfies readonly (keyof MigrationStore)[];
@@ -112,9 +111,10 @@ function createFakeStore(
 			all().filter(({ _type }) => _type.startsWith('group.')),
 		),
 		fetchPersons: vi.fn<MigrationStore['fetchPersons']>(async () =>
-			ofType('person').map(({ _id, _rev, affiliations }) => ({
+			ofType('person').map(({ _id, _rev, _type, affiliations }) => ({
 				_id,
 				_rev: _rev ?? 'rev-0',
+				_type,
 				affiliations: affiliations as Affiliation[] | undefined,
 			})),
 		),
@@ -122,6 +122,11 @@ function createFakeStore(
 			all()
 				.filter((document) => referencesId(document, id))
 				.map(({ _id, _type }) => ({ _id, _type })),
+		),
+		fetchReferringDocuments: vi.fn<MigrationStore['fetchReferringDocuments']>(async (ids) =>
+			all()
+				.filter((document) => ids.some((id) => referencesId(document, id)))
+				.map((document) => Object.assign(document, { _rev: document._rev ?? 'rev-0' })),
 		),
 		fetchReleaseVersions: vi.fn<MigrationStore['fetchReleaseVersions']>(async () =>
 			all()
@@ -131,16 +136,12 @@ function createFakeStore(
 		hasImage: vi.fn<MigrationStore['hasImage']>(
 			async (fileName) => !missingImages.includes(fileName),
 		),
-		patchAffiliations: vi.fn<MigrationStore['patchAffiliations']>(async (id, rev, affiliations) => {
-			const person = lake.get(id);
-			if (!person || (person._rev ?? 'rev-0') !== rev) {
+		patchDocument: vi.fn<MigrationStore['patchDocument']>(async (id, rev, fields) => {
+			const document = lake.get(id);
+			if (!document || (document._rev ?? 'rev-0') !== rev) {
 				throw new Error(`Revision mismatch for ${id}`);
 			}
-			write({ ...person, affiliations });
-		}),
-		swapType: vi.fn<MigrationStore['swapType']>(async (legacyId, next) => {
-			lake.delete(legacyId);
-			write(next);
+			write({ ...document, ...fields });
 		}),
 		unsetGroupsPageStats: vi.fn<MigrationStore['unsetGroupsPageStats']>(async () => {
 			for (const page of ofType('groupsPage').filter(({ _id }) => !_id.startsWith('versions.'))) {

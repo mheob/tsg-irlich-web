@@ -4,11 +4,10 @@ import { describe, expect, it } from 'vite-plus/test';
 import { parseMigrationOptions } from './options';
 
 describe('the migration options', () => {
-	it('defaults to a dry run without the probe', () => {
+	it('defaults to a dry run', () => {
 		expect(parseMigrationOptions(['--dataset', 'development'])).toStrictEqual({
 			dataset: 'development',
 			dryRun: true,
-			probe: false,
 		});
 	});
 
@@ -16,20 +15,13 @@ describe('the migration options', () => {
 		expect(parseMigrationOptions(['--dataset', 'production', '--no-dry-run'])).toStrictEqual({
 			dataset: 'production',
 			dryRun: false,
-			probe: false,
 		});
 	});
 
-	it('runs only the probe with --probe --no-dry-run', () => {
-		expect(
-			parseMigrationOptions(['--dataset', 'development', '--probe', '--no-dry-run']),
-		).toStrictEqual({ dataset: 'development', dryRun: false, probe: true });
-	});
-
-	// The probe writes, so it must never pass for a dry run.
-	it('requires --no-dry-run for the probe', () => {
+	// The same-id type swap is gone, and with it the probe that tried it.
+	it('knows no --probe any more', () => {
 		expect(() => parseMigrationOptions(['--dataset', 'development', '--probe'])).toThrow(
-			'--probe legt zwei Testdokumente an und löscht sie wieder, braucht also --no-dry-run.',
+			"Unknown option '--probe'",
 		);
 	});
 

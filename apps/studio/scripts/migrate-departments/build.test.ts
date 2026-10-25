@@ -100,12 +100,11 @@ describe('a group document', () => {
 		training: { trainingTimes: [{ _key: 'a', day: 'monday' }] },
 	};
 
-	it('keeps the id and the content and drops the revision and the sport group flag', () => {
+	it('keeps the content and drops the revision and the sport group flag', () => {
 		const group = toGroupDocument(legacy, 'department-fussball');
 
 		expect(group).toMatchObject({
 			_createdAt: '2024-09-23T10:00:49Z',
-			_id: 'drafts.9150a863',
 			newsCategory: { _ref: 'category-fussball', _type: 'reference' },
 			slug: { _type: 'slug', current: '1-mannschaft' },
 			title: '1. Mannschaft',
@@ -114,6 +113,17 @@ describe('a group document', () => {
 		expect(group).not.toHaveProperty('isSportGroup');
 		expect(group).not.toHaveProperty('_rev');
 		expect(group).not.toHaveProperty('_updatedAt');
+	});
+
+	// Sanity never changes the type of an id, so the group moves to `group-<id>`.
+	it('moves a draft to the draft of its new id', () => {
+		expect(toGroupDocument(legacy, 'department-fussball')._id).toBe('drafts.group-9150a863');
+	});
+
+	it('moves a published group to its new id', () => {
+		expect(toGroupDocument({ ...legacy, _id: '9150a863' }, 'department-fussball')._id).toBe(
+			'group-9150a863',
+		);
 	});
 
 	it('becomes a group under its department', () => {

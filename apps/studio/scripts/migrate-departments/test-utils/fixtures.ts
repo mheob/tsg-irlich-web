@@ -29,6 +29,33 @@ function ref(id: string): { _ref: string; _type: 'reference' } {
 }
 
 /**
+ * A news article whose text links a group, the way the studio stores an internal link.
+ *
+ * @param id - The article id.
+ * @param groupId - The linked group.
+ * @returns The document.
+ */
+function newsLinkingTo(id: string, groupId: string): FakeDocument {
+	return {
+		_id: id,
+		_type: 'news.article',
+		body: [
+			{
+				_key: 'b1',
+				_type: 'textBlock',
+				text: [
+					{
+						_key: 't1',
+						_type: 'block',
+						markDefs: [{ _key: 'm1', _type: 'internalLink', link: ref(groupId) }],
+					},
+				],
+			},
+		],
+	};
+}
+
+/**
  * A legacy group as the studio stored it.
  *
  * @param type - The legacy type, e.g. `group.soccer`.
@@ -145,8 +172,8 @@ const ORPHANED_GROUPS: FakeDocument[] = [
 
 /**
  * A dataset shaped like `production` before the migration: 32 sport groups, two administration
- * groups, `group` documents left from 2024, persons with department strings, a news article about
- * a team and the groups page stats.
+ * groups, `group` documents left from 2024, persons with department strings, a news article that
+ * links a team and the groups page stats.
  *
  * @returns The documents.
  */
@@ -157,11 +184,7 @@ function createProductionFixture(): FakeDocument[] {
 		...ORPHANED_GROUPS,
 		...LEGACY_PERSONS,
 		...OTHER_PERSONS,
-		{
-			_id: 'news-1',
-			_type: 'news.article',
-			groups: [{ _key: 'n1', ...ref('soccer-mannschaft-1') }],
-		},
+		newsLinkingTo('news-1', 'soccer-mannschaft-1'),
 		{ _id: 'groupsPage', _type: 'groupsPage', content: { stats: GROUPS_PAGE_STATS } },
 	];
 }
@@ -179,5 +202,6 @@ export {
 	ORPHANED_GROUPS,
 	createProductionFixture,
 	legacyGroup,
+	newsLinkingTo,
 	ref,
 };

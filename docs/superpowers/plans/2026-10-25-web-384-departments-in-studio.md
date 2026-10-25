@@ -675,8 +675,7 @@ In `page.test.ts`:
 Staging (`next.tsg-irlich.de`) and every preview deployment read `development`. Between the migration and the merge of this branch into `next`, staging serves the pages it has cached. The paused webhook keeps those pages cached. A page first requested in that window can fail until the merge deploys.
 
 - [ ] **Step 1: STOP — ask the user** for the go: pause the „Vercel Staging Revalidation“ webhook, then migrate `development`. Show both commands. Pausing goes through the Webhooks API with a `sanity exec` script, stripping `secret` and `headers` from anything printed (memory „Sanity revalidation webhooks“), or through the Sanity UI by the user.
-- [ ] **Step 2: Run the probe** `pnpm --filter studio run migrate:departments --dataset development --probe`. Expected: `ok`.
-  - **If the swap is rejected**, stop and report to the user. The fallback is a plan change, not an improvisation: new ids `group-<old id>`, rewriting `person.affiliations[].team` and the `internalLink` marks in `news.article`, then deleting the old documents.
+- [ ] **Step 2: Export the dataset** before anything is deleted: `pnpm --filter studio exec sanity dataset export development <file>.tar.gz`. There is no probe any more: on 2026-10-25 Sanity rejected the same-id type swap (`immutable attribute "_type" may not be modified`), and the user chose the fallback. The migration now moves every group to `group-<old id>`, rewrites every reference to the old ids and then deletes the old documents (spec, „Migration“, step 2).
 - [ ] **Step 3: Migrate** `pnpm --filter studio run migrate:departments --dataset development --no-dry-run`. Expected: the same numbers as the dry run in Task 5, Step 5, and a verification without problems.
 - [ ] **Step 4: Check by hand in the studio** (`pnpm --filter studio run dev`):
   - „Abteilungen“ lists six departments.
@@ -695,7 +694,7 @@ Staging (`next.tsg-irlich.de`) and every preview deployment read `development`. 
 - [ ] **Step 1: STOP — ask the user** to agree on a time window. The editors must not change groups, persons or the groups page from step 2 until step 6.
 - [ ] **Step 2:** Run the dry run with `--dataset production` (read-only) and save its paths for step 6.
 - [ ] **Step 3: STOP — ask the user**, then pause „Vercel Production Revalidation“.
-- [ ] **Step 4:** Run the probe, then the real migration with `--dataset production`. Expected: the numbers of the dry run in step 2 (the open group draft counts as one more swap) and a clean verification.
+- [ ] **Step 4:** Export the dataset (`pnpm --filter studio exec sanity dataset export production <file>.tar.gz`), then run the real migration with `--dataset production --no-dry-run`. There is no probe any more (Task 11, Step 2). Expected: the numbers of the dry run in step 2 (the draft-only group counts as one more new group) and a clean verification.
 - [ ] **Step 5:** The user merges `next` into `main`, which deploys web and studio. Wait until both deployments are ready.
 - [ ] **Step 6:** Every path from step 2 answers 200 on `https://www.tsg-irlich.de`, and `https://www.tsg-irlich.de/llms.txt` lists six departments. Then **STOP — ask the user**, set the production webhook filter to the documented list and re-enable it. Verify with one publish and the hook logs.
 - [ ] **Step 7:** In a follow-up PR, delete `apps/studio/scripts/migrate-departments*` with its images, the `migrate:departments` script and its `AGENTS.md` section. Keep `slug-history` and everything else.

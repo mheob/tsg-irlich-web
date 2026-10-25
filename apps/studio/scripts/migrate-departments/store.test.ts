@@ -61,7 +61,7 @@ function createFakeClient(fetchResult: unknown = []) {
 describe('the migration store', () => {
 	it.each([
 		['fetchLegacyGroups', '*[string::startsWith(_type, "group.")]'],
-		['fetchPersons', '*[_type == "person"]{_id, _rev, affiliations}'],
+		['fetchPersons', '*[_type == "person"]{_id, _rev, _type, affiliations}'],
 	] as const)('reads %s in the raw perspective, drafts included', async (method, query) => {
 		const { client, fake } = createFakeClient();
 
@@ -173,24 +173,14 @@ describe('the migration store', () => {
 		expect(options).toStrictEqual({ filename: 'fussball-card.webp' });
 	});
 
-	it('swaps the type in one transaction: delete, then create', async () => {
-		const { client, steps } = createFakeClient();
-		const next = { _id: 'group-1', _type: 'group' };
-
-		await createSanityMigrationStore(client, IMAGE_FOLDER).swapType('group-1', next);
-
-		expect(steps).toStrictEqual([['delete', 'group-1'], ['create', next], ['commit']]);
-	});
-
-	it('patches the affiliations only in the revision it read', async () => {
+	// One patch per document: the references and, for a person, the affiliations together.
+	it('sets the changed fields of a document only in the revision it read', async () => {
 		const { client, steps } = createFakeClient();
 		const affiliations = [{ _key: 'a1', role: { _ref: 'role-1', _type: 'reference' } }];
 
-		await createSanityMigrationStore(client, IMAGE_FOLDER).patchAffiliations(
-			'person-1',
-			'rev-7',
+		await createSanityMigrationStore(client, IMAGE_FOLDER).patchDocument('person-1', 'rev-7', {
 			affiliations,
-		);
+		});
 
 		expect(steps).toStrictEqual([
 			['patch', 'person-1'],
@@ -198,6 +188,21 @@ describe('the migration store', () => {
 			['set', { affiliations }],
 			['patch.commit'],
 		]);
+	});
+
+	it('reads every document that references a legacy group, in the raw perspective', async () => {
+		const { client, fake } = createFakeClient();
+
+		await createSanityMigrationStore(client, IMAGE_FOLDER).fetchReferringDocuments([
+			'soccer-1',
+			'dance-2',
+		]);
+
+		expect(fake.fetch).toHaveBeenCalledWith(
+			'*[references($ids)]',
+			{ ids: ['soccer-1', 'dance-2'] },
+			{ perspective: 'raw' },
+		);
 	});
 
 	it('removes the stats from the published groups page and its draft in one transaction', async () => {
@@ -222,12 +227,16 @@ describe('the migration store', () => {
 	it('creates or replaces a document and deletes one by id', async () => {
 		const { client, fake } = createFakeClient();
 		const store = createSanityMigrationStore(client, IMAGE_FOLDER);
-		const document = { _id: 'migration-probe-target', _type: 'group.soccer' };
+		const document = {
+			_id: 'group-soccer-1',
+			_type: 'group' as const,
+			department: { _ref: 'department-fussball', _type: 'reference' as const },
+		};
 
 		await store.createOrReplace(document);
-		await store.deleteDocument('migration-probe-target');
+		await store.deleteDocument('soccer-1');
 
 		expect(fake.createOrReplace).toHaveBeenCalledWith(document);
-		expect(fake.delete).toHaveBeenCalledWith('migration-probe-target');
+		expect(fake.delete).toHaveBeenCalledWith('soccer-1');
 	});
 });

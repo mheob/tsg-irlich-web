@@ -248,8 +248,10 @@ Eine Sanity-Migration (`apps/studio/migrations/<id>/`, `apps/studio/AGENTS.md`, 
    - Stats: die heutigen gemeinsamen Stats aus `groupsPage`, in jede Abteilung kopiert. Die Seiten sehen danach aus wie vorher, und die Redaktion passt sie pro Abteilung an.
    - Ansprechpartner: die Personen, die heute per E-Mail-Abgleich erscheinen, in derselben Reihenfolge
 2. **Gruppen umstellen:**
-   - Jede `group.<x>` (veröffentlicht und Entwurf) wird ein `group` mit derselben `_id` und Verweis auf ihre Abteilung.
-   - Sanity erlaubt keinen Typwechsel per Patch. Das Dokument wird in einer Transaktion durch eines mit neuem Typ ersetzt, damit die Verweise von Personen und News gültig bleiben.
+   - Jede `group.<x>` (veröffentlicht und Entwurf) wird ein neues `group`-Dokument mit der ID `group-<alte ID>` (Entwurf: `drafts.group-<alte ID>`) und Verweis auf ihre Abteilung. Inhalte und `_createdAt` bleiben.
+   - Sanity ändert den `_type` einer ID nie, auch nicht durch Löschen und Neuanlegen in einer Transaktion. Die Probe auf `development` am 25.10.2026 wurde abgelehnt (`immutable attribute "_type" may not be modified`). Deshalb gibt es neue IDs.
+   - Jeder Verweis auf eine alte ID wird auf die neue umgeschrieben, in jedem Dokument (Personen, News, alle übrigen, veröffentlicht und Entwurf) und an jeder Stelle des Dokuments. `_weak` und `_key` bleiben, ein ausstehendes `_strengthenOnPublish` nennt danach den Typ `group`. Bei Personen geschieht das im selben Patch wie Schritt 3.
+   - Danach werden die alten Dokumente gelöscht, Entwürfe zuerst, sobald nichts mehr auf sie verweist. Eine Version in einem Release, die noch verweist, wird nicht angepasst, sondern gemeldet, und ihr Ziel bleibt stehen.
 3. **Personen:**
    - `affiliations[].department` wird ein Verweis auf die Abteilung.
    - Zuordnungen mit `admin` verlieren `department` und `team` und behalten die Rolle.

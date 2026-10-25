@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vite-plus/test';
 
 import { runMigration, summarize } from './run';
 import { WRITE_METHODS, clearCalls, createFakeStore } from './test-utils/fake-store';
-import type { FakeStore } from './test-utils/fake-store';
+import type { FakeDocument, FakeStore } from './test-utils/fake-store';
 import {
 	CONTACT_PERSON_IDS,
 	GROUPS_PAGE_STATS,
@@ -11,8 +11,12 @@ import {
 	ORPHANED_GROUPS,
 	createProductionFixture,
 	legacyGroup,
+	newsLinkingTo,
 	ref,
 } from './test-utils/fixtures';
+
+/** The documents whose references the production fixture points at legacy groups. */
+const REFERRERS = ['person-coach', 'drafts.person-coach', 'person-dancer', 'news-1'];
 
 /**
  * Every write method the store saw called, with its call count.
@@ -31,6 +35,73 @@ function writesOf(store: FakeStore): Record<string, number> {
 	return counts;
 }
 
+/**
+ * The ids of the `group` documents the store created, in their order.
+ *
+ * @param store - The fake store.
+ * @returns The ids.
+ */
+function createdGroups(store: FakeStore): string[] {
+	return store.createOrReplace.mock.calls
+		.map(([document]) => document)
+		.filter(({ _type }) => _type === 'group')
+		.map(({ _id }) => _id);
+}
+
+/**
+ * When the store was first asked to create a `group`.
+ *
+ * @param store - The fake store.
+ * @returns The invocation order of that call.
+ */
+function firstGroupCreation(store: FakeStore): number {
+	const index = store.createOrReplace.mock.calls.findIndex(([{ _type }]) => _type === 'group');
+	return store.createOrReplace.mock.invocationCallOrder[index];
+}
+
+/**
+ * The deletions the store saw whose id passes a test, with their invocation order.
+ *
+ * @param store - The fake store.
+ * @param matches - Which ids to keep.
+ * @returns The ids and their order.
+ */
+function deletionsOf(
+	store: FakeStore,
+	matches: (id: string) => boolean,
+): { id: string; order: number }[] {
+	return store.deleteDocument.mock.calls
+		.map(([id], index) => ({ id, order: store.deleteDocument.mock.invocationCallOrder[index] }))
+		.filter(({ id }) => matches(id));
+}
+
+/**
+ * A draft-only legacy group and a draft person that references it weakly, as the studio does
+ * before the group is published.
+ */
+const DRAFT_ONLY: FakeDocument[] = [
+	{ ...legacyGroup('group.other-sports', 'sportart-7'), _id: 'drafts.other-sports-sportart-7' },
+	{
+		_id: 'drafts.person-new',
+		_type: 'person',
+		affiliations: [
+			{
+				_key: 'n1',
+				_type: 'affiliation',
+				team: {
+					_ref: 'other-sports-sportart-7',
+					_strengthenOnPublish: {
+						template: { id: 'group.other-sports' },
+						type: 'group.other-sports',
+					},
+					_type: 'reference',
+					_weak: true,
+				},
+			},
+		],
+	},
+];
+
 describe('a dry run', () => {
 	it('calls no write method and leaves the dataset as it was', async () => {
 		const { lake, store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
@@ -42,7 +113,7 @@ describe('a dry run', () => {
 		expect([...lake.entries()]).toStrictEqual(before);
 	});
 
-	it('counts six departments, the groups from 2024, 32 groups, two deletions and every person with a department string', async () => {
+	it('counts every write a real run would make', async () => {
 		const { store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
 
 		const report = await runMigration(store, { dryRun: true });
@@ -51,9 +122,11 @@ describe('a dry run', () => {
 			deleted: 2,
 			departments: 6,
 			groups: 11 + 4 + 4 + 3 + 4 + 6,
+			legacyDeleted: 32,
 			orphanedGroups: ORPHANED_GROUPS.length,
 			persons: LEGACY_PERSONS.length,
 			problems: [],
+			rewritten: REFERRERS.length,
 		});
 	});
 
@@ -88,18 +161,17 @@ describe('a dry run', () => {
 		]);
 	});
 
-	// A draft is swapped as well, but the website does not serve it.
-	it('swaps a group draft without listing a path for it', async () => {
-		const draft = {
-			...legacyGroup('group.other-sports', 'tischtennis'),
-			_id: 'drafts.tischtennis',
-		};
-		const { store } = createFakeStore([...createProductionFixture(), draft], CONTACT_PERSON_IDS);
+	// A draft is migrated as well, but the website does not serve it.
+	it('counts a group draft without listing a path for it', async () => {
+		const { store } = createFakeStore(
+			[...createProductionFixture(), ...DRAFT_ONLY],
+			CONTACT_PERSON_IDS,
+		);
 
 		const report = await runMigration(store, { dryRun: true });
 
 		expect(report.groups).toBe(33);
-		expect(report.paths.some((path) => path.endsWith('/tischtennis'))).toBe(false);
+		expect(report.paths.some((path) => path.endsWith('/sportart-7'))).toBe(false);
 	});
 });
 
@@ -120,21 +192,41 @@ describe('a real run', () => {
 		expect(lake.get('department-tanzen')).toMatchObject({ contactPersons: [ref('person-dancer')] });
 	});
 
-	it('swaps every sport group for a group under its department with the same id', async () => {
+	it('moves every sport group to a group under its department with a new id', async () => {
 		const { lake, store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
 
 		await runMigration(store, { dryRun: false });
 
-		expect(lake.get('soccer-mannschaft-1')).toMatchObject({
+		expect(lake.get('group-soccer-mannschaft-1')).toMatchObject({
 			_type: 'group',
 			department: ref('department-fussball'),
 			slug: { current: 'mannschaft-1' },
 		});
-		expect(lake.get('soccer-mannschaft-1')).not.toHaveProperty('isSportGroup');
+		expect(lake.get('group-soccer-mannschaft-1')).not.toHaveProperty('isSportGroup');
 		expect([...lake.values()].filter(({ _type }) => _type.startsWith('group.'))).toStrictEqual([]);
 	});
 
-	it('patches the persons and deletes the administration groups only after the last patch', async () => {
+	it('creates the published groups first, then the drafts, and a draft-only group as a draft', async () => {
+		const draft = {
+			...legacyGroup('group.soccer', 'mannschaft-1'),
+			_id: 'drafts.soccer-mannschaft-1',
+		};
+		const { lake, store } = createFakeStore(
+			[...createProductionFixture(), draft, ...DRAFT_ONLY],
+			CONTACT_PERSON_IDS,
+		);
+
+		await runMigration(store, { dryRun: false });
+
+		expect(createdGroups(store).slice(-3)).toStrictEqual([
+			'group-other-sports-sportart-6',
+			'drafts.group-soccer-mannschaft-1',
+			'drafts.group-other-sports-sportart-7',
+		]);
+		expect(lake.has('group-other-sports-sportart-7')).toBe(false);
+	});
+
+	it('rewrites the references and the affiliations of a person in one patch', async () => {
 		const { lake, store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
 
 		await runMigration(store, { dryRun: false });
@@ -145,19 +237,69 @@ describe('a real run', () => {
 				_type: 'affiliation',
 				department: ref('department-fussball'),
 				role: ref('role-trainer'),
-				team: ref('soccer-mannschaft-1'),
+				team: ref('group-soccer-mannschaft-1'),
 			},
 			{ _key: 'c2', _type: 'affiliation', role: ref('role-trainer') },
 		]);
-		const adminDeletions = store.deleteDocument.mock.calls
-			.map(([id], index) => ({
-				id,
-				order: store.deleteDocument.mock.invocationCallOrder[index],
-			}))
-			.filter(({ id }) => id.startsWith('admin-'));
-		expect(adminDeletions.map(({ id }) => id)).toStrictEqual(['admin-vorstand', 'admin-pr-team']);
-		const lastPatch = Math.max(...store.patchAffiliations.mock.invocationCallOrder);
-		expect(Math.min(...adminDeletions.map(({ order }) => order))).toBeGreaterThan(lastPatch);
+		expect(store.patchDocument.mock.calls.filter(([id]) => id === 'person-coach')).toStrictEqual([
+			['person-coach', 'rev-0', { affiliations: lake.get('person-coach')?.affiliations }],
+		]);
+	});
+
+	it('rewrites an internal link deep inside a news article', async () => {
+		const { lake, store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
+
+		await runMigration(store, { dryRun: false });
+
+		expect(lake.get('news-1')?.body).toStrictEqual(
+			newsLinkingTo('news-1', 'group-soccer-mannschaft-1').body,
+		);
+	});
+
+	it('keeps a weak reference weak and strengthens it to a group on publish', async () => {
+		const { lake, store } = createFakeStore(DRAFT_ONLY);
+
+		await runMigration(store, { dryRun: false });
+
+		expect(lake.get('drafts.person-new')?.affiliations).toStrictEqual([
+			{
+				_key: 'n1',
+				_type: 'affiliation',
+				team: {
+					_ref: 'group-other-sports-sportart-7',
+					_strengthenOnPublish: { template: { id: 'group.other-sports' }, type: 'group' },
+					_type: 'reference',
+					_weak: true,
+				},
+			},
+		]);
+	});
+
+	it('deletes the legacy groups, drafts first, once the last reference is rewritten', async () => {
+		const draft = {
+			...legacyGroup('group.soccer', 'mannschaft-1'),
+			_id: 'drafts.soccer-mannschaft-1',
+		};
+		const { store } = createFakeStore([...createProductionFixture(), draft], CONTACT_PERSON_IDS);
+
+		await runMigration(store, { dryRun: false });
+
+		const legacy = deletionsOf(store, (id) => /^(?:drafts\.)?(?:soccer|dance)-/u.test(id));
+		expect(legacy[0]?.id).toBe('drafts.soccer-mannschaft-1');
+		expect(legacy).toHaveLength(11 + 4 + 1);
+		const lastPatch = Math.max(...store.patchDocument.mock.invocationCallOrder);
+		expect(Math.min(...legacy.map(({ order }) => order))).toBeGreaterThan(lastPatch);
+	});
+
+	it('deletes the administration groups only after the last patch', async () => {
+		const { store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
+
+		await runMigration(store, { dryRun: false });
+
+		const admin = deletionsOf(store, (id) => id.startsWith('admin-'));
+		expect(admin.map(({ id }) => id)).toStrictEqual(['admin-vorstand', 'admin-pr-team']);
+		const lastPatch = Math.max(...store.patchDocument.mock.invocationCallOrder);
+		expect(Math.min(...admin.map(({ order }) => order))).toBeGreaterThan(lastPatch);
 	});
 
 	it('removes the stats from the groups page', async () => {
@@ -169,7 +311,10 @@ describe('a real run', () => {
 	});
 
 	it('writes nothing the second time', async () => {
-		const { store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
+		const { store } = createFakeStore(
+			[...createProductionFixture(), ...DRAFT_ONLY],
+			CONTACT_PERSON_IDS,
+		);
 		await runMigration(store, { dryRun: false });
 		clearCalls(store);
 
@@ -180,9 +325,11 @@ describe('a real run', () => {
 			deleted: 0,
 			departments: 0,
 			groups: 0,
+			legacyDeleted: 0,
 			orphanedGroups: 0,
 			persons: 0,
 			problems: [],
+			rewritten: 0,
 		});
 		expect(report.paths).toHaveLength(6 + 32);
 	});
@@ -212,14 +359,15 @@ describe('a real run', () => {
 
 describe('the problems of a run', () => {
 	it('report a legacy type without a department and leave it alone', async () => {
-		const { store } = createFakeStore([legacyGroup('group.swimming', 'kraulen')]);
+		const { lake, store } = createFakeStore([legacyGroup('group.swimming', 'kraulen')]);
 
 		const report = await runMigration(store, { dryRun: false });
 
 		expect(report.problems).toContain(
 			'Unbekannter Gruppentyp „group.swimming“ bei swimming-kraulen: nicht umgestellt.',
 		);
-		expect(store.swapType).not.toHaveBeenCalled();
+		expect(createdGroups(store)).toStrictEqual([]);
+		expect(lake.has('swimming-kraulen')).toBe(true);
 	});
 
 	it('report a department string the migration does not know', async () => {
@@ -257,8 +405,30 @@ describe('the problems of a run', () => {
 		const report = await runMigration(store, { dryRun: true });
 
 		expect(report.problems).toContain(
-			'Gruppe dance-ohne-slug („ohne-slug“) hat keinen Slug und bekommt keinen Pfad.',
+			'Gruppe group-dance-ohne-slug („ohne-slug“) hat keinen Slug und bekommt keinen Pfad.',
 		);
+	});
+
+	// Sanity refuses to delete a document that is still referenced, so it stays and is reported.
+	it('keep a legacy group that a release version still references', async () => {
+		const version = {
+			...newsLinkingTo('news-2', 'soccer-mannschaft-1'),
+			_id: 'versions.r1.news-2',
+		};
+		const { lake, store } = createFakeStore(
+			[...createProductionFixture(), version],
+			CONTACT_PERSON_IDS,
+		);
+
+		const report = await runMigration(store, { dryRun: false });
+
+		expect(report.problems).toStrictEqual([
+			'Version versions.r1.news-2 („news.article“) liegt in einem Release und wird nicht migriert. Den Release vorher veröffentlichen oder verwerfen.',
+			'Die Gruppe soccer-mannschaft-1 (alter Typ) bleibt bestehen, weil noch versions.r1.news-2 auf sie verweist.',
+		]);
+		expect(lake.get('soccer-mannschaft-1')?._type).toBe('group.soccer');
+		expect(lake.get('versions.r1.news-2')).toStrictEqual(version);
+		expect(report.legacyDeleted).toBe(31);
 	});
 
 	it('keep an administration group that a person still uses as team', async () => {
@@ -324,18 +494,15 @@ describe('the problems of a run', () => {
 });
 
 describe('the groups left from 2024', () => {
-	it('are deleted, published and draft, before the first type swap', async () => {
+	it('are deleted, published and draft, before the first new group is created', async () => {
 		const { lake, store } = createFakeStore(createProductionFixture(), CONTACT_PERSON_IDS);
 
 		await runMigration(store, { dryRun: false });
 
-		for (const { _id } of ORPHANED_GROUPS) {
-			expect(lake.has(_id)).toBe(false);
-		}
-		const deletions = store.deleteDocument.mock.calls.map(([id]) => id);
-		expect(deletions.slice(0, 3)).toStrictEqual(ORPHANED_GROUPS.map(({ _id }) => _id));
-		const lastOrphanDeletion = store.deleteDocument.mock.invocationCallOrder[2];
-		expect(lastOrphanDeletion).toBeLessThan(Math.min(...store.swapType.mock.invocationCallOrder));
+		expect(ORPHANED_GROUPS.filter(({ _id }) => lake.has(_id))).toStrictEqual([]);
+		const orphans = deletionsOf(store, (id) => id.includes('old-'));
+		expect(orphans.map(({ id }) => id)).toStrictEqual(ORPHANED_GROUPS.map(({ _id }) => _id));
+		expect(Math.max(...orphans.map(({ order }) => order))).toBeLessThan(firstGroupCreation(store));
 	});
 
 	it('stay untouched in a dry run', async () => {
@@ -389,12 +556,7 @@ describe('the release versions', () => {
 					`Version ${_id} („${_type}“) liegt in einem Release und wird nicht migriert. Den Release vorher veröffentlichen oder verwerfen.`,
 			),
 		);
-		expect(versions.map(({ _id }) => lake.get(_id)?._type)).toStrictEqual([
-			'group.soccer',
-			'person',
-			'groupsPage',
-		]);
-		expect(lake.get('versions.r1.groupsPage')?.content).toStrictEqual({ stats: GROUPS_PAGE_STATS });
+		expect(versions.map(({ _id }) => lake.get(_id))).toStrictEqual(versions);
 		expect(report).toMatchObject({ groups: 32, persons: LEGACY_PERSONS.length });
 	});
 
@@ -430,10 +592,12 @@ describe('the summary of a run', () => {
 		deleted: 2,
 		departments: 6,
 		groups: 32,
+		legacyDeleted: 32,
 		orphanedGroups: 44,
 		paths: ['/angebot/fussball', '/angebot/fussball/1-mannschaft'],
 		persons: 42,
 		problems: [],
+		rewritten: 42,
 	};
 
 	it('says that a dry run wrote nothing and lists the paths', () => {
@@ -441,8 +605,10 @@ describe('the summary of a run', () => {
 			'Probelauf, geschrieben wurde nichts. Ein echter Lauf würde:',
 			'  Abteilungen angelegt: 6',
 			'  Alte Gruppen ohne Abteilungsverweis gelöscht: 44',
-			'  Gruppen umgestellt: 32',
+			'  Gruppen unter neuer ID angelegt: 32',
+			'  Dokumente mit umgeschriebenen Verweisen: 42',
 			'  Personen angepasst: 42',
+			'  Gruppen des alten Typs gelöscht: 32',
 			'  Administration-Gruppen gelöscht: 2',
 			'Pfade nach der Migration (2):',
 			'/angebot/fussball',

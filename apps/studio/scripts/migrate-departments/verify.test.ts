@@ -78,6 +78,56 @@ describe('the verification', () => {
 	});
 
 	// A draft does not count: the website only shows published departments.
+	// A team still pointing at a legacy id would be a dangling or wrongly typed reference.
+	it('finds a team that is no group', async () => {
+		await expect(
+			problemsIn([
+				...DEPARTMENTS,
+				{
+					_id: 'person-x',
+					_type: 'person',
+					affiliations: [{ _key: 'x1', team: ref('soccer-a-jugend') }],
+				},
+			]),
+		).resolves.toStrictEqual([
+			'Person person-x: Die Zugehörigkeit x1 verweist als Gruppe auf soccer-a-jugend, das keine Gruppe ist.',
+		]);
+	});
+
+	// A weak reference may point at a group that only exists as a draft.
+	it('accepts a team that is a group, published or only a draft', async () => {
+		await expect(
+			problemsIn([
+				...DEPARTMENTS,
+				{ _id: 'group-a', _type: 'group', department: ref('department-kurse') },
+				{ _id: 'drafts.group-b', _type: 'group', department: ref('department-kurse') },
+				{
+					_id: 'person-x',
+					_type: 'person',
+					affiliations: [
+						{ _key: 'x1', department: ref('department-kurse'), team: ref('group-a') },
+						{ _key: 'x2', team: { ...ref('group-b'), _weak: true } },
+					],
+				},
+			]),
+		).resolves.toStrictEqual([]);
+	});
+
+	it('finds an affiliation department that is no department', async () => {
+		await expect(
+			problemsIn([
+				...DEPARTMENTS,
+				{
+					_id: 'person-x',
+					_type: 'person',
+					affiliations: [{ _key: 'x1', department: ref('group-a') }],
+				},
+			]),
+		).resolves.toStrictEqual([
+			'Person person-x: Die Zugehörigkeit x1 verweist als Abteilung auf group-a, das keine Abteilung ist.',
+		]);
+	});
+
 	it('finds a seeded department that is not published', async () => {
 		const [first, ...rest] = DEPARTMENTS;
 		const draftOnly = { ...first, _id: `drafts.${first._id}` };

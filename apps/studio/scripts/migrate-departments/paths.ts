@@ -1,5 +1,5 @@
 import type { LegacyGroupDocument } from './build';
-import { departmentIdOf, isPublished } from './documents';
+import { departmentIdOf, isPublished, toNewGroupId } from './documents';
 import { DEPARTMENT_SEEDS, SEED_BY_LEGACY_TYPE } from './seeds';
 import type { DepartmentSummary, GroupSummary } from './store';
 
@@ -41,17 +41,18 @@ function departmentsAfter(
 }
 
 /**
- * The published groups once the run is through: the swapped legacy groups and the existing
- * `group` documents with a department.
+ * The published groups once the run is through: the legacy groups under their new ids and the
+ * existing `group` documents with a department. A group a former run already moved is listed
+ * once, as it is now.
  *
  * @param sources - The groups before the run, without the ones the run deletes.
  * @returns The groups.
  */
 function groupsAfter(sources: PathSources): PathGroup[] {
-	const swapped = sources.legacyGroups
+	const moved = sources.legacyGroups
 		.filter(({ _id, _type }) => isPublished(_id) && SEED_BY_LEGACY_TYPE.has(_type))
 		.map((group) => ({
-			_id: group._id,
+			_id: toNewGroupId(group._id),
 			departmentId: SEED_BY_LEGACY_TYPE.get(group._type)?.id,
 			slug: group.slug?.current,
 			title: group.title,
@@ -64,7 +65,7 @@ function groupsAfter(sources: PathSources): PathGroup[] {
 			slug: group.slug,
 			title: group.title,
 		}));
-	return [...swapped, ...existing];
+	return [...new Map([...moved, ...existing].map((group) => [group._id, group])).values()];
 }
 
 /**

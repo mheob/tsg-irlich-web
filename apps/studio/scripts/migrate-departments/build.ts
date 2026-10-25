@@ -1,3 +1,4 @@
+import { toNewGroupId } from './documents';
 import { ADMIN_LEGACY_AFFILIATION } from './seeds';
 import type { DepartmentImages, DepartmentSeed } from './seeds';
 
@@ -77,7 +78,8 @@ function buildDepartmentDocument(
 }
 
 /**
- * Turns a legacy `group.<x>` document into a `group` with the same id and every content field.
+ * Turns a legacy `group.<x>` document into a `group` with every content field, under its new id
+ * (`group-<id>`, a draft stays a draft).
  *
  * @param legacy - The legacy document, published or draft.
  * @param departmentId - The id of the department it belongs to.
@@ -86,7 +88,7 @@ function buildDepartmentDocument(
 function toGroupDocument(legacy: LegacyGroupDocument, departmentId: string): GroupDocument {
 	return {
 		...omit(legacy, DROPPED_GROUP_FIELDS),
-		_id: legacy._id,
+		_id: toNewGroupId(legacy._id),
 		_type: 'group',
 		department: toReference(departmentId),
 	};
@@ -160,6 +162,7 @@ interface StatsItem {
 }
 
 interface DepartmentDocument {
+	[field: string]: unknown;
 	_id: string;
 	_type: 'department';
 	cardImage: ImageValue<'extendedImage'>;
