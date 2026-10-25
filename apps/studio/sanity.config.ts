@@ -1,5 +1,6 @@
 import { defineConfig } from 'sanity';
 
+import { createPublishWithSlugHistoryAction } from './actions/publish-with-slug-history';
 import { RegenerateEchoPagesAction } from './actions/regenerate-echo-pages';
 import { Logo } from './components/logo';
 import { dataset, projectId } from './env';
@@ -13,6 +14,9 @@ const singletonActions = new Set(['publish', 'discardChanges', 'restore']);
 // Define the singleton document types
 const singletonTypes = new Set(['privacy', 'site-settings']);
 
+// Define the document types whose publish action remembers former slugs, so old URLs can redirect
+const slugHistoryTypes = new Set(['department', 'group']);
+
 export default defineConfig({
 	dataset,
 	document: {
@@ -24,6 +28,11 @@ export default defineConfig({
 			}
 			if (context.schemaType === echoIssue.name) {
 				return [...input, RegenerateEchoPagesAction];
+			}
+			if (slugHistoryTypes.has(context.schemaType)) {
+				return input.map((action) =>
+					action.action === 'publish' ? createPublishWithSlugHistoryAction(action) : action,
+				);
 			}
 			return input;
 		},
