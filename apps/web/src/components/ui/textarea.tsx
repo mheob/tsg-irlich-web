@@ -37,7 +37,7 @@ function TextareaWithLabel({
 			<FormControl>
 				<Textarea {...field} {...props} />
 			</FormControl>
-			{description && <FormDescription className="px-3">{description}</FormDescription>}
+			{description && <FormDescription className="max-w-none px-3">{description}</FormDescription>}
 			<FormMessage />
 		</FormItem>
 	);
