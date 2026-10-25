@@ -197,8 +197,9 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 										<FormField
 											render={({ field }) => (
 												<TextareaWithLabel
+													description="Wenn du einen Rückruf wünschst, schreib uns deine Telefonnummer in die Nachricht."
 													field={field}
-													placeholder="Hallo liebes Team von der TSG Irlich! Ich wende mich folgendem Anliegen an euch..."
+													placeholder="Hallo liebes Team von der TSG Irlich! Ich wende mich mit folgendem Anliegen an euch..."
 												>
 													<MessagesSquare /> Nachricht
 												</TextareaWithLabel>

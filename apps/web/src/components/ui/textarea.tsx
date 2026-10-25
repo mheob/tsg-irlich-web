@@ -1,9 +1,9 @@
-import type { ComponentPropsWithRef, HTMLAttributes } from 'react';
+import type { ComponentPropsWithRef, HTMLAttributes, ReactNode } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
 import { cn } from '@tsgi-web/shared';
 
-import { FormControl, FormItem, FormLabel, FormMessage } from '../with-logic/form';
+import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from '../with-logic/form';
 
 function Textarea({ className, ...props }: ComponentPropsWithRef<'textarea'>) {
 	return (
@@ -19,12 +19,14 @@ function Textarea({ className, ...props }: ComponentPropsWithRef<'textarea'>) {
 
 interface TextareaWithLabelProps extends ComponentPropsWithRef<typeof Textarea> {
 	children?: HTMLAttributes<HTMLLabelElement>['children'];
+	description?: ReactNode;
 	field?: FieldValues;
 	wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
 function TextareaWithLabel({
 	children,
+	description,
 	field,
 	wrapperClassName,
 	...props
@@ -35,6 +37,7 @@ function TextareaWithLabel({
 			<FormControl>
 				<Textarea {...field} {...props} />
 			</FormControl>
+			{description && <FormDescription className="px-3">{description}</FormDescription>}
 			<FormMessage />
 		</FormItem>
 	);

@@ -47,6 +47,26 @@ describe('the contact form', () => {
 		expect(privacyCheckbox(getByRole).getAttribute('aria-labelledby')).toBe(description.id);
 	});
 
+	it('describes the message field with where to leave a phone number for a callback', () => {
+		const { getByRole } = renderForm();
+
+		expect(
+			getByRole('textbox', {
+				description:
+					'Wenn du einen Rückruf wünschst, schreib uns deine Telefonnummer in die Nachricht.',
+				name: 'Nachricht',
+			}),
+		).not.toBeNull();
+	});
+
+	it('opens the message placeholder with a grammatical greeting', () => {
+		const { getByRole } = renderForm();
+
+		expect(getByRole('textbox', { name: 'Nachricht' }).getAttribute('placeholder')).toBe(
+			'Hallo liebes Team von der TSG Irlich! Ich wende mich mit folgendem Anliegen an euch...',
+		);
+	});
+
 	it('shows the schema validation messages on an empty submission and never calls the action', async () => {
 		const { findByText, getByRole, getByText, user } = renderForm();
 
