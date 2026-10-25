@@ -1,5 +1,3 @@
-import { groupSections } from './groups';
-
 /** The document type of the home page, which is served from the site root. */
 const HOME_TYPE = 'home';
 
@@ -18,13 +16,14 @@ const ECHO_ISSUE_TYPE = 'echo.issue';
 /** The path of the TSG-Echo archive. */
 const ECHO_OVERVIEW_PATH = '/verein/echo';
 
-/** The type prefix shared by every group document. */
-const GROUP_TYPE_PREFIX = 'group.';
+/** The document type of a department, which is served below the offer page. */
+const DEPARTMENT_TYPE = 'department';
 
-/** Map from a group document type to the path of the department it belongs to. */
-const departmentPathByGroupType = new Map(
-	groupSections.map((section) => [section._type, section.slug]),
-);
+/** The document type of a group, which is served below its department. */
+const GROUP_TYPE = 'group';
+
+/** The path of the offer page, below which every department lives. */
+const OFFER_PATH = '/angebot';
 
 /**
  * Builds the path of a TSG-Echo issue.
@@ -36,9 +35,24 @@ function getEchoIssuePath(slug: string): string {
 	return `${ECHO_OVERVIEW_PATH}/${slug}`;
 }
 
+/**
+ * Builds the path of a group, which lives below its department.
+ *
+ * @param slug - The slug of the group.
+ * @param _category - Unused: only a news article has a category.
+ * @param department - The slug of the department the group belongs to.
+ * @returns The path of the group, or `undefined` if it has no department.
+ */
+function getGroupPath(slug: string, _category?: string, department?: string): string | undefined {
+	// A group without a department, or whose department document is gone, is not on the website.
+	return department ? `${OFFER_PATH}/${department}/${slug}` : undefined;
+}
+
 /** The document types whose path is not their slug, mapped to how their path is built. */
 const PATH_RESOLVERS = new Map<string, PathResolver>([
 	[HOME_TYPE, () => '/'],
+	[DEPARTMENT_TYPE, (slug) => `${OFFER_PATH}/${slug}`],
+	[GROUP_TYPE, getGroupPath],
 	[NEWS_ARTICLE_TYPE, (slug, category) => (category ? `/news/${category}/${slug}` : undefined)],
 	[NEWS_CATEGORY_TYPE, (slug) => `/news/${slug}`],
 	[ECHO_OVERVIEW_TYPE, () => ECHO_OVERVIEW_PATH],
@@ -46,34 +60,25 @@ const PATH_RESOLVERS = new Map<string, PathResolver>([
 ]);
 
 /**
- * Builds the path of a group, which lives below the department its type belongs to.
- *
- * @param type - The document type of the group.
- * @param slug - The slug of the group.
- * @returns The path of the group, or `undefined` if its department has no page.
- */
-function getGroupHref(type: string, slug: string): string | undefined {
-	const departmentPath = departmentPathByGroupType.get(type);
-	// A group whose department has no page on the website (e.g. the administration) has no URL.
-	return departmentPath ? `${departmentPath}/${slug}` : undefined;
-}
-
-/**
- * Builds the path of a document from its type, slug and — for a news article — its category.
+ * Builds the path of a document from its type, slug and — where its path depends on one — its
+ * category or department.
  *
  * @param type - The document type.
  * @param slug - The slug of the document, which only holds the last segment of the URL.
  * @param category - The slug of the category a news article belongs to.
+ * @param department - The slug of the department a group belongs to.
  * @returns The path of the document, or `undefined` if it cannot be resolved.
  */
-function getHrefForType(type: string, slug: string, category?: string): string | undefined {
+// oxlint-disable-next-line eslint/max-params -- the type, the slug and what a path may depend on
+function getHrefForType(
+	type: string,
+	slug: string,
+	category?: string,
+	department?: string,
+): string | undefined {
 	const resolvePath = PATH_RESOLVERS.get(type);
 	if (resolvePath) {
-		return resolvePath(slug, category);
-	}
-
-	if (type.startsWith(GROUP_TYPE_PREFIX)) {
-		return getGroupHref(type, slug);
+		return resolvePath(slug, category, department);
 	}
 
 	// Every remaining linkable document is a single page whose slug already is the full path.
@@ -84,8 +89,8 @@ function getHrefForType(type: string, slug: string, category?: string): string |
  * Builds the path of an internal link target.
  *
  * A slug in Sanity only holds the last segment of the URL, so the full path has to be derived from
- * the document type: news articles live below their category, groups below their department and the
- * home page at the root.
+ * the document type: news articles live below their category, groups below their department,
+ * departments below the offer page and the home page at the root.
  *
  * @param target - The link target as projected by the `internalLinkTarget` GROQ fragment.
  * @returns The path of the target, or `undefined` if it cannot be resolved.
@@ -98,15 +103,19 @@ function getInternalHref(target: InternalLinkTarget | null | undefined): string 
 		return undefined;
 	}
 
-	return getHrefForType(type, slug, target.category ?? undefined);
+	return getHrefForType(type, slug, target.category ?? undefined, target.department ?? undefined);
 }
 
-/** Builds the path of a document from its slug and, for a news article, its category. */
-type PathResolver = (slug: string, category?: string) => string | undefined;
+/**
+ * Builds the path of a document from its slug and, for a news article, its category or, for a
+ * group, its department.
+ */
+type PathResolver = (slug: string, category?: string, department?: string) => string | undefined;
 
 interface InternalLinkTarget {
 	_type?: string | null;
 	category?: string | null;
+	department?: string | null;
 	slug?: string | null;
 }
 

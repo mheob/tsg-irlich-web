@@ -59,8 +59,10 @@ Without the staging webhook, every content change on staging that is not read th
 
    **Filter** (optional, to track only specific documents). Every type the route handles has to be in it, `site-settings` above all: the menu and the footer data live there, and without it a menu change waits out the layout's 12-hour cache. The filter lives in Sanity, not in the repository, so adding or renaming a type in the route's `REVALIDATION_MAP` means updating the filter of **both** webhooks too. Until October 2026 the production filter still listed `settings`, `navigation` and `group`, which no document is called, and menu changes never fired it.
 
+   The filter below is the one for the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. The live webhooks are switched over only during the rollout (Tasks 11 and 12 of the WEB-384 plan), not when this change merges, so until then they keep the old filter.
+
    ```groq
-   _type in ["aboutUs", "contact", "departmentsPage", "echo.issue", "echoOverview", "group.children-gymnastics", "group.courses", "group.dance", "group.other-sports", "group.soccer", "group.taekwondo", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
+   _type in ["aboutUs", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
    ```
 
    **Projection** (what is sent to the webhook):
