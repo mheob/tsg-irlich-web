@@ -1,5 +1,8 @@
 import { describe, expect, it, vi } from 'vite-plus/test';
 
+import type { AnyImage } from '@/types/sanity.types';
+import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
+
 import { renderWithUser } from '../../../test-utils/render';
 import { GroupCard } from './group-card';
 
@@ -11,29 +14,18 @@ vi.hoisted(() => {
 	globalThis.process.env.NEXT_PUBLIC_SANITY_PROJECT_ID = 'test-project';
 });
 
-const DEPARTMENT = {
-	_type: 'group.soccer',
-	heroImage: { alt: 'Fußball', src: '/hero/fussball.webp' },
-	icon: 'Fussball',
-	image: { alt: 'Fußball', src: '/fussball.webp' },
-	slug: '/angebot/fussball',
-	title: 'Fußball',
-} as const;
+const IMAGE_WITH_ASSET: AnyImage = {
+	_type: 'extendedImage',
+	alt: 'Fußball',
+	asset: { _ref: 'image-abc123-800x600-jpg', _type: 'reference' },
+};
+
+const IMAGE_WITHOUT_ASSET: AnyImage = { _type: 'extendedImage', alt: 'Fußball' };
 
 describe('the group card', () => {
-	it('links to the group below its department', () => {
+	it('links to the given href', () => {
 		const { getByRole } = renderWithUser(
-			<GroupCard currentDepartment={DEPARTMENT} icon="Fussball" slug="herren-1" title="Herren 1" />,
-		);
-
-		expect(getByRole('link', { name: 'Mehr über "Herren 1" erfahren' }).getAttribute('href')).toBe(
-			'/angebot/fussball/herren-1',
-		);
-	});
-
-	it('links to the slug alone when it belongs to no department', () => {
-		const { getByRole } = renderWithUser(
-			<GroupCard icon="Fussball" slug="/angebot/fussball" title="Fußball" />,
+			<GroupCard href="/angebot/fussball" icon="Fussball" title="Fußball" />,
 		);
 
 		expect(getByRole('link', { name: 'Mehr über "Fußball" erfahren' }).getAttribute('href')).toBe(
@@ -41,28 +33,59 @@ describe('the group card', () => {
 		);
 	});
 
-	it('prefers the overview title over the group title', () => {
+	it('prefers the overview title over the title', () => {
 		const { getByRole } = renderWithUser(
-			<GroupCard icon="Fussball" overviewTitle="Erste Herren" slug="herren-1" title="Herren 1" />,
+			<GroupCard
+				href="/angebot/fussball/herren-1"
+				icon="Fussball"
+				overviewTitle="Erste Herren"
+				title="Herren 1"
+			/>,
 		);
 
 		expect(getByRole('heading', { name: 'Erste Herren' })).not.toBeNull();
 	});
 
-	it('shows the group title as the image alternative text', () => {
+	it('shows the title as the image alternative text', () => {
 		const { getByRole } = renderWithUser(
-			<GroupCard icon="Fussball" slug="herren-1" title="Herren 1" />,
+			<GroupCard href="/angebot/fussball/herren-1" icon="Fussball" title="Herren 1" />,
 		);
 
 		expect(getByRole('img', { name: 'Herren 1' })).not.toBeNull();
 	});
 
+	it('shows the image from Sanity when it has an asset', () => {
+		const { getByRole } = renderWithUser(
+			<GroupCard href="/angebot/fussball" image={IMAGE_WITH_ASSET} title="Fußball" />,
+		);
+
+		expect(
+			getByRole('img', { name: 'Fußball' })
+				.getAttribute('src')
+				?.startsWith('https://cdn.sanity.io/images/test-project/test-dataset/abc123-800x600.jpg'),
+		).toBe(true);
+	});
+
 	it.each([
-		['slug', { slug: null, title: 'Herren 1' }],
-		['title', { slug: 'herren-1', title: null }],
-	])('renders nothing for a group without a %s', (_name, group) => {
+		['has no asset', IMAGE_WITHOUT_ASSET],
+		['is null', null],
+		['is missing', undefined],
+	])('shows the fallback image when the image %s', (_name, image) => {
+		const { getByRole } = renderWithUser(
+			<GroupCard href="/angebot/fussball" image={image} title="Fußball" />,
+		);
+
+		expect(getByRole('img', { name: 'Fußball' }).getAttribute('src')).toBe(
+			OFFER_FALLBACK_IMAGE.src.src,
+		);
+	});
+
+	it.each([
+		['missing', undefined],
+		['null', null],
+	])('renders nothing for a card whose title is %s', (_name, title) => {
 		const { container } = renderWithUser(
-			<GroupCard icon="Fussball" slug={group.slug} title={group.title} />,
+			<GroupCard href="/angebot/fussball" icon="Fussball" title={title} />,
 		);
 
 		expect(container.textContent).toBe('');

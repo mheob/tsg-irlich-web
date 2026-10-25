@@ -1552,6 +1552,41 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: src/lib/sanity/queries/departments.ts
+// Variable: departmentCardsQuery
+// Query: *[_type == 'department' && defined(slug.current)] | order(sortOrder asc) {		_id,		cardImage,		icon,		"slug": slug.current,		title,	}
+export type DepartmentCardsQueryResult = Array<{
+  _id: string;
+  cardImage: ExtendedImage;
+  icon:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "ElternKindTurnen"
+    | "Fitness"
+    | "Fussball"
+    | "Gehen"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
+    | "Pilates"
+    | "Pokal"
+    | "RopeSkipping"
+    | "Sportakrobatik"
+    | "SportInGebaeuden"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga";
+  slug: string;
+  title: string;
+}>;
+
 // Source: src/lib/sanity/queries/echo.ts
 // Variable: echoRenderStateQuery
 // Query: *[_id == $id][0] {		_id,		_rev,		"pdfRef": pdf.asset._ref,		"renderSource": render.source,		"renderStartedAt": render.startedAt	}
@@ -4406,6 +4441,7 @@ export type SitemapEchoIssuesQueryResult = Array<{
 // Query TypeMap
 declare global {
   interface SanityQueries {
+    "\n\t*[_type == 'department' && defined(slug.current)] | order(sortOrder asc) {\n\t\t_id,\n\t\tcardImage,\n\t\ticon,\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t}\n": DepartmentCardsQueryResult;
     '\n\t*[_id == $id][0] {\n\t\t_id,\n\t\t_rev,\n\t\t"pdfRef": pdf.asset._ref,\n\t\t"renderSource": render.source,\n\t\t"renderStartedAt": render.startedAt\n\t}\n': EchoRenderStateQueryResult;
     "\n\t{\n\t\t\"aboutUs\": *[_type == 'aboutUs'][0].meta.metaDescription,\n\t\t\"contact\": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },\n\t\t\"description\": *[_type == 'home'][0].meta.metaDescription,\n\t\t\"groups\": *[_type in [\n\t\t\t'group.soccer',\n\t\t\t'group.children-gymnastics',\n\t\t\t'group.courses',\n\t\t\t'group.taekwondo',\n\t\t\t'group.dance',\n\t\t\t'group.other-sports',\n\t\t]] | order(sortOrder asc) {\n\t\t\t_type,\n\t\t\t\"description\": meta.metaDescription,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"membership\": *[_type == 'membership'][0].meta.metaDescription,\n\t}\n": LlmsTxtQueryResult;
     '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_type,\n\t\t\t\n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n,\n\t\t\thasTwoColumns,\n\t\t\t"children": coalesce(children[] { \n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n, description }, [])\n\t\t}\n\t}\n': MainNavigationQueryResult;

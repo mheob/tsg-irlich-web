@@ -11,6 +11,7 @@ import { Pricing } from '@/components/section/pricing';
 import { Stats } from '@/components/section/stats';
 import { Vision } from '@/components/section/vision';
 import type { client } from '@/lib/sanity/client';
+import { departmentCardsQuery } from '@/lib/sanity/queries/departments';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
@@ -72,6 +73,7 @@ function buildPage(meta?: Record<string, unknown>): Record<string, unknown> {
 }
 
 interface HomeResults {
+	departments?: unknown[];
 	news?: unknown[];
 	page?: unknown;
 	socialMedia?: unknown;
@@ -79,9 +81,10 @@ interface HomeResults {
 	testimonials?: unknown[];
 }
 
-// The five queries run inside one `Promise.all`, so keying on the query keeps the fixtures
+// The six queries run inside one `Promise.all`, so keying on the query keeps the fixtures
 // independent of the order they resolve in.
 function mockSanity({
+	departments = [],
 	news = [],
 	page = buildPage(),
 	socialMedia = { instagram: 'https://instagram.example' },
@@ -91,6 +94,7 @@ function mockSanity({
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedFetch.mockImplementation(async (query: string) => {
 		if (query === homePageQuery) return page;
+		if (query === departmentCardsQuery) return departments;
 		if (query === homePageTestimonialsQuery) return testimonials;
 		if (query === newsArticlesQuery) return news;
 		if (query === socialMediaQuery) return socialMedia;
@@ -165,6 +169,19 @@ describe('home page', () => {
 			expect(findElement(page, Stats)?.props.stats).toMatchObject([{ label: 'Mitglieder' }]);
 			expect(findElement(page, Pricing)?.props).toMatchObject({ title: 'Beiträge' });
 			expect(findElement(page, ContactPersons)?.props).toMatchObject({ title: 'Ansprechpartner' });
+		});
+
+		it('passes the departments to the groups section', async () => {
+			mockSanity({
+				departments: [{ _id: 'department-fussball', slug: 'fussball', title: 'Fußball' }],
+			});
+
+			const groups = findElement(await HomePage(), Groups);
+
+			expect(groups?.props).toMatchObject({
+				departments: [{ _id: 'department-fussball', slug: 'fussball' }],
+				title: 'Unsere Abteilungen',
+			});
 		});
 
 		it('tells the vision section which document it belongs to', async () => {

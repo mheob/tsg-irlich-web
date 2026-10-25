@@ -1,16 +1,22 @@
 import { SectionHeader } from '@/components/ui/section-header';
-import type { Home } from '@/types/sanity.types';
-import { groupSections } from '@/utils/groups';
+import type { DepartmentCardsQueryResult, Home } from '@/types/sanity.types';
+import { getInternalHref } from '@/utils/links';
 
 import { GroupCard } from './group-card';
 
 import styles from './groups.module.css';
 
-const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
+type GroupsProps = Home['content']['groupsSection'] & { departments: DepartmentCardsQueryResult };
 
-type GroupsProps = Home['content']['groupsSection'];
+export function Groups({ departments, subtitle, title }: Readonly<GroupsProps>) {
+	// A department without a slug has no page to link to. Dropping it before the cards are numbered
+	// keeps the digits free of gaps.
+	const linkedDepartments = departments.flatMap(({ _id, icon, slug, title: departmentTitle }) => {
+		const href = getInternalHref({ _type: 'department', slug });
 
-export function Groups({ subtitle, title }: Readonly<GroupsProps>) {
+		return href ? [{ _id, href, icon, title: departmentTitle }] : [];
+	});
+
 	return (
 		<section className="relative">
 			<div className={styles.bg} />
@@ -20,13 +26,13 @@ export function Groups({ subtitle, title }: Readonly<GroupsProps>) {
 				<SectionHeader isCenteredOnDesktop={false} subTitle={subtitle} title={title} isCentered />
 
 				<div className="my-6 grid grid-cols-1 gap-2 md:mt-24 md:grid-cols-2 md:gap-7 lg:grid-cols-3">
-					{groupSections?.map(({ icon, slug, title: groupSectionTitle }, index) => (
+					{linkedDepartments.map(({ _id, href, icon, title: departmentTitle }, index) => (
 						<GroupCard
 							digit={index + 1}
-							icon={icon || getFirstLetter(groupSectionTitle)}
-							key={groupSectionTitle}
-							slug={slug}
-							title={groupSectionTitle}
+							icon={icon}
+							key={_id}
+							slug={href}
+							title={departmentTitle}
 						/>
 					))}
 				</div>

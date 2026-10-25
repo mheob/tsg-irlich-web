@@ -7,8 +7,12 @@ import { Newsletter } from '@/components/section/newsletter';
 import { Stats } from '@/components/section/stats';
 import heroImage from '@/images/angebot/hero.webp';
 import { client } from '@/lib/sanity/client';
+import { departmentCardsQuery } from '@/lib/sanity/queries/departments';
 import { offerPageQuery } from '@/lib/sanity/queries/pages/offer';
-import type { OfferPageQueryResult } from '@/types/sanity.types.generated';
+import type {
+	DepartmentCardsQueryResult,
+	OfferPageQueryResult,
+} from '@/types/sanity.types.generated';
 import { getPageMetadata } from '@/utils/metadata';
 
 import { Groups } from './_sections/groups';
@@ -26,7 +30,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function OfferPage() {
-	const page = await client.fetch<OfferPageQueryResult>(offerPageQuery);
+	const [page, departments] = await Promise.all([
+		client.fetch<OfferPageQueryResult>(offerPageQuery),
+		client.fetch<DepartmentCardsQueryResult>(departmentCardsQuery),
+	]);
 
 	if (!page) {
 		notFound();
@@ -35,7 +42,7 @@ export default async function OfferPage() {
 	return (
 		<>
 			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
-			<Groups {...page.content.departmentsSection} />
+			<Groups {...page.content.departmentsSection} departments={departments} />
 			<Stats stats={page.content.stats} />
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<Newsletter />
