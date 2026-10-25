@@ -3,13 +3,14 @@ import type {
 	DocumentActionDescription,
 	DocumentActionProps,
 } from 'sanity';
-import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { createPublishWithSlugHistoryAction } from './publish-with-slug-history';
 
 const studio = vi.hoisted(() => ({
 	execute: vi.fn(),
 	fetch: vi.fn(),
+	pushToast: vi.fn(),
 }));
 
 // The action only needs the patch operation and the client of the studio. Calling the component as a
@@ -17,6 +18,10 @@ const studio = vi.hoisted(() => ({
 vi.mock(import('sanity'), () => ({
 	useClient: (() => ({ fetch: studio.fetch })) as never,
 	useDocumentOperation: (() => ({ patch: { execute: studio.execute } })) as never,
+}));
+
+vi.mock(import('@sanity/ui/toast'), () => ({
+	useToast: (() => ({ push: studio.pushToast })) as never,
 }));
 
 const calls: string[] = [];
@@ -80,6 +85,12 @@ describe('publish action with slug history', () => {
 			calls.push('patch');
 		});
 		studio.fetch.mockReset().mockResolvedValue(departmentRows);
+		studio.pushToast.mockReset();
+	});
+
+	afterEach(() => {
+		// Puts `console.warn` back, which the tests of a failed lookup silence.
+		vi.restoreAllMocks();
 	});
 
 	describe('what the original action decides', () => {
@@ -154,6 +165,30 @@ describe('publish action with slug history', () => {
 			expect(studio.fetch).not.toHaveBeenCalled();
 		});
 
+		it('names the former slugs when the history of a department cannot be worked out', async () => {
+			vi.spyOn(console, 'warn').mockReturnValue();
+			const broken = createProps({
+				draft: {
+					_id: 'drafts.tanz',
+					previousSlugs: 'tanz-alt',
+					slug: { current: 'tanzen' },
+				} as never,
+				id: 'tanz',
+				published: { _id: 'tanz', slug: { current: 'tanz' } } as never,
+				type: 'department',
+			});
+
+			await click(wrap(broken));
+
+			expect(calls).toStrictEqual(['publish']);
+			expect(studio.pushToast).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({
+					description: 'Bitte unter „Frühere Slugs“ von Hand eintragen.',
+					status: 'warning',
+				}),
+			);
+		});
+
 		it('only publishes when the slug stays', async () => {
 			const unchanged = createProps({
 				draft: { _id: 'drafts.tanz', slug: { current: 'tanz' } } as never,
@@ -191,8 +226,20 @@ describe('publish action with slug history', () => {
 			expect(studio.fetch).toHaveBeenCalledExactlyOnceWith(
 				'*[_id in $ids]{ _id, "slug": slug.current }',
 				{ ids: ['kurse', 'weitere-sportarten'] },
-				{ perspective: 'published' },
+				{ perspective: 'published', timeout: 5000 },
 			);
+		});
+
+		it('looks the departments up again when only the slug of a group changes', async () => {
+			const renamed = createProps({
+				draft: { ...publishedGroup, _id: 'drafts.yoga', slug: { current: 'hatha-yoga' } } as never,
+				published: publishedGroup as never,
+			});
+
+			await click(wrap(renamed));
+
+			expect(studio.fetch).toHaveBeenCalledOnce();
+			expect(studio.execute).toHaveBeenCalledWith([{ set: { previousPaths: ['kurse/yoga'] } }]);
 		});
 
 		it('keeps the paths it knew before', async () => {
@@ -224,6 +271,17 @@ describe('publish action with slug history', () => {
 			expect(calls).toStrictEqual(['publish']);
 		});
 
+		it('looks nothing up when the department and the slug stay', async () => {
+			const unchanged = createProps({
+				draft: { ...publishedGroup, _id: 'drafts.yoga' } as never,
+				published: publishedGroup as never,
+			});
+
+			await click(wrap(unchanged));
+
+			expect(studio.fetch).not.toHaveBeenCalled();
+		});
+
 		it('publishes a new group without looking anything up', async () => {
 			await click(wrap(createProps({ draft: { ...publishedGroup, _id: 'drafts.yoga' } as never })));
 
@@ -233,10 +291,37 @@ describe('publish action with slug history', () => {
 
 		it('still publishes when the departments cannot be looked up', async () => {
 			studio.fetch.mockRejectedValue(new Error('offline'));
+			vi.spyOn(console, 'warn').mockReturnValue();
 
 			await click(wrap(movedGroup));
 
 			expect(calls).toStrictEqual(['publish']);
+		});
+
+		it('tells the editor to fill in the former address by hand when the lookup fails', async () => {
+			const error = new Error('offline');
+			studio.fetch.mockRejectedValue(error);
+			const warn = vi.spyOn(console, 'warn').mockReturnValue();
+
+			await click(wrap(movedGroup));
+
+			expect(studio.pushToast).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({
+					description: 'Bitte unter „Frühere Adressen“ von Hand eintragen.',
+					status: 'warning',
+					title: 'Die frühere Adresse konnte nicht gespeichert werden.',
+				}),
+			);
+			expect(warn).toHaveBeenCalledWith(expect.any(String), error);
+		});
+
+		it('says nothing when the history was saved', async () => {
+			const warn = vi.spyOn(console, 'warn').mockReturnValue();
+
+			await click(wrap(movedGroup));
+
+			expect(studio.pushToast).not.toHaveBeenCalled();
+			expect(warn).not.toHaveBeenCalled();
 		});
 
 		it('still publishes when a department has no slug', async () => {

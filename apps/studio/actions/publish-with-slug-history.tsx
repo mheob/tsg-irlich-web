@@ -1,3 +1,4 @@
+import { useToast } from '@sanity/ui/toast';
 import type { DocumentActionComponent, SanityClient, SanityDocument } from 'sanity';
 import { useClient, useDocumentOperation } from 'sanity';
 
@@ -8,6 +9,22 @@ import { getSlugHistoryPatch } from '@/utils/slug-history';
 const SLUG_HISTORY_API_VERSION = '2026-10-01';
 
 const DEPARTMENT_SLUGS_QUERY = '*[_id in $ids]{ _id, "slug": slug.current }';
+
+/**
+ * How long the lookup of the department slugs may take. The client's own limit is five minutes,
+ * and the history is not worth keeping an editor waiting that long: publishing goes on without it.
+ */
+const DEPARTMENT_SLUGS_TIMEOUT_MS = 5000;
+
+/** What an editor is told when the history could not be saved, and which field to fill in by hand. */
+const DEPARTMENT_HISTORY_FAILED = {
+	description: 'Bitte unter „Frühere Slugs“ von Hand eintragen.',
+	title: 'Der frühere Slug konnte nicht gespeichert werden.',
+};
+const GROUP_HISTORY_FAILED = {
+	description: 'Bitte unter „Frühere Adressen“ von Hand eintragen.',
+	title: 'Die frühere Adresse konnte nicht gespeichert werden.',
+};
 
 /** The fields of a department or a group that its slug history reads. */
 interface SlugHistoryDocument {
@@ -77,12 +94,19 @@ async function resolveSlugHistoryPatch({
 	if (!draftDepartmentId || !publishedDepartmentId) {
 		return undefined;
 	}
+	if (
+		draftDepartmentId === publishedDepartmentId &&
+		draftFields.slug?.current === publishedFields.slug?.current
+	) {
+		// The same department and the same slug make the same path, so there is nothing to look up.
+		return undefined;
+	}
 
 	// References point at published documents, so the slugs are the ones the website serves.
 	const departments = await client.fetch<DepartmentSlug[]>(
 		DEPARTMENT_SLUGS_QUERY,
 		{ ids: [publishedDepartmentId, draftDepartmentId] },
-		{ perspective: 'published' },
+		{ perspective: 'published', timeout: DEPARTMENT_SLUGS_TIMEOUT_MS },
 	);
 	const getDepartmentSlug = (id: string): string | undefined =>
 		departments.find((department) => department._id === id)?.slug ?? undefined;
@@ -126,6 +150,7 @@ function createPublishWithSlugHistoryAction(
 		const original = publishAction(props);
 		const client = useClient({ apiVersion: SLUG_HISTORY_API_VERSION });
 		const { patch } = useDocumentOperation(props.id, props.type);
+		const toast = useToast();
 
 		const onHandleOriginal = original?.onHandle;
 		if (!original || !onHandleOriginal) {
@@ -150,8 +175,18 @@ function createPublishWithSlugHistoryAction(
 				);
 				pendingIds.delete(props.id);
 
-				if (outcome.ok && outcome.value) {
-					patch.execute([{ set: outcome.value }]);
+				if (outcome.ok) {
+					if (outcome.value) {
+						patch.execute([{ set: outcome.value }]);
+					}
+				} else {
+					// Publishing goes on, so the editor has to hear that the history is theirs to fill in.
+					console.warn('The slug history could not be worked out before publishing', outcome.error);
+					toast.push({
+						...(props.type === 'department' ? DEPARTMENT_HISTORY_FAILED : GROUP_HISTORY_FAILED),
+						closable: true,
+						status: 'warning',
+					});
 				}
 				onHandleOriginal();
 			},
