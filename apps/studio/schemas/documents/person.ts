@@ -67,6 +67,23 @@ async function validateTeamMatchesDepartment(
 		: 'Die Gruppe gehört nicht zur gewählten Abteilung.';
 }
 
+/**
+ * Builds the list preview of an affiliation from the parts it has. An affiliation may have only a
+ * role (a board member) or, while it is being filled in, only a team or nothing at all.
+ *
+ * @param selection - The selected titles of the group and the role.
+ * @param selection.role - The title of the role.
+ * @param selection.team - The title of the group.
+ * @returns The title naming the group and the role that exist.
+ */
+function prepareAffiliationPreview({ role, team }: { role?: string; team?: string }): {
+	title: string;
+} {
+	const parts = [team && `Gruppe: ${team}`, role && `Rolle: ${role}`].filter(Boolean);
+
+	return { title: parts.length > 0 ? parts.join(' - ') : 'Zugehörigkeit ohne Gruppe und Rolle' };
+}
+
 const person = defineType({
 	fields: [
 		// Personal
@@ -142,9 +159,7 @@ const person = defineType({
 					],
 					name: 'affiliation',
 					preview: {
-						prepare: ({ team, role }: { team?: string; role?: string }) => ({
-							title: `Gruppe: ${team} - Rolle: ${role}`,
-						}),
+						prepare: prepareAffiliationPreview,
 						select: {
 							role: 'role.title',
 							team: 'team.title',

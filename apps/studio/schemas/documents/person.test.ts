@@ -111,24 +111,19 @@ describe('person affiliation preview', () => {
 		expect(result).toStrictEqual({ title: 'Gruppe: Fußball - Rolle: Vorstand Finanzen' });
 	});
 
-	// Regression case: `prepare` interpolates the two selected reference titles straight into a
-	// template literal, so an unset or unresolved reference renders as the literal string
-	// "undefined" in the array item's preview. Both `team` and `role` carry `Rule.required()`, but
-	// Sanity validation gates publishing, not autosave — a freshly added affiliation item shows
-	// "Gruppe: undefined - Rolle: undefined" until both references are picked. Lower severity than
-	// the `spacer`/`group` defects: this one heals as soon as the references are set, whereas those
-	// two leave pre-existing documents permanently stuck. Pinned rather than fixed, since
-	// production code is out of scope here.
-	it('stringifies a missing team as the literal word "undefined"', () => {
-		const result = prepareAffiliation({ role: 'Vorstand Finanzen' });
-
-		expect(result.title).toBe('Gruppe: undefined - Rolle: Vorstand Finanzen');
+	// A board member's affiliation has only a role, since the group and the department are optional.
+	it('shows only the role when there is no team', () => {
+		expect(prepareAffiliation({ role: 'Vorstand Finanzen' })).toStrictEqual({
+			title: 'Rolle: Vorstand Finanzen',
+		});
 	});
 
-	it('stringifies a missing role as the literal word "undefined"', () => {
-		const result = prepareAffiliation({ team: 'Fußball' });
+	it('shows only the team when there is no role yet', () => {
+		expect(prepareAffiliation({ team: 'Fußball' })).toStrictEqual({ title: 'Gruppe: Fußball' });
+	});
 
-		expect(result.title).toBe('Gruppe: Fußball - Rolle: undefined');
+	it('names an affiliation with neither team nor role', () => {
+		expect(prepareAffiliation({})).toStrictEqual({ title: 'Zugehörigkeit ohne Gruppe und Rolle' });
 	});
 });
 
