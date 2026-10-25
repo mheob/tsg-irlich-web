@@ -16,6 +16,16 @@ describe('internal link targets', () => {
 	it('offers the TSG-Echo archive', () => {
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'echoOverview' });
 	});
+
+	it('offers departments and groups', () => {
+		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'department' });
+		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'group' });
+	});
+
+	// The seven `group.*` types were merged into `group`; a reference to one of them would not resolve.
+	it('no longer offers the former group types', () => {
+		expect(INTERNAL_LINK_TARGETS.filter(({ type }) => type.startsWith('group.'))).toStrictEqual([]);
+	});
 });
 
 // Without a preview the studio lists every entry of the legal menu as "link: {empty}".
