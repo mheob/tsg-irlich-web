@@ -25,7 +25,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 
 | Path | Contains |
 | --- | --- |
-| `schemas/documents` | editable document types (`news.article`, `person`, `group.*`, …) |
+| `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
 | `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
@@ -36,7 +36,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | `plugins` | studio plugins: structure, singletons, assist presets, presentation |
 | `structure` | the custom desk structure, grouped by topic |
 | `components` | custom input and preview components |
-| `utils`, `constants` | helpers (`getFieldWithGroup`, date formatting, departments, …) |
+| `utils`, `constants` | helpers (`getFieldWithGroup`, date formatting, slug history, …) |
 
 ## Schema conventions
 
@@ -116,6 +116,14 @@ The editors then review the intros in the release and publish it as a whole. Arc
 - `mainNavigationMenu` ("Menü"): a title, at least one child (`navigationLink`, with an optional sub-text for the desktop dropdown) and "Zweispaltig". A menu has no target of its own; the page belongs into it as a child.
 
 The migration `main-navigation-menus` turned the earlier `mainNavigationItem` entries into these. An entry with children became a menu, and its former target became the first child, titled like the old "Übersicht" link. It is idempotent and runs like every migration here, `development` first.
+
+## Departments and groups
+
+`department` is a document of its own (title, slug, DOSB icon, `sortOrder`, `isTeamSport`, card and hero image, intro, stats, contact persons), and there is exactly one `group` type. Every group has a required `department` reference at the top, and a group sits under one department only. The former `group.*` types and the "Administration" group are gone.
+
+- **Slugs.** A department slug is unique among the departments (Sanity's default slug check). A group slug is unique only within its department, so two departments may each have a group "herren" (`isGroupSlugUniqueInDepartment` in `schemas/documents/group.ts` checks in the raw perspective, so drafts and release versions of other groups count).
+- **Slug history.** `previousSlugs` on a department and `previousPaths` on a group (`<department slug>/<group slug>`) keep the old addresses so the website can redirect them. The publish action (`actions/publish-with-slug-history.tsx`, wired up for both types in `sanity.config.ts`) wraps the default "Veröffentlichen" and adds the previously published value whenever the slug, or the department of a group, has changed. That is the only thing that fills the fields. Publishing through a release, scheduled publishing or the API does not, so the editors enter the old value by hand there; the field description says so. The action never stalls publishing: if the lookup of the department slugs fails or takes longer than five seconds, the document is published anyway and a toast names the field to fill in.
+- **Desk.** "Abteilungen" lists the departments by `sortOrder`. "Gruppen" lists the same departments, and each one opens its groups (`getGroupsOfDepartmentList` in `structure/index.ts`, a filter on `department._ref`, ordered by `sortOrder`). The departments come from the documents, so a new department needs no change in the desk. "Neu" inside a department uses the `group-by-department` template from `structure/templates.ts`, which presets the department. `sanity.config.ts` appends that template to `schema.templates` after the singleton filter.
 
 ## Content migrations
 

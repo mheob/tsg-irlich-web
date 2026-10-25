@@ -40,6 +40,7 @@ function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureReso
 		// The middle block: the custom groups plus the default root list items (except custom ones),
 		// all sorted by title
 		const middleListItems = [
+			...getGroup(S, 'departments'),
 			...getGroup(S, 'persons'),
 			...getGroup(S, 'groups'),
 			...getGroup(S, 'echo'),

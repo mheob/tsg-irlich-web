@@ -199,6 +199,7 @@ describe('page structure', () => {
 			'News',
 			'Einzelseiten',
 			DIVIDER_TITLE,
+			'Abteilungen',
 			'Gruppen',
 			'Personen',
 			'Sponsoren',

@@ -7,6 +7,7 @@ import { dataset, projectId } from './env';
 import { getPlugins } from './plugins';
 import { schemaTypes } from './schemas';
 import echoIssue from './schemas/documents/echo.issue';
+import { groupByDepartmentTemplate } from './structure/templates';
 
 // Define the actions that should be available for singleton documents
 const singletonActions = new Set(['publish', 'discardChanges', 'restore']);
@@ -52,8 +53,12 @@ export default defineConfig({
 	plugins: getPlugins(),
 	projectId,
 	schema: {
-		// Filter out singleton types from the global “New document” menu options
-		templates: (templates) => templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+		// Filter out singleton types from the global “New document” menu options, then add the template
+		// behind "Neu" in the groups of a department
+		templates: (templates) => [
+			...templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+			groupByDepartmentTemplate,
+		],
 		types: schemaTypes,
 	},
 	title: 'TSG Irlich 1882',
