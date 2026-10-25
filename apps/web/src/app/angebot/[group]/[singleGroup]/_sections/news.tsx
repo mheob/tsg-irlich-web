@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { ButtonLink } from '@/components/ui/button';
 import { NewsArticleGrid } from '@/components/ui/news-article-grid';
 import { SectionHeader } from '@/components/ui/section-header';
-import type { OfferGroupsGroupPageNewsQueryResult } from '@/types/sanity.types';
+import type { GroupNewsQueryResult } from '@/types/sanity.types';
 import { getInternalHref } from '@/utils/links';
 
-type NewsProps = NonNullable<OfferGroupsGroupPageNewsQueryResult>;
+type NewsProps = NonNullable<GroupNewsQueryResult>;
 
 export function News({ _type, articles, slug, title }: Readonly<NewsProps>) {
 	const categoryHref = getInternalHref({ _type, slug });

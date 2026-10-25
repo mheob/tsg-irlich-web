@@ -404,28 +404,6 @@
 							},
 							"optional": false
 						},
-						"stats": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "array",
-								"of": {
-									"type": "object",
-									"attributes": {
-										"_key": {
-											"type": "objectAttribute",
-											"value": {
-												"type": "string"
-											}
-										}
-									},
-									"rest": {
-										"type": "inline",
-										"name": "stats"
-									}
-								}
-							},
-							"optional": false
-						},
 						"contactPersonsSection": {
 							"type": "objectAttribute",
 							"value": {
@@ -882,7 +860,7 @@
 	},
 	{
 		"type": "type",
-		"name": "group.children-gymnastics.reference",
+		"name": "department.reference",
 		"value": {
 			"type": "object",
 			"attributes": {
@@ -907,12 +885,12 @@
 					"optional": true
 				}
 			},
-			"dereferencesTo": "group.children-gymnastics"
+			"dereferencesTo": "department"
 		}
 	},
 	{
 		"type": "type",
-		"name": "group.courses.reference",
+		"name": "group.reference",
 		"value": {
 			"type": "object",
 			"attributes": {
@@ -937,127 +915,7 @@
 					"optional": true
 				}
 			},
-			"dereferencesTo": "group.courses"
-		}
-	},
-	{
-		"type": "type",
-		"name": "group.dance.reference",
-		"value": {
-			"type": "object",
-			"attributes": {
-				"_ref": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					}
-				},
-				"_type": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string",
-						"value": "reference"
-					}
-				},
-				"_weak": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": true
-				}
-			},
-			"dereferencesTo": "group.dance"
-		}
-	},
-	{
-		"type": "type",
-		"name": "group.other-sports.reference",
-		"value": {
-			"type": "object",
-			"attributes": {
-				"_ref": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					}
-				},
-				"_type": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string",
-						"value": "reference"
-					}
-				},
-				"_weak": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": true
-				}
-			},
-			"dereferencesTo": "group.other-sports"
-		}
-	},
-	{
-		"type": "type",
-		"name": "group.soccer.reference",
-		"value": {
-			"type": "object",
-			"attributes": {
-				"_ref": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					}
-				},
-				"_type": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string",
-						"value": "reference"
-					}
-				},
-				"_weak": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": true
-				}
-			},
-			"dereferencesTo": "group.soccer"
-		}
-	},
-	{
-		"type": "type",
-		"name": "group.taekwondo.reference",
-		"value": {
-			"type": "object",
-			"attributes": {
-				"_ref": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					}
-				},
-				"_type": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string",
-						"value": "reference"
-					}
-				},
-				"_weak": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": true
-				}
-			},
-			"dereferencesTo": "group.taekwondo"
+			"dereferencesTo": "group"
 		}
 	},
 	{
@@ -1416,27 +1274,11 @@
 																	},
 																	{
 																		"type": "inline",
-																		"name": "group.children-gymnastics.reference"
+																		"name": "department.reference"
 																	},
 																	{
 																		"type": "inline",
-																		"name": "group.courses.reference"
-																	},
-																	{
-																		"type": "inline",
-																		"name": "group.dance.reference"
-																	},
-																	{
-																		"type": "inline",
-																		"name": "group.other-sports.reference"
-																	},
-																	{
-																		"type": "inline",
-																		"name": "group.soccer.reference"
-																	},
-																	{
-																		"type": "inline",
-																		"name": "group.taekwondo.reference"
+																		"name": "group.reference"
 																	},
 																	{
 																		"type": "inline",
@@ -2010,27 +1852,11 @@
 							},
 							{
 								"type": "inline",
-								"name": "group.children-gymnastics.reference"
+								"name": "department.reference"
 							},
 							{
 								"type": "inline",
-								"name": "group.courses.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.dance.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.other-sports.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.soccer.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.taekwondo.reference"
+								"name": "group.reference"
 							},
 							{
 								"type": "inline",
@@ -2281,27 +2107,11 @@
 							},
 							{
 								"type": "inline",
-								"name": "group.children-gymnastics.reference"
+								"name": "department.reference"
 							},
 							{
 								"type": "inline",
-								"name": "group.courses.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.dance.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.other-sports.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.soccer.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.taekwondo.reference"
+								"name": "group.reference"
 							},
 							{
 								"type": "inline",
@@ -2385,27 +2195,11 @@
 							},
 							{
 								"type": "inline",
-								"name": "group.children-gymnastics.reference"
+								"name": "department.reference"
 							},
 							{
 								"type": "inline",
-								"name": "group.courses.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.dance.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.other-sports.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.soccer.reference"
-							},
-							{
-								"type": "inline",
-								"name": "group.taekwondo.reference"
+								"name": "group.reference"
 							},
 							{
 								"type": "inline",
@@ -3505,36 +3299,6 @@
 	},
 	{
 		"type": "type",
-		"name": "group.admin.reference",
-		"value": {
-			"type": "object",
-			"attributes": {
-				"_ref": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					}
-				},
-				"_type": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string",
-						"value": "reference"
-					}
-				},
-				"_weak": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": true
-				}
-			},
-			"dereferencesTo": "group.admin"
-		}
-	},
-	{
-		"type": "type",
 		"name": "role.reference",
 		"value": {
 			"type": "object",
@@ -3662,76 +3426,18 @@
 							"department": {
 								"type": "objectAttribute",
 								"value": {
-									"type": "union",
-									"of": [
-										{
-											"type": "string",
-											"value": "admin"
-										},
-										{
-											"type": "string",
-											"value": "children-gymnastics"
-										},
-										{
-											"type": "string",
-											"value": "courses"
-										},
-										{
-											"type": "string",
-											"value": "dance"
-										},
-										{
-											"type": "string",
-											"value": "other-sports"
-										},
-										{
-											"type": "string",
-											"value": "soccer"
-										},
-										{
-											"type": "string",
-											"value": "taekwondo"
-										}
-									]
+									"type": "inline",
+									"name": "department.reference"
 								},
-								"optional": false
+								"optional": true
 							},
 							"team": {
 								"type": "objectAttribute",
 								"value": {
-									"type": "union",
-									"of": [
-										{
-											"type": "inline",
-											"name": "group.admin.reference"
-										},
-										{
-											"type": "inline",
-											"name": "group.children-gymnastics.reference"
-										},
-										{
-											"type": "inline",
-											"name": "group.courses.reference"
-										},
-										{
-											"type": "inline",
-											"name": "group.dance.reference"
-										},
-										{
-											"type": "inline",
-											"name": "group.other-sports.reference"
-										},
-										{
-											"type": "inline",
-											"name": "group.soccer.reference"
-										},
-										{
-											"type": "inline",
-											"name": "group.taekwondo.reference"
-										}
-									]
+									"type": "inline",
+									"name": "group.reference"
 								},
-								"optional": false
+								"optional": true
 							},
 							"role": {
 								"type": "objectAttribute",
@@ -3828,314 +3534,6 @@
 					"type": "string"
 				},
 				"optional": true
-			}
-		}
-	},
-	{
-		"name": "group.admin",
-		"type": "document",
-		"attributes": {
-			"_id": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_type": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string",
-					"value": "group.admin"
-				}
-			},
-			"_createdAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_updatedAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_rev": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"title": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"slug": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "slug"
-				},
-				"optional": false
-			},
-			"email": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"meta": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "metaFields"
-				},
-				"optional": true
-			},
-			"overviewTitle": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": true
-			},
-			"sortOrder": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "number"
-				},
-				"optional": false
-			},
-			"description": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "simpleBlockContent"
-				},
-				"optional": false
-			},
-			"icon": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "union",
-					"of": [
-						{
-							"type": "string",
-							"value": "Badminton"
-						},
-						{
-							"type": "string",
-							"value": "Bodenturnen"
-						},
-						{
-							"type": "string",
-							"value": "Cheerleading"
-						},
-						{
-							"type": "string",
-							"value": "ElternKindTurnen"
-						},
-						{
-							"type": "string",
-							"value": "Fitness"
-						},
-						{
-							"type": "string",
-							"value": "Fussball"
-						},
-						{
-							"type": "string",
-							"value": "Gehen"
-						},
-						{
-							"type": "string",
-							"value": "Gymnastik"
-						},
-						{
-							"type": "string",
-							"value": "Jujutsu"
-						},
-						{
-							"type": "string",
-							"value": "Laufen"
-						},
-						{
-							"type": "string",
-							"value": "Medaille"
-						},
-						{
-							"type": "string",
-							"value": "Pilates"
-						},
-						{
-							"type": "string",
-							"value": "Pokal"
-						},
-						{
-							"type": "string",
-							"value": "RopeSkipping"
-						},
-						{
-							"type": "string",
-							"value": "SportInGebaeuden"
-						},
-						{
-							"type": "string",
-							"value": "Sportakrobatik"
-						},
-						{
-							"type": "string",
-							"value": "StepAerobic"
-						},
-						{
-							"type": "string",
-							"value": "Taekwondo"
-						},
-						{
-							"type": "string",
-							"value": "Tanzen"
-						},
-						{
-							"type": "string",
-							"value": "Tischtennis"
-						},
-						{
-							"type": "string",
-							"value": "Trainer"
-						},
-						{
-							"type": "string",
-							"value": "Turnen"
-						},
-						{
-							"type": "string",
-							"value": "Wandern"
-						},
-						{
-							"type": "string",
-							"value": "Yoga"
-						}
-					]
-				},
-				"optional": false
-			},
-			"featuredImage": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "extendedImage"
-				},
-				"optional": false
-			},
-			"images": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "array",
-					"of": {
-						"type": "object",
-						"attributes": {
-							"_key": {
-								"type": "objectAttribute",
-								"value": {
-									"type": "string"
-								}
-							}
-						},
-						"rest": {
-							"type": "inline",
-							"name": "extendedImage"
-						}
-					}
-				},
-				"optional": true
-			},
-			"training": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "object",
-					"attributes": {
-						"trainingDescription": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "inline",
-								"name": "simpleBlockContent"
-							},
-							"optional": true
-						},
-						"trainingTimes": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "array",
-								"of": {
-									"type": "object",
-									"attributes": {
-										"_key": {
-											"type": "objectAttribute",
-											"value": {
-												"type": "string"
-											}
-										}
-									},
-									"rest": {
-										"type": "inline",
-										"name": "trainingTime"
-									}
-								}
-							},
-							"optional": true
-						}
-					}
-				},
-				"optional": true
-			},
-			"newsCategory": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "news.category.reference"
-				},
-				"optional": true
-			},
-			"isSportGroup": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "boolean"
-				},
-				"optional": false
-			}
-		}
-	},
-	{
-		"name": "slug",
-		"type": "type",
-		"value": {
-			"type": "object",
-			"attributes": {
-				"_type": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string",
-						"value": "slug"
-					}
-				},
-				"current": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					},
-					"optional": false
-				},
-				"source": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					},
-					"optional": true
-				}
 			}
 		}
 	},
@@ -5414,6 +4812,36 @@
 		}
 	},
 	{
+		"name": "slug",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "slug"
+					}
+				},
+				"current": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"source": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
 		"name": "newsOverview",
 		"type": "document",
 		"attributes": {
@@ -5498,7 +4926,7 @@
 		}
 	},
 	{
-		"name": "group.taekwondo",
+		"name": "group",
 		"type": "document",
 		"attributes": {
 			"_id": {
@@ -5511,7 +4939,7 @@
 				"type": "objectAttribute",
 				"value": {
 					"type": "string",
-					"value": "group.taekwondo"
+					"value": "group"
 				}
 			},
 			"_createdAt": {
@@ -5532,6 +4960,14 @@
 					"type": "string"
 				}
 			},
+			"department": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "department.reference"
+				},
+				"optional": false
+			},
 			"title": {
 				"type": "objectAttribute",
 				"value": {
@@ -5546,6 +4982,16 @@
 					"name": "slug"
 				},
 				"optional": false
+			},
+			"previousPaths": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
 			},
 			"email": {
 				"type": "objectAttribute",
@@ -5765,1403 +5211,6 @@
 					"name": "news.category.reference"
 				},
 				"optional": true
-			},
-			"isSportGroup": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "boolean"
-				},
-				"optional": false
-			}
-		}
-	},
-	{
-		"name": "group.soccer",
-		"type": "document",
-		"attributes": {
-			"_id": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_type": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string",
-					"value": "group.soccer"
-				}
-			},
-			"_createdAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_updatedAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_rev": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"title": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"slug": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "slug"
-				},
-				"optional": false
-			},
-			"email": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"meta": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "metaFields"
-				},
-				"optional": true
-			},
-			"overviewTitle": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": true
-			},
-			"sortOrder": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "number"
-				},
-				"optional": false
-			},
-			"description": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "simpleBlockContent"
-				},
-				"optional": false
-			},
-			"icon": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "union",
-					"of": [
-						{
-							"type": "string",
-							"value": "Badminton"
-						},
-						{
-							"type": "string",
-							"value": "Bodenturnen"
-						},
-						{
-							"type": "string",
-							"value": "Cheerleading"
-						},
-						{
-							"type": "string",
-							"value": "ElternKindTurnen"
-						},
-						{
-							"type": "string",
-							"value": "Fitness"
-						},
-						{
-							"type": "string",
-							"value": "Fussball"
-						},
-						{
-							"type": "string",
-							"value": "Gehen"
-						},
-						{
-							"type": "string",
-							"value": "Gymnastik"
-						},
-						{
-							"type": "string",
-							"value": "Jujutsu"
-						},
-						{
-							"type": "string",
-							"value": "Laufen"
-						},
-						{
-							"type": "string",
-							"value": "Medaille"
-						},
-						{
-							"type": "string",
-							"value": "Pilates"
-						},
-						{
-							"type": "string",
-							"value": "Pokal"
-						},
-						{
-							"type": "string",
-							"value": "RopeSkipping"
-						},
-						{
-							"type": "string",
-							"value": "SportInGebaeuden"
-						},
-						{
-							"type": "string",
-							"value": "Sportakrobatik"
-						},
-						{
-							"type": "string",
-							"value": "StepAerobic"
-						},
-						{
-							"type": "string",
-							"value": "Taekwondo"
-						},
-						{
-							"type": "string",
-							"value": "Tanzen"
-						},
-						{
-							"type": "string",
-							"value": "Tischtennis"
-						},
-						{
-							"type": "string",
-							"value": "Trainer"
-						},
-						{
-							"type": "string",
-							"value": "Turnen"
-						},
-						{
-							"type": "string",
-							"value": "Wandern"
-						},
-						{
-							"type": "string",
-							"value": "Yoga"
-						}
-					]
-				},
-				"optional": false
-			},
-			"featuredImage": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "extendedImage"
-				},
-				"optional": false
-			},
-			"images": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "array",
-					"of": {
-						"type": "object",
-						"attributes": {
-							"_key": {
-								"type": "objectAttribute",
-								"value": {
-									"type": "string"
-								}
-							}
-						},
-						"rest": {
-							"type": "inline",
-							"name": "extendedImage"
-						}
-					}
-				},
-				"optional": true
-			},
-			"training": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "object",
-					"attributes": {
-						"trainingDescription": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "inline",
-								"name": "simpleBlockContent"
-							},
-							"optional": true
-						},
-						"trainingTimes": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "array",
-								"of": {
-									"type": "object",
-									"attributes": {
-										"_key": {
-											"type": "objectAttribute",
-											"value": {
-												"type": "string"
-											}
-										}
-									},
-									"rest": {
-										"type": "inline",
-										"name": "trainingTime"
-									}
-								}
-							},
-							"optional": true
-						}
-					}
-				},
-				"optional": true
-			},
-			"newsCategory": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "news.category.reference"
-				},
-				"optional": true
-			},
-			"isSportGroup": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "boolean"
-				},
-				"optional": false
-			}
-		}
-	},
-	{
-		"name": "group.other-sports",
-		"type": "document",
-		"attributes": {
-			"_id": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_type": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string",
-					"value": "group.other-sports"
-				}
-			},
-			"_createdAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_updatedAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_rev": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"title": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"slug": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "slug"
-				},
-				"optional": false
-			},
-			"email": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"meta": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "metaFields"
-				},
-				"optional": true
-			},
-			"overviewTitle": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": true
-			},
-			"sortOrder": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "number"
-				},
-				"optional": false
-			},
-			"description": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "simpleBlockContent"
-				},
-				"optional": false
-			},
-			"icon": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "union",
-					"of": [
-						{
-							"type": "string",
-							"value": "Badminton"
-						},
-						{
-							"type": "string",
-							"value": "Bodenturnen"
-						},
-						{
-							"type": "string",
-							"value": "Cheerleading"
-						},
-						{
-							"type": "string",
-							"value": "ElternKindTurnen"
-						},
-						{
-							"type": "string",
-							"value": "Fitness"
-						},
-						{
-							"type": "string",
-							"value": "Fussball"
-						},
-						{
-							"type": "string",
-							"value": "Gehen"
-						},
-						{
-							"type": "string",
-							"value": "Gymnastik"
-						},
-						{
-							"type": "string",
-							"value": "Jujutsu"
-						},
-						{
-							"type": "string",
-							"value": "Laufen"
-						},
-						{
-							"type": "string",
-							"value": "Medaille"
-						},
-						{
-							"type": "string",
-							"value": "Pilates"
-						},
-						{
-							"type": "string",
-							"value": "Pokal"
-						},
-						{
-							"type": "string",
-							"value": "RopeSkipping"
-						},
-						{
-							"type": "string",
-							"value": "SportInGebaeuden"
-						},
-						{
-							"type": "string",
-							"value": "Sportakrobatik"
-						},
-						{
-							"type": "string",
-							"value": "StepAerobic"
-						},
-						{
-							"type": "string",
-							"value": "Taekwondo"
-						},
-						{
-							"type": "string",
-							"value": "Tanzen"
-						},
-						{
-							"type": "string",
-							"value": "Tischtennis"
-						},
-						{
-							"type": "string",
-							"value": "Trainer"
-						},
-						{
-							"type": "string",
-							"value": "Turnen"
-						},
-						{
-							"type": "string",
-							"value": "Wandern"
-						},
-						{
-							"type": "string",
-							"value": "Yoga"
-						}
-					]
-				},
-				"optional": false
-			},
-			"featuredImage": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "extendedImage"
-				},
-				"optional": false
-			},
-			"images": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "array",
-					"of": {
-						"type": "object",
-						"attributes": {
-							"_key": {
-								"type": "objectAttribute",
-								"value": {
-									"type": "string"
-								}
-							}
-						},
-						"rest": {
-							"type": "inline",
-							"name": "extendedImage"
-						}
-					}
-				},
-				"optional": true
-			},
-			"training": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "object",
-					"attributes": {
-						"trainingDescription": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "inline",
-								"name": "simpleBlockContent"
-							},
-							"optional": true
-						},
-						"trainingTimes": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "array",
-								"of": {
-									"type": "object",
-									"attributes": {
-										"_key": {
-											"type": "objectAttribute",
-											"value": {
-												"type": "string"
-											}
-										}
-									},
-									"rest": {
-										"type": "inline",
-										"name": "trainingTime"
-									}
-								}
-							},
-							"optional": true
-						}
-					}
-				},
-				"optional": true
-			},
-			"newsCategory": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "news.category.reference"
-				},
-				"optional": true
-			},
-			"isSportGroup": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "boolean"
-				},
-				"optional": false
-			}
-		}
-	},
-	{
-		"name": "group.dance",
-		"type": "document",
-		"attributes": {
-			"_id": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_type": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string",
-					"value": "group.dance"
-				}
-			},
-			"_createdAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_updatedAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_rev": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"title": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"slug": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "slug"
-				},
-				"optional": false
-			},
-			"email": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"meta": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "metaFields"
-				},
-				"optional": true
-			},
-			"overviewTitle": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": true
-			},
-			"sortOrder": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "number"
-				},
-				"optional": false
-			},
-			"description": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "simpleBlockContent"
-				},
-				"optional": false
-			},
-			"icon": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "union",
-					"of": [
-						{
-							"type": "string",
-							"value": "Badminton"
-						},
-						{
-							"type": "string",
-							"value": "Bodenturnen"
-						},
-						{
-							"type": "string",
-							"value": "Cheerleading"
-						},
-						{
-							"type": "string",
-							"value": "ElternKindTurnen"
-						},
-						{
-							"type": "string",
-							"value": "Fitness"
-						},
-						{
-							"type": "string",
-							"value": "Fussball"
-						},
-						{
-							"type": "string",
-							"value": "Gehen"
-						},
-						{
-							"type": "string",
-							"value": "Gymnastik"
-						},
-						{
-							"type": "string",
-							"value": "Jujutsu"
-						},
-						{
-							"type": "string",
-							"value": "Laufen"
-						},
-						{
-							"type": "string",
-							"value": "Medaille"
-						},
-						{
-							"type": "string",
-							"value": "Pilates"
-						},
-						{
-							"type": "string",
-							"value": "Pokal"
-						},
-						{
-							"type": "string",
-							"value": "RopeSkipping"
-						},
-						{
-							"type": "string",
-							"value": "SportInGebaeuden"
-						},
-						{
-							"type": "string",
-							"value": "Sportakrobatik"
-						},
-						{
-							"type": "string",
-							"value": "StepAerobic"
-						},
-						{
-							"type": "string",
-							"value": "Taekwondo"
-						},
-						{
-							"type": "string",
-							"value": "Tanzen"
-						},
-						{
-							"type": "string",
-							"value": "Tischtennis"
-						},
-						{
-							"type": "string",
-							"value": "Trainer"
-						},
-						{
-							"type": "string",
-							"value": "Turnen"
-						},
-						{
-							"type": "string",
-							"value": "Wandern"
-						},
-						{
-							"type": "string",
-							"value": "Yoga"
-						}
-					]
-				},
-				"optional": false
-			},
-			"featuredImage": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "extendedImage"
-				},
-				"optional": false
-			},
-			"images": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "array",
-					"of": {
-						"type": "object",
-						"attributes": {
-							"_key": {
-								"type": "objectAttribute",
-								"value": {
-									"type": "string"
-								}
-							}
-						},
-						"rest": {
-							"type": "inline",
-							"name": "extendedImage"
-						}
-					}
-				},
-				"optional": true
-			},
-			"training": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "object",
-					"attributes": {
-						"trainingDescription": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "inline",
-								"name": "simpleBlockContent"
-							},
-							"optional": true
-						},
-						"trainingTimes": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "array",
-								"of": {
-									"type": "object",
-									"attributes": {
-										"_key": {
-											"type": "objectAttribute",
-											"value": {
-												"type": "string"
-											}
-										}
-									},
-									"rest": {
-										"type": "inline",
-										"name": "trainingTime"
-									}
-								}
-							},
-							"optional": true
-						}
-					}
-				},
-				"optional": true
-			},
-			"newsCategory": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "news.category.reference"
-				},
-				"optional": true
-			},
-			"isSportGroup": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "boolean"
-				},
-				"optional": false
-			}
-		}
-	},
-	{
-		"name": "group.courses",
-		"type": "document",
-		"attributes": {
-			"_id": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_type": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string",
-					"value": "group.courses"
-				}
-			},
-			"_createdAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_updatedAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_rev": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"title": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"slug": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "slug"
-				},
-				"optional": false
-			},
-			"email": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"meta": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "metaFields"
-				},
-				"optional": true
-			},
-			"overviewTitle": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": true
-			},
-			"sortOrder": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "number"
-				},
-				"optional": false
-			},
-			"description": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "simpleBlockContent"
-				},
-				"optional": false
-			},
-			"icon": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "union",
-					"of": [
-						{
-							"type": "string",
-							"value": "Badminton"
-						},
-						{
-							"type": "string",
-							"value": "Bodenturnen"
-						},
-						{
-							"type": "string",
-							"value": "Cheerleading"
-						},
-						{
-							"type": "string",
-							"value": "ElternKindTurnen"
-						},
-						{
-							"type": "string",
-							"value": "Fitness"
-						},
-						{
-							"type": "string",
-							"value": "Fussball"
-						},
-						{
-							"type": "string",
-							"value": "Gehen"
-						},
-						{
-							"type": "string",
-							"value": "Gymnastik"
-						},
-						{
-							"type": "string",
-							"value": "Jujutsu"
-						},
-						{
-							"type": "string",
-							"value": "Laufen"
-						},
-						{
-							"type": "string",
-							"value": "Medaille"
-						},
-						{
-							"type": "string",
-							"value": "Pilates"
-						},
-						{
-							"type": "string",
-							"value": "Pokal"
-						},
-						{
-							"type": "string",
-							"value": "RopeSkipping"
-						},
-						{
-							"type": "string",
-							"value": "SportInGebaeuden"
-						},
-						{
-							"type": "string",
-							"value": "Sportakrobatik"
-						},
-						{
-							"type": "string",
-							"value": "StepAerobic"
-						},
-						{
-							"type": "string",
-							"value": "Taekwondo"
-						},
-						{
-							"type": "string",
-							"value": "Tanzen"
-						},
-						{
-							"type": "string",
-							"value": "Tischtennis"
-						},
-						{
-							"type": "string",
-							"value": "Trainer"
-						},
-						{
-							"type": "string",
-							"value": "Turnen"
-						},
-						{
-							"type": "string",
-							"value": "Wandern"
-						},
-						{
-							"type": "string",
-							"value": "Yoga"
-						}
-					]
-				},
-				"optional": false
-			},
-			"featuredImage": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "extendedImage"
-				},
-				"optional": false
-			},
-			"images": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "array",
-					"of": {
-						"type": "object",
-						"attributes": {
-							"_key": {
-								"type": "objectAttribute",
-								"value": {
-									"type": "string"
-								}
-							}
-						},
-						"rest": {
-							"type": "inline",
-							"name": "extendedImage"
-						}
-					}
-				},
-				"optional": true
-			},
-			"training": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "object",
-					"attributes": {
-						"trainingDescription": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "inline",
-								"name": "simpleBlockContent"
-							},
-							"optional": true
-						},
-						"trainingTimes": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "array",
-								"of": {
-									"type": "object",
-									"attributes": {
-										"_key": {
-											"type": "objectAttribute",
-											"value": {
-												"type": "string"
-											}
-										}
-									},
-									"rest": {
-										"type": "inline",
-										"name": "trainingTime"
-									}
-								}
-							},
-							"optional": true
-						}
-					}
-				},
-				"optional": true
-			},
-			"newsCategory": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "news.category.reference"
-				},
-				"optional": true
-			},
-			"isSportGroup": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "boolean"
-				},
-				"optional": false
-			}
-		}
-	},
-	{
-		"name": "group.children-gymnastics",
-		"type": "document",
-		"attributes": {
-			"_id": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_type": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string",
-					"value": "group.children-gymnastics"
-				}
-			},
-			"_createdAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_updatedAt": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"_rev": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				}
-			},
-			"title": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"slug": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "slug"
-				},
-				"optional": false
-			},
-			"email": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": false
-			},
-			"meta": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "metaFields"
-				},
-				"optional": true
-			},
-			"overviewTitle": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "string"
-				},
-				"optional": true
-			},
-			"sortOrder": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "number"
-				},
-				"optional": false
-			},
-			"description": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "simpleBlockContent"
-				},
-				"optional": false
-			},
-			"icon": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "union",
-					"of": [
-						{
-							"type": "string",
-							"value": "Badminton"
-						},
-						{
-							"type": "string",
-							"value": "Bodenturnen"
-						},
-						{
-							"type": "string",
-							"value": "Cheerleading"
-						},
-						{
-							"type": "string",
-							"value": "ElternKindTurnen"
-						},
-						{
-							"type": "string",
-							"value": "Fitness"
-						},
-						{
-							"type": "string",
-							"value": "Fussball"
-						},
-						{
-							"type": "string",
-							"value": "Gehen"
-						},
-						{
-							"type": "string",
-							"value": "Gymnastik"
-						},
-						{
-							"type": "string",
-							"value": "Jujutsu"
-						},
-						{
-							"type": "string",
-							"value": "Laufen"
-						},
-						{
-							"type": "string",
-							"value": "Medaille"
-						},
-						{
-							"type": "string",
-							"value": "Pilates"
-						},
-						{
-							"type": "string",
-							"value": "Pokal"
-						},
-						{
-							"type": "string",
-							"value": "RopeSkipping"
-						},
-						{
-							"type": "string",
-							"value": "SportInGebaeuden"
-						},
-						{
-							"type": "string",
-							"value": "Sportakrobatik"
-						},
-						{
-							"type": "string",
-							"value": "StepAerobic"
-						},
-						{
-							"type": "string",
-							"value": "Taekwondo"
-						},
-						{
-							"type": "string",
-							"value": "Tanzen"
-						},
-						{
-							"type": "string",
-							"value": "Tischtennis"
-						},
-						{
-							"type": "string",
-							"value": "Trainer"
-						},
-						{
-							"type": "string",
-							"value": "Turnen"
-						},
-						{
-							"type": "string",
-							"value": "Wandern"
-						},
-						{
-							"type": "string",
-							"value": "Yoga"
-						}
-					]
-				},
-				"optional": false
-			},
-			"featuredImage": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "extendedImage"
-				},
-				"optional": false
-			},
-			"images": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "array",
-					"of": {
-						"type": "object",
-						"attributes": {
-							"_key": {
-								"type": "objectAttribute",
-								"value": {
-									"type": "string"
-								}
-							}
-						},
-						"rest": {
-							"type": "inline",
-							"name": "extendedImage"
-						}
-					}
-				},
-				"optional": true
-			},
-			"training": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "object",
-					"attributes": {
-						"trainingDescription": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "inline",
-								"name": "simpleBlockContent"
-							},
-							"optional": true
-						},
-						"trainingTimes": {
-							"type": "objectAttribute",
-							"value": {
-								"type": "array",
-								"of": {
-									"type": "object",
-									"attributes": {
-										"_key": {
-											"type": "objectAttribute",
-											"value": {
-												"type": "string"
-											}
-										}
-									},
-									"rest": {
-										"type": "inline",
-										"name": "trainingTime"
-									}
-								}
-							},
-							"optional": true
-						}
-					}
-				},
-				"optional": true
-			},
-			"newsCategory": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "inline",
-					"name": "news.category.reference"
-				},
-				"optional": true
-			},
-			"isSportGroup": {
-				"type": "objectAttribute",
-				"value": {
-					"type": "boolean"
-				},
-				"optional": false
 			}
 		}
 	},
@@ -7220,6 +5269,262 @@
 				"value": {
 					"type": "inline",
 					"name": "metaFields"
+				},
+				"optional": true
+			}
+		}
+	},
+	{
+		"name": "department",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "department"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"title": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"slug": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "slug"
+				},
+				"optional": false
+			},
+			"previousSlugs": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
+			},
+			"icon": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "union",
+					"of": [
+						{
+							"type": "string",
+							"value": "Badminton"
+						},
+						{
+							"type": "string",
+							"value": "Bodenturnen"
+						},
+						{
+							"type": "string",
+							"value": "Cheerleading"
+						},
+						{
+							"type": "string",
+							"value": "ElternKindTurnen"
+						},
+						{
+							"type": "string",
+							"value": "Fitness"
+						},
+						{
+							"type": "string",
+							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gehen"
+						},
+						{
+							"type": "string",
+							"value": "Gymnastik"
+						},
+						{
+							"type": "string",
+							"value": "Jujutsu"
+						},
+						{
+							"type": "string",
+							"value": "Laufen"
+						},
+						{
+							"type": "string",
+							"value": "Medaille"
+						},
+						{
+							"type": "string",
+							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "Pokal"
+						},
+						{
+							"type": "string",
+							"value": "RopeSkipping"
+						},
+						{
+							"type": "string",
+							"value": "SportInGebaeuden"
+						},
+						{
+							"type": "string",
+							"value": "Sportakrobatik"
+						},
+						{
+							"type": "string",
+							"value": "StepAerobic"
+						},
+						{
+							"type": "string",
+							"value": "Taekwondo"
+						},
+						{
+							"type": "string",
+							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Tischtennis"
+						},
+						{
+							"type": "string",
+							"value": "Trainer"
+						},
+						{
+							"type": "string",
+							"value": "Turnen"
+						},
+						{
+							"type": "string",
+							"value": "Wandern"
+						},
+						{
+							"type": "string",
+							"value": "Yoga"
+						}
+					]
+				},
+				"optional": false
+			},
+			"sortOrder": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "number"
+				},
+				"optional": false
+			},
+			"isTeamSport": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "boolean"
+				},
+				"optional": true
+			},
+			"cardImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": true
+			},
+			"intro": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"meta": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "metaFields"
+				},
+				"optional": true
+			},
+			"stats": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"_key": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								}
+							}
+						},
+						"rest": {
+							"type": "inline",
+							"name": "stats"
+						}
+					}
+				},
+				"optional": true
+			},
+			"contactPersons": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"_key": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								}
+							}
+						},
+						"rest": {
+							"type": "inline",
+							"name": "person.reference"
+						}
+					}
 				},
 				"optional": true
 			}

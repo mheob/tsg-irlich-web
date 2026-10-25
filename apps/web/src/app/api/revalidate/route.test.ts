@@ -166,26 +166,38 @@ describe('sanity revalidation webhook', () => {
 		expect(mockedRevalidatePath).toHaveBeenCalledWith('/verein', 'layout');
 	});
 
-	it('revalidates the group department, its overview and the group itself', async () => {
-		mockedParseBody.mockResolvedValue(
-			parsed({ _type: 'group.soccer', slug: { current: 'herren-1' } }),
-		);
+	it('revalidates the home page and the whole offer for a department', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'department', slug: { current: 'tanzen' } }));
 
 		await POST(REQUEST);
 
-		expect(revalidatedPaths()).toStrictEqual([
-			'/angebot',
-			'/angebot/fussball',
-			'/angebot/fussball/herren-1',
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
+			['/'],
+			['/angebot', 'layout'],
+			['/sitemap.xml'],
+			['/llms.txt'],
 		]);
 	});
 
-	it('leaves out the group path when the payload carries no slug', async () => {
-		mockedParseBody.mockResolvedValue(parsed({ _type: 'group.taekwondo' }));
+	it('revalidates the whole offer for a group, but not the home page', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'group', slug: { current: 'herren' } }));
 
 		await POST(REQUEST);
 
-		expect(revalidatedPaths()).toStrictEqual(['/angebot', '/angebot/taekwondo']);
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
+			['/angebot', 'layout'],
+			['/sitemap.xml'],
+			['/llms.txt'],
+		]);
+		expect(revalidatedPaths()).not.toContain('/');
+	});
+
+	it('revalidates every department page for the groups page', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'groupsPage' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/angebot/[group]', 'page']]);
 	});
 
 	it('revalidates the article route for a news article', async () => {

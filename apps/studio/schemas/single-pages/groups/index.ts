@@ -5,9 +5,8 @@ import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
 import { defaultHeroFields } from '@/shared/fields/general';
-import { statsField } from '@/shared/sections/stats';
 
-import { contactPersons, groups, stats } from './_groups';
+import { contactPersons, groups } from './_groups';
 import { contactPersonsField } from './contact-persons';
 import { groupsField } from './groups';
 
@@ -30,9 +29,9 @@ const groupsPage = defineType({
 
 		// Content
 		defineField({
-			fields: [groupsField, statsField, contactPersonsField],
+			fields: [groupsField, contactPersonsField],
 			group: 'content',
-			groups: [groups, stats, contactPersons],
+			groups: [groups, contactPersons],
 			icon: RiLinksLine,
 			name: 'content',
 			title: 'Inhalte',

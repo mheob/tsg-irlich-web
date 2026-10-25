@@ -1,0 +1,251 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'department' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t\"groups\": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"contactPersons\": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  \"email\": affiliations[0].role->email,\n  \"role\": affiliations[0].role->title,\n  \"taskDescription\": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n",
+		"result": {
+			"_id": "department-weitere-sportarten",
+			"cardImage": {
+				"_type": "extendedImage",
+				"alt": "Weitere Sportarten",
+				"asset": {
+					"_ref": "image-6c63c5637f346af6a5f77e4e9d38f4e6df5df6e3-480x270-webp",
+					"_type": "reference"
+				}
+			},
+			"contactPersons": [
+				{
+					"_id": "d191c9ee-bb52-48ed-8aef-57ce2a5af9d1",
+					"contactAs": "both",
+					"email": "breitensport@tsg-irlich.de",
+					"firstName": "Melanie ",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+						"asset": {
+							"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+							"_type": "reference"
+						}
+					},
+					"lastName": "Klein",
+					"phone": "+49 171 9941807",
+					"role": "Abteilungsleitung Breitensport",
+					"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+				}
+			],
+			"groups": [
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die Badminton Gruppe der TSG Irlich posiert mit Schlägern in einer Turnhalle",
+						"asset": {
+							"_ref": "image-4fed79cb6245f6598f8d4d0a9110dbe6dcde52a2-4284x5712-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.24314934216258602,
+							"left": 0.02602306061398159,
+							"right": 0.027693067294008306,
+							"top": 0.3881894223229067
+						},
+						"description": "Gruppenbild der Abteilung Badminton",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.227291539600941,
+							"width": 0.939632711616247,
+							"x": 0.5024905768978682,
+							"y": 0.5448886904243271
+						}
+					},
+					"icon": "Badminton",
+					"overviewTitle": null,
+					"slug": "badminton",
+					"title": "Badminton"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die Gruppe der Frauengymnastik posiert lächelnden in weißen Oberteilen und Sportbekleidung in einer Turnhalle",
+						"asset": {
+							"_ref": "image-5e53d2552b1ded5f085fef992dec094df166cef8-5712x4284-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.06807721810278697,
+							"left": 0,
+							"right": 0,
+							"top": 0.15613014574277678
+						},
+						"description": "Gruppenbild der Abteilung Frauengymnastik ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.3100289722734923,
+							"width": 0.8640890731735914,
+							"x": 0.4961021468486739,
+							"y": 0.4355575409058836
+						}
+					},
+					"icon": "Gymnastik",
+					"overviewTitle": null,
+					"slug": "frauengymnastik",
+					"title": "Frauengymnastik"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Mitglieder der Jedermänner in blauen Team-Shirts posieren für ein Gruppenfoto in einer Turnhalle, mit einem Ball.",
+						"asset": {
+							"_ref": "image-94a0bb2411769cb8803d33fa3120be76f8abefd8-4032x3024-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.08780789226966676,
+							"left": 0.16861895934543594,
+							"right": 0.14536723344413194,
+							"top": 0.27340620472172505
+						},
+						"description": "Gruppenbild der Abteilung Jedermänner",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.4371217932327623,
+							"width": 0.5070793914599846,
+							"x": 0.511625862950652,
+							"y": 0.602872240688656
+						}
+					},
+					"icon": "SportInGebaeuden",
+					"overviewTitle": null,
+					"slug": "jedermaenner",
+					"title": "Jedermänner"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Teilnehmerinnen und Teilnehmer der Gruppe \"Rope Skipping\" in blauen T-Shirts der TSG Irlich im Pappelstadion.",
+						"asset": {
+							"_ref": "image-6777f3410f32556b6d74fd02a3e31c6de14354e7-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.12004326752348352,
+							"left": 0.13404599179786886,
+							"right": 0.11566474276278112,
+							"top": 0.22175067958577926
+						},
+						"description": "Gruppenbild der Abteilung Rope Skipping",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.37526477614992054,
+							"width": 0.7502892654393499,
+							"x": 0.5091906245175438,
+							"y": 0.4830428307221901
+						}
+					},
+					"icon": "RopeSkipping",
+					"overviewTitle": null,
+					"slug": "rope-skipping",
+					"title": "Rope Skipping"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Hintergrundmotiv in warmen Naturtönen mit sanftem Licht und strukturierter Landschaft.",
+						"asset": {
+							"_ref": "image-b00897817ac36bc09619d482588ac2f35449cb40-5184x3888-jpg",
+							"_type": "reference"
+						}
+					},
+					"icon": "Tischtennis",
+					"overviewTitle": null,
+					"slug": "tischtennis",
+					"title": "Tischtennis"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die bunt gemischte Wandergruppe der TSG Irlich, steht auf einem Bürgersteig vor einem Haus und einem großen grünen Baum.",
+						"asset": {
+							"_ref": "image-390b174f1e47cd4bf5cf5580bd214fdc734e895b-3072x4080-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.20894393797392857,
+							"left": 0,
+							"right": 0,
+							"top": 0.30559237429195835
+						},
+						"description": "Gruppenbild der Abteilung Wandern",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.25451690609488287,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.5196028524243228
+						}
+					},
+					"icon": "Wandern",
+					"overviewTitle": null,
+					"slug": "wandern",
+					"title": "Wandern"
+				}
+			],
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Weitere Sportarten",
+				"asset": {
+					"_ref": "image-999b9e2bdaa4c34ba8d05307c83f0ec75f68e0e5-2560x1230-webp",
+					"_type": "reference"
+				}
+			},
+			"intro": null,
+			"meta": {
+				"metaDescription": null,
+				"metaTitle": null,
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Weitere Sportarten",
+					"asset": {
+						"_ref": "image-2d3cc785488d73bbc2c4b4facd69bf71f0ecc351-1200x630-webp",
+						"_type": "reference"
+					}
+				}
+			},
+			"stats": [
+				{
+					"_key": "weitere-sportarten-stat-1",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "Fußball-Teams",
+					"value": 10
+				},
+				{
+					"_key": "weitere-sportarten-stat-2",
+					"_type": "stats",
+					"title": "Breitensportgruppen ",
+					"value": 20
+				},
+				{
+					"_key": "weitere-sportarten-stat-3",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Kinder/Jugendliche",
+					"value": 250
+				},
+				{
+					"_key": "weitere-sportarten-stat-4",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Sportler ",
+					"value": 420
+				}
+			],
+			"title": "Weitere Sportarten"
+		},
+		"syncTags": ["s1:wniU8Q", "s1:uMx6JQ", "s1:WU9DBg", "s1:B7LhMw"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09intro%2C%0A%09%09cardImage%2C%0A%09%09heroImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09stats%2C%0A%09%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+department._ref+%3D%3D+%5E._id+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09%09featuredImage%2C%0A%09%09%09icon%2C%0A%09%09%09overviewTitle%2C%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%2C%0A%09%09%7D%2C%0A%09%09%22contactPersons%22%3A+contactPersons%5B%5D-%3E+%7B%0A%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%7D%2C%0A%09%7D%0A&%24slug=%22weitere-sportarten%22&perspective=published&tag=next-loader.fetch"
+}

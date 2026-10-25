@@ -1,0 +1,179 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'department' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t\"groups\": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"contactPersons\": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  \"email\": affiliations[0].role->email,\n  \"role\": affiliations[0].role->title,\n  \"taskDescription\": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n",
+		"result": {
+			"_id": "department-taekwondo",
+			"cardImage": {
+				"_type": "extendedImage",
+				"alt": "Taekwondo",
+				"asset": {
+					"_ref": "image-c02ce926f61df756520663ded663a836656c949e-480x270-webp",
+					"_type": "reference"
+				}
+			},
+			"contactPersons": [
+				{
+					"_id": "d191c9ee-bb52-48ed-8aef-57ce2a5af9d1",
+					"contactAs": "both",
+					"email": "breitensport@tsg-irlich.de",
+					"firstName": "Melanie ",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+						"asset": {
+							"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+							"_type": "reference"
+						}
+					},
+					"lastName": "Klein",
+					"phone": "+49 171 9941807",
+					"role": "Abteilungsleitung Breitensport",
+					"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+				}
+			],
+			"groups": [
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Teilnehmerinnen und Teilnehmer beim Taekwondo in weißer Kleidung vor einer weißen Wand. ",
+						"asset": {
+							"_ref": "image-c7f8adbbd366a9f1ca83ab1dee2a9ea9903b2109-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.0478120695483687,
+							"left": 0,
+							"right": 0,
+							"top": 0.027475922611437824
+						},
+						"description": "Gruppenbild der Abteilung Taekwondo",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6644844445571456,
+							"width": 0.9942469956532856,
+							"x": 0.5028765021733572,
+							"y": 0.46418844234164297
+						}
+					},
+					"icon": "Taekwondo",
+					"overviewTitle": null,
+					"slug": "mini-scorpions",
+					"title": "Mini Scorpions"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Teilnehmerinnen und Teilnehmer beim Taekwondo in weißer Kleidung vor einer weißen Wand. ",
+						"asset": {
+							"_ref": "image-c7f8adbbd366a9f1ca83ab1dee2a9ea9903b2109-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.05833313374840883,
+							"left": 0,
+							"right": 0,
+							"top": 0.05511585675601936
+						},
+						"description": "Teilnehmerinnen und Teilnehmer der Gruppe in weißer Kleidung vor einer weißen Wand. ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5786374324053134,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.4586210555292038
+						}
+					},
+					"icon": "Taekwondo",
+					"overviewTitle": null,
+					"slug": "scorpions",
+					"title": "Scorpions"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Teilnehmerinnen und Teilnehmer beim Taekwondo in weißer Kleidung vor einer weißen Wand. ",
+						"asset": {
+							"_ref": "image-c7f8adbbd366a9f1ca83ab1dee2a9ea9903b2109-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.03016404629611008,
+							"left": 0,
+							"right": 0,
+							"top": 0.03672625110192024
+						},
+						"description": "Gruppenbild der Abteilung Taekwondo",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5992117225457181,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.44587357662092275
+						}
+					},
+					"icon": "Jujutsu",
+					"overviewTitle": null,
+					"slug": "selbstverteidigung",
+					"title": "Selbstverteidigung"
+				}
+			],
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Taekwondo",
+				"asset": {
+					"_ref": "image-fa204733865ea9a7f15cacb52a99932a8b593af7-2560x1230-webp",
+					"_type": "reference"
+				}
+			},
+			"intro": null,
+			"meta": {
+				"metaDescription": null,
+				"metaTitle": null,
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Taekwondo",
+					"asset": {
+						"_ref": "image-45005aefe01cdfead630daaa1792aaebaf2bda80-1200x630-webp",
+						"_type": "reference"
+					}
+				}
+			},
+			"stats": [
+				{
+					"_key": "taekwondo-stat-1",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "Fußball-Teams",
+					"value": 10
+				},
+				{
+					"_key": "taekwondo-stat-2",
+					"_type": "stats",
+					"title": "Breitensportgruppen ",
+					"value": 20
+				},
+				{
+					"_key": "taekwondo-stat-3",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Kinder/Jugendliche",
+					"value": 250
+				},
+				{
+					"_key": "taekwondo-stat-4",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Sportler ",
+					"value": 420
+				}
+			],
+			"title": "Taekwondo"
+		},
+		"syncTags": ["s1:uMx6JQ", "s1:1ObbnA", "s1:WU9DBg", "s1:B7LhMw"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09intro%2C%0A%09%09cardImage%2C%0A%09%09heroImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09stats%2C%0A%09%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+department._ref+%3D%3D+%5E._id+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09%09featuredImage%2C%0A%09%09%09icon%2C%0A%09%09%09overviewTitle%2C%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%2C%0A%09%09%7D%2C%0A%09%09%22contactPersons%22%3A+contactPersons%5B%5D-%3E+%7B%0A%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%7D%2C%0A%09%7D%0A&%24slug=%22taekwondo%22&perspective=published&tag=next-loader.fetch"
+}

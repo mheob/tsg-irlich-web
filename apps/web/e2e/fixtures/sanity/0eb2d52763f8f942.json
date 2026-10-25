@@ -1,0 +1,43 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'person' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t\"email\": affiliations[team._ref == $groupId][0].team->email,\n\t\t\"role\":  affiliations[team._ref == $groupId][0].role->title,\n\t\t\"team\":  affiliations[team._ref == $groupId][0].team->title,\n\t\t\"taskDescription\": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n",
+		"result": [
+			{
+				"_id": "b8552a28-bf33-4b12-9e03-0c584d679fb0",
+				"contactAs": "both",
+				"email": "montagskicker@tsg-irlich.de",
+				"firstName": "Oliver",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Ansprechpartner Oliver Armbrecht",
+					"asset": {
+						"_ref": "image-a2892983483640d8490f66456f165866017683df-3648x5472-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.3212369290759018,
+						"left": 0.1525105829343477,
+						"right": 0.15390546453642948,
+						"top": 0.05424516045162289
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.47354237933660787,
+						"width": 0.5152049128125138,
+						"x": 0.4915008883264148,
+						"y": 0.3686814574299065
+					}
+				},
+				"lastName": "Armbrecht",
+				"phone": "+49 160 99538102",
+				"role": "Betreuer",
+				"taskDescription": "Als Ansprechpartner der Montagskicker organisiere ich das Hobbytraining, achte auf Spaß am Spiel, Bewegung und Fairplay. Ich motiviere zu Teamgeist und ermögliche allen Teilnehmern ein entspanntes Fußballerlebnis ohne Leistungsdruck.",
+				"team": "Montagskicker"
+			}
+		],
+		"syncTags": ["s1:mWzJLg", "s1:FAyvtw", "s1:GXw2oQ"],
+		"ms": 15
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27person%27+%26%26%0A%09%09defined%28affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D%29%0A%09%5D%7Corder%28lastName+asc%29+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09phone%2C%0A%09%09image%2C%0A%09%09contactAs%2C%0A%09%09%22email%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Eemail%2C%0A%09%09%22role%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.role-%3Etitle%2C%0A%09%09%22team%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Etitle%2C%0A%09%09%22taskDescription%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.taskDescription%2C%0A%09%7D%0A&%24groupId=%22group-f654dfc8-31c4-4156-9c91-18aaaeae8337%22&perspective=published&tag=next-loader.fetch"
+}

@@ -1,0 +1,33 @@
+{
+	"body": {
+		"result": [
+			{
+				"lastModified": "2026-10-25T18:44:37Z",
+				"slug": "fussball"
+			},
+			{
+				"lastModified": "2026-10-25T18:44:38Z",
+				"slug": "kinderturnen"
+			},
+			{
+				"lastModified": "2026-10-25T18:44:39Z",
+				"slug": "kurse"
+			},
+			{
+				"lastModified": "2026-10-25T18:44:40Z",
+				"slug": "taekwondo"
+			},
+			{
+				"lastModified": "2026-10-25T18:44:41Z",
+				"slug": "tanzen"
+			},
+			{
+				"lastModified": "2026-10-25T18:44:42Z",
+				"slug": "weitere-sportarten"
+			}
+		],
+		"syncTags": ["s1:0+17mg"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+defined%28slug.current%29%5D+%7B%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22lastModified%22%3A+_updatedAt%0A%09%7D%0A&returnQuery=false"
+}

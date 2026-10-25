@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test';
 
-import { groupSections } from '@/utils/groups';
 import { getInternalHref } from '@/utils/links';
 
 describe('resolving internal link targets', () => {
@@ -22,22 +21,32 @@ describe('resolving internal link targets', () => {
 		expect(getInternalHref({ _type: 'news.category', slug: 'verein' })).toBe('/news/verein');
 	});
 
-	it('resolves a group below the department it belongs to', () => {
-		expect(getInternalHref({ _type: 'group.soccer', slug: 'herren-1' })).toBe(
-			'/angebot/fussball/herren-1',
+	it('links a department below the offer page', () => {
+		expect(getInternalHref({ _type: 'department', slug: 'tanzen' })).toBe('/angebot/tanzen');
+	});
+
+	it('links a group below its department', () => {
+		expect(getInternalHref({ _type: 'group', department: 'fussball', slug: 'herren' })).toBe(
+			'/angebot/fussball/herren',
 		);
 	});
 
-	it('resolves every group type in groupSections below its own department slug', () => {
-		for (const section of groupSections) {
-			expect(getInternalHref({ _type: section._type, slug: 'mitglied-1' })).toBe(
-				`${section.slug}/mitglied-1`,
-			);
-		}
+	it('gives a group without department slug no link', () => {
+		expect(getInternalHref({ _type: 'group', slug: 'herren' })).toBeUndefined();
 	});
 
-	it('leaves a group type without a department page unresolved', () => {
-		expect(getInternalHref({ _type: 'group.administration', slug: 'vorstand' })).toBeUndefined();
+	it('gives a group with a null department slug no link', () => {
+		expect(getInternalHref({ _type: 'group', department: null, slug: 'herren' })).toBeUndefined();
+	});
+
+	it('gives a group with an empty department slug no link', () => {
+		expect(getInternalHref({ _type: 'group', department: '', slug: 'herren' })).toBeUndefined();
+	});
+
+	it('ignores a department slug on a type that is not a group', () => {
+		expect(
+			getInternalHref({ _type: 'membership', department: 'fussball', slug: 'mitgliedschaft' }),
+		).toBe('/mitgliedschaft');
 	});
 
 	it('resolves an unknown type to a single page at its slug', () => {

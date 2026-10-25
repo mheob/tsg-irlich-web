@@ -25,8 +25,8 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 
 | Path | Contains |
 | --- | --- |
-| `schemas/documents` | editable document types (`news.article`, `person`, `group.*`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import) |
+| `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import, the department migration) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -36,7 +36,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | `plugins` | studio plugins: structure, singletons, assist presets, presentation |
 | `structure` | the custom desk structure, grouped by topic |
 | `components` | custom input and preview components |
-| `utils`, `constants` | helpers (`getFieldWithGroup`, date formatting, departments, …) |
+| `utils`, `constants` | helpers (`getFieldWithGroup`, date formatting, slug history, …) |
 
 ## Schema conventions
 
@@ -117,6 +117,44 @@ The editors then review the intros in the release and publish it as a whole. Arc
 
 The migration `main-navigation-menus` turned the earlier `mainNavigationItem` entries into these. An entry with children became a menu, and its former target became the first child, titled like the old "Übersicht" link. It is idempotent and runs like every migration here, `development` first.
 
+## Departments and groups
+
+`department` is a document of its own (title, slug, DOSB icon, `sortOrder`, `isTeamSport`, card and hero image, intro, stats, contact persons), and there is exactly one `group` type. Every group has a required `department` reference at the top, and a group sits under one department only. The former `group.*` types and the "Administration" group are gone.
+
+- **Slugs.** A department slug is unique among the departments (Sanity's default slug check). A group slug is unique only within its department, so two departments may each have a group "herren" (`isGroupSlugUniqueInDepartment` in `schemas/documents/group.ts` checks in the raw perspective, so drafts and release versions of other groups count).
+- **Slug history.** `previousSlugs` on a department and `previousPaths` on a group (`<department slug>/<group slug>`) keep the old addresses so the website can redirect them. The publish action (`actions/publish-with-slug-history.tsx`, wired up for both types in `sanity.config.ts`) wraps the default "Veröffentlichen" and adds the previously published value whenever the slug, or the department of a group, has changed. A group moved into a department that only exists as a draft still records its old path, because the new path cannot be built yet. That is the only thing that fills the fields. Publishing through a release, scheduled publishing or the API does not, so the editors enter the old value by hand there; the field description says so. The two fields check what is typed: a `previousSlugs` entry has to be a bare slug (`kurse`), a `previousPaths` entry `<department>/<group>` without `/angebot` (`kurse/yoga`), lowercase, and every entry that does not match is marked, since a value in another shape never matches a URL. The action never stalls publishing: if the lookup of the department slugs fails or takes longer than five seconds, the document is published anyway and a toast names the field to fill in.
+- **Desk.** "Abteilungen" lists the departments by `sortOrder`. "Gruppen" lists the same departments, also by `sortOrder` (without an ordering Sanity sorts by last update, so an edited department would jump to the top), and each one opens its groups (`getGroupsOfDepartmentList` in `structure/index.ts`, a filter on `department._ref`, ordered by `sortOrder`). The departments come from the documents, so a new department needs no change in the desk. "Neu" inside a department uses the `group-by-department` template from `structure/templates.ts`, which presets the department. `sanity.config.ts` appends that template to `schema.templates` after the singleton filter.
+
+## Department migration
+
+`scripts/migrate-departments.ts` moves a dataset from the `group.*` types and the hard-coded departments to `department` documents and the one `group` type (WEB-384). It is a one-off: once `production` is migrated, a follow-up deletes the script, its images, the `migrate:departments` script and this section. The modules under `scripts/migrate-departments/` take the store as an argument and are tested against an in-memory dataset (`test-utils/fake-store.ts`).
+
+**Running it.** A dry run is the default. It reads everything and writes nothing, checks that every image file is there, then prints the counts (among them „Dokumente geändert“, the number of documents actually patched, each once), the paths after the migration and the problems, and exits with 1 on any problem:
+
+```bash
+pnpm --filter studio run migrate:departments --dataset development              # dry run
+pnpm --filter studio run migrate:departments --dataset development --no-dry-run # migrates
+```
+
+The real run writes and deletes, so it needs the user's OK first, and the rollout exports the dataset before it (`pnpm exec sanity dataset export <dataset> <file>.tar.gz`). `sanity exec --with-user-token` writes as the logged-in user, so run `pnpm exec sanity login` first. Migrate `development` first, then `production`.
+
+**New ids.** Sanity never changes the `_type` of an id, not even by deleting and creating it in one transaction (the probe on `development` was rejected with `immutable attribute "_type" may not be modified`). So every `group.<x>` document `<id>` moves to a `group` document `group-<id>`, its draft to `drafts.group-<id>`, and every reference to the old id is rewritten before the old document goes.
+
+**What a real run does**, in this order. Every step skips what is done already, so a second run writes nothing:
+
+1. uploads the card, hero and open graph image of every missing department from `scripts/migrate-departments/images/` (Sanity deduplicates assets by content hash)
+2. creates the six departments `department-<slug>` from `seeds.ts`: title, slug, icon, `sortOrder` 10 to 60, `isTeamSport` for Fußball only, the images with the title as alt text, a copy of the groups page stats, and the persons the department page lists today (role email `fussball@tsg-irlich.de` for Fußball, `breitensport@tsg-irlich.de` for the others). An existing department is left alone, so a rerun never overwrites what the editors changed.
+3. deletes every `group` left from the 2024 schema, which used the same type name, published and draft: one whose `department` is a string, or that has none but still carries `isSportGroup`. One that something references stays and is reported.
+4. creates the `group` under its new id for every `group.<x>` except `group.admin`, the published ones first, then the drafts (a draft-only group gets only the draft). It keeps `_createdAt` and every content field, drops `_rev`, `_updatedAt` and `isSportGroup`, and references the department.
+5. rewrites, in every document that references an old id (persons, news, anything else, published and draft), each such reference to the new id, wherever it sits in the document. `_key` and `_weak` stay, and a pending `_strengthenOnPublish` names the type `group`. A person gets this in the same patch as its affiliations: `affiliations[].department` becomes a reference, and an `admin` affiliation loses its department and its group and keeps the role. Every patch is guarded by `ifRevisionID`. A document step 3 just deleted (a 2024 `group` that references a legacy group) is neither patched nor counted, and it does not block the deletion of the legacy group, in a dry run as in a real run. A person whose `affiliations` are set but not a list of objects with a `_key` is reported and left alone, because its department strings could not be told apart.
+6. deletes the old `group.<x>` documents, the drafts first, once nothing references them any more. A release version that still references one is not patched but reported, and the old document stays.
+7. deletes the `group.admin` documents, published and draft. One that something still references stays and is reported.
+8. removes `groupsPage.content.stats`
+
+A real run then checks the dataset (it skips `null` entries and an `affiliations` field that is no list instead of stopping): no `group.*` document left, every `group` under a department reference, no department string in an affiliation, every affiliation's group a `group` and its department a `department`, each of the six `department-<slug>` published, every department with a card image. A legacy type, a department string or a `group` the migration does not know is reported, never guessed. Versions in a content release (`versions.<release>.<id>`) of these types, or ones that reference an old group, are not migrated either but reported, so publish or discard such a release before the run.
+
+**Paths.** A run lists `/angebot/<abteilung>` and `/angebot/<abteilung>/<gruppe>` for every published department and group after the migration, which are the pages that exist before it. Keep the list of the dry run to check those pages after the rollout.
+
 ## Content migrations
 
 A schema change that moves existing data comes with a migration in `migrations/<id>/index.ts` (`defineMigration` from `sanity/migrate`), next to a test for its pure parts. `sanity migration run` does a dry run by default and needs both the project and the dataset:
@@ -134,6 +172,8 @@ Run it on `development` first (the e2e fixtures are recorded from there), then o
 
 `mainDocuments` maps a URL to the document that is edited when the preview navigates there; `locations` powers the "Verwendet auf" links on a document. The `select` of `defineLocations` only understands plain field paths — a dereference such as `categories[0]->slug.current` makes the Content Lake reject the preview query — so the locations are resolved through `documentStore.listenQuery` with a GROQ query that projects the location state itself.
 
+The group route (`/angebot/:group/:singleGroup`) comes before the department route (`/angebot/:group`), and both before the news routes. `LOCATION_QUERIES` has an entry for `department` (its page and `/angebot`), `group` (its page and the page of its department), `news.article` and `news.category`. A document without a slug, or a group without a department slug, shows no location of its own.
+
 The order of the plugins in `plugins/index.ts` is the order of the studio's top navigation (Structure, Media, Presentation, Vision in development, then the built-in Releases).
 
 ## Testing
@@ -141,6 +181,8 @@ The order of the plugins in `plugins/index.ts` is the order of the studio's top 
 A single `vitest.config.ts` (jsdom, `**/*.test.{ts,tsx}`) covers the whole app — no project split like `apps/web`. Beyond the plain utilities (`utils/`), most schema coverage comes from calling `preview.prepare` and a `Rule.custom(...)` predicate as plain functions directly on the exported definition object — schema definitions are plain objects, so no Sanity runtime is needed. Only `Rule.custom` predicates are reachable this way; a `Rule.required().min().error(...)` builder chain has no function to extract and call, so those validations are deliberately left untested. A fake `Rule` object (`{ custom: (fn) => fn }`, plus no-op `.required()/.error()` stubs where a field mixes a builder chain with a custom rule) captures the predicate without reimplementing chain semantics. `preview.prepare` itself is only worth pinning when it computes something (concatenation, pluralization, a fallback); a verbatim `({ title }) => ({ title })` passthrough or a no-input literal (`() => ({ title: 'Kontakt' })`) is skipped as not worth a test. Note what this seam does _not_ cover: the tests hand-build the selection object to match `prepare`'s parameter names, so `preview.select` itself is never read or executed. A renamed `select` path (`firstName: 'firstname'`, `media: 'image.assetRef'`) that makes the real Studio feed `prepare` `undefined` would pass every one of these tests — "we test `prepare`" is not "we test the preview pipeline".
 
 Some schemas cannot be imported in a test as-is: `schemas/objects/meta.tsx` (and anything else wired to `components/named-image-input.tsx`) transitively imports `sanity-plugin-media`, which throws under Vitest (`react-dropzone`'s CJS/ESM interop breaks), and `NamedImageInput` also reads Studio-only env vars via `@/env` that assert and throw when unset. Stub the component in the test file — `vi.mock(import('@/components/named-image-input'), () => ({ NamedImageInput: (() => null) as unknown as typeof NamedImageInput }))` — rather than setting Studio env vars or touching production code; see `schemas/objects/meta.test.ts`.
+
+`plugins/presentation.test.ts` mocks `@/env` for the same reason (`vi.mock(import('@/env'), () => ({ previewUrl: 'http://localhost:3000' }))`), since `env.ts` throws without the studio variables. `mainDocuments` and `LOCATION_QUERIES` are exported for it only.
 
 ## Environment variables
 

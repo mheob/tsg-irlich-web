@@ -1,14 +1,9 @@
 // oxlint-disable import/max-dependencies
 
 import author from './documents/author';
+import department from './documents/department';
 import echoIssue from './documents/echo.issue';
-import groupAdmin from './documents/group.admin';
-import groupChildrenGymnastics from './documents/group.children-gymnastics';
-import groupCourses from './documents/group.courses';
-import groupDance from './documents/group.dance';
-import groupOtherSports from './documents/group.other-sports';
-import groupSoccer from './documents/group.soccer';
-import groupTaekwondo from './documents/group.taekwondo';
+import group from './documents/group';
 import honoraryMember from './documents/honorary-member';
 import newsArticle from './documents/news.article';
 import newsCategory from './documents/news.category';
@@ -65,13 +60,8 @@ export const schemaTypes = [
 	honoraryMember,
 	role,
 
-	groupAdmin,
-	groupChildrenGymnastics,
-	groupCourses,
-	groupDance,
-	groupOtherSports,
-	groupSoccer,
-	groupTaekwondo,
+	department,
+	group,
 	sponsors,
 	testimonial,
 	venue,

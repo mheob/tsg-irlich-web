@@ -1,17 +1,22 @@
 import { defineConfig } from 'sanity';
 
+import { createPublishWithSlugHistoryAction } from './actions/publish-with-slug-history';
 import { RegenerateEchoPagesAction } from './actions/regenerate-echo-pages';
 import { Logo } from './components/logo';
 import { dataset, projectId } from './env';
 import { getPlugins } from './plugins';
 import { schemaTypes } from './schemas';
 import echoIssue from './schemas/documents/echo.issue';
+import { groupByDepartmentTemplate } from './structure/templates';
 
 // Define the actions that should be available for singleton documents
 const singletonActions = new Set(['publish', 'discardChanges', 'restore']);
 
 // Define the singleton document types
 const singletonTypes = new Set(['privacy', 'site-settings']);
+
+// Define the document types whose publish action remembers former slugs, so old URLs can redirect
+const slugHistoryTypes = new Set(['department', 'group']);
 
 export default defineConfig({
 	dataset,
@@ -24,6 +29,11 @@ export default defineConfig({
 			}
 			if (context.schemaType === echoIssue.name) {
 				return [...input, RegenerateEchoPagesAction];
+			}
+			if (slugHistoryTypes.has(context.schemaType)) {
+				return input.map((action) =>
+					action.action === 'publish' ? createPublishWithSlugHistoryAction(action) : action,
+				);
 			}
 			return input;
 		},
@@ -43,8 +53,12 @@ export default defineConfig({
 	plugins: getPlugins(),
 	projectId,
 	schema: {
-		// Filter out singleton types from the global “New document” menu options
-		templates: (templates) => templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+		// Filter out singleton types from the global “New document” menu options, then add the template
+		// behind "Neu" in the groups of a department
+		templates: (templates) => [
+			...templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+			groupByDepartmentTemplate,
+		],
 		types: schemaTypes,
 	},
 	title: 'TSG Irlich 1882',

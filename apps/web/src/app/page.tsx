@@ -12,11 +12,13 @@ import { Pricing } from '@/components/section/pricing';
 import { Stats } from '@/components/section/stats';
 import { Vision } from '@/components/section/vision';
 import { client } from '@/lib/sanity/client';
+import { departmentCardsQuery } from '@/lib/sanity/queries/departments';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import type {
+	DepartmentCardsQueryResult,
 	HomePageQueryResult,
 	HomePageTestimonialsQueryResult,
 	NewsArticlesQueryResult,
@@ -46,8 +48,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-	const [page, testimonials, newsArticles, socialMedia, sponsors] = await Promise.all([
+	const [page, departments, testimonials, newsArticles, socialMedia, sponsors] = await Promise.all([
 		client.fetch<HomePageQueryResult>(homePageQuery),
+		client.fetch<DepartmentCardsQueryResult>(departmentCardsQuery),
 		client.fetch<HomePageTestimonialsQueryResult>(
 			homePageTestimonialsQuery,
 			{},
@@ -75,7 +78,7 @@ export default async function HomePage() {
 			/>
 			<Features {...page.content.featureSection} />
 			<Vision {...{ ...page.content.visionSection, _type: page._type }} />
-			<Groups {...page.content.groupsSection} />
+			<Groups {...page.content.groupsSection} departments={departments} />
 			<Stats stats={page.content.stats} />
 			<Pricing {...page.content.pricingSection} />
 			<Testimonials {...page.content.testimonialSection} testimonials={shuffledTestimonials} />

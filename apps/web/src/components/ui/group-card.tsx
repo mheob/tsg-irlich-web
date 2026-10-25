@@ -5,35 +5,24 @@ import { DOSBIcon } from '@tsgi-web/shared';
 
 import { ArrowElement } from '@/components/ui/arrow-button';
 import { urlForImage } from '@/lib/sanity/utils';
-import type { Groups as GroupsType } from '@/types/sanity.types';
-import { getGroupImage } from '@/utils/groups';
-import type { GroupSection } from '@/utils/groups';
+import type { AnyImage } from '@/types/sanity.types';
+import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
 const IMAGE_SIZE = { height: 270, width: 480 };
 
-type Group = GroupsType['groups'][number];
-
 interface GroupCardProps {
-	currentDepartment?: GroupSection;
-	featuredImage?: Group['featuredImage'];
-	icon: Group['icon'];
-	overviewTitle?: Group['overviewTitle'];
-	slug: Group['slug'];
-	title: Group['title'];
+	href: string;
+	icon?: string | null;
+	image?: AnyImage | null;
+	overviewTitle?: string | null;
+	title?: string | null;
 }
 
-export function GroupCard({
-	currentDepartment,
-	featuredImage,
-	icon,
-	overviewTitle,
-	slug,
-	title,
-}: Readonly<GroupCardProps>) {
-	// Sanity may return groups without a slug or title, which cannot be rendered as a card
-	if (!slug || !title) {
+export function GroupCard({ href, icon, image, overviewTitle, title }: Readonly<GroupCardProps>) {
+	// Sanity may return a group without a title, which cannot be rendered as a card
+	if (!title) {
 		return null;
 	}
 
@@ -43,16 +32,11 @@ export function GroupCard({
 			<Image
 				alt={title}
 				className="absolute inset-0 z-[-2] rounded-xl"
-				src={
-					urlForImage(featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width) ?? getGroupImage(slug).src
-				}
+				src={urlForImage(image, IMAGE_SIZE.height, IMAGE_SIZE.width) ?? OFFER_FALLBACK_IMAGE.src}
 				fill
 			/>
 
-			<Link
-				aria-label={`Mehr über "${title}" erfahren`}
-				href={currentDepartment ? `${currentDepartment.slug}/${slug}` : slug}
-			>
+			<Link aria-label={`Mehr über "${title}" erfahren`} href={href}>
 				<div className="flex h-full flex-row items-end justify-between p-6">
 					<div className="flex flex-col justify-end">
 						<div className="grid size-12 place-content-center rounded-full bg-secondary text-5xl text-primary md:size-14">

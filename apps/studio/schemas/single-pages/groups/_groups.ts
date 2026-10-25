@@ -8,9 +8,4 @@ const groups = {
 	title: 'Gruppen',
 };
 
-const stats = {
-	name: 'stats',
-	title: 'Stats',
-};
-
-export { contactPersons, groups, stats };
+export { contactPersons, groups };

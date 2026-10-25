@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vite-plus/test';
 
-import type { OfferGroupsGroupPageNewsQueryResult } from '@/types/sanity.types';
+import type { GroupNewsQueryResult } from '@/types/sanity.types';
 
 import { renderWithUser } from '../../../../../../test-utils/render';
 import { News } from './news';
@@ -13,7 +13,7 @@ vi.hoisted(() => {
 	globalThis.process.env.NEXT_PUBLIC_SANITY_PROJECT_ID = 'test-project';
 });
 
-type NewsCategory = NonNullable<OfferGroupsGroupPageNewsQueryResult>;
+type NewsCategory = NonNullable<GroupNewsQueryResult>;
 
 function buildArticle(id: string, slug: string, title: string): NewsCategory['articles'][number] {
 	// The generated result type carries more fields than a fixture needs to name.

@@ -1,0 +1,43 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'person' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t\"email\": affiliations[team._ref == $groupId][0].team->email,\n\t\t\"role\":  affiliations[team._ref == $groupId][0].role->title,\n\t\t\"team\":  affiliations[team._ref == $groupId][0].team->title,\n\t\t\"taskDescription\": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n",
+		"result": [
+			{
+				"_id": "2786c56b-67f1-45fe-9311-39237515b38f",
+				"contactAs": "both",
+				"email": "f-jugend@tsg-irlich.de",
+				"firstName": "Sebastian",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Jugendtrainer Sebastian Steinhöfer",
+					"asset": {
+						"_ref": "image-ee947a050de976778e09ba23af9ba3dc0355c407-4000x6000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.29633902360748776,
+						"left": 0.08958694219212568,
+						"right": 0.034191032724684794,
+						"top": 0.1075398535114175
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5293250625808916,
+						"width": 0.6859554786627363,
+						"x": 0.5483791010837697,
+						"y": 0.43286589191086805
+					}
+				},
+				"lastName": "Steinhöfer",
+				"phone": "+49 1573 1473629",
+				"role": "Trainer",
+				"taskDescription": "Als F-Jugend-Trainer setze ich spielerische Übungen auf kleinen Feldern ein, um vielen Kindern Ballkontakte zu ermöglichen. Ich fördere Koordination, Teamgeist und Freude am Spiel, wechsle regelmäßig die Übungsformen und gestalte Training altersgerecht und abwechslungsreich.",
+				"team": "F-Jugend"
+			}
+		],
+		"syncTags": ["s1:mWzJLg", "s1:MdmizQ", "s1:zJ4G5A"],
+		"ms": 17
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27person%27+%26%26%0A%09%09defined%28affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D%29%0A%09%5D%7Corder%28lastName+asc%29+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09phone%2C%0A%09%09image%2C%0A%09%09contactAs%2C%0A%09%09%22email%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Eemail%2C%0A%09%09%22role%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.role-%3Etitle%2C%0A%09%09%22team%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Etitle%2C%0A%09%09%22taskDescription%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.taskDescription%2C%0A%09%7D%0A&%24groupId=%22group-455ec903-0dc3-4c37-ba25-ca760a7642ed%22&perspective=published&tag=next-loader.fetch"
+}

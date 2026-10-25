@@ -5,11 +5,19 @@ import {
 	RiParentLine,
 	RiSettings5Line,
 	RiTeamLine,
+	RiTrophyLine,
 } from 'react-icons/ri';
 import type { DocumentDefinition } from 'sanity';
-import type { ListItemBuilder, StructureBuilder } from 'sanity/structure';
+import type { DocumentListBuilder, ListItemBuilder, StructureBuilder } from 'sanity/structure';
 
-type DocumentGroup = 'echo' | 'groups' | 'news' | 'persons' | 'settings' | 'single-pages';
+type DocumentGroup =
+	| 'departments'
+	| 'echo'
+	| 'groups'
+	| 'news'
+	| 'persons'
+	| 'settings'
+	| 'single-pages';
 
 /**
  * Returns the group for the news.
@@ -76,7 +84,46 @@ function getGroupPersons(S: StructureBuilder): ListItemBuilder[] {
 }
 
 /**
- * Returns the group for the groups.
+ * Returns the group for the departments, ordered like on the website.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the departments.
+ */
+function getGroupDepartments(S: StructureBuilder): ListItemBuilder[] {
+	return [
+		S.listItem()
+			.title('Abteilungen')
+			.id('departments')
+			.icon(RiTrophyLine)
+			.child(
+				S.documentTypeList('department')
+					.title('Abteilungen')
+					.defaultOrdering([{ direction: 'asc', field: 'sortOrder' }]),
+			),
+	];
+}
+
+/**
+ * Returns the list of the groups of one department. "Neu" in this list creates a group that is
+ * already assigned to the department.
+ *
+ * @param S - The structure builder.
+ * @param departmentId - The id of the department document.
+ * @returns The list of the groups of the department.
+ */
+function getGroupsOfDepartmentList(S: StructureBuilder, departmentId: string): DocumentListBuilder {
+	return S.documentList()
+		.title('Gruppen')
+		.schemaType('group')
+		.filter('_type == "group" && department._ref == $departmentId')
+		.params({ departmentId })
+		.defaultOrdering([{ direction: 'asc', field: 'sortOrder' }])
+		.initialValueTemplates([S.initialValueTemplateItem('group-by-department', { departmentId })]);
+}
+
+/**
+ * Returns the group for the groups: the departments by sort order, each opening its own groups.
+ * The departments come from the documents, so a new department shows up without a change here.
  *
  * @param S - The structure builder.
  * @returns The group for the groups.
@@ -88,17 +135,10 @@ function getGroupGroups(S: StructureBuilder): ListItemBuilder[] {
 			.id('groups')
 			.icon(RiTeamLine)
 			.child(
-				S.list()
+				S.documentTypeList('department')
 					.title('Gruppen')
-					.items([
-						S.documentTypeListItem('group.admin'),
-						S.documentTypeListItem('group.soccer'),
-						S.documentTypeListItem('group.children-gymnastics'),
-						S.documentTypeListItem('group.courses'),
-						S.documentTypeListItem('group.taekwondo'),
-						S.documentTypeListItem('group.dance'),
-						S.documentTypeListItem('group.other-sports'),
-					]),
+					.defaultOrdering([{ direction: 'asc', field: 'sortOrder' }])
+					.child((departmentId) => getGroupsOfDepartmentList(S, departmentId)),
 			),
 	];
 }
@@ -185,14 +225,9 @@ function isExcludedDefaultListItem(id?: string): boolean {
 	return ![
 		'assist.instruction.context',
 		'author',
+		'department',
 		'echo.issue',
-		'group.admin',
-		'group.children-gymnastics',
-		'group.courses',
-		'group.dance',
-		'group.other-sports',
-		'group.soccer',
-		'group.taekwondo',
+		'group',
 		'honoraryMember',
 		'media.folder',
 		'media.tag',
@@ -217,6 +252,9 @@ function getGroup(
 	typeDefinitionArray?: DocumentDefinition[],
 ): ListItemBuilder[] {
 	switch (name) {
+		case 'departments': {
+			return getGroupDepartments(S);
+		}
 		case 'echo': {
 			return getGroupEcho(S);
 		}
@@ -241,4 +279,4 @@ function getGroup(
 	}
 }
 
-export { isExcludedDefaultListItem, getGroup };
+export { getGroup, getGroupsOfDepartmentList, isExcludedDefaultListItem };

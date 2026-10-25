@@ -1,0 +1,86 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "9b4811ec-6c36-4cc7-9a2b-e9f43e80c350",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						},
+						{
+							"slug": "montagskicker",
+							"title": "Montagskicker"
+						}
+					],
+					"excerpt": "16 Kilometer, 17 Grad und gute Laune: Die Montagskicker feierten ihren Jahresabschluss mit einer Wanderung. Ab Januar 2026 sucht die Hobbymannschaft Verstärkung!",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Die Montagskicker der TSG feiern Weihnachten, fröhliche Gesichter und festliche Dekoration im Hintergrund.",
+						"asset": {
+							"_ref": "image-0667b31e7258059393c286ca0eca7773e5fac9e4-1600x1200-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.06939694720160147,
+							"left": 0,
+							"right": 0.006005622738985499,
+							"top": 0.08007340061723246
+						},
+						"description": "Die Montagskicker der TSG bei der Weihnachtsfeier.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5168807009709752,
+							"width": 0.6958896681991951,
+							"x": 0.5118366918368464,
+							"y": 0.5181014249283041
+						}
+					},
+					"meta": {
+						"metaDescription": "Montagskicker der TSG Irlich: Jahresabschluss 2024 mit Wanderung durch das Kehlbachtal. Ab Januar 2026 Neustart – Hobbymannschaft sucht neue Mitspieler.",
+						"metaTitle": "TSG Irlich - Moki's: Weihnachtsfeier und sportlicher Neustart",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-12-08T22:42:02.281Z",
+					"slug": "neustart-montagskicker",
+					"title": "Weihnachtsfeier & sportlicher Neustart der Montagskicker"
+				}
+			],
+			"slug": "montagskicker",
+			"title": "Montagskicker"
+		},
+		"syncTags": ["s1:PkBqnQ", "s1:GXw2oQ", "s1:GNFE5A", "s1:Ik/M0w", "s1:c5Grjg"],
+		"ms": 12
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-f654dfc8-31c4-4156-9c91-18aaaeae8337%22&perspective=published&tag=next-loader.fetch"
+}

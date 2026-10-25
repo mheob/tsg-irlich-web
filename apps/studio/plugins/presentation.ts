@@ -9,8 +9,15 @@ const ALLOWED_ORIGINS = ['http://localhost:*', 'https://*.vercel.app', 'https://
 /**
  * Maps the routes of the website to the documents that are rendered on them.
  * The first matching route wins, so the more specific ones come first.
+ *
+ * Exported for the tests only.
  */
 const mainDocuments = defineDocuments([
+	{
+		filter: `_type == "group" && slug.current == $singleGroup && department->slug.current == $group`,
+		route: '/angebot/:group/:singleGroup',
+	},
+	{ filter: `_type == "department" && slug.current == $group`, route: '/angebot/:group' },
 	{ filter: `_type == "news.article" && slug.current == $slug`, route: '/news/:category/:slug' },
 	{ filter: `_type == "news.category" && slug.current == $category`, route: '/news/:category' },
 	{ route: '/news', type: 'newsOverview' },
@@ -19,9 +26,38 @@ const mainDocuments = defineDocuments([
 /**
  * Queries that resolve the pages a document appears on. They project the location state directly,
  * because the `select` of `defineLocations` only understands plain field paths and chokes on the
- * dereference that is needed to read the slug of a referenced category.
+ * dereference that is needed to read the slug of a referenced category or department.
+ *
+ * Exported for the tests only.
  */
 const LOCATION_QUERIES: Record<string, string> = {
+	department: `*[_id == $id][0] {
+		"locations": array::compact([
+			select(
+				defined(slug.current) => {
+					"href": "/angebot/" + slug.current,
+					"title": coalesce(title, "Ohne Titel")
+				}
+			),
+			{ "href": "/angebot", "title": "Alle Angebote" }
+		])
+	}`,
+	group: `*[_id == $id][0] {
+		"locations": array::compact([
+			select(
+				defined(slug.current) && defined(department->slug.current) => {
+					"href": "/angebot/" + department->slug.current + "/" + slug.current,
+					"title": coalesce(title, "Ohne Titel")
+				}
+			),
+			select(
+				defined(department->slug.current) => {
+					"href": "/angebot/" + department->slug.current,
+					"title": coalesce(department->title, "Ohne Titel")
+				}
+			)
+		])
+	}`,
 	'news.article': `*[_id == $id][0] {
 		"locations": array::compact([
 			select(
@@ -91,3 +127,5 @@ export function presentationWithPreview(): PluginOptions {
 		resolve: { locations, mainDocuments },
 	});
 }
+
+export { LOCATION_QUERIES, mainDocuments };

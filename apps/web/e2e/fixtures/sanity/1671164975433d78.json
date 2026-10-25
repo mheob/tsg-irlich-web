@@ -1,0 +1,9 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'department' && defined(slug.current)].slug.current\n",
+		"result": ["fussball", "kinderturnen", "kurse", "taekwondo", "tanzen", "weitere-sportarten"],
+		"syncTags": ["s1:0+17mg"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+defined%28slug.current%29%5D.slug.current%0A&perspective=published&tag=next-loader.fetch"
+}

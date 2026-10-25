@@ -1,14 +1,88 @@
 // oxlint-disable no-magic-numbers max-nested-calls
 
 import { RiUserSmileLine } from 'react-icons/ri';
-import type { PreviewValue } from 'sanity';
+import type { PreviewValue, Reference, ValidationContext } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
 import TextInput from '@/components/text-input';
-import { DEPARTMENTS } from '@/constants/departments';
 import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { contactAsField, phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
+
+const PERSON_API_VERSION = '2026-10-01';
+
+/**
+ * Reads the department an affiliation points to.
+ *
+ * @param affiliation - The affiliation object, or whatever the form hands over while it is empty.
+ * @returns The id of the department document, or `undefined` when none is chosen.
+ */
+function getDepartmentId(affiliation: unknown): string | undefined {
+	// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+	return (affiliation as { department?: Reference } | undefined)?.department?._ref;
+}
+
+/**
+ * Limits the groups an affiliation offers to those of its department.
+ *
+ * @param context - The reference filter context, whose `parent` is the affiliation.
+ * @param context.parent - The affiliation the group is chosen in.
+ * @returns The filter for the group picker; empty without a department, so every group is offered.
+ */
+function getTeamFilter({ parent }: { parent?: unknown }): {
+	filter?: string;
+	params?: Record<string, string>;
+} {
+	const departmentId = getDepartmentId(parent);
+
+	return departmentId
+		? { filter: 'department._ref == $departmentId', params: { departmentId } }
+		: {};
+}
+
+/**
+ * Warns when the chosen group belongs to another department than the affiliation. The group picker
+ * is filtered, but a group chosen earlier stays when the editor then picks another department.
+ *
+ * @param team - The reference to the chosen group.
+ * @param context - The validation context, whose `parent` is the affiliation.
+ * @returns `true`, or the warning shown to the editor.
+ */
+async function validateTeamMatchesDepartment(
+	team: Reference | undefined,
+	context: ValidationContext,
+): Promise<true | string> {
+	const departmentId = getDepartmentId(context.parent);
+	if (!team?._ref || !departmentId) {
+		// Without a group or a department there is nothing to compare.
+		return true;
+	}
+
+	const teamDepartmentId = await context
+		.getClient({ apiVersion: PERSON_API_VERSION })
+		.fetch<string | null>('*[_id == $id][0].department._ref', { id: team._ref });
+
+	return teamDepartmentId === departmentId
+		? true
+		: 'Die Gruppe gehört nicht zur gewählten Abteilung.';
+}
+
+/**
+ * Builds the list preview of an affiliation from the parts it has. An affiliation may have only a
+ * role (a board member) or, while it is being filled in, only a team or nothing at all.
+ *
+ * @param selection - The selected titles of the group and the role.
+ * @param selection.role - The title of the role.
+ * @param selection.team - The title of the group.
+ * @returns The title naming the group and the role that exist.
+ */
+function prepareAffiliationPreview({ role, team }: { role?: string; team?: string }): {
+	title: string;
+} {
+	const parts = [team && `Gruppe: ${team}`, role && `Rolle: ${role}`].filter(Boolean);
+
+	return { title: parts.length > 0 ? parts.join(' - ') : 'Zugehörigkeit ohne Gruppe und Rolle' };
+}
 
 const person = defineType({
 	fields: [
@@ -29,81 +103,22 @@ const person = defineType({
 				defineField({
 					fields: [
 						defineField({
-							description: 'Die Abteilung bzw. der Bereich der Person.',
+							description: 'Optional. Die Abteilung der Person.',
 							name: 'department',
-							options: {
-								layout: 'dropdown',
-								list: DEPARTMENTS.map((department) => ({
-									title: department.title,
-									value: department.slug,
-								})),
-							},
-							title: 'Abteilung / Bereich',
-
-							type: 'string',
-							validation: (Rule) => [
-								Rule.required().error('Die Gruppe oder Abteilung ist erforderlich'),
-							],
+							title: 'Abteilung',
+							to: [{ type: 'department' }],
+							type: 'reference',
 						}),
 
 						defineField({
-							description: 'Die Gruppe oder das Team der Person.',
+							description:
+								'Optional. Die Gruppe oder das Team der Person. Zur Auswahl stehen die Gruppen der gewählten Abteilung.',
 							name: 'team',
-							options: {
-								// oxlint-disable-next-line max-statements
-								filter: ({ parent }) => {
-									// oxlint-disable-next-line typescript/no-unsafe-type-assertion
-									const type = (parent as { department?: string } | undefined)?.department;
-
-									switch (type) {
-										case 'admin': {
-											return { filter: '_type == $type', params: { type: 'group.admin' } };
-										}
-										case 'children-gymnastics': {
-											return {
-												filter: '_type == $type',
-												params: { type: 'group.children-gymnastics' },
-											};
-										}
-										case 'courses': {
-											return { filter: '_type == $type', params: { type: 'group.courses' } };
-										}
-										case 'dance': {
-											return { filter: '_type == $type', params: { type: 'group.dance' } };
-										}
-										case 'other-sports': {
-											return { filter: '_type == $type', params: { type: 'group.other-sports' } };
-										}
-										case 'soccer': {
-											return { filter: '_type == $type', params: { type: 'group.soccer' } };
-										}
-										case 'taekwondo': {
-											return { filter: '_type == $type', params: { type: 'group.taekwondo' } };
-										}
-										case undefined: {
-											return {};
-										}
-										default: {
-											return {};
-										}
-									}
-								},
-							},
+							options: { filter: getTeamFilter },
 							title: 'Gruppe / Team',
-							to: [
-								{ type: 'group.admin' },
-								{ type: 'group.children-gymnastics' },
-								{ type: 'group.courses' },
-								{ type: 'group.dance' },
-								{ type: 'group.other-sports' },
-								{ type: 'group.soccer' },
-								{ type: 'group.taekwondo' },
-							],
-
+							to: [{ type: 'group' }],
 							type: 'reference',
-							validation: (Rule) => [
-								Rule.required().error('Die Gruppe oder das Team ist erforderlich'),
-							],
+							validation: (Rule) => Rule.custom(validateTeamMatchesDepartment).warning(),
 						}),
 
 						defineField({
@@ -144,9 +159,7 @@ const person = defineType({
 					],
 					name: 'affiliation',
 					preview: {
-						prepare: ({ team, role }: { team?: string; role?: string }) => ({
-							title: `Gruppe: ${team} - Rolle: ${role}`,
-						}),
+						prepare: prepareAffiliationPreview,
 						select: {
 							role: 'role.title',
 							team: 'team.title',
@@ -208,4 +221,5 @@ const person = defineType({
 	type: 'document',
 });
 
+export { getTeamFilter, validateTeamMatchesDepartment };
 export default person;

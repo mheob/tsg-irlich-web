@@ -1,0 +1,62 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'person' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t\"email\": affiliations[team._ref == $groupId][0].team->email,\n\t\t\"role\":  affiliations[team._ref == $groupId][0].role->title,\n\t\t\"team\":  affiliations[team._ref == $groupId][0].team->title,\n\t\t\"taskDescription\": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n",
+		"result": [
+			{
+				"_id": "b3ec749e-1d4a-43e8-b37e-47e6e5d0c713",
+				"contactAs": "both",
+				"email": "d-jugend@tsg-irlich.de",
+				"firstName": "Daniel",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Jugendtrainer Daniel Baldus in einem Shirt der TSG Irlich auf einem Fußballplatz",
+					"asset": {
+						"_ref": "image-6a975c45056003b838a5fd5228e8686771304da4-600x600-webp",
+						"_type": "reference"
+					}
+				},
+				"lastName": "Baldus",
+				"phone": "+49 170 5587368",
+				"role": "Trainer",
+				"taskDescription": "Als D-Jugend-Trainer fördere ich Ballgefühl, Dribblings und einfache Spielzüge. Ich setze spielerische Übungen und Kleinfeldspiele ein, lege Wert auf Spaß, Fairplay und Teamgeist und begleite die Kinder im „goldenen Lernalter“ beim Erlernen der Grundlagen des Jugendfußballs.",
+				"team": "D-Jugend"
+			},
+			{
+				"_id": "aa5834a4-32c4-46c8-af1a-cd9aa9030d8e",
+				"contactAs": "both",
+				"email": "d-jugend@tsg-irlich.de",
+				"firstName": "Martin",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Trainer und Schiedsrichterobmann Martin Tietzmann in einen Poloshirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-bbe2fb7c1d9b440fd3c129b8f24cb773342c28a3-4000x6000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.13608966769874625,
+						"left": 0.22717460849440746,
+						"right": 0.22717460849440707,
+						"top": 0.2937570077217989
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.352481174695341,
+						"width": 0.5456507830111854,
+						"x": 0.5000000000000002,
+						"y": 0.4699975950694694
+					}
+				},
+				"lastName": "Tietzmann",
+				"phone": "+49 173 3862569",
+				"role": "Co-Trainer",
+				"taskDescription": "Als Co-Trainer unterstütze ich den Trainer bei Technik- und Spielformen, begleite die Kinder im „goldenen Lernalter“ durch abwechslungsreiche Übungen und helfe dabei, Ballgefühl, Teamgeist und Fairplay zu fördern. Zudem unterstütze ich bei Spielen, Organisation und Trainingsabläufen.",
+				"team": "D-Jugend"
+			}
+		],
+		"syncTags": ["s1:mWzJLg", "s1:hC9C9g", "s1:MdmizQ", "s1:ihQ0qw"],
+		"ms": 17
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27person%27+%26%26%0A%09%09defined%28affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D%29%0A%09%5D%7Corder%28lastName+asc%29+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09phone%2C%0A%09%09image%2C%0A%09%09contactAs%2C%0A%09%09%22email%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Eemail%2C%0A%09%09%22role%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.role-%3Etitle%2C%0A%09%09%22team%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Etitle%2C%0A%09%09%22taskDescription%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.taskDescription%2C%0A%09%7D%0A&%24groupId=%22group-776252d2-bf70-482b-a749-c58b5e3cd21a%22&perspective=published&tag=next-loader.fetch"
+}

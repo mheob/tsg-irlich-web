@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 import { env } from '@/lib/env';
-import { groupSections } from '@/utils/groups';
 import { ECHO_OVERVIEW_PATH } from '@/utils/links';
 
 interface WebhookBody {
@@ -23,21 +22,15 @@ function revalidateNewsRoutes(): void {
 }
 
 /**
- * One handler per group document type, because the department segment of the URL is derived from
- * the type and not from the slug of the group.
+ * The offer pages, the sitemap and `llms.txt`, which list every department and group. The payload
+ * only carries the slug of the changed document, not the slug of the department a group belongs to,
+ * so the path of a single group cannot be built from it and the whole offer is revalidated.
  */
-const GROUP_REVALIDATION_MAP: Record<string, RevalidateHandler> = Object.fromEntries(
-	groupSections.map((section) => [
-		section._type,
-		(slug?: string) => {
-			revalidatePath('/angebot');
-			revalidatePath(section.slug);
-			if (slug) {
-				revalidatePath(`${section.slug}/${slug}`);
-			}
-		},
-	]),
-);
+function revalidateOfferRoutes(): void {
+	revalidatePath('/angebot', 'layout');
+	revalidatePath('/sitemap.xml');
+	revalidatePath('/llms.txt');
+}
 
 /**
  * The archive and every issue page. The slug of an earlier version of an issue is not in the
@@ -49,12 +42,16 @@ function revalidateEchoRoutes(): void {
 }
 
 const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
-	...GROUP_REVALIDATION_MAP,
 	aboutUs: () => {
 		revalidatePath('/verein');
 	},
 	contact: () => {
 		revalidatePath('/kontakt');
+	},
+	// The home page links the departments.
+	department: () => {
+		revalidatePath('/');
+		revalidateOfferRoutes();
 	},
 	departmentsPage: () => {
 		revalidatePath('/angebot');
@@ -63,6 +60,11 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	'echo.issue': revalidateEchoRoutes,
 	echoOverview: () => {
 		revalidatePath(ECHO_OVERVIEW_PATH);
+	},
+	group: revalidateOfferRoutes,
+	// The groups page holds the content of every department page.
+	groupsPage: () => {
+		revalidatePath('/angebot/[group]', 'page');
 	},
 	home: () => {
 		revalidatePath('/');

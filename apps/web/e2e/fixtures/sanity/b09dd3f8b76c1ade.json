@@ -1,0 +1,425 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'department' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t\"groups\": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"contactPersons\": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  \"email\": affiliations[0].role->email,\n  \"role\": affiliations[0].role->title,\n  \"taskDescription\": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n",
+		"result": {
+			"_id": "department-fussball",
+			"cardImage": {
+				"_type": "extendedImage",
+				"alt": "Fußball",
+				"asset": {
+					"_ref": "image-296ec6f2144c28e6cd712e21f1d4220e273c8cee-480x270-webp",
+					"_type": "reference"
+				}
+			},
+			"contactPersons": [
+				{
+					"_id": "6ea6af4c-6dcb-4492-97cf-404c8128b359",
+					"contactAs": "both",
+					"email": "fussball@tsg-irlich.de",
+					"firstName": "Markus",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Abteilungsleiter Markus Straeten in einem Shirts der TSG Irlich auf einem Fußballplatz",
+						"asset": {
+							"_ref": "image-0ce6f3246b26f5cfd54973c83fece2aaf34317d6-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.882559012428059,
+							"width": 0.9733088664609225,
+							"x": 0.5133455667695388,
+							"y": 0.5587204937859704
+						}
+					},
+					"lastName": "Straeten",
+					"phone": "+49 170 2206948",
+					"role": "Abteilungsleitung Fußball",
+					"taskDescription": "Als Abteilungsleiter Fußball trage ich die Gesamtverantwortung für die Abteilung und koordiniere alle Teams. Ich führe das Team, wähle Übungsleiter aus, organisiere die Materialbeschaffung und entwickle das sportliche Angebot laufend weiter."
+				}
+			],
+			"groups": [
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "1. Mannschaft der TSG Irlich zur Saison 2025/26 im Pappelstadion",
+						"asset": {
+							"_ref": "image-a6abf54daebf1b59f4d2d9ffef90e5453ba2e17b-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0.05551443197543121,
+							"top": 0.09960171824172158
+						},
+						"description": "Die 1. Mannschaft der TSG Irlich",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5113952772960696,
+							"width": 0.9129969116115498,
+							"x": 0.4725126906812197,
+							"y": 0.40467657856918987
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": null,
+					"slug": "1-mannschaft",
+					"title": "1. Mannschaft"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die Montagskicker der TSG Irlich, umgeben von Bäumen.",
+						"asset": {
+							"_ref": "image-98922cd14bf073749646137f787e5facd1dcac9a-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.11185802635116968,
+							"left": 0.1931224044695408,
+							"right": 0.10898987182934482,
+							"top": 0.020077081652774043
+						},
+						"description": "Die Montagskicker der TSG Irlich",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.4745770760013009,
+							"width": 0.631942467282704,
+							"x": 0.5438359498741712,
+							"y": 0.33808534558407727
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": null,
+					"slug": "montagskicker",
+					"title": "Montagskicker"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die \"Alten Herren\" der TSG Irlich",
+						"asset": {
+							"_ref": "image-8361e8a33651330a7247141aa42e1a9299af843b-4032x3024-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0.07568396829455382,
+							"top": 0.07363845563794426
+						},
+						"description": "Die \"Alten Herren\" der TSG Irlich",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.650899173271968,
+							"width": 0.807721810278701,
+							"x": 0.4767003323958067,
+							"y": 0.39908804227392825
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": null,
+					"slug": "alte-herren",
+					"title": "Alte Herren"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die beiden A-Junioren-Teams der JSG Irlich posieren in Sportkleidung auf einem Fußballplatz, lächelnd in die Kamera.",
+						"asset": {
+							"_ref": "image-843448fee760b95366e6a9ca34a8fab873762c4d-2674x2006-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Die beiden A-Junioren-Teams der JSG Irlich",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6352815141224057,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.3775898523739997
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": "A-Jugend (2008-2009)",
+					"slug": "a-jugend",
+					"title": "A-Jugend"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "B-Junioren der JSG Feldkirchen/Irlich in Fußballtrikots jubelnd in der Kabine",
+						"asset": {
+							"_ref": "image-ec2668c896cb38739dd427020ebd9c40de3ba6fe-4512x3000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.06728563950984337,
+							"left": 0.014547993831650615,
+							"right": 0.016366493060606942,
+							"top": 0.04102562264363456
+						},
+						"description": "Die B-Junioren der JSG Feldkirchen/Irlich",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6458596934174197,
+							"width": 0.9690855131077425,
+							"x": 0.49909075038552186,
+							"y": 0.37151538977146303
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": "B-Jugend (2010-2011)",
+					"slug": "b-jugend",
+					"title": "B-Jugend"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die C-Junioren der JSG Feldkirchen/Irlich jubelnd auf einem Spielfeld.",
+						"asset": {
+							"_ref": "image-1100819cf002bd5dc14a175278827d06b19ce6fa-4512x3000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Die C-Junioren der JSG Feldkirchen/Irlich",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6171974647807775,
+							"width": 0.9276356216131453,
+							"x": 0.4884907575378816,
+							"y": 0.3955207394534368
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": "C-Jugend (2012-2013)",
+					"slug": "c-jugend",
+					"title": "C-Jugend"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die D-Junioren der JSG Feldkirchen/Irlich jubelnd im Pappelstadion.",
+						"asset": {
+							"_ref": "image-934f91994d66ff4cba9a15120ab25453d851d6b6-5120x3413-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Die D-Junioren der JSG Irlich/Wied",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5722225619067602,
+							"width": 0.8204554464088023,
+							"x": 0.5312030344053187,
+							"y": 0.3228835435197759
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": "D-Jugend (2014-2015)",
+					"slug": "d-jugend",
+					"title": "D-Jugend"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die E-Junioren der JSG Irlich/Wied",
+						"asset": {
+							"_ref": "image-e04f5d72b9443f2b4f6f5ab3f1364dda6de0c7c9-5120x3413-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0.0048952081179752804,
+							"top": 0
+						},
+						"description": "Die E-Junioren der JSG Irlich/Wied",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5980016475312451,
+							"width": 0.9475745263975951,
+							"x": 0.5123437228475224,
+							"y": 0.32052471846210584
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": "E-Jugend (2016-2017)",
+					"slug": "e-jugend",
+					"title": "E-Jugend"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Ein F-Jugend-Kicker der JSG Irlich/Wied beim Training",
+						"asset": {
+							"_ref": "image-7a1be92df186b614a5f3db832028ef3fef694644-5120x3413-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Die E-Junioren der JSG Irlich/Wied",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6649864601815322,
+							"width": 0.8834731812762509,
+							"x": 0.49474704524953456,
+							"y": 0.3324932300907661
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": "F-Jugend (2018-2019)",
+					"slug": "f-jugend",
+					"title": "F-Jugend"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die Bambini-Kicker der TSG Irlich",
+						"asset": {
+							"_ref": "image-7a4e40ec70b1e39278de92600c89c1a7fb8687a7-5120x3413-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Die Bambini-Kicker der TSG Irlich",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6387941579062917,
+							"width": 0.9224383353003693,
+							"x": 0.4968028046464703,
+							"y": 0.4245229920486594
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": "Bambinis (bis 2020)",
+					"slug": "bambinis",
+					"title": "Bambinis"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die Schiedsrichter der TSG Irlich",
+						"asset": {
+							"_ref": "image-e0b2a7b930e9fcfb01bfbca5c7f4ad765c48777a-4032x3024-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Das Schiedsrichter-Team der TSG Irlich: Lukas Krechel, Maximilian Holterhoff, Martin Tietzmann, Simon Schulz und Emelie Efa.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6959756206865646,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.39756331600037126
+						}
+					},
+					"icon": "Fussball",
+					"overviewTitle": null,
+					"slug": "schiedsrichter",
+					"title": "Schiedsrichter"
+				}
+			],
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Fußball",
+				"asset": {
+					"_ref": "image-9cd0bd37e14545195b540ed72734a7101bb4efb3-2560x1230-webp",
+					"_type": "reference"
+				}
+			},
+			"intro": null,
+			"meta": {
+				"metaDescription": null,
+				"metaTitle": null,
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Fußball",
+					"asset": {
+						"_ref": "image-40aae418bd2c6eb8c99bd8c6e65111eb72114d10-1200x630-webp",
+						"_type": "reference"
+					}
+				}
+			},
+			"stats": [
+				{
+					"_key": "fussball-stat-1",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "Fußball-Teams",
+					"value": 10
+				},
+				{
+					"_key": "fussball-stat-2",
+					"_type": "stats",
+					"title": "Breitensportgruppen ",
+					"value": 20
+				},
+				{
+					"_key": "fussball-stat-3",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Kinder/Jugendliche",
+					"value": 250
+				},
+				{
+					"_key": "fussball-stat-4",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Sportler ",
+					"value": 420
+				}
+			],
+			"title": "Fußball"
+		},
+		"syncTags": ["s1:kG7Arw", "s1:bW4l3Q", "s1:g12uZw", "s1:uMx6JQ"],
+		"ms": 12
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09intro%2C%0A%09%09cardImage%2C%0A%09%09heroImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09stats%2C%0A%09%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+department._ref+%3D%3D+%5E._id+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09%09featuredImage%2C%0A%09%09%09icon%2C%0A%09%09%09overviewTitle%2C%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%2C%0A%09%09%7D%2C%0A%09%09%22contactPersons%22%3A+contactPersons%5B%5D-%3E+%7B%0A%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%7D%2C%0A%09%7D%0A&%24slug=%22fussball%22&perspective=published&tag=next-loader.fetch"
+}

@@ -21,7 +21,8 @@ const featuredImage = /* groq */ `featuredImage`;
 const internalLinkTarget = /* groq */ `
   _type,
   "slug": slug.current,
-  "category": categories[0]->slug.current
+  "category": categories[0]->slug.current,
+  "department": department->slug.current
 `;
 
 /**

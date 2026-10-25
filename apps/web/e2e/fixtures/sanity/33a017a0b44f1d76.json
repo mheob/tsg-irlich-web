@@ -1,0 +1,29 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'person' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t\"email\": affiliations[team._ref == $groupId][0].team->email,\n\t\t\"role\":  affiliations[team._ref == $groupId][0].role->title,\n\t\t\"team\":  affiliations[team._ref == $groupId][0].team->title,\n\t\t\"taskDescription\": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n",
+		"result": [
+			{
+				"_id": "d25de2ab-5fd9-441e-a8a2-27538c3305a2",
+				"contactAs": "both",
+				"email": "taekwondo@tsg-irlich.de",
+				"firstName": "Matthias ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Matthias Schneider in Taekwondo-Kleidung vor einer weißen Leinwand. ",
+					"asset": {
+						"_ref": "image-ab8a2404c8e131aff1e7e5a6418193ff31533ba8-1080x1080-webp",
+						"_type": "reference"
+					}
+				},
+				"lastName": "Schneider",
+				"phone": "+49 176 31459886",
+				"role": "Übungsleiter",
+				"taskDescription": "Ich bin verantwortlich für die Organisation von Trainings und Prüfungen, die Betreuung und Weiterentwicklung der Gruppe und fungiere als Bindeglied zwischen Aktiven und Vorstand. Ich fördere die sportliche & persönliche Entwicklung und die Teamdynamik.",
+				"team": "Scorpions"
+			}
+		],
+		"syncTags": ["s1:mWzJLg", "s1:o7Cn/w", "s1:ML93+w"],
+		"ms": 15
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27person%27+%26%26%0A%09%09defined%28affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D%29%0A%09%5D%7Corder%28lastName+asc%29+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09phone%2C%0A%09%09image%2C%0A%09%09contactAs%2C%0A%09%09%22email%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Eemail%2C%0A%09%09%22role%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.role-%3Etitle%2C%0A%09%09%22team%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Etitle%2C%0A%09%09%22taskDescription%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.taskDescription%2C%0A%09%7D%0A&%24groupId=%22group-e6b44dce-48a9-4d0d-b115-84d5b33c1e0b%22&perspective=published&tag=next-loader.fetch"
+}

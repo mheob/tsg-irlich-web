@@ -1,0 +1,308 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'group' &&\n\t\tslug.current == $slug &&\n\t\tdefined(department->slug.current) &&\n\t\tdepartment->slug.current == $department\n\t][0] {\n\t\t_id,\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\t\"isTeamSport\": department->isTeamSport,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n",
+		"result": {
+			"_id": "group-4d6fb5c8-26c1-4c52-8023-fe39e4dbc925",
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "f838807dc360",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "3160090932cc",
+								"_type": "span",
+								"marks": [],
+								"text": "Die "
+							},
+							{
+								"_key": "b6639108e079",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "Funky Diamonds"
+							},
+							{
+								"_key": "ca2d5a9f7545",
+								"_type": "span",
+								"marks": [],
+								"text": " sind die Erwachsenen-Tanzgruppe der TSG Irlich - hier tanzen erfahrene Tänzerinnen und Tänzern ab 18 Jahren. Sie beeindrucken an Karneval nicht nur mit ihren stimmungsvollen Tänzen, sondern auch mit akrobatischen Hebefiguren sowie farbenfrohen Kostümen."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "25452683545b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "030f4f0d7192",
+								"_type": "span",
+								"marks": [],
+								"text": "Neben zahlreichen Auftritten auf regionalen Bühnen unternehmen sie gemeinsam viel und sind auch immer wieder Teil des traditionellen Karnevalsumzuges in Irlich. Vertrauen und Gemeinschaft werden innerhalb der Gruppe sehr großgeschrieben, weshalb viel Wert auf die Gruppendynamik und gemeinsame Ausflüge gelegt wird. Auch wenn in jedem Training sehr viel Konzentration und Fokus aufgebracht werden, kommt der Spaß in der Gruppe absolut nicht zu kurz."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "Die Funky Diamonds in pinken und organgenen Kostümen, von denen einige auf den Schultern stehen, posiert auf Steinstufen mit Herz-Requisiten",
+				"asset": {
+					"_ref": "image-3788f91787dec33b2fe63b0bdb1c0be5d75a88d9-6000x4000-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"description": "Gruppenbild der Funky Diamonds ",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.8181887212716412,
+					"width": 0.9961526779386454,
+					"x": 0.5,
+					"y": 0.5530905133137592
+				}
+			},
+			"images": [
+				{
+					"_key": "235d38418b4b",
+					"_type": "extendedImage",
+					"alt": "Eine Nahaufnahme von ein paar Tänzerinnen der Funky Diamonds in ihren pinken Kostümen, wie sie kleiner Hebefiguren aufbauen ",
+					"asset": {
+						"_ref": "image-87a44808cab61722054a25f76271c8b6d7743423-5712x4284-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.15348802522798943,
+						"left": 0.06420992073638455,
+						"right": 0.02438634620301713,
+						"top": 0.20434884513764595
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6421631296343646,
+						"width": 0.9114037330605983,
+						"x": 0.5199117872666836,
+						"y": 0.5254304099548283
+					}
+				},
+				{
+					"_key": "67ec29df5905",
+					"_type": "extendedImage",
+					"alt": "Ein Teil der Tänzerinnen und Tänzer der Funky Diamonds im Karnevalsumzug in Irlich mit Luftballons und pinken Haarreifen",
+					"asset": {
+						"_ref": "image-be46fb38fc64e0a8d446d8e691ace1ea4408612f-768x1024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.24656922540733642,
+						"left": 0,
+						"right": 0,
+						"top": 0.2815413435566786
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.471889431035985,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.517486059074671
+					}
+				},
+				{
+					"_key": "a745fd9de110",
+					"_type": "extendedImage",
+					"alt": "Alle Tänzerinnen und Tänzer der Funky Diamonds auf einem gemeinsamen Hebefigurenbild auf einer Bühne in ihren pinken und orangenen Kostümen.",
+					"asset": {
+						"_ref": "image-24da35694058359ee52fee9427101b5c41f9841b-5712x4284-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.06271840109094008,
+						"left": 0,
+						"right": 0,
+						"top": 0.1190765362652348
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8182050626438251,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5281790675871474
+					}
+				}
+			],
+			"isTeamSport": false,
+			"meta": {
+				"metaDescription": "Funky Diamonds der TSG Irlich: Erfahrene Showtanzgruppe mit Akrobatik und beeindruckenden Hebefiguren. Gemeinschaft, Auftritte und Karnevalsumzüge inklusive.",
+				"metaTitle": "Funky Diamonds: Showtanz bei der TSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die Funky Diamonds in pinken und organgenen Kostümen, von denen einige auf den Schultern stehen, posiert auf Steinstufen mit Herz-Requisiten",
+					"asset": {
+						"_ref": "image-c1f6a4e16e240edff2eb1325a50adc50d062c75c-1600x1066-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.06139396396912436,
+						"left": 0,
+						"right": 0,
+						"top": 0.03277045411375038
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.9058355819171253,
+						"width": 0.8417548859240358,
+						"x": 0.5,
+						"y": 0.485688245072313
+					}
+				}
+			},
+			"title": "Funky Diamonds",
+			"training": {
+				"trainingDescription": null,
+				"trainingTimes": [
+					{
+						"_key": "24b5f8ce337f",
+						"_type": "trainingTime",
+						"endTime": "22:00",
+						"note": "Die Sommerzeiten gelten von April bis September.",
+						"season": "summer",
+						"startTime": "20:00",
+						"venue": {
+							"_createdAt": "2024-09-20T10:51:19Z",
+							"_id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+							"_rev": "Nik63qLLJXUuVJPKyfgzyq",
+							"_system": {
+								"base": {
+									"id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+									"rev": "y6qAFx3KEt65PvSAGze7lj"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-09-29T12:28:49Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "2d364aa6e545",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "a23c592ffa610",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Turnhalle der Robert-Krups-Schule in Neuwied ist eine großzügige Geräteturnhalle, die Teil der kooperativen Realschule ist. Mit Maßen von 18 x 33 Metern bietet sie ausreichend Platz für vielfältige sportliche Aktivitäten und Veranstaltungen. Die moderne Ausstattung und die großzügige Fläche machen sie zu einem idealen Ort für den Sportunterricht und Vereinssport. Nach der Generalsanierung, die fast 2 Mio. Euro kostete und in einer rekordverdächtigen Bauzeit von nur 16 Monaten abgeschlossen wurde, wurde die Turnhalle im November 2016 wiedereröffnet."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "21",
+								"name": "Turnhalle Robert-Krups-Schule Irlich",
+								"street": "Marienstraße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion",
+								"asset": {
+									"_ref": "image-c6ce126a8971e3f1fada153c0cf6698a8bbbdef2-4000x2250-jpg",
+									"_type": "reference"
+								},
+								"description": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion"
+							},
+							"title": "Turnhalle Robert-Krups-Schule",
+							"type": "hall-2"
+						},
+						"weekday": "tuesday"
+					},
+					{
+						"_key": "03741d0b46cf",
+						"_type": "trainingTime",
+						"endTime": "22:00",
+						"note": "Die Winterzeiten gelten von Oktober bis März.",
+						"season": "winter",
+						"startTime": "20:00",
+						"venue": {
+							"_createdAt": "2024-09-20T10:52:33Z",
+							"_id": "6cfbe736-644b-4819-8b4d-1946aaacd92e",
+							"_rev": "R3E9jQFgtI1iXWhprtj9yR",
+							"_type": "venue",
+							"_updatedAt": "2026-09-29T12:28:49Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "a5a3bea2570c",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "4fe25f442dff0",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Mehrzweckhalle (MZH) neben der Grundschule St. Peter und Paul im Herzen von Irlich ist eine vielseitig nutzbare Halle. Die Geräteturnhalle hat die Maße 15 x 27 Meter und bietet ausreichend Platz für sportliche Aktivitäten und Events. Direkt angrenzend befindet sich ein Foyer, das zusätzlichen Raum für Veranstaltungen bietet."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "5",
+								"name": "Mehrzweckhalle Irlich",
+								"street": "Apostelstraße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Die Mehrzweckhalle an der Grundschule Irlich",
+								"asset": {
+									"_ref": "image-92065e479cf70420aa6a9c8fce88ba4676e7dc26-3000x4000-jpg",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0.14250000000000007,
+									"left": 0,
+									"right": 0,
+									"top": 0.16750000000000007
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.47999999999999954,
+									"width": 1,
+									"x": 0.5,
+									"y": 0.5
+								}
+							},
+							"title": "Mehrzweckhalle Irlich",
+							"type": "hall-1"
+						},
+						"weekday": "tuesday"
+					}
+				]
+			}
+		},
+		"syncTags": ["s1:w2LXFQ", "s1:/Xhdug", "s1:HwW8kg", "s1:vKMQtw"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27group%27+%26%26%0A%09%09slug.current+%3D%3D+%24slug+%26%26%0A%09%09defined%28department-%3Eslug.current%29+%26%26%0A%09%09department-%3Eslug.current+%3D%3D+%24department%0A%09%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09%22isTeamSport%22%3A+department-%3EisTeamSport%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24department=%22tanzen%22&%24slug=%22funky-diamonds%22&perspective=published&tag=next-loader.fetch"
+}

@@ -1,7 +1,7 @@
-import type { PreviewValue } from 'sanity';
-import { describe, expect, it } from 'vite-plus/test';
+import type { PreviewValue, Reference, ValidationContext } from 'sanity';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
-import person from './person';
+import person, { getTeamFilter, validateTeamMatchesDepartment } from './person';
 
 interface PersonSelection {
 	readonly firstName?: string;
@@ -111,23 +111,172 @@ describe('person affiliation preview', () => {
 		expect(result).toStrictEqual({ title: 'Gruppe: Fußball - Rolle: Vorstand Finanzen' });
 	});
 
-	// Regression case: `prepare` interpolates the two selected reference titles straight into a
-	// template literal, so an unset or unresolved reference renders as the literal string
-	// "undefined" in the array item's preview. Both `team` and `role` carry `Rule.required()`, but
-	// Sanity validation gates publishing, not autosave — a freshly added affiliation item shows
-	// "Gruppe: undefined - Rolle: undefined" until both references are picked. Lower severity than
-	// the `spacer`/`group` defects: this one heals as soon as the references are set, whereas those
-	// two leave pre-existing documents permanently stuck. Pinned rather than fixed, since
-	// production code is out of scope here.
-	it('stringifies a missing team as the literal word "undefined"', () => {
-		const result = prepareAffiliation({ role: 'Vorstand Finanzen' });
-
-		expect(result.title).toBe('Gruppe: undefined - Rolle: Vorstand Finanzen');
+	// A board member's affiliation has only a role, since the group and the department are optional.
+	it('shows only the role when there is no team', () => {
+		expect(prepareAffiliation({ role: 'Vorstand Finanzen' })).toStrictEqual({
+			title: 'Rolle: Vorstand Finanzen',
+		});
 	});
 
-	it('stringifies a missing role as the literal word "undefined"', () => {
-		const result = prepareAffiliation({ team: 'Fußball' });
+	it('shows only the team when there is no role yet', () => {
+		expect(prepareAffiliation({ team: 'Fußball' })).toStrictEqual({ title: 'Gruppe: Fußball' });
+	});
 
-		expect(result.title).toBe('Gruppe: Fußball - Rolle: undefined');
+	it('names an affiliation with neither team nor role', () => {
+		expect(prepareAffiliation({})).toStrictEqual({ title: 'Zugehörigkeit ohne Gruppe und Rolle' });
+	});
+});
+
+interface ContextOptions {
+	readonly affiliationDepartment?: string;
+	/** The department of the chosen group; `undefined` when the group has none. */
+	readonly teamDepartment?: string;
+}
+
+// The validation context of the team of an affiliation; the client answers with `teamDepartment`.
+function contextFor({ affiliationDepartment, teamDepartment }: ContextOptions): {
+	context: ValidationContext;
+	fetch: ReturnType<typeof vi.fn>;
+	getClient: ReturnType<typeof vi.fn>;
+} {
+	const fetch = vi.fn().mockResolvedValue(teamDepartment);
+	const getClient = vi.fn(() => ({ fetch }));
+	const context = {
+		getClient,
+		parent: {
+			department: affiliationDepartment ? { _ref: affiliationDepartment } : undefined,
+		},
+	} as unknown as ValidationContext;
+	return { context, fetch, getClient };
+}
+
+function getAffiliationField(name: string): Record<string, unknown> {
+	const affiliations = (person as unknown as PersonSchema).fields.find(
+		(field) => field.name === 'affiliations',
+	);
+	const field = (
+		affiliations?.of?.[0] as unknown as { fields: Record<string, unknown>[] } | undefined
+	)?.fields.find((candidate) => candidate.name === name);
+	if (!field) {
+		throw new Error(`Expected the affiliation to declare a "${name}" field.`);
+	}
+	return field;
+}
+
+const GROUP_REFERENCE: Reference = { _ref: 'g1', _type: 'reference' };
+
+describe('person affiliation fields', () => {
+	it('references the department document and does not require it', () => {
+		const field = getAffiliationField('department');
+
+		expect(field).toMatchObject({ to: [{ type: 'department' }], type: 'reference' });
+		expect(field.validation).toBeUndefined();
+	});
+
+	it('references the group document, filtered by department', () => {
+		expect(getAffiliationField('team')).toMatchObject({
+			options: { filter: getTeamFilter },
+			to: [{ type: 'group' }],
+			type: 'reference',
+		});
+	});
+
+	// A mismatch must not block publishing: the department is optional and the editor may mean it.
+	it('only warns when the group does not match the department', () => {
+		const validation = getAffiliationField('team').validation as (rule: {
+			custom: (fn: unknown) => { warning: () => unknown };
+		}) => unknown;
+		const rule = { custom: (fn: unknown) => ({ warning: () => fn }) };
+
+		expect(validation(rule)).toBe(validateTeamMatchesDepartment);
+	});
+
+	it('keeps the role required', () => {
+		const role = getAffiliationField('role');
+
+		expect(role).toMatchObject({ to: [{ type: 'role' }], type: 'reference' });
+		expect(role.validation).toBeTypeOf('function');
+	});
+});
+
+describe('person affiliation team filter', () => {
+	it('limits the groups to the chosen department', () => {
+		expect(getTeamFilter({ parent: { department: { _ref: 'department-tanzen' } } })).toStrictEqual({
+			filter: 'department._ref == $departmentId',
+			params: { departmentId: 'department-tanzen' },
+		});
+	});
+
+	it('offers every group without a department', () => {
+		expect(getTeamFilter({ parent: {} })).toStrictEqual({});
+	});
+
+	it('offers every group when the affiliation is not known yet', () => {
+		expect(getTeamFilter({ parent: undefined })).toStrictEqual({});
+	});
+});
+
+describe('person affiliation team validation', () => {
+	it('warns when the group belongs to another department', async () => {
+		const { context } = contextFor({
+			affiliationDepartment: 'department-kurse',
+			teamDepartment: 'department-fussball',
+		});
+
+		await expect(validateTeamMatchesDepartment(GROUP_REFERENCE, context)).resolves.toBe(
+			'Die Gruppe gehört nicht zur gewählten Abteilung.',
+		);
+	});
+
+	it('accepts a group of the chosen department', async () => {
+		const { context } = contextFor({
+			affiliationDepartment: 'department-fussball',
+			teamDepartment: 'department-fussball',
+		});
+
+		await expect(validateTeamMatchesDepartment(GROUP_REFERENCE, context)).resolves.toBe(true);
+	});
+
+	it('reads the department of the chosen group from the group document', async () => {
+		const { context, fetch, getClient } = contextFor({
+			affiliationDepartment: 'department-fussball',
+			teamDepartment: 'department-fussball',
+		});
+
+		await validateTeamMatchesDepartment(GROUP_REFERENCE, context);
+
+		expect(getClient).toHaveBeenCalledWith({ apiVersion: '2026-10-01' });
+		expect(fetch).toHaveBeenCalledExactlyOnceWith('*[_id == $id][0].department._ref', {
+			id: 'g1',
+		});
+	});
+
+	it('warns about a group that has no department at all', async () => {
+		const { context } = contextFor({
+			affiliationDepartment: 'department-fussball',
+			teamDepartment: undefined,
+		});
+
+		await expect(validateTeamMatchesDepartment(GROUP_REFERENCE, context)).resolves.toBe(
+			'Die Gruppe gehört nicht zur gewählten Abteilung.',
+		);
+	});
+
+	it('accepts an affiliation with only a role', async () => {
+		const { context, fetch } = contextFor({ affiliationDepartment: undefined });
+
+		await expect(validateTeamMatchesDepartment(undefined, context)).resolves.toBe(true);
+		expect(fetch).not.toHaveBeenCalled();
+	});
+
+	// Without a department there is nothing the group could contradict, and the filter offers every group.
+	it('accepts a group while no department is chosen', async () => {
+		const { context, fetch } = contextFor({
+			affiliationDepartment: undefined,
+			teamDepartment: 'department-fussball',
+		});
+
+		await expect(validateTeamMatchesDepartment(GROUP_REFERENCE, context)).resolves.toBe(true);
+		expect(fetch).not.toHaveBeenCalled();
 	});
 });

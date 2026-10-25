@@ -1,0 +1,243 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'group' &&\n\t\tslug.current == $slug &&\n\t\tdefined(department->slug.current) &&\n\t\tdepartment->slug.current == $department\n\t][0] {\n\t\t_id,\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\t\"isTeamSport\": department->isTeamSport,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n",
+		"result": {
+			"_id": "group-99a99cb7-a09c-4e81-9ace-453367c48b1f",
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "aa2fd36dd47b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "0c714b5a7a6a",
+								"_type": "span",
+								"marks": [],
+								"text": "Unser Motto: Egal in welchem Alter, wichtig ist, einfach fit zu bleiben oder wieder fit zu werden. Mit einer Altersspanne unserer Teilnehmer von 18 bis 80 Jahren sind die Übungsstunden natürlich für jede Altersgruppe gedacht. Egal ob Gymnastik, kleine Läufe oder Ballspiele: Für jeden ist immer etwas dabei. Jeder fordert sich dabei, wie er will und kann."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "77831f12e61a",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "0c714b5a7a6a",
+								"_type": "span",
+								"marks": [],
+								"text": "Das Programm wird immer mit Abwechslung gestaltet und auch der gesellschaftliche Teil bleibt hier nicht auf der Strecke. Oft werden neben den Übungsstunden auch zusätzlich Wanderungen unternommen oder andere kulturelle und fitnessfördernde Ausflüge in der näheren Heimat organisiert."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "58156b7fb43b",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "0c714b5a7a6a",
+								"_type": "span",
+								"marks": [],
+								"text": "Einmal jährlich führen wir darüber hinaus eine kleine 3-Tagestour für Interessierte durch. Bisher hatten wir sehr viel Spaß in Städten wie München, Berlin, Hamburg, aber auch Nordholland, das Münsterland und Franken haben wir schon besucht."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "f441a1422b74",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "0c714b5a7a6a",
+								"_type": "span",
+								"marks": [],
+								"text": "Wir freuen uns ganz herzlich über Neuzugänge jeden Alters. Bitte habt keine Angst oder Scheu. Bei uns ist – inklusive Übungsleiter – keiner zu 100% fit. Wichtig ist einfach, dass man etwas für seine persönliche Fitness tut und versucht, seinen Fitnesslevel zu halten oder ihn vielleicht sogar zu verbessern. Für einen Anfang ist es nie zu spät."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "Mitglieder der Jedermänner in blauen Team-Shirts posieren für ein Gruppenfoto in einer Turnhalle, mit einem Ball.",
+				"asset": {
+					"_ref": "image-94a0bb2411769cb8803d33fa3120be76f8abefd8-4032x3024-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0.08780789226966676,
+					"left": 0.16861895934543594,
+					"right": 0.14536723344413194,
+					"top": 0.27340620472172505
+				},
+				"description": "Gruppenbild der Abteilung Jedermänner",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.4371217932327623,
+					"width": 0.5070793914599846,
+					"x": 0.511625862950652,
+					"y": 0.602872240688656
+				}
+			},
+			"images": [
+				{
+					"_key": "eece5004849e",
+					"_type": "extendedImage",
+					"alt": "Die Jedermänner in einheitlichen blauen Shirts auf bleuen Turnmatten wie sie Liegestütze machen.",
+					"asset": {
+						"_ref": "image-4e7a492e0bc0aa3278471ac6abee1712e32ea16f-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0.22776570357112425
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5634002386431433,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.6138828517855621
+					}
+				},
+				{
+					"_key": "9315a77ebc2f",
+					"_type": "extendedImage",
+					"alt": "Jedermänner in blaune Shirts bei einer Partie Basketball. Ein Sportler setzt zum Sprung und Wurf des balles an.",
+					"asset": {
+						"_ref": "image-34c75c6ab3c58dbcb2a03d1c8d6c425deb77ba9b-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0.04505454700417626
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.9549454529958238,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.522527273502088
+					}
+				},
+				{
+					"_key": "1cd1dc25de5d",
+					"_type": "extendedImage",
+					"alt": "Jedermänner beim einlaufen bevor die Sportpartie startet.",
+					"asset": {
+						"_ref": "image-088a94b2e45493e383a5815b7b75b3b2785e8eee-6000x4000-jpg",
+						"_type": "reference"
+					}
+				}
+			],
+			"isTeamSport": false,
+			"meta": {
+				"metaDescription": "Jedermanns-Fitness TSG Irlich: Sport für alle Altersklassen von 18 bis 80. Gymnastik, Ballspiele, Ausflüge und Gemeinschaft – jeder fordert sich, wie er will.",
+				"metaTitle": "Jedermänner bei der TSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Mitglieder der Jedermänner in blauen Team-Shirts posieren für ein Gruppenfoto in einer Turnhalle, mit einem Ball.",
+					"asset": {
+						"_ref": "image-94a0bb2411769cb8803d33fa3120be76f8abefd8-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.10355407824085912,
+						"left": 0.16328144975709538,
+						"right": 0.11438091281002301,
+						"top": 0.268771840109094
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4773075939657377,
+						"width": 0.5723759907951931,
+						"x": 0.5244502684735362,
+						"y": 0.6216334270859969
+					}
+				}
+			},
+			"title": "Jedermänner",
+			"training": {
+				"trainingDescription": null,
+				"trainingTimes": [
+					{
+						"_key": "38903870af7f",
+						"_type": "trainingTime",
+						"endTime": "22:00",
+						"season": "yearly",
+						"startTime": "20:00",
+						"venue": {
+							"_createdAt": "2024-09-20T10:51:19Z",
+							"_id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+							"_rev": "Nik63qLLJXUuVJPKyfgzyq",
+							"_system": {
+								"base": {
+									"id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+									"rev": "y6qAFx3KEt65PvSAGze7lj"
+								}
+							},
+							"_type": "venue",
+							"_updatedAt": "2026-09-29T12:28:49Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "2d364aa6e545",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "a23c592ffa610",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Turnhalle der Robert-Krups-Schule in Neuwied ist eine großzügige Geräteturnhalle, die Teil der kooperativen Realschule ist. Mit Maßen von 18 x 33 Metern bietet sie ausreichend Platz für vielfältige sportliche Aktivitäten und Veranstaltungen. Die moderne Ausstattung und die großzügige Fläche machen sie zu einem idealen Ort für den Sportunterricht und Vereinssport. Nach der Generalsanierung, die fast 2 Mio. Euro kostete und in einer rekordverdächtigen Bauzeit von nur 16 Monaten abgeschlossen wurde, wurde die Turnhalle im November 2016 wiedereröffnet."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "21",
+								"name": "Turnhalle Robert-Krups-Schule Irlich",
+								"street": "Marienstraße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion",
+								"asset": {
+									"_ref": "image-c6ce126a8971e3f1fada153c0cf6698a8bbbdef2-4000x2250-jpg",
+									"_type": "reference"
+								},
+								"description": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion"
+							},
+							"title": "Turnhalle Robert-Krups-Schule",
+							"type": "hall-2"
+						},
+						"weekday": "friday"
+					}
+				]
+			}
+		},
+		"syncTags": ["s1:vKMQtw", "s1:GMAT3w", "s1:3mbpCw"],
+		"ms": 8
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27group%27+%26%26%0A%09%09slug.current+%3D%3D+%24slug+%26%26%0A%09%09defined%28department-%3Eslug.current%29+%26%26%0A%09%09department-%3Eslug.current+%3D%3D+%24department%0A%09%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09%22isTeamSport%22%3A+department-%3EisTeamSport%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24department=%22weitere-sportarten%22&%24slug=%22jedermaenner%22&perspective=published&tag=next-loader.fetch"
+}

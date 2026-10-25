@@ -2,18 +2,19 @@ import type { MetadataRoute } from 'next';
 
 import { client } from '@/lib/sanity/client';
 import {
+	sitemapDepartmentsQuery,
 	sitemapEchoIssuesQuery,
 	sitemapGroupsQuery,
 	sitemapNewsArticlesQuery,
 	sitemapNewsCategoriesQuery,
 } from '@/lib/sanity/queries/sitemap';
 import type {
+	SitemapDepartmentsQueryResult,
 	SitemapEchoIssuesQueryResult,
 	SitemapGroupsQueryResult,
 	SitemapNewsArticlesQueryResult,
 	SitemapNewsCategoriesQueryResult,
 } from '@/types/sanity.types';
-import { groupSections } from '@/utils/groups';
 import { ECHO_OVERVIEW_PATH, getEchoIssuePath, getInternalHref } from '@/utils/links';
 import { getBaseUrl } from '@/utils/url';
 
@@ -21,9 +22,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const baseUrl = getBaseUrl();
 
 	// Fetch dynamic content from Sanity
-	const [newsArticles, newsCategories, groups, echoIssues] = await Promise.all([
+	const [newsArticles, newsCategories, departments, groups, echoIssues] = await Promise.all([
 		client.fetch<SitemapNewsArticlesQueryResult>(sitemapNewsArticlesQuery),
 		client.fetch<SitemapNewsCategoriesQueryResult>(sitemapNewsCategoriesQuery),
+		client.fetch<SitemapDepartmentsQueryResult>(sitemapDepartmentsQuery),
 		client.fetch<SitemapGroupsQueryResult>(sitemapGroupsQuery),
 		client.fetch<SitemapEchoIssuesQueryResult>(sitemapEchoIssuesQuery),
 	]);
@@ -87,12 +89,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		},
 	];
 
-	// Group category pages (e.g., /angebot/fussball)
-	const groupCategoryPages: MetadataRoute.Sitemap = groupSections.map((section) => ({
-		changeFrequency: 'weekly',
-		priority: 0.7,
-		url: `${baseUrl}${section.slug}`,
-	}));
+	// Department pages (e.g., /angebot/fussball)
+	const departmentPages: MetadataRoute.Sitemap = departments.flatMap((department) => {
+		const href = getInternalHref({ _type: 'department', slug: department.slug });
+		if (!href) {
+			return [];
+		}
+
+		return [
+			{
+				changeFrequency: 'weekly' as const,
+				lastModified: new Date(department.lastModified),
+				priority: 0.7,
+				url: `${baseUrl}${href}`,
+			},
+		];
+	});
 
 	// Individual group pages (e.g., /angebot/fussball/herren-1)
 	const groupPages: MetadataRoute.Sitemap = groups.flatMap((group) => {
@@ -141,7 +153,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	return [
 		...staticPages,
-		...groupCategoryPages,
+		...departmentPages,
 		...groupPages,
 		...newsCategoryPages,
 		...newsArticlePages,

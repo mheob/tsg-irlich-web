@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 import sitemap from '@/app/sitemap';
 import type { client } from '@/lib/sanity/client';
 import {
+	sitemapDepartmentsQuery,
 	sitemapEchoIssuesQuery,
 	sitemapGroupsQuery,
 	sitemapNewsArticlesQuery,
@@ -12,7 +13,7 @@ import {
 import { clientFetchMock } from '../../test-utils/sanity-client-mock';
 
 // The real client validates `NEXT_PUBLIC_SANITY_*` at import time and would talk to the content
-// lake; only the three query results matter here. The cast names the one method the sitemap uses.
+// lake; only the query results matter here. The cast names the one method the sitemap uses.
 vi.mock(import('@/lib/sanity/client'), () => ({
 	client: { fetch: vi.fn() } as unknown as typeof client,
 }));
@@ -25,11 +26,18 @@ const ARTICLE = {
 	slug: 'sommerfest',
 };
 const CATEGORY = { lastModified: '2026-02-01T10:00:00Z', slug: 'vereinsleben' };
-const GROUP = { _type: 'group.soccer', lastModified: '2026-01-01T10:00:00Z', slug: 'herren-1' };
+const DEPARTMENT = { lastModified: '2026-04-01T10:00:00Z', slug: 'fussball' };
+const GROUP = {
+	_type: 'group',
+	department: 'fussball',
+	lastModified: '2026-01-01T10:00:00Z',
+	slug: 'herren-1',
+};
 
 interface SanityResults {
 	articles?: unknown[];
 	categories?: unknown[];
+	departments?: unknown[];
 	echoIssues?: unknown[];
 	groups?: unknown[];
 }
@@ -37,15 +45,17 @@ interface SanityResults {
 function mockSanity({
 	articles = [],
 	categories = [],
+	departments = [],
 	echoIssues = [],
 	groups = [],
 }: SanityResults): void {
-	// The three queries run inside one `Promise.all`, so keying on the query keeps the fixtures
+	// The queries run inside one `Promise.all`, so keying on the query keeps the fixtures
 	// readable and independent of the order they resolve in.
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedFetch.mockImplementation(async (query: string) => {
 		if (query === sitemapNewsArticlesQuery) return articles;
 		if (query === sitemapNewsCategoriesQuery) return categories;
+		if (query === sitemapDepartmentsQuery) return departments;
 		if (query === sitemapGroupsQuery) return groups;
 		if (query === sitemapEchoIssuesQuery) return echoIssues;
 		throw new Error(`unexpected query: ${query}`);
@@ -76,12 +86,6 @@ describe(sitemap, () => {
 			'http://localhost:3000/datenschutz',
 			'http://localhost:3000/impressum',
 			'http://localhost:3000/barrierefreiheit',
-			'http://localhost:3000/angebot/fussball',
-			'http://localhost:3000/angebot/kinderturnen',
-			'http://localhost:3000/angebot/kurse',
-			'http://localhost:3000/angebot/taekwondo',
-			'http://localhost:3000/angebot/tanzen',
-			'http://localhost:3000/angebot/weitere-sportarten',
 		]);
 	});
 
@@ -97,16 +101,52 @@ describe(sitemap, () => {
 		});
 	});
 
-	it('puts a group below the department its type belongs to', async () => {
+	it('lists every department below the offer page', async () => {
+		const entries = await urls({
+			departments: [
+				DEPARTMENT,
+				{ lastModified: '2026-04-02T10:00:00Z', slug: 'weitere-sportarten' },
+			],
+		});
+
+		expect(entries.filter((url) => url.startsWith('http://localhost:3000/angebot/'))).toStrictEqual(
+			[
+				'http://localhost:3000/angebot/fussball',
+				'http://localhost:3000/angebot/weitere-sportarten',
+			],
+		);
+	});
+
+	it('drops a department without a slug', async () => {
+		const entries = await urls({ departments: [{ ...DEPARTMENT, slug: null }] });
+
+		expect(entries.some((url) => url.startsWith('http://localhost:3000/angebot/'))).toBe(false);
+	});
+
+	it('carries the last modification date of a department as a date', async () => {
+		mockSanity({ departments: [DEPARTMENT] });
+
+		const entries = await sitemap();
+		const entry = entries.find((candidate) => candidate.url.endsWith('/angebot/fussball'));
+
+		expect(entry?.lastModified).toStrictEqual(new Date('2026-04-01T10:00:00Z'));
+	});
+
+	it('puts a group below its department', async () => {
 		const entries = await urls({ groups: [GROUP] });
 
 		expect(entries).toContain('http://localhost:3000/angebot/fussball/herren-1');
 	});
 
-	it('drops a group whose department has no page', async () => {
-		const entries = await urls({ groups: [{ ...GROUP, _type: 'group.administration' }] });
+	it.each([
+		['department', { department: null }],
+		['slug', { slug: null }],
+	])('drops a group without a %s', async (_name, overrides) => {
+		const entries = await urls({ groups: [{ ...GROUP, ...overrides }] });
 
-		expect(entries.some((url) => url.includes('herren-1'))).toBe(false);
+		expect(entries.filter((url) => url.startsWith('http://localhost:3000/angebot/'))).toStrictEqual(
+			[],
+		);
 	});
 
 	it('carries the last modification date of a group as a date', async () => {
@@ -172,9 +212,15 @@ describe(sitemap, () => {
 	});
 
 	it('orders dynamic entries after the static ones', async () => {
-		const entries = await urls({ articles: [ARTICLE], categories: [CATEGORY], groups: [GROUP] });
+		const entries = await urls({
+			articles: [ARTICLE],
+			categories: [CATEGORY],
+			departments: [DEPARTMENT],
+			groups: [GROUP],
+		});
 
-		expect(entries.slice(-3)).toStrictEqual([
+		expect(entries.slice(-4)).toStrictEqual([
+			'http://localhost:3000/angebot/fussball',
 			'http://localhost:3000/angebot/fussball/herren-1',
 			'http://localhost:3000/news/vereinsleben',
 			'http://localhost:3000/news/vereinsleben/sommerfest',
