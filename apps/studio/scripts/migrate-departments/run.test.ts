@@ -119,6 +119,7 @@ describe('a dry run', () => {
 		const report = await runMigration(store, { dryRun: true });
 
 		expect(report).toMatchObject({
+			changed: new Set([...REFERRERS, ...LEGACY_PERSONS.map(({ _id }) => _id)]).size,
 			deleted: 2,
 			departments: 6,
 			groups: 11 + 4 + 4 + 3 + 4 + 6,
@@ -322,6 +323,7 @@ describe('a real run', () => {
 
 		expect(writesOf(store)).toStrictEqual({});
 		expect(report).toMatchObject({
+			changed: 0,
 			deleted: 0,
 			departments: 0,
 			groups: 0,
@@ -385,6 +387,36 @@ describe('the problems of a run', () => {
 			'Person person-x: unbekannte Abteilung „massSports“ in der Zugehörigkeit x1, nicht umgestellt.',
 		);
 		expect(report.persons).toBe(0);
+	});
+
+	// Neither migrated nor reported would leave the department strings behind unnoticed.
+	it.each([
+		['a dry run', true],
+		['a real run', false],
+	])('report affiliations the migration cannot read in %s', async (_name, dryRun) => {
+		const { store } = createFakeStore([
+			{ _id: 'person-a', _type: 'person', affiliations: [{ department: 'soccer' }] },
+			{
+				_id: 'person-b',
+				_type: 'person',
+				affiliations: [null, { _key: 'b1', department: 'soccer' }],
+			},
+			{ _id: 'person-c', _type: 'person', affiliations: { _key: 'c1', department: 'soccer' } },
+			{ _id: 'person-d', _type: 'person', affiliations: [] },
+			{ _id: 'person-e', _type: 'person', affiliations: null },
+			{ _id: 'person-f', _type: 'person' },
+		]);
+
+		const report = await runMigration(store, { dryRun });
+
+		expect(report.problems).toStrictEqual(
+			['person-a', 'person-b', 'person-c'].map(
+				(id) =>
+					`Person ${id}: Die Zugehörigkeiten haben nicht die erwartete Form (Liste von Objekten mit _key), nicht umgestellt.`,
+			),
+		);
+		expect(report).toMatchObject({ changed: 0, persons: 0 });
+		expect(store.patchDocument).not.toHaveBeenCalled();
 	});
 
 	// A draft the current studio creates has no department until the editor picks one.
@@ -531,6 +563,64 @@ describe('the groups left from 2024', () => {
 	});
 });
 
+describe('an orphaned group that references a legacy group', () => {
+	/** A 2024 group, published and draft, that points at a group the migration moves. */
+	const orphans: FakeDocument[] = ['old-3-mannschaft', 'drafts.old-3-mannschaft'].map((_id) => ({
+		_id,
+		_type: 'group',
+		department: 'soccer',
+		team: ref('soccer-mannschaft-1'),
+		title: '3. Mannschaft',
+	}));
+
+	// Step 3 deletes it, so a patch with `ifRevisionID` in step 5 would abort the real run.
+	it('is deleted in step 3 and never patched', async () => {
+		const { lake, store } = createFakeStore(
+			[...createProductionFixture(), ...orphans],
+			CONTACT_PERSON_IDS,
+		);
+
+		const report = await runMigration(store, { dryRun: false });
+
+		expect(orphans.filter(({ _id }) => lake.has(_id))).toStrictEqual([]);
+		expect(store.patchDocument.mock.calls.map(([id]) => id)).not.toContain('old-3-mannschaft');
+		expect(store.patchDocument.mock.calls.map(([id]) => id)).not.toContain(
+			'drafts.old-3-mannschaft',
+		);
+		expect(report).toMatchObject({ changed: 5, rewritten: REFERRERS.length });
+		expect(report.problems).toStrictEqual([]);
+	});
+
+	it('gives a dry run the same report as a real run', async () => {
+		const documents = [...createProductionFixture(), ...orphans];
+		const dry = createFakeStore(documents, CONTACT_PERSON_IDS);
+		const real = createFakeStore(documents, CONTACT_PERSON_IDS);
+
+		const dryReport = await runMigration(dry.store, { dryRun: true });
+		const realReport = await runMigration(real.store, { dryRun: false });
+
+		expect(dryReport.problems).toStrictEqual([]);
+		expect(dryReport).toStrictEqual(realReport);
+	});
+
+	// It exists afterwards, so its reference to the old group has to move like every other one.
+	it('is still patched while something references it and it stays', async () => {
+		const { lake, store } = createFakeStore([
+			legacyGroup('group.soccer', 'mannschaft-1'),
+			orphans[0],
+			{ _id: 'news-9', _type: 'news.article', team: ref('old-3-mannschaft') },
+		]);
+
+		const report = await runMigration(store, { dryRun: false });
+
+		expect(lake.get('old-3-mannschaft')?.team).toStrictEqual(ref('group-soccer-mannschaft-1'));
+		expect(report.problems).toContain(
+			'Die alte Gruppe old-3-mannschaft ohne Abteilungsverweis bleibt bestehen, weil noch news-9 auf sie verweist.',
+		);
+		expect(report.rewritten).toBe(1);
+	});
+});
+
 describe('the release versions', () => {
 	const versions = [
 		{ ...legacyGroup('group.soccer', 'mannschaft-1'), _id: 'versions.r1.soccer-mannschaft-1' },
@@ -589,6 +679,7 @@ describe('the images of a dry run', () => {
 
 describe('the summary of a run', () => {
 	const report = {
+		changed: 50,
 		deleted: 2,
 		departments: 6,
 		groups: 32,
@@ -608,6 +699,7 @@ describe('the summary of a run', () => {
 			'  Gruppen unter neuer ID angelegt: 32',
 			'  Dokumente mit umgeschriebenen Verweisen: 42',
 			'  Personen angepasst: 42',
+			'  Dokumente geändert: 50',
 			'  Gruppen des alten Typs gelöscht: 32',
 			'  Administration-Gruppen gelöscht: 2',
 			'Pfade nach der Migration (2):',

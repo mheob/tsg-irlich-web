@@ -108,4 +108,4 @@ function isAffiliationList(value: unknown): value is Affiliation[] {
 	);
 }
 
-export { isAffiliationList, referencesId, rewriteDocumentReferences, rewriteReferences };
+export { isAffiliationList, isRecord, referencesId, rewriteDocumentReferences, rewriteReferences };

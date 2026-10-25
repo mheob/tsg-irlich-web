@@ -333,6 +333,24 @@ function affiliationsOf(document: Readonly<Record<string, unknown>>): Affiliatio
 }
 
 /**
+ * Finds a person whose affiliations are set but not in the shape the studio stores (see
+ * `isAffiliationList`). The migration converts none of its department strings and cannot tell
+ * which ones it does not know, so the person is reported instead of being skipped silently.
+ *
+ * @param document - The document as read.
+ * @returns One problem for such a person, none for any other document.
+ */
+function findUnreadableAffiliations(document: Readonly<Record<string, unknown>>): string[] {
+	const { _id, _type, affiliations } = document;
+	const isSet = affiliations !== undefined && affiliations !== null;
+	return _type === 'person' && isSet && !isAffiliationList(affiliations)
+		? [
+				`Person ${String(_id)}: Die Zugehörigkeiten haben nicht die erwartete Form (Liste von Objekten mit _key), nicht umgestellt.`,
+			]
+		: [];
+}
+
+/**
  * Finds every department string the migration does not know in a person.
  *
  * @param document - The document after the migration.
@@ -388,17 +406,20 @@ function migrateDocument(
 
 /**
  * Every document step 5 looks at: each person, and each document that references a legacy group.
- * A referrer is read whole, so it replaces the partial person of the same id.
+ * A referrer is read whole, so it replaces the partial person of the same id. A document step 3
+ * deleted is left out: a patch would hit a document that is gone, and the dry run, which deletes
+ * nothing, would count a change a real run never makes.
  *
  * @param snapshot - The dataset before the run.
+ * @param deletedIds - The ids step 3 deleted, or in a dry run would delete.
  * @returns The documents, each once.
  */
-function collectCandidates(snapshot: Snapshot): RawDocument[] {
+function collectCandidates(snapshot: Snapshot, deletedIds: ReadonlySet<string>): RawDocument[] {
 	const byId = new Map<string, RawDocument>();
 	for (const document of [...snapshot.persons, ...snapshot.referrers]) {
 		byId.set(document._id, document);
 	}
-	return [...byId.values()];
+	return [...byId.values()].filter(({ _id }) => !deletedIds.has(_id));
 }
 
 /**
@@ -410,6 +431,7 @@ function collectCandidates(snapshot: Snapshot): RawDocument[] {
 function countChanges(report: MigrationReport, migrated: MigratedDocument): void {
 	report.persons += migrated.affiliationsMigrated ? 1 : 0;
 	report.rewritten += migrated.referencesRewritten ? 1 : 0;
+	report.changed += Object.keys(migrated.fields).length > 0 ? 1 : 0;
 }
 
 /**
@@ -419,16 +441,21 @@ function countChanges(report: MigrationReport, migrated: MigratedDocument): void
  *
  * @param run - The store, the mode and the report.
  * @param snapshot - The dataset before the run.
+ * @param deletedIds - The ids step 3 deleted, or in a dry run would delete; they are not patched.
  * @returns Every patched document as it is after the patch, by id.
  */
 async function rewriteDocuments(
 	run: MigrationRun,
 	snapshot: Snapshot,
+	deletedIds: ReadonlySet<string>,
 ): Promise<Map<string, Record<string, unknown>>> {
 	const afterById = new Map<string, Record<string, unknown>>();
-	for (const document of collectCandidates(snapshot)) {
+	for (const document of collectCandidates(snapshot, deletedIds)) {
 		const migrated = migrateDocument(document, snapshot.newIdByLegacy);
-		run.report.problems.push(...findUnknownDepartments(migrated.after));
+		run.report.problems.push(
+			...findUnreadableAffiliations(document),
+			...findUnknownDepartments(migrated.after),
+		);
 		if (Object.keys(migrated.fields).length > 0) {
 			if (!run.dryRun) {
 				// oxlint-disable-next-line no-await-in-loop -- one patch at a time
@@ -442,24 +469,28 @@ async function rewriteDocuments(
 }
 
 /**
- * Who still points at a document once step 5 is through: every referrer, unless its patched
- * version no longer references the id. In a real run the patched documents are gone from the
- * referrers already; in a dry run the patched versions stand in for the patches.
+ * Who still points at a document once step 5 is through: every referrer, unless step 3 deleted it
+ * or its patched version no longer references the id. In a real run the deleted documents are gone
+ * from the referrers already and the patched ones show their new references; in a dry run the
+ * deleted ids and the patched versions stand in for the writes.
  *
  * @param store - The Sanity side.
  * @param id - The published id of the document to delete.
- * @param afterById - The documents step 5 patched, as they are after the patch.
+ * @param aftermath - What steps 3 and 5 did to the documents that may reference it.
  * @returns The ids of the documents in the way of the deletion.
  */
 async function findRemainingReferrers(
 	store: MigrationStore,
 	id: string,
-	afterById: ReadonlyMap<string, Record<string, unknown>>,
+	aftermath: Aftermath,
 ): Promise<string[]> {
 	const referrers = await store.fetchReferrers(id);
 	return referrers
 		.filter(({ _id }) => {
-			const after = afterById.get(_id);
+			if (aftermath.deletedIds.has(_id)) {
+				return false;
+			}
+			const after = aftermath.afterById.get(_id);
 			return after === undefined || referencesId(after, id);
 		})
 		.map(({ _id }) => _id);
@@ -471,12 +502,12 @@ async function findRemainingReferrers(
  *
  * @param run - The store, the mode and the report.
  * @param snapshot - The dataset before the run.
- * @param afterById - The documents step 5 patched, as they are after the patch.
+ * @param aftermath - What steps 3 and 5 did to the documents that may reference a group.
  */
 async function deleteLegacyGroups(
 	run: MigrationRun,
 	snapshot: Snapshot,
-	afterById: ReadonlyMap<string, Record<string, unknown>>,
+	aftermath: Aftermath,
 ): Promise<void> {
 	const moved = migratableGroups(snapshot.legacyGroups).map(({ group }) => group);
 	const deleted = await deleteUnreferenced(
@@ -488,7 +519,7 @@ async function deleteLegacyGroups(
 		{
 			describe: (id, referrers) =>
 				`Die Gruppe ${id} (alter Typ) bleibt bestehen, weil noch ${referrers.join(', ')} auf sie verweist.`,
-			referrersOf: async (id) => findRemainingReferrers(run.store, id, afterById),
+			referrersOf: async (id) => findRemainingReferrers(run.store, id, aftermath),
 		},
 	);
 	run.report.legacyDeleted = deleted.size;
@@ -499,12 +530,12 @@ async function deleteLegacyGroups(
  *
  * @param run - The store, the mode and the report.
  * @param legacyGroups - Every `group.<x>` document, published and draft.
- * @param afterById - The documents step 5 patched, as they are after the patch.
+ * @param aftermath - What steps 3 and 5 did to the documents that may reference a group.
  */
 async function deleteAdminGroups(
 	run: MigrationRun,
 	legacyGroups: readonly LegacyGroupDocument[],
-	afterById: ReadonlyMap<string, Record<string, unknown>>,
+	aftermath: Aftermath,
 ): Promise<void> {
 	const deleted = await deleteUnreferenced(
 		run,
@@ -512,7 +543,7 @@ async function deleteAdminGroups(
 		{
 			describe: (id, referrers) =>
 				`Die Administration-Gruppe ${id} bleibt bestehen, weil noch ${referrers.join(', ')} auf sie verweist.`,
-			referrersOf: async (id) => findRemainingReferrers(run.store, id, afterById),
+			referrersOf: async (id) => findRemainingReferrers(run.store, id, aftermath),
 		},
 	);
 	run.report.deleted = deleted.size;
@@ -544,9 +575,12 @@ async function runSteps(run: MigrationRun, snapshot: Snapshot): Promise<GroupSum
 	await createDepartments(run, snapshot);
 	const deletedGroups = await deleteOrphanedGroups(run, snapshot.groups);
 	await createGroups(run, snapshot);
-	const afterById = await rewriteDocuments(run, snapshot);
-	await deleteLegacyGroups(run, snapshot, afterById);
-	await deleteAdminGroups(run, snapshot.legacyGroups, afterById);
+	const aftermath: Aftermath = {
+		afterById: await rewriteDocuments(run, snapshot, deletedGroups),
+		deletedIds: deletedGroups,
+	};
+	await deleteLegacyGroups(run, snapshot, aftermath);
+	await deleteAdminGroups(run, snapshot.legacyGroups, aftermath);
 	await removeGroupsPageStats(run, snapshot.stats);
 	return snapshot.groups.filter(({ _id }) => !deletedGroups.has(_id));
 }
@@ -568,6 +602,7 @@ async function runMigration(
 	const run: MigrationRun = {
 		dryRun: options.dryRun,
 		report: {
+			changed: 0,
 			deleted: 0,
 			departments: 0,
 			groups: 0,
@@ -606,6 +641,7 @@ function summarize(
 		`  Gruppen unter neuer ID angelegt: ${report.groups}`,
 		`  Dokumente mit umgeschriebenen Verweisen: ${report.rewritten}`,
 		`  Personen angepasst: ${report.persons}`,
+		`  Dokumente geändert: ${report.changed}`,
 		`  Gruppen des alten Typs gelöscht: ${report.legacyDeleted}`,
 		`  Administration-Gruppen gelöscht: ${report.deleted}`,
 		`Pfade nach der Migration (${report.paths.length}):`,
@@ -649,6 +685,14 @@ interface DeletionGuard {
 	referrersOf: (id: string) => Promise<string[]>;
 }
 
+/** What steps 3 and 5 did to the documents that may still reference a group. */
+interface Aftermath {
+	/** The documents step 5 patched, as they are after the patch, by id. */
+	afterById: ReadonlyMap<string, Record<string, unknown>>;
+	/** The ids step 3 deleted, or in a dry run would delete. */
+	deletedIds: ReadonlySet<string>;
+}
+
 interface MigrationRun {
 	dryRun: boolean;
 	report: MigrationReport;
@@ -656,6 +700,11 @@ interface MigrationRun {
 }
 
 interface MigrationReport {
+	/**
+	 * Documents patched in step 5: the union of `rewritten` and `persons`, each document once,
+	 * published and draft.
+	 */
+	changed: number;
 	/** Administration groups deleted, published and draft. */
 	deleted: number;
 	/** Departments created. */

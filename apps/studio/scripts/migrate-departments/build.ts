@@ -196,12 +196,15 @@ interface GroupDocument {
 	department: Reference;
 }
 
-/** A person affiliation; `department` is a string before the migration and a reference after it. */
+/**
+ * A person affiliation; `department` is a string before the migration and a reference after it.
+ * The lake may hold a `null` for either field, so the checks cannot assume an object.
+ */
 interface Affiliation {
 	[field: string]: unknown;
 	_key: string;
-	department?: Reference | string;
-	team?: Reference;
+	department?: Reference | string | null;
+	team?: Reference | null;
 }
 
 export { buildDepartmentDocument, migrateAffiliations, toGroupDocument };

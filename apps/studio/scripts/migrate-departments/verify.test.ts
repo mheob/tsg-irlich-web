@@ -128,6 +128,36 @@ describe('the verification', () => {
 		]);
 	});
 
+	// The documents come from the lake as they are, so a null must not stop the check.
+	it('skips a null affiliation, a null department and a null team instead of crashing', async () => {
+		await expect(
+			problemsIn([
+				...DEPARTMENTS,
+				{
+					_id: 'person-x',
+					_type: 'person',
+					affiliations: [
+						null,
+						{ _key: 'x1', department: null, team: null },
+						{ _key: 'x2', department: 'soccer' },
+					],
+				},
+			]),
+		).resolves.toStrictEqual([
+			'Person person-x: Die Zugehörigkeit x2 nennt die Abteilung noch als Text („soccer“).',
+		]);
+	});
+
+	it('skips affiliations that are no list', async () => {
+		await expect(
+			problemsIn([
+				...DEPARTMENTS,
+				{ _id: 'person-x', _type: 'person', affiliations: { _key: 'x1', department: 'soccer' } },
+				{ _id: 'person-y', _type: 'person', affiliations: null },
+			]),
+		).resolves.toStrictEqual([]);
+	});
+
 	it('finds a seeded department that is not published', async () => {
 		const [first, ...rest] = DEPARTMENTS;
 		const draftOnly = { ...first, _id: `drafts.${first._id}` };

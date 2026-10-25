@@ -1,4 +1,6 @@
+import type { Affiliation } from './build';
 import { departmentIdOf } from './documents';
+import { isRecord } from './references';
 import { DEPARTMENT_SEEDS } from './seeds';
 import type { GroupSummary, MigrationStore, PersonDocument } from './store';
 
@@ -22,17 +24,30 @@ function findGroupsWithoutDepartment(groups: readonly GroupSummary[]): string[] 
 }
 
 /**
+ * The affiliations of a person that the checks can read: the objects of the list. The documents
+ * come from the lake as they are, so a `null` entry or an `affiliations` field that is no list
+ * must not stop the verification and lose its summary. `runMigration` reports such a person.
+ *
+ * @param person - A person.
+ * @returns The entries that are objects, none when `affiliations` is no list.
+ */
+function readableAffiliations(person: PersonDocument): Affiliation[] {
+	const { affiliations } = person;
+	return Array.isArray(affiliations) ? affiliations.filter((entry) => isRecord(entry)) : [];
+}
+
+/**
  * Finds every affiliation that still names its department as a string.
  *
  * @param persons - Every person, published and draft.
  * @returns One German problem per affiliation.
  */
 function findDepartmentStrings(persons: readonly PersonDocument[]): string[] {
-	return persons.flatMap(({ _id, affiliations }) =>
-		(affiliations ?? []).flatMap(({ _key, department }) =>
+	return persons.flatMap((person) =>
+		readableAffiliations(person).flatMap(({ _key, department }) =>
 			typeof department === 'string'
 				? [
-						`Person ${_id}: Die Zugehörigkeit ${_key} nennt die Abteilung noch als Text („${department}“).`,
+						`Person ${person._id}: Die Zugehörigkeit ${_key} nennt die Abteilung noch als Text („${department}“).`,
 					]
 				: [],
 		),
@@ -61,14 +76,19 @@ function resolves(ids: ReadonlySet<string>, id: string): boolean {
  */
 function findWrongTargets(persons: readonly PersonDocument[], targets: ReferenceTargets): string[] {
 	const problems: string[] = [];
-	for (const { _id, affiliations } of persons) {
-		for (const { _key, department, team } of affiliations ?? []) {
+	for (const person of persons) {
+		const { _id } = person;
+		for (const { _key, department, team } of readableAffiliations(person)) {
 			if (team?._ref && !resolves(targets.groups, team._ref)) {
 				problems.push(
 					`Person ${_id}: Die Zugehörigkeit ${_key} verweist als Gruppe auf ${team._ref}, das keine Gruppe ist.`,
 				);
 			}
-			if (typeof department === 'object' && !resolves(targets.departments, department._ref)) {
+			if (
+				typeof department === 'object' &&
+				department !== null &&
+				!resolves(targets.departments, department._ref)
+			) {
 				problems.push(
 					`Person ${_id}: Die Zugehörigkeit ${_key} verweist als Abteilung auf ${department._ref}, das keine Abteilung ist.`,
 				);
