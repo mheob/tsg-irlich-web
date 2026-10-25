@@ -5,7 +5,7 @@ const ASSET_PATTERN = /\.(?:avif|gif|jpe?g|png|svg|webp)$/u;
 
 /**
  * Resolves static image imports to the object Next.js injects for them, so modules that import
- * an image (for example `src/utils/groups.ts`) can be loaded in a test run.
+ * an image (for example `src/utils/fallback-image.ts`) can be loaded in a test run.
  *
  * @returns The Vite plugin that stubs static image imports.
  */

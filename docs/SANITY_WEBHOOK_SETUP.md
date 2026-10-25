@@ -59,7 +59,7 @@ Without the staging webhook, every content change on staging that is not read th
 
    **Filter** (optional, to track only specific documents). Every type the route handles has to be in it, `site-settings` above all: the menu and the footer data live there, and without it a menu change waits out the layout's 12-hour cache. The filter lives in Sanity, not in the repository, so adding or renaming a type in the route's `REVALIDATION_MAP` means updating the filter of **both** webhooks too. Until October 2026 the production filter still listed `settings`, `navigation` and `group`, which no document is called, and menu changes never fired it.
 
-   The filter below is the one for the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. The live webhooks are switched over only during the rollout (Tasks 11 and 12 of the WEB-384 plan), not when this change merges, so until then they keep the old filter.
+   The filter below is the one for the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. The live webhooks are switched over when the department migration is rolled out, not when this change merges, so until then they keep the old filter.
 
    ```groq
    _type in ["aboutUs", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
@@ -121,7 +121,9 @@ vercel --prod
 The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/revalidate/route.ts) automatically revalidates:
 
 - **News** (`_type: "news"`): `/news` and `/news/[slug]`
-- **Groups** (`_type: "group"`): `/angebot` and `/angebot/[slug]`
+- **Department** (`_type: "department"`): the home page, which links the departments, and the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`
+- **Group** (`_type: "group"`): the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`. The payload only carries the slug of the group, not the one of its department, so a single group path cannot be built
+- **Offer pages** (`_type: "departmentsPage"`, `"groupsPage"`): `/angebot`, or every department page `/angebot/[group]`
 - **Person** (`_type: "person"`): every page that shows contact persons, among them `/verein` with the TSG-Echo pages below it (layout revalidation)
 - **News overview** (`_type: "newsOverview"`): `/news` and the TSG-Echo pages, which show its contact persons
 - **Testimonial** (`_type: "testimonial"`): Homepage `/`
