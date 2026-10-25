@@ -19,6 +19,16 @@ ignore:
           the rendered mail content never passes through the merge. Revisit once deepmerge
           publishes a patched release.
         expires: 2026-11-16T00:00:00.000Z
+  SNYK-JS-PICOMATCH-21248802:
+    - '*':
+        reason: >-
+          picomatch has no fixed version: 4.0.7 is the latest published release and every version
+          is affected (CVE-2026-112366). It reaches this project only through tooling: chokidar and
+          anymatch below @sanity/codegen (Sanity's CLI, through next-sanity and sanity), and vitest
+          as the optional peer of get-it below @sanity/client. Both compile glob patterns from this
+          repository's own configuration, never outside input, and neither runs in the deployed
+          app. Revisit once picomatch publishes a patched release.
+        expires: 2026-11-16T00:00:00.000Z
   SNYK-JS-ZOD-20510278:
     - '*':
         reason: >-
