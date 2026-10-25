@@ -31,20 +31,31 @@ const sitemapNewsCategoriesQuery = defineQuery(`
 `);
 
 /**
+ * Query to get all departments for the sitemap
+ *
+ * A department without a slug has no page, so it is left out here.
+ *
+ * @returns All departments with slug and updated date
+ */
+const sitemapDepartmentsQuery = defineQuery(`
+	*[_type == 'department' && defined(slug.current)] {
+		"slug": slug.current,
+		"lastModified": _updatedAt
+	}
+`);
+
+/**
  * Query to get all groups (teams) for the sitemap
  *
- * @returns All groups with slug, type, and updated date
+ * A group lives below its department, so one whose department is gone or has no slug has no page
+ * and is left out here.
+ *
+ * @returns All groups with type, department slug, slug and updated date
  */
 const sitemapGroupsQuery = defineQuery(`
-	*[_type in [
-		'group.soccer',
-		'group.children-gymnastics',
-		'group.courses',
-		'group.taekwondo',
-		'group.dance',
-		'group.other-sports',
-	]] {
+	*[_type == 'group' && defined(department->slug.current)] {
 		_type,
+		"department": department->slug.current,
 		"slug": slug.current,
 		"lastModified": _updatedAt
 	}
@@ -63,8 +74,9 @@ const sitemapEchoIssuesQuery = defineQuery(`
 `);
 
 export {
+	sitemapDepartmentsQuery,
 	sitemapEchoIssuesQuery,
+	sitemapGroupsQuery,
 	sitemapNewsArticlesQuery,
 	sitemapNewsCategoriesQuery,
-	sitemapGroupsQuery,
 };

@@ -18,22 +18,42 @@ const CONTENT = {
 		phone: '+49 2631 76987',
 		postalAddress: { city: 'Neuwied', houseNumber: '20', street: 'Gotenstraße', zipCode: '56567' },
 	},
-	description: 'Dein Sportverein für Fußball, Turnen und Tanzen.',
-	groups: [
+	departments: [
 		{
-			_type: 'group.soccer',
-			description: 'Kreisliga C.',
-			slug: '1-mannschaft',
-			title: '1. Mannschaft',
+			groups: [
+				{
+					_type: 'group',
+					department: 'fussball',
+					description: 'Kreisliga C.',
+					slug: '1-mannschaft',
+					title: '1. Mannschaft',
+				},
+				{
+					_type: 'group',
+					department: 'fussball',
+					description: null,
+					slug: 'bambinis',
+					title: 'Bambinis',
+				},
+			],
+			slug: 'fussball',
+			title: 'Fußball',
 		},
 		{
-			_type: 'group.dance',
-			description: 'Showtanz\nmit Akrobatik.',
-			slug: 'funky-diamonds',
-			title: 'Funky Diamonds',
+			groups: [
+				{
+					_type: 'group',
+					department: 'tanzen',
+					description: 'Showtanz\nmit Akrobatik.',
+					slug: 'funky-diamonds',
+					title: 'Funky Diamonds',
+				},
+			],
+			slug: 'tanzen',
+			title: 'Tanzen',
 		},
-		{ _type: 'group.soccer', description: null, slug: 'bambinis', title: 'Bambinis' },
 	],
+	description: 'Dein Sportverein für Fußball, Turnen und Tanzen.',
 	membership: 'Werde Teil der Gemeinschaft.',
 };
 
@@ -73,6 +93,14 @@ describe('llms.txt', () => {
 		expect(text).toContain('Telefon: +49 2631 76987');
 	});
 
+	it('lists the departments in the order Sanity returns them, each with its groups', async () => {
+		const text = await llmsTxt();
+
+		const headings = text.split('\n').filter((line) => line.startsWith('## '));
+
+		expect(headings).toStrictEqual(['## Fußball', '## Tanzen', '## Verein', '## Optional']);
+	});
+
 	it('lists every group under its department, with its description on one line', async () => {
 		const text = await llmsTxt();
 
@@ -103,18 +131,63 @@ describe('llms.txt', () => {
 		expect(text).toContain('- [Sitemap](http://localhost:3000/sitemap.xml)');
 	});
 
-	it('still lists the departments and pages without any content from Sanity', async () => {
+	it('skips a group without the slug of its department', async () => {
+		const text = await llmsTxt({
+			...CONTENT,
+			departments: [
+				{
+					...CONTENT.departments[0],
+					groups: [
+						{
+							_type: 'group',
+							department: null,
+							description: null,
+							slug: 'verwaist',
+							title: 'Verwaist',
+						},
+						...CONTENT.departments[0].groups,
+					],
+				},
+			],
+		});
+
+		expect(text).not.toContain('Verwaist');
+		expect(text).toContain('[1. Mannschaft](http://localhost:3000/angebot/fussball/1-mannschaft)');
+	});
+
+	it('skips a department without a slug together with its groups', async () => {
+		const text = await llmsTxt({
+			...CONTENT,
+			departments: [{ ...CONTENT.departments[0], slug: null }],
+		});
+
+		expect(text).not.toContain('## Fußball');
+		expect(text).not.toContain('1. Mannschaft');
+	});
+
+	it('lists a department without groups by its overview alone', async () => {
+		const text = await llmsTxt({
+			...CONTENT,
+			departments: [{ groups: [], slug: 'kurse', title: 'Kurse' }],
+		});
+
+		expect(text).toContain(
+			'## Kurse\n\n- [Alle Gruppen: Kurse](http://localhost:3000/angebot/kurse)\n\n## Verein',
+		);
+	});
+
+	it('still lists the club pages without any content from Sanity', async () => {
 		const text = await llmsTxt({
 			aboutUs: null,
 			contact: null,
+			departments: [],
 			description: null,
-			groups: [],
 			membership: null,
 		});
 
 		expect(text).not.toContain('>');
 		expect(text).not.toContain('Anschrift');
-		expect(text).toContain('## Weitere Sportarten');
+		expect(text.startsWith('# TSG Irlich\n\n## Verein\n')).toBe(true);
 		expect(text).toContain('- [Über den Verein](http://localhost:3000/verein)\n');
 		expect(text).not.toMatch(/\n{3}/u);
 	});

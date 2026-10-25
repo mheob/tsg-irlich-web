@@ -1,7 +1,6 @@
 import { client } from '@/lib/sanity/client';
 import { llmsTxtQuery } from '@/lib/sanity/queries/llms';
 import type { LlmsTxtQueryResult } from '@/types/sanity.types';
-import { groupSections } from '@/utils/groups';
 import { getInternalHref } from '@/utils/links';
 import { SITE_NAME } from '@/utils/metadata';
 import { getBaseUrl } from '@/utils/url';
@@ -39,19 +38,23 @@ function buildContact(contact: LlmsTxtQueryResult['contact']): string[] {
 }
 
 function buildDepartment(
-	section: (typeof groupSections)[number],
-	groups: LlmsTxtQueryResult['groups'],
+	department: LlmsTxtQueryResult['departments'][number],
 	baseUrl: string,
 ): string[] {
-	const entries = groups.flatMap((group) => {
-		const href = group._type === section._type ? getInternalHref(group) : undefined;
+	const departmentHref = getInternalHref({ _type: 'department', slug: department.slug });
+	if (!departmentHref) {
+		return [];
+	}
+
+	const entries = department.groups.flatMap((group) => {
+		const href = getInternalHref(group);
 		return href ? [link(group.title, `${baseUrl}${href}`, group.description)] : [];
 	});
 
 	return [
-		`## ${section.title}`,
+		`## ${department.title}`,
 		'',
-		link(`Alle Gruppen: ${section.title}`, `${baseUrl}${section.slug}`),
+		link(`Alle Gruppen: ${department.title}`, `${baseUrl}${departmentHref}`),
 		...entries,
 		'',
 	];
@@ -72,7 +75,7 @@ function buildLlmsTxt(content: LlmsTxtQueryResult, baseUrl: string): string {
 		...(content.description ? [`> ${content.description}`, ''] : []),
 		...buildContact(content.contact),
 		'',
-		...groupSections.flatMap((section) => buildDepartment(section, content.groups, baseUrl)),
+		...content.departments.flatMap((department) => buildDepartment(department, baseUrl)),
 		'## Verein',
 		'',
 		link('Über den Verein', `${baseUrl}/verein`, content.aboutUs),

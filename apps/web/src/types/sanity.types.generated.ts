@@ -1689,7 +1689,7 @@ export type EchoRenderStateQueryResult =
 
 // Source: src/lib/sanity/queries/llms.ts
 // Variable: llmsTxtQuery
-// Query: {		"aboutUs": *[_type == 'aboutUs'][0].meta.metaDescription,		"contact": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },		"description": *[_type == 'home'][0].meta.metaDescription,		"groups": *[_type in [			'group.soccer',			'group.children-gymnastics',			'group.courses',			'group.taekwondo',			'group.dance',			'group.other-sports',		]] | order(sortOrder asc) {			_type,			"description": meta.metaDescription,			"slug": slug.current,			title,		},		"membership": *[_type == 'membership'][0].meta.metaDescription,	}
+// Query: {		"aboutUs": *[_type == 'aboutUs'][0].meta.metaDescription,		"contact": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },		"departments": *[_type == 'department' && defined(slug.current)] | order(sortOrder asc) {			title,			"slug": slug.current,			"groups": *[_type == 'group' && department._ref == ^._id] | order(sortOrder asc) {				_type,				"department": ^.slug.current,				"description": meta.metaDescription,				"slug": slug.current,				title,			},		},		"description": *[_type == 'home'][0].meta.metaDescription,		"membership": *[_type == 'membership'][0].meta.metaDescription,	}
 export type LlmsTxtQueryResult = {
   aboutUs: string | null;
   contact: {
@@ -1702,8 +1702,18 @@ export type LlmsTxtQueryResult = {
       city: string;
     };
   } | null;
+  departments: Array<{
+    title: string;
+    slug: string;
+    groups: Array<{
+      _type: "group";
+      department: string;
+      description: string | null;
+      slug: string;
+      title: string;
+    }>;
+  }>;
   description: string | null;
-  groups: Array<never>;
   membership: string | null;
 };
 
@@ -4147,11 +4157,6 @@ export type RssNewsArticlesQueryResult = Array<{
   _updatedAt: string;
 }>;
 
-// Source: src/lib/sanity/queries/shared/groups.ts
-// Variable: groupsQuery
-// Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_id,		title,		icon,	}
-export type GroupsQueryResult = Array<never>;
-
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsArticlesQuery
 // Query: *[_type == 'news.article'] | order(publishedAt desc) [0..2] {			_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,	}
@@ -4310,9 +4315,22 @@ export type SitemapNewsCategoriesQueryResult = Array<{
 }>;
 
 // Source: src/lib/sanity/queries/sitemap.ts
+// Variable: sitemapDepartmentsQuery
+// Query: *[_type == 'department' && defined(slug.current)] {		"slug": slug.current,		"lastModified": _updatedAt	}
+export type SitemapDepartmentsQueryResult = Array<{
+  slug: string;
+  lastModified: string;
+}>;
+
+// Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapGroupsQuery
-// Query: *[_type in [		'group.soccer',		'group.children-gymnastics',		'group.courses',		'group.taekwondo',		'group.dance',		'group.other-sports',	]] {		_type,		"slug": slug.current,		"lastModified": _updatedAt	}
-export type SitemapGroupsQueryResult = Array<never>;
+// Query: *[_type == 'group' && defined(department->slug.current)] {		_type,		"department": department->slug.current,		"slug": slug.current,		"lastModified": _updatedAt	}
+export type SitemapGroupsQueryResult = Array<{
+  _type: "group";
+  department: string;
+  slug: string;
+  lastModified: string;
+}>;
 
 // Source: src/lib/sanity/queries/sitemap.ts
 // Variable: sitemapEchoIssuesQuery
@@ -4330,7 +4348,7 @@ declare global {
     "\n\t*[_type == 'department' && $slug in previousSlugs && !(_id in path('drafts.**'))][0].slug.current\n": DepartmentRedirectQueryResult;
     "\n\t*[_type == 'department' && defined(slug.current)].slug.current\n": DepartmentSlugsQueryResult;
     '\n\t*[_id == $id][0] {\n\t\t_id,\n\t\t_rev,\n\t\t"pdfRef": pdf.asset._ref,\n\t\t"renderSource": render.source,\n\t\t"renderStartedAt": render.startedAt\n\t}\n': EchoRenderStateQueryResult;
-    "\n\t{\n\t\t\"aboutUs\": *[_type == 'aboutUs'][0].meta.metaDescription,\n\t\t\"contact\": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },\n\t\t\"description\": *[_type == 'home'][0].meta.metaDescription,\n\t\t\"groups\": *[_type in [\n\t\t\t'group.soccer',\n\t\t\t'group.children-gymnastics',\n\t\t\t'group.courses',\n\t\t\t'group.taekwondo',\n\t\t\t'group.dance',\n\t\t\t'group.other-sports',\n\t\t]] | order(sortOrder asc) {\n\t\t\t_type,\n\t\t\t\"description\": meta.metaDescription,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"membership\": *[_type == 'membership'][0].meta.metaDescription,\n\t}\n": LlmsTxtQueryResult;
+    '\n\t{\n\t\t"aboutUs": *[_type == \'aboutUs\'][0].meta.metaDescription,\n\t\t"contact": *[_type == \'site-settings\'][0].contact { email, phone, postalAddress },\n\t\t"departments": *[_type == \'department\' && defined(slug.current)] | order(sortOrder asc) {\n\t\t\ttitle,\n\t\t\t"slug": slug.current,\n\t\t\t"groups": *[_type == \'group\' && department._ref == ^._id] | order(sortOrder asc) {\n\t\t\t\t_type,\n\t\t\t\t"department": ^.slug.current,\n\t\t\t\t"description": meta.metaDescription,\n\t\t\t\t"slug": slug.current,\n\t\t\t\ttitle,\n\t\t\t},\n\t\t},\n\t\t"description": *[_type == \'home\'][0].meta.metaDescription,\n\t\t"membership": *[_type == \'membership\'][0].meta.metaDescription,\n\t}\n': LlmsTxtQueryResult;
     '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_type,\n\t\t\t\n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n,\n\t\t\thasTwoColumns,\n\t\t\t"children": coalesce(children[] { \n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n, description }, [])\n\t\t}\n\t}\n': MainNavigationQueryResult;
     '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
     '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': AccessibilityPageQueryResult;
@@ -4361,7 +4379,6 @@ declare global {
     '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
     '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tintroText { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': PrivacyPageQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName, email },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
-    "\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_id,\n\t\ttitle,\n\t\ticon,\n\t}\n": GroupsQueryResult;
     '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
     '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
     'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
@@ -4372,7 +4389,8 @@ declare global {
     "\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
     '\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
-    "\n\t*[_type in [\n\t\t'group.soccer',\n\t\t'group.children-gymnastics',\n\t\t'group.courses',\n\t\t'group.taekwondo',\n\t\t'group.dance',\n\t\t'group.other-sports',\n\t]] {\n\t\t_type,\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapGroupsQueryResult;
+    '\n\t*[_type == \'department\' && defined(slug.current)] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapDepartmentsQueryResult;
+    '\n\t*[_type == \'group\' && defined(department->slug.current)] {\n\t\t_type,\n\t\t"department": department->slug.current,\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapGroupsQueryResult;
     "\n\t*[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0 && indexable != false] {\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapEchoIssuesQueryResult;
   }
 }
