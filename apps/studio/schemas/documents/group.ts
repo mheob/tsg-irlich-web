@@ -30,6 +30,10 @@ function isRefereeGroup(title: unknown): boolean {
  * Checks that no other group of the same department uses a slug. Group slugs only have to be unique
  * per department, so two departments may each have a group "herren".
  *
+ * The query runs in the raw perspective, so it sees drafts and release versions as documents of their
+ * own, and `sanity::versionOf` leaves out those of this very group. A draft of another group with the
+ * same slug still counts.
+ *
  * @param slug - The slug to check.
  * @param context - The slug validation context, whose `document` is the group.
  * @returns `false` when another group of the department already uses the slug.
@@ -46,12 +50,12 @@ async function isGroupSlugUniqueInDepartment(
 		return true;
 	}
 
-	const publishedId = document._id.replace(NON_PUBLISHED_ID_PREFIX, '');
-
-	return getClient({ apiVersion: GROUP_API_VERSION }).fetch<boolean>(
-		'count(*[_type == "group" && slug.current == $slug && department._ref == $departmentId && !(_id in [$draftId, $publishedId])]) == 0',
-		{ departmentId, draftId: `drafts.${publishedId}`, publishedId, slug },
-	);
+	return getClient({ apiVersion: GROUP_API_VERSION })
+		.withConfig({ perspective: 'raw' })
+		.fetch<boolean>(
+			'count(*[_type == "group" && slug.current == $slug && department._ref == $departmentId && !sanity::versionOf($publishedId)]) == 0',
+			{ departmentId, publishedId: document._id.replace(NON_PUBLISHED_ID_PREFIX, ''), slug },
+		);
 }
 
 const group = defineType({

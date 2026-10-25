@@ -72,9 +72,11 @@ function contextWith({ count = 0, departmentId, documentId = 'drafts.abc' }: Con
 	context: SlugValidationContext;
 	fetch: ReturnType<typeof vi.fn>;
 	getClient: ReturnType<typeof vi.fn>;
+	withConfig: ReturnType<typeof vi.fn>;
 } {
 	const fetch = vi.fn().mockResolvedValue(count === 0);
-	const getClient = vi.fn(() => ({ fetch }));
+	const withConfig = vi.fn(() => ({ fetch }));
+	const getClient = vi.fn(() => ({ withConfig }));
 	const context = {
 		document: {
 			_id: documentId,
@@ -82,7 +84,7 @@ function contextWith({ count = 0, departmentId, documentId = 'drafts.abc' }: Con
 		},
 		getClient,
 	} as unknown as SlugValidationContext;
-	return { context, fetch, getClient };
+	return { context, fetch, getClient, withConfig };
 }
 
 describe('group document', () => {
@@ -179,8 +181,11 @@ describe('group slug uniqueness', () => {
 		await expect(isGroupSlugUniqueInDepartment('herren', context)).resolves.toBe(false);
 	});
 
-	it('passes the department and both ids of the document to the query', async () => {
-		const { context, fetch, getClient } = contextWith({
+	// A draft or a release version of the document itself is not a second group, but a draft of
+	// another group with the same slug is, so the query matches by published id and sees every
+	// version, which only the raw perspective returns.
+	it('asks for every version of the documents and excludes the versions of this one', async () => {
+		const { context, fetch, getClient, withConfig } = contextWith({
 			departmentId: 'department-fussball',
 			documentId: 'drafts.abc',
 		});
@@ -188,18 +193,14 @@ describe('group slug uniqueness', () => {
 		await isGroupSlugUniqueInDepartment('herren', context);
 
 		expect(getClient).toHaveBeenCalledWith({ apiVersion: '2026-10-01' });
+		expect(withConfig).toHaveBeenCalledWith({ perspective: 'raw' });
 		expect(fetch).toHaveBeenCalledExactlyOnceWith(
-			'count(*[_type == "group" && slug.current == $slug && department._ref == $departmentId && !(_id in [$draftId, $publishedId])]) == 0',
-			{
-				departmentId: 'department-fussball',
-				draftId: 'drafts.abc',
-				publishedId: 'abc',
-				slug: 'herren',
-			},
+			'count(*[_type == "group" && slug.current == $slug && department._ref == $departmentId && !sanity::versionOf($publishedId)]) == 0',
+			{ departmentId: 'department-fussball', publishedId: 'abc', slug: 'herren' },
 		);
 	});
 
-	it('derives both ids from a published document', async () => {
+	it('derives the published id from a published document', async () => {
 		const { context, fetch } = contextWith({
 			departmentId: 'department-fussball',
 			documentId: 'abc',
@@ -209,13 +210,12 @@ describe('group slug uniqueness', () => {
 
 		expect(fetch).toHaveBeenCalledWith(expect.any(String), {
 			departmentId: 'department-fussball',
-			draftId: 'drafts.abc',
 			publishedId: 'abc',
 			slug: 'herren',
 		});
 	});
 
-	it('derives both ids from the version of a release', async () => {
+	it('derives the published id from the version of a release', async () => {
 		const { context, fetch } = contextWith({
 			departmentId: 'department-fussball',
 			documentId: 'versions.rSommer.abc',
@@ -225,7 +225,6 @@ describe('group slug uniqueness', () => {
 
 		expect(fetch).toHaveBeenCalledWith(expect.any(String), {
 			departmentId: 'department-fussball',
-			draftId: 'drafts.abc',
 			publishedId: 'abc',
 			slug: 'herren',
 		});
