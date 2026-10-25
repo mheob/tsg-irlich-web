@@ -8,7 +8,8 @@ on:
   deployment_status:
   # Only here to report the required check on every pull request commit. A commit that affects
   # neither app gets no Vercel deployment and so no `deployment_status`, which would leave the
-  # check missing. The job below skips itself for this event, and a skipped job reports success.
+  # check missing. The measurements below skip themselves for this event, and the `Lighthouse` job
+  # reports success for them.
   pull_request:
   # A `deployment_status` run cannot be replayed — GitHub cannot reconstruct the event — so this is
   # the way to re-measure a deployment that is already up, or to score production on demand.
@@ -23,8 +24,8 @@ permissions:
   contents: read
 
 jobs:
-  lighthouse:
-    name: Lighthouse
+  measure:
+    name: Measure
     # Only the website is scored: the studio deploys from the same commit and raises its own
     # `deployment_status` (environment `Preview – tsg-irlich-web-studio`).
     if: >-
@@ -32,6 +33,25 @@ jobs:
       endsWith(github.event.deployment.environment, 'tsg-irlich-web'))
     runs-on: ubuntu-latest
     continue-on-error: true
+    # One job per route. Lighthouse measures its URLs one after another, so a single job measuring
+    # all five took about six minutes. Running them side by side on one machine would make them
+    # compete for its CPU and skew the performance numbers; separate runners do not. The routes are
+    # the ones `ROUTES` in `apps/web/lighthouserc.cjs` lists, and the config rejects any other.
+    # `report` names the artifact, since an artifact name cannot contain a slash.
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - route: /
+            report: home
+          - route: /verein
+            report: verein
+          - route: /angebot
+            report: angebot
+          - route: /news
+            report: news
+          - route: /kontakt
+            report: kontakt
     # Preview deployments are behind Vercel's SSO. The token comes from the project's "Protection
     # Bypass for Automation". It is lifted to the job level because the run step below has to skip
     # itself when it is unset, and a step's `if` cannot read the `secrets` context — only `env`.
@@ -58,7 +78,7 @@ jobs:
 
       # Lighthouse drives the Chrome the runner image already ships; there is no browser to install.
       # `LHCI_BASE_URL` is the deployment this event was raised for, so every pull request is scored
-      # against its own preview.
+      # against its own preview, and `LHCI_ROUTE` the one route this job measures.
       - name: Run Lighthouse
         # Without the bypass token every request is answered by Vercel's login page, and the job
         # would report a wall of failures about a page nobody ships. It reports nothing instead.
@@ -66,13 +86,33 @@ jobs:
         run: pnpm --filter web run test:lighthouse
         env:
           LHCI_BASE_URL: ${{ inputs.url || github.event.deployment_status.environment_url }}
+          LHCI_ROUTE: ${{ matrix.route }}
 
-      # One HTML report per URL per run, plus the JSON they were rendered from. Opening the HTML is
-      # the only way to see which audit moved a score.
+      # One HTML report per run, plus the JSON they were rendered from. Opening the HTML is the only
+      # way to see which audit moved a score.
       - name: Upload Report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: lighthouse-report
+          name: lighthouse-report-${{ matrix.report }}
           path: apps/web/lighthouse-report
           retention-days: 7
+
+  # The ruleset requires a check named `Lighthouse`, while the matrix reports one check per route
+  # under a name of its own. This job is that one check. It also runs when the measurements were
+  # skipped (`pull_request`, the studio's deployment) and passes then, as the single job used to.
+  # `always()` rather than `!cancelled()`: when the measurements are cancelled, this check has to
+  # fail, not be skipped, which the ruleset would count as passed.
+  lighthouse:
+    name: Lighthouse
+    needs: measure
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Check the measurements
+        env:
+          RESULT: ${{ needs.measure.result }}
+        run: |
+          echo "The measurements ended with: $RESULT"
+          [ "$RESULT" = success ] || [ "$RESULT" = skipped ]

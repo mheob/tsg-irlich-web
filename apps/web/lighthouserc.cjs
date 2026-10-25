@@ -29,14 +29,16 @@ const MIN_PERFORMANCE_SCORE = 0.9;
  * seconds, and every page used all of them: `<SanityLive />` in the root layout holds the Live
  * Content API stream open for as long as the page lives. `@sanity/client` streams it through
  * `fetch` rather than a native `EventSource`, so Lighthouse counts it as a critical request that
- * never finishes and waits for a network quiet that never comes. The observed load event lands
- * within 1.5 seconds even on the cold first hit of a preview, so ten seconds leaves plenty of room
- * and cuts a run from about a minute to about twenty seconds.
+ * never finishes and waits for a network quiet that never comes. So every run waits out the whole
+ * timeout, and the timeout sets the pace: 45 seconds made a run take about a minute, ten seconds
+ * about 23 seconds. The observed load event lands within 1.5 seconds even on the cold first hit of
+ * a preview, and the default simulated throttling lets the page load at the runner's own speed, so
+ * five seconds still leaves more than three times that.
  *
  * Every report therefore still carries the "page loaded too slowly" warning — it always did. Read
  * `observedLoad` in the metrics audit to tell a real timeout from this one.
  */
-const MAX_WAIT_FOR_LOAD_MS = 10_000;
+const MAX_WAIT_FOR_LOAD_MS = 5000;
 
 /**
  * The base URL of the deployment under test. The workflow passes the preview URL that triggered it;
@@ -58,8 +60,23 @@ const bypassToken = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
  * Deliberately no dynamic route — a department or an article can only be reached through a slug
  * that lives in the dataset, which is why the preview smoke suite clicks its way there instead of
  * hard-coding one. Lighthouse takes URLs and nothing else, so those routes stay with Playwright.
+ *
+ * The matrix in the workflow lists the same routes. A route added here has to go there as well, or
+ * CI never measures it.
  */
 const ROUTES = ['/', '/verein', '/angebot', '/news', '/kontakt'];
+
+/**
+ * The one route to measure. Each job of the workflow's matrix sets it, so the routes run side by
+ * side on separate runners instead of one after another on a single one. Unset, as in a local run,
+ * every route is measured. A route that is not in `ROUTES` is a typo in the matrix, and the run
+ * fails instead of measuring a page nobody picked.
+ */
+const onlyRoute = process.env.LHCI_ROUTE;
+
+if (onlyRoute !== undefined && !ROUTES.includes(onlyRoute)) {
+	throw new Error(`LHCI_ROUTE "${onlyRoute}" is not one of ${ROUTES.join(', ')}.`);
+}
 
 module.exports = {
 	ci: {
@@ -84,7 +101,9 @@ module.exports = {
 					},
 				}),
 			},
-			url: ROUTES.map((route) => new URL(route, baseUrl).toString()),
+			url: (onlyRoute === undefined ? ROUTES : [onlyRoute]).map((route) =>
+				new URL(route, baseUrl).toString(),
+			),
 		},
 		assert: {
 			assertions: {
