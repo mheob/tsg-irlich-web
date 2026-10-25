@@ -115,7 +115,7 @@ describe('desk group resolution', () => {
 		expect(titles).toContain('Abteilungen');
 	});
 
-	it('resolves the groups group to the list of the departments', () => {
+	it('resolves the groups group to the departments by sort order', () => {
 		const { calls, structureBuilder } = createRecordingStructureBuilder();
 
 		getGroup(structureBuilder, 'groups');
@@ -123,10 +123,14 @@ describe('desk group resolution', () => {
 		const lists = calls
 			.filter((call) => call.method === 'documentTypeList')
 			.map((call) => call.args[0]);
+		const orderings = calls
+			.filter((call) => call.method === 'defaultOrdering')
+			.map((call) => call.args[0]);
 		const ids = calls.filter((call) => call.method === 'id').map((call) => call.args[0]);
 		const titles = calls.filter((call) => call.method === 'title').map((call) => call.args[0]);
 
 		expect(lists).toStrictEqual(['department']);
+		expect(orderings).toStrictEqual([[{ direction: 'asc', field: 'sortOrder' }]]);
 		expect(ids).toStrictEqual(['groups']);
 		expect(titles).toContain('Gruppen');
 	});

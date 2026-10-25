@@ -122,8 +122,8 @@ function getGroupsOfDepartmentList(S: StructureBuilder, departmentId: string): D
 }
 
 /**
- * Returns the group for the groups: the departments, each opening its own groups. The departments
- * come from the documents, so a new department shows up without a change here.
+ * Returns the group for the groups: the departments by sort order, each opening its own groups.
+ * The departments come from the documents, so a new department shows up without a change here.
  *
  * @param S - The structure builder.
  * @returns The group for the groups.
@@ -137,6 +137,7 @@ function getGroupGroups(S: StructureBuilder): ListItemBuilder[] {
 			.child(
 				S.documentTypeList('department')
 					.title('Gruppen')
+					.defaultOrdering([{ direction: 'asc', field: 'sortOrder' }])
 					.child((departmentId) => getGroupsOfDepartmentList(S, departmentId)),
 			),
 	];
