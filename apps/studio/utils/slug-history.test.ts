@@ -30,6 +30,14 @@ describe('slug history of a value', () => {
 	it('removes the new slug even when the published one is already recorded', () => {
 		expect(appendToHistory(['alt', 'neu'], 'alt', 'neu')).toStrictEqual(['alt']);
 	});
+
+	it('records the published value while the new one cannot be worked out yet', () => {
+		expect(appendToHistory(['alt'], 'mittel')).toStrictEqual(['alt', 'mittel']);
+	});
+
+	it('records a value that is not yet known only once', () => {
+		expect(appendToHistory(['mittel'], 'mittel')).toBeUndefined();
+	});
 });
 
 describe('slug history patch', () => {
@@ -97,11 +105,33 @@ describe('slug history patch', () => {
 		).toBeUndefined();
 	});
 
-	it('records no path while the draft group has no department slug', () => {
+	// The department of the draft exists only as a draft, so the website cannot serve the new path
+	// yet. The old one is gone all the same, and nobody could add it later.
+	it('records the old path when a group moves into a department without a published slug', () => {
 		expect(
 			getSlugHistoryPatch({
 				type: 'group',
 				published: { departmentSlug: 'kurse', slug: 'yoga' },
+				draft: { slug: 'yoga' },
+			}),
+		).toStrictEqual({ previousPaths: ['kurse/yoga'] });
+	});
+
+	it('keeps the earlier paths when a group moves into a department without a published slug', () => {
+		expect(
+			getSlugHistoryPatch({
+				type: 'group',
+				published: { departmentSlug: 'kurse', slug: 'yoga' },
+				draft: { previousPaths: ['fitness/yoga'], slug: 'yoga' },
+			}),
+		).toStrictEqual({ previousPaths: ['fitness/yoga', 'kurse/yoga'] });
+	});
+
+	it('records nothing for a moved group that was never published under a path', () => {
+		expect(
+			getSlugHistoryPatch({
+				type: 'group',
+				published: { slug: 'yoga' },
 				draft: { slug: 'yoga' },
 			}),
 		).toBeUndefined();

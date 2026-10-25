@@ -87,7 +87,7 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 - **GROQ queries** in `src/lib/sanity/queries/`
 - **Type generation** from Sanity schema to TypeScript
 - **Image optimization** with next/image and Sanity image URLs
-- **Preview**: the news routes are previewable through draft mode and the studio's presentation tool — see the two app guides before touching that wiring
+- **Preview**: the news, department and group routes are previewable through draft mode and the studio's presentation tool — see the two app guides before touching that wiring
 
 ## File & Naming Conventions
 

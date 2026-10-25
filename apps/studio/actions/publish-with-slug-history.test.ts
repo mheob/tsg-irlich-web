@@ -332,7 +332,19 @@ describe('publish action with slug history', () => {
 
 			await click(wrap(movedGroup));
 
-			expect(calls).toStrictEqual(['publish']);
+			expect(calls).toStrictEqual(['patch', 'publish']);
+		});
+
+		// A reference may point at a department that is only a draft, which the published perspective
+		// does not return. The old address has to be recorded now, because the editors have no way to
+		// know what it was once the group is published.
+		it('remembers the old path when the group moves into a department that is only a draft', async () => {
+			studio.fetch.mockResolvedValue([{ _id: 'kurse', slug: 'kurse' }]);
+
+			await click(wrap(movedGroup));
+
+			expect(studio.execute).toHaveBeenCalledWith([{ set: { previousPaths: ['kurse/yoga'] } }]);
+			expect(calls).toStrictEqual(['patch', 'publish']);
 		});
 
 		it('publishes once when the button is clicked again while the departments load', async () => {

@@ -102,7 +102,8 @@ async function resolveSlugHistoryPatch({
 		return undefined;
 	}
 
-	// References point at published documents, so the slugs are the ones the website serves.
+	// The slugs are the ones the website serves. A department that only exists as a draft has none, so
+	// a group moved into it gets no new path yet, and its old path is recorded all the same.
 	const departments = await client.fetch<DepartmentSlug[]>(
 		DEPARTMENT_SLUGS_QUERY,
 		{ ids: [publishedDepartmentId, draftDepartmentId] },

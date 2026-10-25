@@ -72,7 +72,7 @@ const department = defineType({
 			name: 'cardImage',
 			title: 'Kachelbild',
 			type: 'extendedImage',
-			validation: (Rule) => Rule.required().error('Kachelbild ist erforderlich'),
+			validation: (Rule) => Rule.required().assetRequired().error('Kachelbild ist erforderlich'),
 		}),
 
 		defineField({

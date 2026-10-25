@@ -199,11 +199,21 @@ const group = defineType({
 		},
 	],
 	preview: {
-		prepare: ({ sortOrder, title }: { sortOrder?: number; title?: string }) => ({
-			subtitle: `Sortierreihenfolge: ${sortOrder}`,
+		prepare: ({
+			departmentTitle,
+			sortOrder,
+			title,
+		}: {
+			departmentTitle?: string;
+			sortOrder?: number;
+			title?: string;
+		}) => ({
+			// "Herren" exists in more than one department, so a picker needs the department to tell them apart.
+			subtitle: [departmentTitle, `Sortierreihenfolge: ${sortOrder}`].filter(Boolean).join(' · '),
 			title,
 		}),
 		select: {
+			departmentTitle: 'department.title',
 			sortOrder: 'sortOrder',
 			title: 'title',
 		},

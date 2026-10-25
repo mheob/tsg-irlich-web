@@ -13,6 +13,7 @@ interface GroupField {
 }
 
 interface GroupPreviewSelection {
+	readonly departmentTitle?: string;
 	readonly sortOrder?: number;
 	readonly title?: string;
 }
@@ -138,7 +139,33 @@ describe('group document', () => {
 });
 
 describe('group preview', () => {
-	it('assembles the subtitle from the sort order and passes the title through', () => {
+	it('names the department in front of the sort order and passes the title through', () => {
+		const result = prepareGroupPreview({
+			departmentTitle: 'Fußball',
+			sortOrder: 10,
+			title: 'Herren',
+		});
+
+		expect(result).toStrictEqual({ subtitle: 'Fußball · Sortierreihenfolge: 10', title: 'Herren' });
+	});
+
+	// "Herren" exists in two departments, so a picker or a search result is only clear with it.
+	it('tells two groups of the same name apart by their department', () => {
+		const soccer = prepareGroupPreview({
+			departmentTitle: 'Fußball',
+			sortOrder: 1,
+			title: 'Herren',
+		});
+		const tanzen = prepareGroupPreview({
+			departmentTitle: 'Tanzen',
+			sortOrder: 1,
+			title: 'Herren',
+		});
+
+		expect(soccer.subtitle).not.toBe(tanzen.subtitle);
+	});
+
+	it('shows only the sort order while the group has no department', () => {
 		const result = prepareGroupPreview({ sortOrder: 3, title: 'Herren' });
 
 		expect(result).toStrictEqual({ subtitle: 'Sortierreihenfolge: 3', title: 'Herren' });
@@ -154,6 +181,10 @@ describe('group preview', () => {
 
 	it('passes a missing title through as undefined', () => {
 		expect(prepareGroupPreview({ sortOrder: 1 }).title).toBeUndefined();
+	});
+
+	it('reads the title of the referenced department', () => {
+		expect(group.preview.select).toMatchObject({ departmentTitle: 'department.title' });
 	});
 });
 
