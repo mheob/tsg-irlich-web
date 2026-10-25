@@ -3,7 +3,7 @@ import { cn } from '@tsgi-web/shared';
 import { Gallery } from '@/components/ui/gallery';
 import { PortableText } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
-import type { GroupDance, SimpleBlockContent } from '@/types/sanity.types';
+import type { Group, SimpleBlockContent } from '@/types/sanity.types';
 import { getGalleryImages } from '@/utils/image';
 
 import styles from './main.module.css';
@@ -34,7 +34,7 @@ function Main({ description, gallery, title }: Readonly<MainProps>) {
 
 interface MainProps {
 	description: SimpleBlockContent;
-	gallery: GroupDance['images'];
+	gallery: Group['images'];
 	title: string;
 }
 

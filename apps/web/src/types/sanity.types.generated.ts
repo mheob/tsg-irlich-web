@@ -3621,186 +3621,89 @@ export type OfferGroupsGroupPageQueryResult = {
 } | null;
 
 // Source: src/lib/sanity/queries/pages/offer-groups-group.ts
-// Variable: offerGroupsGroupPageGroupsQuery
-// Query: *[_type == $groupType && slug.current == $slug][0] {		description,		featuredImage,		images,		meta { metaTitle, metaDescription, openGraphImage},		title,		training {			trainingDescription,			trainingTimes[] {				...,				venue->			}		}	}
-export type OfferGroupsGroupPageGroupsQueryResult =
-  | {
-      description: SimpleBlockContent;
-      featuredImage: ExtendedImage;
-      images: Array<
-        {
-          _key: string;
-        } & ExtendedImage
-      > | null;
-      meta: {
-        metaTitle: string | null;
-        metaDescription: string | null;
-        openGraphImage: {
+// Variable: groupPageQuery
+// Query: *[		_type == 'group' &&		slug.current == $slug &&		defined(department->slug.current) &&		department->slug.current == $department	][0] {		_id,		description,		featuredImage,		images,		"isTeamSport": department->isTeamSport,		meta { metaTitle, metaDescription, openGraphImage},		title,		training {			trainingDescription,			trainingTimes[] {				...,				venue->			}		}	}
+export type GroupPageQueryResult = {
+  _id: string;
+  description: SimpleBlockContent;
+  featuredImage: ExtendedImage;
+  images: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  > | null;
+  isTeamSport: boolean | null;
+  meta: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    openGraphImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+  } | null;
+  title: string;
+  training: {
+    trainingDescription: SimpleBlockContent | null;
+    trainingTimes: Array<{
+      _key: string;
+      _type: "trainingTime";
+      season: "summer" | "winter" | "yearly";
+      weekday:
+        | "friday"
+        | "monday"
+        | "saturday"
+        | "sunday"
+        | "thursday"
+        | "tuesday"
+        | "wednesday";
+      startTime: string;
+      endTime: string;
+      venue: {
+        _id: string;
+        _type: "venue";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        title: string;
+        description: SimpleBlockContent;
+        type:
+          | "artificial-turf"
+          | "cinder"
+          | "grass"
+          | "hall-1"
+          | "hall-2"
+          | "hall-3"
+          | "hybrid";
+        mainImage?: {
           asset?: SanityImageAssetReference;
           media?: unknown;
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
-          alt?: string;
+          alt: string;
+          description?: string;
           _type: "image";
-        } | null;
-      } | null;
-      title: string;
-      training: {
-        trainingDescription: SimpleBlockContent | null;
-        trainingTimes: Array<{
-          _key: string;
-          _type: "trainingTime";
-          season: "summer" | "winter" | "yearly";
-          weekday:
-            | "friday"
-            | "monday"
-            | "saturday"
-            | "sunday"
-            | "thursday"
-            | "tuesday"
-            | "wednesday";
-          startTime: string;
-          endTime: string;
-          venue: {
-            _id: string;
-            _type: "venue";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            title: string;
-            description: SimpleBlockContent;
-            type:
-              | "artificial-turf"
-              | "cinder"
-              | "grass"
-              | "hall-1"
-              | "hall-2"
-              | "hall-3"
-              | "hybrid";
-            mainImage?: {
-              asset?: SanityImageAssetReference;
-              media?: unknown;
-              hotspot?: SanityImageHotspot;
-              crop?: SanityImageCrop;
-              alt: string;
-              description?: string;
-              _type: "image";
-            };
-            location?: {
-              name: string;
-              street: string;
-              houseNumber: string;
-              zipCode?: string;
-              city: string;
-            };
-          };
-          note?: string;
-        }> | null;
-      } | null;
-    }
-  | {
-      description: SimpleBlockContent;
-      featuredImage: null;
-      images: null;
-      meta: null;
-      title: string;
-      training: null;
-    }
-  | {
-      description: null;
-      featuredImage: MainImage;
-      images: null;
-      meta: {
-        metaTitle: string | null;
-        metaDescription: string | null;
-        openGraphImage: {
-          asset?: SanityImageAssetReference;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          alt?: string;
-          _type: "image";
-        } | null;
-      } | null;
-      title: string;
-      training: null;
-    }
-  | {
-      description: null;
-      featuredImage: null;
-      images: null;
-      meta: null;
-      title: null;
-      training: null;
-    }
-  | {
-      description: null;
-      featuredImage: null;
-      images: null;
-      meta: null;
-      title: string;
-      training: null;
-    }
-  | {
-      description: null;
-      featuredImage: null;
-      images: null;
-      meta: null;
-      title: string | null;
-      training: null;
-    }
-  | {
-      description: null;
-      featuredImage: null;
-      images: null;
-      meta: {
-        metaTitle: string | null;
-        metaDescription: string | null;
-        openGraphImage: {
-          asset?: SanityImageAssetReference;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          alt?: string;
-          _type: "image";
-        } | null;
-      } | null;
-      title: null;
-      training: null;
-    }
-  | {
-      description: null;
-      featuredImage: null;
-      images: null;
-      meta: {
-        metaTitle: string | null;
-        metaDescription: string | null;
-        openGraphImage: {
-          asset?: SanityImageAssetReference;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          alt?: string;
-          _type: "image";
-        } | null;
-      } | null;
-      title: string;
-      training: null;
-    }
-  | {
-      description: string | null;
-      featuredImage: null;
-      images: null;
-      meta: null;
-      title: string | null;
-      training: null;
-    }
-  | null;
+        };
+        location?: {
+          name: string;
+          street: string;
+          houseNumber: string;
+          zipCode?: string;
+          city: string;
+        };
+      };
+      note?: string;
+    }> | null;
+  } | null;
+} | null;
 
 // Source: src/lib/sanity/queries/pages/offer-groups-group.ts
-// Variable: offerGroupsGroupPageContactPersonsQuery
-// Query: *[		_type == 'person' &&		defined(affiliations[team->slug.current == $slug][0])	]|order(lastName asc) {		_id,		firstName,		lastName,		phone,		image,		contactAs,		"email": affiliations[team->slug.current == $slug][0].team->email,		"role":  affiliations[team->slug.current == $slug][0].role->title,		"team":  affiliations[team->slug.current == $slug][0].team->title,		"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,	}
-export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
+// Variable: groupContactPersonsQuery
+// Query: *[		_type == 'person' &&		defined(affiliations[team._ref == $groupId][0])	]|order(lastName asc) {		_id,		firstName,		lastName,		phone,		image,		contactAs,		"email": affiliations[team._ref == $groupId][0].team->email,		"role":  affiliations[team._ref == $groupId][0].role->title,		"team":  affiliations[team._ref == $groupId][0].team->title,		"taskDescription": affiliations[team._ref == $groupId][0].taskDescription,	}
+export type GroupContactPersonsQueryResult = Array<{
   _id: string;
   firstName: string;
   lastName: string;
@@ -3814,9 +3717,9 @@ export type OfferGroupsGroupPageContactPersonsQueryResult = Array<{
 }>;
 
 // Source: src/lib/sanity/queries/pages/offer-groups-group.ts
-// Variable: offerGroupsGroupPageNewsQuery
-// Query: *[_type == $groupType && slug.current == $slug][0].newsCategory-> {		_type,		title,		"slug": slug.current,		"articles": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {				_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,		}	}
-export type OfferGroupsGroupPageNewsQueryResult = {
+// Variable: groupNewsQuery
+// Query: *[_id == $groupId][0].newsCategory-> {		_type,		title,		"slug": slug.current,		"articles": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {				_id,	publishedAt,	author->{ firstName, lastName, image },	categories[]->{ title, "slug": slug.current },	excerpt,	meta { metaTitle, metaDescription, openGraphImage},	featuredImage,	"slug": slug.current,	title,		}	}
+export type GroupNewsQueryResult = {
   _type: "news.category";
   title: string;
   slug: string;
@@ -3850,6 +3753,32 @@ export type OfferGroupsGroupPageNewsQueryResult = {
     title: string;
   }>;
 } | null;
+
+// Source: src/lib/sanity/queries/pages/offer-groups-group.ts
+// Variable: groupRedirectQuery
+// Query: {	"inDepartment": *[			_type == 'group' &&	defined(department->slug.current) &&	!(_id in path('drafts.**')) &&		slug.current == $slug &&		$department in department->previousSlugs	] | order(_updatedAt desc) [0] {	"departmentSlug": department->slug.current,	"slug": slug.current,},	"byPreviousPath": *[			_type == 'group' &&	defined(department->slug.current) &&	!(_id in path('drafts.**')) &&		($department + "/" + $slug) in previousPaths	] | order(_updatedAt desc) [0] {	"departmentSlug": department->slug.current,	"slug": slug.current,},	"byDepartmentHistory": *[			_type == 'group' &&	defined(department->slug.current) &&	!(_id in path('drafts.**')) &&		count(previousPaths[			@ == string::split(@, "/")[0] + "/" + $slug &&			string::split(@, "/")[0] in (				*[	_type == 'department' &&	(slug.current == $department || $department in previousSlugs) &&	!(_id in path('drafts.**'))].slug.current + *[	_type == 'department' &&	(slug.current == $department || $department in previousSlugs) &&	!(_id in path('drafts.**'))].previousSlugs[]			)		]) > 0	] | order(_updatedAt desc) [0] {	"departmentSlug": department->slug.current,	"slug": slug.current,},}
+export type GroupRedirectQueryResult = {
+  inDepartment: {
+    departmentSlug: string;
+    slug: string;
+  } | null;
+  byPreviousPath: {
+    departmentSlug: string;
+    slug: string;
+  } | null;
+  byDepartmentHistory: {
+    departmentSlug: string;
+    slug: string;
+  } | null;
+};
+
+// Source: src/lib/sanity/queries/pages/offer-groups-group.ts
+// Variable: groupStaticParamsQuery
+// Query: *[_type == 'group' && defined(slug.current) && defined(department->slug.current)] {		"group": department->slug.current,		"singleGroup": slug.current	}
+export type GroupStaticParamsQueryResult = Array<{
+  group: string;
+  singleGroup: string;
+}>;
 
 // Source: src/lib/sanity/queries/pages/offer-groups.ts
 // Variable: offerGroupsPageQuery
@@ -4423,9 +4352,11 @@ declare global {
     '\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
     '\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
     "*[_type == 'singleGroupPage'][0]": OfferGroupsGroupPageQueryResult;
-    "\n\t*[_type == $groupType && slug.current == $slug][0] {\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n": OfferGroupsGroupPageGroupsQueryResult;
-    '\n\t*[\n\t\t_type == \'person\' &&\n\t\tdefined(affiliations[team->slug.current == $slug][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t"email": affiliations[team->slug.current == $slug][0].team->email,\n\t\t"role":  affiliations[team->slug.current == $slug][0].role->title,\n\t\t"team":  affiliations[team->slug.current == $slug][0].team->title,\n\t\t"taskDescription": affiliations[team->slug.current == $slug][0].taskDescription,\n\t}\n': OfferGroupsGroupPageContactPersonsQueryResult;
-    '\n\t*[_type == $groupType && slug.current == $slug][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"articles": *[_type == \'news.article\' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n': OfferGroupsGroupPageNewsQueryResult;
+    "\n\t*[\n\t\t_type == 'group' &&\n\t\tslug.current == $slug &&\n\t\tdefined(department->slug.current) &&\n\t\tdepartment->slug.current == $department\n\t][0] {\n\t\t_id,\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\t\"isTeamSport\": department->isTeamSport,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n": GroupPageQueryResult;
+    '\n\t*[\n\t\t_type == \'person\' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t"email": affiliations[team._ref == $groupId][0].team->email,\n\t\t"role":  affiliations[team._ref == $groupId][0].role->title,\n\t\t"team":  affiliations[team._ref == $groupId][0].team->title,\n\t\t"taskDescription": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n': GroupContactPersonsQueryResult;
+    '\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"articles": *[_type == \'news.article\' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n': GroupNewsQueryResult;
+    '{\n\t"inDepartment": *[\n\t\t\n\t_type == \'group\' &&\n\tdefined(department->slug.current) &&\n\t!(_id in path(\'drafts.**\'))\n &&\n\t\tslug.current == $slug &&\n\t\t$department in department->previousSlugs\n\t] | order(_updatedAt desc) [0] {\n\t"departmentSlug": department->slug.current,\n\t"slug": slug.current,\n},\n\t"byPreviousPath": *[\n\t\t\n\t_type == \'group\' &&\n\tdefined(department->slug.current) &&\n\t!(_id in path(\'drafts.**\'))\n &&\n\t\t($department + "/" + $slug) in previousPaths\n\t] | order(_updatedAt desc) [0] {\n\t"departmentSlug": department->slug.current,\n\t"slug": slug.current,\n},\n\t"byDepartmentHistory": *[\n\t\t\n\t_type == \'group\' &&\n\tdefined(department->slug.current) &&\n\t!(_id in path(\'drafts.**\'))\n &&\n\t\tcount(previousPaths[\n\t\t\t@ == string::split(@, "/")[0] + "/" + $slug &&\n\t\t\tstring::split(@, "/")[0] in (\n\t\t\t\t*[\n\t_type == \'department\' &&\n\t(slug.current == $department || $department in previousSlugs) &&\n\t!(_id in path(\'drafts.**\'))\n].slug.current + *[\n\t_type == \'department\' &&\n\t(slug.current == $department || $department in previousSlugs) &&\n\t!(_id in path(\'drafts.**\'))\n].previousSlugs[]\n\t\t\t)\n\t\t]) > 0\n\t] | order(_updatedAt desc) [0] {\n\t"departmentSlug": department->slug.current,\n\t"slug": slug.current,\n},\n}': GroupRedirectQueryResult;
+    '\n\t*[_type == \'group\' && defined(slug.current) && defined(department->slug.current)] {\n\t\t"group": department->slug.current,\n\t\t"singleGroup": slug.current\n\t}\n': GroupStaticParamsQueryResult;
     "*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
     '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
     '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tintroText { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': PrivacyPageQueryResult;

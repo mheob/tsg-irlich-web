@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vite-plus/test';
 
-import type { GroupDance, SimpleBlockContent } from '@/types/sanity.types';
+import type { Group, SimpleBlockContent } from '@/types/sanity.types';
 
 import { renderWithUser } from '../../../../../../test-utils/render';
 import { Main } from './main';
@@ -31,13 +31,13 @@ function buildDescription(): SimpleBlockContent {
 	} as unknown as SimpleBlockContent;
 }
 
-function buildGallery(count: number): GroupDance['images'] {
+function buildGallery(count: number): Group['images'] {
 	// The generated type carries more fields than a fixture needs to name.
 	return Array.from({ length: count }, (_unused, index) => ({
 		_key: `image-${index + 1}`,
 		alt: `Bild ${index + 1}`,
 		asset: { _ref: ASSET_REF, _type: 'reference' },
-	})) as unknown as GroupDance['images'];
+	})) as unknown as Group['images'];
 }
 
 describe('the main section of a group', () => {
