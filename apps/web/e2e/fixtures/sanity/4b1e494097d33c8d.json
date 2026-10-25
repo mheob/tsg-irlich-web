@@ -1,0 +1,204 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "ef8eedfd-a1a1-4327-b4ce-cfb8f5a02611",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "jedermanner",
+							"title": "Jedermänner"
+						},
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						}
+					],
+					"excerpt": "Die Jedermänner waren vier Tage in Stuttgart unterwegs. Tolle Programmpunkte und jede Menge Geselligkeit sorgten für eine abwechslungsreiche Tour.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Alle Teilnehmer der Tour gemeinsam auf einem Gruppenbild in der Innenstadt von Stuttgart",
+						"asset": {
+							"_ref": "image-86d4d16093925a4b63a45512f999616e1e4b109f-5849x3462-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.7099261658106689,
+							"width": 0.8020367878348228,
+							"x": 0.46650233819692516,
+							"y": 0.4624717750795386
+						}
+					},
+					"meta": {
+						"metaDescription": "Die Jedermänner waren vier Tage in Stuttgart unterwegs. Tolle Programmpunkte und jede Menge Geselligkeit sorgten für eine abwechslungsreiche Tour.",
+						"metaTitle": "Jedermänner der TSG Irlich auf Tour in Stuttgart",
+						"openGraphImage": null
+					},
+					"publishedAt": "2026-09-15T15:00:00.000Z",
+					"slug": "jedermaenner-unterwegs-stuttgart",
+					"title": "Jedermänner unterwegs: Vier abwechslungsreiche Tage in Stuttgart"
+				},
+				{
+					"_id": "0618bcc7-4f5a-4b5c-9020-de3bcc0a4746",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						},
+						{
+							"slug": "jedermanner",
+							"title": "Jedermänner"
+						}
+					],
+					"excerpt": "Erlebe die Abenteuer der Jedermänner an der Nordseeküste: Radtouren, Dünenwanderungen und unvergessliche Sonnenuntergänge erwarten dich!",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Die Jedermänner in den Dünen bei Dämmerung, umgeben von sanften Licht- und Schatteneffekten.",
+						"asset": {
+							"_ref": "image-a364589e9f53592367bc67c4c515029ab2795caa-5712x4284-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.13991519645444472,
+							"left": 0,
+							"right": 0,
+							"top": 0.10998892013977672
+						},
+						"description": "Die Jedermänner während der Dämmerung in den Dühnen.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.7500958834057786,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.485036861842666
+						}
+					},
+					"meta": {
+						"metaDescription": "Die Jedermänner der TSG Irlich genossen vom 27.-30. Juni eine unvergessliche Tour an die Nordseeküste mit Radfahren, Wandern und Meer.",
+						"metaTitle": "Jedermänner-Abenteuer: TSG Irlichs Nordsee-Radtour",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-10-04T08:24:00.000Z",
+					"slug": "jedermaenner-unterwegs-egmond-aan-zee",
+					"title": "Jedermänner unterwegs in Egmond aan Zee!"
+				},
+				{
+					"_id": "080323a9-68af-4641-a543-9db54aea81e7",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "jedermanner",
+							"title": "Jedermänner"
+						}
+					],
+					"excerpt": "Neben dem wöchentlichen Sportprogramm ist den Jedermännern der TSG Irlich auch der gesellschaftliche Aspekt sehr wichtig, so ergab sich auch für das vergangene Jahr wieder eine Tour. Für die 13-köpfige Gruppe ging es nach Bremen und Bremerhaven. ",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Jedermänner auf einem Gruppenbild stehend vor der Statue der Bremer Stadtmusikanten",
+						"asset": {
+							"_ref": "image-e17669b8a5df978ed5e7eb7a6c67e4e9f74cff92-4032x3024-jpg",
+							"_type": "reference"
+						}
+					},
+					"meta": null,
+					"publishedAt": "2024-06-25T14:00:00.000Z",
+					"slug": "jedermaenner-jahres-tour-bremen-bremerhaven",
+					"title": "Jedermänner on Tour: Jahres-Tour nach Bremen und Bremerhaven  "
+				}
+			],
+			"slug": "jedermanner",
+			"title": "Jedermänner"
+		},
+		"syncTags": ["s1:GNFE5A", "s1:mCzbTw", "s1:sabkUA", "s1:SvG3tg", "s1:gDNQog"],
+		"ms": 12
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-99a99cb7-a09c-4e81-9ace-453367c48b1f%22&perspective=published&tag=next-loader.fetch"
+}

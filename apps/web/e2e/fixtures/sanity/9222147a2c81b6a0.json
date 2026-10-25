@@ -1,0 +1,152 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "3b05bd62-d40d-426a-9af0-62dbbc9859ab",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "alte-herren",
+							"title": "Alte Herren"
+						},
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						}
+					],
+					"excerpt": "Erlebe die Abenteuer der TSG Irlich \"Alten Herren\" auf ihrer fröhlichen Kanu-Tour nach Wetzlar – Spaß und Gemeinschaft pur!",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Die Alten Herren auf Tour, lächelnd und in Freizeitkleidung.",
+						"asset": {
+							"_ref": "image-0325a8160873301f97efcea3f2525de5de997724-1130x1155-png",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Die Alten Herren auf Tour.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5466032786241353,
+							"width": 0.9329961392910618,
+							"x": 0.5,
+							"y": 0.65568441637605
+						}
+					},
+					"meta": {
+						"metaDescription": "Erlebe das Abenteuer der Alten Herren auf einer fröhlichen Kanu-Tour nach Wetzlar. Spaß, Gemeinschaft und unvergessliche Momente garantiert!",
+						"metaTitle": "TSG Irlich: Kanu-Abenteuer auf der Lahn mit viel Spaß",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-09-12T19:30:00.000Z",
+					"slug": "alte-herren-kanu-tour",
+					"title": "Alte Herren der TSG Irlich auf Kanu-Tour"
+				},
+				{
+					"_id": "6b377e52-0876-4a23-a7f5-32fa2c5b3403",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "alte-herren",
+							"title": "Alte Herren"
+						},
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						}
+					],
+					"excerpt": "Im Mai vergangenen Jahres, war es wieder einmal soweit. Die Alten Herren der TSG Irlich brachen zu elft nach Holland auf, um gemeinsam eine Tour zu starten. ",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Yachttour der Alten Herren",
+						"asset": {
+							"_ref": "image-253a77f3d0389031d383cd206c9dbe0ae3025f72-1600x1200-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.32029360246892985,
+							"left": 0.09208621533111017,
+							"right": 0.19217992764753436,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.4021186087246644,
+							"width": 0.543572671837106,
+							"x": 0.4339381498711601,
+							"y": 0.3238385186420886
+						}
+					},
+					"meta": null,
+					"publishedAt": "2024-06-15T11:00:00.000Z",
+					"slug": "alte-herren-starten-yacht-tour",
+					"title": "Alte Herren starten Yacht-Tour übers Pfingstwochenende "
+				}
+			],
+			"slug": "alte-herren",
+			"title": "Alte Herren"
+		},
+		"syncTags": ["s1:vKqJ4Q", "s1:GNFE5A", "s1:Ik/M0w", "s1:PMMwPw", "s1:c5Grjg", "s1:gDNQog"],
+		"ms": 13
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-42490d75-7576-4d76-902a-be9e7a454cf2%22&perspective=published&tag=next-loader.fetch"
+}

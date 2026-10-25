@@ -1,0 +1,93 @@
+{
+	"body": {
+		"result": [
+			{
+				"_id": "department-fussball",
+				"cardImage": {
+					"_type": "extendedImage",
+					"alt": "Fußball",
+					"asset": {
+						"_ref": "image-296ec6f2144c28e6cd712e21f1d4220e273c8cee-480x270-webp",
+						"_type": "reference"
+					}
+				},
+				"icon": "Fussball",
+				"slug": "fussball",
+				"title": "Fußball"
+			},
+			{
+				"_id": "department-kinderturnen",
+				"cardImage": {
+					"_type": "extendedImage",
+					"alt": "Kinderturnen",
+					"asset": {
+						"_ref": "image-d90f42075526cbae1d7ee0ec4c83ad8d78c6cc71-480x270-webp",
+						"_type": "reference"
+					}
+				},
+				"icon": "Turnen",
+				"slug": "kinderturnen",
+				"title": "Kinderturnen"
+			},
+			{
+				"_id": "department-kurse",
+				"cardImage": {
+					"_type": "extendedImage",
+					"alt": "Kurse",
+					"asset": {
+						"_ref": "image-74fee33475089a4d7c5f9cc881f2f7a678e037fc-480x270-webp",
+						"_type": "reference"
+					}
+				},
+				"icon": "StepAerobic",
+				"slug": "kurse",
+				"title": "Kurse"
+			},
+			{
+				"_id": "department-taekwondo",
+				"cardImage": {
+					"_type": "extendedImage",
+					"alt": "Taekwondo",
+					"asset": {
+						"_ref": "image-c02ce926f61df756520663ded663a836656c949e-480x270-webp",
+						"_type": "reference"
+					}
+				},
+				"icon": "Taekwondo",
+				"slug": "taekwondo",
+				"title": "Taekwondo"
+			},
+			{
+				"_id": "department-tanzen",
+				"cardImage": {
+					"_type": "extendedImage",
+					"alt": "Tanzen",
+					"asset": {
+						"_ref": "image-79cd294bb474744bc1b1fef4a9ef72578ed7cf09-480x270-webp",
+						"_type": "reference"
+					}
+				},
+				"icon": "Tanzen",
+				"slug": "tanzen",
+				"title": "Tanzen"
+			},
+			{
+				"_id": "department-weitere-sportarten",
+				"cardImage": {
+					"_type": "extendedImage",
+					"alt": "Weitere Sportarten",
+					"asset": {
+						"_ref": "image-6c63c5637f346af6a5f77e4e9d38f4e6df5df6e3-480x270-webp",
+						"_type": "reference"
+					}
+				},
+				"icon": "Fitness",
+				"slug": "weitere-sportarten",
+				"title": "Weitere Sportarten"
+			}
+		],
+		"syncTags": ["s1:0+17mg"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09_id%2C%0A%09%09cardImage%2C%0A%09%09icon%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&returnQuery=false"
+}

@@ -1,0 +1,208 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'department' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t\"groups\": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"contactPersons\": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  \"email\": affiliations[0].role->email,\n  \"role\": affiliations[0].role->title,\n  \"taskDescription\": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n",
+		"result": {
+			"_id": "department-kinderturnen",
+			"cardImage": {
+				"_type": "extendedImage",
+				"alt": "Kinderturnen",
+				"asset": {
+					"_ref": "image-d90f42075526cbae1d7ee0ec4c83ad8d78c6cc71-480x270-webp",
+					"_type": "reference"
+				}
+			},
+			"contactPersons": [
+				{
+					"_id": "d191c9ee-bb52-48ed-8aef-57ce2a5af9d1",
+					"contactAs": "both",
+					"email": "breitensport@tsg-irlich.de",
+					"firstName": "Melanie ",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+						"asset": {
+							"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+							"_type": "reference"
+						}
+					},
+					"lastName": "Klein",
+					"phone": "+49 171 9941807",
+					"role": "Abteilungsleitung Breitensport",
+					"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+				}
+			],
+			"groups": [
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Teilnehmerinnen und Teilnehmer der Gruppe\"Eltern-Kind Turnen\" in einer Turnhalle",
+						"asset": {
+							"_ref": "image-0ea01f0544b657739e4cf5a780dd3d3b437ec53e-5712x4284-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.02581536182166247,
+							"left": 0,
+							"right": 0.010938698542572234,
+							"top": 0.221891777952057
+						},
+						"description": "Gruppenbild der Abteilung Eltern-Kind Turnen ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.43892227051904886,
+							"width": 0.9890613014574278,
+							"x": 0.4945306507287139,
+							"y": 0.5417678769283218
+						}
+					},
+					"icon": "ElternKindTurnen",
+					"overviewTitle": null,
+					"slug": "eltern-kind-turnen",
+					"title": "Eltern-Kind Turnen"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Teilnehmerinnen und Teilnehmer der Gruppe \"Kinderturnen 3-6 \" in einer Turnhalle.",
+						"asset": {
+							"_ref": "image-fc0dfa32c474237c72af6f10732fdb0c6d5f4606-4032x3024-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.24391673058893718,
+							"left": 0.07689050115060087,
+							"right": 0.15305388647404755,
+							"top": 0.161550856296814
+						},
+						"description": "Gruppenbild der Abteilung Kinderturnen 3-6 Jahre ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.3746433481380205,
+							"width": 0.7700243330902524,
+							"x": 0.4619026676957271,
+							"y": 0.46110040591841417
+						}
+					},
+					"icon": "Turnen",
+					"overviewTitle": null,
+					"slug": "kinderturnen-ab-3",
+					"title": "Kinderturnen 3-6 Jahre"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Teilnehmerinnen und Teilnehmer der Gruppe \"Kinderturnen 6-8\" in einer Turnhalle.",
+						"asset": {
+							"_ref": "image-166d2a6ec9bbf0141dcb7c0f8ed61b4f291555c9-4032x3024-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.08660402284155799,
+							"left": 0.1059671439529532,
+							"right": 0.08066191511122475,
+							"top": 0.19267237705616636
+						},
+						"description": "Gruppenbild der Abteilung Kinderturnen 6-8 Jahre",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6072402625074576,
+							"width": 0.6978793786755304,
+							"x": 0.5137313027358732,
+							"y": 0.6097758459047132
+						}
+					},
+					"icon": "Turnen",
+					"overviewTitle": null,
+					"slug": "kinderturnen-ab-6",
+					"title": "Kinderturnen 6-8 Jahre"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Teilnehmerinnen und Teilnehmer der Gruppe \"Kinderturnen 8-13\" in einer Turnhalle.",
+						"asset": {
+							"_ref": "image-271e661745127df166f88294f2984c63847067a7-4032x3024-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Gruppenbild der Abteilung Kinderturnen 8-13 Jahre",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.2862855192037955,
+							"width": 0.4675211146981383,
+							"x": 0.4959963993586326,
+							"y": 0.44315619524713057
+						}
+					},
+					"icon": "Turnen",
+					"overviewTitle": null,
+					"slug": "kinderturnen-ab-8",
+					"title": "Kinderturnen 8-13 Jahre"
+				}
+			],
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Kinderturnen",
+				"asset": {
+					"_ref": "image-d7a2119f68fa97b8c0f933fd2a9ee32bf9973c0f-2560x1230-webp",
+					"_type": "reference"
+				}
+			},
+			"intro": null,
+			"meta": {
+				"metaDescription": null,
+				"metaTitle": null,
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Kinderturnen",
+					"asset": {
+						"_ref": "image-e9b605be7ddf49665dd7ef47851ed2188cb36e26-1200x630-webp",
+						"_type": "reference"
+					}
+				}
+			},
+			"stats": [
+				{
+					"_key": "kinderturnen-stat-1",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "Fußball-Teams",
+					"value": 10
+				},
+				{
+					"_key": "kinderturnen-stat-2",
+					"_type": "stats",
+					"title": "Breitensportgruppen ",
+					"value": 20
+				},
+				{
+					"_key": "kinderturnen-stat-3",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Kinder/Jugendliche",
+					"value": 250
+				},
+				{
+					"_key": "kinderturnen-stat-4",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Sportler ",
+					"value": 420
+				}
+			],
+			"title": "Kinderturnen"
+		},
+		"syncTags": ["s1:mjjZ4A", "s1:uMx6JQ", "s1:WU9DBg", "s1:B7LhMw"],
+		"ms": 11
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09intro%2C%0A%09%09cardImage%2C%0A%09%09heroImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09stats%2C%0A%09%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+department._ref+%3D%3D+%5E._id+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09%09featuredImage%2C%0A%09%09%09icon%2C%0A%09%09%09overviewTitle%2C%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%2C%0A%09%09%7D%2C%0A%09%09%22contactPersons%22%3A+contactPersons%5B%5D-%3E+%7B%0A%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%7D%2C%0A%09%7D%0A&%24slug=%22kinderturnen%22&perspective=published&tag=next-loader.fetch"
+}

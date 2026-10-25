@@ -1,0 +1,76 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'person' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t\"email\": affiliations[team._ref == $groupId][0].team->email,\n\t\t\"role\":  affiliations[team._ref == $groupId][0].role->title,\n\t\t\"team\":  affiliations[team._ref == $groupId][0].team->title,\n\t\t\"taskDescription\": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n",
+		"result": [
+			{
+				"_id": "375b6fc5-0a51-4e08-8cbf-b7187d83878c",
+				"contactAs": "both",
+				"email": "e-jugend@tsg-irlich.de",
+				"firstName": "Anouar",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Trainer Anouar Mallmann in einen blauen Shirt der JSG Irlich/Wied",
+					"asset": {
+						"_ref": "image-c27e1a7440cd79ac91d588d183e44b2df806f054-4000x6000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.2612915632750605,
+						"left": 0.18018316335871354,
+						"right": 0.21336421233369054,
+						"top": 0.14348982147057487
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.39672337707746735,
+						"width": 0.4549622956219922,
+						"x": 0.4888436077708094,
+						"y": 0.36521818918273014
+					}
+				},
+				"lastName": "Mallmann",
+				"phone": "+49 176 45606734",
+				"role": "Co-Trainer",
+				"taskDescription": "Als Co-Trainer unserer U11 unterstütze ich den Trainer im abwechslungsreichen Trainingsalltag. Ich helfe bei Übungen, begleite Spielformen und sorge dafür, dass jedes Kind viele Ballkontakte und Spaß am Fußball hat. Zudem unterstütze ich bei kleinen Spielen, Turnieren und organisatorischen Aufgaben.",
+				"team": "E-Jugend"
+			},
+			{
+				"_id": "007ad11a-0d59-4225-883f-5e91794cbc59",
+				"contactAs": "both",
+				"email": "e-jugend@tsg-irlich.de",
+				"firstName": "Christian",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Jugendrainer Christian Walldorf in einen Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-0bc944f9219c6d78b67cd412897f0e6004b27095-4000x6000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.07142497562704551,
+						"left": 0.1016937496112429,
+						"right": 0.1481241679592032,
+						"top": 0.22403611907918425
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.48651627846429235,
+						"width": 0.5770552471583398,
+						"x": 0.478852762357917,
+						"y": 0.5001553773772467
+					}
+				},
+				"lastName": "Walldorf",
+				"phone": "+49 151 53202878",
+				"role": "Trainer",
+				"taskDescription": "Als Trainer unserer U11 gestalte ich Trainingseinheiten mit vielen Ballaktionen und altersgerechten Spielformen. Ich fördere Technik, Kreativität und Kooperation, organisiere kleine Spiele und Turniere und sorge dafür, dass jedes Kind Freude am Fußball hat.",
+				"team": "E-Jugend"
+			}
+		],
+		"syncTags": ["s1:hC9C9g", "s1:mWzJLg", "s1:MdmizQ", "s1:qeRn9g"],
+		"ms": 15
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27person%27+%26%26%0A%09%09defined%28affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D%29%0A%09%5D%7Corder%28lastName+asc%29+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09phone%2C%0A%09%09image%2C%0A%09%09contactAs%2C%0A%09%09%22email%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Eemail%2C%0A%09%09%22role%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.role-%3Etitle%2C%0A%09%09%22team%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Etitle%2C%0A%09%09%22taskDescription%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.taskDescription%2C%0A%09%7D%0A&%24groupId=%22group-751bf33f-4a6f-4b4d-83b0-628778d85bea%22&perspective=published&tag=next-loader.fetch"
+}

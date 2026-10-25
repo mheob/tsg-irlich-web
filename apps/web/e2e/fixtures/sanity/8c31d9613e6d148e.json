@@ -1,0 +1,76 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'person' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t\"email\": affiliations[team._ref == $groupId][0].team->email,\n\t\t\"role\":  affiliations[team._ref == $groupId][0].role->title,\n\t\t\"team\":  affiliations[team._ref == $groupId][0].team->title,\n\t\t\"taskDescription\": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n",
+		"result": [
+			{
+				"_id": "811ce855-195c-4263-9812-0e757ba583c2",
+				"contactAs": "both",
+				"email": "b-jugend@tsg-irlich.de",
+				"firstName": "Björn",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Jugendtrainer Björn Dahlem in einem schwarzen Shirt der JSG Irlich/Wied",
+					"asset": {
+						"_ref": "image-97822d77ce46b5775cc26f0edcf3f0bbbf00c477-3024x4032-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.2796599762210861,
+						"left": 0.2625762311955801,
+						"right": 0.247299928066689,
+						"top": 0.28633137377813145
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.3528169290158732,
+						"width": 0.45333892046669705,
+						"x": 0.5240837976648458,
+						"y": 0.48404130603615686
+					}
+				},
+				"lastName": "Dahlem",
+				"phone": "+49 173 6768013",
+				"role": "Trainer",
+				"taskDescription": "Als B-Jugend-Trainer gestalte ich altersgerechte Trainings, vermittle Spielverständnis und grundlegende Taktik. Ich unterstütze die körperliche und technische Entwicklung, motiviere zu fairem Wettkampf und stärke den Zusammenhalt der Mannschaft.",
+				"team": "B-Jugend"
+			},
+			{
+				"_id": "3b7a03fc-f06f-4bb6-968a-d7b27077bbda",
+				"contactAs": "email",
+				"email": "b-jugend@tsg-irlich.de",
+				"firstName": "Benjamin",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "U17 Trainer Ben Oster",
+					"asset": {
+						"_ref": "image-5fb1cfb36d52dc5b1e83635276393c878cde45e0-3024x4032-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.3081905735958409,
+						"left": 0.22910340388512454,
+						"right": 0.2727421474822911,
+						"top": 0.24546151879314754
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4463479076110116,
+						"width": 0.4981544486325844,
+						"x": 0.4781806282014167,
+						"y": 0.4686354725986533
+					}
+				},
+				"lastName": "Oster",
+				"phone": null,
+				"role": "Trainer",
+				"taskDescription": "Als B-Jugend-Trainer gestalte ich altersgerechte Trainings, schule Technik und Taktik und begleite die Spieler in ihrer fußballerischen Entwicklung. Ich motiviere zu fairem Wettkampf, fördere Teamgeist und Zusammenhalt und sorge dafür, dass jeder Spieler Spaß am Spiel hat.",
+				"team": "B-Jugend"
+			}
+		],
+		"syncTags": ["s1:MdmizQ", "s1:EI9j8A", "s1:mWzJLg"],
+		"ms": 15
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27person%27+%26%26%0A%09%09defined%28affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D%29%0A%09%5D%7Corder%28lastName+asc%29+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09phone%2C%0A%09%09image%2C%0A%09%09contactAs%2C%0A%09%09%22email%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Eemail%2C%0A%09%09%22role%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.role-%3Etitle%2C%0A%09%09%22team%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Etitle%2C%0A%09%09%22taskDescription%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.taskDescription%2C%0A%09%7D%0A&%24groupId=%22group-f4df4614-78f5-458a-9b69-41a2c2c34183%22&perspective=published&tag=next-loader.fetch"
+}

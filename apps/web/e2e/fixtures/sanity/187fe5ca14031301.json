@@ -1,0 +1,81 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'person' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t\"email\": affiliations[team._ref == $groupId][0].team->email,\n\t\t\"role\":  affiliations[team._ref == $groupId][0].role->title,\n\t\t\"team\":  affiliations[team._ref == $groupId][0].team->title,\n\t\t\"taskDescription\": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n",
+		"result": [
+			{
+				"_id": "9c58643b-2840-4de7-ad07-3f98ab2d733c",
+				"contactAs": "both",
+				"email": "funky-diamonds@tsg-irlich.de",
+				"firstName": "Lena",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Lena Christmann  in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand ",
+					"asset": {
+						"_ref": "image-06c444019150ce92e2af70d61870fef0096141a2-1080x1080-webp",
+						"_type": "reference"
+					}
+				},
+				"lastName": "Christmann",
+				"phone": "+49 160 92489385",
+				"role": "Übungsleiterin",
+				"taskDescription": "Ich bin verantwortlich für die Organisation des Trainingsbetriebs, die Auftrittsplanung und die Betreuung und Weiterentwicklung der Gruppe. Ich fördere die sportliche & persönliche Entwicklung der Tänzerinnen und Tänzer.",
+				"team": "Funky Diamonds"
+			},
+			{
+				"_id": "58f4c2a4-4433-48d8-aca8-fceb84a8e74a",
+				"contactAs": "email",
+				"email": "funky-diamonds@tsg-irlich.de",
+				"firstName": "Nina ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Nina Meickmann in einer schwarzen TSG Irlich Jacke vor einer weißen Leinwand ",
+					"asset": {
+						"_ref": "image-d290ed37bb1087a73cf5c5a2cb3d25075dd9ef22-4000x6000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.4479988984762254,
+						"left": 0.2687488525794015,
+						"right": 0.25633376170369016,
+						"top": 0.09854048099871494
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.45346062052505964,
+						"width": 0.47491738571690834,
+						"x": 0.5062075454378556,
+						"y": 0.32527079126124475
+					}
+				},
+				"lastName": "Meickmann",
+				"phone": "+49 157 38276203",
+				"role": "Übungsleiterin",
+				"taskDescription": "Ich bin verantwortlich für die Organisation des Trainingsbetriebs, die Planung von Hebefiguren und die Betreuung und Weiterentwicklung der Gruppe. Ich fördere die sportliche & persönliche Entwicklung der Tänzerinnen und Tänzer.",
+				"team": "Funky Diamonds"
+			},
+			{
+				"_id": "52593415-4167-412e-9092-a691745c53cb",
+				"contactAs": "both",
+				"email": "funky-diamonds@tsg-irlich.de",
+				"firstName": "Marissa ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Marissa Schlösser in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand ",
+					"asset": {
+						"_ref": "image-06a0c10edb4a96c030267a4bc83b0e83aa1398f1-1080x1080-webp",
+						"_type": "reference"
+					}
+				},
+				"lastName": "Schlösser",
+				"phone": "+49 1520 3003826",
+				"role": "Übungsleiterin",
+				"taskDescription": "Ich bin verantwortlich für die Organisation des Trainingsbetriebs, die Kostümentwicklung und fungiere als Bindeglied zwischen Aktiven und Vorstand. Außerdem bin ich an der Auftrittsplanung beteiligt. Ich fördere die sportliche & persönliche Entwicklung der Tänzerinnen und Tänzer.",
+				"team": "Funky Diamonds"
+			}
+		],
+		"syncTags": ["s1:mWzJLg", "s1:fZZ15w", "s1:w5t4Lw"],
+		"ms": 18
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27person%27+%26%26%0A%09%09defined%28affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D%29%0A%09%5D%7Corder%28lastName+asc%29+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09phone%2C%0A%09%09image%2C%0A%09%09contactAs%2C%0A%09%09%22email%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Eemail%2C%0A%09%09%22role%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.role-%3Etitle%2C%0A%09%09%22team%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Etitle%2C%0A%09%09%22taskDescription%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.taskDescription%2C%0A%09%7D%0A&%24groupId=%22group-4d6fb5c8-26c1-4c52-8023-fe39e4dbc925%22&perspective=published&tag=next-loader.fetch"
+}

@@ -1,0 +1,227 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "dc106ab7-caa4-47b7-8c95-3b03b76c6948",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						},
+						{
+							"slug": "wandern",
+							"title": "Wandern"
+						}
+					],
+					"excerpt": "Glühwein, Kinderpunsch und ein Besuch vom Nikolaus: Die Wandergruppe der TSG Irlich war auf Adventswanderung. Ein Rückblick auf die winterliche Tour.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Wanderer genießen Glühwein und Plätzchen vor einem weißen Häuschen in winterlicher Landschaft.",
+						"asset": {
+							"_ref": "image-d0f796bb28cb952c880f8c3aeed147d4e5b4377c-1600x1204-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.2407312707747379,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Wanderer am weißen Häuschen während sie Glühwein und Plätzen zur Stärkung zu sich nehmen.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.445452995823745,
+							"width": 0.8806592622648513,
+							"x": 0.5,
+							"y": 0.37963436461263106
+						}
+					},
+					"meta": {
+						"metaDescription": "Adventswanderung der TSG Irlich 2024: Von der Robert-Krups-Schule über Fliegerwiese und Buchbach zum Hanhof. Rückblick auf die traditionelle Wintertour.",
+						"metaTitle": "Irlicher Wanderer wünschen ein frohes Fest und einen guten Rutsch",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-12-19T13:43:00.000Z",
+					"slug": "adventswanderung-2025-irlicher-wanderer-wuenschen-frohes-fest-guten-rutsch-ins-neue-jahr",
+					"title": "Adventswanderung 2025 – Irlicher Wanderer wünschen ein frohes Fest und einen guten Rutsch ins neue Jahr!"
+				},
+				{
+					"_id": "09136768-5231-4d85-a70c-6e69c39e397b",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						},
+						{
+							"slug": "wandern",
+							"title": "Wandern"
+						}
+					],
+					"excerpt": "Mach mit bei der Adventswanderung 2025! Genieße 12 km durch heimische Wälder und lass dich vom Ziel überraschen. Melde dich bis 7.12. an!",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Einladung zur Adventswanderung mit winterlicher Landschaft und festlichen Elementen, Text in festlicher Schriftart.",
+						"asset": {
+							"_ref": "image-21e548edb6253ade3b0c57bac22cdd81e128330a-5292x1404-png",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0.13591591314809068,
+							"right": 0.1317458912216703,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 1,
+							"width": 0.732338195630239,
+							"x": 0.5020850109632102,
+							"y": 0.5
+						}
+					},
+					"meta": {
+						"metaDescription": "Erlebe die Adventswanderung 2025: 12 km durch heimische Wälder mit Überraschungsziel. Start: 13. Dez., 12 Uhr, Robert-Krups-Schule, Irlich.",
+						"metaTitle": "TSG Irlich Adventswanderung 2025: Überraschung & Genuss",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-11-25T09:23:00.000Z",
+					"slug": "adventswanderung-2025-tsg-laedt-zur-letzten-tour-des-jahres",
+					"title": "Adventswanderung 2025 – Die TSG lädt ein zur letzten Tour des Jahres!"
+				},
+				{
+					"_id": "e1701f45-daf2-413b-b762-d6a6710dedba",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "wandern",
+							"title": "Wandern"
+						},
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						}
+					],
+					"excerpt": "Erlebe die TSG Irlich Herbstwanderung: Kunst, Kultur und Natur vereint auf einer malerischen Route mit geselligem Ausklang. Jetzt mehr erfahren!",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Wanderer der TSG Irlich machen Rast auf einer Bank im Sonnenschein, tragen Wanderkleidung.",
+						"asset": {
+							"_ref": "image-752d94efda531377c68619cb7070d578dddc5dad-3024x4032-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.23945717522000523,
+							"left": 0,
+							"right": 0,
+							"top": 0.3064171821904679
+						},
+						"description": "Wanderer der TSG Irlich machen eine Rast.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.4541256425895269,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.5334800034852314
+						}
+					},
+					"meta": {
+						"metaDescription": "Die TSG Irlich genoss eine Herbstwanderung bei perfektem Wetter, erkundete Kunstwerke und beendete den Tag mit Döbbekuchen und Federweißem.",
+						"metaTitle": "Herbstwanderung der TSG Irlich: Natur, Kultur & Genuss",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-10-02T23:17:00.269Z",
+					"slug": "herbstwanderung-tsg-irlich",
+					"title": " Herbstwanderung der TSG Irlich"
+				}
+			],
+			"slug": "wandern",
+			"title": "Wandern"
+		},
+		"syncTags": ["s1:pl5+PQ", "s1:+nbiSw", "s1:GNFE5A", "s1:mCzbTw", "s1:gDNQog"],
+		"ms": 11
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-542a37a2-7296-4a16-9a49-3de76f6d9a20%22&perspective=published&tag=next-loader.fetch"
+}

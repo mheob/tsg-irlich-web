@@ -1,0 +1,209 @@
+{
+	"body": {
+		"result": [
+			{
+				"_type": "group",
+				"department": "weitere-sportarten",
+				"lastModified": "2026-10-25T18:45:30Z",
+				"slug": "tischtennis"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:45:32Z",
+				"slug": "c-jugend"
+			},
+			{
+				"_type": "group",
+				"department": "kurse",
+				"lastModified": "2026-10-25T18:45:33Z",
+				"slug": "yoga"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:45:34Z",
+				"slug": "alte-herren"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:45:35Z",
+				"slug": "f-jugend"
+			},
+			{
+				"_type": "group",
+				"department": "tanzen",
+				"lastModified": "2026-10-25T18:45:36Z",
+				"slug": "funky-diamonds"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:45:37Z",
+				"slug": "schiedsrichter"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:45:38Z",
+				"slug": "a-jugend"
+			},
+			{
+				"_type": "group",
+				"department": "weitere-sportarten",
+				"lastModified": "2026-10-25T18:45:39Z",
+				"slug": "wandern"
+			},
+			{
+				"_type": "group",
+				"department": "tanzen",
+				"lastModified": "2026-10-25T18:45:40Z",
+				"slug": "sweet-diamonds"
+			},
+			{
+				"_type": "group",
+				"department": "weitere-sportarten",
+				"lastModified": "2026-10-25T18:45:41Z",
+				"slug": "badminton"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:45:42Z",
+				"slug": "bambinis"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:45:43Z",
+				"slug": "e-jugend"
+			},
+			{
+				"_type": "group",
+				"department": "kinderturnen",
+				"lastModified": "2026-10-25T18:45:44Z",
+				"slug": "kinderturnen-ab-8"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:45:45Z",
+				"slug": "d-jugend"
+			},
+			{
+				"_type": "group",
+				"department": "weitere-sportarten",
+				"lastModified": "2026-10-25T18:45:46Z",
+				"slug": "rope-skipping"
+			},
+			{
+				"_type": "group",
+				"department": "weitere-sportarten",
+				"lastModified": "2026-10-25T18:45:47Z",
+				"slug": "frauengymnastik"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:45:48Z",
+				"slug": "1-mannschaft"
+			},
+			{
+				"_type": "group",
+				"department": "kurse",
+				"lastModified": "2026-10-25T18:45:49Z",
+				"slug": "after-work-fitness"
+			},
+			{
+				"_type": "group",
+				"department": "weitere-sportarten",
+				"lastModified": "2026-10-25T18:45:50Z",
+				"slug": "jedermaenner"
+			},
+			{
+				"_type": "group",
+				"department": "kinderturnen",
+				"lastModified": "2026-10-25T18:45:51Z",
+				"slug": "kinderturnen-ab-3"
+			},
+			{
+				"_type": "group",
+				"department": "kinderturnen",
+				"lastModified": "2026-10-25T18:45:52Z",
+				"slug": "kinderturnen-ab-6"
+			},
+			{
+				"_type": "group",
+				"department": "tanzen",
+				"lastModified": "2026-10-25T18:45:53Z",
+				"slug": "magic-diamonds"
+			},
+			{
+				"_type": "group",
+				"department": "kurse",
+				"lastModified": "2026-10-25T18:45:54Z",
+				"slug": "pilates"
+			},
+			{
+				"_type": "group",
+				"department": "taekwondo",
+				"lastModified": "2026-10-25T18:45:55Z",
+				"slug": "selbstverteidigung"
+			},
+			{
+				"_type": "group",
+				"department": "kinderturnen",
+				"lastModified": "2026-10-25T18:45:56Z",
+				"slug": "eltern-kind-turnen"
+			},
+			{
+				"_type": "group",
+				"department": "tanzen",
+				"lastModified": "2026-10-25T18:45:57Z",
+				"slug": "little-diamonds"
+			},
+			{
+				"_type": "group",
+				"department": "taekwondo",
+				"lastModified": "2026-10-25T18:45:58Z",
+				"slug": "mini-scorpions"
+			},
+			{
+				"_type": "group",
+				"department": "taekwondo",
+				"lastModified": "2026-10-25T18:45:59Z",
+				"slug": "scorpions"
+			},
+			{
+				"_type": "group",
+				"department": "kurse",
+				"lastModified": "2026-10-25T18:46:00Z",
+				"slug": "aerobic"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:46:01Z",
+				"slug": "b-jugend"
+			},
+			{
+				"_type": "group",
+				"department": "fussball",
+				"lastModified": "2026-10-25T18:46:02Z",
+				"slug": "montagskicker"
+			}
+		],
+		"syncTags": [
+			"s1:OD7l+Q",
+			"s1:w2LXFQ",
+			"s1:Z4VvIg",
+			"s1:3mbpCw",
+			"s1:uMx6JQ",
+			"s1:0P7oqA",
+			"s1:pAHVYA"
+		],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27group%27+%26%26+defined%28department-%3Eslug.current%29%5D+%7B%0A%09%09_type%2C%0A%09%09%22department%22%3A+department-%3Eslug.current%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22lastModified%22%3A+_updatedAt%0A%09%7D%0A&returnQuery=false"
+}

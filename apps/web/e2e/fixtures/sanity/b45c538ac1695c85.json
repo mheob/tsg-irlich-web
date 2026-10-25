@@ -1,0 +1,43 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'person' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t\"email\": affiliations[team._ref == $groupId][0].team->email,\n\t\t\"role\":  affiliations[team._ref == $groupId][0].role->title,\n\t\t\"team\":  affiliations[team._ref == $groupId][0].team->title,\n\t\t\"taskDescription\": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n",
+		"result": [
+			{
+				"_id": "0fb8402d-441c-4e0d-9fb3-3eca941c1e79",
+				"contactAs": "both",
+				"email": "alte-herren@tsg-irlich.de",
+				"firstName": "Jürgen",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Betreuer Jürgen Friedt",
+					"asset": {
+						"_ref": "image-3a7edf6d2f64fe57a89e9230e1361801b72ae5af-231x251-png",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.9231989455884924,
+						"width": 0.9761561629623625,
+						"x": 0.508941438889114,
+						"y": 0.4862855259979451
+					}
+				},
+				"lastName": "Friedt",
+				"phone": "+49 171 9913336",
+				"role": "Betreuer",
+				"taskDescription": "Als Betreuer der Alten Herren koordiniere ich die wöchentlichen Hallen-Trainings, fördere Bewegung, Koordination und Spielspaß. Ich sorge für eine lockere Atmosphäre, erinnere gemeinsam an alte Zeiten und ermögliche den Spielern, Fußball in gemütlicher Runde zu genießen.",
+				"team": "Alte Herren"
+			}
+		],
+		"syncTags": ["s1:vKqJ4Q", "s1:mWzJLg", "s1:FAyvtw"],
+		"ms": 14
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27person%27+%26%26%0A%09%09defined%28affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D%29%0A%09%5D%7Corder%28lastName+asc%29+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09phone%2C%0A%09%09image%2C%0A%09%09contactAs%2C%0A%09%09%22email%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Eemail%2C%0A%09%09%22role%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.role-%3Etitle%2C%0A%09%09%22team%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Etitle%2C%0A%09%09%22taskDescription%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.taskDescription%2C%0A%09%7D%0A&%24groupId=%22group-42490d75-7576-4d76-902a-be9e7a454cf2%22&perspective=published&tag=next-loader.fetch"
+}

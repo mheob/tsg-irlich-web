@@ -1,0 +1,76 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'person' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t\"email\": affiliations[team._ref == $groupId][0].team->email,\n\t\t\"role\":  affiliations[team._ref == $groupId][0].role->title,\n\t\t\"team\":  affiliations[team._ref == $groupId][0].team->title,\n\t\t\"taskDescription\": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n",
+		"result": [
+			{
+				"_id": "500c1478-dba1-41e8-82d7-cb97997d0b0a",
+				"contactAs": "both",
+				"email": "bambinis@tsg-irlich.de",
+				"firstName": "Stefan",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Trainer Stefan Krechel",
+					"asset": {
+						"_ref": "image-e5578937a9d507bdb6a10de110e40b1002e8e5fd-3024x4032-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.2209153669138328,
+						"left": 0.16364528848937446,
+						"right": 0.1891012222543886,
+						"top": 0.07909315605556974
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.48725816074320333,
+						"width": 0.47633507683400095,
+						"x": 0.4927268760671388,
+						"y": 0.3718145401858006
+					}
+				},
+				"lastName": "Krechel",
+				"phone": "+49 160 1884628",
+				"role": "Trainer",
+				"taskDescription": "Als Trainer der Bambini-Kicker begleite ich die jüngsten Fußball-Kinder bei ihren ersten Spielerfahrungen. Ich setze altersgerechte Spiele und kleine Turniere ein, fördere Bewegung, Kooperation und Freude am Spiel und lege gemeinsam mit dem Team den Grundstein für Spaß, Fairplay und Begeisterung am Fußball.",
+				"team": "Bambinis"
+			},
+			{
+				"_id": "0a9426dd-b49b-415e-995c-9f131d6007bc",
+				"contactAs": "both",
+				"email": "bambinis@tsg-irlich.de",
+				"firstName": "Yannick",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Trainer Yannick Peine in einen Poloshirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-82b9742093d4430928451ea170211716848d4eb1-3648x5472-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.3653686654331417,
+						"left": 0.2895762171379477,
+						"right": 0.1934325327316969,
+						"top": 0.07347561941172043
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.2788988897900558,
+						"width": 0.3273206426039645,
+						"x": 0.5500463092704004,
+						"y": 0.2620412721045808
+					}
+				},
+				"lastName": "Peine",
+				"phone": "+49 160 5520230",
+				"role": "Trainer",
+				"taskDescription": "Als Bambini-Trainer ermögliche ich den jüngsten Fußball-Kindern erste positive Fußballerfahrungen. Ich setze kleine Spiele und Turniere ein, fördere Bewegung, Teamgeist und Spaß am Spiel und lege den Grundstein für Freude an Fußball und fairer Zusammenarbeit in der Gruppe.",
+				"team": "Bambinis"
+			}
+		],
+		"syncTags": ["s1:mWzJLg", "s1:MdmizQ", "s1:8LS22w"],
+		"ms": 17
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27person%27+%26%26%0A%09%09defined%28affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D%29%0A%09%5D%7Corder%28lastName+asc%29+%7B%0A%09%09_id%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09phone%2C%0A%09%09image%2C%0A%09%09contactAs%2C%0A%09%09%22email%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Eemail%2C%0A%09%09%22role%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.role-%3Etitle%2C%0A%09%09%22team%22%3A++affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.team-%3Etitle%2C%0A%09%09%22taskDescription%22%3A+affiliations%5Bteam._ref+%3D%3D+%24groupId%5D%5B0%5D.taskDescription%2C%0A%09%7D%0A&%24groupId=%22group-6e8e12eb-de76-4ff4-9dc9-214237c1aeab%22&perspective=published&tag=next-loader.fetch"
+}

@@ -1,0 +1,228 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "d9134493-c1af-40a9-9001-7130aacffd2e",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "taekwondo",
+							"title": "Taekwondo"
+						},
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						}
+					],
+					"excerpt": "Gustav hat die Trainer-C-Lizenz erworben und wird das Taekwondo-Team verstärken. Erfahre mehr über seine intensive Ausbildung und zukünftige Rolle!",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Gustav und seine Mitstreiter bei der Abschlussprüfung.",
+						"asset": {
+							"_ref": "image-650934aa995a7a60bb3c29177bb5b9d04036f37e-1500x1200-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Gustav und seine Mitstreiter bei der Abschlussprüfung.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5238863493770726,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.2658385940301269
+						}
+					},
+					"meta": {
+						"metaDescription": "Gustav hat die Trainer-C-Lizenz im Taekwondo erworben und wird nun Trainer Matthias unterstützen, besonders in der Nachwuchsarbeit.",
+						"metaTitle": "Gustav erwirbt Trainer-C-Lizenz bei TSG Irlich",
+						"openGraphImage": null
+					},
+					"publishedAt": "2026-01-04T21:01:06.931Z",
+					"slug": "c-lizenz-gustav",
+					"title": "Trainer-C-Lizenz: Gustav verstärkt das Taekwondo-Trainerteam"
+				},
+				{
+					"_id": "ba369239-4e14-4943-9988-ac169817d29d",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						},
+						{
+							"slug": "taekwondo",
+							"title": "Taekwondo"
+						}
+					],
+					"excerpt": "Drei Taekwondo-Sportler der TSG Irlich stellten sich der Landes-Dan-Prüfung in Mainz – und bestanden alle mit Bravour. Von Formen bis Bruchtest: So lief der Prüfungstag.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Markus Künzl, Jaleesa Unrau und Jochen Barg stehen nebeneinander und zweigen ihre Urkunden.",
+						"asset": {
+							"_ref": "image-01e8960d9a82b1fb124e80aa91ae449b60a941e8-1500x1200-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.3366785988238303,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "v.l.n.r. Markus Künzl, Jaleesa Unrau, Jochen Barg ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.3977237700142711,
+							"width": 0.9817996979797643,
+							"x": 0.49089984898988215,
+							"y": 0.19886188500713556
+						}
+					},
+					"meta": {
+						"metaDescription": "TSG Irlich: Jaleesa, Jochen und Markus bestehen Taekwondo-Dan-Prüfung 2024 in Mainz. Alle drei erreichen erfolgreich den 4. bzw. 5. Dan-Grad.",
+						"metaTitle": "Tolle Ergebnisse bei der 2. Landes-Dan-Prüfung von Taekwondo-Trio",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-12-23T14:21:45.983Z",
+					"slug": "taekwondo-trio-erfolgreich-tolle-ergebnisse-bei-2-landes-dan-pruefung-mainz",
+					"title": "Taekwondo-Trio erfolgreich: Tolle Ergebnisse bei der 2. Landes-Dan-Prüfung in Mainz"
+				},
+				{
+					"_id": "97d809c4-5fe8-49c8-970d-cd50d410b147",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						},
+						{
+							"slug": "taekwondo",
+							"title": "Taekwondo"
+						}
+					],
+					"excerpt": "Am 29. Nov. treten Jochen, Jaleesa und Markus zur Landes-Dan-Prüfung an. Erfahrt mehr über ihre Taekwondo-Reise und Ziele!",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Die drei Dan-Anwärter auf einem gemeinsamen Gruppenbild.",
+						"asset": {
+							"_ref": "image-2ccbe4a8c53608f27049ee4877e0034208a2cdaa-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0.13368277507883747
+						},
+						"description": "Die drei Dan-Anwärter auf einem gemeinsamen Gruppenbild.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.8663172249211626,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.5668413875394187
+						}
+					},
+					"meta": {
+						"metaDescription": "Drei TSG Irlich Taekwondo-Sportler, Jochen, Jaleesa und Markus, treten am 29. November in Mainz zur Landes-Dan-Prüfung an. Viel Erfolg!",
+						"metaTitle": "TSG Irlich: Drei Sportler bei Dan-Prüfung in Mainz",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-11-16T09:24:00.000Z",
+					"slug": "taekwondo-unsere-dan-anwaerterinnen-anwaerter-stellen-sich-vor",
+					"title": "Taekwondo: Unsere Dan-Anwärterinnen und Anwärter stellen sich vor! "
+				}
+			],
+			"slug": "taekwondo",
+			"title": "Taekwondo"
+		},
+		"syncTags": ["s1:GNFE5A", "s1:Ik/M0w", "s1:gDNQog", "s1:Y1b0bQ", "s1:mCzbTw", "s1:Fwy1kg"],
+		"ms": 13
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-e5006896-2511-4b62-a914-76aadb1901fc%22&perspective=published&tag=next-loader.fetch"
+}

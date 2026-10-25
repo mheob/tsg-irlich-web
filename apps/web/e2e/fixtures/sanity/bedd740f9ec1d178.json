@@ -1,0 +1,218 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "a86cf31d-4610-4dbb-8f1f-aec149a0e976",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						},
+						{
+							"slug": "schiedsrichter",
+							"title": "Schiedsrichter"
+						}
+					],
+					"excerpt": "Martin Tietzmann verstärkt das Schiriteam der TSG Irlich und übernimmt die Rolle des Schiedsrichterbeauftragten. Lies weiter!",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Schiedsrichter Martin Tietzmann mit Philipp Pfeiffer und Markus Straeten in Sportkleidung auf einem Spielfeld.",
+						"asset": {
+							"_ref": "image-443400479f342806c24f07aa86f87075c43375db-3024x4032-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Schiedsrichter Martin Tietzmann (mi.) mit Philipp Pfeiffer und Markus Straeten.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.33657462618108447,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.45303183194202357
+						}
+					},
+					"meta": {
+						"metaDescription": "TSG Irlich freut sich über Martin Tietzmann als neuen Schiri und Vereinsbeauftragten. Er stärkt das Team mit 5 aktiven Schiris. Danke, Martin!",
+						"metaTitle": "TSG Irlich: Martin Tietzmann stärkt Schiriteam",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-07-30T20:11:00.000Z",
+					"slug": "neuer-schiedsrichter-martin-tietzmann",
+					"title": "Neuer Schiedsrichter: Willkommen im Team, Martin Tietzmann!"
+				},
+				{
+					"_id": "a17d4838-15c7-4142-8f5b-b7e71138ceee",
+					"author": {
+						"firstName": "Louisa",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Louisa Krechel in einer schwarzen Jacke mit TSG-Logo",
+							"asset": {
+								"_ref": "image-7c2516eeffb75e433ff90758c1bd0f8257f181b2-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6267365550157675,
+								"width": 0.6660061365379698,
+								"x": 0.5159166453592432,
+								"y": 0.39078880081820505
+							}
+						},
+						"lastName": "Krechel"
+					},
+					"categories": [
+						{
+							"slug": "schiedsrichter",
+							"title": "Schiedsrichter"
+						},
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						}
+					],
+					"excerpt": "Am 2. November hatte unsere Nachwuchs-Schiedsrichterin Emelie Efa die tolle Gelegenheit, beim A-Juniorinnen-Regionalligaspiel zwischen der SG 99 Andernach und Borussia Mönchengladbach ihre erste Erfahrung als Linienrichterin zu sammeln.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Emelie Efa (re.) bei ihrem Einsatz",
+						"asset": {
+							"_ref": "image-29dbf9e3c7427c04fb6d109a4daafb03fff8a463-1361x1361-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.35634535072019075,
+							"width": 0.7654478820421035,
+							"x": 0.49727264979118724,
+							"y": 0.19999147703059733
+						}
+					},
+					"meta": null,
+					"publishedAt": "2024-11-26T16:53:00.000Z",
+					"slug": "u19-regionalliga-erfahrung-als-linienrichterin-fuer-emelie-efa",
+					"title": "U19-Regionalliga: Erfahrung als Linienrichterin für Emelie Efa"
+				},
+				{
+					"_id": "ef4d3e88-7ef7-4878-8a0a-d510c05da416",
+					"author": {
+						"firstName": "Louisa",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Louisa Krechel in einer schwarzen Jacke mit TSG-Logo",
+							"asset": {
+								"_ref": "image-7c2516eeffb75e433ff90758c1bd0f8257f181b2-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6267365550157675,
+								"width": 0.6660061365379698,
+								"x": 0.5159166453592432,
+								"y": 0.39078880081820505
+							}
+						},
+						"lastName": "Krechel"
+					},
+					"categories": [
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						},
+						{
+							"slug": "schiedsrichter",
+							"title": "Schiedsrichter"
+						}
+					],
+					"excerpt": "Die TSG Irlich begrüßt zur Saison 2024/25 gleich vier Nachwuchs-Schiedsrichter in ihren Reihen! Herzlich Willkommen an U15-Spielerin Emelie Efa, unseren ehemaligen Jugendspieler Lukas Krechel, U19-Verteidiger Maximilian Holterhoff und U15-Spieler Simon Schulz! ",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Die Schiedsrichter TSG Irlich im Pappelstadion",
+						"asset": {
+							"_ref": "image-417b3632c56583a3e9e8f7b53f5e79b5fbb2902c-2200x2200-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.48373218607152446,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.24186609303576223
+						}
+					},
+					"meta": null,
+					"publishedAt": "2024-10-13T11:51:00.000Z",
+					"slug": "neues-schiedsrichter-team-fuer-tsg-irlich",
+					"title": "Neues Schiedsrichter-Team für die TSG Irlich"
+				}
+			],
+			"slug": "schiedsrichter",
+			"title": "Schiedsrichter"
+		},
+		"syncTags": ["s1:nHpCqg", "s1:Ik/M0w", "s1:2TTE0Q", "s1:GNFE5A", "s1:lV4t/Q", "s1:c5Grjg"],
+		"ms": 12
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-5040612d-c598-449f-8d39-c18a242c9789%22&perspective=published&tag=next-loader.fetch"
+}

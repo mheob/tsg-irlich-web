@@ -1,0 +1,236 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'group' &&\n\t\tslug.current == $slug &&\n\t\tdefined(department->slug.current) &&\n\t\tdepartment->slug.current == $department\n\t][0] {\n\t\t_id,\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\t\"isTeamSport\": department->isTeamSport,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n",
+		"result": {
+			"_id": "group-ae56b66c-2d1b-4fd3-ade1-fe9a20771fd1",
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "b9eb68bdc645",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "d24cf22f2588",
+								"_type": "span",
+								"marks": [],
+								"text": "In der Gruppe werden spielerisch Bewegungserfahrungen gesammelt, die Grundlagen aller Sportarten sind. Die Förderung der Grundfertigkeiten, wie Balancieren, Hüpfen, Schwingen und Rollen steht im Mittelpunkt des Kinderturnens. Dabei werden Bewegungslandschaften aufgebaut, bei denen die rund 15 bis 20 Kinder ab 6 Jahren selbstständig oder mithilfe der Trainer durchlaufen können."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "e64164b3bf62",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "d24cf22f2588",
+								"_type": "span",
+								"marks": [],
+								"text": "Es werden nur Turnschuhe, Sportkleidung und etwas zu trinken benötigt."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "Teilnehmerinnen und Teilnehmer der Gruppe \"Kinderturnen 6-8\" in einer Turnhalle.",
+				"asset": {
+					"_ref": "image-166d2a6ec9bbf0141dcb7c0f8ed61b4f291555c9-4032x3024-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0.08660402284155799,
+					"left": 0.1059671439529532,
+					"right": 0.08066191511122475,
+					"top": 0.19267237705616636
+				},
+				"description": "Gruppenbild der Abteilung Kinderturnen 6-8 Jahre",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.6072402625074576,
+					"width": 0.6978793786755304,
+					"x": 0.5137313027358732,
+					"y": 0.6097758459047132
+				}
+			},
+			"images": [
+				{
+					"_key": "178f022bb413",
+					"_type": "extendedImage",
+					"alt": "Teilnehmerinnen und Teilnehmer der Gruppe wie sie sich an einem Barren entlanghangeln müssen.",
+					"asset": {
+						"_ref": "image-d9ca557d4a1a4baa896fea488bb3c93f8c99947b-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0.10702008579789199,
+						"right": 0,
+						"top": 0.08177789141736981
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.9182221085826302,
+						"width": 0.892979914202108,
+						"x": 0.553510042898946,
+						"y": 0.540888945708685
+					}
+				},
+				{
+					"_key": "fd7968e77b67",
+					"_type": "extendedImage",
+					"alt": "Zwei Kinder wie sie von einem Trampolin auf einen großen Kasten hüpfen mit der Unterstützung ihrer Übungsleiterin",
+					"asset": {
+						"_ref": "image-e0ac569fe701baa123c830e36439eceb354ffa06-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.12625713798687463,
+						"left": 0.043573681070484954,
+						"right": 0.12831330435523736,
+						"top": 0.11197051052586719
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7617723514872582,
+						"width": 0.586969800278417,
+						"x": 0.4576301883576238,
+						"y": 0.49285668626949625
+					}
+				},
+				{
+					"_key": "a0473d7325f6",
+					"_type": "extendedImage",
+					"alt": "Viele Kinder wie sie mit Hilfe ihrer Übungsleiterin über eine höher gelegte Leiter auf einen Kasten klettern und sich hangeln müssen.",
+					"asset": {
+						"_ref": "image-79137b3b9b74fd6cee67a683706ae81108dae49f-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8255561237535157,
+						"width": 0.8115997613568567,
+						"x": 0.5,
+						"y": 0.5
+					}
+				}
+			],
+			"isTeamSport": false,
+			"meta": {
+				"metaDescription": "Kinderturnen TSG Irlich ab 6 Jahren: Balancieren, Hüpfen, Schwingen und Rollen in Bewegungslandschaften. Spielerisch Grundlagen für alle Sportarten lernen.",
+				"metaTitle": "Kinderturnen 6-8 Jahre bei der TSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die Gruppe Kinderturnen 6-8 Jahre posiert in einer Turnhalle, wobei zwei Kinder im Vordergrund aus blauen Spieltunneln herausschauen.",
+					"asset": {
+						"_ref": "image-166d2a6ec9bbf0141dcb7c0f8ed61b4f291555c9-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.08298176084547856,
+						"left": 0.09809671439529531,
+						"right": 0.04497730759396574,
+						"top": 0.22087275206682008
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.618426659848291,
+						"width": 0.6946433137305037,
+						"x": 0.5317693684479673,
+						"y": 0.6078049092303759
+					}
+				}
+			},
+			"title": "Kinderturnen 6-8 Jahre",
+			"training": {
+				"trainingDescription": null,
+				"trainingTimes": [
+					{
+						"_key": "bb472a235080",
+						"_type": "trainingTime",
+						"endTime": "18:00",
+						"season": "yearly",
+						"startTime": "17:00",
+						"venue": {
+							"_createdAt": "2024-09-20T10:52:33Z",
+							"_id": "6cfbe736-644b-4819-8b4d-1946aaacd92e",
+							"_rev": "R3E9jQFgtI1iXWhprtj9yR",
+							"_type": "venue",
+							"_updatedAt": "2026-09-29T12:28:49Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "a5a3bea2570c",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "4fe25f442dff0",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Mehrzweckhalle (MZH) neben der Grundschule St. Peter und Paul im Herzen von Irlich ist eine vielseitig nutzbare Halle. Die Geräteturnhalle hat die Maße 15 x 27 Meter und bietet ausreichend Platz für sportliche Aktivitäten und Events. Direkt angrenzend befindet sich ein Foyer, das zusätzlichen Raum für Veranstaltungen bietet."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "5",
+								"name": "Mehrzweckhalle Irlich",
+								"street": "Apostelstraße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Die Mehrzweckhalle an der Grundschule Irlich",
+								"asset": {
+									"_ref": "image-92065e479cf70420aa6a9c8fce88ba4676e7dc26-3000x4000-jpg",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0.14250000000000007,
+									"left": 0,
+									"right": 0,
+									"top": 0.16750000000000007
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.47999999999999954,
+									"width": 1,
+									"x": 0.5,
+									"y": 0.5
+								}
+							},
+							"title": "Mehrzweckhalle Irlich",
+							"type": "hall-1"
+						},
+						"weekday": "monday"
+					}
+				]
+			}
+		},
+		"syncTags": ["s1:tGdxlw", "s1:HwW8kg", "s1:0P7oqA"],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27group%27+%26%26%0A%09%09slug.current+%3D%3D+%24slug+%26%26%0A%09%09defined%28department-%3Eslug.current%29+%26%26%0A%09%09department-%3Eslug.current+%3D%3D+%24department%0A%09%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09%22isTeamSport%22%3A+department-%3EisTeamSport%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24department=%22kinderturnen%22&%24slug=%22kinderturnen-ab-6%22&perspective=published&tag=next-loader.fetch"
+}

@@ -1,0 +1,227 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "52b2cbe7-b77d-4932-b3ba-69e947eed733",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "rope-skipping",
+							"title": "Rope Skipping"
+						},
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						}
+					],
+					"excerpt": "Große Erfolge für die TSG Irlich: Zwei Landesmeistertitel und weitere Top-Platzierungen im Rope Skipping.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Alle Teilnehmerinnen der TSG Irlich zusammen mit ihren Urkunden und Medaillen. Dabei steht die Trainerin Melina Dinter. ",
+						"asset": {
+							"_ref": "image-52be9b96adf97082909f706ddc4edc158010cb4b-5712x4284-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6797063975310701,
+							"width": 0.7997622549962766,
+							"x": 0.5060163809705058,
+							"y": 0.4185041764647224
+						}
+					},
+					"meta": {
+						"metaDescription": "Erfolgreiche Wettkämpfe für die Rope Skipperinnen der TSG Irlich: Zwei Rheinland-Pfalz-Meistertitel und starke Platzierungen in Hachenburg und Worms.",
+						"metaTitle": "TSG feiert zwei Rheinland-Pfalz-Meistertitel im Rope Skipping",
+						"openGraphImage": null
+					},
+					"publishedAt": "2026-06-20T14:58:00.000Z",
+					"slug": "erfolgreiche-wettkampftage-rope-skipperinnen",
+					"title": "Erfolgreiche Wettkampftage für die Rope Skipperinnen der TSG "
+				},
+				{
+					"_id": "91d9616d-8d11-49b7-90c7-c2ec461e2589",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						},
+						{
+							"slug": "rope-skipping",
+							"title": "Rope Skipping"
+						}
+					],
+					"excerpt": "Vier Rope-Skipperinnen der TSG Irlich traten beim TVM-Sichtungstraining an. Wer sich für den neuen Rheinland-Pfalz-Kader 2026 qualifizieren konnte, lest ihr hier.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Celina Bernazky und Julika Ludat lächelnd vor einem neutralen Hintergrund.",
+						"asset": {
+							"_ref": "image-ff961d1ca03b2febc403a08b1ebd8486e0846cb0-1024x1536-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.36613358005110574,
+							"left": 0,
+							"right": 0,
+							"top": 0.16672173759802625
+						},
+						"description": "Celina Bernazky und Julika Ludat ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.36145255088554096,
+							"width": 0.8834588950568332,
+							"x": 0.44561194818926775,
+							"y": 0.3668439950656446
+						}
+					},
+					"meta": {
+						"metaDescription": "TVM Rope Skipping Sichtungstraining 2024: Celina Bernazky von der TSG Irlich qualifiziert sich erneut für den Kader 2026. Rückblick auf den Wettkampftag.",
+						"metaTitle": "Irlicherin qualifiziert sich erneut für den TVM-Kader",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-12-21T14:04:00.000Z",
+					"slug": "sichtungstraining-beim-tv-mittelrhein-irlicherin-qualifiziert-sich-erneut-fuer-den-tvm-kader",
+					"title": "Sichtungstraining beim TV Mittelrhein – Irlicherin qualifiziert sich erneut für den TVM-Kader"
+				},
+				{
+					"_id": "def8bf75-fd78-4a71-95ee-46631dc7e281",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						},
+						{
+							"slug": "rope-skipping",
+							"title": "Rope Skipping"
+						}
+					],
+					"excerpt": "Acht Rope-Skipperinnen der TSG Irlich traten beim Gau-Teamwettkampf in Rheinbrohl an – mit persönlichen Bestleistungen und einer Bronzemedaille im Gepäck.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Ropeskipperinnen in Sportkleidung warten konzentriert und gespannt auf ihren Wettkampfstart in der Halle.",
+						"asset": {
+							"_ref": "image-8c17c363f0ada64fb6363214dc58e6731b8a9432-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0.2553481633000938
+						},
+						"description": "Eine Auswahl an Ropeskipperinnen wie sie auf ihren Wettkampf warten.",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6997357879485213,
+							"width": 0.551734424273417,
+							"x": 0.5,
+							"y": 0.6501321060257393
+						}
+					},
+					"meta": {
+						"metaDescription": "Skipping Hearts Gau-Teamwettkampf 2025: TSG Irlich erreicht mit zwei Teams Platz 3 und 5. Erfolge in Speed, Langseil und Teamkür in Rheinbrohl.",
+						"metaTitle": "Ropeskipping: Gau-Teamwettkampf in Rheinbrohl ein voller Erfolg ",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-12-20T13:51:00.000Z",
+					"slug": "ropeskipping-gau-teamwettkampf-rheinbrohl-voller-erfolg",
+					"title": "Ropeskipping: Gau-Teamwettkampf in Rheinbrohl ein voller Erfolg "
+				}
+			],
+			"slug": "rope-skipping",
+			"title": "Rope Skipping"
+		},
+		"syncTags": ["s1:GNFE5A", "s1:ycr7jw", "s1:jQqyBw", "s1:mCzbTw", "s1:gDNQog"],
+		"ms": 14
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-81cf7146-c544-4ef7-a36b-3e6047d7acd9%22&perspective=published&tag=next-loader.fetch"
+}

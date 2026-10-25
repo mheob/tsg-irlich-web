@@ -1,0 +1,146 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'group' && defined(slug.current) && defined(department->slug.current)] {\n\t\t\"group\": department->slug.current,\n\t\t\"singleGroup\": slug.current\n\t}\n",
+		"result": [
+			{
+				"group": "weitere-sportarten",
+				"singleGroup": "tischtennis"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "c-jugend"
+			},
+			{
+				"group": "kurse",
+				"singleGroup": "yoga"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "alte-herren"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "f-jugend"
+			},
+			{
+				"group": "tanzen",
+				"singleGroup": "funky-diamonds"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "schiedsrichter"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "a-jugend"
+			},
+			{
+				"group": "weitere-sportarten",
+				"singleGroup": "wandern"
+			},
+			{
+				"group": "tanzen",
+				"singleGroup": "sweet-diamonds"
+			},
+			{
+				"group": "weitere-sportarten",
+				"singleGroup": "badminton"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "bambinis"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "e-jugend"
+			},
+			{
+				"group": "kinderturnen",
+				"singleGroup": "kinderturnen-ab-8"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "d-jugend"
+			},
+			{
+				"group": "weitere-sportarten",
+				"singleGroup": "rope-skipping"
+			},
+			{
+				"group": "weitere-sportarten",
+				"singleGroup": "frauengymnastik"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "1-mannschaft"
+			},
+			{
+				"group": "kurse",
+				"singleGroup": "after-work-fitness"
+			},
+			{
+				"group": "weitere-sportarten",
+				"singleGroup": "jedermaenner"
+			},
+			{
+				"group": "kinderturnen",
+				"singleGroup": "kinderturnen-ab-3"
+			},
+			{
+				"group": "kinderturnen",
+				"singleGroup": "kinderturnen-ab-6"
+			},
+			{
+				"group": "tanzen",
+				"singleGroup": "magic-diamonds"
+			},
+			{
+				"group": "kurse",
+				"singleGroup": "pilates"
+			},
+			{
+				"group": "taekwondo",
+				"singleGroup": "selbstverteidigung"
+			},
+			{
+				"group": "kinderturnen",
+				"singleGroup": "eltern-kind-turnen"
+			},
+			{
+				"group": "tanzen",
+				"singleGroup": "little-diamonds"
+			},
+			{
+				"group": "taekwondo",
+				"singleGroup": "mini-scorpions"
+			},
+			{
+				"group": "taekwondo",
+				"singleGroup": "scorpions"
+			},
+			{
+				"group": "kurse",
+				"singleGroup": "aerobic"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "b-jugend"
+			},
+			{
+				"group": "fussball",
+				"singleGroup": "montagskicker"
+			}
+		],
+		"syncTags": [
+			"s1:uMx6JQ",
+			"s1:Z4VvIg",
+			"s1:w2LXFQ",
+			"s1:3mbpCw",
+			"s1:0P7oqA",
+			"s1:pAHVYA",
+			"s1:OD7l+Q"
+		],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27group%27+%26%26+defined%28slug.current%29+%26%26+defined%28department-%3Eslug.current%29%5D+%7B%0A%09%09%22group%22%3A+department-%3Eslug.current%2C%0A%09%09%22singleGroup%22%3A+slug.current%0A%09%7D%0A&perspective=published&tag=next-loader.fetch"
+}

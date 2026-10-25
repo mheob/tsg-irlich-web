@@ -1,0 +1,208 @@
+{
+	"body": {
+		"query": "\n\t*[_type == 'department' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t\"groups\": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"contactPersons\": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  \"email\": affiliations[0].role->email,\n  \"role\": affiliations[0].role->title,\n  \"taskDescription\": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n",
+		"result": {
+			"_id": "department-tanzen",
+			"cardImage": {
+				"_type": "extendedImage",
+				"alt": "Tanzen",
+				"asset": {
+					"_ref": "image-79cd294bb474744bc1b1fef4a9ef72578ed7cf09-480x270-webp",
+					"_type": "reference"
+				}
+			},
+			"contactPersons": [
+				{
+					"_id": "d191c9ee-bb52-48ed-8aef-57ce2a5af9d1",
+					"contactAs": "both",
+					"email": "breitensport@tsg-irlich.de",
+					"firstName": "Melanie ",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Melanie Klein in einem blauen Polo Shirt der TSG Irlich auf einem Fußballplatz",
+						"asset": {
+							"_ref": "image-f3ab3acee090e3b8781b1e9a25e560b91f26f92a-600x600-webp",
+							"_type": "reference"
+						}
+					},
+					"lastName": "Klein",
+					"phone": "+49 171 9941807",
+					"role": "Abteilungsleitung Breitensport",
+					"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+				}
+			],
+			"groups": [
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Tänzerinnen und Tänzer der \"Sweet Diamonds\" in rot blauen Cowgirl Kostümen vor einer Mauer",
+						"asset": {
+							"_ref": "image-6e7e578d9adcac840cf0c684b777f5a0918d03cb-5120x3840-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.07774013466291656,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Gruppenbild der Sweet Diamonds ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6706911669548401,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.5004634364612631
+						}
+					},
+					"icon": "Tanzen",
+					"overviewTitle": null,
+					"slug": "sweet-diamonds",
+					"title": "Sweet Diamonds"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die Little Diamonds in pastellfarbenen Kostümen, mit rosa Oberteilen und türkisen Röcken, posiert vor einer Steinmauer",
+						"asset": {
+							"_ref": "image-969072877eda552c6e6245f0bbe9ea3a4b544c0e-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Gruppenbild der Little Diamonds ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.7635415612027944,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.5
+						}
+					},
+					"icon": "Tanzen",
+					"overviewTitle": null,
+					"slug": "little-diamonds",
+					"title": "Little Diamonds"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die Magic Diamonds in schwarz silbernen Kostümen posiert auf einer Steintreppe im Freien",
+						"asset": {
+							"_ref": "image-1433c73677a0bbc8f7b0d8fbacf561c87c0bf33e-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0.028888663899294658,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Gruppenbild der Magic Diamonds ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.9472005669737774,
+							"width": 0.9711113361007053,
+							"x": 0.5144443319496473,
+							"y": 0.5
+						}
+					},
+					"icon": "Tanzen",
+					"overviewTitle": null,
+					"slug": "magic-diamonds",
+					"title": "Magic Diamonds"
+				},
+				{
+					"featuredImage": {
+						"_type": "extendedImage",
+						"alt": "Die Funky Diamonds in pinken und organgenen Kostümen, von denen einige auf den Schultern stehen, posiert auf Steinstufen mit Herz-Requisiten",
+						"asset": {
+							"_ref": "image-3788f91787dec33b2fe63b0bdb1c0be5d75a88d9-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Gruppenbild der Funky Diamonds ",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.8181887212716412,
+							"width": 0.9961526779386454,
+							"x": 0.5,
+							"y": 0.5530905133137592
+						}
+					},
+					"icon": "Sportakrobatik",
+					"overviewTitle": null,
+					"slug": "funky-diamonds",
+					"title": "Funky Diamonds"
+				}
+			],
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Tanzen",
+				"asset": {
+					"_ref": "image-7a9f0431195dd2bfda84b85cbe5bb6176cab2d48-2560x1230-webp",
+					"_type": "reference"
+				}
+			},
+			"intro": null,
+			"meta": {
+				"metaDescription": null,
+				"metaTitle": null,
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Tanzen",
+					"asset": {
+						"_ref": "image-7b96a1241d64990567815d0058b70821a41e1ffa-1200x630-webp",
+						"_type": "reference"
+					}
+				}
+			},
+			"stats": [
+				{
+					"_key": "tanzen-stat-1",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "Fußball-Teams",
+					"value": 10
+				},
+				{
+					"_key": "tanzen-stat-2",
+					"_type": "stats",
+					"title": "Breitensportgruppen ",
+					"value": 20
+				},
+				{
+					"_key": "tanzen-stat-3",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Kinder/Jugendliche",
+					"value": 250
+				},
+				{
+					"_key": "tanzen-stat-4",
+					"_type": "stats",
+					"suffix": "+",
+					"title": "aktive Sportler ",
+					"value": 420
+				}
+			],
+			"title": "Tanzen"
+		},
+		"syncTags": ["s1:uMx6JQ", "s1:WU9DBg", "s1:xqMVMQ", "s1:B7LhMw"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09intro%2C%0A%09%09cardImage%2C%0A%09%09heroImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09stats%2C%0A%09%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+department._ref+%3D%3D+%5E._id+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09%09featuredImage%2C%0A%09%09%09icon%2C%0A%09%09%09overviewTitle%2C%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%2C%0A%09%09%7D%2C%0A%09%09%22contactPersons%22%3A+contactPersons%5B%5D-%3E+%7B%0A%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%7D%2C%0A%09%7D%0A&%24slug=%22tanzen%22&perspective=published&tag=next-loader.fetch"
+}

@@ -1,0 +1,86 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "b1118fdd-af32-4c9b-9f47-79057b8f3c1a",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						},
+						{
+							"slug": "faszien",
+							"title": "Faszien"
+						},
+						{
+							"slug": "pilates",
+							"title": "Pilates"
+						}
+					],
+					"excerpt": "Nach über 15 Jahren als Übungsleiterin und Trainerin trat Conny Ohlenschlager zum Jahreswechsel 23/24 in den wohlverdienten Ruhestand.\nBereits seit Beginn des Jahres übernimmt für sie die neue Übungsleiterin Rimma Nikulin. ",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Conny Ohlenschlager zusammen mit der neuen Übungsleiterin Rimma Nikulin und den Vorstandsmitgliedern Melina Dinter (Vorstand Verwaltung), Alexander Hof (Vorsitzender), sowie Melanie Klein (Übungsleiterin Breitensport)",
+						"asset": {
+							"_ref": "image-1bed599bc2a7fbe86fcfc45ea68d2ed64b9f6f51-1600x1200-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"description": "Von links nach rechts: Melina Dinter (Vorstand Verwaltung), Rimma Nikulin (neue Übungsleiterin), Melanie Klein (Abteilungsleiterin Breitensport), Conny Ohlenschlager (bisherige Übungsleiterin) und Alexander Hof (Vorsitzender)",
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5686274509803921,
+							"width": 0.8345588235294122,
+							"x": 0.4963235294117647,
+							"y": 0.3063725490196079
+						}
+					},
+					"meta": null,
+					"publishedAt": "2024-03-20T09:00:00.000Z",
+					"slug": "uebungsleiterwechsel-breitensport-danke-conny",
+					"title": "Übungsleiterwechsel im Bereich Breitensport - TSG sagt DANKESCHÖN"
+				}
+			],
+			"slug": "pilates",
+			"title": "Pilates"
+		},
+		"syncTags": ["s1:yaGJRw", "s1:GNFE5A", "s1:mCzbTw", "s1:gDNQog", "s1:lM/cvg", "s1:TQLY2g"],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-d09e92ac-7f4f-4920-9126-7245d93e41ee%22&perspective=published&tag=next-loader.fetch"
+}

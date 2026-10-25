@@ -1,0 +1,198 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'group' &&\n\t\tslug.current == $slug &&\n\t\tdefined(department->slug.current) &&\n\t\tdepartment->slug.current == $department\n\t][0] {\n\t\t_id,\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\t\"isTeamSport\": department->isTeamSport,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n",
+		"result": {
+			"_id": "group-a6870da4-5514-4f14-ae23-e03579d24763",
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "b1fe7f7cb369",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "c001a5da63ac",
+								"_type": "span",
+								"marks": [],
+								"text": "Ziel des Kleinkind- und Kinderturnens ist die Förderung der körperlichen Entwicklung durch Bewegung. Die Kinder lernen auf spielerische Art, ihre Fähigkeiten einzuschätzen und immer weiter auszubauen. Bewegungsspiele und kleine gymnastische Übungen dienen dazu, die "
+							},
+							{
+								"_key": "66844d193e19",
+								"_type": "span",
+								"marks": ["4c349f1d94ad"],
+								"text": "Motorik"
+							},
+							{
+								"_key": "468cf8f66c67",
+								"_type": "span",
+								"marks": [],
+								"text": " und den Gleichgewichtssinn zu schulen."
+							}
+						],
+						"markDefs": [
+							{
+								"_key": "4c349f1d94ad",
+								"_type": "link",
+								"href": "https://www.windeln.de/magazin/baby/spielen-foerdern/motorik-foerdern-krabbeln-wie-ein-weltmeister.html"
+							}
+						],
+						"style": "normal"
+					},
+					{
+						"_key": "185bec91c252",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "6f5323004bb2",
+								"_type": "span",
+								"marks": [],
+								"text": "Das Miteinander und einfache Regeln helfen, soziales Verhalten richtig einzuordnen und zu üben. Es wird geklettert, gehüpft, geklatscht, balanciert, gesungen und getanzt. Spielerisch erlernen die Kinder wichtige Grundlagen der verschiedensten Sportarten."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "94dd2c999757",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "693918f8b688",
+								"_type": "span",
+								"marks": [],
+								"text": "Das Kinderturnen ist von daher auch für Kinder mit motorischen Entwicklungsverzögerungen gut geeignet, da der Schwerpunkt auf der Teilnahme und der Freude am gemeinsamen Spiel liegt und es nicht ausschließlich um Sieg oder Niederlage geht."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "Teilnehmerinnen und Teilnehmer der Gruppe \"Kinderturnen 3-6 \" in einer Turnhalle.",
+				"asset": {
+					"_ref": "image-fc0dfa32c474237c72af6f10732fdb0c6d5f4606-4032x3024-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0.24391673058893718,
+					"left": 0.07689050115060087,
+					"right": 0.15305388647404755,
+					"top": 0.161550856296814
+				},
+				"description": "Gruppenbild der Abteilung Kinderturnen 3-6 Jahre ",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.3746433481380205,
+					"width": 0.7700243330902524,
+					"x": 0.4619026676957271,
+					"y": 0.46110040591841417
+				}
+			},
+			"images": null,
+			"isTeamSport": false,
+			"meta": {
+				"metaDescription": "Kinderturnen bei der TSG Irlich: Spielerisch Motorik und Gleichgewicht schulen. Für alle Kinder geeignet – Spaß und Gemeinschaft stehen im Vordergrund.",
+				"metaTitle": "Kinderturnen 3-6 Jahre bei der TSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die Gruppe Kinderturnen 3-6 Jahre lächelt in einer Turnhalle.",
+					"asset": {
+						"_ref": "image-fc0dfa32c474237c72af6f10732fdb0c6d5f4606-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.366148135791142,
+						"width": 0.6657026405056928,
+						"x": 0.4632546598300879,
+						"y": 0.45309241804987904
+					}
+				}
+			},
+			"title": "Kinderturnen 3-6 Jahre",
+			"training": {
+				"trainingDescription": null,
+				"trainingTimes": [
+					{
+						"_key": "8684a56989c6",
+						"_type": "trainingTime",
+						"endTime": "16:00",
+						"season": "yearly",
+						"startTime": "15:00",
+						"venue": {
+							"_createdAt": "2024-09-20T10:52:33Z",
+							"_id": "6cfbe736-644b-4819-8b4d-1946aaacd92e",
+							"_rev": "R3E9jQFgtI1iXWhprtj9yR",
+							"_type": "venue",
+							"_updatedAt": "2026-09-29T12:28:49Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "a5a3bea2570c",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "4fe25f442dff0",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Mehrzweckhalle (MZH) neben der Grundschule St. Peter und Paul im Herzen von Irlich ist eine vielseitig nutzbare Halle. Die Geräteturnhalle hat die Maße 15 x 27 Meter und bietet ausreichend Platz für sportliche Aktivitäten und Events. Direkt angrenzend befindet sich ein Foyer, das zusätzlichen Raum für Veranstaltungen bietet."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "5",
+								"name": "Mehrzweckhalle Irlich",
+								"street": "Apostelstraße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Die Mehrzweckhalle an der Grundschule Irlich",
+								"asset": {
+									"_ref": "image-92065e479cf70420aa6a9c8fce88ba4676e7dc26-3000x4000-jpg",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0.14250000000000007,
+									"left": 0,
+									"right": 0,
+									"top": 0.16750000000000007
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.47999999999999954,
+									"width": 1,
+									"x": 0.5,
+									"y": 0.5
+								}
+							},
+							"title": "Mehrzweckhalle Irlich",
+							"type": "hall-1"
+						},
+						"weekday": "wednesday"
+					}
+				]
+			}
+		},
+		"syncTags": ["s1:vsqitw", "s1:HwW8kg", "s1:0P7oqA"],
+		"ms": 11
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27group%27+%26%26%0A%09%09slug.current+%3D%3D+%24slug+%26%26%0A%09%09defined%28department-%3Eslug.current%29+%26%26%0A%09%09department-%3Eslug.current+%3D%3D+%24department%0A%09%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09images%2C%0A%09%09%22isTeamSport%22%3A+department-%3EisTeamSport%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24department=%22kinderturnen%22&%24slug=%22kinderturnen-ab-3%22&perspective=published&tag=next-loader.fetch"
+}

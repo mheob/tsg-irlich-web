@@ -1,0 +1,208 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "18348f91-f18a-4973-aab7-e005cf27ba0b",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "frauengymnastik",
+							"title": "Frauengymnastik"
+						},
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						}
+					],
+					"excerpt": "Am 5. August 2026 hieß es für die Mittwochsgirls der TSG Irlich wieder: Gemeinsam unterwegs sein und einen schönen Tag miteinander verbringen! ",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Alle Mittwochsgirls gemeinsam auf einem Gruppenbild vor einer gelben Hauswand ",
+						"asset": {
+							"_ref": "image-99650bdb7af6ad848db3a7b33ea9bba4b1569c99-5184x3888-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.114253086084072,
+							"left": 0,
+							"right": 0,
+							"top": 0.1966257001468269
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.504016670918197,
+							"width": 0.9070265699640963,
+							"x": 0.513012182601135,
+							"y": 0.5478590904161468
+						}
+					},
+					"meta": {
+						"metaDescription": "Die Mittwochsgirls der TSG Irlich verbrachten einen geselligen Tag in Cochem – mit Stadtführung und einer überraschenden Moselfahrt.",
+						"metaTitle": "Mittwochsgirls der TSG Irlich auf Tagestour in Cochem",
+						"openGraphImage": null
+					},
+					"publishedAt": "2026-09-22T15:10:00.000Z",
+					"slug": "mittwochsgirls-unterwegs-in-cochem",
+					"title": "Mittwochsgirls unterwegs: Ein schöner Tag in Cochem"
+				},
+				{
+					"_id": "4fe317cf-6f26-4bb1-9f62-8f339e792721",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "frauengymnastik",
+							"title": "Frauengymnastik"
+						},
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						}
+					],
+					"excerpt": "Die Mittwochsgirls der TSG Irlich erlebten einen spannenden Tag in Koblenz mit Schlossfrühstück, Stadtrundgang und gemütlichem Abendessen.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Gruppe von Teilnehmerinnen vor einem Brunnen mit Statue in der Stadtmitte von Koblenz.",
+						"asset": {
+							"_ref": "image-c56308322ee0b8189fdfdd113115d5dd5db52942-2604x1569-jpg",
+							"_type": "reference"
+						},
+						"description": "Alle Teilnehmerinnen der Tour vor einem Brunnen mit Statue in Mitten der Stadt Koblenz."
+					},
+					"meta": {
+						"metaDescription": "Die Mittwochsgirls der TSG Irlich genossen eine Tagestour nach Koblenz mit Frühstück im Schloss, Stadtrundgang und Essen am Rhein. Wiederholungsbedarf!",
+						"metaTitle": "TSG Irlich: Unvergessliche Tagestour nach Koblenz",
+						"openGraphImage": null
+					},
+					"publishedAt": "2025-09-16T23:16:00.000Z",
+					"slug": "mittwochsgirls-on-tour-tsg-damen-erkunden-koblenz",
+					"title": "Mittwochsgirls on Tour: TSG-Damen erkunden Koblenz! "
+				},
+				{
+					"_id": "57cf7579-91e3-4b7a-8386-1e5b4cf691b5",
+					"author": {
+						"firstName": "Sophie ",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+							"asset": {
+								"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0,
+								"left": 0,
+								"right": 0,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6740816500468764,
+								"width": 0.6978607346799625,
+								"x": 0.4942576493650388,
+								"y": 0.40427639989772435
+							}
+						},
+						"lastName": "Thomé"
+					},
+					"categories": [
+						{
+							"slug": "breitensport",
+							"title": "Breitensport"
+						},
+						{
+							"slug": "frauengymnastik",
+							"title": "Frauengymnastik"
+						}
+					],
+					"excerpt": "Mitte August ging es für 10 Damen der „Mittwochsgirls“ auf gemeinsame Tour nach Rhöndorf und Umgebung. Das Ziel der Reise blieb bis zum gemeinsamen Treffen unbekannt. ",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Gruppenbild der Mittwochsgirls vor zwei Statuen in einem grünen Garten",
+						"asset": {
+							"_ref": "image-96eb916d64df2205acd05c97f2f658ea5ae728fe-5120x3840-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.08791797969187665,
+							"left": 0,
+							"right": 0,
+							"top": 0.20160407913165268
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.7104779411764707,
+							"width": 0.7045365021008405,
+							"x": 0.5,
+							"y": 0.556843049719888
+						}
+					},
+					"meta": null,
+					"publishedAt": "2024-11-12T19:40:00.000Z",
+					"slug": "mittwochsgirls-on-tour-mit-blick-deutsche-geschichte",
+					"title": "Mittwochsgirls on Tour mit Blick in die deutsche Geschichte"
+				}
+			],
+			"slug": "frauengymnastik",
+			"title": "Frauengymnastik"
+		},
+		"syncTags": ["s1:GNFE5A", "s1:gDNQog", "s1:8Qkb8Q", "s1:dl35cA", "s1:mCzbTw"],
+		"ms": 15
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-85948ebb-3e1d-4c73-a078-f1d5ece34ff9%22&perspective=published&tag=next-loader.fetch"
+}

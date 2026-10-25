@@ -1,0 +1,225 @@
+{
+	"body": {
+		"query": "\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t\"slug\": slug.current,\n\t\t\"articles\": *[_type == 'news.article' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, \"slug\": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t\"slug\": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n",
+		"result": {
+			"_type": "news.category",
+			"articles": [
+				{
+					"_id": "f7b1f730-c4d9-42dc-8005-bde6fc36afce",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "jugend",
+							"title": "Jugend"
+						},
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						}
+					],
+					"excerpt": "Die U19 startet mit einem souveränem 3:0-Sieg gegen Raiffeisen-United ins Pflichtspieljahr: starke Defensive und kein Gegentor sorgen für Tabellenplatz 5.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Umkämpft, aber stets fair: U19-Spieler im Kopfballduell mit dem Gegenspieler",
+						"asset": {
+							"_ref": "image-2633e3e3514a5bf0413f86f7afa33f9f240eeffa-6000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.18273246399045429,
+							"left": 0.07818403931929885,
+							"right": 0,
+							"top": 0.057274354385067755
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.4981675615784541,
+							"width": 0.7309014460638086,
+							"x": 0.5400011363959203,
+							"y": 0.3854512912298646
+						}
+					},
+					"meta": {
+						"metaDescription": "U19 der JSG startet mit souveränem 3:0 gegen Raiffeisen-United ins Pflichtspieljahr: starke Defensive, kein Gegentor, Sprung auf Tabellenplatz 5.",
+						"metaTitle": "U19 siegt 3:0 nach Winterpause gegen Raiffeisen United",
+						"openGraphImage": null
+					},
+					"publishedAt": "2026-03-12T15:54:00.000Z",
+					"slug": "u19-sieg-raiffeisen",
+					"title": "Souveräner U19-Heimsieg zum Pflichtspielstart"
+				},
+				{
+					"_id": "237dcd14-d544-4243-aec6-753b45806ac9",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "jugend",
+							"title": "Jugend"
+						},
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						}
+					],
+					"excerpt": "Die TSG Irlich hat ein spannendes Hallenfußball-Wochenende ausgerichtet: Vier U13-Turniere, packende Duelle und ein Highlight mit der Masters-Qualifikation – hier gibt’s alle Details.",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Viel los in der Turnhalle: Hallenturnier vor gefüllten Rängen",
+						"asset": {
+							"_ref": "image-5a1bbc465b13f9a96a80f1aa616e606e35c5ce1e-4032x3024-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5008758028192509,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.5480440403703395
+						}
+					},
+					"meta": {
+						"metaDescription": "TSG Irlich begeistert mit top organisiertem C-Jugend-Hallenfußballturnier in Niederbieber, starken Teams, Masters-Quali und Ausblick auf neue Events.",
+						"metaTitle": "TSG Irlich: Erfolgreiches Hallenfußball-Wochenende in Niederbieber",
+						"openGraphImage": null
+					},
+					"publishedAt": "2026-01-21T15:51:00.000Z",
+					"slug": "erfolgreiches-turnier-wochenende",
+					"title": "Budenzauber in Niederbieber: Erfolgreiches Turnier-Wochenende"
+				},
+				{
+					"_id": "0c8271d4-bbe7-4c9a-a307-54287d60b36e",
+					"author": {
+						"firstName": "Philipp",
+						"image": {
+							"_type": "extendedImage",
+							"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+							"asset": {
+								"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+								"_type": "reference"
+							},
+							"crop": {
+								"_type": "sanity.imageCrop",
+								"bottom": 0.09074985403286345,
+								"left": 0,
+								"right": 0.026691133539077486,
+								"top": 0
+							},
+							"hotspot": {
+								"_type": "sanity.imageHotspot",
+								"height": 0.6927356852875811,
+								"width": 0.6490937792297277,
+								"x": 0.510074160141839,
+								"y": 0.46890832100794233
+							}
+						},
+						"lastName": "Pfeiffer"
+					},
+					"categories": [
+						{
+							"slug": "jugend",
+							"title": "Jugend"
+						},
+						{
+							"slug": "fussball",
+							"title": "Fußball"
+						}
+					],
+					"excerpt": "Daniel Baldus, Jugendleiter und U13-Trainer der TSG Irlich, hat die C-Lizenz erworben und stärkt damit die Jugendarbeit des Vereins. Mehr erfahren!",
+					"featuredImage": {
+						"_type": "mainImage",
+						"alt": "Daniel Baldus nach dem Erhalt seiner C-Lizenz",
+						"asset": {
+							"_ref": "image-b3cf1f3d1012d1dec28884c52198488b96684445-4032x3024-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.10676453415630999,
+							"left": 0,
+							"right": 0,
+							"top": 0.03736758695470848
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.4555008758028192,
+							"width": 0.543572671837106,
+							"x": 0.5110103083548067,
+							"y": 0.298481941779965
+						}
+					},
+					"meta": {
+						"metaDescription": "Daniel Baldus von TSG Irlich erwirbt C-Trainerlizenz, stärkt Jugendarbeit und fördert Nachwuchs mit pädagogischem Fokus. Qualitätssicherung im Verein.",
+						"metaTitle": "TSG Irlich: Erfolgreiche C-Lizenz für Daniel Baldus",
+						"openGraphImage": null
+					},
+					"publishedAt": "2026-01-20T15:38:00.000Z",
+					"slug": "c-lizenz-baldus",
+					"title": "Jugendleiter Daniel Baldus erlangt DFB-C-Lizenz"
+				}
+			],
+			"slug": "jugend",
+			"title": "Jugend"
+		},
+		"syncTags": ["s1:yx3Vpw", "s1:c5Grjg", "s1:FKOuMA", "s1:Ik/M0w", "s1:GNFE5A"],
+		"ms": 15
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+%3D%3D+%24groupId%5D%5B0%5D.newsCategory-%3E+%7B%0A%09%09_type%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22articles%22%3A+*%5B_type+%3D%3D+%27news.article%27+%26%26+references%28%5E._id%29%5D+%7C+order%28publishedAt+desc%29+%5B0..2%5D+%7B%0A%09%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%09%7D%0A%09%7D%0A&%24groupId=%22group-197f97a5-1d6b-4394-8315-2305785f2f28%22&perspective=published&tag=next-loader.fetch"
+}
