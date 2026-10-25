@@ -1,6 +1,16 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 version: v1.25.1
 ignore:
+  SNYK-JS-ADMZIP-21707815:
+    - '*':
+        reason: >-
+          adm-zip has no fixed version: 0.6.1 is the latest published release and every version
+          is affected (CVE-2026-116137, published 2026-10-25). It reaches this project only through
+          Sanity's CLI tooling (@module-federation/dts-plugin below @sanity/workbench-cli and
+          @sanity/cli-build, through next-sanity and sanity), which extracts the type archives of
+          Sanity's own module-federation remotes while building; nothing in the deployed website
+          runs it. Revisit once adm-zip publishes a patched release.
+        expires: 2026-11-25T00:00:00.000Z
   SNYK-JS-BRACES-19963945:
     - '*':
         reason: >-
