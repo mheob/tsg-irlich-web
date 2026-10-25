@@ -1,25 +1,31 @@
 'use client';
 
-import type { AnchorHTMLAttributes, CSSProperties, MouseEvent } from 'react';
-import { useMemo, useState } from 'react';
+import type { AnchorHTMLAttributes, MouseEvent } from 'react';
+import { useState } from 'react';
 
-// Segments by grapheme cluster so multi-code-point characters survive the reversal
-const graphemeSegmenter = new Intl.Segmenter('de', { granularity: 'grapheme' });
+// Hidden from sight and from assistive technology, but part of the markup and the text content: a
+// harvester reading either finds the address in two pieces with this in between, none of which
+// forms an address. Visitors see, copy and hear the address in one piece.
+const SPAM_GUARD = ' [Spamschutz] ';
 
-function reverse(stringToReverse: string): string {
-	return [...graphemeSegmenter.segment(stringToReverse)]
-		.map(({ segment }) => segment)
-		.toReversed()
-		.map((char) => {
-			if (char === '(') {
-				return ')';
-			}
-			if (char === ')') {
-				return '(';
-			}
-			return char;
-		})
-		.join('');
+/**
+ * Splits the address in front of its `@`, or in the middle when it has none (a phone number), and
+ * puts the hidden spam guard in between.
+ *
+ * @param address - The email address or phone number the link shows.
+ * @returns The two halves with the guard between them.
+ */
+function guardAddress(address: string) {
+	const atIndex = address.indexOf('@');
+	const splitIndex = atIndex > 0 ? atIndex : Math.floor(address.length / 2);
+
+	return (
+		<>
+			{address.slice(0, splitIndex)}
+			<span hidden>{SPAM_GUARD}</span>
+			{address.slice(splitIndex)}
+		</>
+	);
 }
 
 function createContactLink({ header, href }: Pick<ContactLinkProps, 'header' | 'href'>): string {
@@ -52,28 +58,13 @@ interface ContactLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 	href: string;
 }
 
-export function ContactLink({
-	children,
-	header,
-	href,
-	style,
-	...props
-}: Readonly<ContactLinkProps>) {
+export function ContactLink({ children, header, href, ...props }: Readonly<ContactLinkProps>) {
 	const [hasInteracted, setHasInteracted] = useState(false);
 	const hrefText = href.slice(Math.max(0, href.indexOf(':') + 1));
 
 	const handleInteraction = () => {
 		setHasInteracted(true);
 	};
-
-	const directionStyle: CSSProperties = useMemo(
-		() => ({
-			...style,
-			direction: children || hasInteracted ? 'ltr' : 'rtl',
-			unicodeBidi: 'bidi-override',
-		}),
-		[children, hasInteracted, style],
-	);
 
 	const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
 		if (!hasInteracted) {
@@ -82,9 +73,10 @@ export function ContactLink({
 		}
 	};
 
+	// The accessible name comes from the visible text or from the caller's `aria-label`, never from a
+	// generic label of its own (WCAG 2.5.3). The real target only exists after an interaction.
 	const renderProps: AnchorHTMLAttributes<HTMLAnchorElement> = {
 		...props,
-		'aria-label': hasInteracted ? undefined : 'Kontaktlink - tippen zum Anzeigen',
 		href: hasInteracted ? createContactLink({ header, href }) : '#',
 		onClick: handleClick,
 		onContextMenu: handleInteraction,
@@ -97,8 +89,7 @@ export function ContactLink({
 		onMouseOver: handleInteraction,
 		onTouchStart: handleInteraction,
 		role: hasInteracted ? 'link' : 'button',
-		style: directionStyle,
 	};
 
-	return <a {...renderProps}>{children ?? (hasInteracted ? hrefText : reverse(hrefText))}</a>;
+	return <a {...renderProps}>{children ?? guardAddress(hrefText)}</a>;
 }

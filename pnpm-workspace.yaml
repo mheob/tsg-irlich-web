@@ -150,10 +150,7 @@ catalog:
   react-email: ^6.11.3
 
   # Tests: Vitest environment and plugins, end-to-end, accessibility and Lighthouse
-  # Held at 4.13: axe-core 4.14 checks `label-content-name-mismatch` by default, which every page
-  # fails through ContactLink's footer link. Lift together with the Renovate rule once WEB-381
-  # fixes ContactLink
-  "@axe-core/playwright": ~4.13.0
+  "@axe-core/playwright": ^4.14.0
   "@lhci/cli": ^0.15.1
   "@playwright/test": ^1.64.1
   "@testing-library/react": ^16.3.3

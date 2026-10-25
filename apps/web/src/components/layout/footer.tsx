@@ -80,11 +80,7 @@ export default async function Footer() {
 									href={`mailto:${email}`}
 								>
 									<span className="rounded-full border border-white p-3 transition-colors group-hover:border-secondary md:border-2">
-										<Mail
-											aria-label={`Schreibe uns eine E-Mail: ${email}`}
-											className="size-6 md:size-12"
-											strokeWidth="1"
-										/>
+										<Mail aria-hidden="true" className="size-6 md:size-12" strokeWidth="1" />
 									</span>
 									<address>{email}</address>
 								</ContactLink>

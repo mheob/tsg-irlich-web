@@ -15,11 +15,7 @@ interface DownloadCardProps {
 
 function DownloadCard({ download }: Readonly<DownloadCardProps>) {
 	return (
-		<Link
-			aria-label={`Das PDF "${download.title}" herunterladen`}
-			className={cn('flex flex-1')}
-			href={getDownloadFileUrl(download.document.asset)}
-		>
+		<Link className={cn('flex flex-1')} href={getDownloadFileUrl(download.document.asset)}>
 			<Card
 				className={cn(
 					'flex flex-1 flex-col items-center justify-between gap-8',
@@ -38,6 +34,8 @@ function DownloadCard({ download }: Readonly<DownloadCardProps>) {
 					Dateigröße: {getFileSize(download.document.asset?.size)}
 				</CardContent>
 			</Card>
+			{/* The name starts with what the card shows (WCAG 2.5.3) and ends with what the link does. */}
+			<span className="sr-only">PDF herunterladen</span>
 		</Link>
 	);
 }

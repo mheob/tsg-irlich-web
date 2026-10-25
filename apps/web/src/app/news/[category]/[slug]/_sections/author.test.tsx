@@ -78,11 +78,11 @@ describe('the author beside an article', () => {
 	});
 
 	// The link renders as a `ContactLink`, which hides its target until the visitor interacts with it
-	// and reports a generic name until then — see `src/components/with-logic/contact-link.test.tsx`.
+	// — see `src/components/with-logic/contact-link.test.tsx`.
 	it('reveals the author address once the visitor interacts with the link', async () => {
 		const { getByRole, user } = renderWithUser(<Author article={buildArticle()} />);
 
-		const link = getByRole('button', { name: 'Kontaktlink - tippen zum Anzeigen' });
+		const link = getByRole('button', { name: 'Autor anschreiben' });
 		await user.hover(link);
 
 		expect(link.getAttribute('href')).toBe('mailto:ada@tsg-irlich.de');

@@ -57,12 +57,6 @@ const NAMESAKES_LIST: ContactPerson[] = [
 	{ ...BASE_PERSON, _id: 'person-meike', firstName: 'Meike', lastName: 'Kaap' },
 ];
 
-// `contact-link.tsx` forces this exact aria-label on every `ContactLink` before it has been
-// interacted with, discarding whatever `ui/contact-button.tsx` passed in (see
-// `contact-link.test.tsx`'s "overrides a caller-supplied aria-label..." case) — so every contact
-// control, whatever it links to, is queryable by this one generic name before interaction.
-const KONTAKTLINK_LABEL = 'Kontaktlink - tippen zum Anzeigen';
-
 describe('the contact persons list', () => {
 	it('falls back to the initials when a person has no image', () => {
 		const { container, getByText } = renderWithUser(
@@ -103,56 +97,51 @@ describe('the contact persons list', () => {
 		expect(errors).toStrictEqual([]);
 	});
 
-	// Each `controls[n]` reference is queried once, before any interaction, then reused after
-	// clicking it — the underlying DOM node persists across the re-render, so `getAttribute('href')`
-	// on the same reference sees the real `mailto:`/`tel:`/`wa.me` href `ContactLink` resolves to
-	// once interacted with (see `contact-link.tsx`'s `createContactLink`).
+	// `ui/contact-button.tsx` names each control by its channel ("E-Mail", "Telefon", "Whatsapp"),
+	// and `ContactLink` keeps that name while it hides the target until the first interaction.
 	it('shows the phone control but not whatsapp when contactAs is "phone"', async () => {
-		const { getAllByRole, user } = renderWithUser(
+		const { getByRole, queryByRole, user } = renderWithUser(
 			<ContactPersons contactPersons={PHONE_ONLY_LIST} />,
 		);
 
-		const controls = getAllByRole('button', { name: KONTAKTLINK_LABEL });
-		expect(controls).toHaveLength(2);
+		const email = getByRole('button', { name: 'E-Mail' });
+		const phone = getByRole('button', { name: 'Telefon' });
+		await user.click(email);
+		await user.click(phone);
 
-		await user.click(controls[0]);
-		expect(controls[0].getAttribute('href')).toBe('mailto:anna.schmidt@tsg-irlich.de');
-
-		await user.click(controls[1]);
-		expect(controls[1].getAttribute('href')).toBe('tel:01761234567');
+		expect(email.getAttribute('href')).toBe('mailto:anna.schmidt@tsg-irlich.de');
+		expect(phone.getAttribute('href')).toBe('tel:01761234567');
+		expect(queryByRole('button', { name: 'Whatsapp' })).toBeNull();
 	});
 
 	it('shows the whatsapp control but not phone when contactAs is "whatsapp"', async () => {
-		const { getAllByRole, user } = renderWithUser(
+		const { getByRole, queryByRole, user } = renderWithUser(
 			<ContactPersons contactPersons={WHATSAPP_ONLY_LIST} />,
 		);
 
-		const controls = getAllByRole('button', { name: KONTAKTLINK_LABEL });
-		expect(controls).toHaveLength(2);
+		const email = getByRole('button', { name: 'E-Mail' });
+		const whatsapp = getByRole('button', { name: 'Whatsapp' });
+		await user.click(email);
+		await user.click(whatsapp);
 
-		await user.click(controls[0]);
-		expect(controls[0].getAttribute('href')).toBe('mailto:anna.schmidt@tsg-irlich.de');
-
-		await user.click(controls[1]);
-		expect(controls[1].getAttribute('href')).toBe('https://wa.me/01761234567');
+		expect(email.getAttribute('href')).toBe('mailto:anna.schmidt@tsg-irlich.de');
+		expect(whatsapp.getAttribute('href')).toBe('https://wa.me/01761234567');
+		expect(queryByRole('button', { name: 'Telefon' })).toBeNull();
 	});
 
 	it('shows all three controls, email, phone and whatsapp, when contactAs is "both"', async () => {
-		const { getAllByRole, user } = renderWithUser(
-			<ContactPersons contactPersons={NO_IMAGE_LIST} />,
-		);
+		const { getByRole, user } = renderWithUser(<ContactPersons contactPersons={NO_IMAGE_LIST} />);
 
-		const controls = getAllByRole('button', { name: KONTAKTLINK_LABEL });
-		expect(controls).toHaveLength(3);
+		const email = getByRole('button', { name: 'E-Mail' });
+		const phone = getByRole('button', { name: 'Telefon' });
+		const whatsapp = getByRole('button', { name: 'Whatsapp' });
+		await user.click(email);
+		await user.click(phone);
+		await user.click(whatsapp);
 
-		await user.click(controls[0]);
-		expect(controls[0].getAttribute('href')).toBe('mailto:anna.schmidt@tsg-irlich.de');
-
-		await user.click(controls[1]);
-		expect(controls[1].getAttribute('href')).toBe('tel:01761234567');
-
-		await user.click(controls[2]);
-		expect(controls[2].getAttribute('href')).toBe('https://wa.me/01761234567');
+		expect(email.getAttribute('href')).toBe('mailto:anna.schmidt@tsg-irlich.de');
+		expect(phone.getAttribute('href')).toBe('tel:01761234567');
+		expect(whatsapp.getAttribute('href')).toBe('https://wa.me/01761234567');
 	});
 
 	it('shows only the email control when contactAs is "email", even though a phone number is set', async () => {
@@ -160,11 +149,12 @@ describe('the contact persons list', () => {
 			<ContactPersons contactPersons={EMAIL_ONLY_LIST} />,
 		);
 
-		const controls = getAllByRole('button', { name: KONTAKTLINK_LABEL });
+		const controls = getAllByRole('button');
 		expect(controls).toHaveLength(1);
 
 		await user.click(controls[0]);
 		expect(controls[0].getAttribute('href')).toBe('mailto:anna.schmidt@tsg-irlich.de');
+		expect(controls[0].getAttribute('aria-label')).toBe('E-Mail');
 	});
 
 	it('hides both phone and whatsapp controls when the phone number is absent, regardless of contactAs', async () => {
@@ -172,10 +162,11 @@ describe('the contact persons list', () => {
 			<ContactPersons contactPersons={NO_PHONE_LIST} />,
 		);
 
-		const controls = getAllByRole('button', { name: KONTAKTLINK_LABEL });
+		const controls = getAllByRole('button');
 		expect(controls).toHaveLength(1);
 
 		await user.click(controls[0]);
 		expect(controls[0].getAttribute('href')).toBe('mailto:anna.schmidt@tsg-irlich.de');
+		expect(controls[0].getAttribute('aria-label')).toBe('E-Mail');
 	});
 });

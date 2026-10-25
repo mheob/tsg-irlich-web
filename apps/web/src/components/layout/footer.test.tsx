@@ -14,10 +14,6 @@ const mockedFetch = clientFetchMock();
 
 const ADDRESS = 'Gotenstraße 20, 56567 Neuwied';
 
-// Until the visitor interacts with it, every `ContactLink` reports this generic name instead of
-// its target — see `src/components/with-logic/contact-link.test.tsx`.
-const CONTACT_LINK_NAME = 'Kontaktlink - tippen zum Anzeigen';
-
 const CONTACT = {
 	email: 'info@tsg-irlich.de',
 	phone: '+49 2631 76987',
@@ -36,6 +32,17 @@ async function renderFooter(socialFields: unknown = null, contact: unknown = CON
 	return renderWithUser(await Footer());
 }
 
+/**
+ * Picks the contact links out of the footer's buttons: until the visitor interacts with them they
+ * are anchors announced as buttons, while the maps trigger is a real button without an href.
+ *
+ * @param buttons - Every element with the button role.
+ * @returns The contact links among them.
+ */
+function contactLinks(buttons: HTMLElement[]): HTMLElement[] {
+	return buttons.filter((button) => button.hasAttribute('href'));
+}
+
 describe('the footer', () => {
 	it('links back to the home page', async () => {
 		const { getByTitle } = await renderFooter();
@@ -50,18 +57,15 @@ describe('the footer', () => {
 		expect(getByLabelText(`Besuche uns im Pappelstadion: ${ADDRESS}`)).not.toBeNull();
 	});
 
-	// Every `ContactLink` hides its target until the visitor interacts with it, and until then it
-	// carries the same generic name — so the club address is reached by hovering it and reading the
-	// href it then reveals.
+	// A `ContactLink` hides its target until the visitor interacts with it, but is named by the
+	// address it shows (WCAG 2.5.3) — see `src/components/with-logic/contact-link.test.tsx`.
 	it('reveals the club email address once the visitor interacts with it', async () => {
-		const { getAllByRole, user } = await renderFooter();
+		const { getByRole, user } = await renderFooter();
 
-		const contactLinks = getAllByRole('button', { name: CONTACT_LINK_NAME });
-		await Promise.all(contactLinks.map(async (link) => user.hover(link)));
+		const link = getByRole('button', { name: 'info@tsg-irlich.de' });
+		await user.hover(link);
 
-		expect(contactLinks.map((link) => link.getAttribute('href'))).toContain(
-			'mailto:info@tsg-irlich.de',
-		);
+		expect(link.getAttribute('href')).toBe('mailto:info@tsg-irlich.de');
 	});
 
 	it.each([
@@ -106,32 +110,37 @@ describe('the footer', () => {
 		});
 
 		expect(queryByText(ADDRESS)).toBeNull();
-		expect(queryAllByRole('button', { name: CONTACT_LINK_NAME })).toHaveLength(0);
+		expect(queryAllByRole('button')).toHaveLength(0);
 	});
 
 	it('lists the social media channels the document carries', async () => {
-		const { getAllByRole, user } = await renderFooter({
+		const { getByRole, user } = await renderFooter({
 			facebook: 'https://facebook.example/tsg',
 			instagram: 'https://instagram.example/tsg',
 		});
 
-		const contactLinks = getAllByRole('button', { name: CONTACT_LINK_NAME });
-		await Promise.all(contactLinks.map(async (link) => user.hover(link)));
-		const targets = contactLinks.map((link) => link.getAttribute('href'));
+		const facebook = getByRole('button', { name: 'facebook' });
+		const instagram = getByRole('button', { name: 'instagram' });
+		await user.hover(facebook);
+		await user.hover(instagram);
 
-		expect(targets).toContain('https://instagram.example/tsg');
-		expect(targets).toContain('https://facebook.example/tsg');
+		expect(facebook.getAttribute('href')).toBe('https://facebook.example/tsg');
+		expect(instagram.getAttribute('href')).toBe('https://instagram.example/tsg');
 	});
 
 	it('shows only the email link when the document carries no social media', async () => {
 		const { getAllByRole } = await renderFooter();
 
-		expect(getAllByRole('button', { name: CONTACT_LINK_NAME })).toHaveLength(1);
+		expect(contactLinks(getAllByRole('button'))).toHaveLength(1);
 	});
 
 	it('skips a platform the document has no url for', async () => {
-		const { getAllByRole } = await renderFooter({ facebook: '', instagram: 'https://x.example' });
+		const { getAllByRole, queryByRole } = await renderFooter({
+			facebook: '',
+			instagram: 'https://x.example',
+		});
 
-		expect(getAllByRole('button', { name: CONTACT_LINK_NAME })).toHaveLength(2);
+		expect(contactLinks(getAllByRole('button'))).toHaveLength(2);
+		expect(queryByRole('button', { name: 'facebook' })).toBeNull();
 	});
 });

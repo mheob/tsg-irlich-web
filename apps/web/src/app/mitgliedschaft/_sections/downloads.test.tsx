@@ -46,10 +46,13 @@ describe('the downloads section', () => {
 		expect(getByText('Alles zum Mitnehmen.')).not.toBeNull();
 	});
 
-	it('offers each document as a labelled download', () => {
+	// WCAG 2.5.3 (Label in Name): the name starts with what the card shows, its title and file size.
+	it('offers each document as a download named by its visible text', () => {
 		const { getByRole } = renderWithUser(<Downloads {...buildSection([download('beitritt')])} />);
 
-		const link = getByRole('link', { name: 'Das PDF "Formular beitritt" herunterladen' });
+		const link = getByRole('link', {
+			name: 'Formular beitritt Dateigröße: 2.0 KB PDF herunterladen',
+		});
 
 		expect(link.getAttribute('href')).toBe('https://cdn.example/beitritt?dl=beitritt.pdf');
 	});

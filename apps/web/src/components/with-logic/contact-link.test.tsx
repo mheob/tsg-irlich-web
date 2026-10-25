@@ -8,6 +8,9 @@ import { ContactLink } from './contact-link';
 // `**/*.tsx` override in `vite.config.ts`).
 const MAILTO_HEADER = { subject: 'Hallo Welt', body: 'Bitte um Rückruf' };
 
+/** What an address harvester matches, in the markup as well as in the text content. */
+const EMAIL_PATTERN = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/u;
+
 describe('the contact link', () => {
 	it('resolves to the exact mailto href, unchanged, once interacted with', async () => {
 		const { getByRole, user } = renderWithUser(
@@ -56,86 +59,56 @@ describe('the contact link', () => {
 		expect(getByRole('link').getAttribute('href')).toBe('https://wa.me/491761234567');
 	});
 
-	it('exposes only a generic aria-label before interaction, not identifying whether this is an email, phone or WhatsApp link', () => {
+	// WCAG 2.5.3 (Label in Name): whoever reads or speaks the visible text has to reach the link by it.
+	it('is named by its visible text before interaction', () => {
 		const { getByRole } = renderWithUser(
-			<ContactLink href="mailto:info@tsg-irlich.de">info@tsg-irlich.de</ContactLink>,
+			<ContactLink href="mailto:info@tsg-irlich.de">Autor anschreiben</ContactLink>,
 		);
 
-		expect(getByRole('button').getAttribute('aria-label')).toBe(
-			'Kontaktlink - tippen zum Anzeigen',
-		);
+		expect(getByRole('button', { name: 'Autor anschreiben' })).not.toBeNull();
 	});
 
-	// With no `children`, the rendered text falls back to `reverse(hrefText)` before interaction.
-	// A plain ASCII href has no grapheme clusters spanning more than one UTF-16 code unit and no
-	// parentheses, so this pins the baseline: every character reversed in place, nothing else.
-	it('renders the reversed href text before any interaction', () => {
-		const { getByRole } = renderWithUser(<ContactLink href="tel:+49 176 1234567" />);
-
-		expect(getByRole('button').textContent).toBe('7654321 671 94+');
-	});
-
-	// The 😀 emoji is a surrogate pair (two UTF-16 code units). Reversing by code unit instead of by
-	// grapheme cluster splits the pair apart and reassembles it in the wrong order, producing two lone
-	// surrogates instead of the original emoji. `reverse()` segments with `Intl.Segmenter` precisely to
-	// keep this cluster intact, so this is the case that actually pins grapheme-awareness.
-	it('keeps a multi-code-unit grapheme cluster intact when reversing, rather than reversing UTF-16 code units', () => {
-		const { getByRole } = renderWithUser(<ContactLink href="tel:+49 176 😀 1234567" />);
-
-		expect(getByRole('button').textContent).toBe('7654321 😀 671 94+');
-	});
-
-	// `reverse()` also swaps `(` for `)` (and vice versa) as it reverses, so a parenthesised area code
-	// still opens and closes the right way round instead of ending up back to front.
-	it('swaps parentheses so they still point the right way once the text is reversed', () => {
-		const { getByRole } = renderWithUser(<ContactLink href="tel:+49 (0)176 1234567" />);
-
-		expect(getByRole('button').textContent).toBe('7654321 671(0) 94+');
-	});
-
-	// `contact-link.tsx`'s `renderProps` spreads `...props` and only THEN sets `'aria-label'`, so a
-	// caller-supplied label always loses — before interaction it is forced to the generic string
-	// above regardless of what the caller passed, after interaction it is discarded outright. This is
-	// the mechanism the next test (no accessible name at all) rests on: a component "fixed" to defer
-	// to a caller's label when one is supplied would still pass every other case in this file
-	// unchanged, so this is the one that actually pins it.
-	it('overrides a caller-supplied aria-label with its own generic one before interaction, and discards it entirely after interaction', async () => {
+	// `ui/contact-button.tsx` and the social media icons pass a purpose-specific `aria-label` with an
+	// icon as the only content. Without that label, the control has no accessible name at all.
+	it('keeps a caller-supplied aria-label before and after interaction', async () => {
 		const { getByRole, user } = renderWithUser(
 			<ContactLink aria-label="E-Mail" href="mailto:info@tsg-irlich.de">
-				info@tsg-irlich.de
-			</ContactLink>,
-		);
-
-		expect(getByRole('button').getAttribute('aria-label')).toBe(
-			'Kontaktlink - tippen zum Anzeigen',
-		);
-
-		await user.click(getByRole('button'));
-
-		expect(getByRole('link').getAttribute('aria-label')).toBeNull();
-	});
-
-	// `ui/contact-button.tsx` passes a purpose-specific `aria-label` ("E-Mail", "Telefon", "Whatsapp")
-	// together with an `aria-hidden` icon as the only child. Once a user interacts with such a button
-	// even once — including just hovering or focusing it, since `onMouseOver`/`onFocus` also call
-	// `handleInteraction` — `ContactLink` discards that label (pinned above) and the only remaining
-	// content is `aria-hidden`, leaving the button with no accessible name at all.
-	it('is left with no accessible name at all once interacted with, when its content is hidden from assistive technology (as ui/contact-button.tsx renders it)', async () => {
-		const { getByRole, user } = renderWithUser(
-			<ContactLink href="mailto:info@tsg-irlich.de">
 				<span aria-hidden="true">Icon</span>
 			</ContactLink>,
 		);
 
-		await user.click(getByRole('button'));
+		await user.click(getByRole('button', { name: 'E-Mail' }));
 
-		const link = getByRole('link');
-		expect(link.getAttribute('aria-label')).toBeNull();
-		expect(link.getAttribute('aria-labelledby')).toBeNull();
-		// The only content is still there in the DOM (`textContent` sees it), but hidden from
-		// assistive technology — together with the two assertions above, nothing is left to give this
-		// link an accessible name.
-		expect(link.textContent).toBe('Icon');
-		expect(link.querySelector('[aria-hidden="true"]')).not.toBeNull();
+		expect(getByRole('link', { name: 'E-Mail' })).not.toBeNull();
+	});
+
+	// dom-accessibility-api puts a space around every child that is not displayed inline, the hidden
+	// spam guard included, and names this one "it @tsg-irlich.de". Browsers and axe skip a hidden
+	// child without a space, so the name is compared without that one.
+	it('shows a bare email address under its own accessible name', () => {
+		const { getByRole } = renderWithUser(<ContactLink href="mailto:it@tsg-irlich.de" />);
+
+		expect(
+			getByRole('button', { name: (name) => name.replaceAll(' ', '') === 'it@tsg-irlich.de' }),
+		).not.toBeNull();
+	});
+
+	// The spam protection: a harvester reads either the markup or its text content, and neither may
+	// hold the address in one piece until a visitor interacts with the link.
+	it('keeps a bare email address out of the markup and the text a harvester reads', () => {
+		const { getByRole } = renderWithUser(<ContactLink href="mailto:it@tsg-irlich.de" />);
+
+		const button = getByRole('button');
+
+		expect(button.outerHTML).not.toMatch(EMAIL_PATTERN);
+		expect(button.textContent).not.toMatch(EMAIL_PATTERN);
+	});
+
+	it('shows a bare phone number under its own accessible name, but not as one piece of text', () => {
+		const { getByRole } = renderWithUser(<ContactLink href="tel:+49 176 1234567" />);
+
+		const button = getByRole('button', { name: '+49 176 1234567' });
+
+		expect(button.textContent).not.toContain('+49 176 1234567');
 	});
 });
