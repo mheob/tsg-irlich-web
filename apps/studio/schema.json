@@ -5143,6 +5143,14 @@
 				},
 				"optional": false
 			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": true
+			},
 			"images": {
 				"type": "objectAttribute",
 				"value": {

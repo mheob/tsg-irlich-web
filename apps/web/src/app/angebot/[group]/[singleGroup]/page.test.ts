@@ -19,6 +19,7 @@ import {
 	groupStaticParamsQuery,
 	offerGroupsGroupPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups-group';
+import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
 
 import { findElement } from '../../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../../test-utils/sanity-live-mock';
@@ -51,6 +52,7 @@ const mockedSanityFetch = sanityFetchMock();
 
 /** The `image-<id>-<width>x<height>-<format>` shape `@sanity/image-url` requires. */
 const ASSET_REF = 'image-abc123def456-800x600-jpg';
+const HERO_ASSET_REF = 'image-hero987fed654-800x600-jpg';
 
 const PAGE = {
 	content: {
@@ -310,7 +312,7 @@ describe('single group page', () => {
 			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
 		});
 
-		it('heads the page with the featured image and the shared titles', async () => {
+		it('heads the page with the card image and the shared titles', async () => {
 			mockSanity();
 
 			const hero = findElement(await SingleGroupsPage(routeProps()), Hero);
@@ -351,7 +353,7 @@ describe('single group page', () => {
 			},
 		);
 
-		it('crops the featured image to the landscape format of the hero', async () => {
+		it('crops the card image to the landscape format of the hero', async () => {
 			mockSanity();
 
 			const hero = findElement(await SingleGroupsPage(routeProps()), Hero);
@@ -362,12 +364,42 @@ describe('single group page', () => {
 			expect(searchParams.get('h')).toBe('600');
 		});
 
-		it('leaves the hero without an image when the featured image has no alt text', async () => {
+		it('shows the hero image instead of the card image when the group has one', async () => {
+			mockSanity({
+				group: {
+					...GROUP,
+					heroImage: { alt: 'Das Training', asset: { _ref: HERO_ASSET_REF, _type: 'reference' } },
+				},
+			});
+
+			const image = findElement(await SingleGroupsPage(routeProps()), Hero)?.props.image;
+
+			expect(image?.alt).toBe('Das Training');
+			expect(image?.src).toContain('hero987fed654');
+		});
+
+		it('falls back to the card image when the hero image has no file', async () => {
+			mockSanity({ group: { ...GROUP, heroImage: { alt: 'Leer' } } });
+
+			const image = findElement(await SingleGroupsPage(routeProps()), Hero)?.props.image;
+
+			expect(image?.alt).toBe('Die Mannschaft');
+		});
+
+		it('names the image after the group when it has no alt text', async () => {
 			mockSanity({ group: { ...GROUP, featuredImage: { asset: { _ref: ASSET_REF } } } });
 
 			const hero = findElement(await SingleGroupsPage(routeProps()), Hero);
 
-			expect(hero?.props.image).toBeUndefined();
+			expect(hero?.props.image?.alt).toBe('Herren 1');
+		});
+
+		it('shows the offer image when neither image has a file', async () => {
+			mockSanity({ group: { ...GROUP, featuredImage: { alt: 'Leer' }, heroImage: null } });
+
+			const hero = findElement(await SingleGroupsPage(routeProps()), Hero);
+
+			expect(hero?.props.image).toStrictEqual(OFFER_FALLBACK_IMAGE);
 		});
 
 		it('renders the group description and title', async () => {

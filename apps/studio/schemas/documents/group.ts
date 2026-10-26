@@ -119,13 +119,21 @@ const group = defineType({
 
 		dosbIconField,
 
+		// Keeps the name of the former background image, so the existing images stay without a migration.
 		defineField({
 			description:
-				'Das Hintergrundbild wird z.B. auf der Gruppen-Übersicht angezeigt, wenn man über eine Gruppe hovered.',
+				'Das Kachelbild erscheint auf den Gruppenkacheln der Abteilungsseite. Fehlen Hero- oder Open-Graph-Bild, dient es als Rückfall.',
 			name: 'featuredImage',
-			title: 'Hintergrundbild',
+			title: 'Kachelbild',
 			type: 'extendedImage',
-			validation: (Rule) => [Rule.required().error('Bild ist erforderlich')],
+			validation: (Rule) => Rule.required().assetRequired().error('Kachelbild ist erforderlich'),
+		}),
+
+		defineField({
+			description: 'Optional. Ohne Hero-Bild zeigt die Gruppenseite das Kachelbild.',
+			name: 'heroImage',
+			title: 'Hero-Bild',
+			type: 'extendedImage',
 		}),
 
 		defineField({

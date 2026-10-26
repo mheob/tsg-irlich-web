@@ -1,0 +1,94 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'group' &&\n\t\tslug.current == $slug &&\n\t\tdefined(department->slug.current) &&\n\t\tdepartment->slug.current == $department\n\t][0] {\n\t\t_id,\n\t\tdescription,\n\t\tfeaturedImage,\n\t\theroImage,\n\t\timages,\n\t\t\"isTeamSport\": department->isTeamSport,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n",
+		"result": {
+			"_id": "group-5040612d-c598-449f-8d39-c18a242c9789",
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "78b2b3ae4557",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "76a53d191ee6",
+								"_type": "span",
+								"marks": [],
+								"text": "Unsere Schiedsrichter sind ein wichtiger Bestandteil der TSG Irlich. Aktuell vertreten fünf Unparteiische den Verein im Fußballverband Rheinland und sorgen Woche für Woche für Fairness auf den Sportplätzen der Region."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "a5b66e7fe049",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "76a53d191ee6",
+								"_type": "span",
+								"marks": [],
+								"text": "Auch wenn sie keinen festen Trainingsbetrieb haben, sind sie mit großem Einsatz und Leidenschaft unterwegs und tragen so dazu bei, dass der Ball rollen kann. Die TSG ist stolz auf ihre Schiedsrichter und ihre wertvolle Arbeit für den Fußball."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "Die Schiedsrichter der TSG Irlich",
+				"asset": {
+					"_ref": "image-e0b2a7b930e9fcfb01bfbca5c7f4ad765c48777a-4032x3024-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"description": "Das Schiedsrichter-Team der TSG Irlich: Lukas Krechel, Maximilian Holterhoff, Martin Tietzmann, Simon Schulz und Emelie Efa.",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.6959756206865646,
+					"width": 1,
+					"x": 0.5,
+					"y": 0.39756331600037126
+				}
+			},
+			"heroImage": null,
+			"images": [
+				{
+					"_key": "ae3dd8a6c6e8",
+					"_type": "extendedImage",
+					"alt": "Schiedsrichter der TSG Irlich",
+					"asset": {
+						"_ref": "image-e0b2a7b930e9fcfb01bfbca5c7f4ad765c48777a-4032x3024-jpg",
+						"_type": "reference"
+					}
+				}
+			],
+			"isTeamSport": true,
+			"meta": {
+				"metaDescription": "Schiedsrichter TSG Irlich: Fünf engagierte Unparteiische vertreten unseren Verein im FV Rheinland und sorgen jede Woche für Fairness auf den Sportplätzen.",
+				"metaTitle": "Die Schiedsrichter der TSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Das Schiedsrichter-Team der TSG Irlich: Lukas Krechel, Maximilian Holterhoff, Martin Tietzmann, Simon Schulz und Emelie Efa.",
+					"asset": {
+						"_ref": "image-e0b2a7b930e9fcfb01bfbca5c7f4ad765c48777a-4032x3024-jpg",
+						"_type": "reference"
+					}
+				}
+			},
+			"title": "Schiedsrichter",
+			"training": null
+		},
+		"syncTags": ["s1:KnmjGQ", "s1:Z4VvIg"],
+		"ms": 7
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27group%27+%26%26%0A%09%09slug.current+%3D%3D+%24slug+%26%26%0A%09%09defined%28department-%3Eslug.current%29+%26%26%0A%09%09department-%3Eslug.current+%3D%3D+%24department%0A%09%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09heroImage%2C%0A%09%09images%2C%0A%09%09%22isTeamSport%22%3A+department-%3EisTeamSport%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24department=%22fussball%22&%24slug=%22schiedsrichter%22&perspective=published&tag=next-loader.fetch"
+}

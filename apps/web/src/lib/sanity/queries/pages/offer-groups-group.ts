@@ -54,6 +54,7 @@ const groupPageQuery = defineQuery(`
 		_id,
 		description,
 		${featuredImage},
+		heroImage,
 		images,
 		"isTeamSport": department->isTeamSport,
 		${meta},
