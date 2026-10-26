@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
 import { defaultPageSectionFields, getHiddenSlugField } from '@/shared/fields/general';
+import { getHeroImageField } from '@/shared/fields/hero-image';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
@@ -32,6 +33,9 @@ const homePage = defineType({
 
 		// General
 		...defaultPageSectionFields,
+		getHeroImageField(
+			'Freigestelltes Bild mit transparentem Hintergrund (PNG oder WebP) im Hochformat. Es steht unten bündig neben dem Seitentitel.',
+		),
 
 		// Meta
 		metaField,
