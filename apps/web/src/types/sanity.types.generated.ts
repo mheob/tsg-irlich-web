@@ -538,6 +538,17 @@ export type SiteSettings = {
     } & InternalLink
   >;
   socialFields?: SocialFields;
+  visionImages: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  contactFormImages: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  fallbackImage: ExtendedImage;
 };
 
 export type Venue = {
@@ -817,6 +828,7 @@ export type AboutUs = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     introSection?: {
@@ -865,6 +877,7 @@ export type Membership = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   intro: BlockContent;
   downloadsSection: {
@@ -898,6 +911,7 @@ export type Accessibility = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: BlockContent;
 };
@@ -911,6 +925,7 @@ export type Privacy = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   introText: BlockContent;
   address: string;
@@ -928,6 +943,7 @@ export type Imprint = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   intro?: SimpleBlockContent;
   address: SimpleBlockContent;
@@ -959,6 +975,7 @@ export type NewsOverview = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     contactPersonsSection: ContactPersonsSection;
@@ -1095,6 +1112,7 @@ export type DepartmentsPage = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     departmentsSection: {
@@ -1120,6 +1138,7 @@ export type Contact = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     receiver: Array<
@@ -1161,6 +1180,7 @@ export type Home = {
   title: string;
   subtitle: string;
   intro?: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     featureSection: {
@@ -2130,6 +2150,7 @@ export type AboutUsPageQueryResult = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     introSection: {
@@ -2589,6 +2610,7 @@ export type AccessibilityPageQueryResult = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     _type: "blockContent";
@@ -2735,6 +2757,7 @@ export type ContactPageQueryResult = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     receiver: Array<
@@ -2888,6 +2911,7 @@ export type HomePageQueryResult = {
   title: string;
   subtitle: string;
   intro?: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     featureSection: {
@@ -3006,6 +3030,7 @@ export type ImprintPageQueryResult = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   intro?: SimpleBlockContent;
   address: SimpleBlockContent;
@@ -3122,6 +3147,7 @@ export type MembershipPageQueryResult = {
     slug?: Slug;
     title: string;
     subtitle: string;
+    heroImage: ExtendedImage;
     meta?: MetaFields;
     intro: {
       _type: "blockContent";
@@ -3780,6 +3806,7 @@ export type NewsOverviewPageQueryResult = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     contactPersonsSection: {
@@ -4028,6 +4055,7 @@ export type OfferPageQueryResult = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
     departmentsSection: {
@@ -4071,6 +4099,7 @@ export type PrivacyPageQueryResult = {
   slug?: Slug;
   title: string;
   subtitle: string;
+  heroImage: ExtendedImage;
   meta?: MetaFields;
   introText: {
     _type: "blockContent";

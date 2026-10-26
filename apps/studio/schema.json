@@ -2805,6 +2805,58 @@
 					"name": "socialFields"
 				},
 				"optional": true
+			},
+			"visionImages": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"_key": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								}
+							}
+						},
+						"rest": {
+							"type": "inline",
+							"name": "extendedImage"
+						}
+					}
+				},
+				"optional": false
+			},
+			"contactFormImages": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"_key": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								}
+							}
+						},
+						"rest": {
+							"type": "inline",
+							"name": "extendedImage"
+						}
+					}
+				},
+				"optional": false
+			},
+			"fallbackImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
 			}
 		}
 	},
@@ -4430,6 +4482,14 @@
 				},
 				"optional": false
 			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
+			},
 			"meta": {
 				"type": "objectAttribute",
 				"value": {
@@ -4693,6 +4753,14 @@
 				},
 				"optional": false
 			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
+			},
 			"meta": {
 				"type": "objectAttribute",
 				"value": {
@@ -4872,6 +4940,14 @@
 				},
 				"optional": false
 			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
+			},
 			"meta": {
 				"type": "objectAttribute",
 				"value": {
@@ -4944,6 +5020,14 @@
 				"type": "objectAttribute",
 				"value": {
 					"type": "string"
+				},
+				"optional": false
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
 				},
 				"optional": false
 			},
@@ -5048,6 +5132,14 @@
 				"type": "objectAttribute",
 				"value": {
 					"type": "string"
+				},
+				"optional": false
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
 				},
 				"optional": false
 			},
@@ -5242,6 +5334,14 @@
 				"type": "objectAttribute",
 				"value": {
 					"type": "string"
+				},
+				"optional": false
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
 				},
 				"optional": false
 			},
@@ -5942,6 +6042,14 @@
 				},
 				"optional": false
 			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
+			},
 			"meta": {
 				"type": "objectAttribute",
 				"value": {
@@ -6075,6 +6183,14 @@
 				"type": "objectAttribute",
 				"value": {
 					"type": "string"
+				},
+				"optional": false
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
 				},
 				"optional": false
 			},
@@ -6295,6 +6411,14 @@
 					"type": "string"
 				},
 				"optional": true
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
 			},
 			"meta": {
 				"type": "objectAttribute",
