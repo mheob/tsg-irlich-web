@@ -72,7 +72,7 @@ Every route builds its metadata with `getPageMetadata` from `src/utils/metadata.
 
 ## Page images
 
-Every content image comes from Sanity (WEB-389); the app ships no image file of its own.
+Every content image comes from Sanity (WEB-389); the app ships no content image of its own. Only the icons and the club logo stay files: the ones in `public/` and `favicon.ico`, `apple-icon.png` and `icon.svg` in `src/app`.
 
 - The hero of a single page reads `heroImage` from its document through `getPageHeroImage` (`src/utils/hero-image.ts`). The URL is uncropped (`urlForImageMax`, 3840 px wide) and `object-cover` crops in the browser, as it did for the static files. `getObjectPosition` turns the hotspot into `object-position`, measured inside the crop rectangle. The department and group heroes keep `getHeroImage`, which crops to 1920 × 600 on the server and takes the fallback image of the site settings as its last candidate. The home hero is a cut-out with `object-contain object-bottom` and ignores the hotspot.
 - The feedback page shows the hero of `contact` (`contactHeroImageQuery`), the TSG-Echo pages the one of `aboutUs` (`aboutUsHeroImageQuery`), the news categories the one of `newsOverview` (`newsOverviewHeroImageQuery`).
