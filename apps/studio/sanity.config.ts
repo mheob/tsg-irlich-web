@@ -1,5 +1,6 @@
 import { defineConfig } from 'sanity';
 
+import { createDuplicateWithoutSlugHistoryAction } from './actions/duplicate-without-slug-history';
 import { createPublishWithSlugHistoryAction } from './actions/publish-with-slug-history';
 import { RegenerateEchoPagesAction } from './actions/regenerate-echo-pages';
 import { Logo } from './components/logo';
@@ -15,7 +16,8 @@ const singletonActions = new Set(['publish', 'discardChanges', 'restore']);
 // Define the singleton document types
 const singletonTypes = new Set(['privacy', 'site-settings']);
 
-// Define the document types whose publish action remembers former slugs, so old URLs can redirect
+// Define the document types whose publish action remembers former slugs, so old URLs can redirect,
+// and whose duplicate action leaves that history behind, so a copy cannot take over the redirects
 const slugHistoryTypes = new Set(['department', 'group']);
 
 export default defineConfig({
@@ -31,9 +33,15 @@ export default defineConfig({
 				return [...input, RegenerateEchoPagesAction];
 			}
 			if (slugHistoryTypes.has(context.schemaType)) {
-				return input.map((action) =>
-					action.action === 'publish' ? createPublishWithSlugHistoryAction(action) : action,
-				);
+				return input.map((action) => {
+					if (action.action === 'publish') {
+						return createPublishWithSlugHistoryAction(action);
+					}
+					if (action.action === 'duplicate') {
+						return createDuplicateWithoutSlugHistoryAction(action);
+					}
+					return action;
+				});
 			}
 			return input;
 		},
