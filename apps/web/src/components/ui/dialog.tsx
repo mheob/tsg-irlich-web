@@ -9,7 +9,10 @@ const DialogTrigger = BaseDialog.Trigger;
 const DialogPortal = BaseDialog.Portal;
 const DialogClose = BaseDialog.Close;
 
-function DialogBackdrop({ className, ...props }: ComponentProps<typeof BaseDialog.Backdrop>) {
+function DialogBackdrop({
+	className,
+	...props
+}: Readonly<ComponentProps<typeof BaseDialog.Backdrop>>) {
 	return (
 		<BaseDialog.Backdrop
 			className={cn(
@@ -21,7 +24,11 @@ function DialogBackdrop({ className, ...props }: ComponentProps<typeof BaseDialo
 	);
 }
 
-function DialogPopup({ children, className, ...props }: ComponentProps<typeof BaseDialog.Popup>) {
+function DialogPopup({
+	children,
+	className,
+	...props
+}: Readonly<ComponentProps<typeof BaseDialog.Popup>>) {
 	return (
 		<DialogPortal>
 			<DialogBackdrop />
@@ -42,7 +49,7 @@ function DialogPopup({ children, className, ...props }: ComponentProps<typeof Ba
 	);
 }
 
-function DialogHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+function DialogHeader({ className, ...props }: Readonly<HTMLAttributes<HTMLDivElement>>) {
 	return (
 		<div
 			className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)}
@@ -51,7 +58,7 @@ function DialogHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
 	);
 }
 
-function DialogFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+function DialogFooter({ className, ...props }: Readonly<HTMLAttributes<HTMLDivElement>>) {
 	return (
 		<div
 			className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)}
@@ -60,7 +67,7 @@ function DialogFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
 	);
 }
 
-function DialogTitle({ className, ...props }: ComponentProps<typeof BaseDialog.Title>) {
+function DialogTitle({ className, ...props }: Readonly<ComponentProps<typeof BaseDialog.Title>>) {
 	return (
 		<BaseDialog.Title
 			className={cn('text-lg leading-none font-semibold tracking-tight', className)}
@@ -69,7 +76,10 @@ function DialogTitle({ className, ...props }: ComponentProps<typeof BaseDialog.T
 	);
 }
 
-function DialogDescription({ className, ...props }: ComponentProps<typeof BaseDialog.Description>) {
+function DialogDescription({
+	className,
+	...props
+}: Readonly<ComponentProps<typeof BaseDialog.Description>>) {
 	return (
 		<BaseDialog.Description className={cn('text-sm text-muted-foreground', className)} {...props} />
 	);

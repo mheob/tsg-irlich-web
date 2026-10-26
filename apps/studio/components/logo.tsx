@@ -1,6 +1,8 @@
 export function Logo() {
 	return (
+		// The studio shows the logo next to the workspace title, which already names the club
 		<svg
+			aria-hidden="true"
 			clipRule="evenodd"
 			fillRule="evenodd"
 			strokeLinejoin="round"

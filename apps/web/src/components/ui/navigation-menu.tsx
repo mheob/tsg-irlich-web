@@ -14,7 +14,7 @@ function NavigationMenuPositioner({
 	side = 'bottom',
 	sideOffset = POPUP_OFFSET,
 	...props
-}: NavigationMenuPrimitive.Positioner.Props) {
+}: Readonly<NavigationMenuPrimitive.Positioner.Props>) {
 	return (
 		<NavigationMenuPrimitive.Portal>
 			<NavigationMenuPrimitive.Positioner
@@ -41,7 +41,7 @@ function NavigationMenu({
 	className,
 	positionMethod,
 	...props
-}: NavigationMenuProps) {
+}: Readonly<NavigationMenuProps>) {
 	return (
 		<NavigationMenuPrimitive.Root
 			className={cn('relative flex items-center', className)}
@@ -54,7 +54,7 @@ function NavigationMenu({
 	);
 }
 
-function NavigationMenuList({ className, ...props }: NavigationMenuPrimitive.List.Props) {
+function NavigationMenuList({ className, ...props }: Readonly<NavigationMenuPrimitive.List.Props>) {
 	return (
 		<NavigationMenuPrimitive.List
 			className={cn('flex list-none items-center', className)}
@@ -64,7 +64,7 @@ function NavigationMenuList({ className, ...props }: NavigationMenuPrimitive.Lis
 	);
 }
 
-function NavigationMenuItem({ className, ...props }: NavigationMenuPrimitive.Item.Props) {
+function NavigationMenuItem({ className, ...props }: Readonly<NavigationMenuPrimitive.Item.Props>) {
 	return (
 		<NavigationMenuPrimitive.Item
 			className={cn('relative', className)}
@@ -78,7 +78,7 @@ function NavigationMenuTrigger({
 	children,
 	className,
 	...props
-}: NavigationMenuPrimitive.Trigger.Props) {
+}: Readonly<NavigationMenuPrimitive.Trigger.Props>) {
 	return (
 		<NavigationMenuPrimitive.Trigger
 			className={cn(
@@ -97,7 +97,10 @@ function NavigationMenuTrigger({
 	);
 }
 
-function NavigationMenuContent({ className, ...props }: NavigationMenuPrimitive.Content.Props) {
+function NavigationMenuContent({
+	className,
+	...props
+}: Readonly<NavigationMenuPrimitive.Content.Props>) {
 	return (
 		<NavigationMenuPrimitive.Content
 			className={cn(
@@ -110,7 +113,7 @@ function NavigationMenuContent({ className, ...props }: NavigationMenuPrimitive.
 	);
 }
 
-function NavigationMenuLink({ className, ...props }: NavigationMenuPrimitive.Link.Props) {
+function NavigationMenuLink({ className, ...props }: Readonly<NavigationMenuPrimitive.Link.Props>) {
 	return (
 		<NavigationMenuPrimitive.Link
 			className={cn(

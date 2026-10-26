@@ -25,8 +25,6 @@ export const featuresField = defineField({
 		defineField({
 			description: "Merkmale (USP's), die auf der Homepage angezeigt werden.",
 			name: 'features',
-			// oxlint-disable-next-line no-warning-comments
-			// TODO: add icon name (string) from https://... (see: /apps/studio/schemas/documents/group.tsx:63)
 			of: [
 				defineField({
 					fields: [
