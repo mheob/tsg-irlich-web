@@ -10,9 +10,9 @@ import type { client } from '@/lib/sanity/client';
 import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 
 import { itFollowsTheMetadataContract } from '../../../test-utils/page-contract';
+import { PAGE_HERO_IMAGE, SITE_IMAGES } from '../../../test-utils/page-images';
 import { findElement } from '../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
-import { SITE_IMAGES } from '../../../test-utils/site-images';
 // The contact form pulls in the server action, which pulls in `src/lib/resend.ts` — and that
 // reads its API key at import time. `vi.hoisted` runs before the imports are evaluated, which a
 // plain `vi.stubEnv` at the file's top level would not.
@@ -68,6 +68,7 @@ describe('contact page', () => {
 		// oxlint-disable-next-line vitest/require-hook -- registers `it` cases, not setup code
 		itFollowsTheMetadataContract({
 			build: buildPage,
+			buildWithHeroImage: (heroImage, meta) => ({ ...buildPage(meta), heroImage }),
 			fetchMock: mockedFetch,
 			generateMetadata,
 			path: '/kontakt',
@@ -76,6 +77,15 @@ describe('contact page', () => {
 	});
 
 	describe('rendering', () => {
+		it('shows the hero image of the page', async () => {
+			mockedFetch.mockResolvedValue({ ...buildPage(), heroImage: PAGE_HERO_IMAGE });
+
+			const hero = findElement(await ContactPage(), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
+		});
+
 		it('gives up when the document is missing', async () => {
 			mockedFetch.mockResolvedValue(null);
 

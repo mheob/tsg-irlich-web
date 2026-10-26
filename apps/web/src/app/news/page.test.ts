@@ -12,6 +12,7 @@ import {
 	newsCategoriesQuery,
 } from '@/lib/sanity/queries/shared/news';
 
+import { PAGE_HERO_IMAGE } from '../../../test-utils/page-images';
 import { findElement } from '../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../test-utils/sanity-live-mock';
 import { CategoryCombobox } from './_sections/category-combobox';
@@ -126,6 +127,19 @@ describe('news overview page', () => {
 			});
 		});
 
+		it('falls back to the hero image for the open graph image', async () => {
+			mockSanity({ page: { ...OVERVIEW, heroImage: PAGE_HERO_IMAGE } });
+
+			const metadata = await generateMetadata(routeProps());
+
+			const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+			expect(openGraphImage).toMatchObject({
+				alt: 'Hero der Seite',
+			});
+			expect(openGraphImage?.url).toContain('heroimg111');
+		});
+
 		it('prefers the meta title and description', async () => {
 			mockSanity({
 				page: { ...OVERVIEW, meta: { metaDescription: 'Aktuelles', metaTitle: 'News · TSG' } },
@@ -156,6 +170,15 @@ describe('news overview page', () => {
 	});
 
 	describe('rendering', () => {
+		it('shows the hero image of the page', async () => {
+			mockSanity({ page: { ...OVERVIEW, heroImage: PAGE_HERO_IMAGE } });
+
+			const hero = findElement(await NewsOverviewPage(routeProps()), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
+		});
+
 		it('renders nothing when the document is missing', async () => {
 			mockSanity({ page: null });
 

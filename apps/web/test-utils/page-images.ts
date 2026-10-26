@@ -42,4 +42,11 @@ const SITE_IMAGES = {
 	],
 };
 
-export { SITE_IMAGES };
+/** The hero image of a single page, as its document carries it. */
+const PAGE_HERO_IMAGE = {
+	_type: 'extendedImage' as const,
+	alt: 'Hero der Seite',
+	asset: { _ref: 'image-heroimg111-4094x2160-webp', _type: 'reference' as const },
+};
+
+export { PAGE_HERO_IMAGE, SITE_IMAGES };

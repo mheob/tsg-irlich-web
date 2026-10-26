@@ -27,6 +27,7 @@ import type {
 	SocialMediaQueryResult,
 	SponsorsQueryResult,
 } from '@/types/sanity.types';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
 import { resolveSectionImages } from '@/utils/section-images';
 
@@ -79,6 +80,7 @@ export default async function HomePage() {
 	return (
 		<>
 			<Hero
+				image={getPageHeroImage(page.heroImage, page.title)}
 				intro={page.intro}
 				socialMedia={socialMedia}
 				subtitle={page.subtitle}

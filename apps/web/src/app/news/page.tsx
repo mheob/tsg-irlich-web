@@ -14,21 +14,16 @@ import {
 	newsArticlesTotalQuery,
 	newsCategoriesQuery,
 } from '@/lib/sanity/queries/shared/news';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
 import { getPageNumber, getPaginatedPath } from '@/utils/pagination';
 
-import newsOverviewImage from './_assets/news-overview.webp';
 import { CategoryCombobox } from './_sections/category-combobox';
 import { LatestNews } from './_sections/latest-news';
 import { LatestNewsPagination } from './_sections/latest-news-pagination';
 
 const START_INDEX = 3;
 const ITEMS_PER_PAGE = 6;
-
-const HERO_IMAGE = {
-	alt: 'Ein Handy und ein Kugelschreiber auf einer Zeitung sollen eine Nachrichtenübersicht darstellen.',
-	src: newsOverviewImage,
-};
 
 export async function generateMetadata({
 	searchParams,
@@ -43,6 +38,7 @@ export async function generateMetadata({
 	}
 
 	return getPageMetadata({
+		image: page.heroImage,
 		meta: page.meta,
 		path: getPaginatedPath('/news', getPageNumber(seite)),
 		title: page.title,
@@ -81,7 +77,11 @@ export default async function NewsOverviewPage({ searchParams }: Readonly<PagePr
 
 	return (
 		<>
-			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
+			<Hero
+				image={getPageHeroImage(page.heroImage, page.title)}
+				subTitle={page.subtitle}
+				title={page.title}
+			/>
 
 			<section className="container mx-auto py-10 md:py-28">
 				<div className="flex flex-col gap-6 md:flex-row md:justify-between">

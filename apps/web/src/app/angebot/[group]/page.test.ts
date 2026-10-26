@@ -15,9 +15,9 @@ import {
 import { offerGroupsPageQuery } from '@/lib/sanity/queries/pages/offer-groups';
 import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 
+import { SITE_IMAGES } from '../../../../test-utils/page-images';
 import { findElement, findElements, sectionTypes } from '../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../test-utils/sanity-live-mock';
-import { SITE_IMAGES } from '../../../../test-utils/site-images';
 import { encodeLikeDraftMode } from '../../../../test-utils/stega';
 import { Faq } from './_sections/faq';
 import { Groups } from './_sections/groups';

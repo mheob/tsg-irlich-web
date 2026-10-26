@@ -9,6 +9,7 @@ import { Pricing } from '@/components/section/pricing';
 import type { client } from '@/lib/sanity/client';
 
 import { itFollowsTheMetadataContract } from '../../../test-utils/page-contract';
+import { PAGE_HERO_IMAGE } from '../../../test-utils/page-images';
 import { findElement } from '../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
 import { Downloads } from './_sections/downloads';
@@ -52,6 +53,10 @@ describe('membership page', () => {
 		// oxlint-disable-next-line vitest/require-hook -- registers `it` cases, not setup code
 		itFollowsTheMetadataContract({
 			build: buildPage,
+			buildWithHeroImage: (heroImage, meta) => {
+				const document = buildPage(meta) as { membership: Record<string, unknown> };
+				return { ...document, membership: { ...document.membership, heroImage } };
+			},
 			fetchMock: mockedFetch,
 			generateMetadata,
 			// Both parts of the page come from one query, so an absent membership document still
@@ -63,6 +68,21 @@ describe('membership page', () => {
 	});
 
 	describe('rendering', () => {
+		it('shows the hero image of the page', async () => {
+			mockedFetch.mockResolvedValue({
+				...buildPage(),
+				membership: {
+					...(buildPage() as { membership: Record<string, unknown> }).membership,
+					heroImage: PAGE_HERO_IMAGE,
+				},
+			});
+
+			const hero = findElement(await MembershipPage(), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
+		});
+
 		it.each([
 			['membership document', { membership: null, pricingSection: { title: 'Beiträge' } }],
 			['pricing section', { ...buildPage(), pricingSection: null }],

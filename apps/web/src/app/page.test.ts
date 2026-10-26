@@ -20,9 +20,9 @@ import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 
 import { itFollowsTheMetadataContract } from '../../test-utils/page-contract';
+import { PAGE_HERO_IMAGE, SITE_IMAGES } from '../../test-utils/page-images';
 import { findElement } from '../../test-utils/react-tree';
 import { clientFetchMock } from '../../test-utils/sanity-client-mock';
-import { SITE_IMAGES } from '../../test-utils/site-images';
 import { Features } from './_home/features';
 import { Groups } from './_home/groups';
 import { Hero } from './_home/hero';
@@ -144,12 +144,30 @@ describe('home page', () => {
 		});
 	});
 
+	// The cut-out of the home hero is no preview picture, so the page shares none of its own.
+	it('keeps the hero image out of the open graph image', async () => {
+		mockedFetch.mockResolvedValue({ ...buildPage(), heroImage: PAGE_HERO_IMAGE });
+
+		const metadata = await generateMetadata();
+
+		expect(metadata.openGraph?.images).toStrictEqual([]);
+	});
+
 	describe('rendering', () => {
 		it('gives up when the document is missing', async () => {
 			mockSanity({ page: null });
 
 			await expect(HomePage()).rejects.toThrow('NEXT_NOT_FOUND');
 			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
+		});
+
+		it('shows the hero image of the page', async () => {
+			mockSanity({ page: { ...buildPage(), heroImage: PAGE_HERO_IMAGE } });
+
+			const hero = findElement(await HomePage(), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
 		});
 
 		it('heads the page with the intro, title and social media links', async () => {

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { ImageProps } from 'next/image';
 import Link from 'next/link';
 
 import { cn } from '@tsgi-web/shared';
@@ -7,17 +8,18 @@ import { ButtonLink } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
 import { SocialMediaIcon } from '@/components/ui/social-media-icon';
 import ArrowCta from '@/icons/design/arrow-cta';
-import heroImage from '@/images/home/hero.webp';
 import type { Home, SocialMediaQueryResult } from '@/types/sanity.types';
 import { getSocialMediaEntries } from '@/utils/icon';
 
 import styles from './hero.module.css';
 
 interface HeroProps extends Pick<Home, 'intro' | 'subtitle' | 'title'> {
+	/** The cut-out photo of the page; it stands on the bottom edge and ignores any hotspot. */
+	image?: { alt: string; src: ImageProps['src'] };
 	socialMedia: SocialMediaQueryResult;
 }
 
-export function Hero({ intro, socialMedia, subtitle, title }: Readonly<HeroProps>) {
+export function Hero({ image, intro, socialMedia, subtitle, title }: Readonly<HeroProps>) {
 	return (
 		<section className="relative pt-20 lg:grid lg:min-h-dvh lg:pt-48">
 			<div className="pt-5 lg:container lg:grid lg:grid-cols-2">
@@ -39,17 +41,19 @@ export function Hero({ intro, socialMedia, subtitle, title }: Readonly<HeroProps
 
 					{/* `object-contain` keeps the cut-out undistorted in whatever box the viewport leaves it,
 					    so it can never grow into the text or the icons beside it. */}
-					<div className="relative h-104 sm:h-128 md:h-160 lg:h-[calc(100%+4rem)] lg:max-h-240 lg:self-end">
-						<Image
-							alt="Eine Taekwondo-Sportlerin, eine Tänzerin und ein Fußballer der TSG Irlich"
-							className="object-contain object-bottom"
-							fetchPriority="high"
-							loading="eager"
-							sizes="(min-width: 64rem) 36vw, (min-width: 48rem) 28rem, (min-width: 40rem) 23rem, 19rem"
-							src={heroImage}
-							fill
-						/>
-					</div>
+					{image && (
+						<div className="relative h-104 sm:h-128 md:h-160 lg:h-[calc(100%+4rem)] lg:max-h-240 lg:self-end">
+							<Image
+								alt={image.alt}
+								className="object-contain object-bottom"
+								fetchPriority="high"
+								loading="eager"
+								sizes="(min-width: 64rem) 36vw, (min-width: 48rem) 28rem, (min-width: 40rem) 23rem, 19rem"
+								src={image.src}
+								fill
+							/>
+						</div>
+					)}
 
 					<nav
 						aria-label="Social Media"

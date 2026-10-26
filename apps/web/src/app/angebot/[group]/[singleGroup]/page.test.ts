@@ -21,9 +21,9 @@ import {
 } from '@/lib/sanity/queries/pages/offer-groups-group';
 import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 
+import { SITE_IMAGES } from '../../../../../test-utils/page-images';
 import { findElement } from '../../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../../test-utils/sanity-live-mock';
-import { SITE_IMAGES } from '../../../../../test-utils/site-images';
 import { Main } from './_sections/main';
 import { News } from './_sections/news';
 import { Training } from './_sections/training';

@@ -10,9 +10,9 @@ import type { client } from '@/lib/sanity/client';
 import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 import type { AboutUsPageQueryResult } from '@/types/sanity.types.generated';
 
+import { PAGE_HERO_IMAGE, SITE_IMAGES } from '../../../test-utils/page-images';
 import { findElement } from '../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
-import { SITE_IMAGES } from '../../../test-utils/site-images';
 import { Chronicle } from './_sections/chronicle';
 // The real client validates `NEXT_PUBLIC_SANITY_*` at import time and would talk to the content
 // lake. `config()` is what `@sanity/image-url` reads to build an image URL for the open graph
@@ -118,6 +118,19 @@ describe('about us page', () => {
 			expect(metadata.openGraph?.images).toStrictEqual([]);
 		});
 
+		it('falls back to the hero image for the open graph image', async () => {
+			mockedFetch.mockResolvedValue(buildPage({ heroImage: PAGE_HERO_IMAGE }));
+
+			const metadata = await generateMetadata();
+
+			const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+			expect(openGraphImage).toMatchObject({
+				alt: 'Hero der Seite',
+			});
+			expect(openGraphImage?.url).toContain('heroimg111');
+		});
+
 		it('sizes the open graph image for social previews', async () => {
 			mockedFetch.mockResolvedValue(
 				buildPage({
@@ -134,6 +147,15 @@ describe('about us page', () => {
 	});
 
 	describe('rendering', () => {
+		it('shows the hero image of the page', async () => {
+			mockedFetch.mockResolvedValue(buildPage({ heroImage: PAGE_HERO_IMAGE }));
+
+			const hero = findElement(await VereinPage(), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
+		});
+
 		it('gives up when the document is missing', async () => {
 			mockedFetch.mockResolvedValue(null);
 
