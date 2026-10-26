@@ -99,12 +99,14 @@ const H3WithAnchor: PortableTextComponent<PortableTextBlock> = ({ children, valu
 	</h3>
 );
 
+// Lists take the colour `globals.css` gives every paragraph, markers included, so a list reads as
+// part of the text around it.
 const BulletList: PortableTextListComponent = ({ children }) => (
-	<ul className="list-disc pl-4">{children}</ul>
+	<ul className="list-disc pl-4 text-muted-foreground">{children}</ul>
 );
 
 const NumberList: PortableTextListComponent = ({ children }) => (
-	<ol className="list-decimal pl-4">{children}</ol>
+	<ol className="list-decimal pl-4 text-muted-foreground">{children}</ol>
 );
 
 const ListItem: PortableTextListItemComponent = ({ children }) => (

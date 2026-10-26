@@ -32,7 +32,7 @@ export function Faq({
 	}
 
 	return (
-		<section className="bg-background">
+		<section className="bg-background-low-contrast">
 			<div className="container mx-auto px-5 py-10 md:py-32">
 				<SectionHeader
 					title={
@@ -50,8 +50,9 @@ export function Faq({
 				<Accordion className="mx-auto mt-6 max-w-3xl md:mt-16">
 					{completeFaqs.map((faq) => (
 						<AccordionItem key={faq._id} value={faq._id}>
-							<AccordionTrigger>{faq.question}</AccordionTrigger>
-							<AccordionContent>
+							{/* The answer takes the size of the intro texts of the section headers */}
+							<AccordionTrigger className="md:text-2xl">{faq.question}</AccordionTrigger>
+							<AccordionContent className="md:text-xl">
 								<PortableText value={faq.answer} />
 							</AccordionContent>
 						</AccordionItem>
