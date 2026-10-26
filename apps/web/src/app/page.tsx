@@ -11,6 +11,7 @@ import { Newsletter } from '@/components/section/newsletter';
 import { Pricing } from '@/components/section/pricing';
 import { Stats } from '@/components/section/stats';
 import { Vision } from '@/components/section/vision';
+import { CONTACT_FORM_TITLE } from '@/constants/contact-form';
 import { client } from '@/lib/sanity/client';
 import { departmentCardsQuery } from '@/lib/sanity/queries/departments';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
@@ -37,9 +38,6 @@ import { Hero } from './_home/hero';
 import { News } from './_home/news';
 import { Sponsors } from './_home/sponsors';
 import { Testimonials } from './_home/testimonials';
-
-/** The heading of the contact form, the alt text of one of its images that has none. */
-const CONTACT_FORM_TITLE = 'Kontaktiere uns';
 
 // oxlint-disable-next-line no-magic-numbers
 const TESTIMONIALS_REVALIDATE_SECONDS = 60 * 60 * 12;

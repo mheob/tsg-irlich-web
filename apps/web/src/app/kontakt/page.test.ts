@@ -52,9 +52,11 @@ function buildPage(meta?: Record<string, unknown>): Record<string, unknown> {
 /**
  * Answers the page query with the page and the site images query with the images of the site
  * settings.
+ *
+ * @param siteImages - What the site images query finds.
  */
-function mockPageWithSiteImages(): void {
-	const answers = new Map<string, unknown>([[siteImagesQuery, SITE_IMAGES]]);
+function mockPageWithSiteImages(siteImages: unknown = SITE_IMAGES): void {
+	const answers = new Map<string, unknown>([[siteImagesQuery, siteImages]]);
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedFetch.mockImplementation(async (query: string) => answers.get(query) ?? buildPage());
 }
@@ -119,6 +121,17 @@ describe('contact page', () => {
 				'Mannschaftsfoto',
 				'PR-Team bei der Arbeit',
 			]);
+		});
+
+		it('names a contact image without alt text after the form heading', async () => {
+			mockPageWithSiteImages({
+				...SITE_IMAGES,
+				contactFormImages: [{ ...SITE_IMAGES.contactFormImages[0], alt: '' }],
+			});
+
+			const form = findElement(await ContactPage(), ContactForm);
+
+			expect(form?.props.images[0]?.alt).toBe('Kontaktiere uns');
 		});
 
 		it('lists the contact persons and the newsletter sign-up', async () => {

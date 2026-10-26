@@ -5,6 +5,7 @@ import { ContactForm } from '@/components/section/contact-form';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
+import { CONTACT_FORM_TITLE } from '@/constants/contact-form';
 import { client } from '@/lib/sanity/client';
 import { contactPageQuery } from '@/lib/sanity/queries/pages/contact';
 import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
@@ -12,9 +13,6 @@ import type { ContactPageQueryResult, SiteImagesQueryResult } from '@/types/sani
 import { getPageHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
 import { resolveSectionImages } from '@/utils/section-images';
-
-/** The heading of the contact form, the alt text of one of its images that has none. */
-const CONTACT_FORM_TITLE = 'Kontaktiere uns';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<ContactPageQueryResult>(contactPageQuery);

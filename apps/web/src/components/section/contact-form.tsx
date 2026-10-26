@@ -15,6 +15,7 @@ import { SectionHeader } from '@/components/ui/section-header';
 import { SelectWithLabel } from '@/components/ui/select';
 import { TextareaWithLabel } from '@/components/ui/textarea';
 import { ErrorAlert, Form, FormField, SuccessAlert } from '@/components/with-logic/form';
+import { CONTACT_FORM_TITLE } from '@/constants/contact-form';
 import { contactFormSchema, contactFormWithReceiverSchema } from '@/lib/validations/contact-form';
 import type { ContactFormData } from '@/lib/validations/contact-form';
 import type { ResolvedImage } from '@/types/image.types';
@@ -110,7 +111,7 @@ export function ContactForm({ images, receiver }: Readonly<ContactFormProps>) {
 							<SectionHeader
 								className="mb-10"
 								isCenteredOnDesktop={false}
-								title="Kontaktiere uns"
+								title={CONTACT_FORM_TITLE}
 								isCentered
 							/>
 							<SuccessAlert />
@@ -142,7 +143,11 @@ export function ContactForm({ images, receiver }: Readonly<ContactFormProps>) {
 
 							<Form {...form}>
 								<form className="flex-1" onSubmit={form.handleSubmit(onSubmit)}>
-									<SectionHeader isCenteredOnDesktop={false} title="Kontaktiere uns" isCentered />
+									<SectionHeader
+										isCenteredOnDesktop={false}
+										title={CONTACT_FORM_TITLE}
+										isCentered
+									/>
 
 									<div className="mt-10 flex flex-col gap-10 md:mt-20">
 										<FormField
