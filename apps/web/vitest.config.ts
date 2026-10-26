@@ -1,32 +1,7 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig, type Plugin } from 'vite-plus';
-
-const ASSET_PATTERN = /\.(?:avif|gif|jpe?g|png|svg|webp)$/u;
-
-/**
- * Resolves static image imports to the object Next.js injects for them, so modules that import
- * an image (for example `src/utils/fallback-image.ts`) can be loaded in a test run.
- *
- * @returns The Vite plugin that stubs static image imports.
- */
-function assetStub(): Plugin {
-	return {
-		enforce: 'pre',
-		load(id) {
-			if (!ASSET_PATTERN.test(id)) {
-				return null;
-			}
-			return `export default { blurDataURL: '', blurWidth: 0, height: 1, src: '${id}', width: 1 };`;
-		},
-		name: 'tsgi:asset-stub',
-		resolveId(source) {
-			return ASSET_PATTERN.test(source) ? source : null;
-		},
-	};
-}
+import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
-	plugins: [assetStub()],
 	resolve: { tsconfigPaths: true },
 	test: {
 		coverage: {

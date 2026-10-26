@@ -102,19 +102,11 @@ Element.prototype.getAnimations = () => [];
 
 // --- next/image --------------------------------------------------------------------------------
 
-interface StaticImageStub {
-	blurDataURL?: string;
-	blurWidth?: number;
-	height: number;
-	src: string;
-	width: number;
-}
-
 interface NextImageMockProps {
 	alt: string;
 	className?: string;
 	height?: number | string;
-	src: StaticImageStub | string;
+	src: string;
 	style?: CSSProperties;
 	width?: number | string;
 }
@@ -126,10 +118,6 @@ interface NextImageMockProps {
  * otherwise land on the DOM node and trigger a React "unknown prop" warning. `alt` is forwarded
  * verbatim, so a test can query the image by its accessible name.
  *
- * A static image import resolves, through the `assetStub` Vite plugin in `vitest.config.ts`, to a
- * `StaticImageStub` object rather than a string — its `src` field is used as the `<img>` `src` in
- * that case.
- *
  * Escape hatch: this mock carries no per-test state, so a test that needs different `next/image`
  * behaviour overrides the whole module itself with its own `vi.mock('next/image', () => ({...}))`
  * — a mock declared in a test file is registered after this one and wins for that file. Nothing to
@@ -139,7 +127,7 @@ interface NextImageMockProps {
  * @param props.alt - Forwarded verbatim to the `<img>`.
  * @param props.className - Forwarded verbatim to the `<img>`.
  * @param props.height - Forwarded verbatim to the `<img>`.
- * @param props.src - A URL, or the `assetStub` object a static import resolves to.
+ * @param props.src - Forwarded verbatim to the `<img>`.
  * @param props.style - Forwarded verbatim to the `<img>`.
  * @param props.width - Forwarded verbatim to the `<img>`.
  * @returns The `<img>` standing in for `next/image`'s `Image`.
@@ -152,8 +140,7 @@ function NextImageMock({
 	style,
 	width,
 }: NextImageMockProps): ReactElement {
-	const resolvedSrc = typeof src === 'string' ? src : src.src;
-	return createElement('img', { alt, className, height, src: resolvedSrc, style, width });
+	return createElement('img', { alt, className, height, src, style, width });
 }
 
 vi.mock('next/image', () => ({ default: NextImageMock }));
