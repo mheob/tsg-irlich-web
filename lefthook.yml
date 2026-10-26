@@ -14,8 +14,20 @@ pre-commit:
       run: pnpm exec vp lint --fix --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 
+# The checks CI and SonarQube Cloud would otherwise report after the push. `but commit` skips the
+# pre-commit jobs above, `but push` runs these. Turbo replays every package that has not changed.
 pre-push:
-  commands:
-    cve-lite:
+  parallel: true
+  jobs:
+    - name: cve-lite
       run: pnpm exec cve-lite . --cache-dir .cache/cve-lite
       timeout: "120s"
+    - name: format
+      run: pnpm run format:check
+    # `--deny-warnings` keeps the repository at zero lint warnings
+    - name: lint
+      run: pnpm exec turbo run lint -- --deny-warnings && pnpm run lint:root --deny-warnings
+    - name: typecheck
+      run: pnpm run typecheck
+    - name: test
+      run: pnpm run test
