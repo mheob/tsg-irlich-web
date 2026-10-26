@@ -28,8 +28,6 @@ export function Author({ article, ...props }: Readonly<AuthorProps>) {
 
 			<div className="mt-3 flex items-center gap-4">
 				{authorImageSource && (
-					// oxlint-disable-next-line no-warning-comments
-					// TODO: use shadcn's Avatar component
 					<Image
 						alt={article.author.image.alt}
 						className="rounded-full"
