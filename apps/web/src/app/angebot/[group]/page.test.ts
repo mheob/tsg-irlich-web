@@ -1,11 +1,13 @@
+import { stegaEncodeSourceMap } from '@sanity/client/stega';
 import { notFound, permanentRedirect } from 'next/navigation';
-import type { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import DepartmentPage, { generateMetadata, generateStaticParams } from '@/app/angebot/[group]/page';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Stats } from '@/components/section/stats';
+import { JsonLd } from '@/components/ui/json-ld';
 import {
 	departmentPageQuery,
 	departmentRedirectQuery,
@@ -14,8 +16,9 @@ import {
 import { offerGroupsPageQuery } from '@/lib/sanity/queries/pages/offer-groups';
 import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
 
-import { findElement } from '../../../../test-utils/react-tree';
+import { findElement, findElements, sectionTypes } from '../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../test-utils/sanity-live-mock';
+import { Faq } from './_sections/faq';
 import { Groups } from './_sections/groups';
 // `src/lib/sanity/api.ts` asserts the project variables at import time, and the page reaches it
 // through `urlForImage`. `vi.hoisted` runs before the imports are evaluated; `globalThis` because
@@ -65,10 +68,29 @@ const GROUPS = [
 	{ featuredImage: sanityImage('Damen', CARD_ASSET), slug: 'damen', title: 'Damen' },
 ];
 
+/** A question of this department, which it is the first department of. */
+const OWN_FAQ = {
+	_id: 'faq-trial',
+	answer: [],
+	answerText: 'Ja, jederzeit.',
+	isMarkedUp: true,
+	question: 'Gibt es ein Probetraining?',
+};
+
+/** A question shared with another department, which comes first in it. */
+const SHARED_FAQ = {
+	_id: 'faq-fee',
+	answer: [],
+	answerText: 'Das steht auf der Seite Mitgliedschaft.',
+	isMarkedUp: false,
+	question: 'Was kostet die Mitgliedschaft?',
+};
+
 const DEPARTMENT = {
 	_id: 'department-fussball',
 	cardImage: sanityImage('Kachelbild Fußball', CARD_ASSET),
 	contactPersons: PERSONS,
+	faqs: [],
 	groups: GROUPS,
 	heroImage: sanityImage('Hero Fußball', HERO_ASSET),
 	intro: 'Fußball in Irlich',
@@ -80,6 +102,7 @@ const DEPARTMENT = {
 const GROUPS_PAGE = {
 	content: {
 		contactPersonsSection: { subtitle: 'Wir helfen', title: 'Ansprechpartner' },
+		faqSection: { subtitle: 'Gut zu wissen', title: 'Häufige Fragen' },
 		groupsSection: {
 			intro: 'Gemeinsames Intro',
 			subtitle: 'Alle Gruppen',
@@ -114,6 +137,41 @@ function mockSanity({
 		if (query === departmentSlugsQuery) return { data: slugs };
 		throw new Error(`unexpected query: ${query}`);
 	});
+}
+
+/**
+ * Encodes a text the way `sanityFetch` does in draft mode: the text followed by invisible characters
+ * that point the presentation tool at its source.
+ *
+ * @param text - The visible text.
+ * @returns The text followed by its stega encoding.
+ */
+function encodeLikeDraftMode(text: string): string {
+	const { value } = stegaEncodeSourceMap(
+		{ value: text },
+		{
+			documents: [{ _id: 'faq-trial', _type: 'faq' }],
+			mappings: {
+				"$['value']": { source: { document: 0, path: 0, type: 'documentValue' }, type: 'value' },
+			},
+			paths: ["$['value']"],
+		},
+		{ enabled: true, studioUrl: 'https://studio.test' },
+	);
+
+	return value;
+}
+
+/**
+ * Finds the `FAQPage` among the JSON-LD blocks the page renders itself.
+ *
+ * @param page - The rendered page.
+ * @returns The data of the `FAQPage` block, if there is one.
+ */
+function faqPageOf(page: ReactNode): Record<string, unknown> | undefined {
+	return findElements(page, JsonLd)
+		.map((element) => element.props.data as unknown as Record<string, unknown>)
+		.find((data) => data['@type'] === 'FAQPage');
 }
 
 function routeProps(group = 'fussball'): PageProps<'/angebot/[group]'> {
@@ -371,6 +429,65 @@ describe('department page', () => {
 			['an empty list', []],
 		])('renders no statistics band for %s', async (_description, stats) => {
 			expect(findElement(await renderPage({ stats }), Stats)).toBeUndefined();
+		});
+	});
+
+	describe('faq', () => {
+		it('shows the FAQ between the statistics and the contact persons', async () => {
+			const page = await renderPage({ faqs: [OWN_FAQ] });
+			const types = sectionTypes(page as ReactElement<{ children?: ReactNode }>);
+
+			expect(types.indexOf(Faq)).toBe(types.indexOf(Stats) + 1);
+			expect(types.indexOf(ContactPersons)).toBe(types.indexOf(Faq) + 1);
+		});
+
+		it('hands the section the department, its FAQ and the shared heading', async () => {
+			const faq = findElement(await renderPage({ faqs: [OWN_FAQ, SHARED_FAQ] }), Faq);
+
+			expect(faq?.props).toMatchObject({
+				departmentTitle: 'Fußball',
+				faqs: [OWN_FAQ, SHARED_FAQ],
+				subtitle: 'Gut zu wissen',
+				title: 'Häufige Fragen',
+			});
+		});
+
+		it('marks up only the questions whose first department this is', async () => {
+			const faqPage = faqPageOf(await renderPage({ faqs: [OWN_FAQ, SHARED_FAQ] }));
+
+			expect(faqPage).toMatchObject({
+				mainEntity: [{ name: 'Gibt es ein Probetraining?' }],
+				url: 'http://localhost:3000/angebot/fussball',
+			});
+			expect(faqPage?.mainEntity).toHaveLength(1);
+		});
+
+		it('shows a shared question without a FAQPage when it belongs to another department first', async () => {
+			const page = await renderPage({ faqs: [SHARED_FAQ] });
+
+			expect(findElement(page, Faq)).toBeDefined();
+			expect(faqPageOf(page)).toBeUndefined();
+		});
+
+		it.each([
+			['none', null],
+			['an empty list', []],
+		])('renders neither the section nor a FAQPage for %s', async (_description, faqs) => {
+			const page = await renderPage({ faqs });
+
+			expect(findElement(page, Faq)).toBeUndefined();
+			expect(faqPageOf(page)).toBeUndefined();
+		});
+
+		it('keeps stega characters out of the FAQPage', async () => {
+			const question = encodeLikeDraftMode('Gibt es ein Probetraining?');
+			const page = await renderPage({ faqs: [{ ...OWN_FAQ, question }] });
+
+			expect(faqPageOf(page)).toMatchObject({
+				mainEntity: [{ name: 'Gibt es ein Probetraining?' }],
+			});
+			// The section keeps the encoding, which carries the click-to-edit overlay.
+			expect(findElement(page, Faq)?.props.faqs[0]?.question).toBe(question);
 		});
 	});
 

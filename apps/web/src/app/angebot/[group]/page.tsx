@@ -8,6 +8,7 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Stats } from '@/components/section/stats';
+import { JsonLd } from '@/components/ui/json-ld';
 import { sanityFetch } from '@/lib/sanity/live';
 import {
 	departmentPageQuery,
@@ -17,7 +18,10 @@ import {
 import { offerGroupsPageQuery } from '@/lib/sanity/queries/pages/offer-groups';
 import { getHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
+import { getFaqPageSchema } from '@/utils/structured-data';
+import { getBaseUrl } from '@/utils/url';
 
+import { Faq } from './_sections/faq';
 import { Groups } from './_sections/groups';
 
 export async function generateStaticParams(): Promise<{ group: string }[]> {
@@ -85,9 +89,18 @@ export default async function DepartmentPage({ params }: Readonly<PageProps<'/an
 	// The persons' phone numbers end up in links and their contact method is compared to literals,
 	// so neither may carry stega characters.
 	const contactPersons = stegaClean(department.contactPersons ?? EMPTY_ARRAY);
+	const faqs = department.faqs ?? EMPTY_ARRAY;
+	// The structured data gets a copy cleaned of the stega encoding draft mode adds, which leaves
+	// the rendered questions and their click-to-edit overlays alone.
+	const faqPageSchema = getFaqPageSchema({
+		baseUrl: getBaseUrl(),
+		faqs: stegaClean(faqs),
+		path: `/angebot/${group}`,
+	});
 
 	return (
 		<>
+			{faqPageSchema && <JsonLd data={faqPageSchema} />}
 			<Hero
 				image={getHeroImage([department.heroImage, department.cardImage], department.title)}
 				subTitle={groupsPage.subtitle}
@@ -101,6 +114,9 @@ export default async function DepartmentPage({ params }: Readonly<PageProps<'/an
 				intro={department.intro ?? groupsPage.content.groupsSection.intro}
 			/>
 			{stats.length > 0 && <Stats stats={stats} />}
+			{faqs.length > 0 && (
+				<Faq {...groupsPage.content.faqSection} departmentTitle={department.title} faqs={faqs} />
+			)}
 			{contactPersons.length > 0 && (
 				<ContactPersons
 					{...groupsPage.content.contactPersonsSection}

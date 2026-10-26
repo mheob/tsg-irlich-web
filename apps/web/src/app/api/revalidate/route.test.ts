@@ -192,6 +192,14 @@ describe('sanity revalidation webhook', () => {
 		expect(revalidatedPaths()).not.toContain('/');
 	});
 
+	it('revalidates every department page for a FAQ', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'faq' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/angebot/[group]', 'page']]);
+	});
+
 	it('revalidates every department page for the groups page', async () => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: 'groupsPage' }));
 
