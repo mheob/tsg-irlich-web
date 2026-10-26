@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { contactPersons, meta } from '@/lib/sanity/queries';
+import { contactPersons, markDefsWithLinks, meta } from '@/lib/sanity/queries';
 
 /**
  * Query to get every department that can be linked, in the order the offer shows them
@@ -25,9 +25,13 @@ export const departmentCardsQuery = defineQuery(`
  * The groups are the ones that point at the department, and a group without a slug has no page to
  * link to. The contact persons keep the order the editors chose in the department document.
  *
+ * The FAQ are the ones whose `departments` list the department. `references()` would not do: an
+ * answer that links to the department references it as well. `isMarkedUp` tells whether the
+ * department is the first one of a question, the only page whose `FAQPage` names it.
+ *
  * @param slug - The slug of the department
- * @returns The department with its groups and contact persons, or `null` when no department has
- * that slug
+ * @returns The department with its FAQ, groups and contact persons, or `null` when no department
+ * has that slug
  */
 export const departmentPageQuery = defineQuery(`
 	*[_type == 'department' && slug.current == $slug][0] {
@@ -38,6 +42,13 @@ export const departmentPageQuery = defineQuery(`
 		heroImage,
 		${meta},
 		stats,
+		"faqs": *[_type == 'faq' && ^._id in departments[]._ref] | order(sortOrder asc, question asc) {
+			_id,
+			question,
+			"answer": coalesce(answer[] { ..., ${markDefsWithLinks} }, []),
+			"answerText": pt::text(answer),
+			"isMarkedUp": departments[0]._ref == ^._id,
+		},
 		"groups": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {
 			featuredImage,
 			icon,
