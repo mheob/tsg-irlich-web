@@ -12,7 +12,7 @@ export function Accordion({
 	className,
 	multiple = true,
 	...props
-}: ComponentPropsWithRef<typeof BaseAccordion.Root>) {
+}: Readonly<ComponentPropsWithRef<typeof BaseAccordion.Root>>) {
 	return (
 		<BaseAccordion.Root
 			className={cn('flex flex-col gap-4', className)}
@@ -26,7 +26,7 @@ export function Accordion({
 export function AccordionItem({
 	className,
 	...props
-}: ComponentPropsWithRef<typeof BaseAccordion.Item>) {
+}: Readonly<ComponentPropsWithRef<typeof BaseAccordion.Item>>) {
 	return (
 		<BaseAccordion.Item
 			className={cn(
@@ -45,7 +45,7 @@ export function AccordionTrigger({
 	children,
 	className,
 	...props
-}: ComponentPropsWithRef<typeof BaseAccordion.Trigger>) {
+}: Readonly<ComponentPropsWithRef<typeof BaseAccordion.Trigger>>) {
 	return (
 		<BaseAccordion.Header className="flex" data-slot="accordion-header">
 			<BaseAccordion.Trigger
@@ -77,7 +77,7 @@ export function AccordionContent({
 	className,
 	hiddenUntilFound = true,
 	...props
-}: ComponentPropsWithRef<typeof BaseAccordion.Panel>) {
+}: Readonly<ComponentPropsWithRef<typeof BaseAccordion.Panel>>) {
 	return (
 		<BaseAccordion.Panel
 			className="h-(--accordion-panel-height) overflow-hidden transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none"

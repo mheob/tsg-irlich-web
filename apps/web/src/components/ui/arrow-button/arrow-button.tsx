@@ -86,7 +86,13 @@ function ArrowButton({
 	);
 }
 
-function ArrowElement({ className, direction, size, variant, ...props }: ArrowElementProps) {
+function ArrowElement({
+	className,
+	direction,
+	size,
+	variant,
+	...props
+}: Readonly<ArrowElementProps>) {
 	return (
 		<div
 			className={cn(
@@ -100,7 +106,7 @@ function ArrowElement({ className, direction, size, variant, ...props }: ArrowEl
 	);
 }
 
-function ArrowLink({ className, direction, size, variant, ...props }: ArrowAnchorProps) {
+function ArrowLink({ className, direction, size, variant, ...props }: Readonly<ArrowAnchorProps>) {
 	return (
 		<Link className={arrowButtonVariants({ className, variant })} {...props}>
 			<Arrow className={size} direction={direction} />
