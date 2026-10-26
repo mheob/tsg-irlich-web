@@ -1,6 +1,6 @@
 {
 	"body": {
-		"query": "\n\t*[_type == 'department' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t\"groups\": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"contactPersons\": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  \"email\": affiliations[0].role->email,\n  \"role\": affiliations[0].role->title,\n  \"taskDescription\": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n",
+		"query": "\n\t*[_type == 'department' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t\"faqs\": *[_type == 'faq' && ^._id in departments[]._ref] | order(sortOrder asc, question asc) {\n\t\t\t_id,\n\t\t\tquestion,\n\t\t\t\"answer\": coalesce(answer[] { ..., \n  \"markDefs\": coalesce(markDefs[] {\n    ...,\n    _type == \"internalLink\" => { \"target\": link-> { \n  _type,\n  \"slug\": slug.current,\n  \"category\": categories[0]->slug.current,\n  \"department\": department->slug.current\n } }\n  }, [])\n }, []),\n\t\t\t\"answerText\": pt::text(answer),\n\t\t\t\"isMarkedUp\": departments[0]._ref == ^._id,\n\t\t},\n\t\t\"groups\": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t\"slug\": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t\"contactPersons\": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  \"email\": affiliations[0].role->email,\n  \"role\": affiliations[0].role->title,\n  \"taskDescription\": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n",
 		"result": {
 			"_id": "department-kinderturnen",
 			"cardImage": {
@@ -29,6 +29,57 @@
 					"phone": "+49 171 9941807",
 					"role": "Abteilungsleitung Breitensport",
 					"taskDescription": "Ich trage die Gesamtverantwortung für die Abteilung Breitensport und koordiniere alle Gruppen. Ich führe das Team unserer Übungsleiter*innen, wähle sie aus, organisiere Anschaffungen und entwickle unser sportliches Angebot kontinuierlich weiter."
+				}
+			],
+			"faqs": [
+				{
+					"_id": "faq-platzhalter-mitgliedsbeitrag",
+					"answer": [
+						{
+							"_key": "b1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "s1",
+									"_type": "span",
+									"marks": [],
+									"text": "Platzhalter: Die Beiträge stehen auf der Seite "
+								},
+								{
+									"_key": "s2",
+									"_type": "span",
+									"marks": ["membership"],
+									"text": "Mitgliedschaft"
+								},
+								{
+									"_key": "s3",
+									"_type": "span",
+									"marks": [],
+									"text": "."
+								}
+							],
+							"markDefs": [
+								{
+									"_key": "membership",
+									"_type": "internalLink",
+									"link": {
+										"_ref": "membership",
+										"_type": "reference"
+									},
+									"target": {
+										"_type": "membership",
+										"category": null,
+										"department": null,
+										"slug": "mitgliedschaft"
+									}
+								}
+							],
+							"style": "normal"
+						}
+					],
+					"answerText": "Platzhalter: Die Beiträge stehen auf der Seite Mitgliedschaft.",
+					"isMarkedUp": false,
+					"question": "Platzhalter: Was kostet die Mitgliedschaft?"
 				}
 			],
 			"groups": [
@@ -201,8 +252,8 @@
 			],
 			"title": "Kinderturnen"
 		},
-		"syncTags": ["s1:mjjZ4A", "s1:uMx6JQ", "s1:WU9DBg", "s1:B7LhMw"],
-		"ms": 11
+		"syncTags": ["s1:2QTQgQ", "s1:B7LhMw", "s1:uMx6JQ", "s1:WU9DBg", "s1:RTKmCw", "s1:mjjZ4A"],
+		"ms": 15
 	},
-	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09intro%2C%0A%09%09cardImage%2C%0A%09%09heroImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09stats%2C%0A%09%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+department._ref+%3D%3D+%5E._id+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09%09featuredImage%2C%0A%09%09%09icon%2C%0A%09%09%09overviewTitle%2C%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%2C%0A%09%09%7D%2C%0A%09%09%22contactPersons%22%3A+contactPersons%5B%5D-%3E+%7B%0A%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%7D%2C%0A%09%7D%0A&%24slug=%22kinderturnen%22&perspective=published&tag=next-loader.fetch"
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09intro%2C%0A%09%09cardImage%2C%0A%09%09heroImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09stats%2C%0A%09%09%22faqs%22%3A+*%5B_type+%3D%3D+%27faq%27+%26%26+%5E._id+in+departments%5B%5D._ref%5D+%7C+order%28sortOrder+asc%2C+question+asc%29+%7B%0A%09%09%09_id%2C%0A%09%09%09question%2C%0A%09%09%09%22answer%22%3A+coalesce%28answer%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%2C%0A%09%09%09%22answerText%22%3A+pt%3A%3Atext%28answer%29%2C%0A%09%09%09%22isMarkedUp%22%3A+departments%5B0%5D._ref+%3D%3D+%5E._id%2C%0A%09%09%7D%2C%0A%09%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+department._ref+%3D%3D+%5E._id+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09%09featuredImage%2C%0A%09%09%09icon%2C%0A%09%09%09overviewTitle%2C%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%2C%0A%09%09%7D%2C%0A%09%09%22contactPersons%22%3A+contactPersons%5B%5D-%3E+%7B%0A%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%7D%2C%0A%09%7D%0A&%24slug=%22kinderturnen%22&perspective=published&tag=next-loader.fetch"
 }

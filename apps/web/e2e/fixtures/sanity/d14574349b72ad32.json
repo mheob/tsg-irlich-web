@@ -4,7 +4,7 @@
 		"result": {
 			"_createdAt": "2024-06-21T18:46:50Z",
 			"_id": "groupsPage",
-			"_rev": "7fdbr8tOKzCjSuW3JiwZga",
+			"_rev": "YNVH3USBiPjsywfIvPMd8W",
 			"_system": {
 				"base": {
 					"id": "groupsPage",
@@ -12,12 +12,17 @@
 				}
 			},
 			"_type": "groupsPage",
-			"_updatedAt": "2026-10-25T18:47:28Z",
+			"_updatedAt": "2026-10-26T09:53:24Z",
 			"content": {
 				"contactPersonsSection": {
 					"intro": "Du hast Fragen rund um diesen Sportbereich? Kein Problem – unsere Abteilungsleitung ist für dich da! Egal ob du Infos zu Trainingszeiten brauchst, wissen willst, ob das Angebot zu dir passt, oder einfach neugierig bist: Melde dich gern direkt bei uns. Wir freuen uns auf deine Nachricht!",
 					"subtitle": "Ansprechpartner",
 					"title": "Kontakt zu unserer Abteilungsleitung"
+				},
+				"faqSection": {
+					"intro": "Platzhalter: Antworten auf die Fragen, die uns am häufigsten erreichen.",
+					"subtitle": "FAQ",
+					"title": "Häufige Fragen"
 				},
 				"groupsSection": {
 					"intro": "Für Jedermann, der sich gerne bewegt und mit Menschen zusammen ist. Egal ob im Breitensport, beim gemütlichen Beisammensein oder dem leistungsorientierten Sport. In über 18 verschiedenen Sportarten bieten wir dir alles, was du benötigst.",
