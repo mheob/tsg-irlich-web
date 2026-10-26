@@ -8,6 +8,7 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import type { client } from '@/lib/sanity/client';
+import { aboutUsHeroImageQuery } from '@/lib/sanity/queries/pages/about-us';
 import {
 	echoContactPersonsQuery,
 	echoIssuesQuery,
@@ -16,6 +17,7 @@ import {
 } from '@/lib/sanity/queries/pages/echo';
 import type { EchoContactPersonsQueryResult } from '@/types/sanity.types';
 
+import { PAGE_HERO_IMAGE } from '../../../../test-utils/page-images';
 import { findElement, findElements, sectionTypes } from '../../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../../test-utils/sanity-client-mock';
 import { IssueGrid } from './_sections/issue-grid';
@@ -74,6 +76,7 @@ interface ArchiveIssue {
 
 interface Archive {
 	contactPersons?: EchoContactPersonsQueryResult;
+	heroImage?: unknown;
 	issues?: ArchiveIssue[];
 	page?: typeof PAGE | null;
 }
@@ -83,17 +86,20 @@ interface Archive {
  *
  * @param archive - What the dataset holds.
  * @param archive.contactPersons - The contact persons section of the news overview.
+ * @param archive.heroImage - The hero image of the about page.
  * @param archive.issues - The finished issues, newest first.
  * @param archive.page - The archive's own document.
  */
 function mockArchive({
 	contactPersons = CONTACT_PERSONS,
+	heroImage = PAGE_HERO_IMAGE,
 	issues = [],
 	page = PAGE,
 }: Archive): void {
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedFetch.mockImplementation(async (query: string, params?: Record<string, unknown>) => {
 		if (query === echoOverviewPageQuery) return page;
+		if (query === aboutUsHeroImageQuery) return heroImage;
 		if (query === echoContactPersonsQuery) return contactPersons;
 		if (query === echoIssuesTotalQuery) return issues.length;
 		if (query === echoIssuesQuery) return issues.slice(Number(params?.start), Number(params?.end));
@@ -136,6 +142,24 @@ describe('the tsg-echo archive', () => {
 			subTitle: 'Vereinsgeschichte zum Durchblättern',
 			title: 'TSG-Echo',
 		});
+	});
+
+	it('shows the hero image of the about page', async () => {
+		mockArchive({});
+
+		const hero = findElement(await EchoOverviewPage(props()), Hero);
+
+		expect(hero?.props.image?.alt).toBe('Hero der Seite');
+		expect(hero?.props.image?.src).toContain('heroimg111');
+	});
+
+	it('shares the hero image of the about page as preview image', async () => {
+		mockArchive({});
+
+		const metadata = await generateMetadata(props());
+		const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+		expect(openGraphImage?.url).toContain('heroimg111');
 	});
 
 	it('shows the newest issue as the wide card', async () => {

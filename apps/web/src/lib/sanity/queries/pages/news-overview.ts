@@ -20,3 +20,10 @@ export const newsOverviewPageQuery = defineQuery(`
 		}
 	}
 `);
+
+/**
+ * Query to get the hero image of the news overview, which the category pages show as well
+ *
+ * @returns The hero image of the news overview
+ */
+export const newsOverviewHeroImageQuery = defineQuery(`*[_type == 'newsOverview'][0].heroImage`);

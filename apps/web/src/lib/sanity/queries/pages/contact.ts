@@ -21,3 +21,10 @@ export const contactPageQuery = defineQuery(`
 		}
 	}
 `);
+
+/**
+ * Query to get the hero image of the contact page, which the feedback page shows as well
+ *
+ * @returns The hero image of the contact page
+ */
+export const contactHeroImageQuery = defineQuery(`*[_type == 'contact'][0].heroImage`);

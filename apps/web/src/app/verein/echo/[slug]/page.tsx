@@ -7,20 +7,22 @@ import { Newsletter } from '@/components/section/newsletter';
 import { ButtonLink } from '@/components/ui/button';
 import { FlipbookLazy } from '@/components/with-logic/flipbook/flipbook-lazy';
 import { client } from '@/lib/sanity/client';
+import { aboutUsHeroImageQuery } from '@/lib/sanity/queries/pages/about-us';
 import {
 	echoContactPersonsQuery,
 	echoIssueQuery,
 	echoIssueSlugsQuery,
 } from '@/lib/sanity/queries/pages/echo';
 import type {
+	AboutUsHeroImageQueryResult,
 	EchoContactPersonsQueryResult,
 	EchoIssueQueryResult,
 	EchoIssueSlugsQueryResult,
 } from '@/types/sanity.types';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getEchoIssuePath } from '@/utils/links';
 import { getPageMetadata } from '@/utils/metadata';
 
-import { ECHO_HERO_IMAGE } from '../_shared/hero';
 import {
 	getCoverPage,
 	getFlipbookPages,
@@ -61,9 +63,10 @@ export default async function EchoIssuePage({
 	params,
 }: Readonly<PageProps<'/verein/echo/[slug]'>>) {
 	const { slug } = await params;
-	const [issue, contactPersons] = await Promise.all([
+	const [issue, contactPersons, heroImage] = await Promise.all([
 		client.fetch<EchoIssueQueryResult>(echoIssueQuery, { slug }),
 		client.fetch<EchoContactPersonsQueryResult>(echoContactPersonsQuery),
+		client.fetch<AboutUsHeroImageQueryResult>(aboutUsHeroImageQuery),
 	]);
 
 	if (!issue?.pages?.length) {
@@ -76,7 +79,7 @@ export default async function EchoIssuePage({
 	return (
 		<>
 			<Hero
-				image={ECHO_HERO_IMAGE}
+				image={getPageHeroImage(heroImage, issue.title)}
 				subTitle={getIssueYear(issue.releaseDate)}
 				title={issue.title}
 			/>
