@@ -26,7 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import, the department migration) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import, the department migration, the page image migration) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -156,6 +156,29 @@ The real run writes and deletes, so it needs the user's OK first, and the rollou
 A real run then checks the dataset (it skips `null` entries and an `affiliations` field that is no list instead of stopping): no `group.*` document left, every `group` under a department reference, no department string in an affiliation, every affiliation's group a `group` and its department a `department`, each of the six `department-<slug>` published, every department with a card image. A legacy type, a department string or a `group` the migration does not know is reported, never guessed. Versions in a content release (`versions.<release>.<id>`) of these types, or ones that reference an old group, are not migrated either but reported, so publish or discard such a release before the run.
 
 **Paths.** A run lists `/angebot/<abteilung>` and `/angebot/<abteilung>/<gruppe>` for every published department and group after the migration, which are the pages that exist before it. Keep the list of the dry run to check those pages after the rollout.
+
+## Page images
+
+The content images of the website live in the studio, not in the web app (WEB-389).
+
+- **Hero image.** Every single page with a banner carries a required `heroImage` (`extendedImage` in the group `general`, built by `getHeroImageField` in `shared/fields/hero-image.ts`): `home`, `departmentsPage`, `aboutUs`, `membership`, `contact`, `newsOverview`, `imprint`, `privacy` and `accessibility`. Home wants a cut-out in portrait format. Every other page wants a landscape picture whose hotspot decides what the banner keeps, and that also serves as preview image when `meta` sets none. The description names where else an image appears: the TSG-Echo pages show the one of `aboutUs`, the feedback page the one of `contact`, the news categories the one of `newsOverview`.
+- **Central images.** The group „Bilder“ of `site-settings` holds `visionImages` and `contactFormImages`, exactly three each in the order large, medium, small and cropped round, and `fallbackImage`, which stands in for a department or group with neither hero nor card image.
+
+### Page image migration
+
+`scripts/migrate-page-images.ts` uploads the images the web app carried until WEB-389 (copies in `scripts/migrate-page-images/images/`) and fills the empty fields, with corrected alt texts (`targets.ts`). It is a one-off like the department migration: once `production` is migrated, a follow-up deletes the script, its images, the `migrate:page-images` script and this subsection.
+
+```bash
+pnpm --filter studio run migrate:page-images --dataset development              # dry run
+pnpm --filter studio run migrate:page-images --dataset development --no-dry-run # migrates
+```
+
+- A dry run is the default and lists the documents a real run would change.
+- A missing file stops the run before anything is written.
+- The published document and its draft both get the images, one patch per document guarded by its revision. Release versions are reported, not patched.
+- A field the editors already set is left alone, so a second run writes nothing.
+- It sets no hotspot, so the banner shows the middle of the picture, as the static files did.
+- The real run needs the user's OK and an export of the dataset first, like every migration here. `development` was migrated on 2026-10-26; `production` follows with the WEB-384 release, before `next` is merged into `main`.
 
 ## Content migrations
 

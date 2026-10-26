@@ -58,7 +58,7 @@ Rules for `sanityFetch`:
 
 Adding a previewable route also means adding a `mainDocuments` route and a `locations` entry in `apps/studio/plugins/presentation.ts`, and a `revalidatePath` entry in `src/app/api/revalidate/route.ts` for the affected document type. A new or renamed type in that route also has to go into the type filter of both revalidation webhooks, production and staging, which live in Sanity rather than in the repository (`docs/SANITY_WEBHOOK_SETUP.md`). Otherwise the webhook never fires for it.
 
-The offer pages revalidate through `REVALIDATION_MAP` in the same route. A `department` or `group` change revalidates the whole `/angebot` layout plus `/sitemap.xml` and `/llms.txt`, because the payload carries the slug of the changed document but not the slug of the department a group belongs to, so a single group path cannot be built from it. `department` also revalidates the home page, which links the departments. `departmentsPage` revalidates `/angebot`, `groupsPage` and `faq` every department page (`/angebot/[group]`; a question can belong to several departments, and the payload names none it belonged to before), and `venue` and the news types the group pages (`/angebot/[group]/[singleGroup]`), which show the venues of their training times and the latest articles of their category.
+The offer pages revalidate through `REVALIDATION_MAP` in the same route. A `department` or `group` change revalidates the whole `/angebot` layout plus `/sitemap.xml` and `/llms.txt`, because the payload carries the slug of the changed document but not the slug of the department a group belongs to, so a single group path cannot be built from it. `department` also revalidates the home page, which links the departments. `aboutUs` and `contact` revalidate their path as a layout, because the TSG-Echo pages and the feedback page below them show their hero image; `newsOverview` revalidates the category pages for the same reason, and `accessibility` its own page. `departmentsPage` revalidates `/angebot`, `groupsPage` and `faq` every department page (`/angebot/[group]`; a question can belong to several departments, and the payload names none it belonged to before), and `venue` and the news types the group pages (`/angebot/[group]/[singleGroup]`), which show the venues of their training times and the latest articles of their category.
 
 ## Page metadata
 
@@ -69,6 +69,16 @@ Every route builds its metadata with `getPageMetadata` from `src/utils/metadata.
 - The root layout's title template appends ` | TSG Irlich`. Most meta titles in the studio already name the club, so a title containing "Irlich" goes through as `absolute` instead.
 - The paginated news overviews point their canonical URL at the page they show (`?seite=N`, the first page without the parameter). Their page links come from `OverviewPagination` (`src/components/ui/pagination/`, also used by the TSG-Echo archive), which links every page by that same path. Its `PaginationLink` keeps shadcn's structure but renders a plain `next/link` instead of shadcn's `Button`, which would announce every page as a button (WEB-280). An article points at its first category, like the sitemap and the feed, since it renders under any category segment.
 - The layout sets only `twitter.card`. Next.js fills in the X card's title, description and image from each page's open graph fields.
+
+## Page images
+
+Every content image comes from Sanity (WEB-389); the app ships no image file of its own.
+
+- The hero of a single page reads `heroImage` from its document through `getPageHeroImage` (`src/utils/hero-image.ts`). The URL is uncropped (`urlForImageMax`, 3840 px wide) and `object-cover` crops in the browser, as it did for the static files. `getObjectPosition` turns the hotspot into `object-position`, measured inside the crop rectangle. The department and group heroes keep `getHeroImage`, which crops to 1920 × 600 on the server and takes the fallback image of the site settings as its last candidate. The home hero is a cut-out with `object-contain object-bottom` and ignores the hotspot.
+- The feedback page shows the hero of `contact` (`contactHeroImageQuery`), the TSG-Echo pages the one of `aboutUs` (`aboutUsHeroImageQuery`), the news categories the one of `newsOverview` (`newsOverviewHeroImageQuery`).
+- `siteImagesQuery` serves the three vision images (home and club page), the three images next to the contact form (home and contact page) and the fallback image of the offer cards and heroes. `resolveSectionImages` (`src/utils/section-images.ts`) keeps every image at its position, so a missing one leaves its place empty.
+- An image without a file never breaks a page; the component leaves it out.
+- Every page with a hero image except home hands it to `getPageMetadata` as `image`, so it becomes the preview image when `meta.openGraphImage` is empty.
 
 ## Structured data
 
@@ -142,7 +152,7 @@ The resolved target is added as `target` next to the untouched `link` reference,
 - An issue with `indexable` off (WEB-367) stays readable but out of search engines. Its page sets `noindex, nofollow` and no cover as open graph image, and the sitemap leaves it out. Its PDF, page images and cover are linked through `/echo-archiv/{images,files}/…` (`toArchiveUrl` in `src/lib/echo/archive-url.ts`). `src/proxy.ts` rewrites such a path to the Sanity CDN of the configured project and dataset (`toCdnUrl`) and adds `X-Robots-Tag: noindex, nofollow`; anything else below the prefix gets 404. A rewrite in `next.config.ts` would not do: Next.js drops the `headers()` of an external rewrite, while it keeps a proxy's. The platform forwards the rewrite, so no file passes through a function and the 4.5 MB response limit does not apply. Covers of such issues skip `next/image`'s optimizer (`unoptimized`), which would serve them without the header. `robots.ts` must not disallow `/echo-archiv` for `*`, or search engines never see the header; only the AI crawler group disallows it. The switch only fully works if it is off before an issue is first published: Sanity serves every asset under a content-hash URL that stays live, so files that were public once remain reachable at their old CDN address. A preview smoke test (`e2e/preview/smoke.spec.ts`) checks the header on the real platform.
 - The archive page ends with a takedown hint that links `/kontakt`.
 - Both pages show the contact persons of `/news` before the newsletter. `echoContactPersonsQuery` reads them from the `newsOverview` document, so the editors maintain them in one place, and a page without them leaves the section out.
-- The revalidation webhook handles `echo.issue` (the archive and the whole issue route, since the payload does not carry a former slug) and `echoOverview` (the archive). `newsOverview` and `person` revalidate both pages as well, because of the contact persons.
+- The revalidation webhook handles `echo.issue` (the archive and the whole issue route, since the payload does not carry a former slug) and `echoOverview` (the archive). `newsOverview` and `person` revalidate both pages as well, because of the contact persons, and `aboutUs` because of its hero image.
 
 ## Environment variables
 
@@ -167,7 +177,7 @@ Forms use react-hook-form with a Zod schema from `src/lib/validations`. The matc
 
 Vitest splits this app into two projects, defined in `vitest.config.ts`, by file extension: `.test.tsx` anywhere under `src/` runs in the `dom` project (jsdom); `.test.ts` runs in `node`, except under `src/components/**` and `src/hooks/**`, which also run in `dom`.
 
-Static image imports (`.webp` and friends) are resolved by the `assetStub` Vite plugin in `vitest.config.ts` — without it, any module that imports an image fails to load in a test run.
+The app imports no static image (see „Page images“), so the test setup needs no stub for one; `test-utils/page-images.ts` holds Sanity image fixtures for the page tests.
 
 `renderWithUser` (`test-utils/render.tsx`) is the entry point for a `.test.tsx` case — it wraps Testing Library's `render` and returns the usual result plus a `user` (`@testing-library/user-event`) already set up against the same document.
 
