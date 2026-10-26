@@ -10,7 +10,7 @@ import { SectionHeader } from '../ui/section-header';
 import Breadcrumb from '../with-logic/breadcrumb';
 
 interface HeroProps extends ComponentPropsWithoutRef<'section'> {
-	image?: { alt: ImageProps['alt']; src: ImageProps['src'] };
+	image?: { alt: ImageProps['alt']; objectPosition?: string; src: ImageProps['src'] };
 	subTitle?: string;
 	title: string;
 }
@@ -29,6 +29,7 @@ export function Hero({ children, image, subTitle, title, ...props }: Readonly<He
 					alt={image.alt}
 					className="absolute inset-0 -z-10 object-cover"
 					src={image.src}
+					style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
 					fill
 				/>
 			)}
