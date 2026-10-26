@@ -42,6 +42,13 @@ const LOCATION_QUERIES: Record<string, string> = {
 			{ "href": "/angebot", "title": "Alle Angebote" }
 		])
 	}`,
+	// A FAQ appears on the page of every department it is assigned to.
+	faq: `*[_id == $id][0] {
+		"locations": *[_type == "department" && _id in ^.departments[]._ref && defined(slug.current)] | order(sortOrder asc) {
+			"href": "/angebot/" + slug.current,
+			"title": coalesce(title, "Ohne Titel")
+		}
+	}`,
 	group: `*[_id == $id][0] {
 		"locations": array::compact([
 			select(

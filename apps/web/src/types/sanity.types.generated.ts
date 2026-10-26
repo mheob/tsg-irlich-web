@@ -92,6 +92,11 @@ export type GroupsPage = {
       subtitle: string;
       intro?: string;
     };
+    faqSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
     contactPersonsSection: {
       title: string;
       subtitle: string;
@@ -613,6 +618,60 @@ export type Sponsors = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+};
+
+export type Faq = {
+  _id: string;
+  _type: "faq";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  question: string;
+  answer: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<
+      | {
+          link:
+            | HomeReference
+            | AboutUsReference
+            | EchoOverviewReference
+            | ContactReference
+            | DepartmentsPageReference
+            | DepartmentReference
+            | GroupReference
+            | MembershipReference
+            | NewsArticleReference
+            | NewsCategoryReference
+            | NewsOverviewReference
+            | AccessibilityReference
+            | PrivacyReference
+            | ImprintReference;
+          _type: "internalLink";
+          _key: string;
+        }
+      | {
+          href?: string;
+          _type: "externalLink";
+          _key: string;
+        }
+    >;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  departments: Array<
+    {
+      _key: string;
+    } & DepartmentReference
+  >;
+  sortOrder: number;
 };
 
 export type HonoraryMember = {
@@ -1505,6 +1564,7 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | Testimonial
   | Sponsors
+  | Faq
   | HonoraryMember
   | RoleReference
   | Person
@@ -3807,6 +3867,11 @@ export type OfferGroupsPageQueryResult = {
   metaDescription?: string;
   content: {
     groupsSection: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+    faqSection?: {
       title: string;
       subtitle: string;
       intro?: string;

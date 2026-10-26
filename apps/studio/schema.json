@@ -404,6 +404,36 @@
 							},
 							"optional": false
 						},
+						"faqSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
 						"contactPersonsSection": {
 							"type": "objectAttribute",
 							"value": {
@@ -3226,6 +3256,323 @@
 							}
 						}
 					}
+				},
+				"optional": false
+			}
+		}
+	},
+	{
+		"name": "faq",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "faq"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"question": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"answer": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"children": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "array",
+									"of": {
+										"type": "object",
+										"attributes": {
+											"marks": {
+												"type": "objectAttribute",
+												"value": {
+													"type": "array",
+													"of": {
+														"type": "string"
+													}
+												},
+												"optional": true
+											},
+											"text": {
+												"type": "objectAttribute",
+												"value": {
+													"type": "string"
+												},
+												"optional": true
+											},
+											"_type": {
+												"type": "objectAttribute",
+												"value": {
+													"type": "string",
+													"value": "span"
+												}
+											}
+										},
+										"rest": {
+											"type": "object",
+											"attributes": {
+												"_key": {
+													"type": "objectAttribute",
+													"value": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									}
+								},
+								"optional": true
+							},
+							"style": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "union",
+									"of": [
+										{
+											"type": "string",
+											"value": "normal"
+										}
+									]
+								},
+								"optional": true
+							},
+							"listItem": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "union",
+									"of": [
+										{
+											"type": "string",
+											"value": "bullet"
+										},
+										{
+											"type": "string",
+											"value": "number"
+										}
+									]
+								},
+								"optional": true
+							},
+							"markDefs": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "array",
+									"of": {
+										"type": "union",
+										"of": [
+											{
+												"type": "object",
+												"attributes": {
+													"link": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "union",
+															"of": [
+																{
+																	"type": "inline",
+																	"name": "home.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "aboutUs.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "echoOverview.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "contact.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "departmentsPage.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "department.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "group.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "membership.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "news.article.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "news.category.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "newsOverview.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "accessibility.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "privacy.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "imprint.reference"
+																}
+															]
+														},
+														"optional": false
+													},
+													"_type": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string",
+															"value": "internalLink"
+														}
+													}
+												},
+												"rest": {
+													"type": "object",
+													"attributes": {
+														"_key": {
+															"type": "objectAttribute",
+															"value": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											},
+											{
+												"type": "object",
+												"attributes": {
+													"href": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": true
+													},
+													"_type": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string",
+															"value": "externalLink"
+														}
+													}
+												},
+												"rest": {
+													"type": "object",
+													"attributes": {
+														"_key": {
+															"type": "objectAttribute",
+															"value": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										]
+									}
+								},
+								"optional": true
+							},
+							"level": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "number"
+								},
+								"optional": true
+							},
+							"_type": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string",
+									"value": "block"
+								}
+							}
+						},
+						"rest": {
+							"type": "object",
+							"attributes": {
+								"_key": {
+									"type": "objectAttribute",
+									"value": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"optional": false
+			},
+			"departments": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"_key": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								}
+							}
+						},
+						"rest": {
+							"type": "inline",
+							"name": "department.reference"
+						}
+					}
+				},
+				"optional": false
+			},
+			"sortOrder": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "number"
 				},
 				"optional": false
 			}

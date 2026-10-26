@@ -200,6 +200,7 @@ describe('page structure', () => {
 			'Einzelseiten',
 			DIVIDER_TITLE,
 			'Abteilungen',
+			'FAQ',
 			'Gruppen',
 			'Personen',
 			'Sponsoren',

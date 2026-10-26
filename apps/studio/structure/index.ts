@@ -3,6 +3,7 @@ import {
 	RiBookOpenLine,
 	RiOpenaiLine,
 	RiParentLine,
+	RiQuestionAnswerLine,
 	RiSettings5Line,
 	RiTeamLine,
 	RiTrophyLine,
@@ -13,6 +14,7 @@ import type { DocumentListBuilder, ListItemBuilder, StructureBuilder } from 'san
 type DocumentGroup =
 	| 'departments'
 	| 'echo'
+	| 'faq'
 	| 'groups'
 	| 'news'
 	| 'persons'
@@ -98,6 +100,26 @@ function getGroupDepartments(S: StructureBuilder): ListItemBuilder[] {
 			.child(
 				S.documentTypeList('department')
 					.title('Abteilungen')
+					.defaultOrdering([{ direction: 'asc', field: 'sortOrder' }]),
+			),
+	];
+}
+
+/**
+ * Returns the group for the FAQ, ordered like on the department pages.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the FAQ.
+ */
+function getGroupFaq(S: StructureBuilder): ListItemBuilder[] {
+	return [
+		S.listItem()
+			.title('FAQ')
+			.id('faq')
+			.icon(RiQuestionAnswerLine)
+			.child(
+				S.documentTypeList('faq')
+					.title('FAQ')
 					.defaultOrdering([{ direction: 'asc', field: 'sortOrder' }]),
 			),
 	];
@@ -227,6 +249,7 @@ function isExcludedDefaultListItem(id?: string): boolean {
 		'author',
 		'department',
 		'echo.issue',
+		'faq',
 		'group',
 		'honoraryMember',
 		'media.folder',
@@ -257,6 +280,9 @@ function getGroup(
 		}
 		case 'echo': {
 			return getGroupEcho(S);
+		}
+		case 'faq': {
+			return getGroupFaq(S);
 		}
 		case 'news': {
 			return getGroupNews(S);
