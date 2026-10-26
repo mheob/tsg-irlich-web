@@ -947,6 +947,7 @@ export type Group = {
     | "Wandern"
     | "Yoga";
   featuredImage: ExtendedImage;
+  heroImage?: ExtendedImage;
   images?: Array<
     {
       _key: string;
@@ -3633,11 +3634,12 @@ export type OfferGroupsGroupPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/offer-groups-group.ts
 // Variable: groupPageQuery
-// Query: *[		_type == 'group' &&		slug.current == $slug &&		defined(department->slug.current) &&		department->slug.current == $department	][0] {		_id,		description,		featuredImage,		images,		"isTeamSport": department->isTeamSport,		meta { metaTitle, metaDescription, openGraphImage},		title,		training {			trainingDescription,			trainingTimes[] {				...,				venue->			}		}	}
+// Query: *[		_type == 'group' &&		slug.current == $slug &&		defined(department->slug.current) &&		department->slug.current == $department	][0] {		_id,		description,		featuredImage,		heroImage,		images,		"isTeamSport": department->isTeamSport,		meta { metaTitle, metaDescription, openGraphImage},		title,		training {			trainingDescription,			trainingTimes[] {				...,				venue->			}		}	}
 export type GroupPageQueryResult = {
   _id: string;
   description: SimpleBlockContent;
   featuredImage: ExtendedImage;
+  heroImage: ExtendedImage | null;
   images: Array<
     {
       _key: string;
@@ -4371,7 +4373,7 @@ declare global {
     '\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
     '\n\t*[_type == \'newsOverview\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': NewsOverviewPageQueryResult;
     "*[_type == 'singleGroupPage'][0]": OfferGroupsGroupPageQueryResult;
-    "\n\t*[\n\t\t_type == 'group' &&\n\t\tslug.current == $slug &&\n\t\tdefined(department->slug.current) &&\n\t\tdepartment->slug.current == $department\n\t][0] {\n\t\t_id,\n\t\tdescription,\n\t\tfeaturedImage,\n\t\timages,\n\t\t\"isTeamSport\": department->isTeamSport,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n": GroupPageQueryResult;
+    "\n\t*[\n\t\t_type == 'group' &&\n\t\tslug.current == $slug &&\n\t\tdefined(department->slug.current) &&\n\t\tdepartment->slug.current == $department\n\t][0] {\n\t\t_id,\n\t\tdescription,\n\t\tfeaturedImage,\n\t\theroImage,\n\t\timages,\n\t\t\"isTeamSport\": department->isTeamSport,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n": GroupPageQueryResult;
     '\n\t*[\n\t\t_type == \'person\' &&\n\t\tdefined(affiliations[team._ref == $groupId][0])\n\t]|order(lastName asc) {\n\t\t_id,\n\t\tfirstName,\n\t\tlastName,\n\t\tphone,\n\t\timage,\n\t\tcontactAs,\n\t\t"email": affiliations[team._ref == $groupId][0].team->email,\n\t\t"role":  affiliations[team._ref == $groupId][0].role->title,\n\t\t"team":  affiliations[team._ref == $groupId][0].team->title,\n\t\t"taskDescription": affiliations[team._ref == $groupId][0].taskDescription,\n\t}\n': GroupContactPersonsQueryResult;
     '\n\t*[_id == $groupId][0].newsCategory-> {\n\t\t_type,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"articles": *[_type == \'news.article\' && references(^._id)] | order(publishedAt desc) [0..2] {\n\t\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t\t}\n\t}\n': GroupNewsQueryResult;
     '{\n\t"inDepartment": *[\n\t\t\n\t_type == \'group\' &&\n\tdefined(slug.current) &&\n\tdefined(department->slug.current) &&\n\t!(_id in path(\'drafts.**\'))\n &&\n\t\tslug.current == $slug &&\n\t\t$department in department->previousSlugs\n\t] | order(_updatedAt desc, _id asc) [0] {\n\t"departmentSlug": department->slug.current,\n\t"slug": slug.current,\n},\n\t"byPreviousPath": *[\n\t\t\n\t_type == \'group\' &&\n\tdefined(slug.current) &&\n\tdefined(department->slug.current) &&\n\t!(_id in path(\'drafts.**\'))\n &&\n\t\t($department + "/" + $slug) in previousPaths\n\t] | order(_updatedAt desc, _id asc) [0] {\n\t"departmentSlug": department->slug.current,\n\t"slug": slug.current,\n},\n\t"byDepartmentHistory": *[\n\t\t\n\t_type == \'group\' &&\n\tdefined(slug.current) &&\n\tdefined(department->slug.current) &&\n\t!(_id in path(\'drafts.**\'))\n &&\n\t\tcount(previousPaths[\n\t\t\t@ == string::split(@, "/")[0] + "/" + $slug &&\n\t\t\tstring::split(@, "/")[0] in (\n\t\t\t\t*[\n\t_type == \'department\' &&\n\t(slug.current == $department || $department in previousSlugs) &&\n\t!(_id in path(\'drafts.**\'))\n].slug.current + *[\n\t_type == \'department\' &&\n\t(slug.current == $department || $department in previousSlugs) &&\n\t!(_id in path(\'drafts.**\'))\n].previousSlugs[]\n\t\t\t)\n\t\t]) > 0\n\t] | order(_updatedAt desc, _id asc) [0] {\n\t"departmentSlug": department->slug.current,\n\t"slug": slug.current,\n},\n}': GroupRedirectQueryResult;

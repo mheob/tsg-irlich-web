@@ -1,0 +1,207 @@
+{
+	"body": {
+		"query": "\n\t*[\n\t\t_type == 'group' &&\n\t\tslug.current == $slug &&\n\t\tdefined(department->slug.current) &&\n\t\tdepartment->slug.current == $department\n\t][0] {\n\t\t_id,\n\t\tdescription,\n\t\tfeaturedImage,\n\t\theroImage,\n\t\timages,\n\t\t\"isTeamSport\": department->isTeamSport,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\ttitle,\n\t\ttraining {\n\t\t\ttrainingDescription,\n\t\t\ttrainingTimes[] {\n\t\t\t\t...,\n\t\t\t\tvenue->\n\t\t\t}\n\t\t}\n\t}\n",
+		"result": {
+			"_id": "group-c4afdd11-fc43-4481-89c8-20075150dac2",
+			"description": {
+				"_type": "simpleBlockContent",
+				"text": [
+					{
+						"_key": "f823658733a6",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "598eab7417fd",
+								"_type": "span",
+								"marks": [],
+								"text": "Die "
+							},
+							{
+								"_key": "500f0693851c",
+								"_type": "span",
+								"marks": ["strong"],
+								"text": "Magic Diamonds"
+							},
+							{
+								"_key": "ed7169323aed",
+								"_type": "span",
+								"marks": [],
+								"text": " sind die Jugend-Tanzgruppe der TSG Irlich und vereinen tanzbegeisterte Jugendliche im Alter von 13 bis 17 Jahren. Mit viel Energie, Kreativität und Freude am Tanz präsentieren sie ihre Choreografien in der Karnevalszeit auf verschiedenen Bühnen der Region und sorgen dort für echte Begeisterung."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					},
+					{
+						"_key": "6b470af54b60",
+						"_type": "block",
+						"children": [
+							{
+								"_key": "af782217ee0c",
+								"_type": "span",
+								"marks": [],
+								"text": "Auch beim traditionellen Karnevalsumzug in Irlich sind die Magic Diamonds regelmäßig mit dabei. Das gemeinsame Training stärkt nicht nur das tänzerische Können, sondern auch den Teamgeist und das soziale Miteinander. Durch gemeinsame Aktivitäten und Ausflüge wachsen die Jugendlichen als Gruppe zusammen, schließen Freundschaften und erleben Tanz als sportliche, aktive und zugleich spaßige Freizeitgestaltung."
+							}
+						],
+						"markDefs": [],
+						"style": "normal"
+					}
+				]
+			},
+			"featuredImage": {
+				"_type": "extendedImage",
+				"alt": "Die Magic Diamonds in schwarz silbernen Kostümen posiert auf einer Steintreppe im Freien",
+				"asset": {
+					"_ref": "image-1433c73677a0bbc8f7b0d8fbacf561c87c0bf33e-6000x4000-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0.028888663899294658,
+					"right": 0,
+					"top": 0
+				},
+				"description": "Gruppenbild der Magic Diamonds ",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.9472005669737774,
+					"width": 0.9711113361007053,
+					"x": 0.5144443319496473,
+					"y": 0.5
+				}
+			},
+			"heroImage": null,
+			"images": [
+				{
+					"_key": "d92d3fdc0795",
+					"_type": "extendedImage",
+					"alt": "Tänzerinnen und Tänzer der Magic Diamonds auf der Bühne während sie tanzen.",
+					"asset": {
+						"_ref": "image-3d25471896defcb8aaa03e04edb48ba4d0332e69-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0.12879272138413023
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8712072786158698,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5643963606920651
+					}
+				},
+				{
+					"_key": "c89d7222a609",
+					"_type": "extendedImage",
+					"alt": "Tänzerinnen und Tänzer der Magic Diamonds auf der Bühne nach ihrem Haupttanz wie sie sich einzeln dem Publikum vorstellen",
+					"asset": {
+						"_ref": "image-de382e6fb454ab99a9ff496552e92d3cfc04deb9-6000x4000-jpg",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "0f8e91916ace",
+					"_type": "extendedImage",
+					"alt": "Tänzerinnen uns Tänzer der Magic Diamonds auf der Bühne mit einem synchronen Bühnenbild bestehend aus mehreren Hebungen",
+					"asset": {
+						"_ref": "image-e64e0cf8a8805742511f84112071e5fb7c87bead-6000x4000-jpg",
+						"_type": "reference"
+					}
+				}
+			],
+			"isTeamSport": false,
+			"meta": {
+				"metaDescription": "Magic Diamonds der TSG Irlich: Nachwuchstänzer für Karnevalsbühnen und Umzüge. Sport, Gemeinschaft und enge Freundschaften – Tanzspaß für junge Talente.",
+				"metaTitle": "Magic Diamonds: Showtanz bei der TSG Irlich",
+				"openGraphImage": {
+					"_type": "image",
+					"alt": "Die Magic Diamonds in schwarz silbernen Kostümen posiert auf einer Steintreppe im Freien",
+					"asset": {
+						"_ref": "image-5246bc784c21119bee352df832cdbd74afc3e781-1600x1066-jpg",
+						"_type": "reference"
+					}
+				}
+			},
+			"title": "Magic Diamonds",
+			"training": {
+				"trainingDescription": null,
+				"trainingTimes": [
+					{
+						"_key": "05031f9c8f24",
+						"_type": "trainingTime",
+						"endTime": "19:15",
+						"season": "yearly",
+						"startTime": "17:15",
+						"venue": {
+							"_createdAt": "2024-09-20T10:52:33Z",
+							"_id": "6cfbe736-644b-4819-8b4d-1946aaacd92e",
+							"_rev": "R3E9jQFgtI1iXWhprtj9yR",
+							"_type": "venue",
+							"_updatedAt": "2026-09-29T12:28:49Z",
+							"description": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "a5a3bea2570c",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "4fe25f442dff0",
+												"_type": "span",
+												"marks": [],
+												"text": "Die Mehrzweckhalle (MZH) neben der Grundschule St. Peter und Paul im Herzen von Irlich ist eine vielseitig nutzbare Halle. Die Geräteturnhalle hat die Maße 15 x 27 Meter und bietet ausreichend Platz für sportliche Aktivitäten und Events. Direkt angrenzend befindet sich ein Foyer, das zusätzlichen Raum für Veranstaltungen bietet."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"location": {
+								"city": "Neuwied",
+								"houseNumber": "5",
+								"name": "Mehrzweckhalle Irlich",
+								"street": "Apostelstraße",
+								"zipCode": "56567"
+							},
+							"mainImage": {
+								"_type": "image",
+								"alt": "Die Mehrzweckhalle an der Grundschule Irlich",
+								"asset": {
+									"_ref": "image-92065e479cf70420aa6a9c8fce88ba4676e7dc26-3000x4000-jpg",
+									"_type": "reference"
+								},
+								"crop": {
+									"_type": "sanity.imageCrop",
+									"bottom": 0.14250000000000007,
+									"left": 0,
+									"right": 0,
+									"top": 0.16750000000000007
+								},
+								"hotspot": {
+									"_type": "sanity.imageHotspot",
+									"height": 0.47999999999999954,
+									"width": 1,
+									"x": 0.5,
+									"y": 0.5
+								}
+							},
+							"title": "Mehrzweckhalle Irlich",
+							"type": "hall-1"
+						},
+						"weekday": "tuesday"
+					}
+				]
+			}
+		},
+		"syncTags": ["s1:7YxuRg", "s1:HwW8kg", "s1:w2LXFQ"],
+		"ms": 11
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B%0A%09%09_type+%3D%3D+%27group%27+%26%26%0A%09%09slug.current+%3D%3D+%24slug+%26%26%0A%09%09defined%28department-%3Eslug.current%29+%26%26%0A%09%09department-%3Eslug.current+%3D%3D+%24department%0A%09%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09description%2C%0A%09%09featuredImage%2C%0A%09%09heroImage%2C%0A%09%09images%2C%0A%09%09%22isTeamSport%22%3A+department-%3EisTeamSport%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09title%2C%0A%09%09training+%7B%0A%09%09%09trainingDescription%2C%0A%09%09%09trainingTimes%5B%5D+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09venue-%3E%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&%24department=%22tanzen%22&%24slug=%22magic-diamonds%22&perspective=published&tag=next-loader.fetch"
+}

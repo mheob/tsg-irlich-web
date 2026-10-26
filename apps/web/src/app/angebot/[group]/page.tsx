@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { stegaClean } from 'next-sanity';
 import { notFound, permanentRedirect } from 'next/navigation';
-import type { ComponentProps } from 'react';
 
 import { EMPTY_ARRAY } from '@tsgi-web/shared';
 
@@ -16,39 +15,10 @@ import {
 	departmentSlugsQuery,
 } from '@/lib/sanity/queries/departments';
 import { offerGroupsPageQuery } from '@/lib/sanity/queries/pages/offer-groups';
-import { urlForImage } from '@/lib/sanity/utils';
-import type { DepartmentPageQueryResult } from '@/types/sanity.types';
-import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
+import { getHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
 
 import { Groups } from './_sections/groups';
-
-const HERO_IMAGE_SIZE = { height: 600, width: 1920 };
-
-type HeroSource = Pick<NonNullable<DepartmentPageQueryResult>, 'cardImage' | 'heroImage' | 'title'>;
-type HeroImage = NonNullable<ComponentProps<typeof Hero>['image']>;
-
-/**
- * Picks the picture the hero shows: the hero image of the department, else its card image, else the
- * offer image that stands in everywhere. An image without an asset counts as missing, so a hero
- * image the editors emptied does not hide a card image that is still there.
- *
- * @param department - The department the page shows.
- * @returns The image of the hero with its alt text, which is the department title when the image
- * has none.
- */
-function getHeroImage(department: HeroSource): HeroImage {
-	for (const image of [department.heroImage, department.cardImage]) {
-		const src = urlForImage(image, HERO_IMAGE_SIZE.height, HERO_IMAGE_SIZE.width);
-
-		if (image && src) {
-			// An empty alt text counts as missing too: the hero shows no image without one
-			return { alt: image.alt || department.title, src };
-		}
-	}
-
-	return OFFER_FALLBACK_IMAGE;
-}
 
 export async function generateStaticParams(): Promise<{ group: string }[]> {
 	const { data: slugs } = await sanityFetch({
@@ -119,7 +89,7 @@ export default async function DepartmentPage({ params }: Readonly<PageProps<'/an
 	return (
 		<>
 			<Hero
-				image={getHeroImage(department)}
+				image={getHeroImage([department.heroImage, department.cardImage], department.title)}
 				subTitle={groupsPage.subtitle}
 				title={`${groupsPage.title} ${department.title}`}
 			/>

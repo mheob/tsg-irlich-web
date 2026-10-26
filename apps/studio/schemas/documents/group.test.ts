@@ -44,6 +44,46 @@ function prepareGroupPreview(selection: GroupPreviewSelection): PreviewValue {
 	);
 }
 
+interface ChainRule {
+	assetRequired: () => ChainRule;
+	error: (message: string) => ChainRule;
+	required: () => ChainRule;
+}
+
+/**
+ * Runs the validation of a field against a rule that only writes down the calls it receives, which
+ * is all a builder chain like `Rule.required().assetRequired()` leaves to look at.
+ *
+ * @param name - The name of the field of the group.
+ * @returns The calls of the chain, in order, with the message of `error`.
+ */
+function recordValidationChain(name: string): string[] {
+	const { validation } = getField(name) as unknown as {
+		validation?: (rule: ChainRule) => unknown;
+	};
+	if (!validation) {
+		throw new Error(`Expected the group to validate its "${name}" field.`);
+	}
+
+	const calls: string[] = [];
+	const rule: ChainRule = {
+		assetRequired: () => {
+			calls.push('assetRequired');
+			return rule;
+		},
+		error: (message) => {
+			calls.push(`error: ${message}`);
+			return rule;
+		},
+		required: () => {
+			calls.push('required');
+			return rule;
+		},
+	};
+	validation(rule);
+	return calls;
+}
+
 function getTrainingValidator(): TrainingValidator {
 	const { validation } = getField('training');
 	if (!validation) {
@@ -121,6 +161,7 @@ describe('group document', () => {
 			'description',
 			'icon',
 			'featuredImage',
+			'heroImage',
 			'images',
 			'training',
 			'newsCategory',
@@ -131,6 +172,29 @@ describe('group document', () => {
 		for (const name of ['icon', 'featuredImage', 'images', 'newsCategory']) {
 			expect(getField(name).hidden).toBeUndefined();
 		}
+	});
+
+	// The field keeps its name, so the existing images stay where they are; only the editors see the
+	// new title.
+	it('titles the former background image "Kachelbild"', () => {
+		expect(getField('featuredImage')).toMatchObject({ title: 'Kachelbild', type: 'extendedImage' });
+	});
+
+	// `required()` alone passes an image object that holds only the alt text, so the group would go
+	// live without a card image.
+	it('requires an uploaded file for the card image, not only the image object', () => {
+		expect(recordValidationChain('featuredImage')).toStrictEqual([
+			'required',
+			'assetRequired',
+			'error: Kachelbild ist erforderlich',
+		]);
+	});
+
+	it('offers an optional hero image', () => {
+		const heroImage = getField('heroImage');
+
+		expect(heroImage).toMatchObject({ title: 'Hero-Bild', type: 'extendedImage' });
+		expect(heroImage.validation).toBeUndefined();
 	});
 
 	it('checks the slug against the groups of the same department', () => {

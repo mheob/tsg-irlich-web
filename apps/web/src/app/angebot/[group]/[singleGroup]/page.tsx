@@ -15,9 +15,9 @@ import {
 	groupStaticParamsQuery,
 	offerGroupsGroupPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups-group';
-import { urlForImage } from '@/lib/sanity/utils';
 import type { SimpleBlockContent } from '@/types/sanity.types';
 import { resolveGroupRedirect } from '@/utils/group-redirect';
+import { getHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
 import { getGroupSchema } from '@/utils/structured-data';
 import { getBaseUrl } from '@/utils/url';
@@ -25,8 +25,6 @@ import { getBaseUrl } from '@/utils/url';
 import { Main } from './_sections/main';
 import { News } from './_sections/news';
 import { Training } from './_sections/training';
-
-const IMAGE_SIZE = { height: 600, width: 1920 };
 
 /** What the main section shows for a group without description, such as a fresh draft. */
 const EMPTY_DESCRIPTION: SimpleBlockContent = { _type: 'simpleBlockContent', text: [] };
@@ -102,7 +100,6 @@ export default async function SingleGroupsPage({
 	]);
 
 	const path = `/angebot/${group}/${singleGroup}`;
-	const imageSource = urlForImage(groupData.featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
 	// Only the fields the structured data reads, cleaned of the stega encoding draft mode adds, which
 	// leaves the rendered group and its click-to-edit overlays alone.
 	const groupSchema = getGroupSchema({
@@ -124,11 +121,7 @@ export default async function SingleGroupsPage({
 		<>
 			<JsonLd data={groupSchema} />
 			<Hero
-				image={
-					groupData.featuredImage?.alt && imageSource
-						? { alt: groupData.featuredImage.alt, src: imageSource }
-						: undefined
-				}
+				image={getHeroImage([groupData.heroImage, groupData.featuredImage], groupData.title)}
 				subTitle={page.subtitle}
 				title={page.title}
 			/>
