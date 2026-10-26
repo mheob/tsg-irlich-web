@@ -25,10 +25,17 @@ function group(slug: string, title: string, overviewTitle: null | string = null)
 	};
 }
 
+const FALLBACK_IMAGE = {
+	_type: 'extendedImage' as const,
+	alt: 'Sporthalle',
+	asset: { _ref: 'image-fallback999-800x600-jpg', _type: 'reference' as const },
+};
+
 function renderGroups(groups: Group[], departmentSlug = 'fussball') {
 	return renderWithUser(
 		<Groups
 			departmentSlug={departmentSlug}
+			fallbackImage={FALLBACK_IMAGE}
 			departmentTitle="Fußball"
 			groups={groups}
 			intro="Alle Mannschaften auf einen Blick"
@@ -43,6 +50,12 @@ describe('the groups section of a department page', () => {
 		const { getByRole } = renderGroups([]);
 
 		expect(getByRole('heading', { level: 2 }).textContent).toBe('Gruppen Fußball');
+	});
+
+	it('shows the fallback image on a card without an image of its own', () => {
+		const { getByRole } = renderGroups([group('herren', 'Herren')]);
+
+		expect(getByRole('img', { name: 'Herren' }).getAttribute('src')).toContain('fallback999');
 	});
 
 	it('shows the intro', () => {

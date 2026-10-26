@@ -7,10 +7,12 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import type { client } from '@/lib/sanity/client';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 
 import { itFollowsTheMetadataContract } from '../../../test-utils/page-contract';
 import { findElement } from '../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
+import { SITE_IMAGES } from '../../../test-utils/site-images';
 // The contact form pulls in the server action, which pulls in `src/lib/resend.ts` — and that
 // reads its API key at import time. `vi.hoisted` runs before the imports are evaluated, which a
 // plain `vi.stubEnv` at the file's top level would not.
@@ -45,6 +47,16 @@ function buildPage(meta?: Record<string, unknown>): Record<string, unknown> {
 		subtitle: 'So erreichst du uns',
 		title: 'Kontakt',
 	};
+}
+
+/**
+ * Answers the page query with the page and the site images query with the images of the site
+ * settings.
+ */
+function mockPageWithSiteImages(): void {
+	const answers = new Map<string, unknown>([[siteImagesQuery, SITE_IMAGES]]);
+	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
+	mockedFetch.mockImplementation(async (query: string) => answers.get(query) ?? buildPage());
 }
 
 describe('contact page', () => {
@@ -85,6 +97,18 @@ describe('contact page', () => {
 			const form = findElement(await ContactPage(), ContactForm);
 
 			expect(form?.props.receiver).toBe('vorstand@tsg-irlich.de');
+		});
+
+		it('shows the contact images of the site settings next to the form', async () => {
+			mockPageWithSiteImages();
+
+			const form = findElement(await ContactPage(), ContactForm);
+
+			expect(form?.props.images.map((image) => image?.alt)).toStrictEqual([
+				'Spielerin am Telefon',
+				'Mannschaftsfoto',
+				'PR-Team bei der Arbeit',
+			]);
 		});
 
 		it('lists the contact persons and the newsletter sign-up', async () => {

@@ -9,9 +9,11 @@ import heroImage from '@/images/angebot/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { departmentCardsQuery } from '@/lib/sanity/queries/departments';
 import { offerPageQuery } from '@/lib/sanity/queries/pages/offer';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 import type {
 	DepartmentCardsQueryResult,
 	OfferPageQueryResult,
+	SiteImagesQueryResult,
 } from '@/types/sanity.types.generated';
 import { getPageMetadata } from '@/utils/metadata';
 
@@ -30,9 +32,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function OfferPage() {
-	const [page, departments] = await Promise.all([
+	const [page, departments, siteImages] = await Promise.all([
 		client.fetch<OfferPageQueryResult>(offerPageQuery),
 		client.fetch<DepartmentCardsQueryResult>(departmentCardsQuery),
+		client.fetch<SiteImagesQueryResult>(siteImagesQuery),
 	]);
 
 	if (!page) {
@@ -42,7 +45,11 @@ export default async function OfferPage() {
 	return (
 		<>
 			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
-			<Groups {...page.content.departmentsSection} departments={departments} />
+			<Groups
+				{...page.content.departmentsSection}
+				departments={departments}
+				fallbackImage={siteImages?.fallbackImage}
+			/>
 			<Stats stats={page.content.stats} />
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<Newsletter />

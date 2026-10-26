@@ -6,13 +6,14 @@ import { DOSBIcon } from '@tsgi-web/shared';
 import { ArrowElement } from '@/components/ui/arrow-button';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { AnyImage } from '@/types/sanity.types';
-import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
 const IMAGE_SIZE = { height: 270, width: 480 };
 
 interface GroupCardProps {
+	/** The image of the site settings that stands in when the card has none with a file. */
+	fallbackImage?: AnyImage | null;
 	href: string;
 	icon?: string | null;
 	image?: AnyImage | null;
@@ -20,21 +21,27 @@ interface GroupCardProps {
 	title?: string | null;
 }
 
-export function GroupCard({ href, icon, image, overviewTitle, title }: Readonly<GroupCardProps>) {
+export function GroupCard({
+	fallbackImage,
+	href,
+	icon,
+	image,
+	overviewTitle,
+	title,
+}: Readonly<GroupCardProps>) {
 	// Sanity may return a group without a title, which cannot be rendered as a card
 	if (!title) {
 		return null;
 	}
 
+	const src =
+		urlForImage(image, IMAGE_SIZE.height, IMAGE_SIZE.width) ??
+		urlForImage(fallbackImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
+
 	return (
 		<article className="relative aspect-video shadow-lg transition-transform duration-200 hover:scale-105">
 			<div className="absolute inset-0 z-[-1] rounded-xl bg-black/50" />
-			<Image
-				alt={title}
-				className="absolute inset-0 z-[-2] rounded-xl"
-				src={urlForImage(image, IMAGE_SIZE.height, IMAGE_SIZE.width) ?? OFFER_FALLBACK_IMAGE.src}
-				fill
-			/>
+			{src && <Image alt={title} className="absolute inset-0 z-[-2] rounded-xl" src={src} fill />}
 
 			<Link aria-label={`Mehr über "${title}" erfahren`} href={href}>
 				<div className="flex h-full flex-row items-end justify-between p-6">

@@ -13,10 +13,11 @@ import {
 	departmentSlugsQuery,
 } from '@/lib/sanity/queries/departments';
 import { offerGroupsPageQuery } from '@/lib/sanity/queries/pages/offer-groups';
-import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 
 import { findElement, findElements, sectionTypes } from '../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../test-utils/sanity-live-mock';
+import { SITE_IMAGES } from '../../../../test-utils/site-images';
 import { encodeLikeDraftMode } from '../../../../test-utils/stega';
 import { Faq } from './_sections/faq';
 import { Groups } from './_sections/groups';
@@ -135,6 +136,7 @@ function mockSanity({
 		if (query === offerGroupsPageQuery) return { data: groupsPage };
 		if (query === departmentRedirectQuery) return { data: redirect };
 		if (query === departmentSlugsQuery) return { data: slugs };
+		if (query === siteImagesQuery) return { data: SITE_IMAGES };
 		throw new Error(`unexpected query: ${query}`);
 	});
 }
@@ -352,13 +354,20 @@ describe('department page', () => {
 			expect(hero?.props.image?.src).toContain('cardbbb222');
 		});
 
-		it('falls back to the offer image when neither image has an asset', async () => {
+		it('falls back to the image of the site settings when neither image has an asset', async () => {
 			const hero = findElement(
 				await renderPage({ cardImage: sanityImage('Leer'), heroImage: sanityImage('Auch leer') }),
 				Hero,
 			);
 
-			expect(hero?.props.image).toStrictEqual(OFFER_FALLBACK_IMAGE);
+			expect(hero?.props.image?.alt).toBe('Sporthalle');
+			expect(hero?.props.image?.src).toContain('fallback999');
+		});
+
+		it('hands the fallback image of the site settings to the group cards', async () => {
+			const groups = findElement(await renderPage(), Groups);
+
+			expect(groups?.props.fallbackImage).toStrictEqual(SITE_IMAGES.fallbackImage);
 		});
 
 		it('describes the image with the department title when it has no alt text', async () => {

@@ -7,10 +7,12 @@ import { Hero } from '@/components/section/hero';
 import { Stats } from '@/components/section/stats';
 import { Vision } from '@/components/section/vision';
 import type { client } from '@/lib/sanity/client';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 import type { AboutUsPageQueryResult } from '@/types/sanity.types.generated';
 
 import { findElement } from '../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
+import { SITE_IMAGES } from '../../../test-utils/site-images';
 import { Chronicle } from './_sections/chronicle';
 // The real client validates `NEXT_PUBLIC_SANITY_*` at import time and would talk to the content
 // lake. `config()` is what `@sanity/image-url` reads to build an image URL for the open graph
@@ -51,6 +53,16 @@ function buildPage(overrides: Record<string, unknown> = {}): AboutUsPageQueryRes
 		title: 'Über uns',
 		...overrides,
 	} as unknown as AboutUsPageQueryResult;
+}
+
+/**
+ * Answers the page query with the page and the site images query with the images of the site
+ * settings.
+ */
+function mockPageWithSiteImages(): void {
+	const answers = new Map<string, unknown>([[siteImagesQuery, SITE_IMAGES]]);
+	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
+	mockedFetch.mockImplementation(async (query: string) => answers.get(query) ?? buildPage());
 }
 
 describe('about us page', () => {
@@ -151,6 +163,18 @@ describe('about us page', () => {
 			expect(findElement(page, Chronicle)?.props.content).toMatchObject({ title: 'Chronik' });
 			expect(findElement(page, Stats)?.props.stats).toMatchObject([{ label: 'Mitglieder' }]);
 			expect(findElement(page, ContactPersons)).toBeDefined();
+		});
+
+		it('shows the vision images of the site settings', async () => {
+			mockPageWithSiteImages();
+
+			const vision = findElement(await VereinPage(), Vision);
+
+			expect(vision?.props.images.map((image) => image?.alt)).toStrictEqual([
+				'Scheck-Übergabe',
+				'Tanzgruppe',
+				'Jugendmannschaft',
+			]);
 		});
 
 		it('tells the vision section which document it belongs to', async () => {

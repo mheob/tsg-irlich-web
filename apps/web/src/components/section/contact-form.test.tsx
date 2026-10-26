@@ -17,8 +17,14 @@ const mockedSendContactForm = vi.mocked(sendContactForm);
 
 const VALID_MESSAGE = 'Dies ist eine ausführliche Testnachricht für das Kontaktformular.';
 
-function renderForm() {
-	return renderWithUser(<ContactForm />);
+const CONTACT_IMAGES = [
+	{ alt: 'Spielerin am Telefon', src: 'https://cdn.sanity.io/contact-1.webp' },
+	{ alt: 'Mannschaftsfoto', src: 'https://cdn.sanity.io/contact-2.webp' },
+	{ alt: 'PR-Team bei der Arbeit', src: 'https://cdn.sanity.io/contact-3.webp' },
+];
+
+function renderForm(images: Parameters<typeof ContactForm>[0]['images'] = CONTACT_IMAGES) {
+	return renderWithUser(<ContactForm images={images} />);
 }
 
 /**
@@ -37,6 +43,25 @@ function privacyCheckbox(getByRole: RenderWithUserResult['getByRole']): HTMLElem
 describe('the contact form', () => {
 	afterEach(() => {
 		mockedSendContactForm.mockReset();
+	});
+
+	it('shows the three images next to the form', () => {
+		const { getAllByRole } = renderForm();
+
+		expect(getAllByRole('img').map((image) => image.getAttribute('alt'))).toStrictEqual([
+			'Spielerin am Telefon',
+			'Mannschaftsfoto',
+			'PR-Team bei der Arbeit',
+		]);
+	});
+
+	it('leaves out an image without a file and keeps the others in place', () => {
+		const { getAllByRole } = renderForm([CONTACT_IMAGES[0], undefined, CONTACT_IMAGES[2]]);
+
+		expect(getAllByRole('img').map((image) => image.getAttribute('src'))).toStrictEqual([
+			'https://cdn.sanity.io/contact-1.webp',
+			'https://cdn.sanity.io/contact-3.webp',
+		]);
 	});
 
 	it('names the privacy checkbox with the text standing next to it', () => {

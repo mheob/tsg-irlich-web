@@ -15,6 +15,7 @@ import {
 	groupStaticParamsQuery,
 	offerGroupsGroupPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups-group';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 import type { SimpleBlockContent } from '@/types/sanity.types';
 import { resolveGroupRedirect } from '@/utils/group-redirect';
 import { getHeroImage } from '@/utils/hero-image';
@@ -67,9 +68,10 @@ export default async function SingleGroupsPage({
 }: Readonly<PageProps<'/angebot/[group]/[singleGroup]'>>) {
 	const { group, singleGroup } = await params;
 
-	const [{ data: page }, { data: groupData }] = await Promise.all([
+	const [{ data: page }, { data: groupData }, { data: siteImages }] = await Promise.all([
 		sanityFetch({ query: offerGroupsGroupPageQuery }),
 		sanityFetch({ params: { department: group, slug: singleGroup }, query: groupPageQuery }),
+		sanityFetch({ query: siteImagesQuery }),
 	]);
 
 	if (!groupData) {
@@ -121,7 +123,10 @@ export default async function SingleGroupsPage({
 		<>
 			<JsonLd data={groupSchema} />
 			<Hero
-				image={getHeroImage([groupData.heroImage, groupData.featuredImage], groupData.title)}
+				image={getHeroImage(
+					[groupData.heroImage, groupData.featuredImage, siteImages?.fallbackImage],
+					groupData.title,
+				)}
 				subTitle={page.subtitle}
 				title={page.title}
 			/>

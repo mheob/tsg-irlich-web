@@ -11,10 +11,12 @@ import { GroupCard } from '@/components/ui/group-card';
 import type { client } from '@/lib/sanity/client';
 import { departmentCardsQuery } from '@/lib/sanity/queries/departments';
 import { offerPageQuery } from '@/lib/sanity/queries/pages/offer';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 
 import { itFollowsTheMetadataContract } from '../../../test-utils/page-contract';
 import { findElement, findElements } from '../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
+import { SITE_IMAGES } from '../../../test-utils/site-images';
 import { Groups } from './_sections/groups';
 
 vi.mock(import('@/lib/sanity/client'), () => ({
@@ -57,6 +59,7 @@ function mockSanity({ departments = [], page = buildPage() }: OfferResults = {})
 	mockedFetch.mockImplementation(async (query: string) => {
 		if (query === offerPageQuery) return page;
 		if (query === departmentCardsQuery) return departments;
+		if (query === siteImagesQuery) return SITE_IMAGES;
 		throw new Error(`unexpected query: ${query}`);
 	});
 }
@@ -153,6 +156,14 @@ describe('offer page', () => {
 				icon: 'Fussball',
 				image: { _type: 'extendedImage', alt: 'Fußball' },
 			});
+		});
+
+		it('gives every card the fallback image of the site settings', async () => {
+			mockSanity({ departments: [department('fussball', 'Fußball')] });
+
+			const [card] = await renderedCards();
+
+			expect(card.props.fallbackImage).toStrictEqual(SITE_IMAGES.fallbackImage);
 		});
 
 		it('renders no card for a department without a slug', async () => {

@@ -4506,6 +4506,23 @@ export type OrganizationQueryResult = {
   socialFields: SocialFields | null;
 } | null;
 
+// Source: src/lib/sanity/queries/shared/site-images.ts
+// Variable: siteImagesQuery
+// Query: *[_type == 'site-settings'][0] { visionImages, contactFormImages, fallbackImage }
+export type SiteImagesQueryResult = {
+  visionImages: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  contactFormImages: Array<
+    {
+      _key: string;
+    } & ExtendedImage
+  >;
+  fallbackImage: ExtendedImage;
+} | null;
+
 // Source: src/lib/sanity/queries/shared/social-media.ts
 // Variable: socialMediaQuery
 // Query: *[_type == 'site-settings'][0].socialFields
@@ -4614,6 +4631,7 @@ declare global {
     "{\n\t\"categories\": *[\n\t\t_type == 'news.category'\n\t\t&& (slug.current == $current || count(*[_type == 'news.article' && references(^._id)]) > 0)\n\t] | order(title asc) {\n\t\t\"articleCount\": count(*[_type == 'news.article' && references(^._id)]),\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t},\n\t\"total\": count(*[_type == 'news.article'])\n}": NewsCategoriesQueryResult;
     "\n\t*[_type == 'news.category' && slug.current == $slug][0] {\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n": NewsCategoryQueryResult;
     "\n\t*[_type == 'site-settings'][0] {\n\t\tcontact { email, phone, postalAddress },\n\t\tsocialFields,\n\t}\n": OrganizationQueryResult;
+    "*[_type == 'site-settings'][0] { visionImages, contactFormImages, fallbackImage }": SiteImagesQueryResult;
     "*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
     "\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;

@@ -19,10 +19,11 @@ import {
 	groupStaticParamsQuery,
 	offerGroupsGroupPageQuery,
 } from '@/lib/sanity/queries/pages/offer-groups-group';
-import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 
 import { findElement } from '../../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../../test-utils/sanity-live-mock';
+import { SITE_IMAGES } from '../../../../../test-utils/site-images';
 import { Main } from './_sections/main';
 import { News } from './_sections/news';
 import { Training } from './_sections/training';
@@ -113,6 +114,7 @@ function mockSanity({
 		if (query === groupNewsQuery) return { data: news };
 		if (query === groupRedirectQuery) return { data: redirect };
 		if (query === groupStaticParamsQuery) return { data: staticParams };
+		if (query === siteImagesQuery) return { data: SITE_IMAGES };
 		throw new Error(`unexpected query: ${query}`);
 	});
 }
@@ -394,12 +396,13 @@ describe('single group page', () => {
 			expect(hero?.props.image?.alt).toBe('Herren 1');
 		});
 
-		it('shows the offer image when neither image has a file', async () => {
+		it('shows the image of the site settings when neither image has a file', async () => {
 			mockSanity({ group: { ...GROUP, featuredImage: { alt: 'Leer' }, heroImage: null } });
 
 			const hero = findElement(await SingleGroupsPage(routeProps()), Hero);
 
-			expect(hero?.props.image).toStrictEqual(OFFER_FALLBACK_IMAGE);
+			expect(hero?.props.image?.alt).toBe('Sporthalle');
+			expect(hero?.props.image?.src).toContain('fallback999');
 		});
 
 		it('renders the group description and title', async () => {

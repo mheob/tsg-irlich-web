@@ -9,8 +9,10 @@ import { Vision } from '@/components/section/vision';
 import heroImage from '@/images/verein/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { aboutUsPageQuery } from '@/lib/sanity/queries/pages/about-us';
-import type { AboutUsPageQueryResult } from '@/types/sanity.types.generated';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
+import type { AboutUsPageQueryResult, SiteImagesQueryResult } from '@/types/sanity.types.generated';
 import { getPageMetadata } from '@/utils/metadata';
+import { resolveSectionImages } from '@/utils/section-images';
 
 import { Chronicle } from './_sections/chronicle';
 import { Intro } from './_sections/intro';
@@ -31,7 +33,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function VereinPage() {
-	const page = await client.fetch<AboutUsPageQueryResult>(aboutUsPageQuery);
+	const [page, siteImages] = await Promise.all([
+		client.fetch<AboutUsPageQueryResult>(aboutUsPageQuery),
+		client.fetch<SiteImagesQueryResult>(siteImagesQuery),
+	]);
 
 	if (!page?.content.introSection) {
 		notFound();
@@ -42,7 +47,10 @@ export default async function VereinPage() {
 			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
 			<Intro content={page.content.introSection} />
 			<Chronicle content={page.content.chronicleSection} />
-			<Vision {...{ ...page.content.visionSection, _type: page._type }} />
+			<Vision
+				{...{ ...page.content.visionSection, _type: page._type }}
+				images={resolveSectionImages(siteImages?.visionImages, page.content.visionSection.title)}
+			/>
 			<Stats stats={page.content.stats} withBackground />
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<Newsletter />
