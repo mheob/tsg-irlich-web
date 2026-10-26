@@ -16,6 +16,8 @@ interface TrainingProps {
 }
 
 export function Training({ title, training }: Readonly<TrainingProps>) {
+	const trainingTimes = training?.trainingTimes ?? [];
+
 	return (
 		<section className="relative z-0 bg-background-low-contrast">
 			<div className="container mx-auto px-5 py-10 md:py-32">
@@ -25,22 +27,22 @@ export function Training({ title, training }: Readonly<TrainingProps>) {
 					)}
 				</SectionHeader>
 
-				{training?.trainingTimes && training.trainingTimes.length > 0 && (
+				{trainingTimes.length > 0 && (
 					<div
 						className={cn(
 							'grid place-content-center place-items-center gap-10',
-							{ 'grid-cols-1': training?.trainingTimes && training.trainingTimes.length === 1 },
+							{ 'grid-cols-1': trainingTimes.length === 1 },
 							{
 								'lg:grid-cols-[repeat(2,minmax(0,var(--container-xl)))]':
-									training?.trainingTimes && training.trainingTimes.length === 2,
+									trainingTimes.length === 2,
 							},
 							{
 								'lg:grid-cols-[repeat(2,minmax(0,var(--container-xl)))] 2xl:grid-cols-[repeat(3,minmax(0,var(--container-xl)))]':
-									training?.trainingTimes && training.trainingTimes.length >= 3,
+									trainingTimes.length >= 3,
 							},
 						)}
 					>
-						{training.trainingTimes?.map((trainingTime) => (
+						{trainingTimes.map((trainingTime) => (
 							<TrainingCard key={trainingTime._key} training={trainingTime} />
 						))}
 					</div>
