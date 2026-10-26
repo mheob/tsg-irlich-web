@@ -14,7 +14,7 @@ import {
 } from '@/lib/sanity/queries/pages/news-overview-category';
 import { newsCategoriesQuery, newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
 
-import { PAGE_HERO_IMAGE } from '../../../../test-utils/page-images';
+import { META_OPEN_GRAPH_IMAGE, PAGE_HERO_IMAGE } from '../../../../test-utils/page-images';
 import { findElement } from '../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../test-utils/sanity-live-mock';
 import { CategoryCombobox } from '../_sections/category-combobox';
@@ -121,6 +121,15 @@ describe('news category page', () => {
 			const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
 
 			expect(openGraphImage?.url).toContain('heroimg111');
+		});
+
+		it('prefers the open graph image of the category over the hero image', async () => {
+			mockSanity({ category: { ...CATEGORY, meta: { openGraphImage: META_OPEN_GRAPH_IMAGE } } });
+
+			const metadata = await generateMetadata(routeProps());
+			const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+			expect(openGraphImage?.url).toContain('ogimg222');
 		});
 
 		it('prefers the meta title and description over the category title', async () => {

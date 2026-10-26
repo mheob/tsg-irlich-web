@@ -49,4 +49,10 @@ const PAGE_HERO_IMAGE = {
 	asset: { _ref: 'image-heroimg111-4094x2160-webp', _type: 'reference' as const },
 };
 
-export { PAGE_HERO_IMAGE, SITE_IMAGES };
+/** An open graph image the editors set in the `meta` object of a document. */
+const META_OPEN_GRAPH_IMAGE = {
+	_type: 'image' as const,
+	asset: { _ref: 'image-ogimg222-1200x630-jpg', _type: 'reference' as const },
+};
+
+export { META_OPEN_GRAPH_IMAGE, PAGE_HERO_IMAGE, SITE_IMAGES };

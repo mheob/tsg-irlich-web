@@ -17,7 +17,7 @@ import {
 } from '@/lib/sanity/queries/pages/echo';
 import type { EchoContactPersonsQueryResult } from '@/types/sanity.types';
 
-import { PAGE_HERO_IMAGE } from '../../../../test-utils/page-images';
+import { META_OPEN_GRAPH_IMAGE, PAGE_HERO_IMAGE } from '../../../../test-utils/page-images';
 import { findElement, findElements, sectionTypes } from '../../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../../test-utils/sanity-client-mock';
 import { IssueGrid } from './_sections/issue-grid';
@@ -160,6 +160,17 @@ describe('the tsg-echo archive', () => {
 		const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
 
 		expect(openGraphImage?.url).toContain('heroimg111');
+	});
+
+	it('prefers the open graph image of the archive over the hero image', async () => {
+		mockArchive({
+			page: { ...PAGE, meta: { openGraphImage: META_OPEN_GRAPH_IMAGE } } as unknown as typeof PAGE,
+		});
+
+		const metadata = await generateMetadata(props());
+		const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+		expect(openGraphImage?.url).toContain('ogimg222');
 	});
 
 	it('shows the newest issue as the wide card', async () => {
