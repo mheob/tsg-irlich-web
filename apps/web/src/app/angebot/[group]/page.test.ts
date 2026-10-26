@@ -1,4 +1,3 @@
-import { stegaEncodeSourceMap } from '@sanity/client/stega';
 import { notFound, permanentRedirect } from 'next/navigation';
 import type { ReactElement, ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
@@ -18,6 +17,7 @@ import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
 
 import { findElement, findElements, sectionTypes } from '../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../test-utils/sanity-live-mock';
+import { encodeLikeDraftMode } from '../../../../test-utils/stega';
 import { Faq } from './_sections/faq';
 import { Groups } from './_sections/groups';
 // `src/lib/sanity/api.ts` asserts the project variables at import time, and the page reaches it
@@ -137,29 +137,6 @@ function mockSanity({
 		if (query === departmentSlugsQuery) return { data: slugs };
 		throw new Error(`unexpected query: ${query}`);
 	});
-}
-
-/**
- * Encodes a text the way `sanityFetch` does in draft mode: the text followed by invisible characters
- * that point the presentation tool at its source.
- *
- * @param text - The visible text.
- * @returns The text followed by its stega encoding.
- */
-function encodeLikeDraftMode(text: string): string {
-	const { value } = stegaEncodeSourceMap(
-		{ value: text },
-		{
-			documents: [{ _id: 'faq-trial', _type: 'faq' }],
-			mappings: {
-				"$['value']": { source: { document: 0, path: 0, type: 'documentValue' }, type: 'value' },
-			},
-			paths: ["$['value']"],
-		},
-		{ enabled: true, studioUrl: 'https://studio.test' },
-	);
-
-	return value;
 }
 
 /**

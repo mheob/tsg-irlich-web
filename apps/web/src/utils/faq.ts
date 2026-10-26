@@ -1,3 +1,5 @@
+import { stegaClean } from 'next-sanity';
+
 /** What the website reads of a FAQ to decide whether, and where, to show and mark it up. */
 interface FaqEntry {
 	/** The answer as plain text, from `pt::text()`. */
@@ -18,7 +20,8 @@ interface FaqEntry {
  * @returns `true` when neither the question nor the answer text is missing or blank.
  */
 function isCompleteFaq({ answerText, question }: FaqEntry): boolean {
-	return Boolean(question?.trim() && answerText?.trim());
+	// In draft mode both strings carry stega characters, which are no whitespace to `trim()`.
+	return Boolean(stegaClean(question)?.trim() && stegaClean(answerText)?.trim());
 }
 
 export { type FaqEntry, isCompleteFaq };

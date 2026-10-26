@@ -1,8 +1,11 @@
+import { render, within } from '@testing-library/react';
+import { renderToReadableStream } from 'react-dom/server';
 import { describe, expect, it } from 'vite-plus/test';
 
 import type { DepartmentPageQueryResult } from '@/types/sanity.types';
 
 import { renderWithUser } from '../../../../../test-utils/render';
+import { encodeLikeDraftMode } from '../../../../../test-utils/stega';
 import { Faq } from './faq';
 
 type DepartmentFaq = NonNullable<DepartmentPageQueryResult>['faqs'][number];
@@ -110,5 +113,26 @@ describe('faq section', () => {
 		);
 
 		expect(container.innerHTML).toBe('');
+	});
+
+	it('leaves out a draft question whose blank answer carries the draft mode encoding', () => {
+		const blank = {
+			...faq('faq-blank', 'Wo wird trainiert?', ''),
+			answerText: encodeLikeDraftMode(''),
+		};
+		const { queryByRole } = renderWithUser(<Faq departmentTitle="Fußball" faqs={[TRIAL, blank]} />);
+
+		expect(queryByRole('button', { name: 'Wo wird trainiert?' })).toBeNull();
+	});
+
+	// Crawlers read the server HTML, so a closed answer has to be in it, only hidden.
+	it('renders a closed answer into the server HTML, hidden', async () => {
+		const stream = await renderToReadableStream(<Faq departmentTitle="Fußball" faqs={[TRIAL]} />);
+		const html = await new Response(stream).text();
+		// The markup comes straight out of the component under test, nothing external is injected.
+		// oxlint-disable-next-line react/no-danger
+		const { container } = render(<div dangerouslySetInnerHTML={{ __html: html }} />);
+
+		expect(within(container).getByText('Ja, jederzeit.').closest('[hidden]')).not.toBeNull();
 	});
 });
