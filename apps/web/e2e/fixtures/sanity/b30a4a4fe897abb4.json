@@ -3,7 +3,7 @@
 		"result": {
 			"_createdAt": "2024-06-22T10:47:26Z",
 			"_id": "aboutUs",
-			"_rev": "Nik63qLLJXUuVJPKyfhCv0",
+			"_rev": "xxPBWo0DB1601cZ03nza4G",
 			"_system": {
 				"base": {
 					"id": "aboutUs",
@@ -11,7 +11,7 @@
 				}
 			},
 			"_type": "aboutUs",
-			"_updatedAt": "2026-09-29T12:28:50Z",
+			"_updatedAt": "2026-10-26T13:19:03Z",
 			"content": {
 				"chronicleSection": {
 					"chronicleCategories": [
@@ -939,6 +939,14 @@
 					"title": "Für was steht die TSG und was wollen wir erreichen?"
 				}
 			},
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Luftaufnahme des Vereinsheims „Pappelstübchen“ der TSG Irlich mit Terrasse, Tischen und Sonnenschirmen, dahinter Bäume und der Sportplatz",
+				"asset": {
+					"_ref": "image-bf810a9943f31d1c51a5d4bbe43baccc3bec32cb-4094x2160-webp",
+					"_type": "reference"
+				}
+			},
 			"meta": {
 				"_type": "metaFields",
 				"metaDescription": "Die TSG Irlich bietet für jedermann, der sich gerne bewegt und mit Menschen zusammen ist, etwas. In 18 verschiedenen Sparten findest du alles, was du benötigst.",
@@ -974,21 +982,21 @@
 			"title": "Über unseren Verein"
 		},
 		"syncTags": [
-			"s1:yJoVrQ",
 			"s1:SgUpiQ",
-			"s1:N029bQ",
 			"s1:BpJQvw",
 			"s1:kG7Arw",
-			"s1:y+gLqA",
-			"s1:WU9DBg",
-			"s1:bW4l3Q",
-			"s1:BU299g",
-			"s1:PeVrtw",
 			"s1:eOuqJg",
 			"s1:NuVTmQ",
-			"s1:B7LhMw"
+			"s1:WU9DBg",
+			"s1:B7LhMw",
+			"s1:BU299g",
+			"s1:PeVrtw",
+			"s1:N029bQ",
+			"s1:y+gLqA",
+			"s1:bW4l3Q",
+			"s1:yJoVrQ"
 		],
-		"ms": 13
+		"ms": 19
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27aboutUs%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09...%2C%0A%09%09%09introSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09intro+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%7D%2C%0A%09%09%09chronicleSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09chronicleCategories%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09description+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%2C%0A%09%09%09visionSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09longVision+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%7D%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
 }

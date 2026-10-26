@@ -9,26 +9,22 @@ import { Newsletter } from '@/components/section/newsletter';
 import { ButtonLink } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
 import { sanityFetch } from '@/lib/sanity/live';
+import { newsOverviewHeroImageQuery } from '@/lib/sanity/queries/pages/news-overview';
 import {
 	newsArticlesPaginatedForCategoryQuery,
 	newsArticlesTotalForCategoryQuery,
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
 import { newsCategoriesQuery, newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
 import { getPageNumber, getPaginatedPath } from '@/utils/pagination';
 
-import newsOverviewImage from '../_assets/news-overview.webp';
 import { CategoryCombobox } from '../_sections/category-combobox';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
 
 const START_INDEX = 0;
 const ITEMS_PER_PAGE = 9;
-
-const HERO_IMAGE = {
-	alt: 'Ein Handy und ein Kugelschreiber auf einer Zeitung sollen eine Nachrichtenübersicht darstellen.',
-	src: newsOverviewImage,
-};
 
 function getCurrentPage(page?: string | string[]): {
 	currentPage: number;
@@ -48,16 +44,16 @@ export async function generateMetadata({
 	const { category: categoryParameter } = await params;
 	const { seite } = await searchParams;
 
-	const { data: category } = await sanityFetch({
-		params: { slug: categoryParameter },
-		query: newsCategoryQuery,
-		stega: false,
-	});
+	const [{ data: category }, { data: heroImage }] = await Promise.all([
+		sanityFetch({ params: { slug: categoryParameter }, query: newsCategoryQuery, stega: false }),
+		sanityFetch({ query: newsOverviewHeroImageQuery, stega: false }),
+	]);
 	if (!category) {
 		return {};
 	}
 
 	return getPageMetadata({
+		image: heroImage,
 		meta: category.meta,
 		path: getPaginatedPath(`/news/${category.slug ?? categoryParameter}`, getPageNumber(seite)),
 		title: category.title,
@@ -79,6 +75,7 @@ export default async function NewsCategoryPage({
 		{ data: category },
 		{ data: paginatedArticles },
 		{ data: categories },
+		{ data: heroImage },
 	] = await Promise.all([
 		sanityFetch({ query: newsOverviewCategoryPageQuery }),
 		sanityFetch({
@@ -91,6 +88,7 @@ export default async function NewsCategoryPage({
 			query: newsArticlesPaginatedForCategoryQuery,
 		}),
 		sanityFetch({ params: { current: categoryParameter }, query: newsCategoriesQuery }),
+		sanityFetch({ query: newsOverviewHeroImageQuery }),
 	]);
 
 	const isBeyondLastPage = currentPage > 1 && start >= totalArticles;
@@ -102,7 +100,11 @@ export default async function NewsCategoryPage({
 
 	return (
 		<>
-			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={category.title} />
+			<Hero
+				image={getPageHeroImage(heroImage, category.title)}
+				subTitle={page.subtitle}
+				title={category.title}
+			/>
 
 			<section className="container mx-auto py-10 md:py-28">
 				<div className="flex flex-col gap-6 pb-8 md:flex-row md:justify-between md:pb-14">

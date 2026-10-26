@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react';
 import { createElement, Fragment, useRef } from 'react';
-import type { ReactElement, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { afterEach, vi } from 'vite-plus/test';
 
 type MediaQueryListener = (event: MediaQueryListEvent) => void;
@@ -102,32 +102,21 @@ Element.prototype.getAnimations = () => [];
 
 // --- next/image --------------------------------------------------------------------------------
 
-interface StaticImageStub {
-	blurDataURL?: string;
-	blurWidth?: number;
-	height: number;
-	src: string;
-	width: number;
-}
-
 interface NextImageMockProps {
 	alt: string;
 	className?: string;
 	height?: number | string;
-	src: StaticImageStub | string;
+	src: string;
+	style?: CSSProperties;
 	width?: number | string;
 }
 
 /**
  * Stands in for `next/image`'s `Image`: a plain `<img>` forwarding the props a test can query or
- * assert on (`src`, `alt`, `width`, `height`, `className`) and silently dropping the Next-only ones
+ * assert on (`src`, `alt`, `width`, `height`, `className`, `style`) and silently dropping the Next-only ones
  * (`fill`, `preload`, `quality`, `sizes`, `loader`, `placeholder`, `blurDataURL`, …) that would
  * otherwise land on the DOM node and trigger a React "unknown prop" warning. `alt` is forwarded
  * verbatim, so a test can query the image by its accessible name.
- *
- * A static image import resolves, through the `assetStub` Vite plugin in `vitest.config.ts`, to a
- * `StaticImageStub` object rather than a string — its `src` field is used as the `<img>` `src` in
- * that case.
  *
  * Escape hatch: this mock carries no per-test state, so a test that needs different `next/image`
  * behaviour overrides the whole module itself with its own `vi.mock('next/image', () => ({...}))`
@@ -138,13 +127,20 @@ interface NextImageMockProps {
  * @param props.alt - Forwarded verbatim to the `<img>`.
  * @param props.className - Forwarded verbatim to the `<img>`.
  * @param props.height - Forwarded verbatim to the `<img>`.
- * @param props.src - A URL, or the `assetStub` object a static import resolves to.
+ * @param props.src - Forwarded verbatim to the `<img>`.
+ * @param props.style - Forwarded verbatim to the `<img>`.
  * @param props.width - Forwarded verbatim to the `<img>`.
  * @returns The `<img>` standing in for `next/image`'s `Image`.
  */
-function NextImageMock({ alt, className, height, src, width }: NextImageMockProps): ReactElement {
-	const resolvedSrc = typeof src === 'string' ? src : src.src;
-	return createElement('img', { alt, className, height, src: resolvedSrc, width });
+function NextImageMock({
+	alt,
+	className,
+	height,
+	src,
+	style,
+	width,
+}: NextImageMockProps): ReactElement {
+	return createElement('img', { alt, className, height, src, style, width });
 }
 
 vi.mock('next/image', () => ({ default: NextImageMock }));

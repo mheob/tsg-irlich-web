@@ -36,3 +36,10 @@ export const aboutUsPageQuery = defineQuery(`
 		}
 	}
 `);
+
+/**
+ * Query to get the hero image of the about page, which the TSG-Echo pages show as well
+ *
+ * @returns The hero image of the about page
+ */
+export const aboutUsHeroImageQuery = defineQuery(`*[_type == 'aboutUs'][0].heroImage`);

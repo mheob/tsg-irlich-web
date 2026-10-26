@@ -3,11 +3,13 @@ import { notFound } from 'next/navigation';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import ImprintPage, { generateMetadata } from '@/app/(legal)/impressum/page';
+import { Hero } from '@/components/section/hero';
 import { PortableText } from '@/components/ui/portable-text';
 import { ContactLink } from '@/components/with-logic/contact-link';
 import type { client } from '@/lib/sanity/client';
 
 import { itFollowsTheMetadataContract } from '../../../../test-utils/page-contract';
+import { PAGE_HERO_IMAGE } from '../../../../test-utils/page-images';
 import { findElement, findElements } from '../../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../../test-utils/sanity-client-mock';
 
@@ -62,6 +64,7 @@ describe('imprint page', () => {
 		// oxlint-disable-next-line vitest/require-hook -- registers `it` cases, not setup code
 		itFollowsTheMetadataContract({
 			build: buildPage,
+			buildWithHeroImage: (heroImage, meta) => ({ ...buildPage(meta), heroImage }),
 			fetchMock: mockedFetch,
 			generateMetadata,
 			path: '/impressum',
@@ -70,6 +73,15 @@ describe('imprint page', () => {
 	});
 
 	describe('rendering', () => {
+		it('shows the hero image of the page', async () => {
+			mockedFetch.mockResolvedValue({ ...buildPage(), heroImage: PAGE_HERO_IMAGE });
+
+			const hero = findElement(await ImprintPage(), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
+		});
+
 		it('gives up when the document is missing', async () => {
 			mockedFetch.mockResolvedValue(null);
 

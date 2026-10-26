@@ -8,15 +8,10 @@ import { PortableText } from '@/components/ui/portable-text';
 import { client } from '@/lib/sanity/client';
 import { privacyPageQuery } from '@/lib/sanity/queries/pages/privacy';
 import type { PrivacyPageQueryResult } from '@/types/sanity.types.generated';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
 
 import { textClassName } from '../_shared/class-names';
-import heroImage from '../_shared/hero.webp';
-
-const HERO_IMAGE = {
-	alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
-	src: heroImage,
-};
 
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<PrivacyPageQueryResult>(privacyPageQuery);
@@ -25,7 +20,12 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	return getPageMetadata({ meta: page.meta, path: '/datenschutz', title: page.title });
+	return getPageMetadata({
+		image: page.heroImage,
+		meta: page.meta,
+		path: '/datenschutz',
+		title: page.title,
+	});
 }
 
 export default async function PrivacyPage() {
@@ -37,7 +37,11 @@ export default async function PrivacyPage() {
 
 	return (
 		<>
-			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
+			<Hero
+				image={getPageHeroImage(page.heroImage, page.title)}
+				subTitle={page.subtitle}
+				title={page.title}
+			/>
 
 			<section className="container py-10 md:grid md:grid-cols-8 md:gap-12 md:py-32">
 				<div className="md:col-span-1" />

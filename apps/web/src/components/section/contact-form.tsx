@@ -15,11 +15,10 @@ import { SectionHeader } from '@/components/ui/section-header';
 import { SelectWithLabel } from '@/components/ui/select';
 import { TextareaWithLabel } from '@/components/ui/textarea';
 import { ErrorAlert, Form, FormField, SuccessAlert } from '@/components/with-logic/form';
-import contactImage1 from '@/images/contact/contact-1.webp';
-import contactImage2 from '@/images/contact/contact-2.webp';
-import contactImage3 from '@/images/contact/contact-3.webp';
+import { CONTACT_FORM_TITLE } from '@/constants/contact-form';
 import { contactFormSchema, contactFormWithReceiverSchema } from '@/lib/validations/contact-form';
 import type { ContactFormData } from '@/lib/validations/contact-form';
+import type { ResolvedImage } from '@/types/image.types';
 import type { ContactNameMail } from '@/types/sanity.types';
 
 import { PrivacyField } from '../with-logic/form/privacy-field';
@@ -36,10 +35,13 @@ function mapSelectItems(receiver?: ContactNameMail[]): { label: string; value: s
 type SubmitResult = null | { error: string; success: false } | { success: true };
 
 interface ContactFormProps {
+	/** The three round images next to the form, large, medium and small; a missing one leaves its place empty. */
+	images: readonly (ResolvedImage | undefined)[];
 	receiver?: ContactNameMail[];
 }
 
-export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
+export function ContactForm({ images, receiver }: Readonly<ContactFormProps>) {
+	const [large, medium, small] = images;
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitResult, setSubmitResult] = useState<SubmitResult>(null);
 
@@ -109,7 +111,7 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 							<SectionHeader
 								className="mb-10"
 								isCenteredOnDesktop={false}
-								title="Kontaktiere uns"
+								title={CONTACT_FORM_TITLE}
 								isCentered
 							/>
 							<SuccessAlert />
@@ -120,37 +122,32 @@ export function ContactForm({ receiver }: Readonly<ContactFormProps>) {
 					) : (
 						<>
 							<div className="hidden lg:relative lg:block lg:w-1/2">
-								<div className="absolute top-0 right-0 grid size-60 place-content-center rounded-full bg-secondary lg:size-80">
-									<Image
-										alt="'FUNKY DIAMONDS'-Spielerin mit geflochtener Frisur und Pferdeschwanz in schwarzem Trikot und Rückennummer 6, telefoniert während eines Spiels."
-										className="rounded-full"
-										src={contactImage1}
-										fill
-									/>
-								</div>
+								{large && (
+									<div className="absolute top-0 right-0 grid size-60 place-content-center rounded-full bg-secondary lg:size-80">
+										<Image alt={large.alt} className="rounded-full" src={large.src} fill />
+									</div>
+								)}
 
-								<div className="absolute top-[42%] right-[calc(60%-8rem)] grid size-64 place-content-center rounded-full bg-secondary">
-									<Image
-										alt="Gruppe der TSG Irlich in blauen Trikots posiert für ein Mannschaftsfoto auf dem Spielfeld, während eine Fotografin in schwarzem Kleid mit Kamera auf Stativ das Foto macht."
-										className="rounded-full"
-										src={contactImage2}
-										fill
-									/>
-								</div>
+								{medium && (
+									<div className="absolute top-[42%] right-[calc(60%-8rem)] grid size-64 place-content-center rounded-full bg-secondary">
+										<Image alt={medium.alt} className="rounded-full" src={medium.src} fill />
+									</div>
+								)}
 
-								<div className="absolute right-[calc(30%-8rem)] bottom-0 grid size-52 place-content-center rounded-full bg-secondary">
-									<Image
-										alt="PR-Team-Mitglied der TSG Irlich in blau-weißem Vereinstrikot mit Kamera auf Stativ bei der Arbeit im Freien."
-										className="rounded-full"
-										src={contactImage3}
-										fill
-									/>
-								</div>
+								{small && (
+									<div className="absolute right-[calc(30%-8rem)] bottom-0 grid size-52 place-content-center rounded-full bg-secondary">
+										<Image alt={small.alt} className="rounded-full" src={small.src} fill />
+									</div>
+								)}
 							</div>
 
 							<Form {...form}>
 								<form className="flex-1" onSubmit={form.handleSubmit(onSubmit)}>
-									<SectionHeader isCenteredOnDesktop={false} title="Kontaktiere uns" isCentered />
+									<SectionHeader
+										isCenteredOnDesktop={false}
+										title={CONTACT_FORM_TITLE}
+										isCentered
+									/>
 
 									<div className="mt-10 flex flex-col gap-10 md:mt-20">
 										<FormField

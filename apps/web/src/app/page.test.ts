@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import HomePage, { generateMetadata } from '@/app/page';
+import { ContactForm } from '@/components/section/contact-form';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Pricing } from '@/components/section/pricing';
 import { Stats } from '@/components/section/stats';
@@ -14,10 +15,12 @@ import type { client } from '@/lib/sanity/client';
 import { departmentCardsQuery } from '@/lib/sanity/queries/departments';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 
 import { itFollowsTheMetadataContract } from '../../test-utils/page-contract';
+import { PAGE_HERO_IMAGE, SITE_IMAGES } from '../../test-utils/page-images';
 import { findElement } from '../../test-utils/react-tree';
 import { clientFetchMock } from '../../test-utils/sanity-client-mock';
 import { Features } from './_home/features';
@@ -77,6 +80,7 @@ interface HomeResults {
 	news?: unknown[];
 	page?: unknown;
 	socialMedia?: unknown;
+	siteImages?: unknown;
 	sponsors?: unknown[];
 	testimonials?: unknown[];
 }
@@ -87,6 +91,7 @@ function mockSanity({
 	departments = [],
 	news = [],
 	page = buildPage(),
+	siteImages = SITE_IMAGES,
 	socialMedia = { instagram: 'https://instagram.example' },
 	sponsors = [],
 	testimonials = [],
@@ -99,6 +104,7 @@ function mockSanity({
 		if (query === newsArticlesQuery) return news;
 		if (query === socialMediaQuery) return socialMedia;
 		if (query === sponsorsQuery) return sponsors;
+		if (query === siteImagesQuery) return siteImages;
 		throw new Error(`unexpected query: ${query}`);
 	});
 }
@@ -138,12 +144,30 @@ describe('home page', () => {
 		});
 	});
 
+	// The cut-out of the home hero is no preview picture, so the page shares none of its own.
+	it('keeps the hero image out of the open graph image', async () => {
+		mockedFetch.mockResolvedValue({ ...buildPage(), heroImage: PAGE_HERO_IMAGE });
+
+		const metadata = await generateMetadata();
+
+		expect(metadata.openGraph?.images).toStrictEqual([]);
+	});
+
 	describe('rendering', () => {
 		it('gives up when the document is missing', async () => {
 			mockSanity({ page: null });
 
 			await expect(HomePage()).rejects.toThrow('NEXT_NOT_FOUND');
 			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
+		});
+
+		it('shows the hero image of the page', async () => {
+			mockSanity({ page: { ...buildPage(), heroImage: PAGE_HERO_IMAGE } });
+
+			const hero = findElement(await HomePage(), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
 		});
 
 		it('heads the page with the intro, title and social media links', async () => {
@@ -182,6 +206,44 @@ describe('home page', () => {
 				departments: [{ _id: 'department-fussball', slug: 'fussball' }],
 				title: 'Unsere Abteilungen',
 			});
+		});
+
+		it('shows the vision images of the site settings', async () => {
+			mockSanity();
+
+			const vision = findElement(await HomePage(), Vision);
+
+			expect(vision?.props.images.map((image) => image?.alt)).toStrictEqual([
+				'Scheck-Übergabe',
+				'Tanzgruppe',
+				'Jugendmannschaft',
+			]);
+			expect(vision?.props.images[0]?.src).toContain('vision1aaa');
+		});
+
+		it('shows the contact images of the site settings next to the form', async () => {
+			mockSanity();
+
+			const form = findElement(await HomePage(), ContactForm);
+
+			expect(form?.props.images.map((image) => image?.alt)).toStrictEqual([
+				'Spielerin am Telefon',
+				'Mannschaftsfoto',
+				'PR-Team bei der Arbeit',
+			]);
+		});
+
+		it('names a vision image without alt text after the section', async () => {
+			mockSanity({
+				siteImages: {
+					...SITE_IMAGES,
+					visionImages: [{ ...SITE_IMAGES.visionImages[0], alt: '' }],
+				},
+			});
+
+			const vision = findElement(await HomePage(), Vision);
+
+			expect(vision?.props.images[0]?.alt).toBe('Vision');
 		});
 
 		it('tells the vision section which document it belongs to', async () => {

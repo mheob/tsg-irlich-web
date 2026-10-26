@@ -2,7 +2,7 @@
 
 import { Text } from '@sanity/ui';
 import { RiLinksLine, RiSettings5Line } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 import { withRichDescription } from '@/components/rich-field-description';
 import { phoneFieldRegex } from '@/constants/regex';
@@ -21,6 +21,12 @@ const metadataBaseFieldDescription = withRichDescription(
 		</a>
 	</Text>,
 );
+
+/** One image of the vision section or of the contact form, which only shows with a file. */
+const sectionImageMember = defineArrayMember({
+	type: 'extendedImage',
+	validation: (Rule) => Rule.required().assetRequired().error('Jedes Bild braucht eine Datei'),
+});
 
 const siteSettings = defineType({
 	fields: [
@@ -138,6 +144,42 @@ const siteSettings = defineType({
 			title: 'Social Media',
 			type: 'socialFields',
 		}),
+
+		// Images
+		defineField({
+			description:
+				'Genau drei Bilder für die Vision-Sektion auf Home und Verein, in dieser Reihenfolge: groß, mittel, klein. Sie werden rund beschnitten, der Hotspot bestimmt den Ausschnitt.',
+			group: 'images',
+			name: 'visionImages',
+			of: [sectionImageMember],
+			title: 'Vision-Bilder',
+			type: 'array',
+			validation: (Rule) =>
+				Rule.required().length(3).error('Die Vision-Sektion braucht genau drei Bilder'),
+		}),
+
+		defineField({
+			description:
+				'Genau drei Bilder neben dem Kontaktformular auf Home und Kontakt, nur auf großen Bildschirmen sichtbar, in dieser Reihenfolge: groß, mittel, klein. Sie werden rund beschnitten, der Hotspot bestimmt den Ausschnitt.',
+			group: 'images',
+			name: 'contactFormImages',
+			of: [sectionImageMember],
+			title: 'Kontaktformular-Bilder',
+			type: 'array',
+			validation: (Rule) =>
+				Rule.required().length(3).error('Das Kontaktformular braucht genau drei Bilder'),
+		}),
+
+		defineField({
+			description:
+				'Erscheint im Hero und auf der Kachel einer Abteilung oder Gruppe, die weder Hero- noch Kachelbild hat.',
+			group: 'images',
+			name: 'fallbackImage',
+			title: 'Ersatzbild Angebot',
+			type: 'extendedImage',
+			validation: (Rule) =>
+				Rule.required().assetRequired().error('Das Ersatzbild ist erforderlich'),
+		}),
 	],
 	groups: [
 		meta,
@@ -145,6 +187,7 @@ const siteSettings = defineType({
 		{ name: 'misc', title: 'Misc' },
 		{ name: 'navigation', title: 'Navigation' },
 		{ name: 'social', title: 'Social' },
+		{ name: 'images', title: 'Bilder' },
 	],
 	icon: RiSettings5Line,
 	name: 'site-settings',

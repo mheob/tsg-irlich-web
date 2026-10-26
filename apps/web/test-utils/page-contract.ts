@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { expect, it } from 'vite-plus/test';
 import type { MockedFunction } from 'vite-plus/test';
 
+import { PAGE_HERO_IMAGE } from './page-images';
+
 /** The `image-<id>-<width>x<height>-<format>` shape `@sanity/image-url` requires. */
 const CONTRACT_ASSET_REF = 'image-abc123def456-800x600-jpg';
 
@@ -13,6 +15,11 @@ const OPEN_GRAPH_IMAGE = {
 interface MetadataContractOptions {
 	/** Builds the document the page fetches, with the given `meta` object in place. */
 	build: (meta?: Record<string, unknown>) => unknown;
+	/**
+	 * Builds the document with the given hero image and `meta` object, for a page whose hero image
+	 * stands in as open graph image.
+	 */
+	buildWithHeroImage?: (heroImage: unknown, meta?: Record<string, unknown>) => unknown;
 	/** The mocked `client.fetch` the page reads its document through. */
 	fetchMock: MockedFunction<(...args: never[]) => unknown>;
 	/** The page's `generateMetadata` export. */
@@ -35,6 +42,8 @@ interface MetadataContractOptions {
  *
  * @param options - The page under test and how to build its document.
  * @param options.build - Builds the document the page fetches.
+ * @param options.buildWithHeroImage - Builds the document with a hero image, for a page whose hero
+ * image stands in as open graph image.
  * @param options.fetchMock - The mocked fetcher the page reads its document through.
  * @param options.generateMetadata - The page's `generateMetadata` export.
  * @param options.missingDocument - What the fetch resolves with when the document is absent.
@@ -43,6 +52,7 @@ interface MetadataContractOptions {
  */
 function itFollowsTheMetadataContract({
 	build,
+	buildWithHeroImage,
 	fetchMock,
 	generateMetadata,
 	missingDocument = null,
@@ -102,6 +112,35 @@ function itFollowsTheMetadataContract({
 
 		expect(metadata.openGraph?.images).toMatchObject({ height: 630, width: 1200 });
 	});
+
+	if (buildWithHeroImage) {
+		it('falls back to the hero image for the open graph image', async () => {
+			fetchMock.mockResolvedValue(buildWithHeroImage(PAGE_HERO_IMAGE));
+
+			const metadata = await generateMetadata();
+
+			const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+			expect(openGraphImage).toMatchObject({
+				alt: 'Hero der Seite',
+				height: 630,
+				width: 1200,
+			});
+			expect(openGraphImage?.url).toContain('heroimg111');
+		});
+
+		it('prefers the open graph image over the hero image', async () => {
+			fetchMock.mockResolvedValue(
+				buildWithHeroImage(PAGE_HERO_IMAGE, { openGraphImage: OPEN_GRAPH_IMAGE }),
+			);
+
+			const metadata = await generateMetadata();
+
+			const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+			expect(openGraphImage?.url).toContain('abc123def456');
+		});
+	}
 }
 
 export { itFollowsTheMetadataContract };

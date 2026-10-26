@@ -132,15 +132,15 @@
 			}
 		],
 		"syncTags": [
-			"s1:uMx6JQ",
-			"s1:Z4VvIg",
-			"s1:w2LXFQ",
 			"s1:3mbpCw",
+			"s1:uMx6JQ",
 			"s1:0P7oqA",
-			"s1:pAHVYA",
-			"s1:OD7l+Q"
+			"s1:OD7l+Q",
+			"s1:w2LXFQ",
+			"s1:Z4VvIg",
+			"s1:pAHVYA"
 		],
-		"ms": 9
+		"ms": 18
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27group%27+%26%26+defined%28slug.current%29+%26%26+defined%28department-%3Eslug.current%29%5D+%7B%0A%09%09%22group%22%3A+department-%3Eslug.current%2C%0A%09%09%22singleGroup%22%3A+slug.current%0A%09%7D%0A&perspective=published&tag=next-loader.fetch"
 }

@@ -42,11 +42,16 @@ function revalidateEchoRoutes(): void {
 }
 
 const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
+	// The TSG-Echo pages below the about page show its hero image.
 	aboutUs: () => {
-		revalidatePath('/verein');
+		revalidatePath('/verein', 'layout');
 	},
+	accessibility: () => {
+		revalidatePath('/barrierefreiheit');
+	},
+	// The feedback page below the contact page shows its hero image.
 	contact: () => {
-		revalidatePath('/kontakt');
+		revalidatePath('/kontakt', 'layout');
 	},
 	// The home page links the departments.
 	department: () => {
@@ -86,9 +91,11 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	// category with its article count.
 	'news.article': revalidateNewsRoutes,
 	'news.category': revalidateNewsRoutes,
-	// The TSG-Echo pages show the contact persons of the news overview.
+	// The category pages show the hero image of the news overview, the TSG-Echo pages its contact
+	// persons.
 	newsOverview: () => {
 		revalidatePath('/news');
+		revalidatePath('/news/[category]', 'page');
 		revalidateEchoRoutes();
 	},
 	person: () => {

@@ -7,6 +7,7 @@ import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { PortableText } from '@/components/ui/portable-text';
 import { client } from '@/lib/sanity/client';
+import { aboutUsHeroImageQuery } from '@/lib/sanity/queries/pages/about-us';
 import {
 	echoContactPersonsQuery,
 	echoIssuesQuery,
@@ -14,18 +15,19 @@ import {
 	echoOverviewPageQuery,
 } from '@/lib/sanity/queries/pages/echo';
 import type {
+	AboutUsHeroImageQueryResult,
 	EchoContactPersonsQueryResult,
 	EchoIssuesQueryResult,
 	EchoIssuesTotalQueryResult,
 	EchoOverviewPageQueryResult,
 } from '@/types/sanity.types';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { ECHO_OVERVIEW_PATH } from '@/utils/links';
 import { getPageMetadata } from '@/utils/metadata';
 import { getPageNumber, getPaginatedPath } from '@/utils/pagination';
 
 import { IssueGrid } from './_sections/issue-grid';
 import { LatestIssue } from './_sections/latest-issue';
-import { ECHO_HERO_IMAGE } from './_shared/hero';
 
 /** The newest issue has its own card; the grid starts with the second one. */
 const START_INDEX = 1;
@@ -34,8 +36,9 @@ const ITEMS_PER_PAGE = 12;
 export async function generateMetadata({
 	searchParams,
 }: Readonly<PageProps<'/verein/echo'>>): Promise<Metadata> {
-	const [page, { seite }] = await Promise.all([
+	const [page, heroImage, { seite }] = await Promise.all([
 		client.fetch<EchoOverviewPageQueryResult>(echoOverviewPageQuery),
+		client.fetch<AboutUsHeroImageQueryResult>(aboutUsHeroImageQuery),
 		searchParams,
 	]);
 
@@ -44,6 +47,7 @@ export async function generateMetadata({
 	}
 
 	return getPageMetadata({
+		image: heroImage,
 		meta: page.meta,
 		path: getPaginatedPath(ECHO_OVERVIEW_PATH, getPageNumber(seite)),
 		title: page.title,
@@ -57,12 +61,13 @@ export default async function EchoOverviewPage({
 	const currentPage = getPageNumber(seite);
 	const start = (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX;
 
-	const [page, total, [latest], issues, contactPersons] = await Promise.all([
+	const [page, total, [latest], issues, contactPersons, heroImage] = await Promise.all([
 		client.fetch<EchoOverviewPageQueryResult>(echoOverviewPageQuery),
 		client.fetch<EchoIssuesTotalQueryResult>(echoIssuesTotalQuery),
 		client.fetch<EchoIssuesQueryResult>(echoIssuesQuery, { end: START_INDEX, start: 0 }),
 		client.fetch<EchoIssuesQueryResult>(echoIssuesQuery, { end: start + ITEMS_PER_PAGE, start }),
 		client.fetch<EchoContactPersonsQueryResult>(echoContactPersonsQuery),
+		client.fetch<AboutUsHeroImageQueryResult>(aboutUsHeroImageQuery),
 	]);
 
 	if (!page) {
@@ -75,7 +80,11 @@ export default async function EchoOverviewPage({
 
 	return (
 		<>
-			<Hero image={ECHO_HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
+			<Hero
+				image={getPageHeroImage(heroImage, page.title)}
+				subTitle={page.subtitle}
+				title={page.title}
+			/>
 
 			<section className="container mx-auto py-10 md:py-28">
 				{page.intro && (

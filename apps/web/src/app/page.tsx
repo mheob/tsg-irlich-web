@@ -11,10 +11,12 @@ import { Newsletter } from '@/components/section/newsletter';
 import { Pricing } from '@/components/section/pricing';
 import { Stats } from '@/components/section/stats';
 import { Vision } from '@/components/section/vision';
+import { CONTACT_FORM_TITLE } from '@/constants/contact-form';
 import { client } from '@/lib/sanity/client';
 import { departmentCardsQuery } from '@/lib/sanity/queries/departments';
 import { homePageQuery, homePageTestimonialsQuery } from '@/lib/sanity/queries/pages/home';
 import { newsArticlesQuery } from '@/lib/sanity/queries/shared/news';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import type {
@@ -22,10 +24,13 @@ import type {
 	HomePageQueryResult,
 	HomePageTestimonialsQueryResult,
 	NewsArticlesQueryResult,
+	SiteImagesQueryResult,
 	SocialMediaQueryResult,
 	SponsorsQueryResult,
 } from '@/types/sanity.types';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
+import { resolveSectionImages } from '@/utils/section-images';
 
 import { Features } from './_home/features';
 import { Groups } from './_home/groups';
@@ -48,18 +53,20 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-	const [page, departments, testimonials, newsArticles, socialMedia, sponsors] = await Promise.all([
-		client.fetch<HomePageQueryResult>(homePageQuery),
-		client.fetch<DepartmentCardsQueryResult>(departmentCardsQuery),
-		client.fetch<HomePageTestimonialsQueryResult>(
-			homePageTestimonialsQuery,
-			{},
-			{ next: { revalidate: TESTIMONIALS_REVALIDATE_SECONDS } },
-		),
-		client.fetch<NewsArticlesQueryResult>(newsArticlesQuery),
-		client.fetch<SocialMediaQueryResult>(socialMediaQuery),
-		client.fetch<SponsorsQueryResult>(sponsorsQuery),
-	]);
+	const [page, departments, testimonials, newsArticles, socialMedia, sponsors, siteImages] =
+		await Promise.all([
+			client.fetch<HomePageQueryResult>(homePageQuery),
+			client.fetch<DepartmentCardsQueryResult>(departmentCardsQuery),
+			client.fetch<HomePageTestimonialsQueryResult>(
+				homePageTestimonialsQuery,
+				{},
+				{ next: { revalidate: TESTIMONIALS_REVALIDATE_SECONDS } },
+			),
+			client.fetch<NewsArticlesQueryResult>(newsArticlesQuery),
+			client.fetch<SocialMediaQueryResult>(socialMediaQuery),
+			client.fetch<SponsorsQueryResult>(sponsorsQuery),
+			client.fetch<SiteImagesQueryResult>(siteImagesQuery),
+		]);
 
 	if (!page) {
 		notFound();
@@ -71,19 +78,25 @@ export default async function HomePage() {
 	return (
 		<>
 			<Hero
+				image={getPageHeroImage(page.heroImage, page.title)}
 				intro={page.intro}
 				socialMedia={socialMedia}
 				subtitle={page.subtitle}
 				title={page.title}
 			/>
 			<Features {...page.content.featureSection} />
-			<Vision {...{ ...page.content.visionSection, _type: page._type }} />
+			<Vision
+				{...{ ...page.content.visionSection, _type: page._type }}
+				images={resolveSectionImages(siteImages?.visionImages, page.content.visionSection.title)}
+			/>
 			<Groups {...page.content.groupsSection} departments={departments} />
 			<Stats stats={page.content.stats} />
 			<Pricing {...page.content.pricingSection} />
 			<Testimonials {...page.content.testimonialSection} testimonials={shuffledTestimonials} />
 			<ContactPersons {...page.content.contactPersonsSection} />
-			<ContactForm />
+			<ContactForm
+				images={resolveSectionImages(siteImages?.contactFormImages, CONTACT_FORM_TITLE)}
+			/>
 			<News {...page.content.newsSection} articles={newsArticles} />
 			{sponsors && sponsors.length > 0 && <Sponsors sponsors={sponsors} />}
 			<Newsletter />

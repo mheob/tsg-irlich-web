@@ -5,19 +5,14 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Pricing } from '@/components/section/pricing';
-import heroImage from '@/images/mitgliedschaft/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { membershipPageQuery } from '@/lib/sanity/queries/pages/membership';
 import type { MembershipPageQueryResult } from '@/types/sanity.types.generated';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
 
 import { Downloads } from './_sections/downloads';
 import { Intro } from './_sections/intro';
-
-const HERO_IMAGE = {
-	alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
-	src: heroImage,
-};
 
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<MembershipPageQueryResult>(membershipPageQuery);
@@ -27,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	}
 
 	return getPageMetadata({
+		image: page.membership.heroImage,
 		meta: page.membership.meta,
 		path: '/mitgliedschaft',
 		title: page.membership.title,
@@ -42,7 +38,11 @@ export default async function ContactPage() {
 
 	return (
 		<>
-			<Hero image={HERO_IMAGE} subTitle={page.membership.subtitle} title={page.membership.title} />
+			<Hero
+				image={getPageHeroImage(page.membership.heroImage, page.membership.title)}
+				subTitle={page.membership.subtitle}
+				title={page.membership.title}
+			/>
 			<Intro text={page.membership.intro} />
 			<Pricing {...page.pricingSection} />
 			<Downloads {...page.membership.downloadsSection} />

@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { content, general, meta } from '@/shared/field-groups';
 import { addressField, emailField } from '@/shared/fields/contact';
 import { defaultHeroFields, getHiddenSlugField, introField } from '@/shared/fields/general';
+import { getHeroImageField, LANDSCAPE_HERO_DESCRIPTION } from '@/shared/fields/hero-image';
 import { metaField } from '@/shared/fields/meta';
 import { getSinglePagePreview } from '@/utils/previews';
 
@@ -14,6 +15,7 @@ const imprintPage = defineType({
 
 		// General
 		...defaultHeroFields,
+		getHeroImageField(LANDSCAPE_HERO_DESCRIPTION),
 
 		// Meta
 		metaField,

@@ -11,8 +11,10 @@ import { GroupCard } from '@/components/ui/group-card';
 import type { client } from '@/lib/sanity/client';
 import { departmentCardsQuery } from '@/lib/sanity/queries/departments';
 import { offerPageQuery } from '@/lib/sanity/queries/pages/offer';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 
 import { itFollowsTheMetadataContract } from '../../../test-utils/page-contract';
+import { PAGE_HERO_IMAGE, SITE_IMAGES } from '../../../test-utils/page-images';
 import { findElement, findElements } from '../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
 import { Groups } from './_sections/groups';
@@ -57,6 +59,7 @@ function mockSanity({ departments = [], page = buildPage() }: OfferResults = {})
 	mockedFetch.mockImplementation(async (query: string) => {
 		if (query === offerPageQuery) return page;
 		if (query === departmentCardsQuery) return departments;
+		if (query === siteImagesQuery) return SITE_IMAGES;
 		throw new Error(`unexpected query: ${query}`);
 	});
 }
@@ -96,6 +99,7 @@ describe('offer page', () => {
 		// oxlint-disable-next-line vitest/require-hook -- registers `it` cases, not setup code
 		itFollowsTheMetadataContract({
 			build: buildPage,
+			buildWithHeroImage: (heroImage, meta) => ({ ...buildPage(meta), heroImage }),
 			fetchMock: mockedFetch,
 			generateMetadata,
 			path: '/angebot',
@@ -104,6 +108,15 @@ describe('offer page', () => {
 	});
 
 	describe('rendering', () => {
+		it('shows the hero image of the page', async () => {
+			mockSanity({ page: { ...buildPage(), heroImage: PAGE_HERO_IMAGE } });
+
+			const hero = findElement(await OfferPage(), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
+		});
+
 		it('gives up when the document is missing', async () => {
 			mockSanity({ page: null });
 
@@ -153,6 +166,14 @@ describe('offer page', () => {
 				icon: 'Fussball',
 				image: { _type: 'extendedImage', alt: 'Fußball' },
 			});
+		});
+
+		it('gives every card the fallback image of the site settings', async () => {
+			mockSanity({ departments: [department('fussball', 'Fußball')] });
+
+			const [card] = await renderedCards();
+
+			expect(card.props.fallbackImage).toStrictEqual(SITE_IMAGES.fallbackImage);
 		});
 
 		it('renders no card for a department without a slug', async () => {

@@ -7,8 +7,10 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import type { client } from '@/lib/sanity/client';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 
 import { itFollowsTheMetadataContract } from '../../../test-utils/page-contract';
+import { PAGE_HERO_IMAGE, SITE_IMAGES } from '../../../test-utils/page-images';
 import { findElement } from '../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
 // The contact form pulls in the server action, which pulls in `src/lib/resend.ts` — and that
@@ -47,6 +49,18 @@ function buildPage(meta?: Record<string, unknown>): Record<string, unknown> {
 	};
 }
 
+/**
+ * Answers the page query with the page and the site images query with the images of the site
+ * settings.
+ *
+ * @param siteImages - What the site images query finds.
+ */
+function mockPageWithSiteImages(siteImages: unknown = SITE_IMAGES): void {
+	const answers = new Map<string, unknown>([[siteImagesQuery, siteImages]]);
+	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
+	mockedFetch.mockImplementation(async (query: string) => answers.get(query) ?? buildPage());
+}
+
 describe('contact page', () => {
 	afterEach(() => {
 		mockedFetch.mockReset();
@@ -56,6 +70,7 @@ describe('contact page', () => {
 		// oxlint-disable-next-line vitest/require-hook -- registers `it` cases, not setup code
 		itFollowsTheMetadataContract({
 			build: buildPage,
+			buildWithHeroImage: (heroImage, meta) => ({ ...buildPage(meta), heroImage }),
 			fetchMock: mockedFetch,
 			generateMetadata,
 			path: '/kontakt',
@@ -64,6 +79,15 @@ describe('contact page', () => {
 	});
 
 	describe('rendering', () => {
+		it('shows the hero image of the page', async () => {
+			mockedFetch.mockResolvedValue({ ...buildPage(), heroImage: PAGE_HERO_IMAGE });
+
+			const hero = findElement(await ContactPage(), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
+		});
+
 		it('gives up when the document is missing', async () => {
 			mockedFetch.mockResolvedValue(null);
 
@@ -85,6 +109,29 @@ describe('contact page', () => {
 			const form = findElement(await ContactPage(), ContactForm);
 
 			expect(form?.props.receiver).toBe('vorstand@tsg-irlich.de');
+		});
+
+		it('shows the contact images of the site settings next to the form', async () => {
+			mockPageWithSiteImages();
+
+			const form = findElement(await ContactPage(), ContactForm);
+
+			expect(form?.props.images.map((image) => image?.alt)).toStrictEqual([
+				'Spielerin am Telefon',
+				'Mannschaftsfoto',
+				'PR-Team bei der Arbeit',
+			]);
+		});
+
+		it('names a contact image without alt text after the form heading', async () => {
+			mockPageWithSiteImages({
+				...SITE_IMAGES,
+				contactFormImages: [{ ...SITE_IMAGES.contactFormImages[0], alt: '' }],
+			});
+
+			const form = findElement(await ContactPage(), ContactForm);
+
+			expect(form?.props.images[0]?.alt).toBe('Kontaktiere uns');
 		});
 
 		it('lists the contact persons and the newsletter sign-up', async () => {

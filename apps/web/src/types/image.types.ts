@@ -36,4 +36,17 @@ interface MainImage extends SanityImageReference {
 
 type AnyImage = ExtendedImage | MainImage | SanityImage;
 
-export type { SanityImage, SanityImageReference, ExtendedImage, MainImage, AnyImage };
+/** An image resolved to the URL and the alt text a component renders. */
+interface ResolvedImage {
+	alt: string;
+	src: string;
+}
+
+export type {
+	SanityImage,
+	SanityImageReference,
+	ExtendedImage,
+	MainImage,
+	AnyImage,
+	ResolvedImage,
+};

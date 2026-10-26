@@ -2,6 +2,7 @@ import { cn } from '@tsgi-web/shared';
 
 import { GroupCard } from '@/components/ui/group-card';
 import { SectionHeader } from '@/components/ui/section-header';
+import type { AnyImage } from '@/types/image.types';
 import type { DepartmentCardsQueryResult, DepartmentsPage } from '@/types/sanity.types';
 import { getInternalHref } from '@/utils/links';
 
@@ -9,9 +10,17 @@ import styles from './groups.module.css';
 
 type GroupsProps = DepartmentsPage['content']['departmentsSection'] & {
 	departments: DepartmentCardsQueryResult;
+	/** The image of the site settings a card without an image of its own shows. */
+	fallbackImage?: AnyImage | null;
 };
 
-export function Groups({ departments, intro, subtitle, title }: Readonly<GroupsProps>) {
+export function Groups({
+	departments,
+	fallbackImage,
+	intro,
+	subtitle,
+	title,
+}: Readonly<GroupsProps>) {
 	return (
 		<section className={cn(styles.bg, 'relative z-0 bg-background-low-contrast')}>
 			<div className="container mx-auto px-5 py-10 md:py-32">
@@ -26,6 +35,7 @@ export function Groups({ departments, intro, subtitle, title }: Readonly<GroupsP
 						// A department without a slug has no page to link to
 						return href ? (
 							<GroupCard
+								fallbackImage={fallbackImage}
 								href={href}
 								icon={icon}
 								image={cardImage}

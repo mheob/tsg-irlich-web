@@ -7,6 +7,7 @@ import {
 	getDefaultPageSectionFieldsWithGroup,
 	getHiddenSlugField,
 } from '@/shared/fields/general';
+import { getHeroImageField, LANDSCAPE_HERO_DESCRIPTION } from '@/shared/fields/hero-image';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { getSinglePagePreview } from '@/utils/previews';
@@ -18,6 +19,7 @@ const membershipPage = defineType({
 
 		// General
 		...defaultHeroFields,
+		getHeroImageField(LANDSCAPE_HERO_DESCRIPTION),
 
 		// Meta
 		metaField,

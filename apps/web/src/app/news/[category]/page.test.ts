@@ -6,6 +6,7 @@ import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { ButtonLink } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
+import { newsOverviewHeroImageQuery } from '@/lib/sanity/queries/pages/news-overview';
 import {
 	newsArticlesPaginatedForCategoryQuery,
 	newsArticlesTotalForCategoryQuery,
@@ -13,6 +14,7 @@ import {
 } from '@/lib/sanity/queries/pages/news-overview-category';
 import { newsCategoriesQuery, newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
 
+import { META_OPEN_GRAPH_IMAGE, PAGE_HERO_IMAGE } from '../../../../test-utils/page-images';
 import { findElement } from '../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../test-utils/sanity-live-mock';
 import { CategoryCombobox } from '../_sections/category-combobox';
@@ -71,6 +73,7 @@ function mockSanity({
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedSanityFetch.mockImplementation(async ({ query }) => {
 		if (query === newsOverviewCategoryPageQuery) return { data: page };
+		if (query === newsOverviewHeroImageQuery) return { data: PAGE_HERO_IMAGE };
 		if (query === newsArticlesTotalForCategoryQuery) return { data: total };
 		if (query === newsCategoryQuery) return { data: category };
 		if (query === newsCategoriesQuery) return { data: categories };
@@ -111,6 +114,24 @@ describe('news category page', () => {
 			await expect(generateMetadata(routeProps())).resolves.toStrictEqual({});
 		});
 
+		it('shares the hero image of the news overview as preview image', async () => {
+			mockSanity();
+
+			const metadata = await generateMetadata(routeProps());
+			const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+			expect(openGraphImage?.url).toContain('heroimg111');
+		});
+
+		it('prefers the open graph image of the category over the hero image', async () => {
+			mockSanity({ category: { ...CATEGORY, meta: { openGraphImage: META_OPEN_GRAPH_IMAGE } } });
+
+			const metadata = await generateMetadata(routeProps());
+			const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+			expect(openGraphImage?.url).toContain('ogimg222');
+		});
+
 		it('prefers the meta title and description over the category title', async () => {
 			mockSanity({
 				category: {
@@ -130,7 +151,6 @@ describe('news category page', () => {
 
 			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
 				description: '',
-				openGraph: { images: [] },
 				title: 'Vereinsleben',
 			});
 		});
@@ -187,6 +207,15 @@ describe('news category page', () => {
 			const pagination = findElement(await NewsCategoryPage(routeProps('2')), LatestNewsPagination);
 
 			expect(pagination?.props).toMatchObject({ currentPage: 2, totalArticles: 10 });
+		});
+
+		it('shows the hero image of the news overview', async () => {
+			mockSanity();
+
+			const hero = findElement(await NewsCategoryPage(routeProps()), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
 		});
 
 		it('heads the page with the category title and the overview subtitle', async () => {

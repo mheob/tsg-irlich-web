@@ -6,19 +6,16 @@ import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
 import { Stats } from '@/components/section/stats';
 import { Vision } from '@/components/section/vision';
-import heroImage from '@/images/verein/hero.webp';
 import { client } from '@/lib/sanity/client';
 import { aboutUsPageQuery } from '@/lib/sanity/queries/pages/about-us';
-import type { AboutUsPageQueryResult } from '@/types/sanity.types.generated';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
+import type { AboutUsPageQueryResult, SiteImagesQueryResult } from '@/types/sanity.types.generated';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
+import { resolveSectionImages } from '@/utils/section-images';
 
 import { Chronicle } from './_sections/chronicle';
 import { Intro } from './_sections/intro';
-
-const HERO_IMAGE = {
-	alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
-	src: heroImage,
-};
 
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<AboutUsPageQueryResult>(aboutUsPageQuery);
@@ -27,11 +24,19 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	return getPageMetadata({ meta: page.meta, path: '/verein', title: page.title });
+	return getPageMetadata({
+		image: page.heroImage,
+		meta: page.meta,
+		path: '/verein',
+		title: page.title,
+	});
 }
 
 export default async function VereinPage() {
-	const page = await client.fetch<AboutUsPageQueryResult>(aboutUsPageQuery);
+	const [page, siteImages] = await Promise.all([
+		client.fetch<AboutUsPageQueryResult>(aboutUsPageQuery),
+		client.fetch<SiteImagesQueryResult>(siteImagesQuery),
+	]);
 
 	if (!page?.content.introSection) {
 		notFound();
@@ -39,10 +44,17 @@ export default async function VereinPage() {
 
 	return (
 		<>
-			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
+			<Hero
+				image={getPageHeroImage(page.heroImage, page.title)}
+				subTitle={page.subtitle}
+				title={page.title}
+			/>
 			<Intro content={page.content.introSection} />
 			<Chronicle content={page.content.chronicleSection} />
-			<Vision {...{ ...page.content.visionSection, _type: page._type }} />
+			<Vision
+				{...{ ...page.content.visionSection, _type: page._type }}
+				images={resolveSectionImages(siteImages?.visionImages, page.content.visionSection.title)}
+			/>
 			<Stats stats={page.content.stats} withBackground />
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<Newsletter />

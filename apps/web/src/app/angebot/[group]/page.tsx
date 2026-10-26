@@ -16,6 +16,7 @@ import {
 	departmentSlugsQuery,
 } from '@/lib/sanity/queries/departments';
 import { offerGroupsPageQuery } from '@/lib/sanity/queries/pages/offer-groups';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 import { getHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
 import { getFaqPageSchema } from '@/utils/structured-data';
@@ -60,9 +61,10 @@ export async function generateMetadata({
 export default async function DepartmentPage({ params }: Readonly<PageProps<'/angebot/[group]'>>) {
 	const { group } = await params;
 
-	const [{ data: department }, { data: groupsPage }] = await Promise.all([
+	const [{ data: department }, { data: groupsPage }, { data: siteImages }] = await Promise.all([
 		sanityFetch({ params: { slug: group }, query: departmentPageQuery }),
 		sanityFetch({ query: offerGroupsPageQuery }),
+		sanityFetch({ query: siteImagesQuery }),
 	]);
 
 	if (!department) {
@@ -102,7 +104,10 @@ export default async function DepartmentPage({ params }: Readonly<PageProps<'/an
 		<>
 			{faqPageSchema && <JsonLd data={faqPageSchema} />}
 			<Hero
-				image={getHeroImage([department.heroImage, department.cardImage], department.title)}
+				image={getHeroImage(
+					[department.heroImage, department.cardImage, siteImages?.fallbackImage],
+					department.title,
+				)}
 				subTitle={groupsPage.subtitle}
 				title={`${groupsPage.title} ${department.title}`}
 			/>
@@ -110,6 +115,7 @@ export default async function DepartmentPage({ params }: Readonly<PageProps<'/an
 				{...groupsPage.content.groupsSection}
 				departmentSlug={group}
 				departmentTitle={department.title}
+				fallbackImage={siteImages?.fallbackImage}
 				groups={department.groups}
 				intro={department.intro ?? groupsPage.content.groupsSection.intro}
 			/>

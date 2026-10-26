@@ -11,9 +11,11 @@ import { Newsletter } from '@/components/section/newsletter';
 import { ButtonLink } from '@/components/ui/button';
 import { FlipbookLazy } from '@/components/with-logic/flipbook/flipbook-lazy';
 import type { client } from '@/lib/sanity/client';
+import { aboutUsHeroImageQuery } from '@/lib/sanity/queries/pages/about-us';
 import { echoContactPersonsQuery, echoIssueQuery } from '@/lib/sanity/queries/pages/echo';
 import type { EchoContactPersonsQueryResult, EchoIssueQueryResult } from '@/types/sanity.types';
 
+import { PAGE_HERO_IMAGE } from '../../../../../test-utils/page-images';
 import { findElement, findElements, sectionTypes } from '../../../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../../../test-utils/sanity-client-mock';
 import type { EchoPageImage } from '../_shared/utils';
@@ -104,6 +106,7 @@ function mockIssue(
 	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
 	mockedFetch.mockImplementation(async (query: string) => {
 		if (query === echoIssueQuery) return issue;
+		if (query === aboutUsHeroImageQuery) return PAGE_HERO_IMAGE;
 		if (query === echoContactPersonsQuery) return contactPersons;
 		throw new Error(`unexpected query: ${query}`);
 	});
@@ -138,6 +141,15 @@ describe('a tsg-echo issue page', () => {
 		const hero = findElement(await EchoIssuePage(props()), Hero);
 
 		expect(hero?.props).toMatchObject({ subTitle: '2025', title: 'TSG ECHO 2025' });
+	});
+
+	it('shows the hero image of the about page', async () => {
+		mockIssue(buildIssue());
+
+		const hero = findElement(await EchoIssuePage(props()), Hero);
+
+		expect(hero?.props.image?.alt).toBe('Hero der Seite');
+		expect(hero?.props.image?.src).toContain('heroimg111');
 	});
 
 	it('hands the flipbook every page, its cover and its name', async () => {

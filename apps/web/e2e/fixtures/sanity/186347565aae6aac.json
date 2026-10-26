@@ -1,0 +1,15 @@
+{
+	"body": {
+		"result": {
+			"_type": "extendedImage",
+			"alt": "Ein MacBook auf einem Schreibtisch zeigt das Kontaktformular der TSG Irlich, daneben ein Festnetztelefon und eine kabellose Maus, im Hintergrund ein unscharfes Büro",
+			"asset": {
+				"_ref": "image-14a7f089fd1ca2d14026126aad95e6840b0bccfc-4094x2160-webp",
+				"_type": "reference"
+			}
+		},
+		"syncTags": ["s1:LD/aiQ"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27contact%27%5D%5B0%5D.heroImage&returnQuery=false"
+}

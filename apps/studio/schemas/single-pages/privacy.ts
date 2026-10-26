@@ -4,6 +4,7 @@ import { defineField, defineType } from 'sanity';
 import { contact, general, meta } from '@/shared/field-groups';
 import { addressField, emailField, phoneField } from '@/shared/fields/contact';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
+import { getHeroImageField, LANDSCAPE_HERO_DESCRIPTION } from '@/shared/fields/hero-image';
 import { metaField } from '@/shared/fields/meta';
 import { getSinglePagePreview } from '@/utils/previews';
 
@@ -14,6 +15,7 @@ const privacyPage = defineType({
 
 		// General
 		...defaultHeroFields,
+		getHeroImageField(LANDSCAPE_HERO_DESCRIPTION),
 
 		// Meta
 		metaField,

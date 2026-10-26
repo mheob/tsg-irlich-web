@@ -1,5 +1,6 @@
 {
 	"body": {
+		"query": "*[_type == 'singleGroupPage'][0]",
 		"result": {
 			"_createdAt": "2024-06-22T09:37:10Z",
 			"_id": "singleGroupPage",
@@ -26,7 +27,7 @@
 			"title": "Angebote"
 		},
 		"syncTags": ["s1:ZEP+uQ"],
-		"ms": 2
+		"ms": 3
 	},
-	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27singleGroupPage%27%5D%5B0%5D&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27singleGroupPage%27%5D%5B0%5D&perspective=published&tag=next-loader.fetch"
 }

@@ -10,16 +10,11 @@ import { ContactLink } from '@/components/with-logic/contact-link';
 import { client } from '@/lib/sanity/client';
 import { imprintPageQuery } from '@/lib/sanity/queries/pages/imprint';
 import type { ImprintPageQueryResult } from '@/types/sanity.types.generated';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getInternalHref } from '@/utils/links';
 import { getPageMetadata } from '@/utils/metadata';
 
 import { textClassName } from '../_shared/class-names';
-import heroImage from '../_shared/hero.webp';
-
-const HERO_IMAGE = {
-	alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
-	src: heroImage,
-};
 
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<ImprintPageQueryResult>(imprintPageQuery);
@@ -28,7 +23,12 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	return getPageMetadata({ meta: page.meta, path: '/impressum', title: page.title });
+	return getPageMetadata({
+		image: page.heroImage,
+		meta: page.meta,
+		path: '/impressum',
+		title: page.title,
+	});
 }
 
 export default async function ImprintPage() {
@@ -42,7 +42,11 @@ export default async function ImprintPage() {
 
 	return (
 		<>
-			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
+			<Hero
+				image={getPageHeroImage(page.heroImage, page.title)}
+				subTitle={page.subtitle}
+				title={page.title}
+			/>
 
 			<section className="container md:mx-auto md:py-32">
 				<article className={cn('mx-auto max-w-[65ch]', textClassName)}>

@@ -5,16 +5,14 @@ import { ContactForm } from '@/components/section/contact-form';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
-import contactImage from '@/images/kontakt/hero.webp';
+import { CONTACT_FORM_TITLE } from '@/constants/contact-form';
 import { client } from '@/lib/sanity/client';
 import { contactPageQuery } from '@/lib/sanity/queries/pages/contact';
-import type { ContactPageQueryResult } from '@/types/sanity.types.generated';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
+import type { ContactPageQueryResult, SiteImagesQueryResult } from '@/types/sanity.types.generated';
+import { getPageHeroImage } from '@/utils/hero-image';
 import { getPageMetadata } from '@/utils/metadata';
-
-const HERO_IMAGE = {
-	alt: 'Das Bild zeigt einen modernen Arbeitsplatz. Im Vordergrund steht ein MacBook Pro mit einem ausgeschalteten Bildschirm auf einem schwarzen Schreibtisch. Rechts daneben befindet sich ein Festnetztelefon und eine kabellose Maus. Im Hintergrund ist ein Büro mit unscharfen Personen und Möbeln erkennbar. Die Szene ist gut ausgeleuchtet und vermittelt eine professionelle Arbeitsatmosphäre.',
-	src: contactImage,
-};
+import { resolveSectionImages } from '@/utils/section-images';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const page = await client.fetch<ContactPageQueryResult>(contactPageQuery);
@@ -23,11 +21,19 @@ export async function generateMetadata(): Promise<Metadata> {
 		return {};
 	}
 
-	return getPageMetadata({ meta: page.meta, path: '/kontakt', title: page.title });
+	return getPageMetadata({
+		image: page.heroImage,
+		meta: page.meta,
+		path: '/kontakt',
+		title: page.title,
+	});
 }
 
 export default async function ContactPage() {
-	const page = await client.fetch<ContactPageQueryResult>(contactPageQuery);
+	const [page, siteImages] = await Promise.all([
+		client.fetch<ContactPageQueryResult>(contactPageQuery),
+		client.fetch<SiteImagesQueryResult>(siteImagesQuery),
+	]);
 
 	if (!page) {
 		notFound();
@@ -35,8 +41,15 @@ export default async function ContactPage() {
 
 	return (
 		<>
-			<Hero image={HERO_IMAGE} subTitle={page.subtitle} title={page.title} />
-			<ContactForm receiver={page.content.receiver} />
+			<Hero
+				image={getPageHeroImage(page.heroImage, page.title)}
+				subTitle={page.subtitle}
+				title={page.title}
+			/>
+			<ContactForm
+				images={resolveSectionImages(siteImages?.contactFormImages, CONTACT_FORM_TITLE)}
+				receiver={page.content.receiver}
+			/>
 			<ContactPersons {...page.content.contactPersonsSection} />
 			<Newsletter />
 		</>

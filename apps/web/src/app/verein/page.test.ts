@@ -7,8 +7,10 @@ import { Hero } from '@/components/section/hero';
 import { Stats } from '@/components/section/stats';
 import { Vision } from '@/components/section/vision';
 import type { client } from '@/lib/sanity/client';
+import { siteImagesQuery } from '@/lib/sanity/queries/shared/site-images';
 import type { AboutUsPageQueryResult } from '@/types/sanity.types.generated';
 
+import { PAGE_HERO_IMAGE, SITE_IMAGES } from '../../../test-utils/page-images';
 import { findElement } from '../../../test-utils/react-tree';
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
 import { Chronicle } from './_sections/chronicle';
@@ -51,6 +53,16 @@ function buildPage(overrides: Record<string, unknown> = {}): AboutUsPageQueryRes
 		title: 'Über uns',
 		...overrides,
 	} as unknown as AboutUsPageQueryResult;
+}
+
+/**
+ * Answers the page query with the page and the site images query with the images of the site
+ * settings.
+ */
+function mockPageWithSiteImages(): void {
+	const answers = new Map<string, unknown>([[siteImagesQuery, SITE_IMAGES]]);
+	// oxlint-disable-next-line typescript/require-await -- stands in for an async fetcher
+	mockedFetch.mockImplementation(async (query: string) => answers.get(query) ?? buildPage());
 }
 
 describe('about us page', () => {
@@ -106,6 +118,19 @@ describe('about us page', () => {
 			expect(metadata.openGraph?.images).toStrictEqual([]);
 		});
 
+		it('falls back to the hero image for the open graph image', async () => {
+			mockedFetch.mockResolvedValue(buildPage({ heroImage: PAGE_HERO_IMAGE }));
+
+			const metadata = await generateMetadata();
+
+			const openGraphImage = metadata.openGraph?.images as undefined | { url?: string };
+
+			expect(openGraphImage).toMatchObject({
+				alt: 'Hero der Seite',
+			});
+			expect(openGraphImage?.url).toContain('heroimg111');
+		});
+
 		it('sizes the open graph image for social previews', async () => {
 			mockedFetch.mockResolvedValue(
 				buildPage({
@@ -122,6 +147,15 @@ describe('about us page', () => {
 	});
 
 	describe('rendering', () => {
+		it('shows the hero image of the page', async () => {
+			mockedFetch.mockResolvedValue(buildPage({ heroImage: PAGE_HERO_IMAGE }));
+
+			const hero = findElement(await VereinPage(), Hero);
+
+			expect(hero?.props.image?.alt).toBe('Hero der Seite');
+			expect(hero?.props.image?.src).toContain('heroimg111');
+		});
+
 		it('gives up when the document is missing', async () => {
 			mockedFetch.mockResolvedValue(null);
 
@@ -151,6 +185,18 @@ describe('about us page', () => {
 			expect(findElement(page, Chronicle)?.props.content).toMatchObject({ title: 'Chronik' });
 			expect(findElement(page, Stats)?.props.stats).toMatchObject([{ label: 'Mitglieder' }]);
 			expect(findElement(page, ContactPersons)).toBeDefined();
+		});
+
+		it('shows the vision images of the site settings', async () => {
+			mockPageWithSiteImages();
+
+			const vision = findElement(await VereinPage(), Vision);
+
+			expect(vision?.props.images.map((image) => image?.alt)).toStrictEqual([
+				'Scheck-Übergabe',
+				'Tanzgruppe',
+				'Jugendmannschaft',
+			]);
 		});
 
 		it('tells the vision section which document it belongs to', async () => {

@@ -4,6 +4,7 @@ import { cn } from '@tsgi-web/shared';
 
 import { GroupCard } from '@/components/ui/group-card';
 import { SectionHeader } from '@/components/ui/section-header';
+import type { AnyImage } from '@/types/image.types';
 import type { DepartmentPageQueryResult, GroupsPage } from '@/types/sanity.types';
 import { getInternalHref } from '@/utils/links';
 
@@ -14,6 +15,8 @@ type DepartmentGroup = NonNullable<DepartmentPageQueryResult>['groups'][number];
 type GroupsProps = GroupsPage['content']['groupsSection'] & {
 	departmentSlug: string;
 	departmentTitle: string;
+	/** The image of the site settings a card without an image of its own shows. */
+	fallbackImage?: AnyImage | null;
 	// The icon is a plain string here, because `sanityFetch` brands every string as one that may carry
 	// stega characters. The card gets it cleaned.
 	groups: (Omit<DepartmentGroup, 'icon'> & { icon: string })[];
@@ -22,6 +25,7 @@ type GroupsProps = GroupsPage['content']['groupsSection'] & {
 export function Groups({
 	departmentSlug,
 	departmentTitle,
+	fallbackImage,
 	groups,
 	intro,
 	subtitle,
@@ -51,6 +55,7 @@ export function Groups({
 						return href ? (
 							<GroupCard
 								{...group}
+								fallbackImage={fallbackImage}
 								href={href}
 								icon={stegaClean(icon)}
 								image={featuredImage}

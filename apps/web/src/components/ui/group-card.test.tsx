@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from 'vite-plus/test';
 
 import type { AnyImage } from '@/types/sanity.types';
-import { OFFER_FALLBACK_IMAGE } from '@/utils/fallback-image';
 
 import { renderWithUser } from '../../../test-utils/render';
 import { GroupCard } from './group-card';
@@ -21,6 +20,12 @@ const IMAGE_WITH_ASSET: AnyImage = {
 };
 
 const IMAGE_WITHOUT_ASSET: AnyImage = { _type: 'extendedImage', alt: 'Fußball' };
+
+const FALLBACK_IMAGE: AnyImage = {
+	_type: 'extendedImage',
+	alt: 'Sporthalle',
+	asset: { _ref: 'image-fallback999-800x600-jpg', _type: 'reference' },
+};
 
 describe('the group card', () => {
 	it('links to the given href', () => {
@@ -48,7 +53,12 @@ describe('the group card', () => {
 
 	it('shows the title as the image alternative text', () => {
 		const { getByRole } = renderWithUser(
-			<GroupCard href="/angebot/fussball/herren-1" icon="Fussball" title="Herren 1" />,
+			<GroupCard
+				href="/angebot/fussball/herren-1"
+				icon="Fussball"
+				image={IMAGE_WITH_ASSET}
+				title="Herren 1"
+			/>,
 		);
 
 		expect(getByRole('img', { name: 'Herren 1' })).not.toBeNull();
@@ -72,12 +82,28 @@ describe('the group card', () => {
 		['is missing', undefined],
 	])('shows the fallback image when the image %s', (_name, image) => {
 		const { getByRole } = renderWithUser(
-			<GroupCard href="/angebot/fussball" image={image} title="Fußball" />,
+			<GroupCard
+				fallbackImage={FALLBACK_IMAGE}
+				href="/angebot/fussball"
+				image={image}
+				title="Fußball"
+			/>,
 		);
 
-		expect(getByRole('img', { name: 'Fußball' }).getAttribute('src')).toBe(
-			OFFER_FALLBACK_IMAGE.src.src,
+		expect(getByRole('img', { name: 'Fußball' }).getAttribute('src')).toContain('fallback999');
+	});
+
+	it('renders no image when neither the image nor the fallback has a file', () => {
+		const { queryByRole } = renderWithUser(
+			<GroupCard
+				fallbackImage={IMAGE_WITHOUT_ASSET}
+				href="/angebot/fussball"
+				image={IMAGE_WITHOUT_ASSET}
+				title="Fußball"
+			/>,
 		);
+
+		expect(queryByRole('img')).toBeNull();
 	});
 
 	it.each([

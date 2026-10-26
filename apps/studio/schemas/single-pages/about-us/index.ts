@@ -3,6 +3,7 @@ import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
+import { getHeroImageField, LANDSCAPE_HERO_DESCRIPTION } from '@/shared/fields/hero-image';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
 import { statsField } from '@/shared/sections/stats';
@@ -20,6 +21,7 @@ const aboutUsPage = defineType({
 
 		// General
 		...defaultHeroFields,
+		getHeroImageField(`${LANDSCAPE_HERO_DESCRIPTION} Erscheint auch auf den Seiten des TSG-Echos.`),
 
 		// Meta
 		metaField,
