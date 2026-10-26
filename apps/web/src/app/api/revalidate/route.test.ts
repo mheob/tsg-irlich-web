@@ -94,8 +94,7 @@ describe('sanity revalidation webhook', () => {
 	});
 
 	it.each([
-		['aboutUs', ['/verein']],
-		['contact', ['/kontakt']],
+		['accessibility', ['/barrierefreiheit']],
 		['departmentsPage', ['/angebot']],
 		['echoOverview', ['/verein/echo']],
 		['home', ['/']],
@@ -124,16 +123,35 @@ describe('sanity revalidation webhook', () => {
 		]);
 	});
 
-	it('revalidates the tsg-echo pages along with the news overview, whose contact persons they show', async () => {
+	it('revalidates the categories and the tsg-echo pages along with the news overview, which show its hero and its contact persons', async () => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: 'newsOverview' }));
 
 		await POST(REQUEST);
 
 		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
 			['/news'],
+			['/news/[category]', 'page'],
 			['/verein/echo'],
 			['/verein/echo/[slug]', 'page'],
 		]);
+	});
+
+	// The feedback page below it shows the hero image of the contact page.
+	it('revalidates the contact page with the feedback page below it', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'contact' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/kontakt', 'layout']]);
+	});
+
+	// The tsg-echo pages below it show the hero image of the about page.
+	it('revalidates the about page with the tsg-echo pages below it', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'aboutUs' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/verein', 'layout']]);
 	});
 
 	// WEB-370: the menu and the footer data live in `site-settings`, and the root layout renders them

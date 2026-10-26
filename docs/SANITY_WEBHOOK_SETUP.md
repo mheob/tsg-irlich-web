@@ -59,10 +59,10 @@ Without the staging webhook, every content change on staging that is not read th
 
    **Filter** (optional, to track only specific documents). Every type the route handles has to be in it, `site-settings` above all: the menu and the footer data live there, and without it a menu change waits out the layout's 12-hour cache. The filter lives in Sanity, not in the repository, so adding or renaming a type in the route's `REVALIDATION_MAP` means updating the filter of **both** webhooks too. Until October 2026 the production filter still listed `settings`, `navigation` and `group`, which no document is called, and menu changes never fired it.
 
-   The filter below is the one for the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. The live webhooks are switched over when the department migration is rolled out, not when this change merges, so until then they keep the old filter.
+   The filter below is the one for the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. The live webhooks are switched over when the department migration is rolled out, not when this change merges, so until then they keep the old filter. `accessibility` joined with the page images (WEB-389), when the page got a hero image of its own: the staging webhook gets it when the change merges, the production webhook together with the WEB-384 switch.
 
    ```groq
-   _type in ["aboutUs", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
+   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
    ```
 
    **Projection** (what is sent to the webhook):
@@ -126,7 +126,10 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **Offer pages** (`_type: "departmentsPage"`, `"groupsPage"`): `/angebot`, or every department page `/angebot/[group]`
 - **FAQ** (`_type: "faq"`): every department page `/angebot/[group]`. A question can belong to several departments, and the payload carries none it belonged to before
 - **Person** (`_type: "person"`): every page that shows contact persons, among them `/verein` with the TSG-Echo pages below it (layout revalidation)
-- **News overview** (`_type: "newsOverview"`): `/news` and the TSG-Echo pages, which show its contact persons
+- **News overview** (`_type: "newsOverview"`): `/news`, the category pages `/news/[category]`, which show its hero image, and the TSG-Echo pages, which show its contact persons
+- **About page** (`_type: "aboutUs"`): `/verein` with the TSG-Echo pages below it (layout revalidation), which show its hero image
+- **Contact page** (`_type: "contact"`): `/kontakt` with the feedback page below it (layout revalidation), which shows its hero image
+- **Accessibility** (`_type: "accessibility"`): `/barrierefreiheit`
 - **Testimonial** (`_type: "testimonial"`): Homepage `/`
 - **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before. A webhook with a type filter needs both types in it.
 - **Site settings** (`_type: "site-settings"`, the menu and the footer data): all pages (layout revalidation). The root layout tags its two fetches `site-settings`, so the tag revalidation reaches them too.
