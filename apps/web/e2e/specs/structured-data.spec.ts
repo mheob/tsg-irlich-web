@@ -76,4 +76,21 @@ test.describe('structured data', () => {
 			headline: expect.any(String),
 		});
 	});
+
+	test('marks up the FAQ of a department once', async ({ page }) => {
+		await page.goto('/angebot/fussball');
+		await waitForPage(page);
+
+		const blocks = await readStructuredData(page);
+		const faqPage = blocks.find((block) => block['@type'] === 'FAQPage');
+
+		expect(faqPage?.mainEntity).toHaveLength(4);
+
+		// The shared question belongs to Fußball first, so the other departments only show it.
+		await page.goto('/angebot/kurse');
+		await waitForPage(page);
+
+		await expect(page.getByRole('heading', { name: 'Häufige Fragen Kurse' })).toBeVisible();
+		expect(typesOf(await readStructuredData(page))).not.toContain('FAQPage');
+	});
 });

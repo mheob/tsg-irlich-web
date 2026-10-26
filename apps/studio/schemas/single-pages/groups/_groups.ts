@@ -3,9 +3,14 @@ const contactPersons = {
 	title: 'Ansprechpartner',
 };
 
+const faq = {
+	name: 'faq',
+	title: 'FAQ',
+};
+
 const groups = {
 	name: 'groups',
 	title: 'Gruppen',
 };
 
-export { contactPersons, groups };
+export { contactPersons, faq, groups };

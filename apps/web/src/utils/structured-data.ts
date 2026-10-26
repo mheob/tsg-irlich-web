@@ -1,4 +1,5 @@
 import type {
+	FAQPage,
 	Graph,
 	NewsArticle,
 	PostalAddress as PostalAddressNode,
@@ -10,6 +11,7 @@ import type {
 import { urlForImage } from '@/lib/sanity/utils';
 import type { AnyImage } from '@/types/image.types';
 
+import { type FaqEntry, isCompleteFaq } from './faq';
 import { SITE_NAME } from './metadata';
 import { getLastModified } from './time';
 
@@ -246,4 +248,45 @@ function getGroupSchema({
 	};
 }
 
-export { getGroupSchema, getNewsArticleSchema, getSiteGraph };
+/**
+ * Builds the `FAQPage` node of a department page.
+ *
+ * Only the questions whose first department is this page's are marked up: Google wants a question
+ * that appears on several pages marked up once per site. The others are still shown on the page. A
+ * question without an answer is left out, as the page leaves it out.
+ *
+ * @param options - The questions and where the page lives.
+ * @param options.baseUrl - The site's base URL.
+ * @param options.faqs - The questions of the page, with their answers as plain text.
+ * @param options.path - The page's canonical path.
+ * @returns The `FAQPage` node, or `undefined` when no question is left to mark up.
+ */
+function getFaqPageSchema({
+	baseUrl,
+	faqs,
+	path,
+}: {
+	baseUrl: string;
+	faqs: readonly FaqEntry[];
+	path: string;
+}): undefined | WithContext<FAQPage> {
+	const questions = faqs.filter((faq) => faq.isMarkedUp === true && isCompleteFaq(faq));
+
+	if (questions.length === 0) {
+		return undefined;
+	}
+
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		inLanguage: LANGUAGE,
+		mainEntity: questions.map((faq) => ({
+			'@type': 'Question',
+			acceptedAnswer: { '@type': 'Answer', text: faq.answerText ?? undefined },
+			name: faq.question ?? undefined,
+		})),
+		url: `${baseUrl}${path}`,
+	};
+}
+
+export { getFaqPageSchema, getGroupSchema, getNewsArticleSchema, getSiteGraph };

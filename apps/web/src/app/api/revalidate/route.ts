@@ -61,6 +61,11 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	echoOverview: () => {
 		revalidatePath(ECHO_OVERVIEW_PATH);
 	},
+	// A question can belong to several departments, and the payload carries none it belonged to
+	// before, so every department page is revalidated.
+	faq: () => {
+		revalidatePath('/angebot/[group]', 'page');
+	},
 	group: revalidateOfferRoutes,
 	// The groups page holds the content of every department page.
 	groupsPage: () => {

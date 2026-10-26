@@ -251,3 +251,75 @@ describe('a group of the club', () => {
 		).toMatchObject({ description: undefined, image: undefined, location: undefined });
 	});
 });
+
+describe('the faq page', () => {
+	const OWN = {
+		answerText: 'Ja, jederzeit.',
+		isMarkedUp: true,
+		question: 'Gibt es ein Probetraining?',
+	};
+
+	it('describes the marked-up questions of a page as a FAQPage', async () => {
+		const { getFaqPageSchema } = await loadStructuredData();
+
+		expect(
+			getFaqPageSchema({ baseUrl: BASE_URL, faqs: [OWN], path: '/angebot/fussball' }),
+		).toStrictEqual({
+			'@context': 'https://schema.org',
+			'@type': 'FAQPage',
+			inLanguage: 'de-DE',
+			mainEntity: [
+				{
+					'@type': 'Question',
+					acceptedAnswer: { '@type': 'Answer', text: 'Ja, jederzeit.' },
+					name: 'Gibt es ein Probetraining?',
+				},
+			],
+			url: `${BASE_URL}/angebot/fussball`,
+		});
+	});
+
+	it.each([
+		['belongs to another department first', false],
+		['does not say where it belongs first', null],
+	])('leaves out a question that %s', async (_name, isMarkedUp) => {
+		const { getFaqPageSchema } = await loadStructuredData();
+
+		const schema = getFaqPageSchema({
+			baseUrl: BASE_URL,
+			faqs: [OWN, { ...OWN, isMarkedUp, question: 'Was kostet die Mitgliedschaft?' }],
+			path: '/angebot/fussball',
+		});
+
+		expect(schema?.mainEntity).toStrictEqual([
+			expect.objectContaining({ name: 'Gibt es ein Probetraining?' }),
+		]);
+	});
+
+	it('leaves out a question without an answer', async () => {
+		const { getFaqPageSchema } = await loadStructuredData();
+
+		const schema = getFaqPageSchema({
+			baseUrl: BASE_URL,
+			faqs: [OWN, { ...OWN, answerText: ' ', question: 'Wo wird trainiert?' }],
+			path: '/angebot/fussball',
+		});
+
+		expect(schema?.mainEntity).toHaveLength(1);
+	});
+
+	it('describes nothing when no question is left', async () => {
+		const { getFaqPageSchema } = await loadStructuredData();
+
+		expect(
+			getFaqPageSchema({
+				baseUrl: BASE_URL,
+				faqs: [{ ...OWN, isMarkedUp: false }],
+				path: '/angebot/kurse',
+			}),
+		).toBeUndefined();
+		expect(
+			getFaqPageSchema({ baseUrl: BASE_URL, faqs: [], path: '/angebot/kurse' }),
+		).toBeUndefined();
+	});
+});

@@ -62,7 +62,7 @@ Without the staging webhook, every content change on staging that is not read th
    The filter below is the one for the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. The live webhooks are switched over when the department migration is rolled out, not when this change merges, so until then they keep the old filter.
 
    ```groq
-   _type in ["aboutUs", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
+   _type in ["aboutUs", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
    ```
 
    **Projection** (what is sent to the webhook):
@@ -124,6 +124,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **Department** (`_type: "department"`): the home page, which links the departments, and the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`
 - **Group** (`_type: "group"`): the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`. The payload only carries the slug of the group, not the one of its department, so a single group path cannot be built
 - **Offer pages** (`_type: "departmentsPage"`, `"groupsPage"`): `/angebot`, or every department page `/angebot/[group]`
+- **FAQ** (`_type: "faq"`): every department page `/angebot/[group]`. A question can belong to several departments, and the payload carries none it belonged to before
 - **Person** (`_type: "person"`): every page that shows contact persons, among them `/verein` with the TSG-Echo pages below it (layout revalidation)
 - **News overview** (`_type: "newsOverview"`): `/news` and the TSG-Echo pages, which show its contact persons
 - **Testimonial** (`_type: "testimonial"`): Homepage `/`

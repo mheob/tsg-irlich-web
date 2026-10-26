@@ -92,6 +92,11 @@ export type GroupsPage = {
       subtitle: string;
       intro?: string;
     };
+    faqSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
     contactPersonsSection: {
       title: string;
       subtitle: string;
@@ -613,6 +618,60 @@ export type Sponsors = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+};
+
+export type Faq = {
+  _id: string;
+  _type: "faq";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  question: string;
+  answer: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<
+      | {
+          link:
+            | HomeReference
+            | AboutUsReference
+            | EchoOverviewReference
+            | ContactReference
+            | DepartmentsPageReference
+            | DepartmentReference
+            | GroupReference
+            | MembershipReference
+            | NewsArticleReference
+            | NewsCategoryReference
+            | NewsOverviewReference
+            | AccessibilityReference
+            | PrivacyReference
+            | ImprintReference;
+          _type: "internalLink";
+          _key: string;
+        }
+      | {
+          href?: string;
+          _type: "externalLink";
+          _key: string;
+        }
+    >;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  departments: Array<
+    {
+      _key: string;
+    } & DepartmentReference
+  >;
+  sortOrder: number;
 };
 
 export type HonoraryMember = {
@@ -1505,6 +1564,7 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | Testimonial
   | Sponsors
+  | Faq
   | HonoraryMember
   | RoleReference
   | Person
@@ -1590,7 +1650,7 @@ export type DepartmentCardsQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/departments.ts
 // Variable: departmentPageQuery
-// Query: *[_type == 'department' && slug.current == $slug][0] {		_id,		title,		intro,		cardImage,		heroImage,		meta { metaTitle, metaDescription, openGraphImage},		stats,		"groups": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {			featuredImage,			icon,			overviewTitle,			"slug": slug.current,			title,		},		"contactPersons": contactPersons[]-> {			  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,		},	}
+// Query: *[_type == 'department' && slug.current == $slug][0] {		_id,		title,		intro,		cardImage,		heroImage,		meta { metaTitle, metaDescription, openGraphImage},		stats,		"faqs": *[_type == 'faq' && ^._id in departments[]._ref] | order(sortOrder asc, question asc) {			_id,			question,			"answer": coalesce(answer[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []),			"answerText": pt::text(answer),			"isMarkedUp": departments[0]._ref == ^._id,		},		"groups": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {			featuredImage,			icon,			overviewTitle,			"slug": slug.current,			title,		},		"contactPersons": contactPersons[]-> {			  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,		},	}
 export type DepartmentPageQueryResult = {
   _id: string;
   title: string;
@@ -1614,6 +1674,138 @@ export type DepartmentPageQueryResult = {
       _key: string;
     } & Stats
   > | null;
+  faqs: Array<{
+    _id: string;
+    question: string;
+    answer: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal";
+      listItem?: "bullet" | "number";
+      markDefs:
+        | Array<never>
+        | Array<
+            | {
+                href?: string;
+                _type: "externalLink";
+                _key: string;
+              }
+            | {
+                link:
+                  | AboutUsReference
+                  | AccessibilityReference
+                  | ContactReference
+                  | DepartmentReference
+                  | DepartmentsPageReference
+                  | EchoOverviewReference
+                  | GroupReference
+                  | HomeReference
+                  | ImprintReference
+                  | MembershipReference
+                  | NewsArticleReference
+                  | NewsCategoryReference
+                  | NewsOverviewReference
+                  | PrivacyReference;
+                _type: "internalLink";
+                _key: string;
+                target:
+                  | {
+                      _type: "aboutUs";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "accessibility";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "contact";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "department";
+                      slug: string;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "departmentsPage";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "echoOverview";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "group";
+                      slug: string;
+                      category: null;
+                      department: string;
+                    }
+                  | {
+                      _type: "home";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "imprint";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "membership";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "news.article";
+                      slug: string;
+                      category: string | null;
+                      department: null;
+                    }
+                  | {
+                      _type: "news.category";
+                      slug: string;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "newsOverview";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "privacy";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    };
+              }
+          >;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    answerText: string;
+    isMarkedUp: boolean | false;
+  }>;
   groups: Array<{
     featuredImage: ExtendedImage;
     icon:
@@ -3811,6 +4003,11 @@ export type OfferGroupsPageQueryResult = {
       subtitle: string;
       intro?: string;
     };
+    faqSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
     contactPersonsSection: {
       title: string;
       subtitle: string;
@@ -4347,7 +4544,7 @@ export type SitemapEchoIssuesQueryResult = Array<{
 declare global {
   interface SanityQueries {
     "\n\t*[_type == 'department' && defined(slug.current)] | order(sortOrder asc) {\n\t\t_id,\n\t\tcardImage,\n\t\ticon,\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t}\n": DepartmentCardsQueryResult;
-    '\n\t*[_type == \'department\' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t"groups": *[_type == \'group\' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t"slug": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t"contactPersons": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n': DepartmentPageQueryResult;
+    '\n\t*[_type == \'department\' && slug.current == $slug][0] {\n\t\t_id,\n\t\ttitle,\n\t\tintro,\n\t\tcardImage,\n\t\theroImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tstats,\n\t\t"faqs": *[_type == \'faq\' && ^._id in departments[]._ref] | order(sortOrder asc, question asc) {\n\t\t\t_id,\n\t\t\tquestion,\n\t\t\t"answer": coalesce(answer[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, []),\n\t\t\t"answerText": pt::text(answer),\n\t\t\t"isMarkedUp": departments[0]._ref == ^._id,\n\t\t},\n\t\t"groups": *[_type == \'group\' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {\n\t\t\tfeaturedImage,\n\t\t\ticon,\n\t\t\toverviewTitle,\n\t\t\t"slug": slug.current,\n\t\t\ttitle,\n\t\t},\n\t\t"contactPersons": contactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t},\n\t}\n': DepartmentPageQueryResult;
     "\n\t*[_type == 'department' && $slug in previousSlugs && !(_id in path('drafts.**'))] | order(_updatedAt desc, _id asc)[0].slug.current\n": DepartmentRedirectQueryResult;
     "\n\t*[_type == 'department' && defined(slug.current)].slug.current\n": DepartmentSlugsQueryResult;
     '\n\t*[_id == $id][0] {\n\t\t_id,\n\t\t_rev,\n\t\t"pdfRef": pdf.asset._ref,\n\t\t"renderSource": render.source,\n\t\t"renderStartedAt": render.startedAt\n\t}\n': EchoRenderStateQueryResult;

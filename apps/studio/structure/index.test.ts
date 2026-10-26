@@ -55,6 +55,10 @@ describe('excluded default list items', () => {
 		expect(isExcludedDefaultListItem('group')).toBe(false);
 	});
 
+	it('excludes the FAQ, which has its own desk entry', () => {
+		expect(isExcludedDefaultListItem('faq')).toBe(false);
+	});
+
 	it('does not exclude a type with no dedicated place', () => {
 		expect(isExcludedDefaultListItem('some-unlisted-type')).toBe(true);
 	});
@@ -113,6 +117,26 @@ describe('desk group resolution', () => {
 		expect(orderings).toStrictEqual([[{ direction: 'asc', field: 'sortOrder' }]]);
 		expect(ids).toStrictEqual(['departments']);
 		expect(titles).toContain('Abteilungen');
+	});
+
+	it('resolves the faq group to one list of the FAQ by sort order', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		getGroup(structureBuilder, 'faq');
+
+		const lists = calls
+			.filter((call) => call.method === 'documentTypeList')
+			.map((call) => call.args[0]);
+		const orderings = calls
+			.filter((call) => call.method === 'defaultOrdering')
+			.map((call) => call.args[0]);
+		const ids = calls.filter((call) => call.method === 'id').map((call) => call.args[0]);
+		const titles = calls.filter((call) => call.method === 'title').map((call) => call.args[0]);
+
+		expect(lists).toStrictEqual(['faq']);
+		expect(orderings).toStrictEqual([[{ direction: 'asc', field: 'sortOrder' }]]);
+		expect(ids).toStrictEqual(['faq']);
+		expect(titles).toContain('FAQ');
 	});
 
 	it('resolves the groups group to the departments by sort order', () => {

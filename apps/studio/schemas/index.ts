@@ -3,6 +3,7 @@
 import author from './documents/author';
 import department from './documents/department';
 import echoIssue from './documents/echo.issue';
+import faq from './documents/faq';
 import group from './documents/group';
 import honoraryMember from './documents/honorary-member';
 import newsArticle from './documents/news.article';
@@ -62,6 +63,7 @@ export const schemaTypes = [
 
 	department,
 	group,
+	faq,
 	sponsors,
 	testimonial,
 	venue,

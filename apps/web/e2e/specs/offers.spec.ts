@@ -1,3 +1,4 @@
+import { waitForPage } from '../support/navigation';
 import { expect, test } from '../support/test';
 
 test.describe('offers', () => {
@@ -46,5 +47,21 @@ test.describe('offers', () => {
 
 			expect(response.status(), `${href} should render`).toBe(200);
 		}
+	});
+
+	test('opens a question of the FAQ on a department page', async ({ page }) => {
+		await page.goto('/angebot/fussball');
+		await waitForPage(page);
+
+		const question = page.getByRole('button', {
+			name: 'Platzhalter: Was kostet die Mitgliedschaft?',
+		});
+
+		await expect(question).toHaveAttribute('aria-expanded', 'false');
+
+		await question.click();
+
+		await expect(question).toHaveAttribute('aria-expanded', 'true');
+		await expect(page.getByText(/Die Beiträge stehen auf der Seite/u)).toBeVisible();
 	});
 });

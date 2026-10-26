@@ -48,6 +48,7 @@ describe('location queries', () => {
 	it('only resolve locations for document types that have a page', () => {
 		expect(Object.keys(LOCATION_QUERIES).toSorted()).toStrictEqual([
 			'department',
+			'faq',
 			'group',
 			'news.article',
 			'news.category',
@@ -66,6 +67,14 @@ describe('location queries', () => {
 
 		expect(query).toContain('"href": "/angebot/" + department->slug.current + "/" + slug.current');
 		expect(query).toContain('"href": "/angebot/" + department->slug.current,');
+	});
+
+	it('shows a FAQ on the page of every department it belongs to', () => {
+		const query = LOCATION_QUERIES.faq;
+
+		expect(query).toContain('_id in ^.departments[]._ref');
+		expect(query).toContain('defined(slug.current)');
+		expect(query).toContain('"href": "/angebot/" + slug.current');
 	});
 
 	it('leave out a location whose slug is not set yet', () => {
