@@ -62,7 +62,11 @@ describe('the page image migration', () => {
 	});
 
 	it('leaves a document whose field the editors already set alone', async () => {
-		const ownImage = { _type: 'extendedImage', alt: 'Eigenes Bild' };
+		const ownImage = {
+			_type: 'extendedImage',
+			alt: 'Eigenes Bild',
+			asset: { _ref: 'image-eigen' },
+		};
 		const documents = [
 			...publishedPages().filter((page) => page._id !== 'aboutUs'),
 			{ _id: 'aboutUs', _type: 'aboutUs', heroImage: ownImage },
@@ -73,6 +77,67 @@ describe('the page image migration', () => {
 
 		expect(byId.get('aboutUs')?.heroImage).toBe(ownImage);
 		expect(report.skipped).toStrictEqual(['aboutUs.heroImage']);
+	});
+
+	it('fills a single image that has no file', async () => {
+		const documents = [
+			...publishedPages().filter((page) => page._id !== 'aboutUs'),
+			{
+				_id: 'aboutUs',
+				_type: 'aboutUs',
+				heroImage: { _type: 'extendedImage', alt: 'Ohne Datei' },
+			},
+		];
+		const { byId, store } = createFakePageImageStore({ documents });
+
+		const report = await runPageImageMigration(store, { dryRun: false });
+
+		expect(byId.get('aboutUs')?.heroImage).toMatchObject({
+			asset: { _ref: 'image-verein-hero-webp' },
+		});
+		expect(report.skipped).toStrictEqual([]);
+	});
+
+	it('fills a list that holds no image with a file', async () => {
+		const documents = [
+			...publishedPages().filter((page) => page._id !== 'site-settings'),
+			{
+				_id: 'site-settings',
+				_type: 'site-settings',
+				visionImages: [{ _key: 'leer', _type: 'extendedImage', alt: 'Ohne Datei' }],
+			},
+		];
+		const { byId, store } = createFakePageImageStore({ documents });
+
+		await runPageImageMigration(store, { dryRun: false });
+
+		expect(keysOf(byId.get('site-settings')?.visionImages)).toStrictEqual([
+			'vision-1',
+			'vision-2',
+			'vision-3',
+		]);
+	});
+
+	// A list the editors started keeps their images, even when it holds fewer than three.
+	it('leaves a list alone that holds at least one image with a file', async () => {
+		const ownImages = [
+			{
+				_key: 'eigen',
+				_type: 'extendedImage',
+				alt: 'Eigenes Bild',
+				asset: { _ref: 'image-eigen' },
+			},
+		];
+		const documents = [
+			...publishedPages().filter((page) => page._id !== 'site-settings'),
+			{ _id: 'site-settings', _type: 'site-settings', visionImages: ownImages },
+		];
+		const { byId, store } = createFakePageImageStore({ documents });
+
+		const report = await runPageImageMigration(store, { dryRun: false });
+
+		expect(byId.get('site-settings')?.visionImages).toBe(ownImages);
+		expect(report.skipped).toStrictEqual(['site-settings.visionImages']);
 	});
 
 	it('uploads every file once although several fields use it', async () => {

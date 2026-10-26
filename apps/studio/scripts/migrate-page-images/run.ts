@@ -164,10 +164,7 @@ async function migrateType(
 	targets: readonly PageImageTarget[],
 	context: MigrationContext,
 ): Promise<void> {
-	const documents = await context.store.fetchDocuments(
-		documentType,
-		targets.map((target) => target.field),
-	);
+	const documents = await context.store.fetchDocuments(documentType, targets);
 	if (documents.length === 0) {
 		context.report.problems.push(`Kein Dokument vom Typ ${documentType}`);
 	}

@@ -6,19 +6,38 @@ import type { SanityClient } from 'sanity';
 
 import { settle } from '@tsgi-web/shared';
 
+import type { PageImageTarget } from './targets';
+
 const RAW = { perspective: 'raw' } as const;
 
 const RELEASE_VERSIONS_QUERY = /* groq */ '*[_id in path("versions.**") && _type in $types]._id';
 
 /**
+ * The GROQ condition under which an image field counts as set: a single image needs a file, a list
+ * at least one image with a file. An image the editors emptied, or a list of such images, counts as
+ * empty and gets the migrated image.
+ *
+ * @param target - The field and whether it holds a list.
+ * @param target.field - The name of the field.
+ * @param target.isList - Whether the field holds a list of images.
+ * @returns The condition.
+ */
+function getSetCondition({ field, isList }: ImageField): string {
+	return isList ? `count(${field}[defined(asset)]) > 0` : `defined(${field}.asset)`;
+}
+
+/**
  * The query for the published documents and drafts of a type, each with the fields among the given
- * ones that are set. The field names come from the migration's own targets, never from input.
+ * ones that already hold an image. The field names come from the migration's own targets, never
+ * from input.
  *
  * @param fields - The image fields the migration fills on the type.
  * @returns The GROQ query.
  */
-function getDocumentsQuery(fields: readonly string[]): string {
-	const setFields = fields.map((field) => `select(defined(${field}) => "${field}")`).join(', ');
+function getDocumentsQuery(fields: readonly ImageField[]): string {
+	const setFields = fields
+		.map((target) => `select(${getSetCondition(target)} => "${target.field}")`)
+		.join(', ');
 	return `*[_type == $type && !(_id in path("versions.**"))]{_id, _rev, "setFields": [${setFields}]}`;
 }
 
@@ -71,17 +90,23 @@ interface RawPageImageDocument {
 	setFields: (null | string)[];
 }
 
+/** An image field of a page type and whether it holds a list of images. */
+type ImageField = Pick<PageImageTarget, 'field' | 'isList'>;
+
 /** A page document as the migration needs to know it. */
 interface PageImageDocument {
 	_id: string;
 	_rev: string;
-	/** The image fields of the migration that the document already has. */
+	/** The image fields of the migration that already hold an image with a file. */
 	setFields: string[];
 }
 
 interface PageImageStore {
 	/** Published document and draft of the type, without release versions. */
-	fetchDocuments: (documentType: string, fields: readonly string[]) => Promise<PageImageDocument[]>;
+	fetchDocuments: (
+		documentType: string,
+		fields: readonly ImageField[],
+	) => Promise<PageImageDocument[]>;
 	/** Ids of the release versions (`versions.<release>.<id>`) of the given types. */
 	fetchReleaseVersions: (documentTypes: readonly string[]) => Promise<string[]>;
 	/** Whether the image folder holds the file. Reads the disk only. */
@@ -93,4 +118,4 @@ interface PageImageStore {
 }
 
 export { createSanityPageImageStore };
-export type { PageImageDocument, PageImageStore };
+export type { ImageField, PageImageDocument, PageImageStore };

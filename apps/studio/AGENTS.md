@@ -176,7 +176,7 @@ pnpm --filter studio run migrate:page-images --dataset development --no-dry-run 
 - A dry run is the default and lists the documents a real run would change.
 - A missing file stops the run before anything is written.
 - The published document and its draft both get the images, one patch per document guarded by its revision. Release versions are reported, not patched: publishing such a release would replace the published document without the images, so before it is published, set the images on the version in the studio or discard it.
-- A field the editors already set is left alone, so a second run writes nothing.
+- A field that already holds an image with a file is left alone, a list as soon as one of its images has a file, so a second run writes nothing and a list the editors started keeps their images. An image without a file, or a list of such images, counts as empty and gets the migrated image.
 - It sets no hotspot, so the banner shows the middle of the picture, as the static files did.
 - The real run needs the user's OK and an export of the dataset first, like every migration here. `development` was migrated on 2026-10-26; `production` follows with the WEB-384 release, before `next` is merged into `main`.
 

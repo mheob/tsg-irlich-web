@@ -1,5 +1,5 @@
 // oxlint-disable typescript/require-await -- the fake answers at once behind the async store API
-import type { PageImageDocument, PageImageStore } from '../store';
+import type { ImageField, PageImageDocument, PageImageStore } from '../store';
 
 interface StoredDocument {
 	[field: string]: unknown;
@@ -21,6 +21,28 @@ interface FakePageImageStoreOptions {
 	missingFiles?: readonly string[];
 	/** Ids of release versions (`versions.<release>.<id>`) the dataset holds. */
 	releaseVersions?: readonly string[];
+}
+
+/**
+ * Whether a value is an image with a file.
+ *
+ * @param image - The value of a field or of a list item.
+ * @returns `true` when it carries an asset.
+ */
+function hasAsset(image: unknown): boolean {
+	return typeof image === 'object' && image !== null && 'asset' in image;
+}
+
+/**
+ * Whether a field holds an image with a file, the way the real store's query decides it.
+ *
+ * @param value - The value of the field.
+ * @param target - The field and whether it holds a list.
+ * @param target.isList - Whether the field holds a list of images.
+ * @returns `true` for a single image with an asset or a list with at least one.
+ */
+function holdsImage(value: unknown, { isList }: ImageField): boolean {
+	return isList ? Array.isArray(value) && value.some((item) => hasAsset(item)) : hasAsset(value);
 }
 
 /** The in-memory dataset and what was done to it. */
@@ -58,7 +80,9 @@ function createFakePageImageStore(options: FakePageImageStoreOptions = {}): Fake
 				.map((document): PageImageDocument => ({
 					_id: document._id,
 					_rev: document._rev,
-					setFields: fields.filter((field) => document[field] !== undefined),
+					setFields: fields
+						.filter((target) => holdsImage(document[target.field], target))
+						.map((target) => target.field),
 				})),
 		fetchReleaseVersions: async () => [...releaseVersions],
 		hasImage: async (fileName) => !missingFiles.includes(fileName),

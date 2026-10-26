@@ -50,25 +50,28 @@ describe('the page image store', () => {
 		]);
 
 		await expect(
-			createSanityPageImageStore(client, IMAGE_FOLDER).fetchDocuments('home', ['heroImage']),
+			createSanityPageImageStore(client, IMAGE_FOLDER).fetchDocuments('home', [
+				{ field: 'heroImage', isList: false },
+			]),
 		).resolves.toStrictEqual([{ _id: 'home', _rev: 'r1', setFields: ['heroImage'] }]);
 		expect(fake.fetch).toHaveBeenCalledWith(
-			'*[_type == $type && !(_id in path("versions.**"))]{_id, _rev, "setFields": [select(defined(heroImage) => "heroImage")]}',
+			'*[_type == $type && !(_id in path("versions.**"))]{_id, _rev, "setFields": [select(defined(heroImage.asset) => "heroImage")]}',
 			{ type: 'home' },
 			{ perspective: 'raw' },
 		);
 	});
 
-	it('asks for every field of the type at once', async () => {
+	// An image without a file, or a list without any, counts as empty and gets the migrated image.
+	it('counts a field as set only when it holds an image with a file', async () => {
 		const { client, fake } = createFakeClient();
 
 		await createSanityPageImageStore(client, IMAGE_FOLDER).fetchDocuments('site-settings', [
-			'visionImages',
-			'fallbackImage',
+			{ field: 'visionImages', isList: true },
+			{ field: 'fallbackImage', isList: false },
 		]);
 
 		expect(fake.fetch).toHaveBeenCalledWith(
-			'*[_type == $type && !(_id in path("versions.**"))]{_id, _rev, "setFields": [select(defined(visionImages) => "visionImages"), select(defined(fallbackImage) => "fallbackImage")]}',
+			'*[_type == $type && !(_id in path("versions.**"))]{_id, _rev, "setFields": [select(count(visionImages[defined(asset)]) > 0 => "visionImages"), select(defined(fallbackImage.asset) => "fallbackImage")]}',
 			{ type: 'site-settings' },
 			{ perspective: 'raw' },
 		);
