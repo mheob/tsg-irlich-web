@@ -3,7 +3,7 @@
 		"result": {
 			"_createdAt": "2024-06-17T06:52:11Z",
 			"_id": "contact",
-			"_rev": "Nik63qLLJXUuVJPKyfhCq3",
+			"_rev": "zPeEzi94do5iTpmzdp1PNm",
 			"_system": {
 				"base": {
 					"id": "contact",
@@ -11,7 +11,7 @@
 				}
 			},
 			"_type": "contact",
-			"_updatedAt": "2026-09-29T12:28:50Z",
+			"_updatedAt": "2026-10-26T13:19:09Z",
 			"content": {
 				"contactPersonsSection": {
 					"contactPersons": [
@@ -210,6 +210,14 @@
 					}
 				]
 			},
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Ein MacBook auf einem Schreibtisch zeigt das Kontaktformular der TSG Irlich, daneben ein Festnetztelefon und eine kabellose Maus, im Hintergrund ein unscharfes Büro",
+				"asset": {
+					"_ref": "image-14a7f089fd1ca2d14026126aad95e6840b0bccfc-4094x2160-webp",
+					"_type": "reference"
+				}
+			},
 			"meta": {
 				"_type": "metaFields",
 				"metaDescription": "Trete mit der TSG Irlich in Kontakt. Wähle deine gewünschte Kategorie und deine Frage wird von der richtigen verantwortlichen Person beantwortet.",
@@ -245,21 +253,21 @@
 			"title": "Kontaktiere uns"
 		},
 		"syncTags": [
-			"s1:y+gLqA",
-			"s1:WU9DBg",
-			"s1:B7LhMw",
-			"s1:SgUpiQ",
-			"s1:BpJQvw",
-			"s1:eOuqJg",
-			"s1:NuVTmQ",
-			"s1:bW4l3Q",
-			"s1:LD/aiQ",
-			"s1:yJoVrQ",
 			"s1:PeVrtw",
 			"s1:N029bQ",
-			"s1:kG7Arw"
+			"s1:kG7Arw",
+			"s1:eOuqJg",
+			"s1:WU9DBg",
+			"s1:bW4l3Q",
+			"s1:LD/aiQ",
+			"s1:SgUpiQ",
+			"s1:BpJQvw",
+			"s1:y+gLqA",
+			"s1:NuVTmQ",
+			"s1:B7LhMw",
+			"s1:yJoVrQ"
 		],
-		"ms": 10
+		"ms": 14
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27contact%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09...%2C%0A%09%09%09contactPersonsSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
 }

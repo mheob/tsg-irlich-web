@@ -1,0 +1,15 @@
+{
+	"body": {
+		"result": {
+			"_type": "extendedImage",
+			"alt": "Ein Handy und ein Kugelschreiber auf einer Zeitung sollen eine Nachrichtenübersicht darstellen.",
+			"asset": {
+				"_ref": "image-f51b3b1918c9cabdf0a1ab4dc44a710e5e0338e1-4096x2160-webp",
+				"_type": "reference"
+			}
+		},
+		"syncTags": ["s1:b3a4dw"],
+		"ms": 2
+	},
+	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27newsOverview%27%5D%5B0%5D.heroImage&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

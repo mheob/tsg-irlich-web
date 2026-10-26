@@ -87,7 +87,7 @@
 			}
 		],
 		"syncTags": ["s1:0+17mg"],
-		"ms": 3
+		"ms": 6
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09_id%2C%0A%09%09cardImage%2C%0A%09%09icon%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&returnQuery=false"
 }

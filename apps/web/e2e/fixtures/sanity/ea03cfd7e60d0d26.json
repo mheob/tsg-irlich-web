@@ -252,8 +252,8 @@
 			],
 			"title": "Kinderturnen"
 		},
-		"syncTags": ["s1:2QTQgQ", "s1:B7LhMw", "s1:uMx6JQ", "s1:WU9DBg", "s1:RTKmCw", "s1:mjjZ4A"],
-		"ms": 15
+		"syncTags": ["s1:mjjZ4A", "s1:2QTQgQ", "s1:uMx6JQ", "s1:WU9DBg", "s1:B7LhMw", "s1:RTKmCw"],
+		"ms": 14
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27department%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09intro%2C%0A%09%09cardImage%2C%0A%09%09heroImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09stats%2C%0A%09%09%22faqs%22%3A+*%5B_type+%3D%3D+%27faq%27+%26%26+%5E._id+in+departments%5B%5D._ref%5D+%7C+order%28sortOrder+asc%2C+question+asc%29+%7B%0A%09%09%09_id%2C%0A%09%09%09question%2C%0A%09%09%09%22answer%22%3A+coalesce%28answer%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%2C%0A%09%09%09%22answerText%22%3A+pt%3A%3Atext%28answer%29%2C%0A%09%09%09%22isMarkedUp%22%3A+departments%5B0%5D._ref+%3D%3D+%5E._id%2C%0A%09%09%7D%2C%0A%09%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+department._ref+%3D%3D+%5E._id+%26%26+defined%28slug.current%29%5D+%7C+order%28sortOrder+asc%29+%7B%0A%09%09%09featuredImage%2C%0A%09%09%09icon%2C%0A%09%09%09overviewTitle%2C%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%2C%0A%09%09%7D%2C%0A%09%09%22contactPersons%22%3A+contactPersons%5B%5D-%3E+%7B%0A%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%7D%2C%0A%09%7D%0A&%24slug=%22kinderturnen%22&perspective=published&tag=next-loader.fetch"
 }

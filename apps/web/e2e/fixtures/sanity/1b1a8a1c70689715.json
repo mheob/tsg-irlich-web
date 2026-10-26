@@ -4,7 +4,7 @@
 			"membership": {
 				"_createdAt": "2024-06-17T07:03:29Z",
 				"_id": "membership",
-				"_rev": "4lJ2mGct5PnttFtjrn17Hi",
+				"_rev": "zPeEzi94do5iTpmzdp1OHG",
 				"_system": {
 					"base": {
 						"id": "membership",
@@ -12,7 +12,7 @@
 					}
 				},
 				"_type": "membership",
-				"_updatedAt": "2026-09-29T12:28:50Z",
+				"_updatedAt": "2026-10-26T13:19:06Z",
 				"contactPersonsSection": {
 					"contactPersons": [
 						{
@@ -175,6 +175,14 @@
 					"intro": "Alle wichtigen Vereinsdokumente findest du hier zum Download. Lies sie dir bitte genau durch, wenn du in Betracht ziehst, Mitglied in unserem Verein zu werden.",
 					"subtitle": "Downloads",
 					"title": "Wichtige Vereinsdokumente"
+				},
+				"heroImage": {
+					"_type": "extendedImage",
+					"alt": "Zwei Personen geben sich über einem Schreibtisch mit Klemmbrett und Kugelschreiber die Hand",
+					"asset": {
+						"_ref": "image-b160e97b017ae16174dc23c93c164ea0acf7cf10-4094x2160-webp",
+						"_type": "reference"
+					}
 				},
 				"intro": {
 					"_type": "blockContent",
@@ -601,14 +609,14 @@
 		},
 		"syncTags": [
 			"s1:Cc+ZCg",
-			"s1:SgUpiQ",
 			"s1:BpJQvw",
 			"s1:kG7Arw",
 			"s1:WU9DBg",
 			"s1:B7LhMw",
+			"s1:bW4l3Q",
 			"s1:V4dP4Q",
 			"s1:26XUmQ",
-			"s1:bW4l3Q",
+			"s1:SgUpiQ",
 			"s1:gPeMUg",
 			"s1:MNG81A"
 		],

@@ -3,7 +3,7 @@
 		"result": {
 			"_createdAt": "2024-06-09T14:55:24Z",
 			"_id": "imprint",
-			"_rev": "Nik63qLLJXUuVJPKyfhCv0",
+			"_rev": "zPeEzi94do5iTpmzdp1Pc3",
 			"_system": {
 				"base": {
 					"id": "imprint",
@@ -11,7 +11,7 @@
 				}
 			},
 			"_type": "imprint",
-			"_updatedAt": "2026-09-29T12:28:50Z",
+			"_updatedAt": "2026-10-26T13:19:10Z",
 			"address": {
 				"_type": "simpleBlockContent",
 				"text": [
@@ -67,6 +67,14 @@
 				]
 			},
 			"email": "info@tsg-irlich.de",
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Ein MacBook auf einem Schreibtisch zeigt das Kontaktformular der TSG Irlich, daneben ein Festnetztelefon und eine kabellose Maus, im Hintergrund ein unscharfes Büro",
+				"asset": {
+					"_ref": "image-14a7f089fd1ca2d14026126aad95e6840b0bccfc-4094x2160-webp",
+					"_type": "reference"
+				}
+			},
 			"intro": {
 				"_type": "simpleBlockContent",
 				"text": [
@@ -219,8 +227,8 @@
 			"technicalQuestionsName": "Alexander Böhm",
 			"title": "Impressum"
 		},
-		"syncTags": ["s1:OevtwA", "s1:fcrxxQ"],
-		"ms": 10
+		"syncTags": ["s1:fcrxxQ", "s1:OevtwA"],
+		"ms": 9
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27imprint%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09%22contactForm%22%3A+contactForm+%7B%0A%09%09%09%22title%22%3A+link-%3Etitle%2C%0A%09%09%09%22link%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
 }

@@ -1,0 +1,76 @@
+{
+	"body": {
+		"query": "*[_type == 'site-settings'][0] { visionImages, contactFormImages, fallbackImage }",
+		"result": {
+			"contactFormImages": [
+				{
+					"_key": "contact-form-1",
+					"_type": "extendedImage",
+					"alt": "'FUNKY DIAMONDS'-Spielerin mit geflochtener Frisur und Pferdeschwanz in schwarzem Trikot und Rückennummer 6, telefoniert während eines Spiels.",
+					"asset": {
+						"_ref": "image-e179163aa6924f020445302bc0044e604d26dd8a-600x600-webp",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "contact-form-2",
+					"_type": "extendedImage",
+					"alt": "Gruppe der TSG Irlich in blauen Trikots posiert für ein Mannschaftsfoto auf dem Spielfeld, während eine Fotografin in schwarzem Kleid mit Kamera auf Stativ das Foto macht.",
+					"asset": {
+						"_ref": "image-f17ae040b51e6933f1d6a43870da6aac2c87aca9-600x600-webp",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "contact-form-3",
+					"_type": "extendedImage",
+					"alt": "PR-Team-Mitglied der TSG Irlich in blau-weißem Vereinstrikot mit Kamera auf Stativ bei der Arbeit im Freien.",
+					"asset": {
+						"_ref": "image-fc83ca3dfc5a319a9d0832e3a3fb53ecc9700f35-600x600-webp",
+						"_type": "reference"
+					}
+				}
+			],
+			"fallbackImage": {
+				"_type": "extendedImage",
+				"alt": "Sporthalle mit drei verschiedenen Trainingsgruppen: Links üben Kinder und ein Trainer in weißen Taekwondo-Anzügen mit schwarzem Gürtel synchrone Kicks, in der Mitte zeigen Mädchen in türkis-blauen Gymnastik-Trikots mit bunten Federn eine Beinübung, und rechts spielen Kinder unter Anleitung von Trainern in dunkelblauen Shirts Fußball auf einer grünen Kunstrasenfläche. Im Hintergrund sind bunte Gymnastikbälle und Sportgeräte zu sehen.",
+				"asset": {
+					"_ref": "image-8f13e339ee9df0bad86fd4d3df596364a6e7fca0-4094x2160-webp",
+					"_type": "reference"
+				}
+			},
+			"visionImages": [
+				{
+					"_key": "vision-1",
+					"_type": "extendedImage",
+					"alt": "Scheck-Übergabe: TSG Irlich überreicht 250 Euro Spende zum Wiederaufbau des Engerser Lockschuppens.",
+					"asset": {
+						"_ref": "image-6a064c960f0e2aec77a174807aa871900cb2d729-600x600-webp",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "vision-2",
+					"_type": "extendedImage",
+					"alt": "Tanzgruppe 'Funky Diamonds' der TSG Irlich präsentiert eine Choreografie in rot-weißen Kostümen auf der Bühne",
+					"asset": {
+						"_ref": "image-2605b2578399b78ae02960f62c53f77a8b3b80d0-600x600-webp",
+						"_type": "reference"
+					}
+				},
+				{
+					"_key": "vision-3",
+					"_type": "extendedImage",
+					"alt": "Jugend-Fußballmannschaft der TSG Irlich in gelb-blauen Trikots steht Arm in Arm auf dem Sportplatz",
+					"asset": {
+						"_ref": "image-4a9398e5340562218d88460cfc197e7022d3eefb-600x600-webp",
+						"_type": "reference"
+					}
+				}
+			]
+		},
+		"syncTags": ["s1:Mvlp1g"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27site-settings%27%5D%5B0%5D+%7B+visionImages%2C+contactFormImages%2C+fallbackImage+%7D&perspective=published&tag=next-loader.fetch"
+}

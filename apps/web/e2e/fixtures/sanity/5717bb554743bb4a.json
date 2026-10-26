@@ -3,7 +3,7 @@
 		"result": {
 			"_createdAt": "2026-01-02T10:22:52Z",
 			"_id": "accessibility",
-			"_rev": "R3E9jQFgtI1iXWhprtjIsR",
+			"_rev": "zPeEzi94do5iTpmzdp1QLj",
 			"_system": {
 				"base": {
 					"id": "accessibility",
@@ -11,7 +11,7 @@
 				}
 			},
 			"_type": "accessibility",
-			"_updatedAt": "2026-09-29T12:28:50Z",
+			"_updatedAt": "2026-10-26T13:19:12Z",
 			"content": {
 				"_type": "blockContent",
 				"text": [
@@ -425,6 +425,14 @@
 					}
 				]
 			},
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Ein MacBook auf einem Schreibtisch zeigt das Kontaktformular der TSG Irlich, daneben ein Festnetztelefon und eine kabellose Maus, im Hintergrund ein unscharfes Büro",
+				"asset": {
+					"_ref": "image-14a7f089fd1ca2d14026126aad95e6840b0bccfc-4094x2160-webp",
+					"_type": "reference"
+				}
+			},
 			"slug": {
 				"_type": "slug",
 				"current": "barrierefreiheit"
@@ -433,7 +441,7 @@
 			"title": "Barrierefreiheit"
 		},
 		"syncTags": ["s1:Hi85NA", "s1:u8DZ7g", "s1:NlU22g"],
-		"ms": 7
+		"ms": 9
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27accessibility%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%7D%0A&returnQuery=false"
 }

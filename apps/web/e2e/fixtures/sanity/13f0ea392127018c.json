@@ -1,0 +1,15 @@
+{
+	"body": {
+		"result": {
+			"_type": "extendedImage",
+			"alt": "Luftaufnahme des Vereinsheims „Pappelstübchen“ der TSG Irlich mit Terrasse, Tischen und Sonnenschirmen, dahinter Bäume und der Sportplatz",
+			"asset": {
+				"_ref": "image-bf810a9943f31d1c51a5d4bbe43baccc3bec32cb-4094x2160-webp",
+				"_type": "reference"
+			}
+		},
+		"syncTags": ["s1:BU299g"],
+		"ms": 3
+	},
+	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27aboutUs%27%5D%5B0%5D.heroImage&returnQuery=false"
+}
