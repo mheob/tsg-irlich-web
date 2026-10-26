@@ -158,7 +158,7 @@ describe('the page image migration', () => {
 		const report = await runPageImageMigration(store, { dryRun: false });
 
 		expect(report.problems).toStrictEqual([
-			'Version in einem Release bleibt unverändert: versions.sommer.home',
+			'Version in einem Release bleibt unverändert: versions.sommer.home. Vor dem Veröffentlichen des Releases dort die Bilder setzen oder die Version verwerfen, sonst entfernt das Veröffentlichen die migrierten Bilder.',
 		]);
 		expect(patches).not.toContain('versions.sommer.home');
 	});

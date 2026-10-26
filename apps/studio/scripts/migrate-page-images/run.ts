@@ -196,7 +196,10 @@ async function describeReleaseVersions(
 	documentTypes: readonly string[],
 ): Promise<string[]> {
 	const versions = await store.fetchReleaseVersions(documentTypes);
-	return versions.map((id) => `Version in einem Release bleibt unverändert: ${id}`);
+	return versions.map(
+		(id) =>
+			`Version in einem Release bleibt unverändert: ${id}. Vor dem Veröffentlichen des Releases dort die Bilder setzen oder die Version verwerfen, sonst entfernt das Veröffentlichen die migrierten Bilder.`,
+	);
 }
 
 /**
