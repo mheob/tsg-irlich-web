@@ -174,7 +174,7 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - **Vite+** (`vite-plus`) bundles oxlint, oxfmt and Vitest: `vp lint`, `vp fmt` and `vp test` run them
 - **oxlint** with @mheob/oxlint-config (plus oxlint-tsgolint for type-aware rules), configured in the `lint` block of the root `vite.config.ts`. Vite+ reads no nested lint config, so package-specific rules are `lint.overrides` entries there
 - **oxfmt** with @mheob/oxfmt-config, configured in the `fmt` block of the root `vite.config.ts`
-- **Lefthook** for pre-commit hooks
+- **Lefthook** runs the git hooks in `lefthook.yml`. `pre-commit` formats and lints the staged files. `pre-push` runs `cve-lite`, `format:check`, lint with `--deny-warnings`, `typecheck` and the unit tests in parallel, and Turbo replays every package that has not changed. `but commit` skips the pre-commit jobs, `but push` runs the pre-push ones (`but push --no-verify` bypasses them)
 - **Commitizen** with czg for conventional commits
 - **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`, `packages/pdf-pages`); tests live next to their source (`foo.ts` → `foo.test.ts`). `vp test` at the root runs all five as projects through `test.projects` in the root `vite.config.ts`; coverage thresholds only apply per workspace, so gate on `pnpm run test:coverage`
 - Import `describe`/`it`/`expect`/`vi` explicitly from `vite-plus/test` (the `vite-plus/prefer-vite-plus-imports` lint rule enforces it) — `globals` stays off
@@ -189,6 +189,19 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - Each `vitest.config.ts` carries `coverage.thresholds`, so `test:coverage` fails when coverage drops: `packages/shared`, `packages/email` and `packages/pdf-pages` at 100% everywhere, `apps/web` at 93% lines and statements / 88% functions / 85% branches (it reaches 94.7% / 90.2% / 87.8%), `apps/studio` at the level its schema tests currently reach (30% lines). They are a ratchet — raise them with every batch of new tests, never lower them to make a run pass
 - 100% is deliberately not the goal for `apps/web`. What is left is a long tail of single branches plus the import-time bindings in `lib/sanity/live.ts` and `lib/sanity/client.ts`. Covering those means testing the framework, not the app. The `async` mark component in `portable-text.tsx` used to be on that list — React cannot render one on the client, the tree suspends — until `renderPortableTextOnServer` in `portable-text.test.tsx` started rendering it through `renderToReadableStream` and putting the markup into the document; reach for the same trick for any other async component
 - Pure re-export barrels are excluded from coverage (`**/index.ts` in `packages/shared`) — they hold no executable statements, so V8 scores them 0% and importing one in a test would lift the number without testing anything. Do not copy that glob into `apps/web` or `apps/studio`: their `index.ts` files carry real logic (GROQ fragments, schema definitions, the desk structure) and must stay in the denominator. `packages/email` excludes `scripts/**` (a top-level-await build script that writes to `dist/`) and `newsletter-event.ts` (an interface declaration) for the same reason: V8 scores a file with no executable statements as 0% of 0, which leaves a red row in the table without changing any total
+
+### SonarQube Cloud
+
+`.github/workflows/sonar.yml` collects the coverage and scans `main`, `next` and every pull request. `SonarCloud Code Analysis` is a required check on `next`. The scan reads `sonar-project.properties`:
+
+- `test-utils/**` counts as test code next to the `*.test.*` and `*.spec.ts` files, so its fakes are neither analysed as production code nor scored for coverage.
+- A rule that misfires is switched off in `sonar.issue.ignore.multicriteria`, limited to the files where it misfires, and never through "Accept" or "False positive" in the Sonar UI, which leaves no trace in the repository. The current entries (WEB-387):
+  - `css:S8776` and `css:S8767` in `apps/web/src/app/globals.css`: the CSS analyzer does not know Tailwind v4's `@utility`, so the nesting and the declarations inside a utility look invalid to it.
+  - `typescript:S5257` and `typescript:S6819` in `packages/email/**`: mail clients need `<table role="presentation">` for layout. oxlint's `jsx-a11y/prefer-tag-over-role` is off there for the same reason.
+  - `typescript:S9382` in `apps/studio/scripts/**`: the import and migration scripts work one item at a time on purpose, and every such loop gives its reason in an `oxlint-disable-next-line no-await-in-loop`.
+  - `typescript:S7503` everywhere: oxlint's `typescript/promise-function-async` requires every function that returns a promise to be `async`, which Sonar reports as an `async` function without `await`.
+- Sonar has no local mode, its scanner uploads every analysis. The `pre-push` hook therefore runs the repository's own checks, which cover most of what Sonar reports. Sonar's read-only props rule (`typescript:S6759`) has no oxlint counterpart, so wrap a component's props in `Readonly<…>` the way the existing components do.
+- The New Code definition lives in the SonarQube Cloud UI (Administration → New Code), not in `sonar-project.properties`. "Previous version" does not work here: the scan sets no `sonar.projectVersion`, so the baseline never moves.
 
 ### Performance & Best Practices
 
