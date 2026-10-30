@@ -69,6 +69,14 @@ describe('the words of a search input', () => {
 		expect(getSearchWords('1. Mannschaft')).toStrictEqual(['1.', 'mannschaft']);
 	});
 
+	it('keep the punctuation of a word that has a letter or a digit', () => {
+		expect(getSearchWords('C++ Kurs')).toStrictEqual(['c++', 'kurs']);
+	});
+
+	it('leave out a word that is nothing but punctuation', () => {
+		expect(getSearchWords('Tanz & Fitness')).toStrictEqual(['tanz', 'fitness']);
+	});
+
 	it.each(['"', '*', '-', '(', ')', '|', '~', '^'])(
 		'lose the operator character %s',
 		(operator) => {
@@ -85,9 +93,12 @@ describe('the words of a search input', () => {
 		expect(getSearchWords('ÜBUNG Straße')).toStrictEqual(['übung', 'straße']);
 	});
 
-	it.each(['', '   ', '-', '"*"', '()|~^'])('are none in "%s"', (input) => {
-		expect(getSearchWords(input)).toStrictEqual([]);
-	});
+	it.each(['', '   ', '-', '"*"', '()|~^', '..', '!!', '?!', '++', '...', '&'])(
+		'are none in "%s"',
+		(input) => {
+			expect(getSearchWords(input)).toStrictEqual([]);
+		},
+	);
 });
 
 describe('the text query for Sanity', () => {
@@ -107,7 +118,22 @@ describe('the text query for Sanity', () => {
 		expect(toTextQuery('ab')).toBe('ab*');
 	});
 
-	it.each(['a', '-', '"*"', '', '   '])('is undefined for "%s", so nothing is queried', (input) => {
-		expect(toTextQuery(input)).toBeUndefined();
+	it('counts the letters and digits of the words together, not each word', () => {
+		expect(toTextQuery('a b')).toBe('a b*');
 	});
+
+	it('keeps the punctuation of a word that has a letter or a digit', () => {
+		expect(toTextQuery('1. Mannschaft')).toBe('1. mannschaft*');
+	});
+
+	it('leaves out a word that is nothing but punctuation', () => {
+		expect(toTextQuery('Tanz & Fitness')).toBe('tanz fitness*');
+	});
+
+	it.each(['a', '-', '"*"', '', '   ', '..', '!!', '?!', '++', '...', 'a.', '1.', 'a - !'])(
+		'is undefined for "%s", so nothing is queried',
+		(input) => {
+			expect(toTextQuery(input)).toBeUndefined();
+		},
+	);
 });

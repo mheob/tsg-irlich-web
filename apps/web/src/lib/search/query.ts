@@ -10,6 +10,9 @@ import { SEARCH_MAX_LENGTH, SEARCH_MIN_LENGTH } from './constants';
  */
 const WORD_PATTERN = /[^\s"*\-()|~^]+/gu;
 
+/** A letter or a digit, in any language. Punctuation and symbols are neither. */
+const LETTER_OR_DIGIT = /[\p{L}\p{N}]/gu;
+
 /** A high surrogate with no low surrogate behind it: half an emoji, left over by a cut. */
 const DANGLING_HIGH_SURROGATE = /[\uD800-\uDBFF]$/u;
 
@@ -30,15 +33,31 @@ function normalizeSearchInput(input: string[] | string | undefined): string {
 }
 
 /**
+ * Counts the letters and digits of a text, which is what makes a word searchable.
+ *
+ * @param text - The text.
+ * @returns The number of letters and digits in it.
+ */
+function countLettersAndDigits(text: string): number {
+	return text.match(LETTER_OR_DIGIT)?.length ?? 0;
+}
+
+/**
  * Splits a normalized search term into its words, lowercased and without operator characters. An
  * operator character inside a word separates it, so "E-Jugend" gives `e` and `jugend`, the same
  * words Sanity finds in a text that says "E-Jugend".
  *
+ * A word without a letter or a digit is left out: the `&` in "Tanz & Fitness" or a stray `..` match
+ * nothing, and in the query they would only make Sanity look for punctuation. A word that has a
+ * letter or a digit keeps its punctuation, so `1.` stays `1.`.
+ *
  * @param normalized - The term, as `normalizeSearchInput` returns it.
- * @returns The words in the order they were typed, none of them empty.
+ * @returns The words in the order they were typed, none of them empty or punctuation only.
  */
 function getSearchWords(normalized: string): string[] {
-	return normalized.toLowerCase().match(WORD_PATTERN) ?? [];
+	return (normalized.toLowerCase().match(WORD_PATTERN) ?? []).filter(
+		(word) => countLettersAndDigits(word) > 0,
+	);
 }
 
 /**
@@ -47,14 +66,16 @@ function getSearchWords(normalized: string): string[] {
  * the query as the parameter `$q` and nowhere else.
  *
  * @param normalized - The term, as `normalizeSearchInput` returns it.
- * @returns The text query, or `undefined` when the words together are shorter than the minimum
- * length. Input of nothing but operators, punctuation or whitespace ends up there too, so no
- * query reaches Sanity for it.
+ * @returns The text query, or `undefined` when the letters and digits of all words together are
+ * fewer than the minimum length. Spaces and punctuation do not count: `a b` is long enough, while
+ * `..`, `!!`, `1.` and `a.` are not. Input of nothing but operators, punctuation or whitespace
+ * ends up here too, so no query reaches Sanity for it.
  */
 function toTextQuery(normalized: string): string | undefined {
-	const joined = getSearchWords(normalized).join(' ');
+	const words = getSearchWords(normalized);
+	const joined = words.join(' ');
 
-	return joined.length < SEARCH_MIN_LENGTH ? undefined : `${joined}*`;
+	return countLettersAndDigits(joined) < SEARCH_MIN_LENGTH ? undefined : `${joined}*`;
 }
 
 export { getSearchWords, normalizeSearchInput, toTextQuery };
