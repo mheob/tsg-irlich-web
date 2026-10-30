@@ -1,9 +1,8 @@
-import Image from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import { ButtonLink } from '@/components/ui/button';
+import { Portrait } from '@/components/ui/portrait';
 import { ContactLink } from '@/components/with-logic/contact-link';
-import { urlForImage } from '@/lib/sanity/utils';
 import type { NewsArticleContentQueryResult } from '@/types/sanity.types';
 import { getLastModified, getLocaleDate } from '@/utils/time';
 
@@ -17,7 +16,6 @@ interface AuthorProps extends ComponentPropsWithoutRef<'section'> {
 }
 
 export function Author({ article, ...props }: Readonly<AuthorProps>) {
-	const authorImageSource = urlForImage(article.author.image, AUTHOR_IMAGE_SIZE);
 	const publishedDate = getLocaleDate(new Date(article.publishedAt));
 	const lastModified = getLastModified(article.publishedAt, article._updatedAt);
 	const lastModifiedDate = getLocaleDate(new Date(lastModified));
@@ -27,15 +25,13 @@ export function Author({ article, ...props }: Readonly<AuthorProps>) {
 			<h2 className="text-2xl font-bold uppercase">Autor</h2>
 
 			<div className="mt-3 flex items-center gap-4">
-				{authorImageSource && (
-					<Image
-						alt={article.author.image.alt}
-						className="rounded-full"
-						height={64}
-						src={authorImageSource}
-						width={64}
-					/>
-				)}
+				<Portrait
+					className="size-16 text-2xl"
+					firstName={article.author.firstName}
+					image={article.author.image}
+					lastName={article.author.lastName}
+					sourceSize={AUTHOR_IMAGE_SIZE}
+				/>
 
 				<div className="flex flex-col gap-2">
 					<div className="text-xl font-bold">

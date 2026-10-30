@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { NewsArticlesQueryResult } from '@/types/sanity.types';
 
+import { Portrait } from './portrait';
+
 const FEATURED_IMAGE_SIZE = { height: 450, width: 800 };
 const AUTHOR_IMAGE_SIZE = 56;
 
@@ -22,7 +24,6 @@ export function NewsArticlePreviewWide({
 		FEATURED_IMAGE_SIZE.height,
 		FEATURED_IMAGE_SIZE.width,
 	);
-	const authorImageSource = urlForImage(author.image, AUTHOR_IMAGE_SIZE);
 
 	return (
 		<article className="group rounded-xl bg-background text-black md:grid md:grid-cols-[50%_50%]">
@@ -55,17 +56,14 @@ export function NewsArticlePreviewWide({
 				<p className="line-clamp-3 text-sm md:text-xl">{excerpt}</p>
 
 				<div className="flex items-center gap-3">
-					{authorImageSource && (
-						<div className="relative size-7 md:size-14">
-							<Image
-								alt={author.image.alt}
-								className="rounded-full"
-								sizes="(max-width: 48rem) 28px, 56px"
-								src={authorImageSource}
-								fill
-							/>
-						</div>
-					)}
+					<Portrait
+						className="size-7 text-xs md:size-14 md:text-xl"
+						firstName={author.firstName}
+						image={author.image}
+						lastName={author.lastName}
+						sizes="(max-width: 48rem) 28px, 56px"
+						sourceSize={AUTHOR_IMAGE_SIZE}
+					/>
 					<p className="text-sm md:text-xl">
 						{author.firstName} {author.lastName}
 					</p>

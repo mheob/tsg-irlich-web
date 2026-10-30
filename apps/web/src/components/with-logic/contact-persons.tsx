@@ -1,16 +1,11 @@
-'use client';
-
-import Image from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
-import { useMediaQuery } from '@/hooks/use-media-query';
-import { urlForImage } from '@/lib/sanity/utils';
 import type { ContactPerson } from '@/types/sanity.types';
-import { getInitials } from '@/utils/image';
 
 import { ContactButton } from '../ui/contact-button';
+import { Portrait } from '../ui/portrait';
 
 const IMAGE_SIZE = { desktop: 176, mobile: 120 };
 
@@ -27,41 +22,22 @@ function ContactPersonItem({
 	role,
 	taskDescription,
 }: Readonly<ContactPersonItemProps>) {
-	const isMobile = useMediaQuery('(max-width: 48rem)');
-
-	const imageSource = isMobile
-		? urlForImage(image, IMAGE_SIZE.mobile)
-		: urlForImage(image, IMAGE_SIZE.desktop);
-
 	const showPhone = phone && (contactAs === 'phone' || contactAs === 'both');
 	const showWhatsapp = phone && (contactAs === 'whatsapp' || contactAs === 'both');
 
 	return (
 		<article>
-			{imageSource ? (
-				<Image
-					className={cn(
-						'border-primary bg-secondary-light text-primary',
-						'relative z-1 grid place-items-center',
-						`rounded-full border-5 md:border-8`,
-					)}
-					alt={image.alt}
-					height={isMobile ? IMAGE_SIZE.mobile : IMAGE_SIZE.desktop}
-					src={imageSource}
-					width={isMobile ? IMAGE_SIZE.mobile : IMAGE_SIZE.desktop}
-				/>
-			) : (
-				<div
-					className={cn(
-						'border-primary bg-secondary text-primary',
-						'relative z-1 grid place-items-center',
-						`rounded-full border-5 md:border-8`,
-						`size-32 text-6xl font-bold md:size-44`,
-					)}
-				>
-					{getInitials(firstName, lastName)}
-				</div>
-			)}
+			<Portrait
+				className={cn(
+					'z-1 size-30 border-5 border-primary bg-secondary-light text-6xl',
+					'md:size-44 md:border-8',
+				)}
+				firstName={firstName}
+				image={image}
+				lastName={lastName}
+				sizes={`(max-width: 48rem) ${IMAGE_SIZE.mobile}px, ${IMAGE_SIZE.desktop}px`}
+				sourceSize={IMAGE_SIZE.desktop}
+			/>
 
 			<div className="-mt-24 ml-8 flex h-full flex-col gap-4 rounded-xl bg-background text-black md:-mt-36 md:gap-12">
 				<header className="pt-6 pr-12 pl-28 md:pl-40">
