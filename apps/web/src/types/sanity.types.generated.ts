@@ -53,6 +53,87 @@ export type SingleGroupPage = {
   };
 };
 
+export type SearchPage = {
+  _id: string;
+  _type: "searchPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  heroImage: ExtendedImage;
+  meta?: MetaFields;
+  content: {
+    searchSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      placeholder: string;
+    };
+    noResults?: {
+      title: string;
+      text?: SimpleBlockContent;
+      links?: Array<
+        {
+          _key: string;
+        } & NavigationLink
+      >;
+    };
+    popularSearches?: {
+      title?: string;
+      pinnedTerms?: Array<string>;
+      blockedTerms?: Array<string>;
+    };
+    contactPersonsSection: ContactPersonsSection;
+  };
+};
+
+export type SimpleBlockContent = {
+  _type: "simpleBlockContent";
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ExtendedImage = {
+  _type: "extendedImage";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt: string;
+  description?: string;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
 export type NewsOverviewCategory = {
   _id: string;
   _type: "newsOverviewCategory";
@@ -108,13 +189,6 @@ export type GroupsPage = {
 export type Spacer = {
   _type: "spacer";
   variant?: "default";
-};
-
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
 export type MainImage = {
@@ -338,28 +412,6 @@ export type SocialFields = {
   youtube?: string;
 };
 
-export type SimpleBlockContent = {
-  _type: "simpleBlockContent";
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
 export type NavigationLink = {
   _type: "navigationLink";
   title: string;
@@ -460,16 +512,6 @@ export type ImageCard = {
 export type ExternalLink = {
   _type: "externalLink";
   href?: string;
-};
-
-export type ExtendedImage = {
-  _type: "extendedImage";
-  asset?: SanityImageAssetReference;
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt: string;
-  description?: string;
 };
 
 export type SanityFileAssetReference = {
@@ -960,12 +1002,6 @@ export type Imprint = {
   credits: SimpleBlockContent;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
 export type NewsOverview = {
   _id: string;
   _type: "newsOverview";
@@ -990,6 +1026,7 @@ export type Group = {
   _rev: string;
   department: DepartmentReference;
   title: string;
+  searchTerms?: Array<string>;
   slug: Slug;
   previousPaths?: Array<string>;
   email: string;
@@ -1058,6 +1095,7 @@ export type Department = {
   _updatedAt: string;
   _rev: string;
   title: string;
+  searchTerms?: Array<string>;
   slug: Slug;
   previousSlugs?: Array<string>;
   icon:
@@ -1537,11 +1575,15 @@ export type AllSanitySchemaTypes =
   | PersonReference
   | ContactPersonsSection
   | SingleGroupPage
+  | SearchPage
+  | SimpleBlockContent
+  | SanityImageAssetReference
+  | ExtendedImage
+  | Slug
   | NewsOverviewCategory
   | NewsArticlePage
   | GroupsPage
   | Spacer
-  | SanityImageAssetReference
   | MainImage
   | Grid
   | Gallery
@@ -1565,7 +1607,6 @@ export type AllSanitySchemaTypes =
   | TrainingTime
   | Stats
   | SocialFields
-  | SimpleBlockContent
   | NavigationLink
   | MetaFields
   | MainNavigationMenu
@@ -1573,7 +1614,6 @@ export type AllSanitySchemaTypes =
   | InternalLink
   | ImageCard
   | ExternalLink
-  | ExtendedImage
   | SanityFileAssetReference
   | DocumentDownload
   | ContactNameMail
@@ -1597,7 +1637,6 @@ export type AllSanitySchemaTypes =
   | Accessibility
   | Privacy
   | Imprint
-  | Slug
   | NewsOverview
   | Group
   | NewsCategory

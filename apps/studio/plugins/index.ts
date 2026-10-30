@@ -19,6 +19,7 @@ import newsOverviewPage from '@/schemas/single-pages/news-overview';
 import newsOverviewCategoryPage from '@/schemas/single-pages/news-overview-category';
 import departmentsPage from '@/schemas/single-pages/offer';
 import privacyPage from '@/schemas/single-pages/privacy';
+import searchPage from '@/schemas/single-pages/search-page';
 import singleGroupPage from '@/schemas/single-pages/single-group';
 import siteSettings from '@/schemas/singletons/site-settings';
 
@@ -45,6 +46,7 @@ export function getPlugins(): PluginOptions[] {
 				newsArticlePage,
 				newsOverviewPage,
 				newsOverviewCategoryPage,
+				searchPage,
 				groupsPage,
 				singleGroupPage,
 				accessibilityPage,
@@ -64,6 +66,7 @@ export function getPlugins(): PluginOptions[] {
 			newsArticlePage.name,
 			newsOverviewPage.name,
 			newsOverviewCategoryPage.name,
+			searchPage.name,
 			groupsPage.name,
 			singleGroupPage.name,
 			accessibilityPage.name,
