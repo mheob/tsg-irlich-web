@@ -73,5 +73,8 @@
 		"typescript": "catalog:",
 		"vite-plus": "catalog:",
 		"vitest": "catalog:"
+	},
+	"engines": {
+		"node": "^26.13.0"
 	}
 }

@@ -58,7 +58,7 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 - Built with **Turbo** for build orchestration and caching
 - **pnpm** as package manager with workspace support
 - Every external dependency resolves through the default catalog in `pnpm-workspace.yaml`, and the manifests reference it with `catalog:`. `catalogMode: strict` makes `pnpm add` / `vp add` write new dependencies there; only workspace packages stay on `workspace:*`. The four Vite+ toolchain entries (`vite`, `vite-plus`, `vitest`, `@vitest/coverage-v8`) are re-pinned by `vp migrate`, not by hand
-- Node.js ^24.20.0 and pnpm 12.15.0 required
+- Node.js ^26.13.0 and pnpm 12.15.0 required
 
 ### Web App (Next.js)
 
@@ -164,6 +164,7 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 ### Deployment (Vercel)
 
 - Two Vercel projects deploy from this repository: `tsg-irlich-web` (Root Directory `apps/web`) and `tsg-irlich-web-studio` (`apps/studio`). `next` deploys to the `staging` environment, `main` to production.
+- Vercel takes the Node.js version from `engines.node` in the `package.json` of the project's Root Directory, not from the root `package.json`, and only falls back to the version in the project settings when that field is missing. That is why `apps/web/package.json` and `apps/studio/package.json` repeat the range of the root `package.json`, so the version moves with the branch instead of switching every deployment at once. A Node upgrade changes all three together with `.node-version` (read by the CI workflows and the screenshot container) and `@types/node` in the catalog.
 - A project builds only when a commit affects it. Vercel's "Skip unaffected projects" handles changes inside the workspace packages, but it treats every file outside them (`.claude/`, `.github/`, root docs) as a global change and builds everything. The `ignoreCommand` in each app's `vercel.json` closes that gap with `turbo query affected --base="$VERCEL_GIT_PREVIOUS_SHA" --packages <app> --exit-code || exit 1`, which follows the dependency graph and the global dependencies of `turbo.json`. Exit code 0 cancels the build, 1 runs it, and Vercel fails the deployment on any other code. That is why `|| exit 1` turns turbo's errors into a build. `VERCEL_GIT_PREVIOUS_SHA` is the commit of the last successful deployment on the branch, so it is empty on the first push and for as long as no deployment of the branch has succeeded. turbo would then exit with 2 and print a Git error that looks like a failure, so a guard in front of it (`[ -n "$VERCEL_GIT_PREVIOUS_SHA" ] || { echo "No previous deployment, building"; exit 1; };`) builds without calling turbo at all. Vercel caps the command at 256 characters.
 - A dependency between workspace packages has to be declared in the dependent package's `package.json`, otherwise neither mechanism sees it.
 - A deployment canceled by the `ignoreCommand` reports `success` for its Vercel check, but it creates no GitHub deployment and so no `deployment_status`. `E2E Preview` and `Lighthouse` therefore also trigger on `pull_request`, where their job skips itself: the skipped run satisfies the required check on a commit that deploys nothing. When the web app does deploy, the `deployment_status` run follows and is the one that counts.
