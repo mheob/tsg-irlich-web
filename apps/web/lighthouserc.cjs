@@ -98,6 +98,13 @@ module.exports = {
 					extraHeaders: {
 						'x-vercel-protection-bypass': bypassToken,
 						'x-vercel-set-bypass-cookie': 'true',
+						// Vercel injects its toolbar into every preview page, and the toolbar is not part of
+						// the site. Since 2026-10-30 its script (`vercel.live/_next-live/feedback/feedback.js`)
+						// now and then sets a third-party cookie `_vcrr_…`, which fails `third-party-cookies`
+						// and `inspector-issues` and drops best practices to 0.79 on every route at once —
+						// on and off, with no commit of ours in between. This header is Vercel's documented
+						// switch for automated runs; its presence alone keeps the toolbar out of the page.
+						'x-vercel-skip-toolbar': '1',
 					},
 				}),
 			},
