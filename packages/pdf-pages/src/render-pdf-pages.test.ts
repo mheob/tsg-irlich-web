@@ -1,5 +1,5 @@
 import { createCanvas, loadImage } from '@napi-rs/canvas';
-import { describe, expect, it } from 'vite-plus/test';
+import { beforeAll, describe, expect, it } from 'vite-plus/test';
 
 import { createFixturePdf } from '../test-utils/create-fixture-pdf';
 import { createScanPdf } from '../test-utils/create-scan-pdf';
@@ -23,6 +23,15 @@ async function renderFirstPage(pdf: Uint8Array, options?: RenderOptions): Promis
 }
 
 describe('pdf page rendering', () => {
+	// pdf.js sets `ctx.font` at the start of every render, and the first font assignment makes Skia in
+	// @napi-rs/canvas load every installed system font. That one-off cost takes about half a second on
+	// its own and up to five seconds while every workspace runs its tests at once, so the first
+	// rendering test used to run into the default 5 s timeout. Paying it here keeps it out of the
+	// tests, and the hook's own timeout leaves room for a busier machine.
+	beforeAll(() => {
+		createCanvas(1, 1).getContext('2d').font = '10px sans-serif';
+	}, 30_000);
+
 	// Next.js' output tracing only ships the worker because it is imported statically; pdf.js then
 	// has to find it in-process instead of importing it at runtime.
 	it('registers the pdf.js worker in-process', () => {
