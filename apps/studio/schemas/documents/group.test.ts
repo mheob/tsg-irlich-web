@@ -152,6 +152,7 @@ describe('group document', () => {
 		expect(fieldNames).toStrictEqual([
 			'department',
 			'title',
+			'searchTerms',
 			'slug',
 			'previousPaths',
 			'email',
@@ -166,6 +167,20 @@ describe('group document', () => {
 			'training',
 			'newsCategory',
 		]);
+	});
+
+	it('offers search terms right after the title', () => {
+		const fieldNames = (group as unknown as { fields: { name: string }[] }).fields.map(
+			(field) => field.name,
+		);
+
+		expect(fieldNames[fieldNames.indexOf('title') + 1]).toBe('searchTerms');
+		expect(getField('searchTerms')).toMatchObject({
+			of: [{ type: 'string' }],
+			options: { layout: 'tags' },
+			title: 'Suchbegriffe',
+			type: 'array',
+		});
 	});
 
 	it('never hides the fields that used to be hidden for non-sport groups', () => {
