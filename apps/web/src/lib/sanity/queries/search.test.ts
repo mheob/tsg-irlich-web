@@ -33,13 +33,15 @@ const ALL_QUERIES = [
  * Reads the score terms of a query.
  *
  * @param query - The GROQ query
- * @returns Every `boost(<lhs> match text::query($q), <weight>)` term, split into both parts
+ * @returns Every `boost(<lhs> match text::query($q), <weight>)` term, with the guard of a term
+ * written as `boost(<guard>, 0) && boost(…)` (an empty string for a term without a guard)
  */
 function getScoreTerms(query: string): ScoreTerm[] {
 	const term =
-		/boost\((?<lhs>(?:(?!boost\()[\s\S])*?) match text::query\(\$q\), (?<weight>\d+)\)/gu;
+		/(?:boost\((?<guard>(?:[^()]|\([^()]*\))*?), 0\) && )?boost\((?<lhs>(?:(?!boost\()[\s\S])*?) match text::query\(\$q\), (?<weight>\d+)\)/gu;
 
 	return [...query.matchAll(term)].map((match) => ({
+		guard: match.groups?.guard ?? '',
 		lhs: match.groups?.lhs ?? '',
 		weight: Number(match.groups?.weight),
 	}));
@@ -71,13 +73,13 @@ describe('search queries', () => {
 		// Review focus 3: the text of a non-indexable issue must never make it a hit.
 		it('only scores when the issue is indexable', () => {
 			expect(searchCandidatesQuery).toContain(
-				'indexable != false && extractedText match text::query($q)',
+				`boost(indexable != false, 0) && boost(extractedText match text::query($q), ${WEIGHTS.body})`,
 			);
 		});
 
 		it.each(ALL_QUERIES)('is never matched without the guard in %s', (_label, query) => {
 			expect(countOccurrences(query, 'extractedText match')).toBe(
-				countOccurrences(query, 'indexable != false && extractedText match'),
+				countOccurrences(query, 'boost(indexable != false, 0) && boost(extractedText match'),
 			);
 		});
 
@@ -137,14 +139,26 @@ describe('search queries', () => {
 		});
 
 		it.each([
-			['title', WEIGHTS.title],
-			['searchTerms[]', WEIGHTS.searchTerms],
-			['question', WEIGHTS.lead],
-			['[firstName, lastName]', WEIGHTS.lead],
-			['affiliations[].taskDescription', WEIGHTS.body],
-			['indexable != false && extractedText', WEIGHTS.body],
-		])('weigh %s with %i', (lhs, weight) => {
-			expect(getScoreTerms(searchCandidatesQuery)).toContainEqual({ lhs, weight });
+			{ guard: '', lhs: 'title', weight: WEIGHTS.title },
+			{ guard: '', lhs: 'searchTerms[]', weight: WEIGHTS.searchTerms },
+			{ guard: "_type in ['department', 'home']", lhs: 'intro', weight: WEIGHTS.lead },
+			{ guard: '', lhs: 'question', weight: WEIGHTS.lead },
+			{ guard: '', lhs: '[firstName, lastName]', weight: WEIGHTS.lead },
+			{ guard: '', lhs: 'affiliations[].taskDescription', weight: WEIGHTS.body },
+			{ guard: 'indexable != false', lhs: 'extractedText', weight: WEIGHTS.body },
+		])('weigh $lhs with $weight', (term) => {
+			expect(getScoreTerms(searchCandidatesQuery)).toContainEqual(term);
+		});
+
+		// Content Lake adds the score of every other true predicate inside a term, so a guard joined
+		// to the match by `&&` would count once more. A guard of its own, boosted by 0, adds nothing.
+		it('never let a guard add to the score', () => {
+			expect(
+				getScoreTerms(searchCandidatesQuery).filter(({ lhs }) => /&&|==|!=/u.test(lhs)),
+			).toStrictEqual([]);
+			expect(countOccurrences(searchCandidatesQuery, ' && boost(')).toBe(
+				countOccurrences(searchCandidatesQuery, ', 0) && boost('),
+			);
 		});
 
 		// `score()` rejects `role->title`, so a role counts through the roles that reference it.
@@ -156,17 +170,17 @@ describe('search queries', () => {
 
 		// A portable text object as a whole would be matched down to its `_type` and `style` values.
 		it('only match a bare intro where it is plain text', () => {
-			const guard = "_type in ['department', 'home'] && ";
+			const guard = "_type in ['department', 'home']";
 
 			const inArrays = getScoreTerms(searchCandidatesQuery).filter(({ lhs }) =>
 				/[\s,[]intro\s*[,\]]/u.test(lhs),
 			);
 
 			expect(countOccurrences(searchCandidatesQuery, 'intro match')).toBe(
-				countOccurrences(searchCandidatesQuery, `${guard}intro match`),
+				countOccurrences(searchCandidatesQuery, `boost(${guard}, 0) && boost(intro match`),
 			);
 			expect(inArrays).not.toHaveLength(0);
-			expect(inArrays.filter(({ lhs }) => !lhs.startsWith(guard))).toStrictEqual([]);
+			expect(inArrays.filter((term) => term.guard !== guard)).toStrictEqual([]);
 		});
 
 		// `text::query()` wants every word in the one field it is matched against, so a page whose
@@ -174,9 +188,9 @@ describe('search queries', () => {
 		it('score words that sit in different fields of one page', () => {
 			const catchAll = getCatchAllTerms(searchCandidatesQuery);
 
-			expect(catchAll.map(({ lhs }) => lhs.slice(0, lhs.search(/\[\s*title,/u)))).toStrictEqual([
-				"_type in ['department', 'home'] && ",
-				"!(_type in ['department', 'home', 'echo.issue']) && ",
+			expect(catchAll.map(({ guard }) => guard)).toStrictEqual([
+				"_type in ['department', 'home']",
+				"!(_type in ['department', 'home', 'echo.issue'])",
 			]);
 			for (const { weight } of catchAll) {
 				expect(weight).toBe(WEIGHTS.body);
@@ -219,13 +233,17 @@ describe('search queries', () => {
 		it('weigh a title hit above a text hit', () => {
 			const terms = getScoreTerms(searchNewsQuery);
 
-			expect(terms).toContainEqual({ lhs: 'title', weight: WEIGHTS.title });
-			expect(terms).toContainEqual({ lhs: 'body[].text[].children[].text', weight: WEIGHTS.body });
+			expect(terms).toContainEqual({ guard: '', lhs: 'title', weight: WEIGHTS.title });
+			expect(terms).toContainEqual({
+				guard: '',
+				lhs: 'body[].text[].children[].text',
+				weight: WEIGHTS.body,
+			});
 		});
 
 		it('score words that sit in the title and the text of one article', () => {
 			expect(getCatchAllTerms(searchNewsQuery)).toStrictEqual([
-				{ lhs: '[title, body[].text[].children[].text]', weight: WEIGHTS.body },
+				{ guard: '', lhs: '[title, body[].text[].children[].text]', weight: WEIGHTS.body },
 			]);
 		});
 
@@ -246,6 +264,7 @@ describe('search queries', () => {
 });
 
 interface ScoreTerm {
+	guard: string;
 	lhs: string;
 	weight: number;
 }

@@ -59,13 +59,25 @@ const searchTarget = /* groq */ `
 `;
 
 /**
- * The score of a page: the weight of every field the search term matches, see `WEIGHTS`.
+ * The score of a page: the sum of its terms, each a field (or an array of fields) the search term
+ * matches, multiplied by the weight of that field, see `WEIGHTS`. Measured on Content Lake:
+ *
+ * - A match that only comes about through the trailing wildcard (`tanz*` finds „Tanzen“) scores 1,
+ *   so the term adds exactly its weight. A whole word scores a BM25-like relevance instead (term
+ *   frequency against field length), so „tanzen“ in the title „Tanzen“ adds about 7 × 10, and a
+ *   long text that holds the words several times can outweigh a heavier field.
+ * - Every other predicate that is true inside a term adds a score of its own: `_type == …`, `in`
+ *   and `defined()` add 1 × the weight, `!(…)` and `!=` add 1. A guard written as
+ *   `boost(_type == 'x' && path match …, w)` would count twice. Every guard here is therefore its
+ *   own `boost(<guard>, 0)`, joined to the term by `&&`: it still gates the match, but adds 0.
+ * - A role counts through `references()` to the roles whose title matches, because `score()`
+ *   rejects a dereference. That predicate scores 1 × its weight, also for a whole word.
+ *
+ * What the terms cover:
  *
  * - Only a department and the home page have an `intro` of plain text. Everywhere else it is
  *   portable text, and `match` would search such an object down to its `_type` and `style` values,
  *   so a search for „span“ or „block“ would find it. Its words are matched through their path.
- * - `score()` rejects a dereference. A role counts through `references()` to the roles whose title
- *   matches instead.
  * - `text::query()` wants every word in the one field it is matched against. The last two terms
  *   match all fields of a page at once, so a page whose words sit in different fields is still
  *   found. Each page type takes part in exactly one of them. A role title cannot be part of them.
@@ -77,7 +89,7 @@ const pageScore = /* groq */ `
 	boost(title match text::query($q), ${WEIGHTS.title}),
 	boost(searchTerms[] match text::query($q), ${WEIGHTS.searchTerms}),
 	boost(subtitle match text::query($q), ${WEIGHTS.lead}),
-	boost(_type in ['department', 'home'] && intro match text::query($q), ${WEIGHTS.lead}),
+	boost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), ${WEIGHTS.lead}),
 	boost(intro.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
 	boost(introText.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
 	boost(content.introSection.intro.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
@@ -90,9 +102,9 @@ const pageScore = /* groq */ `
 	boost(content.visionSection.longVision.text[].children[].text match text::query($q), ${WEIGHTS.body}),
 	boost(references(*[_type == 'role' && title match text::query($q)]._id), ${WEIGHTS.body}),
 	boost(affiliations[].taskDescription match text::query($q), ${WEIGHTS.body}),
-	boost(indexable != false && extractedText match text::query($q), ${WEIGHTS.body}),
-	boost(_type in ['department', 'home'] && [title, searchTerms[], subtitle, intro] match text::query($q), ${WEIGHTS.body}),
-	boost(!(_type in ['department', 'home', 'echo.issue']) && [
+	boost(indexable != false, 0) && boost(extractedText match text::query($q), ${WEIGHTS.body}),
+	boost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), ${WEIGHTS.body}),
+	boost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([
 		title,
 		searchTerms[],
 		subtitle,
