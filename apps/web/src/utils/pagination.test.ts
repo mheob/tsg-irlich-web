@@ -32,6 +32,15 @@ describe('the canonical path of a paginated overview page', () => {
 	it('points every later page at itself', () => {
 		expect(getPaginatedPath('/news/fussball', 2)).toBe('/news/fussball?seite=2');
 	});
+
+	it('keeps the query string of a path and appends the page to it', () => {
+		expect(getPaginatedPath('/suche?q=x', 2)).toBe('/suche?q=x&seite=2');
+		expect(getPaginatedPath('/suche?q=x&typ=news', 3)).toBe('/suche?q=x&typ=news&seite=3');
+	});
+
+	it('leaves a path with a query string as it is on the first page', () => {
+		expect(getPaginatedPath('/suche?q=x&typ=news', 1)).toBe('/suche?q=x&typ=news');
+	});
 });
 
 describe('the page count of a paginated overview', () => {

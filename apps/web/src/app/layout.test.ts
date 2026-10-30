@@ -9,6 +9,7 @@ import { JsonLd } from '@/components/ui/json-ld';
 import { DisableDraftMode } from '@/components/with-logic/disable-draft-mode';
 import { Navigation } from '@/components/with-logic/navigation/navigation';
 import type { client } from '@/lib/sanity/client';
+import { searchPlaceholderQuery } from '@/lib/sanity/queries/search';
 
 import { findElement } from '../../test-utils/react-tree';
 import { clientFetchMock } from '../../test-utils/sanity-client-mock';
@@ -112,8 +113,11 @@ describe('the root layout', () => {
 	});
 
 	// WEB-370: the revalidation webhook tags its run with the document type, so both fetches of the
-	// layout carry the `site-settings` tag; without it a menu change waited out the 12 hours.
-	it('tags both of its fetches with the site settings', async () => {
+	// site settings carry the `site-settings` tag; without it a menu change waited out the 12 hours.
+	// The placeholder belongs to the search page and expires with its type, read as published like
+	// every fetch of the search. It carries a `revalidate` as well: without one a dynamic render
+	// (draft mode, a page that reads its search params) asks Sanity again on every request.
+	it('tags each of its fetches with the type it reads', async () => {
 		mockDraftMode(false);
 		mockedFetch.mockResolvedValue({ mainNavigation: [] });
 
@@ -122,7 +126,24 @@ describe('the root layout', () => {
 		expect(mockedFetch.mock.calls.map((call) => call[2])).toStrictEqual([
 			{ next: { revalidate: 43_200, tags: ['site-settings'] } },
 			{ next: { tags: ['site-settings'] } },
+			{ next: { revalidate: 43_200, tags: ['searchPage'] }, perspective: 'published' },
 		]);
+	});
+
+	it('hands the navigation the placeholder of the search page', async () => {
+		mockDraftMode(false);
+		// The navigation, the organization and the placeholder, in the order the layout asks.
+		mockedFetch
+			.mockResolvedValueOnce({ mainNavigation: [] })
+			.mockResolvedValueOnce(null)
+			.mockResolvedValueOnce('Sportart, Gruppe oder Name');
+
+		const layout = await RootLayout({ children: null });
+
+		expect(mockedFetch.mock.calls[2]?.[0]).toBe(searchPlaceholderQuery);
+		expect(findElement(layout, Navigation)?.props.searchPlaceholder).toBe(
+			'Sportart, Gruppe oder Name',
+		);
 	});
 
 	it('hands the navigation the items it fetched', async () => {
@@ -146,7 +167,7 @@ describe('the root layout', () => {
 		warnSpy.mockRestore();
 	});
 
-	it('survives a failing navigation query', async () => {
+	it('survives failing queries', async () => {
 		const warnSpy = vi.spyOn(console, 'warn').mockReturnValue();
 		mockDraftMode(false);
 		mockedFetch.mockRejectedValue(new Error('content lake unreachable'));
@@ -154,6 +175,7 @@ describe('the root layout', () => {
 		const layout = await RootLayout({ children: null });
 
 		expect(findElement(layout, Navigation)?.props.navItems).toStrictEqual([]);
+		expect(findElement(layout, Navigation)?.props.searchPlaceholder).toBeNull();
 		warnSpy.mockRestore();
 	});
 

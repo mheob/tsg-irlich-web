@@ -1,5 +1,5 @@
 import type { FlipbookPage } from '@/components/with-logic/flipbook/types';
-import { toArchiveUrl } from '@/lib/echo/archive-url';
+import { linkAsset } from '@/lib/echo/archive-url';
 import { getDownloadFileUrl, getFileSize, urlForImageMax } from '@/lib/sanity/utils';
 import type { EchoIssueQueryResult } from '@/types/sanity.types';
 
@@ -23,21 +23,6 @@ const A4_PAGE = { height: 2000, width: 1414 };
  */
 function getIssueYear(releaseDate?: string | null): string {
 	return releaseDate?.slice(0, YEAR_LENGTH) ?? '';
-}
-
-/**
- * The URL a visitor gets for an asset: the CDN's own, or the archive path's, which tells search
- * engines to stay away.
- *
- * `indexable` is the issue's own field, not a behaviour switch: two functions instead would split
- * every helper that links an asset, hence the NOSONAR for S2301.
- *
- * @param url - The CDN URL.
- * @param indexable - Whether search engines may find the issue.
- * @returns The URL to link.
- */
-function linkAsset(url: string, indexable: boolean): string {
-	return indexable ? url : toArchiveUrl(url); // NOSONAR
 }
 
 /**

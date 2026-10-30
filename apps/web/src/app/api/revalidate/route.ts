@@ -110,6 +110,11 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	privacy: () => {
 		revalidatePath('/datenschutz');
 	},
+	// The placeholder of the search panel in the navigation, which the root layout renders on every
+	// page. The `/suche` page itself reads the same document.
+	searchPage: () => {
+		revalidatePath('/', 'layout');
+	},
 	// The menu and the footer data, rendered by the root layout on every page.
 	'site-settings': () => {
 		revalidatePath('/', 'layout');

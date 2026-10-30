@@ -14,10 +14,12 @@ import { Navigation } from '@/components/with-logic/navigation/navigation';
 import { client } from '@/lib/sanity/client';
 import { SanityLive } from '@/lib/sanity/live';
 import { mainNavigationQuery } from '@/lib/sanity/queries/main-navigation';
+import { searchPlaceholderQuery } from '@/lib/sanity/queries/search';
 import { organizationQuery } from '@/lib/sanity/queries/shared/organization';
 import type {
 	MainNavigationQueryResult,
 	OrganizationQueryResult,
+	SearchPlaceholderQueryResult,
 } from '@/types/sanity.types.generated';
 import { FEED_ALTERNATES, SITE_NAME, SITE_OPEN_GRAPH } from '@/utils/metadata';
 import { getSiteGraph } from '@/utils/structured-data';
@@ -82,10 +84,16 @@ const inter = localFont({
 	variable: '--font-sans',
 });
 
+/**
+ * How long the navigation and the placeholder of the search panel are cached, in seconds. The
+ * revalidation webhook expires them earlier through their tags.
+ */
 // oxlint-disable-next-line no-magic-numbers
 const NAVIGATION_REVALIDATE_SECONDS = 60 * 60 * 12;
 /** The revalidation webhook tags its run with the document type; both layout fetches read it. */
 const SITE_SETTINGS_TAG = 'site-settings';
+/** The type of the search page, whose placeholder the panel of the navigation shows. */
+const SEARCH_PAGE_TAG = 'searchPage';
 
 export const metadata: Metadata = {
 	alternates: { types: FEED_ALTERNATES },
@@ -108,7 +116,7 @@ export default async function RootLayout({
 }>) {
 	const { isEnabled: isDraftMode } = await draftMode();
 
-	const [mainNavigationQueryResults, organization] = await Promise.all([
+	const [mainNavigationQueryResults, organization, searchPlaceholder] = await Promise.all([
 		client
 			.fetch<MainNavigationQueryResult>(
 				mainNavigationQuery,
@@ -122,6 +130,18 @@ export default async function RootLayout({
 				organizationQuery,
 				{},
 				{ next: { tags: [SITE_SETTINGS_TAG] } },
+			)
+			.catch(() => null),
+		// Without it the panel falls back to its own placeholder. Published only, like every fetch of
+		// the search, also while draft mode is on.
+		client
+			.fetch<SearchPlaceholderQueryResult>(
+				searchPlaceholderQuery,
+				{},
+				{
+					next: { revalidate: NAVIGATION_REVALIDATE_SECONDS, tags: [SEARCH_PAGE_TAG] },
+					perspective: 'published',
+				},
 			)
 			.catch(() => null),
 	]);
@@ -143,7 +163,7 @@ export default async function RootLayout({
 					'flex h-screen flex-col',
 				)}
 			>
-				<Navigation navItems={navItems} />
+				<Navigation navItems={navItems} searchPlaceholder={searchPlaceholder} />
 				<main className="grid flex-1">{children}</main>
 				<Footer />
 				<JsonLd data={getSiteGraph(getBaseUrl(), organization)} />

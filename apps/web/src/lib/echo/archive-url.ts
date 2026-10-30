@@ -25,6 +25,21 @@ function toArchiveUrl(url: string): string {
 	return `${ARCHIVE_PATH}/${asset.groups.kind}/${asset.groups.file}${parsed.search}`;
 }
 
+/**
+ * The URL a visitor gets for an asset: the CDN's own, or the archive path's, which tells search
+ * engines to stay away.
+ *
+ * `indexable` is the issue's own field, not a behaviour switch: two functions instead would split
+ * every helper that links an asset, hence the NOSONAR for S2301.
+ *
+ * @param url - The CDN URL.
+ * @param indexable - Whether search engines may find the issue.
+ * @returns The URL to link.
+ */
+function linkAsset(url: string, indexable: boolean): string {
+	return indexable ? url : toArchiveUrl(url); // NOSONAR
+}
+
 /** `<ARCHIVE_PATH>/<kind>/<file>`: one asset of one kind. */
 const ARCHIVE_ASSET_PATH = new RegExp(
 	`^${ARCHIVE_PATH}/(?<kind>images|files)/(?<file>[^/]+)$`,
@@ -80,5 +95,5 @@ interface SanityTarget {
 /** What every archive response tells search engines. */
 const ARCHIVE_ROBOTS_TAG = 'noindex, nofollow';
 
-export { ARCHIVE_PATH, ARCHIVE_ROBOTS_TAG, toArchiveUrl, toCdnUrl };
+export { ARCHIVE_PATH, ARCHIVE_ROBOTS_TAG, linkAsset, toArchiveUrl, toCdnUrl };
 export type { SanityTarget };

@@ -26,6 +26,53 @@ export async function waitForPage(page: Page): Promise<void> {
 }
 
 /**
+ * Opens the search panel with the lupe of the current viewport and waits until its input is there.
+ *
+ * The lupe only answers once the bar is hydrated, and the panel arrives in a chunk of its own that
+ * is loaded on the first press and opens a frame after it has mounted. Pressing again until the
+ * input shows up doubles as the wait for all three. A press that did land makes the lupe `inert`
+ * while the panel is on its way, so a retry only presses while no panel is open and gives up on a
+ * lupe that takes no click instead of waiting for it.
+ *
+ * @param page - A page that has passed `waitForPage`.
+ * @returns The input of the panel.
+ */
+export async function openSearchPanel(page: Page): Promise<Locator> {
+	const lupe = page.getByRole('button', { name: 'Suche öffnen' });
+	const input = page
+		.getByRole('dialog', { name: 'Website durchsuchen' })
+		.getByRole('combobox', { name: 'Suchbegriff' });
+
+	await expect(async () => {
+		if (!(await input.isVisible())) {
+			await lupe.click({ timeout: 1000 });
+		}
+
+		await expect(input).toBeVisible({ timeout: 2000 });
+	}).toPass();
+
+	return input;
+}
+
+/**
+ * Types a search term into the open panel and waits for its hits.
+ *
+ * @param page - A page with the search panel open.
+ * @param term - The search term.
+ * @returns The listbox with the hits.
+ */
+export async function searchInPanel(page: Page, term: string): Promise<Locator> {
+	const input = page.getByRole('combobox', { name: 'Suchbegriff' });
+	const listbox = page.getByRole('listbox', { name: 'Treffer' });
+
+	// `fill` replaces the whole value at once, so the panel searches once, after its debounce.
+	await input.fill(term);
+	await expect(listbox.getByRole('option').first()).toBeVisible();
+
+	return listbox;
+}
+
+/**
  * Locates the first "Mehr über … erfahren" card inside the main region.
  *
  * @param page - The overview page the card is listed on.

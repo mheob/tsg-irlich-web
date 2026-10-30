@@ -73,6 +73,19 @@ describe('department document', () => {
 		);
 	});
 
+	it('offers search terms right after the title', () => {
+		const fieldNames = department.fields.map((field) => field.name);
+		const searchTerms = department.fields.find((field) => field.name === 'searchTerms');
+
+		expect(fieldNames[fieldNames.indexOf('title') + 1]).toBe('searchTerms');
+		expect(searchTerms).toMatchObject({
+			of: [{ type: 'string' }],
+			options: { layout: 'tags' },
+			title: 'Suchbegriffe',
+			type: 'array',
+		});
+	});
+
 	it('starts with team sport switched off', () => {
 		const isTeamSport = department.fields.find((field) => field.name === 'isTeamSport');
 

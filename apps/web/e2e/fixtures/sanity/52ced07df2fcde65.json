@@ -1,0 +1,188 @@
+{
+	"body": {
+		"result": {
+			"_updatedAt": "2026-09-29T12:28:50Z",
+			"author": {
+				"email": "s.thome@tsg-irlich.de",
+				"firstName": "Sophie ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+					"asset": {
+						"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6740816500468764,
+						"width": 0.6978607346799625,
+						"x": 0.4942576493650388,
+						"y": 0.40427639989772435
+					}
+				},
+				"jobTitle": "PR-Team Bereich Breitensport",
+				"lastName": "Thomé"
+			},
+			"body": [
+				{
+					"_key": "d517a9e101c8",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "d1fb07fd4180",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1a9d2f286f590",
+									"_type": "span",
+									"marks": [],
+									"text": "Bereits seit Längerem war es in Planung, das Sportangebot der TSG Irlich zu erweitern. Seit dem 21. März 2024 ist es jetzt Wirklichkeit und eine weitere Kleinkind-Tanzgruppe – die „Sweet Diamonds“, verstärkt die TSG Irlich in ihrem umfangreichen Angebot."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "d42e58f637f0",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "66899274d58a",
+									"_type": "span",
+									"marks": [],
+									"text": ""
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "4dd8b946e25f",
+					"_type": "blockquote",
+					"author": "Vorsitzender Alexander Hof",
+					"quote": "Wir sind sehr stolz auf die super Entwicklung unserer drei Tanzgruppen, die mittlerweile ein absolutes Aushängeschild der TSG Irlich sind. Wir freuen uns daher riesig, mit einer weiteren Tanzgruppe für den Tanz-Nachwuchs an den Start gehen zu können! In den vergangenen Jahren haben unsere Trainerinnen bewiesen, welches Potenzial in den Tanzgruppen der TSG steckt. Hierfür sind wir sehr dankbar!"
+				},
+				{
+					"_key": "500e2ee87803",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "0bff3e4d8b8f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ab6310d47aa00",
+									"_type": "span",
+									"marks": [],
+									"text": "Die neu formierte Gruppe ermöglicht den kleinen tanzbegeisterten Mädels und Jungs im Alter von 3–6 Jahren, einmal die Woche das Tanzbein zu schwingen. Im Vordergrund steht der Spaß am Tanzen und der Musik."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "a3bea588774d",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ee05ac0ef3ad0",
+									"_type": "span",
+									"marks": [],
+									"text": "Die „Sweet Diamonds“ werden trainiert von Melina Dinter, die in der Vergangenheit bereits die Magic und Funky Diamonds trainiert hat und selbst begeisterte Tänzerin war. Ebenfalls trainiert Melina, die seit vielen Jahren auch im Vorstand der TSG Irlich aktiv ist, die IrlicherDorfsjunge!"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "9ccc05441504",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "355016f23e14",
+									"_type": "span",
+									"marks": [],
+									"text": ""
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "403f6476c09b",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "f9e72fb554ff",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "bfd24caa74390",
+									"_type": "span",
+									"marks": [],
+									"text": "Am letzten Juni Wochenende hieß es für die kleinsten Tänzer und Tänzerinnen der TSG Irlich: „Das erste Mal die Tanzschuhe schnüren und ab auf die Bühne!“ \n\nMit ihrem Wellermann-Tanz begeisterten die 15 Nachwuchstänzerinnen und -tänzer  die Irlicher Kirmes und ließen so das ein oder andere Herz schmelzen. \nAuch den „Zugabe“-Rufen wurde professionell standgehalten und so performten die Kids gleich zweimal am Kirmessonntag. \n\n\n\n"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "ea43928e31f1",
+					"_type": "blockquote",
+					"author": "Trainerin Melina Dinter",
+					"quote": "Die Kids haben das einfach nur super gemacht. Man hat richtig gemerkt, wie viel Lust sie hatten, auf die Bühne zu gehen und die Arbeit der vergangenen Monate zu präsentieren. Dieser erste Auftritt war eine gute Probe für die anstehende Karnevalssession und ich bin mir sicher, dass unsere „Sweeties“ auch diese mit Bravour meistern."
+				}
+			],
+			"categories": [
+				{
+					"slug": "diamonds",
+					"title": "Diamonds"
+				}
+			],
+			"excerpt": "Bereits seit längerem war es in Planung das Sportangebot der TSG Irlich zu erweitern. Seit dem 21. März 2024 ist es jetzt Wirklichkeit und eine weitere Kleinkind-Tanzgruppe - die „Sweet Diamonds“, verstärken die TSG Irlich in ihrem umfangreichen Angebot.  ",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Mädels und Jungs der Sweet Diamonds zusammen mit Trainerin auf der Bühne der Kirmes 2023",
+				"asset": {
+					"_ref": "image-6aa37cde096f8fcd0877765e9a3974ac3c3ba639-6000x4000-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0.09790209790209786,
+					"right": 0.12762237762237771,
+					"top": 0.3885003885003885
+				},
+				"description": "Mädels und Jungs der Sweet Diamonds zusammen mit Trainerin auf der Bühne der Kirmes 2023",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.48549948549948535,
+					"width": 0.7499999999999997,
+					"x": 0.4868881118881118,
+					"y": 0.6312501312501312
+				}
+			},
+			"meta": null,
+			"publishedAt": "2024-07-16T07:00:00.000Z",
+			"slug": "sweet-diamonds-feiern-debuet",
+			"title": "Neu formierten \"Sweet Diamonds\" feiern Debüt auf irlicher Kirmes "
+		},
+		"syncTags": ["s1:gDNQog", "s1:NHRb6w", "s1:bmIwtw"],
+		"ms": 9
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22sweet-diamonds-feiern-debuet%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

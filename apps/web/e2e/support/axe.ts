@@ -11,6 +11,19 @@ import { KNOWN_VIOLATIONS } from './axe-baseline';
  */
 const WCAG_21_AA_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 
+/**
+ * Base UI's focus guards: the two visually hidden spans its focus trap puts around a modal popup.
+ * They are `aria-hidden`, except in WebKit on an Apple platform (Base UI's `FocusGuard` checks
+ * `platform.screenReader.voiceOver && platform.engine.webkit`, and `voiceOver` is only an
+ * Apple-OS check, not a running screen reader). There they become unnamed `role="button"` on
+ * purpose, because VoiceOver's virtual cursor only fires `onFocus` on focusable or button
+ * elements, and that is how the trap keeps it inside the popup. So a local macOS run reports them
+ * in WebKit, while Chromium and the Linux CI image do not, and Lighthouse, which runs Chrome,
+ * never sees them. They are library markup, not ours, and every scan leaves them out instead of
+ * baselining `aria-command-name` for each popup the sweep opens.
+ */
+const BASE_UI_FOCUS_GUARD = '[data-base-ui-focus-guard]';
+
 /** The name the helper attaches its result under and the summary reporter reads it back by. */
 export const AXE_ATTACHMENT = 'axe-results';
 
@@ -52,7 +65,10 @@ export async function expectNoAxeViolations(
 	testInfo: TestInfo,
 	route: string,
 ): Promise<void> {
-	const results = await new AxeBuilder({ page }).withTags(WCAG_21_AA_TAGS).analyze();
+	const results = await new AxeBuilder({ page })
+		.withTags(WCAG_21_AA_TAGS)
+		.exclude(BASE_UI_FOCUS_GUARD)
+		.analyze();
 	const known = new Set(KNOWN_VIOLATIONS[route]);
 
 	const attachment: AxeAttachment = {

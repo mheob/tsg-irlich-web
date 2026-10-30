@@ -14,14 +14,19 @@ function getPageNumber(page?: string | string[]): number {
  * Builds the canonical path of a page of a paginated overview.
  *
  * Every page points at itself, since each one lists different articles. The first page drops the
- * parameter, so it shares its canonical URL with the plain overview link.
+ * parameter, so it shares its canonical URL with the plain overview link. A path that has a query
+ * string already (`/suche?q=Tanzen`) keeps it and gets the page appended.
  *
- * @param path - The path of the overview.
+ * @param path - The path of the overview, with its query string if it has one.
  * @param pageNumber - The page number.
  * @returns The canonical path.
  */
 function getPaginatedPath(path: string, pageNumber: number): string {
-	return pageNumber > 1 ? `${path}?seite=${pageNumber}` : path;
+	if (pageNumber <= 1) {
+		return path;
+	}
+
+	return `${path}${path.includes('?') ? '&' : '?'}seite=${pageNumber}`;
 }
 
 /**

@@ -47,6 +47,7 @@ import newsOverviewPage from './single-pages/news-overview';
 import newsOverviewCategoryPage from './single-pages/news-overview-category';
 import departmentsPage from './single-pages/offer';
 import privacyPage from './single-pages/privacy';
+import searchPage from './single-pages/search-page';
 import singleGroupPage from './single-pages/single-group';
 import siteSettings from './singletons/site-settings';
 
@@ -109,5 +110,6 @@ export const schemaTypes = [
 	newsOverviewCategoryPage,
 	newsOverviewPage,
 	privacyPage,
+	searchPage,
 	singleGroupPage,
 ];
