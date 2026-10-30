@@ -18,16 +18,23 @@ import {
 import { SEARCH_MAX_LENGTH } from '@/lib/search/constants';
 import { getSearchPath, SEARCH_PATH } from '@/lib/search/path';
 import { normalizeSearchInput } from '@/lib/search/query';
-import type { SearchHit } from '@/lib/search/types';
+import type { SearchHit, SearchResult } from '@/lib/search/types';
 
 import { SearchPanelHits } from './search-panel-hits';
 import { SearchPanelNotice, SearchPanelPopular } from './search-panel-states';
 import { useListboxNavigation } from './use-listbox-navigation';
 import { usePopularSearches } from './use-popular-searches';
 import { useSearchResults } from './use-search-results';
+import type { SearchStatus } from './use-search-results';
 
 /** The placeholder while the singleton of the search page is missing. */
 const FALLBACK_PLACEHOLDER = 'Wonach suchst du?';
+
+/** What the live region says while a search is running. */
+const SEARCHING_MESSAGE = 'Suche läuft …';
+
+/** What the panel shows, and the live region says, when the search could not be reached. */
+const UNREACHABLE_MESSAGE = 'Die Suche ist gerade nicht erreichbar.';
 
 /**
  * The panel hangs below the bar, which is 3.5 rem high below `lg`. There it fills the screen;
@@ -42,6 +49,48 @@ const POPUP_TOP_CLASS_NAME = 'lg:top-32 lg:max-h-[calc(100dvh-8rem)]';
 
 /** Where the panel starts from `lg` once the bar has shrunk to its scrolled height. */
 const POPUP_TOP_COMPACT_CLASS_NAME = 'lg:top-16 lg:max-h-[calc(100dvh-4rem)]';
+
+/**
+ * The sentence the panel shows when a search found nothing. The live region repeats it word for
+ * word, so both read it from here.
+ *
+ * @param query - The search term, as the route answered it.
+ * @returns The sentence.
+ */
+function getNoHitsMessage(query: string): string {
+	return `Keine Treffer für „${query}“.`;
+}
+
+/**
+ * What a screen reader hears of the search, in step with what the panel shows: that a search is
+ * running, how many hits it found, or the sentence of the notice that stands in place of the hits.
+ *
+ * @param status - Where the search stands.
+ * @param shownResult - The result on screen, `null` where the panel shows none.
+ * @param hasOptions - Whether the result lists at least one hit.
+ * @returns The message, empty while there is nothing to announce.
+ */
+function getLiveMessage(
+	status: SearchStatus,
+	shownResult: SearchResult | null,
+	hasOptions: boolean,
+): string {
+	if (status === 'loading') {
+		return SEARCHING_MESSAGE;
+	}
+
+	if (status === 'error') {
+		return UNREACHABLE_MESSAGE;
+	}
+
+	if (!shownResult) {
+		return '';
+	}
+
+	return hasOptions
+		? `${shownResult.totals.pages + shownResult.totals.news} Treffer`
+		: getNoHitsMessage(shownResult.query);
+}
 
 /**
  * The content of the open panel: the input, the live region and whatever the input leads to.
@@ -150,7 +199,7 @@ function SearchPanelContent({ inputRef, onClose, placeholder }: Readonly<SearchP
 			    `output` holds the result of a form and is no live region in every screen reader. */}
 			{/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role */}
 			<p aria-live="polite" className="sr-only" role="status">
-				{status === 'loading' ? 'Suche läuft …' : ''}
+				{getLiveMessage(status, shownResult, hasOptions)}
 			</p>
 
 			{status === 'idle' && popularSearches && (
@@ -159,13 +208,13 @@ function SearchPanelContent({ inputRef, onClose, placeholder }: Readonly<SearchP
 
 			{status === 'error' && (
 				<SearchPanelNotice onNavigate={onClose} query={normalizeSearchInput(input)}>
-					Die Suche ist gerade nicht erreichbar.
+					{UNREACHABLE_MESSAGE}
 				</SearchPanelNotice>
 			)}
 
 			{shownResult && !hasOptions && (
 				<SearchPanelNotice onNavigate={onClose} query={shownResult.query}>
-					{`Keine Treffer für „${shownResult.query}“.`}
+					{getNoHitsMessage(shownResult.query)}
 				</SearchPanelNotice>
 			)}
 

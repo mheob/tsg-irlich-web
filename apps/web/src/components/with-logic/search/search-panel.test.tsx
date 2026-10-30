@@ -21,6 +21,12 @@ const POPULAR = { terms: ['Fußball', 'Tanzen'], title: 'Häufig gesucht' };
 /** The term the fake route answers with a server error. */
 const FAILING_TERM = 'Kaputt';
 
+/**
+ * Selects the visible sentence of a notice. The live region repeats that sentence for screen
+ * readers, so its text alone is found twice.
+ */
+const VISIBLE_TEXT = ':not([role="status"])';
+
 const RESULTS: Record<string, SearchResult> = {
 	Diamonds: buildSearchResult({
 		news: buildSearchHits('Bericht', 3, { kind: 'news', meta: '01.03.2026 · Breitensport' }),
@@ -136,6 +142,16 @@ async function openPanel(placeholder?: string | null) {
 	});
 
 	return { ...view, dialog, input, lupe };
+}
+
+/**
+ * The polite live region of the open panel.
+ *
+ * @param dialog - The open dialog.
+ * @returns The element screen readers announce changes of.
+ */
+function getLiveRegion(dialog: HTMLElement): HTMLElement {
+	return within(dialog).getByRole('status');
 }
 
 describe('the search panel', () => {
@@ -332,7 +348,9 @@ describe('the search panel', () => {
 
 		await user.type(input, 'Xyz');
 
-		await expect(within(dialog).findByText('Keine Treffer für „Xyz“.')).resolves.not.toBeNull();
+		await expect(
+			within(dialog).findByText('Keine Treffer für „Xyz“.', { selector: VISIBLE_TEXT }),
+		).resolves.not.toBeNull();
 		expect(within(dialog).getByRole('link', { name: 'Zur Suchseite' }).getAttribute('href')).toBe(
 			'/suche?q=Xyz',
 		);
@@ -346,26 +364,85 @@ describe('the search panel', () => {
 		await user.type(input, FAILING_TERM);
 
 		await expect(
-			within(dialog).findByText('Die Suche ist gerade nicht erreichbar.'),
+			within(dialog).findByText('Die Suche ist gerade nicht erreichbar.', {
+				selector: VISIBLE_TEXT,
+			}),
 		).resolves.not.toBeNull();
 		expect(within(dialog).getByRole('link', { name: 'Zur Suchseite' }).getAttribute('href')).toBe(
 			`/suche?q=${FAILING_TERM}`,
 		);
 	});
 
-	it('announces a running search in a polite live region', async () => {
-		const { dialog, input, user } = await openPanel();
-		const status = within(dialog).getByRole('status');
+	describe('its live region', () => {
+		it('is mounted and silent while there is nothing to search for', async () => {
+			const { dialog } = await openPanel();
+			const status = getLiveRegion(dialog);
 
-		expect(status.getAttribute('aria-live')).toBe('polite');
-		expect(status.textContent).toBe('');
+			expect(status.getAttribute('aria-live')).toBe('polite');
+			expect(status.textContent).toBe('');
+		});
 
-		await user.type(input, 'Tanzen');
+		it('says that a search is running', async () => {
+			const { dialog, input, user } = await openPanel();
+			const status = getLiveRegion(dialog);
 
-		expect(status.textContent).toBe('Suche läuft …');
+			await user.type(input, 'Tanzen');
 
-		await within(dialog).findByRole('option', { name: 'Tanzen' });
+			expect(status.textContent).toBe('Suche läuft …');
+		});
 
-		expect(status.textContent).toBe('');
+		it('counts the hits of both groups once the search is done', async () => {
+			const { dialog, input, user } = await openPanel();
+			const status = getLiveRegion(dialog);
+
+			await user.type(input, 'Diamonds');
+
+			await waitFor(() => {
+				expect(status.textContent).toBe('13 Treffer');
+			});
+		});
+
+		it('says exactly what the panel shows for a search without hits', async () => {
+			const { dialog, input, user } = await openPanel();
+			const status = getLiveRegion(dialog);
+
+			await user.type(input, 'Xyz');
+
+			await waitFor(() => {
+				expect(status.textContent).toBe('Keine Treffer für „Xyz“.');
+			});
+			expect(
+				within(dialog).getByText('Keine Treffer für „Xyz“.', { selector: VISIBLE_TEXT }),
+			).not.toBeNull();
+		});
+
+		it('says exactly what the panel shows when the search cannot be reached', async () => {
+			const { dialog, input, user } = await openPanel();
+			const status = getLiveRegion(dialog);
+
+			await user.type(input, FAILING_TERM);
+
+			await waitFor(() => {
+				expect(status.textContent).toBe('Die Suche ist gerade nicht erreichbar.');
+			});
+			expect(
+				within(dialog).getByText('Die Suche ist gerade nicht erreichbar.', {
+					selector: VISIBLE_TEXT,
+				}),
+			).not.toBeNull();
+		});
+
+		it('falls silent again once the input is cleared', async () => {
+			const { dialog, input, user } = await openPanel();
+			const status = getLiveRegion(dialog);
+			await user.type(input, 'Tanzen');
+			await waitFor(() => {
+				expect(status.textContent).toBe('2 Treffer');
+			});
+
+			await user.clear(input);
+
+			expect(status.textContent).toBe('');
+		});
 	});
 });
