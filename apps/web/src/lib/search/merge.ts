@@ -267,7 +267,7 @@ interface SearchTarget {
 	_type: string;
 	category?: TargetReference | null;
 	department?: TargetReference | null;
-	image?: Parameters<typeof getSearchThumbnail>[0];
+	image?: Exclude<Parameters<typeof getSearchThumbnail>[0], undefined>;
 	indexable?: boolean | null;
 	publishedAt?: string | null;
 	slug?: string | null;
