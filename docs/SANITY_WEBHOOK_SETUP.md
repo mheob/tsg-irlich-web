@@ -65,7 +65,7 @@ Without the staging webhook, every content change on staging that is not read th
    _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "searchPage", "site-settings", "testimonial", "venue"]
    ```
 
-   `searchPage` joined with the site search (WEB-204): the singleton holds the placeholder of the search panel, which sits in the navigation on every page. This repository does not change the live webhooks, so `searchPage` has to be added to the filter of **both** of them by hand, or an edit of the placeholder waits out the cache of the layout.
+   `searchPage` joined with the site search (WEB-204): the singleton holds the placeholder of the search panel, which sits in the navigation on every page. This repository does not change the live webhooks, so `searchPage` has to be added to the filter of **both** of them by hand, or an edit of the placeholder waits out the cache of the layout. The staging webhook (dataset `development`) gets it when this change is merged into `next`, the production webhook together with the release that brings WEB-384 to `main`, since the search reaches production only with that release.
 
    **Projection** (what is sent to the webhook):
 
