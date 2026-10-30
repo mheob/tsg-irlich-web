@@ -93,13 +93,84 @@ describe('the row of a hit', () => {
 		expect(container.textContent).toContain(SNIPPET);
 	});
 
-	describe('in its compact form', () => {
-		it('renders no snippet', () => {
-			const { container } = renderWithUser(
-				<SearchHitRow hit={buildHit()} words={['diamond', 'tanz']} compact />,
+	describe.each([false, true])('with link props, compact: %s', (compact) => {
+		const linkProps = {
+			'aria-selected': true,
+			id: 'search-option-1',
+			role: 'option',
+			tabIndex: -1,
+		} as const;
+
+		it('turns its own title link into the option, with the given attributes', () => {
+			const { getByRole } = renderWithUser(
+				<SearchHitRow
+					hit={buildHit()}
+					linkProps={linkProps}
+					words={['diamond']}
+					compact={compact}
+				/>,
 			);
 
-			// The title comes first and the snippet is gone.
+			const option = getByRole('option', { name: 'Diamonds glänzen nochmal' });
+			expect(option.id).toBe('search-option-1');
+			expect(option.getAttribute('aria-selected')).toBe('true');
+			expect(option.getAttribute('tabindex')).toBe('-1');
+			expect(option.getAttribute('href')).toBe('/news/breitensport/session-abschluss');
+		});
+
+		it('holds no second link next to the option, so no anchor is nested', () => {
+			const { container, getAllByRole, queryAllByRole } = renderWithUser(
+				<SearchHitRow
+					hit={buildHit()}
+					linkProps={linkProps}
+					words={['diamond']}
+					compact={compact}
+				/>,
+			);
+
+			expect(getAllByRole('option')).toHaveLength(1);
+			expect(queryAllByRole('link')).toHaveLength(0);
+			expect(container.querySelectorAll('a')).toHaveLength(1);
+		});
+	});
+
+	it('renders a plain link without link props', () => {
+		const { container, queryByRole } = renderWithUser(
+			<SearchHitRow hit={buildHit()} words={['diamond']} />,
+		);
+
+		expect(queryByRole('option')).toBeNull();
+		expect(container.querySelector('a')?.getAttribute('id')).toBeNull();
+	});
+
+	describe('in its compact form', () => {
+		it('shows the person line of a person-derived hit after the meta line, with its matches marked', () => {
+			const { container, getByText } = renderWithUser(
+				<SearchHitRow
+					hit={buildHit({
+						meta: 'Gruppe · Tanzen',
+						snippet: 'Ansprechperson: Alina Kaap, Übungsleiterin',
+						title: 'Funky Diamonds',
+					})}
+					words={['kaap']}
+					compact
+				/>,
+			);
+
+			// Title, meta line, then the person line.
+			expect(container.textContent).toBe(
+				'Funky DiamondsGruppe · TanzenAnsprechperson: Alina Kaap, Übungsleiterin',
+			);
+			expect(getByText('Kaap', { selector: 'mark' }).parentElement?.textContent).toBe(
+				'Ansprechperson: Alina Kaap, Übungsleiterin',
+			);
+		});
+
+		it('renders only the title and the meta line for a hit without a snippet', () => {
+			const { container } = renderWithUser(
+				<SearchHitRow hit={buildHit({ snippet: undefined })} words={['diamond']} compact />,
+			);
+
 			expect(container.textContent).toBe('Diamonds glänzen nochmal01.03.2026 · Breitensport');
 		});
 

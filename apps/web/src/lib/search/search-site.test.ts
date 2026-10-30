@@ -72,6 +72,40 @@ function article(index: number): NewsArticle {
 	};
 }
 
+/**
+ * A person whose name matches, found through the group of her one affiliation.
+ *
+ * @returns The candidate, which leads to the group „Funky Diamonds“ with her person line.
+ */
+function alina(): SearchCandidate {
+	return {
+		...NO_EXTRAS,
+		_id: 'person-alina',
+		_score: 4,
+		_type: 'person',
+		affiliations: [
+			{
+				role: 'Übungsleiterin',
+				roleMatches: false,
+				team: {
+					...NO_EXTRAS,
+					_id: 'group-diamonds',
+					_type: 'group',
+					department: { slug: 'tanzen', title: 'Tanzen' },
+					slug: 'funky-diamonds',
+					title: 'Funky Diamonds',
+				},
+			},
+		],
+		firstName: 'Alina',
+		lastName: 'Kaap',
+		listedOn: [],
+		nameMatches: true,
+		slug: null,
+		title: null,
+	};
+}
+
 function range<T>(count: number, create: (index: number) => T): T[] {
 	return Array.from({ length: count }, (_, index) => create(index + 1));
 }
@@ -259,6 +293,26 @@ describe(searchSite, () => {
 
 		expect(result?.pages[0].snippet).toBe('Frage: Wann ist Tanztraining?');
 		expect(callsOf(searchTextsQuery)).toStrictEqual([]);
+	});
+
+	it('cuts no text snippets for the panel, but keeps the person line of a hit', async () => {
+		mockSanity({
+			candidates: [group(1), alina()],
+			news: [article(1)],
+			texts: [
+				{ _id: 'group-1', text: 'Die Gruppe 1 tanzt.' },
+				{ _id: 'article-1', text: 'Ein Bericht über das Tanzen.' },
+			],
+		});
+
+		const result = await searchSite('Kaap', { perGroup: 3 });
+
+		expect(callsOf(searchTextsQuery)).toStrictEqual([]);
+		expect(result?.pages.map((hit) => [hit.id, hit.snippet])).toStrictEqual([
+			['group-1', undefined],
+			['group-diamonds', 'Ansprechperson: Alina Kaap, Übungsleiterin'],
+		]);
+		expect(result?.news.map((hit) => hit.snippet)).toStrictEqual([undefined]);
 	});
 
 	// Review focus 3: the text of a non-indexable issue must not leak through its snippet.

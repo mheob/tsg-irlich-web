@@ -180,7 +180,8 @@ async function fetchGroups(q: string, windows: SearchWindows): Promise<SearchGro
  * `GET /api/search`.
  *
  * @param input - The search input, as the visitor typed it.
- * @param options - Which hits to return, see `getWindows`.
+ * @param options - Which hits to return, see `getWindows`. A call with `perGroup` (the panel) gets
+ * no text snippets, so it never fetches the texts.
  * @returns The hits of the requested window and the totals of both groups, or `undefined` without
  * a usable search term, in which case nothing reaches Sanity.
  */
@@ -196,7 +197,12 @@ async function searchSite(
 
 	const words = getSearchWords(query);
 	const { hiddenIds, news, pages, totals } = await fetchGroups(q, getWindows(options));
-	const hits = await addSnippets([...pages, ...news], words, hiddenIds);
+	// The panel shows one line per hit and no text snippet, so it skips the query that fetches the
+	// texts. The person and FAQ lines are part of the hits already and stay.
+	const hits =
+		options.perGroup === undefined
+			? await addSnippets([...pages, ...news], words, hiddenIds)
+			: [...pages, ...news];
 
 	return {
 		news: hits.slice(pages.length),
@@ -211,7 +217,10 @@ async function searchSite(
 interface SearchOptions {
 	/** The page of the „Seiten“ or „News“ tab, from 1. */
 	page?: number;
-	/** The hits per group for the panel. Overrides `tab` and `page`. */
+	/**
+	 * The hits per group for the panel. Overrides `tab` and `page`, and cuts no text snippets: only
+	 * the person and FAQ lines, which the hits carry, remain.
+	 */
 	perGroup?: number;
 	/** The tab of the search page, „Alle“ when it is missing. */
 	tab?: SearchTab;

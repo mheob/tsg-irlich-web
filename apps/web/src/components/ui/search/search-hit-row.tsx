@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
@@ -14,21 +15,25 @@ const THUMBNAIL_SIZES = { compact: '4rem', full: '(min-width: 40rem) 13rem, 8rem
  * The row of a hit: the image on the left, then the text. The link covers the whole row.
  *
  * - The full row, as in the news list of the search page, reads meta line, title, snippet.
- * - The compact row, as in the search panel, reads title and meta line and leaves the snippet out.
+ * - The compact row, as in the search panel, reads title, meta line and, when the hit has one, its
+ *   snippet cut to one line. That is the person or FAQ line, the panel fetches no text snippets.
  *
  * @param props - The row's props.
- * @param props.compact - Whether to show the small form without the snippet.
+ * @param props.compact - Whether to show the small form.
  * @param props.hit - The hit.
+ * @param props.linkProps - Attributes for the title link. The panel makes the link the option of
+ * its listbox through them, which keeps the row free of a second, nested link.
  * @param props.words - The search words, for the highlighting.
  * @returns The row.
  */
-function SearchHitRow({ compact = false, hit, words }: Readonly<SearchHitRowProps>) {
+function SearchHitRow({ compact = false, hit, linkProps, words }: Readonly<SearchHitRowProps>) {
 	const meta = (
 		<p className={cn('text-muted-foreground', compact ? 'text-xs' : 'text-sm')}>{hit.meta}</p>
 	);
 
 	const link = (
 		<Link
+			{...linkProps}
 			className="outline-none group-hover:text-primary-light after:absolute after:inset-0"
 			href={hit.href}
 		>
@@ -56,6 +61,11 @@ function SearchHitRow({ compact = false, hit, words }: Readonly<SearchHitRowProp
 					<>
 						<div className="line-clamp-2 text-sm font-medium text-foreground">{link}</div>
 						{meta}
+						{hit.snippet && (
+							<p className="truncate text-xs text-foreground/80">
+								<Highlighted text={hit.snippet} words={words} />
+							</p>
+						)}
 					</>
 				) : (
 					<>
@@ -76,6 +86,7 @@ function SearchHitRow({ compact = false, hit, words }: Readonly<SearchHitRowProp
 interface SearchHitRowProps {
 	compact?: boolean;
 	hit: SearchHit;
+	linkProps?: Readonly<Pick<ComponentProps<'a'>, 'aria-selected' | 'id' | 'role' | 'tabIndex'>>;
 	words: string[];
 }
 
