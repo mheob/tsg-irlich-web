@@ -75,9 +75,11 @@ const searchTarget = /* groq */ `
  *
  * What the terms cover:
  *
- * - Only a department and the home page have an `intro` of plain text. Everywhere else it is
- *   portable text, and `match` would search such an object down to its `_type` and `style` values,
- *   so a search for „span“ or „block“ would find it. Its words are matched through their path.
+ * - A department, the home page and a TSG-Echo issue have an `intro` of plain text. The search
+ *   reads it for the first two only; the issue's `intro` is left out on purpose, see the last point.
+ *   Everywhere else the `intro` is portable text, and `match` would search such an object down to
+ *   its `_type` and `style` values, so a search for „span“ or „block“ would find it. Its words are
+ *   matched through their path.
  * - `text::query()` wants every word in the one field it is matched against. The last two terms
  *   match all fields of a page at once, so a page whose words sit in different fields is still
  *   found. Each page type takes part in exactly one of them. A role title cannot be part of them.
