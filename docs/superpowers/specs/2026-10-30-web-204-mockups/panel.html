@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="de">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Such-Panel (Variante C)</title>
+		<!-- Mockup aus dem Brainstorming zu WEB-204, Wegwerf-Code. Bilder kommen aus dem Dataset development. -->
+		<style>
+			:root {
+				--accent: #5b4bc4;
+				--bg-secondary: #f4f4f6;
+				--border: #d9d9e0;
+				--text-secondary: #5f5f6b;
+			}
+			body {
+				margin: 24px;
+				background: #fff;
+				color: #1d1b29;
+				font-family: system-ui, sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<style>
+			.px-wrap {
+				max-width: 860px;
+			}
+			.px-chips {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				margin: 0 0 14px;
+				flex-wrap: wrap;
+				font-size: 13px;
+			}
+			.px-chips button {
+				border: 1px solid var(--border);
+				background: var(--bg-secondary);
+				color: inherit;
+				border-radius: 999px;
+				padding: 5px 12px;
+				cursor: pointer;
+				font: inherit;
+			}
+			.px-chips button.on {
+				border-color: var(--accent);
+				background: var(--accent);
+				color: #fff;
+			}
+
+			.px-frame {
+				--p: oklch(0.33 0.09 286);
+				--pl: oklch(0.5 0.17 281);
+				--s: oklch(0.88 0.18 94);
+				position: relative;
+				overflow: hidden;
+				background: #f4f3f8;
+				border-radius: 12px;
+				border: 1px solid var(--border);
+				font-family: Inter, system-ui, sans-serif;
+				color: var(--p);
+				text-align: left;
+			}
+			.px-desk {
+				height: 470px;
+				margin-bottom: 8px;
+			}
+			.px-nav {
+				position: relative;
+				z-index: 5;
+				height: 56px;
+				display: flex;
+				align-items: center;
+				gap: 18px;
+				padding: 0 18px;
+				background: #fff;
+				box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+			}
+			.px-logo {
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				background: var(--p);
+				flex: none;
+			}
+			.px-links {
+				display: flex;
+				gap: 18px;
+				flex: 1;
+				font:
+					600 12px/1 Oswald,
+					Inter,
+					sans-serif;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+			}
+			.px-lupe {
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				border: 0;
+				background: transparent;
+				color: var(--p);
+				display: grid;
+				place-items: center;
+				cursor: pointer;
+				flex: none;
+				position: relative;
+			}
+			.px-lupe:hover {
+				background: rgba(60, 40, 140, 0.08);
+			}
+			.px-lupe svg {
+				width: 18px;
+				height: 18px;
+				transition:
+					transform 0.3s ease,
+					opacity 0.2s;
+			}
+			.px-lupe .x {
+				position: absolute;
+				opacity: 0;
+				transform: rotate(-90deg);
+			}
+			.open .px-lupe .l {
+				opacity: 0;
+				transform: rotate(90deg);
+			}
+			.open .px-lupe .x {
+				opacity: 1;
+				transform: rotate(0);
+			}
+			.px-cta {
+				background: var(--s);
+				color: #222;
+				font:
+					600 11px/1 Oswald,
+					Inter,
+					sans-serif;
+				text-transform: uppercase;
+				padding: 10px 14px;
+				border-radius: 6px;
+				flex: none;
+			}
+			.px-hero {
+				margin: 18px;
+				height: 360px;
+				border-radius: 10px;
+				background: linear-gradient(135deg, var(--p), var(--pl));
+				display: flex;
+				align-items: flex-end;
+				padding: 18px;
+			}
+			.px-hero span {
+				font:
+					400 34px/1 'Bebas Neue',
+					Oswald,
+					sans-serif;
+				color: #fff;
+			}
+			.px-dim {
+				position: absolute;
+				inset: 56px 0 0;
+				z-index: 3;
+				background: rgba(25, 15, 60, 0.35);
+				opacity: 0;
+				transition: opacity 0.3s ease;
+				pointer-events: none;
+			}
+			.open .px-dim {
+				opacity: 1;
+				pointer-events: auto;
+			}
+			.px-panel {
+				position: absolute;
+				z-index: 4;
+				top: 56px;
+				left: 0;
+				right: 0;
+				background: #fff;
+				padding: 16px 22px 20px;
+				box-shadow: 0 16px 30px rgba(20, 10, 60, 0.15);
+				transform: translateY(-105%);
+				transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+			}
+			.open .px-panel {
+				transform: none;
+			}
+			.px-input {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				border-bottom: 2px solid var(--pl);
+				height: 42px;
+				padding: 0 2px;
+				font:
+					400 28px/1 'Bebas Neue',
+					Oswald,
+					sans-serif;
+				letter-spacing: 0.02em;
+			}
+			.px-input svg {
+				width: 20px;
+				height: 20px;
+				flex: none;
+				opacity: 0.6;
+			}
+			.px-q::after {
+				content: '|';
+				animation: pxblink 1s steps(1) infinite;
+				color: var(--pl);
+			}
+			@keyframes pxblink {
+				50% {
+					opacity: 0;
+				}
+			}
+			.px-cols {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 22px;
+			}
+			.px-group {
+				font:
+					600 10px/1 Inter,
+					sans-serif;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: #8a86a3;
+				margin: 14px 0 6px;
+			}
+			.px-item {
+				display: flex;
+				gap: 12px;
+				align-items: center;
+				padding: 6px;
+				border-radius: 8px;
+				font-size: 13px;
+				line-height: 1.3;
+				opacity: 0;
+				transform: translateY(4px);
+				transition:
+					opacity 0.25s ease,
+					transform 0.25s ease,
+					background 0.15s;
+				cursor: pointer;
+			}
+			.px-item:hover,
+			.px-item.hl {
+				background: rgba(60, 40, 140, 0.07);
+			}
+			.px-thumb {
+				width: 64px;
+				height: 44px;
+				border-radius: 6px;
+				flex: none;
+				background: #e9e7f2 center/cover no-repeat;
+				display: grid;
+				place-items: center;
+				overflow: hidden;
+			}
+			.px-thumb.fallback::after {
+				content: '';
+				width: 22px;
+				height: 22px;
+				border-radius: 50%;
+				background: var(--p);
+				opacity: 0.35;
+			}
+			.px-text {
+				min-width: 0;
+			}
+			.px-title {
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				font-weight: 500;
+			}
+			.px-meta {
+				color: #8a86a3;
+				font-size: 11px;
+				margin-top: 2px;
+			}
+			.px-person {
+				color: #5b5679;
+				font-size: 11px;
+				margin-top: 2px;
+			}
+			.px-item mark {
+				background: color-mix(in oklch, var(--s) 70%, white);
+				color: inherit;
+				padding: 0 1px;
+				border-radius: 2px;
+			}
+			.px-empty {
+				font-size: 12px;
+				color: #8a86a3;
+				padding: 6px;
+				opacity: 0;
+				transition: opacity 0.25s;
+			}
+			.typed .px-item,
+			.typed .px-empty {
+				opacity: 1;
+				transform: none;
+			}
+			.px-more {
+				display: inline-block;
+				font-size: 11.5px;
+				color: var(--pl);
+				margin: 6px 6px 0;
+				opacity: 0;
+				transition: opacity 0.25s 0.2s;
+			}
+			.typed .px-more {
+				opacity: 1;
+			}
+			.px-hint {
+				position: absolute;
+				right: 70px;
+				top: 62px;
+				font-size: 11px;
+				color: #8a86a3;
+				z-index: 1;
+			}
+			.open .px-hint {
+				display: none;
+			}
+
+			/* mobile */
+			.px-phone {
+				width: 320px;
+				height: 600px;
+				margin: 0 auto;
+				border-radius: 28px;
+				border: 8px solid #222;
+			}
+			.px-phone .px-nav {
+				height: 56px;
+				gap: 8px;
+				padding: 0 12px;
+			}
+			.px-phone .px-links {
+				display: none;
+			}
+			.px-phone .px-spacer {
+				flex: 1;
+			}
+			.px-burger {
+				width: 34px;
+				height: 34px;
+				display: grid;
+				place-items: center;
+			}
+			.px-burger svg {
+				width: 22px;
+				height: 22px;
+			}
+			.px-phone .px-hero {
+				height: 200px;
+				margin: 12px;
+			}
+			.px-phone .px-hero span {
+				font-size: 26px;
+			}
+			.px-phone .px-dim {
+				display: none;
+			}
+			.px-phone .px-panel {
+				bottom: 0;
+				padding: 14px 14px 18px;
+				overflow: auto;
+				box-shadow: none;
+			}
+			.px-phone .px-input {
+				font-size: 24px;
+			}
+			.px-phone .px-cols {
+				grid-template-columns: 1fr;
+				gap: 0;
+			}
+			.px-phone .px-hint {
+				right: 12px;
+			}
+			.px-phone .px-blocks {
+				padding: 0 12px;
+				display: grid;
+				gap: 8px;
+			}
+			.px-phone .px-blocks div {
+				height: 14px;
+				border-radius: 4px;
+				background: #e2e0ec;
+			}
+			.px-legend {
+				font-size: 13px;
+				color: var(--text-secondary);
+				margin: 8px 0 24px;
+			}
+			.px-scale {
+				position: relative;
+				width: 100%;
+			}
+			.px-scale > .px-frame {
+				transform-origin: top left;
+			}
+			.px-scale > .px-desk {
+				width: 860px;
+			}
+		</style>
+
+		<h2>Variante C mit Vorschaubildern</h2>
+		<p class="subtitle">
+			Klick auf die Lupe, um die Suche zu öffnen. Mit den Knöpfen wechselst du den Suchbegriff. Die
+			Bilder und Titel sind echte Inhalte aus dem Dataset <code>development</code>.
+		</p>
+
+		<div class="px-wrap">
+			<div class="px-chips">
+				Suchbegriff:
+				<button data-q="Tanzen" class="on" onclick="pxSet('Tanzen')">Tanzen</button>
+				<button data-q="Diamonds" onclick="pxSet('Diamonds')">Diamonds</button>
+				<button data-q="Kaap" onclick="pxSet('Kaap')">Kaap (Ansprechpartnerin)</button>
+			</div>
+
+			<div class="px-scale">
+				<div class="px-frame px-desk" id="px-desk">
+					<div class="px-nav">
+						<div class="px-logo"></div>
+						<div class="px-links">
+							<span>Verein</span><span>Angebot</span><span>News</span><span>Mitgliedschaft</span>
+						</div>
+						<button class="px-lupe" onclick="pxToggle('px-desk')" aria-label="Suche">
+							<svg class="l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="11" cy="11" r="7" />
+								<path d="m20 20-3.5-3.5" /></svg
+							><svg
+								class="x"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+							>
+								<path d="M6 6l12 12M18 6 6 18" />
+							</svg>
+						</button>
+						<span class="px-cta">Kontakt aufnehmen</span>
+					</div>
+					<div class="px-hero"><span>Gemeinsam sind wir TSG</span></div>
+					<div class="px-dim" onclick="pxToggle('px-desk')"></div>
+					<div class="px-panel">
+						<div class="px-input">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="11" cy="11" r="7" />
+								<path d="m20 20-3.5-3.5" /></svg
+							><span class="px-q"></span>
+						</div>
+						<div class="px-cols">
+							<div class="px-pages"></div>
+							<div class="px-news"></div>
+						</div>
+					</div>
+					<div class="px-hint">Lupe anklicken ↑</div>
+				</div>
+			</div>
+			<p class="px-legend">
+				<strong>Desktop:</strong> Jeder Treffer bekommt links ein kleines Vorschaubild im
+				Querformat. Hat ein Inhalt kein Bild (hier „Magic Diamonds“ bei „Kaap“), erscheint ein
+				neutraler Platzhalter mit dem Vereinslogo.
+			</p>
+
+			<div class="px-scale center">
+				<div class="px-frame px-phone" id="px-phone">
+					<div class="px-nav">
+						<div class="px-logo"></div>
+						<div class="px-spacer"></div>
+						<button class="px-lupe" onclick="pxToggle('px-phone')" aria-label="Suche">
+							<svg class="l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="11" cy="11" r="7" />
+								<path d="m20 20-3.5-3.5" /></svg
+							><svg
+								class="x"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+							>
+								<path d="M6 6l12 12M18 6 6 18" />
+							</svg>
+						</button>
+						<span class="px-burger"
+							><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M4 7h16M4 12h16M4 17h16" /></svg
+						></span>
+					</div>
+					<div class="px-hero"><span>Gemeinsam sind wir TSG</span></div>
+					<div class="px-blocks">
+						<div></div>
+						<div style="width: 80%"></div>
+						<div style="width: 60%"></div>
+					</div>
+					<div class="px-dim"></div>
+					<div class="px-panel">
+						<div class="px-input">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="11" cy="11" r="7" />
+								<path d="m20 20-3.5-3.5" /></svg
+							><span class="px-q"></span>
+						</div>
+						<div class="px-cols">
+							<div class="px-pages"></div>
+							<div class="px-news"></div>
+						</div>
+					</div>
+					<div class="px-hint">↑ Lupe</div>
+				</div>
+			</div>
+			<p class="px-legend" style="text-align: center">
+				<strong>Mobil (mein Vorschlag):</strong> Die Lupe sitzt links neben dem Menü-Button. Das
+				Panel füllt den ganzen Bildschirm unter der Navigation, Seiten und News stehen
+				untereinander.
+			</p>
+		</div>
+
+		<script>
+			const IMG = (id) =>
+				`https://cdn.sanity.io/images/j4rxwl5m/development/${id}?w=160&h=110&fit=crop&auto=format`;
+			const DATA = {
+				Tanzen: {
+					pages: [
+						{
+							t: 'Tanzen',
+							m: 'Abteilung · 4 Gruppen',
+							img: IMG('79cd294bb474744bc1b1fef4a9ef72578ed7cf09-480x270.webp'),
+						},
+					],
+					news: [
+						{
+							t: 'Zuckersüßer Tanz – Bühne frei für unsere Little Diamonds!',
+							m: '28.12.2025 · Breitensport, Diamonds',
+							img: IMG('f53140f7ac8047cb7cd06ff6a6c1a7a50251754c-5292x1404.png'),
+						},
+						{
+							t: 'Offizielles Sessions-Motto: Funky Diamonds tanzen ins Glück',
+							m: '11.01.2025 · Breitensport, Diamonds',
+							img: IMG('df41e368b20bde84206e04a1099294894324303b-6912x3456.png'),
+						},
+					],
+				},
+				Diamonds: {
+					pages: [
+						{
+							t: 'Funky Diamonds',
+							m: 'Gruppe · Tanzen',
+							img: IMG('3788f91787dec33b2fe63b0bdb1c0be5d75a88d9-6000x4000.jpg'),
+						},
+						{
+							t: 'Little Diamonds',
+							m: 'Gruppe · Tanzen',
+							img: IMG('969072877eda552c6e6245f0bbe9ea3a4b544c0e-6000x4000.jpg'),
+						},
+						{
+							t: 'Sweet Diamonds',
+							m: 'Gruppe · Tanzen',
+							img: IMG('6e7e578d9adcac840cf0c684b777f5a0918d03cb-5120x3840.jpg'),
+						},
+					],
+					morePages: 'Alle 4 Seiten anzeigen',
+					news: [
+						{
+							t: 'Erfolgreicher Sessions-Abschluss: Diamonds glänzen nochmal',
+							m: '01.03.2026 · Diamonds, Breitensport',
+							img: IMG('39ea18f07c0b601ba6e2ad8551ccedac58adbc39-1024x768.jpg'),
+						},
+						{
+							t: 'Irlich Vür Bäi! Diamonds rocken das Heimspiel-Wochenende',
+							m: '09.02.2026 · Diamonds, Breitensport',
+							img: IMG('109c64020ccc3487187bf803565f7dadca85908f-1451x881.jpg'),
+						},
+						{
+							t: '„Heimspiel Light“ für die Little und Funky Diamonds',
+							m: '04.02.2026 · Diamonds, Breitensport',
+							img: IMG('54bd84bc19a7641ae26160dcc4ddd4eca39cd833-1600x1066.jpg'),
+						},
+					],
+					moreNews: 'Alle News-Treffer anzeigen',
+				},
+				Kaap: {
+					pages: [
+						{
+							t: 'Magic Diamonds',
+							m: 'Gruppe · Tanzen',
+							p: 'Ansprechpartnerin: Alina Kaap, Übungsleiterin',
+							img: null,
+						},
+						{
+							t: 'Little Diamonds',
+							m: 'Gruppe · Tanzen',
+							p: 'Ansprechpartnerin: Gianna Kaap, Übungsleiterin',
+							img: IMG('969072877eda552c6e6245f0bbe9ea3a4b544c0e-6000x4000.jpg'),
+						},
+					],
+					news: [],
+				},
+			};
+			let current = 'Tanzen';
+
+			function esc(s) {
+				return s.replace(
+					/[&<>"]/g,
+					(c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c],
+				);
+			}
+			function hl(s, q) {
+				const stem = q.slice(0, Math.max(4, q.length - 2)).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+				return esc(s).replace(new RegExp(`(${stem}\\w*)`, 'gi'), '<mark>$1</mark>');
+			}
+			function item(r, q, i) {
+				const thumb = r.img
+					? `<span class="px-thumb" style="background-image:url('${r.img}')"></span>`
+					: '<span class="px-thumb fallback"></span>';
+				return (
+					`<div class="px-item${i === 0 ? ' hl' : ''}" style="transition-delay:${0.04 * i}s">${thumb}<span class="px-text">` +
+					`<span class="px-title">${hl(r.t, q)}</span><div class="px-meta">${esc(r.m)}</div>` +
+					(r.p ? `<div class="px-person">${hl(r.p, q)}</div>` : '') +
+					'</span></div>'
+				);
+			}
+			function render(f, q) {
+				const d = DATA[q];
+				f.querySelector('.px-pages').innerHTML =
+					'<div class="px-group">Seiten</div>' +
+					(d.pages.length
+						? d.pages.map((r, i) => item(r, q, i)).join('')
+						: '<div class="px-empty">Keine Seiten gefunden.</div>') +
+					(d.morePages ? `<span class="px-more">${d.morePages} →</span>` : '');
+				f.querySelector('.px-news').innerHTML =
+					'<div class="px-group">News</div>' +
+					(d.news.length
+						? d.news.map((r, i) => item(r, q, i)).join('')
+						: '<div class="px-empty">Keine News gefunden.</div>') +
+					(d.moreNews ? `<span class="px-more">${d.moreNews} →</span>` : '');
+			}
+			function type(f) {
+				const q = f.querySelector('.px-q');
+				clearInterval(f._t);
+				clearTimeout(f._d);
+				f.classList.remove('typed');
+				q.textContent = '';
+				render(f, current);
+				let i = 0;
+				f._d = setTimeout(() => {
+					f._t = setInterval(() => {
+						q.textContent = current.slice(0, ++i);
+						if (i >= current.length) {
+							clearInterval(f._t);
+							requestAnimationFrame(() => f.classList.add('typed'));
+						}
+					}, 80);
+				}, 380);
+			}
+			function pxToggle(id) {
+				const f = document.getElementById(id);
+				const open = !f.classList.contains('open');
+				f.classList.toggle('open', open);
+				if (open) type(f);
+				else {
+					clearInterval(f._t);
+					clearTimeout(f._d);
+					f.classList.remove('typed');
+				}
+			}
+			function pxFit() {
+				document.querySelectorAll('.px-scale').forEach((wrap) => {
+					const frame = wrap.firstElementChild;
+					const scale = Math.min(1, wrap.clientWidth / frame.offsetWidth);
+					frame.style.transform = scale < 1 ? `scale(${scale})` : '';
+					frame.style.marginLeft = wrap.classList.contains('center')
+						? `${(wrap.clientWidth - frame.offsetWidth * scale) / 2}px`
+						: '0';
+					wrap.style.height = `${frame.offsetHeight * scale}px`;
+				});
+			}
+			window.addEventListener('resize', pxFit);
+			pxFit();
+			function pxSet(q) {
+				current = q;
+				document
+					.querySelectorAll('.px-chips button')
+					.forEach((b) => b.classList.toggle('on', b.dataset.q === q));
+				document.querySelectorAll('.px-frame.open').forEach(type);
+			}
+		</script>
+	</body>
+</html>
