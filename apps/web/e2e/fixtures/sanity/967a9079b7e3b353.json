@@ -1,0 +1,119 @@
+{
+	"body": {
+		"result": [
+			{
+				"_id": "a0779de0-2679-4990-835a-a12e2e74d530",
+				"_score": 13,
+				"_type": "news.article",
+				"category": {
+					"slug": "breitensport",
+					"title": "Breitensport"
+				},
+				"department": null,
+				"image": {
+					"_type": "mainImage",
+					"alt": "generiertes Bild in Grüntönen mit Kleeblättern und dem Schriftzug \"Tanz mit mir ins Glück\"",
+					"asset": {
+						"_ref": "image-df41e368b20bde84206e04a1099294894324303b-6912x3456-png",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7698239664082687,
+						"width": 0.41957364341085274,
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				"indexable": null,
+				"publishedAt": "2025-01-11T14:27:00.000Z",
+				"slug": "offizielles-sessions-motto-funky-diamonds-tanzen-ins-glueck",
+				"title": "Offizielles Sessions-Motto: Funky Diamonds tanzen ins Glück"
+			},
+			{
+				"_id": "a2eff42d-69dc-4ad2-8cd1-2a0e9e97977a",
+				"_score": 2,
+				"_type": "news.article",
+				"category": {
+					"slug": "diamonds",
+					"title": "Diamonds"
+				},
+				"department": null,
+				"image": {
+					"_type": "mainImage",
+					"alt": "Die Funkys bei einer Premiere im Raiffeisenring, machen eine Hebung auf der Bühne",
+					"asset": {
+						"_ref": "image-2ee9ba68ac89c9c8c8b50ac12a5c91d242bfa2ab-540x360-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.1141066105558478,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Die Funkys bei der Premiere im Raiffeisenring.",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7428692501022855,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.4429466947220761
+					}
+				},
+				"indexable": null,
+				"publishedAt": "2026-01-05T23:51:00.000Z",
+				"slug": "premiere-funky-diamonds",
+				"title": "Liebeschaos in Heddesdorf: Gelungene Premiere der Funky Diamonds"
+			},
+			{
+				"_id": "e7d0aa64-ee98-47b9-9cba-917911096665",
+				"_score": 2,
+				"_type": "news.article",
+				"category": {
+					"slug": "diamonds",
+					"title": "Diamonds"
+				},
+				"department": null,
+				"image": {
+					"_type": "mainImage",
+					"alt": "Mädels und Jungs der Sweet Diamonds zusammen mit Trainerin auf der Bühne der Kirmes 2023",
+					"asset": {
+						"_ref": "image-6aa37cde096f8fcd0877765e9a3974ac3c3ba639-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0.09790209790209786,
+						"right": 0.12762237762237771,
+						"top": 0.3885003885003885
+					},
+					"description": "Mädels und Jungs der Sweet Diamonds zusammen mit Trainerin auf der Bühne der Kirmes 2023",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.48549948549948535,
+						"width": 0.7499999999999997,
+						"x": 0.4868881118881118,
+						"y": 0.6312501312501312
+					}
+				},
+				"indexable": null,
+				"publishedAt": "2024-07-16T07:00:00.000Z",
+				"slug": "sweet-diamonds-feiern-debuet",
+				"title": "Neu formierten \"Sweet Diamonds\" feiern Debüt auf irlicher Kirmes "
+			}
+		],
+		"syncTags": ["s1:mCzbTw", "s1:bmIwtw", "s1:GNFE5A"],
+		"ms": 31
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+%5Btitle%2C+body%5B%5D.text%5B%5D.children%5B%5D.text%5D+match+text%3A%3Aquery%28%24q%29%5D%0A%09%7C+score%28%0A%09%09boost%28title+match+text%3A%3Aquery%28%24q%29%2C+10%29%2C%0A%09%09boost%28body%5B%5D.text%5B%5D.children%5B%5D.text+match+text%3A%3Aquery%28%24q%29%2C+1%29%2C%0A%09%09boost%28%5Btitle%2C+body%5B%5D.text%5B%5D.children%5B%5D.text%5D+match+text%3A%3Aquery%28%24q%29%2C+1%29%0A%09%29%0A%09%7C+order%28_score+desc%2C+publishedAt+desc%29+%5B%24start...%24end%5D+%7B%0A%09%09%0A%09_id%2C%0A%09_type%2C%0A%09title%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09%22department%22%3A+department-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09%22category%22%3A+categories%5B0%5D-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09publishedAt%2C%0A%09indexable%2C%0A%09%22image%22%3A+select%28%0A%09%09_type+%3D%3D+%27department%27+%3D%3E+cardImage%2C%0A%09%09_type+in+%5B%27group%27%2C+%27news.article%27%5D+%3D%3E+featuredImage%2C%0A%09%09_type+%3D%3D+%27echo.issue%27+%3D%3E+pages%5B0%5D%2C%0A%09%09_type+%3D%3D+%27home%27+%3D%3E+null%2C%0A%09%09heroImage%0A%09%29%0A%2C%0A%09%09%22_score%22%3A+math%3A%3Asum%28%5B_score%5D%29%0A%09%7D%0A&%24end=3&%24start=0&%24q=%22tanzen*%22&returnQuery=false&perspective=published"
+}
