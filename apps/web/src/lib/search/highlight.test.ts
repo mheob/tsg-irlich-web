@@ -135,6 +135,21 @@ describe('a snippet', () => {
 		expect(snippet.startsWith(ELLIPSIS)).toBe(true);
 	});
 
+	it('does not centre on a one-letter word when a longer word is searched', () => {
+		// "E-Jugend" yields the word "e", which starts "Eltern" long before "Jugend" does.
+		const text = `Eltern ${'lorem '.repeat(60)}Jugend ${'ipsum '.repeat(60)}`;
+		const snippet = cut(text, ['e', 'jugend']);
+
+		expect(snippet).toContain('Jugend');
+		expect(snippet).not.toContain('Eltern');
+	});
+
+	it('still centres on a one-letter word when only one-letter words are searched', () => {
+		const text = `${'lorem '.repeat(60)}Ecke ${'ipsum '.repeat(60)}`;
+
+		expect(cut(text, ['e'])).toContain('Ecke');
+	});
+
 	it('keeps a match that sits in a word longer than the snippet', () => {
 		// No space to cut at before the match, so the cut falls inside the long word, not into the match.
 		const snippet = cut(`${'y'.repeat(300)}-Tanz ${'z'.repeat(300)}`, ['tanz']);
@@ -198,6 +213,29 @@ describe('the highlight parts of a text', () => {
 			{ isMatch: true, text: 'Tanz' },
 			{ isMatch: false, text: ') und E-' },
 			{ isMatch: true, text: 'Jugend' },
+		]);
+	});
+
+	it('ignore a one-letter word when a longer word is searched', () => {
+		// "E-Jugend" yields the word "e", which would mark the start of every word with an e.
+		expect(splitHighlights('Erste E-Jugend', ['e', 'jugend'])).toStrictEqual([
+			{ isMatch: false, text: 'Erste E-' },
+			{ isMatch: true, text: 'Jugend' },
+		]);
+	});
+
+	it('keep one-letter words when no longer word is searched', () => {
+		expect(splitHighlights('Erste E-Jugend', ['e'])).toStrictEqual([
+			{ isMatch: true, text: 'E' },
+			{ isMatch: false, text: 'rste ' },
+			{ isMatch: true, text: 'E' },
+			{ isMatch: false, text: '-Jugend' },
+		]);
+		expect(splitHighlights('Gruppe 1 und 2', ['1', '2'])).toStrictEqual([
+			{ isMatch: false, text: 'Gruppe ' },
+			{ isMatch: true, text: '1' },
+			{ isMatch: false, text: ' und ' },
+			{ isMatch: true, text: '2' },
 		]);
 	});
 

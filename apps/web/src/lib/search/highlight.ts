@@ -19,12 +19,20 @@ const REGEXP_SPECIAL_CHARACTERS = /[$()*+.?[\\\]^{|}]/gu;
  * with any case, at the beginning of a word. A match covers just the typed prefix, so `tanz` marks
  * "Tanz" in "Tanzen" and nothing in "Distanz".
  *
+ * A one-character word is ignored as long as a longer word is searched: "E-Jugend" yields the word
+ * `e`, which would mark the start of every word with an e and centre a snippet on the first one. A
+ * term of nothing but one-character words keeps them.
+ *
  * @param words - The search words.
  * @returns The expression, or `undefined` when no word is left to look for. It has one capture
  * group around the whole match, which `splitHighlights` relies on.
  */
 function createMatcher(words: string[]): RegExp | undefined {
-	const alternatives = [...new Set(words.filter((word) => word.length > 0))]
+	const nonEmptyWords = words.filter((word) => word.length > 0);
+	const longWords = nonEmptyWords.filter((word) => word.length > 1);
+	const usedWords = longWords.length > 0 ? longWords : nonEmptyWords;
+
+	const alternatives = [...new Set(usedWords)]
 		// The longest word first, so `tanz` and `tanzen` together mark "Tanzen" whole.
 		.toSorted((first, second) => second.length - first.length)
 		.map((word) => word.replaceAll(REGEXP_SPECIAL_CHARACTERS, String.raw`\$&`));
