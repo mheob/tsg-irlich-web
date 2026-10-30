@@ -22,18 +22,31 @@ const THUMBNAIL_SIZES = { compact: '4rem', full: '(min-width: 40rem) 13rem, 8rem
  * @param props.compact - Whether to show the small form.
  * @param props.hit - The hit.
  * @param props.linkProps - Attributes for the title link. The panel makes the link the option of
- * its listbox through them, which keeps the row free of a second, nested link.
+ * its listbox through them, which keeps the row free of a second, nested link. Such a row has no
+ * `article` and no heading: an option may only have generic elements between itself and its
+ * group. The option is named by the title alone, so with an `id` the meta line and the snippet
+ * become its description, which a screen reader reads out with the option.
  * @param props.words - The search words, for the highlighting.
  * @returns The row.
  */
 function SearchHitRow({ compact = false, hit, linkProps, words }: Readonly<SearchHitRowProps>) {
+	const Row = linkProps ? 'div' : 'article';
+	const Title = linkProps ? 'div' : 'h3';
+	const optionId = linkProps?.id;
+	const metaId = optionId === undefined ? undefined : `${optionId}-meta`;
+	const snippetId = optionId === undefined || !hit.snippet ? undefined : `${optionId}-snippet`;
+	const describedBy = metaId && (snippetId ? `${metaId} ${snippetId}` : metaId);
+
 	const meta = (
-		<p className={cn('text-muted-foreground', compact ? 'text-xs' : 'text-sm')}>{hit.meta}</p>
+		<p className={cn('text-muted-foreground', compact ? 'text-xs' : 'text-sm')} id={metaId}>
+			{hit.meta}
+		</p>
 	);
 
 	const link = (
 		<Link
 			{...linkProps}
+			aria-describedby={describedBy}
 			className="outline-none group-hover:text-primary-light after:absolute after:inset-0"
 			href={hit.href}
 		>
@@ -42,9 +55,9 @@ function SearchHitRow({ compact = false, hit, linkProps, words }: Readonly<Searc
 	);
 
 	return (
-		<article
+		<Row
 			className={cn(
-				'group relative flex items-start rounded-lg has-focus-visible:ring-2 has-focus-visible:ring-ring motion-reduce:transition-none',
+				'group relative flex items-start rounded-lg has-focus-visible:ring-2 has-focus-visible:ring-ring has-aria-selected:bg-background-low-contrast has-aria-selected:ring-2 has-aria-selected:ring-ring motion-reduce:transition-none',
 				compact
 					? 'gap-3 p-1.5 transition-colors hover:bg-background-low-contrast'
 					: 'gap-4 py-4 sm:gap-6',
@@ -62,7 +75,7 @@ function SearchHitRow({ compact = false, hit, linkProps, words }: Readonly<Searc
 						<div className="line-clamp-2 text-sm font-medium text-foreground">{link}</div>
 						{meta}
 						{hit.snippet && (
-							<p className="truncate text-xs text-foreground/80">
+							<p className="truncate text-xs text-foreground/80" id={snippetId}>
 								<Highlighted text={hit.snippet} words={words} />
 							</p>
 						)}
@@ -70,23 +83,25 @@ function SearchHitRow({ compact = false, hit, linkProps, words }: Readonly<Searc
 				) : (
 					<>
 						{meta}
-						<h3 className="text-lg font-bold hyphens-auto text-primary md:text-xl">{link}</h3>
+						<Title className="text-lg font-bold hyphens-auto text-primary md:text-xl">{link}</Title>
 						{hit.snippet && (
-							<p className="text-sm md:text-base">
+							<p className="text-sm md:text-base" id={snippetId}>
 								<Highlighted text={hit.snippet} words={words} />
 							</p>
 						)}
 					</>
 				)}
 			</div>
-		</article>
+		</Row>
 	);
 }
 
 interface SearchHitRowProps {
 	compact?: boolean;
 	hit: SearchHit;
-	linkProps?: Readonly<Pick<ComponentProps<'a'>, 'aria-selected' | 'id' | 'role' | 'tabIndex'>>;
+	linkProps?: Readonly<
+		Pick<ComponentProps<'a'>, 'aria-selected' | 'id' | 'onClick' | 'role' | 'tabIndex'>
+	>;
 	words: string[];
 }
 

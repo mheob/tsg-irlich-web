@@ -1,4 +1,5 @@
-import { describe, expect, it } from 'vite-plus/test';
+import type { MouseEvent } from 'react';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 import type { SearchHit } from '@/lib/search/types';
 
@@ -132,15 +133,88 @@ describe('the row of a hit', () => {
 			expect(queryAllByRole('link')).toHaveLength(0);
 			expect(container.querySelectorAll('a')).toHaveLength(1);
 		});
+
+		// An option has to sit in its listbox or group with nothing but generic elements in
+		// between. An `article` or a heading there is a role of its own (axe: aria-required-parent).
+		it('leaves the article and the heading out, so the option belongs to the group around the row', () => {
+			const { queryByRole } = renderWithUser(
+				<SearchHitRow
+					hit={buildHit()}
+					linkProps={linkProps}
+					words={['diamond']}
+					compact={compact}
+				/>,
+			);
+
+			expect(queryByRole('article')).toBeNull();
+			expect(queryByRole('heading')).toBeNull();
+		});
+
+		// The option is named by the title alone. A screen reader that moves through the listbox
+		// only reads the option, so the meta line and the snippet travel as its description.
+		it('describes the option by its meta line and its snippet', () => {
+			const { getByRole } = renderWithUser(
+				<SearchHitRow
+					hit={buildHit()}
+					linkProps={linkProps}
+					words={['diamond']}
+					compact={compact}
+				/>,
+			);
+
+			const descriptionIds = String(getByRole('option').getAttribute('aria-describedby')).split(
+				' ',
+			);
+			expect(
+				descriptionIds.map((id) => document.querySelector(`[id="${id}"]`)?.textContent),
+			).toStrictEqual(['01.03.2026 · Breitensport', SNIPPET]);
+		});
+
+		it('describes the option by its meta line alone when the hit has no snippet', () => {
+			const { getByRole } = renderWithUser(
+				<SearchHitRow
+					hit={buildHit({ snippet: undefined })}
+					linkProps={linkProps}
+					words={['diamond']}
+					compact={compact}
+				/>,
+			);
+
+			const descriptionId = String(getByRole('option').getAttribute('aria-describedby'));
+			expect(document.querySelector(`[id="${descriptionId}"]`)?.textContent).toBe(
+				'01.03.2026 · Breitensport',
+			);
+		});
+
+		it('hands a click on the option to the given handler', async () => {
+			const onClick = vi.fn((event: MouseEvent<HTMLAnchorElement>) => {
+				// jsdom cannot follow the link.
+				event.preventDefault();
+			});
+			const { getByRole, user } = renderWithUser(
+				<SearchHitRow
+					hit={buildHit()}
+					linkProps={{ ...linkProps, onClick }}
+					words={['diamond']}
+					compact={compact}
+				/>,
+			);
+
+			await user.click(getByRole('option'));
+
+			expect(onClick).toHaveBeenCalledOnce();
+		});
 	});
 
-	it('renders a plain link without link props', () => {
-		const { container, queryByRole } = renderWithUser(
+	it('renders a plain link in an article without link props', () => {
+		const { container, getByRole, queryByRole } = renderWithUser(
 			<SearchHitRow hit={buildHit()} words={['diamond']} />,
 		);
 
 		expect(queryByRole('option')).toBeNull();
+		expect(getByRole('article')).not.toBeNull();
 		expect(container.querySelector('a')?.getAttribute('id')).toBeNull();
+		expect(container.querySelector('a')?.getAttribute('aria-describedby')).toBeNull();
 	});
 
 	describe('in its compact form', () => {

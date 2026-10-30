@@ -8,6 +8,8 @@ const Dialog = BaseDialog.Root;
 const DialogTrigger = BaseDialog.Trigger;
 const DialogPortal = BaseDialog.Portal;
 const DialogClose = BaseDialog.Close;
+/** The bare popup, for a dialog that brings its own layout, backdrop and close button. */
+const DialogPopupPrimitive = BaseDialog.Popup;
 
 function DialogBackdrop({
 	className,
@@ -94,6 +96,7 @@ export {
 	DialogClose,
 	DialogBackdrop,
 	DialogPopup,
+	DialogPopupPrimitive,
 	DialogHeader,
 	DialogFooter,
 	DialogTitle,
