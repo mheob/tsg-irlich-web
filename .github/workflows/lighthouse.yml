@@ -88,6 +88,26 @@ jobs:
           LHCI_BASE_URL: ${{ inputs.url || github.event.deployment_status.environment_url }}
           LHCI_ROUTE: ${{ matrix.route }}
 
+      # TEMPORARY (WEB-394): does `x-vercel-skip-toolbar` keep the toolbar script out of the HTML?
+      - name: Debug Toolbar
+        if: ${{ matrix.report == 'home' && env.VERCEL_AUTOMATION_BYPASS_SECRET != '' }}
+        env:
+          BASE: ${{ inputs.url || github.event.deployment_status.environment_url }}
+        run: |
+          for v in none 1 true empty; do
+            case $v in
+              none) h=() ;;
+              empty) h=(-H "x-vercel-skip-toolbar;") ;;
+              *) h=(-H "x-vercel-skip-toolbar: $v") ;;
+            esac
+            for path in / /verein; do
+              body=$(curl -sS -H "x-vercel-protection-bypass: $VERCEL_AUTOMATION_BYPASS_SECRET" "${h[@]}" "$BASE$path")
+              echo "skip=$v path=$path bytes=${#body} vercel.live=$(grep -o 'vercel\.live[^" ]*' <<<"$body" | sort -u | tr '\n' ' ')"
+            done
+            hdr=$(curl -sS -o /dev/null -D - -H "Referer: $BASE/" -H "Origin: $BASE" "${h[@]}" https://vercel.live/_next-live/feedback/feedback.js)
+            echo "skip=$v feedback.js: $(head -1 <<<"$hdr" | tr -d '\r') cookies=$(grep -i '^set-cookie:' <<<"$hdr" | cut -d= -f1 | cut -d' ' -f2 | tr '\n' ' ')"
+          done
+
       # One HTML report per run, plus the JSON they were rendered from. Opening the HTML is the only
       # way to see which audit moved a score.
       - name: Upload Report
