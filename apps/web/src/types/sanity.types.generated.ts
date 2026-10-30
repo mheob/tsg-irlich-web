@@ -65,13 +65,13 @@ export type SearchPage = {
   heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
-    searchSection?: {
+    searchSection: {
       title: string;
       subtitle: string;
       intro?: string;
       placeholder: string;
     };
-    noResults?: {
+    noResults: {
       title: string;
       text?: SimpleBlockContent;
       links?: Array<

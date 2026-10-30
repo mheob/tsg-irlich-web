@@ -37,6 +37,7 @@ const searchSectionField = defineField({
 	name: 'searchSection',
 	title: 'Suchbereich',
 	type: 'object',
+	validation: (Rule) => [Rule.required().error('Der Suchbereich ist erforderlich')],
 });
 
 const noResultsTitleField = defineField({
@@ -68,6 +69,7 @@ const noResultsField = defineField({
 	name: 'noResults',
 	title: 'Keine Treffer',
 	type: 'object',
+	validation: (Rule) => [Rule.required().error('Der Bereich „Keine Treffer“ ist erforderlich')],
 });
 
 const popularSearchesTitleField = defineField({

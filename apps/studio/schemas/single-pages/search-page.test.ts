@@ -21,7 +21,18 @@ interface SchemaField {
 	options?: { layout?: string };
 	readOnly?: boolean;
 	type: string;
+	validation?: (rule: FakeRule) => unknown;
 }
+
+/**
+ * A fake `Rule` whose `required().error(message)` hands back the message, so a section's
+ * validation function returns the list of required errors it declares.
+ */
+interface FakeRule {
+	required: () => { error: (message: string) => string };
+}
+
+const fakeRule: FakeRule = { required: () => ({ error: (message) => message }) };
 
 const fields = searchPage.fields as unknown as SchemaField[];
 
@@ -124,6 +135,19 @@ describe('search page', () => {
 		expect(terms).toMatchObject({ description, title, type: 'array' });
 		expect(terms?.options).toStrictEqual({ layout: 'tags' });
 		expect(terms?.of?.map((member) => member.type)).toStrictEqual(['string']);
+	});
+
+	// Sanity skips the validators of a nested field while its object is missing, so the required
+	// fields inside a section only count once the section itself is required.
+	it.each([
+		['searchSection', 'Der Suchbereich ist erforderlich'],
+		['noResults', 'Der Bereich „Keine Treffer“ ist erforderlich'],
+	])('requires the section %s', (name, message) => {
+		expect(contentField(name)?.validation?.(fakeRule)).toStrictEqual([message]);
+	});
+
+	it('leaves the popular searches optional', () => {
+		expect(contentField('popularSearches')?.validation).toBeUndefined();
 	});
 
 	it('keeps the contact persons section in the content', () => {
