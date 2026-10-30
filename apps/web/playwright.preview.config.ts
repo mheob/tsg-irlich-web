@@ -27,10 +27,11 @@ export default defineConfig({
 	testDir: './e2e/preview',
 	use: {
 		baseURL: process.env.PLAYWRIGHT_BASE_URL,
-		// `x-vercel-skip-toolbar` keeps Vercel's preview toolbar out of the page. Its script runs next
-		// to the site's own, so an exception it throws would fail the `pageerror` check of every smoke
-		// test, and Vercel changes it without notice — see `lighthouserc.cjs` for the cookie it began
-		// to set on 2026-10-30.
+		// `x-vercel-skip-toolbar` is Vercel's documented switch for automated runs: with it,
+		// `vercel.live` answers the toolbar script every preview page loads with an empty 204 instead
+		// of the toolbar. Its script would run next to the site's own, so an exception it threw would
+		// fail the `pageerror` check of every smoke test, and Vercel changes it without notice — see
+		// `lighthouserc.cjs` for the cookie it began to set on 2026-10-30.
 		extraHTTPHeaders: bypassToken
 			? {
 					'x-vercel-protection-bypass': bypassToken,
