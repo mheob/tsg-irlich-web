@@ -88,6 +88,7 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 - **Type generation** from Sanity schema to TypeScript
 - **Image optimization** with next/image and Sanity image URLs
 - **Preview**: the news, department and group routes are previewable through draft mode and the studio's presentation tool — see the two app guides before touching that wiring
+- **Site search**: the panel in the navigation and `/suche` search the published pages and news through `searchSite()` in `apps/web/src/lib/search/`. The singleton `searchPage` holds their texts, and `searchTerms` on departments and groups add words to find them by — see the two app guides
 
 ## File & Naming Conventions
 
