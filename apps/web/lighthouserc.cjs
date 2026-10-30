@@ -86,6 +86,17 @@ module.exports = {
 			// connection, which is both the harsher measurement and the one most of the club's
 			// visitors live in. `preset: 'desktop'` would flatter every number.
 			settings: {
+				// Every preview page loads the script of Vercel's preview toolbar
+				// (`https://vercel.live/_next-live/feedback/feedback.js`), which is not part of the site.
+				// Since 2026-10-30 its response now and then sets a third-party cookie `_vcrr_…`, which
+				// fails `third-party-cookies` and `inspector-issues` and drops best practices to 0.79 on
+				// every route at once — on and off, with no commit of ours in between. Vercel's
+				// documented switch for automated runs, the `x-vercel-skip-toolbar` header, does not
+				// help: it makes `vercel.live` answer with an empty 204, which Lighthouse's user agent
+				// was already getting, and the cookie came with exactly that response. So the request
+				// is never sent. `errors-in-console` ignores a request Lighthouse blocked itself
+				// (`ERR_BLOCKED_BY_CLIENT.Inspector`) by default.
+				blockedUrlPatterns: ['https://vercel.live/*'],
 				maxWaitForLoad: MAX_WAIT_FOR_LOAD_MS,
 				// Vercel answers every preview deployment with `X-Robots-Tag: noindex`, which is the
 				// point of a preview and says nothing about what production serves. The audit can
