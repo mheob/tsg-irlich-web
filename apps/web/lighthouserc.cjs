@@ -104,7 +104,10 @@ module.exports = {
 						// and `inspector-issues` and drops best practices to 0.79 on every route at once —
 						// on and off, with no commit of ours in between. This header is Vercel's documented
 						// switch for automated runs; its presence alone keeps the toolbar out of the page.
-						'x-vercel-skip-toolbar': '1',
+						// Not the `1` Vercel's docs suggest: Lighthouse CI hands these settings to Lighthouse
+						// as a flags file, its yargs parser turns `'1'` into the number 1, and Chrome then
+						// rejects every run with "Invalid header value, string expected".
+						'x-vercel-skip-toolbar': 'true',
 					},
 				}),
 			},
