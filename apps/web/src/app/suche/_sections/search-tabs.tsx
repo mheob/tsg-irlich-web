@@ -36,6 +36,8 @@ function SearchTabs({ query, tab, totals }: Readonly<SearchTabsProps>) {
 							aria-current={id === tab ? 'page' : undefined}
 							className="group -mb-px inline-flex items-center gap-2 border-b-[3px] border-transparent px-3.5 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary aria-[current=page]:border-secondary aria-[current=page]:text-primary motion-reduce:transition-none md:text-base"
 							href={getSearchPath(query, id)}
+							// The tabs sit far down the page; a switch keeps the reader where they are.
+							scroll={false}
 						>
 							{/* The space keeps the accessible name "Alle 30" apart; the flex container drops it visually. */}
 							{label}{' '}

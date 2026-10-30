@@ -35,16 +35,16 @@
 			}
 		],
 		"syncTags": [
-			"s1:u8DZ7g",
-			"s1:l0tY2w",
-			"s1:BoqIew",
 			"s1:w2LXFQ",
-			"s1:GHxiYw",
-			"s1:bxzkrQ",
 			"s1:fZZ15w",
-			"s1:e+O/Nw"
+			"s1:e+O/Nw",
+			"s1:u8DZ7g",
+			"s1:GHxiYw",
+			"s1:l0tY2w",
+			"s1:bxzkrQ",
+			"s1:BoqIew"
 		],
-		"ms": 5
+		"ms": 6
 	},
-	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+in+%24ids%5D+%7B%0A%09%09_id%2C%0A%09%09%22text%22%3A+select%28%0A%09%09%09_type+%3D%3D+%27news.article%27+%3D%3E+pt%3A%3Atext%28body%5B_type+%3D%3D+%27blockContent%27%5D.text%5B%5D%29%2C%0A%09%09%09_type+%3D%3D+%27department%27+%3D%3E+intro%2C%0A%09%09%09_type+%3D%3D+%27group%27+%3D%3E+coalesce%28pt%3A%3Atext%28description.text%29%2C+%27%27%29+%2B+%27+%27+%2B+coalesce%28pt%3A%3Atext%28training.trainingDescription.text%29%2C+%27%27%29%2C%0A%09%09%09_type+in+%5B%27membership%27%2C+%27echoOverview%27%5D+%3D%3E+pt%3A%3Atext%28intro.text%29%2C%0A%09%09%09_type+%3D%3D+%27privacy%27+%3D%3E+coalesce%28pt%3A%3Atext%28introText.text%29%2C+%27%27%29+%2B+%27+%27+%2B+coalesce%28pt%3A%3Atext%28content.text%29%2C+%27%27%29%2C%0A%09%09%09_type+%3D%3D+%27accessibility%27+%3D%3E+pt%3A%3Atext%28content.text%29%2C%0A%09%09%09_type+%3D%3D+%27aboutUs%27+%3D%3E+coalesce%28pt%3A%3Atext%28content.introSection.intro.text%29%2C+%27%27%29+%2B+%27+%27+%2B+coalesce%28pt%3A%3Atext%28content.visionSection.longVision.text%29%2C+%27%27%29%2C%0A%09%09%09_type+%3D%3D+%27echo.issue%27+%3D%3E+select%28indexable+%21%3D+false+%3D%3E+extractedText%29%2C%0A%09%09%09subtitle%0A%09%09%29%0A%09%7D%0A&%24ids=%5B%22department-tanzen%22%2C%22group-4d6fb5c8-26c1-4c52-8023-fe39e4dbc925%22%2C%22group-d335e539-9078-4304-97e5-3defb9dc06f8%22%2C%22home%22%2C%22group-54eb7b14-d686-4b35-b344-695cb79e957a%22%2C%22a0779de0-2679-4990-835a-a12e2e74d530%22%2C%22a2eff42d-69dc-4ad2-8cd1-2a0e9e97977a%22%2C%22e7d0aa64-ee98-47b9-9cba-917911096665%22%5D&returnQuery=false&perspective=published"
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_id+in+%24ids%5D+%7B%0A%09%09_id%2C%0A%09%09%22text%22%3A+select%28%0A%09%09%09_type+%3D%3D+%27news.article%27+%3D%3E+pt%3A%3Atext%28body%5B_type+%3D%3D+%27blockContent%27%5D.text%5B%5D%29%2C%0A%09%09%09_type+%3D%3D+%27department%27+%3D%3E+intro%2C%0A%09%09%09_type+%3D%3D+%27group%27+%3D%3E+coalesce%28pt%3A%3Atext%28description.text%29%2C+%27%27%29+%2B+%27+%27+%2B+coalesce%28pt%3A%3Atext%28training.trainingDescription.text%29%2C+%27%27%29%2C%0A%09%09%09_type+in+%5B%27membership%27%2C+%27echoOverview%27%5D+%3D%3E+pt%3A%3Atext%28intro.text%29%2C%0A%09%09%09_type+%3D%3D+%27aboutUs%27+%3D%3E+coalesce%28pt%3A%3Atext%28content.introSection.intro.text%29%2C+%27%27%29+%2B+%27+%27+%2B+coalesce%28pt%3A%3Atext%28content.visionSection.longVision.text%29%2C+%27%27%29%2C%0A%09%09%09_type+%3D%3D+%27echo.issue%27+%3D%3E+select%28indexable+%21%3D+false+%3D%3E+extractedText%29%2C%0A%09%09%09subtitle%0A%09%09%29%0A%09%7D%0A&%24ids=%5B%22department-tanzen%22%2C%22group-4d6fb5c8-26c1-4c52-8023-fe39e4dbc925%22%2C%22group-d335e539-9078-4304-97e5-3defb9dc06f8%22%2C%22home%22%2C%22group-54eb7b14-d686-4b35-b344-695cb79e957a%22%2C%22a0779de0-2679-4990-835a-a12e2e74d530%22%2C%22a2eff42d-69dc-4ad2-8cd1-2a0e9e97977a%22%2C%22e7d0aa64-ee98-47b9-9cba-917911096665%22%5D&returnQuery=false&perspective=published"
 }

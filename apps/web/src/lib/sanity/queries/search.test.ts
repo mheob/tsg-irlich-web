@@ -164,13 +164,16 @@ describe('search queries', () => {
 				'contact',
 				'newsOverview',
 				'echoOverview',
-				'imprint',
-				'privacy',
-				'accessibility',
 			]);
 			expect(searchCandidatesQuery).toContain(
 				`_type in [${SEARCH_PAGE_TYPES.map((type) => `'${type}'`).join(', ')}]`,
 			);
+		});
+
+		// Nobody searches for them, and their long texts would turn up for almost any word.
+		it.each(['imprint', 'privacy', 'accessibility'])('leave out the legal page %s', (type) => {
+			expect(searchCandidatesQuery).not.toContain(`'${type}'`);
+			expect(searchTextsQuery).not.toContain(`'${type}'`);
 		});
 
 		// A pending or failed issue has no page of its own, or shows the pages of the previous PDF.
@@ -245,7 +248,6 @@ describe('search queries', () => {
 				'description.text[].children[].text',
 				'answer[].children[].text',
 				'training.trainingDescription.text[].children[].text',
-				'content.text[].children[].text',
 				'firstName',
 				'affiliations[].taskDescription',
 			]) {

@@ -157,7 +157,7 @@ The resolved target is added as `target` next to the untouched `link` reference,
 
 ## Site search
 
-The search (WEB-204) finds pages and news. It has two surfaces, the panel in the navigation and the page `/suche`, and both sit on one function.
+The search (WEB-204) finds pages and news. It has two surfaces, the panel in the navigation and the page `/suche`, and both sit on one function. The legal pages (`imprint`, `privacy`, `accessibility`) are left out on purpose: nobody searches for them, and their long texts would turn up for almost any word.
 
 - `src/lib/search/` holds the logic around the GROQ queries: the input rules (`query.ts`), the merge of the candidates into hits (`merge.ts`), snippets and highlighting (`highlight.ts`), thumbnails, the path of the page and "Häufig gesucht" (`popular.ts`), plus the seam `searchSite()`. `constants.ts` carries the limits, the debounce and the weights. The GROQ lives in `src/lib/sanity/queries/search.ts`.
 - `searchSite()` (`search-site.ts`) is the seam: a term and options in, the hits of both groups ("Seiten", "News") and their totals out. A provider such as Algolia would replace what is behind it, the queries and the merge, without a page or a component noticing. The page calls it directly. The panel goes through `GET /api/search`, which asks for `PANEL_HITS_PER_GROUP` (3) hits per group and answers `null` without a usable term. `GET /api/search/popular` serves "Häufig gesucht" to the panel (`revalidate = 3600`, a literal because Next.js reads it statically); the page reads `getPopularSearches()` directly. For now that list holds only the terms the editors pin, minus the ones they block, at most eight. Counting real searches is a follow-up.

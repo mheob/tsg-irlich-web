@@ -101,6 +101,7 @@ Durchsucht wird immer der Titel und der eigentliche Seiteninhalt:
 
 - **Personen** haben keine eigene Trefferseite. Eine Person führt zu den Seiten, auf denen sie aufgeführt ist (siehe [Wo Personen aufgeführt sind](#wo-personen-aufgeführt-sind)).
 - **Nicht durchsucht** werden Sponsoren, Testimonials, Ehrenmitglieder und Entwürfe.
+- **Ebenfalls nicht durchsucht** werden die rechtlichen Seiten Impressum, Datenschutz und Barrierefreiheit (Nutzer, 30.10.2026, nach der ersten Abnahme): Niemand sucht nach ihnen, und ihre langen Texte tauchten bei fast jedem Wort auf.
 - Fehlt ein Bild, steht ein neutraler Platzhalter mit dem Vereinslogo.
 
 ### Ranking
