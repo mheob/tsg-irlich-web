@@ -40,6 +40,11 @@ overrides:
   # prebuild-install and prints Node's DEP0176 deprecation on every install. 13.x ships the
   # prebuilt bindings inside the package, so nothing is built at install time any more
   better-sqlite3: "^13.0.3"
+  # chromium-bidi 14 (through puppeteer-core, lighthouse and @lhci/cli) pins zod 3, which can
+  # exhaust memory while validating oversized constrained collections (GHSA-mrhx-c7xc-m3w5); only
+  # zod 4.6.6 fixes it. chromium-bidi only parses WebDriver BiDi messages, and Lighthouse drives
+  # Chrome over CDP, so this repo's Lighthouse run never loads it
+  chromium-bidi>zod: "^4.6.7"
   # react-email → conf → ajv pulls fast-uri 3.1.5, vulnerable to improper hex-encoding
   # handling in URL normalization (CVE-2026-76172); 3.1.6 fixes it and stays in ajv's ^3 range
   fast-uri: "^3.1.6"
@@ -62,6 +67,12 @@ overrides:
   # 6.5.0. 8.x is the same `ProxyAgent` surface and only carries the proxy support behind a
   # browser download and an `lhci upload` — neither of which this repo's Lighthouse run does
   proxy-agent: "^8.0.2"
+  # sanity-plugin-media pins zod 3 (GHSA-mrhx-c7xc-m3w5, fixed only in zod 4.6.6) for its four
+  # asset, tag and folder form schemas, which use nothing zod 4 changed. Its @hookform/resolvers 4
+  # reads a failed parse from zod 3's `errors` array, which zod 4 no longer has, so the forms
+  # would throw instead of showing the message; the catalog's resolvers 6 read both versions
+  sanity-plugin-media>@hookform/resolvers: "^6.0.0"
+  sanity-plugin-media>zod: "^4.6.7"
   smol-toml: ">=1.6.1"
   # @lhci/cli pulls tmp 0.0.33 (through inquirer → external-editor) and 0.1.0, both of which
   # write through a symlinked path parameter (GHSA-52f5-9888-hmc6, GHSA-ph9p-34f9-6g65); 0.2.6
