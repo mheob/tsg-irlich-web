@@ -5,8 +5,10 @@ import { WEIGHTS } from '@/lib/search/constants';
 
 /**
  * The document types of the „Seiten“ group: everything the search finds except the news. FAQs and
- * persons have no page of their own and lead to the pages that show them. The search caches its
- * results under these types as tags, so a change to any of them expires the cache.
+ * persons have no page of their own and lead to the pages that show them. The legal pages
+ * (imprint, privacy policy, accessibility statement) are left out on purpose: nobody searches for
+ * them, and their long texts would turn up for almost any word. The search caches its results under
+ * these types as tags, so a change to any of them expires the cache.
  */
 const SEARCH_PAGE_TYPES = [
 	'department',
@@ -21,16 +23,13 @@ const SEARCH_PAGE_TYPES = [
 	'contact',
 	'newsOverview',
 	'echoOverview',
-	'imprint',
-	'privacy',
-	'accessibility',
 ] as const;
 
 /**
  * `SEARCH_PAGE_TYPES` as a GROQ array. Sanity TypeGen cannot read an array built at runtime, so the
  * list is spelled out a second time; a test keeps both in step.
  */
-const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'imprint', 'privacy', 'accessibility']`;
+const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview']`;
 
 /** The pages that list a person in their contact persons section. Group pages list theirs by team. */
 const contactPersonPageTypeList = /* groq */ `['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory']`;
@@ -93,14 +92,12 @@ const pageScore = /* groq */ `
 	boost(subtitle match text::query($q), ${WEIGHTS.lead}),
 	boost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), ${WEIGHTS.lead}),
 	boost(intro.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
-	boost(introText.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
 	boost(content.introSection.intro.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
 	boost(description.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
 	boost(question match text::query($q), ${WEIGHTS.lead}),
 	boost([firstName, lastName] match text::query($q), ${WEIGHTS.lead}),
 	boost(answer[].children[].text match text::query($q), ${WEIGHTS.body}),
 	boost(training.trainingDescription.text[].children[].text match text::query($q), ${WEIGHTS.body}),
-	boost(content.text[].children[].text match text::query($q), ${WEIGHTS.body}),
 	boost(content.visionSection.longVision.text[].children[].text match text::query($q), ${WEIGHTS.body}),
 	boost(references(*[_type == 'role' && title match text::query($q)]._id), ${WEIGHTS.body}),
 	boost(affiliations[].taskDescription match text::query($q), ${WEIGHTS.body}),
@@ -111,7 +108,6 @@ const pageScore = /* groq */ `
 		searchTerms[],
 		subtitle,
 		intro.text[].children[].text,
-		introText.text[].children[].text,
 		content.introSection.intro.text[].children[].text,
 		description.text[].children[].text,
 		question,
@@ -119,7 +115,6 @@ const pageScore = /* groq */ `
 		lastName,
 		answer[].children[].text,
 		training.trainingDescription.text[].children[].text,
-		content.text[].children[].text,
 		content.visionSection.longVision.text[].children[].text,
 		affiliations[].taskDescription
 	] match text::query($q), ${WEIGHTS.body})
@@ -219,8 +214,6 @@ const searchTextsQuery = defineQuery(`
 			_type == 'department' => intro,
 			_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),
 			_type in ['membership', 'echoOverview'] => pt::text(intro.text),
-			_type == 'privacy' => coalesce(pt::text(introText.text), '') + ' ' + coalesce(pt::text(content.text), ''),
-			_type == 'accessibility' => pt::text(content.text),
 			_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),
 			_type == 'echo.issue' => select(indexable != false => extractedText),
 			subtitle

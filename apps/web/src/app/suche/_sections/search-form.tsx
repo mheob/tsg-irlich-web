@@ -24,7 +24,7 @@ function SearchForm({ placeholder = FALLBACK_PLACEHOLDER, query, tab }: Readonly
 	return (
 		<form
 			action={SEARCH_PATH}
-			className="mt-8 flex max-w-2xl flex-col gap-3 sm:flex-row"
+			className="mt-8 flex max-w-2xl flex-col gap-3 sm:flex-row sm:items-center"
 			method="get"
 			// `role="search"` on the form is the landmark every browser and screen reader supports; the
 			// newer `<search>` element would wrap the form in a second element for the same effect.
