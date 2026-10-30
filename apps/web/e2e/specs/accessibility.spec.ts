@@ -4,6 +4,8 @@ import {
 	openFirstArticle,
 	openFirstDepartment,
 	openNewestEchoIssue,
+	openSearchPanel,
+	searchInPanel,
 	waitForPage,
 } from '../support/navigation';
 import { expect, test } from '../support/test';
@@ -25,6 +27,7 @@ const STATIC_ROUTES = [
 	'/impressum',
 	'/datenschutz',
 	'/barrierefreiheit',
+	'/suche',
 ];
 
 test.describe('accessibility', () => {
@@ -36,6 +39,40 @@ test.describe('accessibility', () => {
 			await expectNoAxeViolations(page, testInfo, route);
 		});
 	}
+
+	// Without a term the search page shows „Häufig gesucht“; with one it shows the summary, the tabs
+	// and both groups of hits instead, which is markup the scan above never sees.
+	test('meets WCAG 2.1 AA on the hits of a search', async ({ page }, testInfo) => {
+		await page.goto('/suche?q=Tanzen');
+		await waitForPage(page);
+
+		await expectNoAxeViolations(page, testInfo, '/suche');
+	});
+
+	// The panel lives in the navigation of every page, and only opens on a press of the lupe. It is
+	// scanned with hits in both groups, the state with the most to get wrong: the combobox, the
+	// listbox with its two groups, the options and the links to the search page.
+	test('meets WCAG 2.1 AA with the search panel open', async ({ page }, testInfo) => {
+		await page.goto('/');
+		await waitForPage(page);
+
+		await openSearchPanel(page);
+		const listbox = await searchInPanel(page, 'Tanzen');
+
+		const pageHits = listbox.getByRole('group', { name: 'Seiten' }).getByRole('option');
+		const newsHits = listbox.getByRole('group', { name: 'News' }).getByRole('option');
+
+		await expect(pageHits.first()).toBeVisible();
+		await expect(newsHits.first()).toBeVisible();
+
+		// The panel slides and fades in. Mid-transition its text is partly transparent, and axe would
+		// measure the contrast of a frame nobody looks at for long.
+		await page.getByRole('dialog', { name: 'Website durchsuchen' }).evaluate(async (dialog) => {
+			await Promise.all(dialog.getAnimations().map(async (animation) => animation.finished));
+		});
+
+		await expectNoAxeViolations(page, testInfo, 'search panel');
+	});
 
 	// The dynamic routes are reached by clicking through, not by a hard-coded slug: the recorded
 	// fixtures are re-recorded from the live dataset, and a slug that disappears would turn a

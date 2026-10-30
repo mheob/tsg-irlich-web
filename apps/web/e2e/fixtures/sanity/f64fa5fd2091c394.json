@@ -1,0 +1,170 @@
+{
+	"body": {
+		"result": [
+			{
+				"_id": "department-tanzen",
+				"_score": 11,
+				"_type": "department",
+				"category": null,
+				"department": null,
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Tanzen",
+					"asset": {
+						"_ref": "image-79cd294bb474744bc1b1fef4a9ef72578ed7cf09-480x270-webp",
+						"_type": "reference"
+					}
+				},
+				"indexable": null,
+				"publishedAt": null,
+				"slug": "tanzen",
+				"title": "Tanzen"
+			},
+			{
+				"_id": "group-4d6fb5c8-26c1-4c52-8023-fe39e4dbc925",
+				"_score": 4,
+				"_type": "group",
+				"category": null,
+				"department": {
+					"slug": "tanzen",
+					"title": "Tanzen"
+				},
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Die Funky Diamonds in pinken und organgenen Kostümen, von denen einige auf den Schultern stehen, posiert auf Steinstufen mit Herz-Requisiten",
+					"asset": {
+						"_ref": "image-3788f91787dec33b2fe63b0bdb1c0be5d75a88d9-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Gruppenbild der Funky Diamonds ",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8181887212716412,
+						"width": 0.9961526779386454,
+						"x": 0.5,
+						"y": 0.5530905133137592
+					}
+				},
+				"indexable": null,
+				"publishedAt": null,
+				"slug": "funky-diamonds",
+				"title": "Funky Diamonds"
+			},
+			{
+				"_id": "group-54eb7b14-d686-4b35-b344-695cb79e957a",
+				"_score": 4,
+				"_type": "group",
+				"category": null,
+				"department": {
+					"slug": "tanzen",
+					"title": "Tanzen"
+				},
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Tänzerinnen und Tänzer der \"Sweet Diamonds\" in rot blauen Cowgirl Kostümen vor einer Mauer",
+					"asset": {
+						"_ref": "image-6e7e578d9adcac840cf0c684b777f5a0918d03cb-5120x3840-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.07774013466291656,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Gruppenbild der Sweet Diamonds ",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6706911669548401,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5004634364612631
+					}
+				},
+				"indexable": null,
+				"publishedAt": null,
+				"slug": "sweet-diamonds",
+				"title": "Sweet Diamonds"
+			},
+			{
+				"_id": "group-d335e539-9078-4304-97e5-3defb9dc06f8",
+				"_score": 4,
+				"_type": "group",
+				"category": null,
+				"department": {
+					"slug": "tanzen",
+					"title": "Tanzen"
+				},
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Die Little Diamonds in pastellfarbenen Kostümen, mit rosa Oberteilen und türkisen Röcken, posiert vor einer Steinmauer",
+					"asset": {
+						"_ref": "image-969072877eda552c6e6245f0bbe9ea3a4b544c0e-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"description": "Gruppenbild der Little Diamonds ",
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7635415612027944,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				"indexable": null,
+				"publishedAt": null,
+				"slug": "little-diamonds",
+				"title": "Little Diamonds"
+			},
+			{
+				"_id": "home",
+				"_score": 4,
+				"_type": "home",
+				"category": null,
+				"department": null,
+				"image": null,
+				"indexable": null,
+				"publishedAt": null,
+				"slug": "home",
+				"title": "Mehr als Sport – wir sind die TSG Irlich."
+			}
+		],
+		"syncTags": [
+			"s1:26XUmQ",
+			"s1:b3a4dw",
+			"s1:BU299g",
+			"s1:Hi85NA",
+			"s1:0+17mg",
+			"s1:uMx6JQ",
+			"s1:Cc+ZCg",
+			"s1:mWzJLg",
+			"s1:kLGmmg",
+			"s1:2QTQgQ",
+			"s1:1drIjw",
+			"s1:M2338A",
+			"s1:hXhJCg",
+			"s1:LD/aiQ",
+			"s1:ZGhU9g",
+			"s1:7SFKSw",
+			"s1:OevtwA",
+			"s1:w2LXFQ"
+		],
+		"ms": 67
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+in+%5B%27department%27%2C+%27group%27%2C+%27echo.issue%27%2C+%27faq%27%2C+%27person%27%2C+%27home%27%2C+%27aboutUs%27%2C+%27departmentsPage%27%2C+%27membership%27%2C+%27contact%27%2C+%27newsOverview%27%2C+%27echoOverview%27%2C+%27imprint%27%2C+%27privacy%27%2C+%27accessibility%27%5D+%26%26+%28_type+%21%3D+%27echo.issue%27+%7C%7C+%28_type+%3D%3D+%27echo.issue%27+%26%26+render.status+%3D%3D+%27done%27+%26%26+render.source+%3D%3D+pdf.asset._ref+%26%26+defined%28slug.current%29+%26%26+count%28pages%29+%3E+0%29%29%5D%0A%09%7C+score%28%0A%09boost%28title+match+text%3A%3Aquery%28%24q%29%2C+10%29%2C%0A%09boost%28searchTerms%5B%5D+match+text%3A%3Aquery%28%24q%29%2C+8%29%2C%0A%09boost%28subtitle+match+text%3A%3Aquery%28%24q%29%2C+3%29%2C%0A%09boost%28_type+in+%5B%27department%27%2C+%27home%27%5D%2C+0%29+%26%26+boost%28intro+match+text%3A%3Aquery%28%24q%29%2C+3%29%2C%0A%09boost%28intro.text%5B%5D.children%5B%5D.text+match+text%3A%3Aquery%28%24q%29%2C+3%29%2C%0A%09boost%28introText.text%5B%5D.children%5B%5D.text+match+text%3A%3Aquery%28%24q%29%2C+3%29%2C%0A%09boost%28content.introSection.intro.text%5B%5D.children%5B%5D.text+match+text%3A%3Aquery%28%24q%29%2C+3%29%2C%0A%09boost%28description.text%5B%5D.children%5B%5D.text+match+text%3A%3Aquery%28%24q%29%2C+3%29%2C%0A%09boost%28question+match+text%3A%3Aquery%28%24q%29%2C+3%29%2C%0A%09boost%28%5BfirstName%2C+lastName%5D+match+text%3A%3Aquery%28%24q%29%2C+3%29%2C%0A%09boost%28answer%5B%5D.children%5B%5D.text+match+text%3A%3Aquery%28%24q%29%2C+1%29%2C%0A%09boost%28training.trainingDescription.text%5B%5D.children%5B%5D.text+match+text%3A%3Aquery%28%24q%29%2C+1%29%2C%0A%09boost%28content.text%5B%5D.children%5B%5D.text+match+text%3A%3Aquery%28%24q%29%2C+1%29%2C%0A%09boost%28content.visionSection.longVision.text%5B%5D.children%5B%5D.text+match+text%3A%3Aquery%28%24q%29%2C+1%29%2C%0A%09boost%28references%28*%5B_type+%3D%3D+%27role%27+%26%26+title+match+text%3A%3Aquery%28%24q%29%5D._id%29%2C+1%29%2C%0A%09boost%28affiliations%5B%5D.taskDescription+match+text%3A%3Aquery%28%24q%29%2C+1%29%2C%0A%09boost%28indexable+%21%3D+false%2C+0%29+%26%26+boost%28extractedText+match+text%3A%3Aquery%28%24q%29%2C+1%29%2C%0A%09boost%28_type+in+%5B%27department%27%2C+%27home%27%5D%2C+0%29+%26%26+boost%28%5Btitle%2C+searchTerms%5B%5D%2C+subtitle%2C+intro%5D+match+text%3A%3Aquery%28%24q%29%2C+1%29%2C%0A%09boost%28%21%28_type+in+%5B%27department%27%2C+%27home%27%2C+%27echo.issue%27%5D%29%2C+0%29+%26%26+boost%28%5B%0A%09%09title%2C%0A%09%09searchTerms%5B%5D%2C%0A%09%09subtitle%2C%0A%09%09intro.text%5B%5D.children%5B%5D.text%2C%0A%09%09introText.text%5B%5D.children%5B%5D.text%2C%0A%09%09content.introSection.intro.text%5B%5D.children%5B%5D.text%2C%0A%09%09description.text%5B%5D.children%5B%5D.text%2C%0A%09%09question%2C%0A%09%09firstName%2C%0A%09%09lastName%2C%0A%09%09answer%5B%5D.children%5B%5D.text%2C%0A%09%09training.trainingDescription.text%5B%5D.children%5B%5D.text%2C%0A%09%09content.text%5B%5D.children%5B%5D.text%2C%0A%09%09content.visionSection.longVision.text%5B%5D.children%5B%5D.text%2C%0A%09%09affiliations%5B%5D.taskDescription%0A%09%5D+match+text%3A%3Aquery%28%24q%29%2C+1%29%0A%29%0A%09%7C+order%28_score+desc%29+%5B_score+%21%3D+0%5D+%5B0...%24limit%5D+%7B%0A%09%09%0A%09_id%2C%0A%09_type%2C%0A%09title%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09%22department%22%3A+department-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09%22category%22%3A+categories%5B0%5D-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09publishedAt%2C%0A%09indexable%2C%0A%09%22image%22%3A+select%28%0A%09%09_type+%3D%3D+%27department%27+%3D%3E+cardImage%2C%0A%09%09_type+in+%5B%27group%27%2C+%27news.article%27%5D+%3D%3E+featuredImage%2C%0A%09%09_type+%3D%3D+%27echo.issue%27+%3D%3E+pages%5B0%5D%2C%0A%09%09_type+%3D%3D+%27home%27+%3D%3E+null%2C%0A%09%09heroImage%0A%09%29%0A%2C%0A%09%09%22_score%22%3A+math%3A%3Asum%28%5B_score%5D%29%2C%0A%09%09_type+%3D%3D+%27faq%27+%3D%3E+%7B%0A%09%09%09question%2C%0A%09%09%09%22targets%22%3A+departments%5B%5D-%3E+%7B+%0A%09_id%2C%0A%09_type%2C%0A%09title%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09%22department%22%3A+department-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09%22category%22%3A+categories%5B0%5D-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09publishedAt%2C%0A%09indexable%2C%0A%09%22image%22%3A+select%28%0A%09%09_type+%3D%3D+%27department%27+%3D%3E+cardImage%2C%0A%09%09_type+in+%5B%27group%27%2C+%27news.article%27%5D+%3D%3E+featuredImage%2C%0A%09%09_type+%3D%3D+%27echo.issue%27+%3D%3E+pages%5B0%5D%2C%0A%09%09_type+%3D%3D+%27home%27+%3D%3E+null%2C%0A%09%09heroImage%0A%09%29%0A+%7D%0A%09%09%7D%2C%0A%09%09_type+%3D%3D+%27person%27+%3D%3E+%7B%0A%09%09%09firstName%2C%0A%09%09%09lastName%2C%0A%09%09%09%22nameMatches%22%3A+%5BfirstName%2C+lastName%5D+match+text%3A%3Aquery%28%24q%29%2C%0A%09%09%09%22affiliations%22%3A+affiliations%5B%5D+%7B%0A%09%09%09%09%22role%22%3A+role-%3Etitle%2C%0A%09%09%09%09%22roleMatches%22%3A+%5Brole-%3Etitle%2C+taskDescription%5D+match+text%3A%3Aquery%28%24q%29%2C%0A%09%09%09%09%22team%22%3A+team-%3E+%7B+%0A%09_id%2C%0A%09_type%2C%0A%09title%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09%22department%22%3A+department-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09%22category%22%3A+categories%5B0%5D-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09publishedAt%2C%0A%09indexable%2C%0A%09%22image%22%3A+select%28%0A%09%09_type+%3D%3D+%27department%27+%3D%3E+cardImage%2C%0A%09%09_type+in+%5B%27group%27%2C+%27news.article%27%5D+%3D%3E+featuredImage%2C%0A%09%09_type+%3D%3D+%27echo.issue%27+%3D%3E+pages%5B0%5D%2C%0A%09%09_type+%3D%3D+%27home%27+%3D%3E+null%2C%0A%09%09heroImage%0A%09%29%0A+%7D%0A%09%09%09%7D%2C%0A%09%09%09%22listedOn%22%3A+*%5B_type+in+%5B%27department%27%2C+%27home%27%2C+%27aboutUs%27%2C+%27departmentsPage%27%2C+%27membership%27%2C+%27contact%27%2C+%27newsOverview%27%2C+%27newsOverviewCategory%27%5D+%26%26+references%28%5E._id%29%5D+%7B+%0A%09_id%2C%0A%09_type%2C%0A%09title%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09%22department%22%3A+department-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09%22category%22%3A+categories%5B0%5D-%3E+%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09publishedAt%2C%0A%09indexable%2C%0A%09%22image%22%3A+select%28%0A%09%09_type+%3D%3D+%27department%27+%3D%3E+cardImage%2C%0A%09%09_type+in+%5B%27group%27%2C+%27news.article%27%5D+%3D%3E+featuredImage%2C%0A%09%09_type+%3D%3D+%27echo.issue%27+%3D%3E+pages%5B0%5D%2C%0A%09%09_type+%3D%3D+%27home%27+%3D%3E+null%2C%0A%09%09heroImage%0A%09%29%0A+%7D%0A%09%09%7D%0A%09%7D%0A&%24limit=100&%24q=%22tanzen*%22&returnQuery=false&perspective=published"
+}

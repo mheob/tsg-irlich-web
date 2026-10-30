@@ -1,0 +1,147 @@
+{
+	"body": {
+		"result": {
+			"_updatedAt": "2026-09-29T12:28:50Z",
+			"author": {
+				"email": "s.thome@tsg-irlich.de",
+				"firstName": "Sophie ",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+					"asset": {
+						"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6740816500468764,
+						"width": 0.6978607346799625,
+						"x": 0.4942576493650388,
+						"y": 0.40427639989772435
+					}
+				},
+				"jobTitle": "PR-Team Bereich Breitensport",
+				"lastName": "Thomé"
+			},
+			"body": [
+				{
+					"_key": "1f5afee166d5",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "81f1bf1d28ba",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "20440e6237040",
+									"_type": "span",
+									"marks": [],
+									"text": "Alle guten Dinge sind drei! Heute Abend steht endlich auch der erste Auftritt für die Funky Diamonds der TSG Irlich auf dem Programm. Unter dem Motto „Tanz mit mir ins Glück“ geht es zusammen mit dem Publikum auf eine Reise ins Glück. \n\nDie 30 Tänzerinnen und Tänzer ab 18 Jahren zeigen jedes Jahr aufs Neue, dass Tanzen und Teamwork keine Altersgrenze kennt. Monatelange harte Arbeit, viele Trainingseinheiten und jede Menge Herzblut haben die Funky´s in ihren neuen Tanz investiert. Trainiert wird die Gruppe von Marissa Schlösser und Lena Christmann, die gemeinsam Details perfektioniert, Schritte trainiert und spektakuläre Hebungen einstudiert haben. \n"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "d2fc3bd62d71",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "5b49c7baccf1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "2ec2a8e1bf53",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Funky´s dürfen sich über schicke Requisiten und sehr detailreiche Kostüme freuen, die in mehreren Grüntönen leuchten und mit den goldenen Pailletten ein richtiger Hingucker sind. Bei der Ausarbeitung haben sich Fabienne und Jennifer von der Twobuns Manufaktur, sowie die Nähhexe Anja Weber mächtig ins Zeug gelegt und das Ergebnis ist beeindruckend. \n"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "99187c93bbb0",
+					"_type": "mainImage",
+					"alt": "Nahaufnahme des Rockes der Funky Diamonds. Zu sehen sind Stoffe mit abgebildeten Kleeblättern und Glitzerdetails.",
+					"asset": {
+						"_ref": "image-6211f6300701bc57f68cecdd0c86064e8d97bcfe-4000x6000-jpg",
+						"_type": "reference"
+					},
+					"description": "Nahaufnahme des Kostüms der Funky Diamonds "
+				},
+				{
+					"_key": "5e6977523e01",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "997749787d2c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1d33b7fe4055",
+									"_type": "span",
+									"marks": [],
+									"text": "Wir freuen uns schon jetzt auf ein tolles Bühnenbild unserer Glücksbringer!  Die Bühne gehört ganz euch, liebe Funky Diamonds. Wir wünschen euch viel Spaß, jede Menge gute Laune und einen grandiosen Start in die neue Session! "
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "breitensport",
+					"title": "Breitensport"
+				},
+				{
+					"slug": "diamonds",
+					"title": "Diamonds"
+				}
+			],
+			"excerpt": "Alle guten Dinge sind drei! Heute Abend steht endlich auch der erste Auftritt für die Funky Diamonds der TSG Irlich auf dem Programm. Unter dem Motto „Tanz mit mir ins Glück“ geht es zusammen mit dem Publikum auf eine Reise ins Glück. ",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "generiertes Bild in Grüntönen mit Kleeblättern und dem Schriftzug \"Tanz mit mir ins Glück\"",
+				"asset": {
+					"_ref": "image-df41e368b20bde84206e04a1099294894324303b-6912x3456-png",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.7698239664082687,
+					"width": 0.41957364341085274,
+					"x": 0.5,
+					"y": 0.5
+				}
+			},
+			"meta": null,
+			"publishedAt": "2025-01-11T14:27:00.000Z",
+			"slug": "offizielles-sessions-motto-funky-diamonds-tanzen-ins-glueck",
+			"title": "Offizielles Sessions-Motto: Funky Diamonds tanzen ins Glück"
+		},
+		"syncTags": ["s1:3gFBog", "s1:mCzbTw", "s1:gDNQog", "s1:bmIwtw"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22offizielles-sessions-motto-funky-diamonds-tanzen-ins-glueck%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

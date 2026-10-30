@@ -88,6 +88,7 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 - **Type generation** from Sanity schema to TypeScript
 - **Image optimization** with next/image and Sanity image URLs
 - **Preview**: the news, department and group routes are previewable through draft mode and the studio's presentation tool — see the two app guides before touching that wiring
+- **Site search**: the panel in the navigation and `/suche` search the published pages and news through `searchSite()` in `apps/web/src/lib/search/`. The singleton `searchPage` holds their texts, and `searchTerms` on departments and groups add words to find them by — see the two app guides
 
 ## File & Naming Conventions
 
@@ -196,9 +197,11 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 `.github/workflows/sonar.yml` collects the coverage and scans `main`, `next` and every pull request. `SonarCloud Code Analysis` is a required check on `next`. The scan reads `sonar-project.properties`:
 
 - `test-utils/**` counts as test code next to the `*.test.*` and `*.spec.ts` files, so its fakes are neither analysed as production code nor scored for coverage.
+- `docs/superpowers/**` is left out of the analysis (`sonar.exclusions`): the HTML mockups next to the design specs are throwaway code nobody ships.
 - A rule that misfires is switched off in `sonar.issue.ignore.multicriteria`, limited to the files where it misfires, and never through "Accept" or "False positive" in the Sonar UI, which leaves no trace in the repository. The current entries (WEB-387):
   - `css:S8776` and `css:S8767` in `apps/web/src/app/globals.css`: the CSS analyzer does not know Tailwind v4's `@utility`, so the nesting and the declarations inside a utility look invalid to it.
   - `typescript:S5257` and `typescript:S6819` in `packages/email/**`: mail clients need `<table role="presentation">` for layout. oxlint's `jsx-a11y/prefer-tag-over-role` is off there for the same reason.
+  - `typescript:S6819` in `apps/web/src/components/with-logic/search/search-panel-hits.tsx`: the search panel is an ARIA combobox whose focus stays in the input while `aria-activedescendant` walks the options, links with thumbnails. A `select` or `datalist` can do neither, and a `fieldset` is no group of a listbox; the two `oxlint-disable-next-line` comments there say the same.
   - `typescript:S9382` in `apps/studio/scripts/**`: the import and migration scripts work one item at a time on purpose, and every such loop gives its reason in an `oxlint-disable-next-line no-await-in-loop`.
   - `typescript:S7503` everywhere: oxlint's `typescript/promise-function-async` requires every function that returns a promise to be `async`, which Sonar reports as an `async` function without `await`.
 - Sonar has no local mode, its scanner uploads every analysis. The `pre-push` hook therefore runs the repository's own checks, which cover most of what Sonar reports. Sonar's read-only props rule (`typescript:S6759`) has no oxlint counterpart, so wrap a component's props in `Readonly<…>` the way the existing components do.

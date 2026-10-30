@@ -1,0 +1,661 @@
+{
+	"body": {
+		"result": {
+			"_updatedAt": "2026-09-29T12:28:50Z",
+			"author": {
+				"email": "p.pfeiffer@tsg-irlich.de",
+				"firstName": "Philipp",
+				"image": {
+					"_type": "extendedImage",
+					"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+					"asset": {
+						"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09074985403286345,
+						"left": 0,
+						"right": 0.026691133539077486,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6927356852875811,
+						"width": 0.6490937792297277,
+						"x": 0.510074160141839,
+						"y": 0.46890832100794233
+					}
+				},
+				"jobTitle": "Vorstand Öffentlichkeitsarbeit",
+				"lastName": "Pfeiffer"
+			},
+			"body": [
+				{
+					"_key": "ef28c8fc36a8",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "14a013755ee4",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "8c3e716a6ab0",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Funky Diamonds, die Showtanzgruppe der TSG Irlich, feierten am Samstag, den 3. Januar, die Premiere ihres neuen Tanzes unter dem Motto "
+								},
+								{
+									"_key": "a953b56117bd",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "„Liebechaos – Ein Auf und Ab der Gefühle“"
+								},
+								{
+									"_key": "55921caa5b14",
+									"_type": "span",
+									"marks": [],
+									"text": ". In der Session 25/26 standen die Funkys damit erstmals auf der Bühne – und das mit großem Erfolg."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "3c49a47ff514",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "cff49dccc509",
+									"_type": "span",
+									"marks": [],
+									"text": "Zu Gast waren die Funky Diamonds auf der "
+								},
+								{
+									"_key": "7a39d723719a",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Narrensitzung des BV Grün-Weiss Frohsinn"
+								},
+								{
+									"_key": "185870974067",
+									"_type": "span",
+									"marks": [],
+									"text": " in der Raiffeisen-Turnhalle in Heddesdorf, bei dem wir uns herzlich für die Einladung bedanken möchten. Zur besten Zeit um 20:30 Uhr füllten die 32 Tänzerinnen und Tänzer die Halle und sorgten von Beginn an für beste Stimmung im Publikum. Ein großes Dankeschön gilt auch den zahlreichen Unterstützerinnen und Unterstützern aus Irlich und Neuwied, die extra für den Auftritt unserer Funkys in die Halle gekommen sind."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "5cb793a61b8e",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "20e87e697308",
+									"_type": "span",
+									"marks": [],
+									"text": "Starke Leistung trotz Premieren-Nervosität"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "e4d7c75aec6f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f53c82ba51f2",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Trainerinnen "
+								},
+								{
+									"_key": "8daf83e9825c",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Marissa Schlösser, Nina Meickmann und Lena Christmann"
+								},
+								{
+									"_key": "ac2c53d7e242",
+									"_type": "span",
+									"marks": [],
+									"text": " können stolz auf ihr Team sein. Wie bei einer Premiere üblich, war die Nervosität vor dem ersten Auftritt groß – doch davon war auf der Bühne nichts mehr zu spüren. Der Auftritt wurde sehr gut gemeistert, und auch wenn noch nicht alles perfekt lief, kann man definitiv von einer rundum gelungenen Premiere sprechen."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "04138c1cc280",
+					"_type": "mainImage",
+					"alt": "Die Funkys bei der Premiere im Raiffeisenring",
+					"asset": {
+						"_ref": "image-de2dde29bd1db9ea3da5bf77d27ddcd94c2f89e6-540x360-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.12217254076801683,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8778274592319831,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.43891372961599157
+					}
+				},
+				{
+					"_key": "431f6379f0cd",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "adc985462724",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "805a212b95ce",
+									"_type": "span",
+									"marks": [],
+									"text": "Personelle Ergänzung - Die Funky Diamonds wachsen weiter"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "35a0a70f76b1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a840bb2e80be",
+									"_type": "span",
+									"marks": [],
+									"text": "Besonders freut uns, dass in dieser Session einige neue Gesichter erfolgreich integriert werden konnten. Aus der eigenen Nachwuchs-Tanzgruppe "
+								},
+								{
+									"_key": "d851f3d96dcc",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "„Magic Diamonds“"
+								},
+								{
+									"_key": "18fcccd607cf",
+									"_type": "span",
+									"marks": [],
+									"text": " rückten "
+								},
+								{
+									"_key": "8f1218389986",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Leonie, Felix und Lara"
+								},
+								{
+									"_key": "b5b53519df30",
+									"_type": "span",
+									"marks": [],
+									"text": " zu den “Großen” auf und zeigten auch hier, wie viel Spaß ihnen das Tanzen macht. Als externe Neuzugänge verstärken "
+								},
+								{
+									"_key": "0316d2108b5b",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Mia und Tom"
+								},
+								{
+									"_key": "2198876436d4",
+									"_type": "span",
+									"marks": [],
+									"text": " das Team. Ihren ersten Auftritt auf der großen Bühne meisterten sie hervorragend und freuen sich schon auf die weiteren. "
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "af389fd84566",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "04adc2ddc3c0",
+									"_type": "span",
+									"marks": [],
+									"text": "Zudem stand "
+								},
+								{
+									"_key": "5e1f05cce689",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Lea"
+								},
+								{
+									"_key": "099495ba7ef2",
+									"_type": "span",
+									"marks": [],
+									"text": " nach über sechs Jahren Pause wieder auf der Bühne – als Springerin eingeplant, sprang sie nach nur wenig Training direkt ein und ersetzte eine erkrankte Tänzerin - mit vollem Einsatz."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "a15796e3ce36",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4a19a6ad6175",
+									"_type": "span",
+									"marks": [],
+									"text": "Leider fällt in diesem Jahr das Funky´s-Urgestein "
+								},
+								{
+									"_key": "8f973928441c",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Daniel Dinter "
+								},
+								{
+									"_key": "4dae8d73f80f",
+									"_type": "span",
+									"marks": [],
+									"text": "verletzungsbedingt aus, der die Gruppe im Hintergrund jedoch weiter tatkräftig unterstützt. Beim Auftritt am Samstag durfte er jedoch nicht fehlen und sorgte dafür, dass die Musik mit perfekten Timing erklang. Seine liebevollen Worte nach der gelungenen Premiere machten der Gruppe nur noch mehr Lust auf weitere Auftritte. Wir freuen uns mindestens genauso wie alle Funkys auf Daniels Comeback."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "5888a2b5cd78",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "9e387194c46b",
+									"_type": "span",
+									"marks": [],
+									"text": "Auf Grund des eher ungewöhnlich frühen Starts in die Session mussten einige Tänzerinnen private Termine absagen oder umplanen. Ohne diese Kompromisse wäre der Auftritt am ersten Januar-Wochenende nicht möglich gewesen. Das ist Einsatz - vielen Dank an dieser Stelle!"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "d5846f84977c",
+					"_type": "mainImage",
+					"alt": "Die Funky Daimonds bei einer der vielen Hebefiguren im Tanz",
+					"asset": {
+						"_ref": "image-ab2eaefdcae5394c409e1fcc20d9d5b4c5b0a233-540x360-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.13508971886141802,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8210006429364662,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.4105003214682331
+					}
+				},
+				{
+					"_key": "a07e9db1fdc0",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "e5914385d0e2",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "655e50d17aa6",
+									"_type": "span",
+									"marks": [],
+									"text": "Ausblick auf ein intensives Wochenende"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "b8c85cbe54fd",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1736a889d4c1",
+									"_type": "span",
+									"marks": [],
+									"text": "Viel Zeit zum Durchatmen bleibt den Funky Diamonds jedoch nicht: Bereits am kommenden Wochenende stehen die nächsten Auftritte an. Am Freitag gastiert die Showtanzgruppe in Thalhausen, am Samstag in Kurtscheid und am Sonntag in Rossbach."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "17f88b94762a",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "af1ca6fdfcac",
+									"_type": "span",
+									"marks": [],
+									"text": "Außerdem dürfen sich die "
+								},
+								{
+									"_key": "a93d1cf0cd7e",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Jugend-Tanzgruppen"
+								},
+								{
+									"_key": "d1d5c6c689a7",
+									"_type": "span",
+									"marks": [],
+									"text": " der TSG Irlich endlich auf ihren ersten Bühnenauftritt in dieser Session freuen. Für die "
+								},
+								{
+									"_key": "07b29795a009",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Little Diamonds"
+								},
+								{
+									"_key": "1093adb08bf0",
+									"_type": "span",
+									"marks": [],
+									"text": " und die "
+								},
+								{
+									"_key": "8d9c851a2839",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Magic Diamonds"
+								},
+								{
+									"_key": "81d076db3dec",
+									"_type": "span",
+									"marks": [],
+									"text": " geht es am Samstag ebenfalls nach Kurtscheid zum karnevalistischen Frühschoppen des KC Kurtscheid. "
+								},
+								{
+									"_key": "0392ca147c74",
+									"_type": "span",
+									"marks": ["strong", "em"],
+									"text": "Wir drücken die Daumen und wünschen viel Erfolg! "
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				},
+				{
+					"_key": "6ee4762caf52",
+					"_type": "mainImage",
+					"alt": "Eine Auswahl der Tänzerinnen und Tänzer am Ende ihres Tanzes zusammen mit der Moderatorin Tanja",
+					"asset": {
+						"_ref": "image-2b774f3c0e811ee0ff397e07adaa573d8d035282-540x360-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.01666002006310449,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.8418769721797849,
+						"width": 0.8362943809603249,
+						"x": 0.41814719048016247,
+						"y": 0.4796589798758629
+					}
+				},
+				{
+					"_key": "558f1dbd9453",
+					"_type": "blockContent",
+					"text": [
+						{
+							"_key": "5fa31395c496",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "5607d0cf650b",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Auftritte auf einen Blick"
+								}
+							],
+							"markDefs": [],
+							"style": "h3"
+						},
+						{
+							"_key": "1e75383245f5",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "d79bd7f3e7c2",
+									"_type": "span",
+									"marks": [],
+									"text": ""
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "97c4c20db6d4",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "5d27ddc1082c",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Funky Dimaonds:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "26cb2060a443",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "72a075ebd1be",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Freitag, 09. 01.2026 18:30 Uhr"
+								},
+								{
+									"_key": "777c1d8eeb97",
+									"_type": "span",
+									"marks": [],
+									"text": " Seniorenveranstaltung Thalhausen"
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "36377f07f440",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "027b3f4c6424",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Samstag, 10.01.2026 20:30 Uhr"
+								},
+								{
+									"_key": "031040d802cb",
+									"_type": "span",
+									"marks": [],
+									"text": "              Frühshoppen KC Kurtscheid "
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "8b45a1906a21",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "db42438919ef",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Sonntag, 11.01.2026 16:15 Uhr                    "
+								},
+								{
+									"_key": "31f076bf2a05",
+									"_type": "span",
+									"marks": [],
+									"text": "Frühshoppen Funkengarde Rossbach "
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "f8bacad57655",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "465e61785550",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Magic Diamonds:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "8ca906adc361",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "e11c637f5056",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Samstag, 10.01.2026 18:40 Uhr"
+								},
+								{
+									"_key": "d9b5d69c4f62",
+									"_type": "span",
+									"marks": [],
+									"text": "              Frühshoppen KC Kurtscheid "
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "813e7d6eea3a",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "6770d6c41937",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Little Diamonds:"
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "fdaa2007a0e6",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "6b92e255955d",
+									"_type": "span",
+									"marks": ["strong"],
+									"text": "Samstag, 10.01.2026 18:20 Uhr"
+								},
+								{
+									"_key": "9194fb2661ff",
+									"_type": "span",
+									"marks": [],
+									"text": "               Frühshoppen KC Kurtscheid "
+								}
+							],
+							"level": 1,
+							"listItem": "bullet",
+							"markDefs": [],
+							"style": "normal"
+						}
+					]
+				}
+			],
+			"categories": [
+				{
+					"slug": "diamonds",
+					"title": "Diamonds"
+				},
+				{
+					"slug": "breitensport",
+					"title": "Breitensport"
+				}
+			],
+			"excerpt": "Die Funky Diamonds begeisterten mit ihrer Premiere „Liebechaos“ in Heddesdorf. Neue Mitglieder und starke Auftritte sorgen für beste Stimmung!",
+			"featuredImage": {
+				"_type": "mainImage",
+				"alt": "Die Funkys bei einer Premiere im Raiffeisenring, machen eine Hebung auf der Bühne",
+				"asset": {
+					"_ref": "image-2ee9ba68ac89c9c8c8b50ac12a5c91d242bfa2ab-540x360-jpg",
+					"_type": "reference"
+				},
+				"crop": {
+					"_type": "sanity.imageCrop",
+					"bottom": 0.1141066105558478,
+					"left": 0,
+					"right": 0,
+					"top": 0
+				},
+				"description": "Die Funkys bei der Premiere im Raiffeisenring.",
+				"hotspot": {
+					"_type": "sanity.imageHotspot",
+					"height": 0.7428692501022855,
+					"width": 1,
+					"x": 0.5,
+					"y": 0.4429466947220761
+				}
+			},
+			"meta": {
+				"metaDescription": "Die Funky Diamonds feierten ihre Tanzpremiere mit 'Liebechaos' in Heddesdorf. Neue Mitglieder verstärkten das Team. Weitere Auftritte folgen.",
+				"metaTitle": "Funky Diamonds: Liebechaos-Premiere der TSG Irlich",
+				"openGraphImage": null
+			},
+			"publishedAt": "2026-01-05T23:51:00.000Z",
+			"slug": "premiere-funky-diamonds",
+			"title": "Liebeschaos in Heddesdorf: Gelungene Premiere der Funky Diamonds"
+		},
+		"syncTags": ["s1:0oGwmQ", "s1:Ik/M0w", "s1:mCzbTw", "s1:bmIwtw"],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+slug.current+%3D%3D+%24slug%5D%5B0%5D+%7B%0A%09%09_updatedAt%2C%0A%09%09author+-%3E+%7B%0A%09%09%09email%2C%0A%09%09%09firstName%2C%0A%09%09%09image%2C%0A%09%09%09lastName%2C%0A%09%09%09jobTitle%2C%0A%09%09%7D%2C%0A%09%09body%5B%5D+%7B%0A%09%09%09...%2C%0A%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%2C%0A%09%09%09_type+%3D%3D+%22grid%22+%3D%3E+%7B%0A%09%09%09%09items%5B%5D+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09_type+%3D%3D+%22blockContent%22+%3D%3E+%7B+%0A++...%2C%0A++%22text%22%3A+coalesce%28text%5B%5D+%7B+...%2C+%0A++%22markDefs%22%3A+coalesce%28markDefs%5B%5D+%7B%0A++++...%2C%0A++++_type+%3D%3D+%22internalLink%22+%3D%3E+%7B+%22target%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D+%7D%0A++%7D%2C+%5B%5D%29%0A+%7D%2C+%5B%5D%29%0A+%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09categories%5B%5D+-%3E+%7B%0A%09%09%09%22slug%22%3A+slug.current%2C%0A%09%09%09title%0A%09%09%7D%2C%0A%09%09excerpt%2C%0A%09%09featuredImage%2C%0A%09%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09%09publishedAt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09title%2C%0A%09%7D%0A&%24slug=%22premiere-funky-diamonds%22&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

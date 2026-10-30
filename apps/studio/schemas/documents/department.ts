@@ -7,6 +7,7 @@ import { defineArrayMember, defineField, defineType } from 'sanity';
 import { dosbIconField } from '@/shared/fields/dosb-icon';
 import { introField, slugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
+import { searchTermsField } from '@/shared/fields/search-terms';
 import { previousSlugsField } from '@/shared/fields/slug-history';
 import { getFieldWithoutGroup } from '@/utils/fields';
 
@@ -42,6 +43,8 @@ const department = defineType({
 				Rule.max(64).warning('Name sollte nicht länger als 64 Zeichen sein'),
 			],
 		}),
+
+		searchTermsField,
 
 		getFieldWithoutGroup(slugField),
 

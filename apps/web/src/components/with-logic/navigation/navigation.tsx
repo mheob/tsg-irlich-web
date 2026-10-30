@@ -3,11 +3,12 @@
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 
 import { cn, TSGLogo } from '@tsgi-web/shared';
 
 import { ButtonLink } from '@/components/ui/button';
+import { SearchButton } from '@/components/with-logic/search/search-button';
 import type { MainNavigationQueryResult } from '@/types/sanity.types';
 
 import { DesktopNavigation } from './desktop-navigation';
@@ -19,19 +20,56 @@ const MOBILE_MENU_ID = 'mobile-navigation';
 
 const CONTACT_HREF = '/kontakt';
 
+// The panel reaches the browser in its own chunk, on the first press of a lupe.
+const SearchPanel = lazy(async () => {
+	const { SearchPanel: component } = await import('@/components/with-logic/search/search-panel');
+	return { default: component };
+});
+
 type NavItem = NonNullable<MainNavigationQueryResult>['mainNavigation'][number];
 
-function Navigation({ navItems }: Readonly<NavigationProps>) {
+function Navigation({ navItems, searchPlaceholder }: Readonly<NavigationProps>) {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileOpen, setIsMobileOpen] = useState(false);
+	const [isSearchOpen, setIsSearchOpen] = useState(false);
+	const [hasOpenedSearch, setHasOpenedSearch] = useState(false);
 
 	const toggleRef = useRef<HTMLButtonElement>(null);
+	const desktopSearchRef = useRef<HTMLButtonElement>(null);
+	const mobileSearchRef = useRef<HTMLButtonElement>(null);
+	// Where the focus goes when the search closes: the lupe that opened it, or the menu toggle when
+	// the menu is what closed it.
+	const searchFinalFocusRef = useRef<HTMLElement | null>(null);
 	const pathname = usePathname();
+
+	// A new page closes the search. Adjusted while rendering, so the old page's panel never paints
+	// over the new one.
+	const [searchPathname, setSearchPathname] = useState(pathname);
+	if (searchPathname !== pathname) {
+		setSearchPathname(pathname);
+		setIsSearchOpen(false);
+	}
 
 	const entries = useMemo(() => getNavigationEntries(navItems, pathname), [navItems, pathname]);
 
 	const closeMobileMenu = () => {
 		setIsMobileOpen(false);
+	};
+
+	const openSearch = (lupe: HTMLButtonElement | null) => {
+		searchFinalFocusRef.current = lupe;
+		setIsMobileOpen(false);
+		setHasOpenedSearch(true);
+		setIsSearchOpen(true);
+	};
+
+	const toggleMobileMenu = () => {
+		if (isSearchOpen) {
+			searchFinalFocusRef.current = toggleRef.current;
+			setIsSearchOpen(false);
+		}
+
+		setIsMobileOpen(!isMobileOpen);
 	};
 
 	// The menu is a disclosure, not a dialog, so it deliberately does not trap the focus (the ARIA
@@ -64,11 +102,15 @@ function Navigation({ navItems }: Readonly<NavigationProps>) {
 		};
 	}, []);
 
+	// The open search is a modal dialog, which hides the bar from assistive technology but leaves it
+	// under the pointer, above the dimmed page. Everything in the bar but the menu toggle is `inert`
+	// meanwhile, so no click opens a menu over the panel or moves the focus into the hidden bar. The
+	// toggle stays live because opening the menu is how the search gives way to it.
 	return (
 		<nav
 			aria-label="Hauptnavigation"
 			className={cn('fixed inset-x-0 top-0 z-50 bg-background/70 transition-all duration-300', {
-				'bg-background': isMobileOpen,
+				'bg-background': isMobileOpen || isSearchOpen,
 				'shadow-sm backdrop-blur-md': isScrolled,
 			})}
 		>
@@ -79,7 +121,7 @@ function Navigation({ navItems }: Readonly<NavigationProps>) {
 					})}
 				>
 					{/* Logo */}
-					<div className="h-full w-40">
+					<div className="h-full w-40" inert={isSearchOpen}>
 						<Link
 							aria-label="Logo der TSG Irlich 1882 e. V."
 							className="absolute top-2 left-0 block"
@@ -93,41 +135,56 @@ function Navigation({ navItems }: Readonly<NavigationProps>) {
 						</Link>
 					</div>
 
-					<DesktopNavigation entries={entries} />
+					<DesktopNavigation entries={entries} inert={isSearchOpen} />
 
-					{/* Contact Button (Desktop). Compact between lg and xl, where the bar is tight; the wrappers
-					    carry the visibility because `btn` sets its own `display`. */}
-					<div className="hidden lg:block xl:hidden">
-						<ButtonLink
-							className="uppercase"
-							render={<Link href={CONTACT_HREF} />}
-							size="sm"
-							variant="secondary"
-						>
-							Kontakt
-						</ButtonLink>
-					</div>
-					<div className="hidden xl:block">
-						<ButtonLink
-							className="uppercase"
-							render={<Link href={CONTACT_HREF} />}
-							size={isScrolled ? 'sm' : 'default'}
-							variant="secondary"
-						>
-							Kontakt aufnehmen
-						</ButtonLink>
+					{/* Lupe and Contact Button (Desktop). The contact button is compact between lg and xl,
+					    where the bar is tight; its wrappers carry the visibility because `btn` sets its own
+					    `display`. */}
+					<div className="hidden items-center gap-3 lg:flex" inert={isSearchOpen}>
+						<SearchButton
+							onOpen={() => {
+								openSearch(desktopSearchRef.current);
+							}}
+							ref={desktopSearchRef}
+						/>
+						<div className="xl:hidden">
+							<ButtonLink
+								className="uppercase"
+								render={<Link href={CONTACT_HREF} />}
+								size="sm"
+								variant="secondary"
+							>
+								Kontakt
+							</ButtonLink>
+						</div>
+						<div className="hidden xl:block">
+							<ButtonLink
+								className="uppercase"
+								render={<Link href={CONTACT_HREF} />}
+								size={isScrolled ? 'sm' : 'default'}
+								variant="secondary"
+							>
+								Kontakt aufnehmen
+							</ButtonLink>
+						</div>
 					</div>
 
-					{/* Mobile Menu Button */}
+					{/* Lupe and Mobile Menu Button */}
 					<div className="flex items-center gap-2 lg:hidden">
+						<SearchButton
+							className="my-2"
+							inert={isSearchOpen}
+							onOpen={() => {
+								openSearch(mobileSearchRef.current);
+							}}
+							ref={mobileSearchRef}
+						/>
 						<button
 							aria-controls={MOBILE_MENU_ID}
 							aria-expanded={isMobileOpen}
 							aria-label="Menü"
 							className="my-2 inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:bg-muted/40"
-							onClick={() => {
-								setIsMobileOpen(!isMobileOpen);
-							}}
+							onClick={toggleMobileMenu}
 							ref={toggleRef}
 							type="button"
 						>
@@ -163,12 +220,28 @@ function Navigation({ navItems }: Readonly<NavigationProps>) {
 					</div>
 				</div>
 			</div>
+
+			{/* Not before the first press of a lupe: until then no code of the panel is loaded. The
+			    dialog is portalled to the end of `<body>`, outside this landmark. */}
+			{hasOpenedSearch && (
+				<Suspense fallback={null}>
+					<SearchPanel
+						finalFocus={searchFinalFocusRef}
+						isBarCompact={isScrolled}
+						onOpenChange={setIsSearchOpen}
+						open={isSearchOpen}
+						placeholder={searchPlaceholder}
+					/>
+				</Suspense>
+			)}
 		</nav>
 	);
 }
 
 interface NavigationProps {
 	navItems: NavItem[];
+	/** The placeholder of the search page, for the input of the panel. */
+	searchPlaceholder?: null | string;
 }
 
 export { Navigation };

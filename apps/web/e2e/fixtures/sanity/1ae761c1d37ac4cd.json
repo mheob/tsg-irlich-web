@@ -1,0 +1,12 @@
+{
+	"body": {
+		"result": {
+			"blockedTerms": null,
+			"pinnedTerms": ["Fußball", "Tanzen", "Kinderturnen", "Mitgliedschaft", "Trainingszeiten"],
+			"title": "Häufig gesucht"
+		},
+		"syncTags": ["s1:I9c4cg"],
+		"ms": 2
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27searchPage%27%5D%5B0%5D.content.popularSearches+%7B+title%2C+pinnedTerms%2C+blockedTerms+%7D%0A&returnQuery=false&perspective=published"
+}

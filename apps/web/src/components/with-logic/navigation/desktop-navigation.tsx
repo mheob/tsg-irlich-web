@@ -68,7 +68,7 @@ function DesktopGroup({ group, onFocus }: Readonly<DesktopGroupProps>) {
 
 // The bar from the `lg` breakpoint on. Plain entries are links; an entry with children opens a panel
 // with "Übersicht" and the children, by hover, click or keyboard.
-function DesktopNavigation({ entries }: Readonly<DesktopNavigationProps>) {
+function DesktopNavigation({ entries, inert = false }: Readonly<DesktopNavigationProps>) {
 	// The open group is held here because Base UI only closes a panel on a focus that leaves the whole
 	// menu: tabbing from its last link on to the next item of the bar would otherwise leave it open.
 	const [openGroup, setOpenGroup] = useState<string | null>(null);
@@ -97,6 +97,7 @@ function DesktopNavigation({ entries }: Readonly<DesktopNavigationProps>) {
 		// Base UI renders the root as `<nav>`, and the shell already is the navigation landmark.
 		<NavigationMenu
 			className="hidden lg:flex"
+			inert={inert}
 			onValueChange={(value: string | null) => {
 				setOpenGroup(value);
 			}}
@@ -127,6 +128,8 @@ function DesktopNavigation({ entries }: Readonly<DesktopNavigationProps>) {
 
 interface DesktopNavigationProps {
 	entries: readonly NavigationEntry[];
+	/** Takes the bar out of reach, while the search panel is open over the page. */
+	inert?: boolean;
 }
 
 interface DesktopLinkProps {

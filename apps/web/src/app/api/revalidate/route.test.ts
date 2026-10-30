@@ -166,6 +166,17 @@ describe('sanity revalidation webhook', () => {
 		expect(mockedRevalidateTag).toHaveBeenCalledWith('site-settings', { expire: 0 });
 	});
 
+	// The root layout fetches the placeholder of the search panel with the tag `searchPage`, and the
+	// navigation sits on every page. The tag itself expires through `revalidateTag(body._type)`.
+	it('revalidates the whole layout for the search page, whose placeholder the navigation shows', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'searchPage' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/', 'layout']]);
+		expect(mockedRevalidateTag).toHaveBeenCalledWith('searchPage', { expire: 0 });
+	});
+
 	it('revalidates every page a person appears on', async () => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: 'person' }));
 

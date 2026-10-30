@@ -1,0 +1,8 @@
+{
+	"body": {
+		"result": 3,
+		"syncTags": ["s1:GNFE5A"],
+		"ms": 20
+	},
+	"url": "/v2025-02-19/data/query/development?query=count%28*%5B_type+%3D%3D+%27news.article%27+%26%26+%5Btitle%2C+body%5B%5D.text%5B%5D.children%5B%5D.text%5D+match+text%3A%3Aquery%28%24q%29%5D%29&%24q=%22tanzen*%22&returnQuery=false&perspective=published"
+}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test';
 
-import { toArchiveUrl, toCdnUrl } from './archive-url';
+import { linkAsset, toArchiveUrl, toCdnUrl } from './archive-url';
 
 const IMAGE =
 	'https://cdn.sanity.io/images/j4rxwl5m/development/0a1b2c-1414x2000.jpg?w=800&fit=max&q=85';
@@ -36,6 +36,18 @@ describe('archive urls', () => {
 		['no url at all', '#!'],
 	])('leaves %s alone', (_label, url) => {
 		expect(toArchiveUrl(url)).toBe(url);
+	});
+});
+
+describe('linked assets', () => {
+	it('keeps the cdn url of an issue search engines may find', () => {
+		expect(linkAsset(IMAGE, true)).toBe(IMAGE);
+	});
+
+	it('links an issue search engines must not find through the archive path', () => {
+		expect(linkAsset(IMAGE, false)).toBe(
+			'/echo-archiv/images/0a1b2c-1414x2000.jpg?w=800&fit=max&q=85',
+		);
 	});
 });
 
