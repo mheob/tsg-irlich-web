@@ -71,9 +71,10 @@ describe('the author beside an article', () => {
 		expect(getByRole('img', { name: 'Ada Lovelace' })).not.toBeNull();
 	});
 
-	it('leaves the portrait out when the author has none', () => {
-		const { queryByRole } = renderWithUser(<Author article={buildArticle(null)} />);
+	it('shows the initials when the author has no portrait', () => {
+		const { getByText, queryByRole } = renderWithUser(<Author article={buildArticle(null)} />);
 
+		expect(getByText('AL')).not.toBeNull();
 		expect(queryByRole('img')).toBeNull();
 	});
 

@@ -72,13 +72,14 @@ describe('the wide news article preview', () => {
 		expect(queryByRole('img', { name: 'Das Sommerfest' })).toBeNull();
 	});
 
-	it('leaves the portrait out when the author has none', () => {
-		const { queryByRole } = renderWithUser(
+	it('shows the initials when the author has no portrait', () => {
+		const { getByText, queryByRole } = renderWithUser(
 			<NewsArticlePreviewWide
 				{...buildArticle({ author: { firstName: 'Ada', image: null, lastName: 'Lovelace' } })}
 			/>,
 		);
 
+		expect(getByText('AL')).not.toBeNull();
 		expect(queryByRole('img', { name: 'Ada Lovelace' })).toBeNull();
 	});
 });
