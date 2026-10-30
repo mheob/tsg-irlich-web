@@ -12,7 +12,8 @@ import { SearchTabs } from './search-tabs';
  *
  * @param props - The section's props.
  * @param props.currentPage - The page of the „Seiten“ or „News“ tab, from 1.
- * @param props.noResults - `noResults` of the search page, `undefined` while the singleton is missing.
+ * @param props.noResults - `noResults` of the search page, `undefined` while the singleton or the
+ * section is missing.
  * @param props.result - The result of the search.
  * @param props.tab - The current tab.
  * @returns The hits or the empty state.
@@ -38,7 +39,7 @@ function SearchHits({ currentPage, noResults, result, tab }: Readonly<SearchHits
 
 interface SearchHitsProps {
 	currentPage: number;
-	noResults?: NoResultsContent;
+	noResults?: Partial<NoResultsContent>;
 	result: SearchResult;
 	tab: SearchTab;
 }

@@ -248,6 +248,39 @@ describe('search page', () => {
 			).not.toBeNull();
 		});
 
+		// A document published through the API is not held to the studio's required fields.
+		it.each([
+			['no content at all', undefined],
+			['no section in its content', {}],
+		])('falls back to the plain page for a singleton with %s', async (_label, content) => {
+			mockedFetch.mockResolvedValue({ ...SEARCH_PAGE, content });
+			mockedSearchSite.mockResolvedValue(buildSearchResult({ query: 'xyz' }));
+
+			const { getByRole, queryByRole } = await renderPage({ q: 'xyz' });
+
+			expect(getByRole('heading', { name: 'Suche' })).not.toBeNull();
+			expect(queryByRole('heading', { name: 'Was suchst du?' })).toBeNull();
+			expect(getByRole('searchbox', { name: 'Suchbegriff' }).getAttribute('placeholder')).toBe(
+				'Wonach suchst du?',
+			);
+			expect(getByRole('heading', { name: 'Keine Treffer für „xyz“' })).not.toBeNull();
+			expect(queryByRole('heading', { name: 'Wir sind für dich da' })).toBeNull();
+		});
+
+		it('names the search term in the empty state when the singleton has no title for it', async () => {
+			mockedFetch.mockResolvedValue({
+				...SEARCH_PAGE,
+				content: { ...SEARCH_PAGE.content, noResults: { links: [] } },
+			});
+			mockedSearchSite.mockResolvedValue(buildSearchResult({ query: 'xyz' }));
+
+			const { getByRole } = await renderPage({ q: 'xyz' });
+
+			expect(getByRole('heading', { name: 'Keine Treffer für „xyz“' })).not.toBeNull();
+			// The rest of the page still comes from the singleton.
+			expect(getByRole('heading', { name: 'Wir sind für dich da' })).not.toBeNull();
+		});
+
 		it('names the search term in the empty state while the singleton is missing', async () => {
 			mockedFetch.mockResolvedValue(null);
 			mockedSearchSite.mockResolvedValue(buildSearchResult({ query: 'xyz' }));

@@ -32,12 +32,14 @@ function resolveLinks(links: NoResultsContent['links']): NavigationLink[] {
  * search term instead.
  *
  * @param props - The empty state's props.
- * @param props.content - `noResults` of the search page, `undefined` while the singleton is missing.
+ * @param props.content - `noResults` of the search page, `undefined` while the singleton or the
+ * section is missing. Any part of it can be missing, and a missing title falls back like the whole
+ * section does.
  * @param props.query - The search term, for the heading while there is no title.
  * @returns The empty state.
  */
 function NoResults({ content, query }: Readonly<NoResultsProps>) {
-	const title = content?.title.trim();
+	const title = content?.title?.trim();
 	const heading = title === undefined || title === '' ? `Keine Treffer für „${query}“` : title;
 	const links = resolveLinks(content?.links ?? []);
 
@@ -65,7 +67,7 @@ function NoResults({ content, query }: Readonly<NoResultsProps>) {
 }
 
 interface NoResultsProps {
-	content?: NoResultsContent;
+	content?: Partial<NoResultsContent>;
 	query: string;
 }
 

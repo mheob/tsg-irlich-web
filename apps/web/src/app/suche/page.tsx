@@ -16,7 +16,7 @@ import { getPageNumber } from '@/utils/pagination';
 import { PopularSearches } from './_sections/popular-searches';
 import { SearchForm } from './_sections/search-form';
 import { SearchHits } from './_sections/search-hits';
-import { FALLBACK_TITLE, fetchSearchPage } from './_shared/search-page';
+import { FALLBACK_TITLE, fetchSearchPage, getSearchPageContent } from './_shared/search-page';
 import { getTab, getTotalHits, isBeyondLastPage } from './_shared/search-params';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -54,7 +54,7 @@ export default async function SearchPage({ searchParams }: Readonly<PageProps<'/
 	const popularSearches =
 		result && getTotalHits(result) > 0 ? undefined : await getPopularSearches();
 	const title = page?.title ?? FALLBACK_TITLE;
-	const searchSection = page?.content.searchSection;
+	const { contactPersonsSection, noResults, searchSection } = getSearchPageContent(page);
 
 	return (
 		<>
@@ -74,18 +74,13 @@ export default async function SearchPage({ searchParams }: Readonly<PageProps<'/
 				<SearchForm placeholder={searchSection?.placeholder} query={query} tab={tab} />
 
 				{result && (
-					<SearchHits
-						currentPage={currentPage}
-						noResults={page?.content.noResults}
-						result={result}
-						tab={tab}
-					/>
+					<SearchHits currentPage={currentPage} noResults={noResults} result={result} tab={tab} />
 				)}
 
 				{popularSearches && <PopularSearches {...popularSearches} />}
 			</section>
 
-			{page && <ContactPersons {...page.content.contactPersonsSection} />}
+			{contactPersonsSection && <ContactPersons {...contactPersonsSection} />}
 
 			<Newsletter />
 		</>

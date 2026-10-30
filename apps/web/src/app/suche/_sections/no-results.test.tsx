@@ -158,4 +158,19 @@ describe('the empty state of a search', () => {
 
 		expect(getByRole('heading', { level: 2, name: 'Keine Treffer für „xyz“' })).not.toBeNull();
 	});
+
+	it('names the search term itself when a published document has no title at all', () => {
+		const { getByRole } = renderWithUser(<NoResults content={{ links: LINKS }} query="xyz" />);
+
+		expect(getByRole('heading', { level: 2, name: 'Keine Treffer für „xyz“' })).not.toBeNull();
+		expect(getByRole('link', { name: 'Unser Angebot' })).not.toBeNull();
+	});
+
+	it('shows no links for a published document that has none', () => {
+		const { queryByRole } = renderWithUser(
+			<NoResults content={{ title: 'Leider nichts' }} query="xyz" />,
+		);
+
+		expect(queryByRole('list')).toBeNull();
+	});
 });
