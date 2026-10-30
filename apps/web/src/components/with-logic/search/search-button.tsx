@@ -9,11 +9,12 @@ import { cn } from '@tsgi-web/shared';
  *
  * @param props - The button's props.
  * @param props.className - Where the bar shows it, the desktop or the mobile row.
+ * @param props.inert - Takes the button out of reach, while the panel it opened is open.
  * @param props.onOpen - Called when the button is pressed.
  * @param props.ref - The button, so the focus can return to it when the panel closes.
  * @returns The button.
  */
-function SearchButton({ className, onOpen, ref }: Readonly<SearchButtonProps>) {
+function SearchButton({ className, inert = false, onOpen, ref }: Readonly<SearchButtonProps>) {
 	return (
 		<button
 			aria-haspopup="dialog"
@@ -22,6 +23,7 @@ function SearchButton({ className, onOpen, ref }: Readonly<SearchButtonProps>) {
 				'inline-flex items-center justify-center rounded-full p-2 text-foreground transition-colors hover:bg-muted/40 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none motion-reduce:transition-none',
 				className,
 			)}
+			inert={inert}
 			onClick={onOpen}
 			ref={ref}
 			type="button"
@@ -33,6 +35,7 @@ function SearchButton({ className, onOpen, ref }: Readonly<SearchButtonProps>) {
 
 interface SearchButtonProps {
 	className?: string;
+	inert?: boolean;
 	onOpen: () => void;
 	ref?: Ref<HTMLButtonElement>;
 }

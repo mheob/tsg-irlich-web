@@ -210,15 +210,30 @@ function SearchPanel({
 	placeholder,
 }: Readonly<SearchPanelProps>) {
 	const inputRef = useRef<HTMLInputElement>(null);
+	// Base UI plays the enter transition only for a dialog that mounts closed and opens later. The
+	// panel mounts on the first press of a lupe, already meant to be open, so it opens a frame after
+	// its mount; otherwise the first opening per page load would neither slide nor fade in.
+	const [hasMounted, setHasMounted] = useState(false);
+
+	useEffect(() => {
+		const frame = requestAnimationFrame(() => {
+			setHasMounted(true);
+		});
+
+		return () => {
+			cancelAnimationFrame(frame);
+		};
+	}, []);
 
 	const close = () => {
 		onOpenChange(false);
 	};
 
 	return (
-		<Dialog onOpenChange={onOpenChange} open={open}>
+		<Dialog onOpenChange={onOpenChange} open={open && hasMounted}>
 			<DialogPortal>
-				{/* Behind the bar too, so the bar stays bright and usable above the dimmed page. */}
+				{/* Behind the bar too, so the bar stays bright above the dimmed page; the navigation
+				    makes all of it but the menu toggle inert meanwhile. */}
 				<DialogBackdrop className="z-40 bg-primary/40 duration-300" />
 				<DialogPopupPrimitive
 					className={cn(

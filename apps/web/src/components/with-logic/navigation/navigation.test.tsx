@@ -343,5 +343,63 @@ describe('navigation', () => {
 				expect(queryByRole('dialog')).toBeNull();
 			});
 		});
+
+		// The dialog hides the bar from assistive technology only. Without `inert` a pointer could
+		// still open a menu over the panel or move the focus into the hidden bar.
+		// jsdom does not implement `inert`'s behaviour, so the attribute is all this test can check.
+		it('makes the bar inert while the search is open, all but the menu toggle', async () => {
+			const { findByRole, getAllByRole, getByRole, queryByRole, user } = renderNavigation();
+			const [desktopLupe, mobileLupe] = getAllByRole('button', { name: 'Suche öffnen' });
+			const barControls = [
+				getByRole('link', { name: 'Logo der TSG Irlich 1882 e. V.' }),
+				// The desktop group comes first, the mobile menu's copy sits in its own container.
+				getAllByRole('button', { name: 'Verein' })[0],
+				getByRole('link', { name: 'Kontakt' }),
+				desktopLupe,
+				mobileLupe,
+			];
+			const toggle = getByRole('button', { name: 'Menü' });
+
+			await user.click(desktopLupe);
+			await findByRole('dialog', { name: 'Website durchsuchen' });
+
+			expect(barControls.map((control) => control.closest('[inert]'))).not.toContain(null);
+			expect(toggle.closest('[inert]')).toBeNull();
+
+			// The toggle still opens the menu, which closes the search and frees the bar again.
+			await user.click(toggle);
+
+			await waitFor(() => {
+				expect(queryByRole('dialog')).toBeNull();
+			});
+			expect(toggle.getAttribute('aria-expanded')).toBe('true');
+			expect(barControls.map((control) => control.closest('[inert]'))).toStrictEqual(
+				barControls.map(() => null),
+			);
+		});
+
+		// Base UI only animates a dialog in that mounts closed and opens later. The panel mounts on
+		// the first press of a lupe, so without care the first opening per page load would neither
+		// slide nor fade in.
+		it('lets the panel play its enter transition on the very first opening', async () => {
+			let hasEnterTransition = false;
+			const observer = new MutationObserver(() => {
+				hasEnterTransition ||=
+					document.querySelector('[role="dialog"][data-starting-style]') !== null;
+			});
+			observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+			const { findByRole, getAllByRole, user } = renderNavigation();
+
+			await user.click(getAllByRole('button', { name: 'Suche öffnen' })[0]);
+			const dialog = await findByRole('dialog', { name: 'Website durchsuchen' });
+			observer.disconnect();
+
+			expect(hasEnterTransition).toBe(true);
+			await waitFor(() => {
+				expect(document.activeElement).toBe(
+					within(dialog).getByRole('combobox', { name: 'Suchbegriff' }),
+				);
+			});
+		});
 	});
 });

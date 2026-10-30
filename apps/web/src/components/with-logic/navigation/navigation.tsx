@@ -102,6 +102,10 @@ function Navigation({ navItems, searchPlaceholder }: Readonly<NavigationProps>) 
 		};
 	}, []);
 
+	// The open search is a modal dialog, which hides the bar from assistive technology but leaves it
+	// under the pointer, above the dimmed page. Everything in the bar but the menu toggle is `inert`
+	// meanwhile, so no click opens a menu over the panel or moves the focus into the hidden bar. The
+	// toggle stays live because opening the menu is how the search gives way to it.
 	return (
 		<nav
 			aria-label="Hauptnavigation"
@@ -117,7 +121,7 @@ function Navigation({ navItems, searchPlaceholder }: Readonly<NavigationProps>) 
 					})}
 				>
 					{/* Logo */}
-					<div className="h-full w-40">
+					<div className="h-full w-40" inert={isSearchOpen}>
 						<Link
 							aria-label="Logo der TSG Irlich 1882 e. V."
 							className="absolute top-2 left-0 block"
@@ -131,12 +135,12 @@ function Navigation({ navItems, searchPlaceholder }: Readonly<NavigationProps>) 
 						</Link>
 					</div>
 
-					<DesktopNavigation entries={entries} />
+					<DesktopNavigation entries={entries} inert={isSearchOpen} />
 
 					{/* Lupe and Contact Button (Desktop). The contact button is compact between lg and xl,
 					    where the bar is tight; its wrappers carry the visibility because `btn` sets its own
 					    `display`. */}
-					<div className="hidden items-center gap-3 lg:flex">
+					<div className="hidden items-center gap-3 lg:flex" inert={isSearchOpen}>
 						<SearchButton
 							onOpen={() => {
 								openSearch(desktopSearchRef.current);
@@ -169,6 +173,7 @@ function Navigation({ navItems, searchPlaceholder }: Readonly<NavigationProps>) 
 					<div className="flex items-center gap-2 lg:hidden">
 						<SearchButton
 							className="my-2"
+							inert={isSearchOpen}
 							onOpen={() => {
 								openSearch(mobileSearchRef.current);
 							}}
