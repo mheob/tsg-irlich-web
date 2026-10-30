@@ -62,8 +62,10 @@ Without the staging webhook, every content change on staging that is not read th
    The filter below is the one for the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. The live webhooks are switched over when the department migration is rolled out, not when this change merges, so until then they keep the old filter. `accessibility` joined with the page images (WEB-389), when the page got a hero image of its own: the staging webhook gets it when the change merges, the production webhook together with the WEB-384 switch.
 
    ```groq
-   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "site-settings", "testimonial", "venue"]
+   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "searchPage", "site-settings", "testimonial", "venue"]
    ```
+
+   `searchPage` joined with the site search (WEB-204): the singleton holds the placeholder of the search panel, which sits in the navigation on every page. This repository does not change the live webhooks, so `searchPage` has to be added to the filter of **both** of them by hand, or an edit of the placeholder waits out the cache of the layout.
 
    **Projection** (what is sent to the webhook):
 
@@ -133,6 +135,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **Testimonial** (`_type: "testimonial"`): Homepage `/`
 - **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before. A webhook with a type filter needs both types in it.
 - **Site settings** (`_type: "site-settings"`, the menu and the footer data): all pages (layout revalidation). The root layout tags its two fetches `site-settings`, so the tag revalidation reaches them too.
+- **Search page** (`_type: "searchPage"`, the placeholder of the search panel and the popular searches): all pages (layout revalidation), because the navigation in the root layout shows the placeholder. The root layout, `/suche` and the popular searches tag their fetches `searchPage`, so the tag revalidation reaches them too.
 
 Two settings keep the render the webhook triggers from caching old content again. Each one alone made a menu change on staging show up only one change late:
 
