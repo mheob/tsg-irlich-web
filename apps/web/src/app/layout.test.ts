@@ -115,7 +115,8 @@ describe('the root layout', () => {
 	// WEB-370: the revalidation webhook tags its run with the document type, so both fetches of the
 	// site settings carry the `site-settings` tag; without it a menu change waited out the 12 hours.
 	// The placeholder belongs to the search page and expires with its type, read as published like
-	// every fetch of the search.
+	// every fetch of the search. It carries a `revalidate` as well: without one a dynamic render
+	// (draft mode, a page that reads its search params) asks Sanity again on every request.
 	it('tags each of its fetches with the type it reads', async () => {
 		mockDraftMode(false);
 		mockedFetch.mockResolvedValue({ mainNavigation: [] });
@@ -125,7 +126,7 @@ describe('the root layout', () => {
 		expect(mockedFetch.mock.calls.map((call) => call[2])).toStrictEqual([
 			{ next: { revalidate: 43_200, tags: ['site-settings'] } },
 			{ next: { tags: ['site-settings'] } },
-			{ next: { tags: ['searchPage'] }, perspective: 'published' },
+			{ next: { revalidate: 43_200, tags: ['searchPage'] }, perspective: 'published' },
 		]);
 	});
 

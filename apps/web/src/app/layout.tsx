@@ -84,6 +84,10 @@ const inter = localFont({
 	variable: '--font-sans',
 });
 
+/**
+ * How long the navigation and the placeholder of the search panel are cached, in seconds. The
+ * revalidation webhook expires them earlier through their tags.
+ */
 // oxlint-disable-next-line no-magic-numbers
 const NAVIGATION_REVALIDATE_SECONDS = 60 * 60 * 12;
 /** The revalidation webhook tags its run with the document type; both layout fetches read it. */
@@ -134,7 +138,10 @@ export default async function RootLayout({
 			.fetch<SearchPlaceholderQueryResult>(
 				searchPlaceholderQuery,
 				{},
-				{ next: { tags: [SEARCH_PAGE_TAG] }, perspective: 'published' },
+				{
+					next: { revalidate: NAVIGATION_REVALIDATE_SECONDS, tags: [SEARCH_PAGE_TAG] },
+					perspective: 'published',
+				},
 			)
 			.catch(() => null),
 	]);
