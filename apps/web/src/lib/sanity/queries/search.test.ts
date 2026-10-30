@@ -57,6 +57,30 @@ function getCatchAllTerms(query: string): ScoreTerm[] {
 	return getScoreTerms(query).filter(({ lhs }) => /\[\s*title,/u.test(lhs));
 }
 
+/** A score term on the text of a TSG-Echo issue, behind the `indexable` guard. */
+const GUARDED_ECHO_MATCH = /boost\(indexable != false, 0\) && boost\(extractedText match /gu;
+
+/** The text of a TSG-Echo issue as the value of a `select()` that gives it for indexable issues. */
+const GUARDED_ECHO_SELECT = /select\(\s*indexable != false\s*=>\s*extractedText\s*\)/gu;
+
+/**
+ * Finds every place a query reads the text of a TSG-Echo issue without the `indexable` guard. The
+ * only two forms that read it are a guarded score term and a guarded `select()`.
+ *
+ * @param query - The GROQ query
+ * @returns A few characters around each occurrence of `extractedText` that is neither, so a failing
+ * test shows where it sits
+ */
+function getUnguardedEchoText(query: string): string[] {
+	const withoutGuardedForms = query
+		.replaceAll(GUARDED_ECHO_MATCH, '')
+		.replaceAll(GUARDED_ECHO_SELECT, '');
+
+	return [...withoutGuardedForms.matchAll(/.{0,40}extractedText.{0,40}/gu)].map(([context]) =>
+		context.trim(),
+	);
+}
+
 /**
  * Counts how often a string occurs in a text.
  *
@@ -77,18 +101,34 @@ describe('search queries', () => {
 			);
 		});
 
-		it.each(ALL_QUERIES)('is never matched without the guard in %s', (_label, query) => {
-			expect(countOccurrences(query, 'extractedText match')).toBe(
-				countOccurrences(query, 'boost(indexable != false, 0) && boost(extractedText match'),
-			);
+		// Every occurrence, not just the plain `extractedText match`: a `[subtitle, extractedText] match`
+		// or a projection of the text would leak it just the same.
+		it.each(ALL_QUERIES)('is never read without the guard in %s', (_label, query) => {
+			expect(getUnguardedEchoText(query)).toStrictEqual([]);
+		});
+
+		it('accepts the two guarded forms', () => {
+			expect(
+				getUnguardedEchoText(
+					'boost(indexable != false, 0) && boost(extractedText match text::query($q), 1)',
+				),
+			).toStrictEqual([]);
+			expect(getUnguardedEchoText('select(indexable != false => extractedText)')).toStrictEqual([]);
+		});
+
+		it.each([
+			['an array of fields', 'boost([subtitle, extractedText] match text::query($q), 1)'],
+			['a projection', '"text": extractedText'],
+			['a term without the guard', 'boost(extractedText match text::query($q), 1)'],
+			['a select on another condition', 'select(indexable == true => extractedText)'],
+		])('is spotted in %s', (_label, query) => {
+			expect(getUnguardedEchoText(query)).toHaveLength(1);
 		});
 
 		// A snippet would show the text of a non-indexable issue just as a hit would.
 		it('is only read for a snippet when the issue is indexable', () => {
 			const reads = countOccurrences(searchTextsQuery, 'extractedText');
-			const guarded = searchTextsQuery.match(
-				/select\(\s*indexable != false\s*=>\s*extractedText\s*\)/gu,
-			);
+			const guarded = searchTextsQuery.match(GUARDED_ECHO_SELECT);
 
 			expect(reads).toBeGreaterThan(0);
 			expect(guarded).toHaveLength(reads);
