@@ -88,27 +88,6 @@ jobs:
           LHCI_BASE_URL: ${{ inputs.url || github.event.deployment_status.environment_url }}
           LHCI_ROUTE: ${{ matrix.route }}
 
-      # TEMPORARY (WEB-394): does `x-vercel-skip-toolbar` keep the toolbar script out of the HTML?
-      - name: Debug Toolbar
-        if: ${{ matrix.report == 'home' && env.VERCEL_AUTOMATION_BYPASS_SECRET != '' }}
-        env:
-          BASE: ${{ inputs.url || github.event.deployment_status.environment_url }}
-        run: |
-          for v in none 1 true empty; do
-            case $v in
-              none) h=() ;;
-              empty) h=(-H "x-vercel-skip-toolbar;") ;;
-              *) h=(-H "x-vercel-skip-toolbar: $v") ;;
-            esac
-            for ua in "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36 Chrome-Lighthouse"; do
-              tag=$(grep -q Lighthouse <<<"$ua" && echo lh || echo chrome)
-              body=$(curl -sS --compressed -A "$ua" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Sec-Fetch-Dest: document" -H "Sec-Fetch-Mode: navigate" -H "x-vercel-protection-bypass: $VERCEL_AUTOMATION_BYPASS_SECRET" "${h[@]}" "$BASE/")
-              echo "skip=$v ua=$tag html bytes=${#body} matches=$(grep -oE '[^"]{0,40}(vercel\.live|vercel-live|next-live|feedback\.js)[^"]{0,40}' <<<"$body" | sort -u | tr '\n' '|')"
-              hdr=$(curl -sS -o /dev/null -D - -A "$ua" -H "Referer: $BASE/" -H "Sec-Fetch-Dest: script" "${h[@]}" https://vercel.live/_next-live/feedback/feedback.js)
-              echo "skip=$v ua=$tag feedback.js: $(head -1 <<<"$hdr" | tr -d '\r') cookies=$(grep -i '^set-cookie:' <<<"$hdr" | cut -d= -f1 | cut -d' ' -f2 | tr '\n' ' ')"
-            done
-          done
-
       # One HTML report per run, plus the JSON they were rendered from. Opening the HTML is the only
       # way to see which audit moved a score.
       - name: Upload Report
