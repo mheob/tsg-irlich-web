@@ -13,13 +13,13 @@ const WCAG_21_AA_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 
 /**
  * Base UI's focus guards: the two visually hidden spans its focus trap puts around a modal popup.
- * They are `aria-hidden`, except where Base UI's `FocusGuard` detects VoiceOver on WebKit
- * (`platform.screenReader.voiceOver && platform.engine.webkit`, where `voiceOver` is only an
- * Apple-OS check). There they become unnamed `role="button"` on purpose, because VoiceOver's
- * virtual cursor only fires `onFocus` on focusable or button elements, and that is how the trap
- * keeps it inside the popup. So WebKit on an Apple platform, as in a local macOS run, reports
- * them, while Chromium and the Linux CI image do not, and Lighthouse, which runs Chrome, never
- * sees them. They are library markup, not ours, and every scan leaves them out instead of
+ * They are `aria-hidden`, except in WebKit on an Apple platform (Base UI's `FocusGuard` checks
+ * `platform.screenReader.voiceOver && platform.engine.webkit`, and `voiceOver` is only an
+ * Apple-OS check, not a running screen reader). There they become unnamed `role="button"` on
+ * purpose, because VoiceOver's virtual cursor only fires `onFocus` on focusable or button
+ * elements, and that is how the trap keeps it inside the popup. So a local macOS run reports them
+ * in WebKit, while Chromium and the Linux CI image do not, and Lighthouse, which runs Chrome,
+ * never sees them. They are library markup, not ours, and every scan leaves them out instead of
  * baselining `aria-command-name` for each popup the sweep opens.
  */
 const BASE_UI_FOCUS_GUARD = '[data-base-ui-focus-guard]';
