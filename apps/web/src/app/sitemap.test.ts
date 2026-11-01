@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
-import sitemap from '@/app/sitemap';
+import sitemap, { revalidate } from '@/app/sitemap';
 import type { client } from '@/lib/sanity/client';
 import {
 	sitemapDepartmentsQuery,
@@ -227,9 +227,14 @@ describe(sitemap, () => {
 		]);
 	});
 
-	// WEB-403: `revalidatePath('/sitemap.xml')` regenerated the route but left these fetches in the
-	// data cache, so the sitemap kept the state of the last deployment. The webhook expires the tag of
-	// every document type it is called for, which reaches them through these tags.
+	// WEB-403: without an interval the build prerenders the sitemap as a static file, which no
+	// revalidation reaches; the build log listed it as `○ /sitemap.xml` with no revalidate time.
+	it('is regenerated incrementally instead of prerendered once', () => {
+		expect(revalidate).toBe(3600);
+	});
+
+	// WEB-403: the webhook expires the tag of every document type it is called for, which reaches
+	// these fetches through their tags.
 	it.each([
 		[sitemapNewsArticlesQuery, ['news.article', 'news.category']],
 		[sitemapNewsCategoriesQuery, ['news.category']],

@@ -18,6 +18,15 @@ import type {
 import { ECHO_OVERVIEW_PATH, getEchoIssuePath, getInternalHref } from '@/utils/links';
 import { getBaseUrl } from '@/utils/url';
 
+/**
+ * Without a revalidate interval Next.js prerenders the sitemap as a static file at build time, and
+ * neither `revalidatePath` nor `revalidateTag` reaches a static file: the sitemap kept the state of
+ * the last deployment (WEB-403). With it the route is incrementally regenerated, so the webhook's tag
+ * expiry refreshes it at once, and the hour is only the fallback. A literal, since Next.js reads it
+ * statically.
+ */
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const baseUrl = getBaseUrl();
 
