@@ -65,11 +65,12 @@ test.describe('preview smoke', () => {
 	// `nofollow`, which only the proxy sends.
 	test('serves the files of the echo archive with their own noindex header', async ({ page }) => {
 		await page.goto('/verein/echo');
-		const src =
-			(await page
-				.getByRole('img', { name: /^Titelseite von /u })
-				.first()
-				.getAttribute('src')) ?? '';
+		const cover = page.getByRole('img', { name: /^Titelseite von /u }).first();
+		// Without a finished issue the archive says so instead of showing a cover, and `getAttribute`
+		// would wait for one until the test timed out, never reaching the skip below. That happened
+		// once `db:sync` had copied production, whose issues were all unpublished, into `development`.
+		await expect(cover.or(page.getByText('Noch keine Ausgaben online.'))).toBeVisible();
+		const src = (await cover.count()) > 0 ? ((await cover.getAttribute('src')) ?? '') : '';
 		const file =
 			/(?:cdn\.sanity\.io%2Fimages%2F[^%]+%2F[^%]+%2F|\/echo-archiv\/images\/)(?<file>[^%?&]+)/u.exec(
 				src,
