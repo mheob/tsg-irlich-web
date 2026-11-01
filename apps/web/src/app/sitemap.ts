@@ -19,20 +19,20 @@ import { ECHO_OVERVIEW_PATH, getEchoIssuePath, getInternalHref } from '@/utils/l
 import { getBaseUrl } from '@/utils/url';
 
 /**
- * Without a revalidate interval Next.js prerenders the sitemap as a static file at build time, and
- * neither `revalidatePath` nor `revalidateTag` reaches a static file: the sitemap kept the state of
- * the last deployment (WEB-403). With it the route is incrementally regenerated, so the webhook's tag
- * expiry refreshes it at once, and the hour is only the fallback. A literal, since Next.js reads it
- * statically.
+ * Without a revalidate interval Next.js prerenders the sitemap as a static file at build time, and it
+ * kept the state of the last deployment (WEB-403). With it the route is regenerated at most an hour
+ * after a change. That hour is what bounds it: on Vercel the webhook's `revalidatePath` and
+ * `revalidateTag` do not reach the sitemap's cache entry, as two probes on staging showed, while
+ * they do refresh the pages at once. A literal, since Next.js reads it statically.
  */
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const baseUrl = getBaseUrl();
 
-	// Each query carries the types it reads as tags. The revalidation webhook expires the tag of the
-	// changed document's type, which is what refreshes these cached fetches; `revalidatePath` on the
-	// sitemap only regenerates the route and would render it from the cached data again (WEB-403).
+	// Each query carries the types it reads as tags, which the revalidation webhook expires for the
+	// changed document's type. They keep the hourly regeneration from rendering cached data that is
+	// older than the change (WEB-403).
 	const [newsArticles, newsCategories, departments, groups, echoIssues] = await Promise.all([
 		client.fetch<SitemapNewsArticlesQueryResult>(
 			sitemapNewsArticlesQuery,
