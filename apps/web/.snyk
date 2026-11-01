@@ -20,6 +20,18 @@ ignore:
           glob patterns from this repository's own configuration and never outside input. Revisit
           once braces publishes a patched release.
         expires: 2026-11-16T00:00:00.000Z
+  SNYK-JS-MINIMATCH-22111072:
+    - '*':
+        reason: >-
+          minimatch is only fixed in 11.0.1, a major release none of its dependents has moved to
+          yet, and the flaw needs a crafted glob pattern parsed with optimizationLevel 2 or higher.
+          10.2.6 reaches this project through tooling only: @oclif/core below the Sanity CLI
+          (through next-sanity and sanity), which matches the CLI's own command files, and glob
+          below the react-email CLI (through @tsgi-web/email), which lists the template folder.
+          3.1.5 sits below @lhci/cli (chrome-launcher, rimraf, glob), a dev dependency that removes
+          its own temporary Chrome profile. None of them runs in the deployed website or sees
+          outside input. Revisit once Sanity, react-email and Lighthouse CI move to minimatch 11.
+        expires: 2026-12-01T00:00:00.000Z
   SNYK-JS-PICOMATCH-21248802:
     - '*':
         reason: >-
