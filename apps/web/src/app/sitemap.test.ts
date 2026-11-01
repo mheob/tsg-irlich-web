@@ -226,4 +226,21 @@ describe(sitemap, () => {
 			'http://localhost:3000/news/vereinsleben/sommerfest',
 		]);
 	});
+
+	// WEB-403: `revalidatePath('/sitemap.xml')` regenerated the route but left these fetches in the
+	// data cache, so the sitemap kept the state of the last deployment. The webhook expires the tag of
+	// every document type it is called for, which reaches them through these tags.
+	it.each([
+		[sitemapNewsArticlesQuery, ['news.article', 'news.category']],
+		[sitemapNewsCategoriesQuery, ['news.category']],
+		[sitemapDepartmentsQuery, ['department']],
+		[sitemapGroupsQuery, ['group', 'department']],
+		[sitemapEchoIssuesQuery, ['echo.issue']],
+	])('tags a query with the document types it lists (%#)', async (query, tags) => {
+		mockSanity({});
+
+		await sitemap();
+
+		expect(mockedFetch).toHaveBeenCalledWith(query, {}, { next: { tags } });
+	});
 });
