@@ -120,7 +120,7 @@ vercel --prod
 
 The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/revalidate/route.ts) automatically revalidates:
 
-- **News** (`_type: "news"`): `/news` and `/news/[slug]`
+- **News** (`_type: "news.article"`, `"news.category"`): `/news`, every category page `/news/[category]` and article `/news/[category]/[slug]`, the group pages, which show the latest articles of their category, and `/sitemap.xml`, which lists every article and category
 - **Department** (`_type: "department"`): the home page, which links the departments, and the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`
 - **Group** (`_type: "group"`): the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`. The payload only carries the slug of the group, not the one of its department, so a single group path cannot be built
 - **Offer pages** (`_type: "departmentsPage"`, `"groupsPage"`): `/angebot`, or every department page `/angebot/[group]`
@@ -131,7 +131,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **Contact page** (`_type: "contact"`): `/kontakt` with the feedback page below it (layout revalidation), which shows its hero image
 - **Accessibility** (`_type: "accessibility"`): `/barrierefreiheit`
 - **Testimonial** (`_type: "testimonial"`): Homepage `/`
-- **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before. A webhook with a type filter needs both types in it.
+- **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before, and `/sitemap.xml`, which lists the indexable issues. A webhook with a type filter needs both types in it.
 - **Site settings** (`_type: "site-settings"`, the menu and the footer data): all pages (layout revalidation). The root layout tags its two fetches `site-settings`, so the tag revalidation reaches them too.
 - **Search page** (`_type: "searchPage"`, the placeholder of the search panel and the popular searches): all pages (layout revalidation), because the navigation in the root layout shows the placeholder. The root layout, `/suche` and the popular searches tag their fetches `searchPage`, so the tag revalidation reaches them too.
 

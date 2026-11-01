@@ -120,8 +120,24 @@ describe('sanity revalidation webhook', () => {
 		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
 			['/verein/echo'],
 			['/verein/echo/[slug]', 'page'],
+			['/sitemap.xml'],
 		]);
 	});
+
+	// WEB-401: the sitemap lists the indexable issues, the articles and the categories, and stayed on
+	// the state of the last deployment when only the offer types refreshed it.
+	it.each(['echo.issue', 'news.article', 'news.category'])(
+		'revalidates the sitemap, which lists it, for %s',
+		async (type) => {
+			mockedParseBody.mockResolvedValue(
+				parsed({ _type: type, slug: { current: 'tsg-echo-2025' } }),
+			);
+
+			await POST(REQUEST);
+
+			expect(mockedRevalidatePath).toHaveBeenCalledWith('/sitemap.xml');
+		},
+	);
 
 	it('revalidates the categories and the tsg-echo pages along with the news overview, which show its hero and its contact persons', async () => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: 'newsOverview' }));
@@ -251,6 +267,7 @@ describe('sanity revalidation webhook', () => {
 			'/news/[category]',
 			'/news/[category]/[slug]',
 			'/angebot/[group]/[singleGroup]',
+			'/sitemap.xml',
 		]);
 		expect(mockedRevalidatePath).toHaveBeenCalledWith('/news/[category]/[slug]', 'page');
 	});
@@ -289,6 +306,7 @@ describe('sanity revalidation webhook', () => {
 			'/news/[category]',
 			'/news/[category]/[slug]',
 			'/angebot/[group]/[singleGroup]',
+			'/sitemap.xml',
 		]);
 	});
 
