@@ -71,7 +71,9 @@ function isTextItem(item: TextContentItem): item is TextItem {
 }
 
 /**
- * Joins the text items of a page, keeping its line breaks and collapsing runs of spaces.
+ * Joins the text items of a page, keeping its line breaks and collapsing runs of spaces. Glyphs
+ * that their font maps to U+FFFD carry no text and are dropped: some PDFs declare a whole font that
+ * way, and the Sanity import refuses a dataset holding the character.
  *
  * @param page - The page to read.
  * @returns The page's text, empty for a scan without a text layer.
@@ -82,6 +84,7 @@ async function extractText(page: PDFPageProxy): Promise<string> {
 		.filter(isTextItem)
 		.map((item) => `${item.str}${item.hasEOL ? '\n' : ' '}`)
 		.join('')
+		.replaceAll('�', '')
 		.replaceAll(/[ \t]+/gu, ' ')
 		.trim();
 }

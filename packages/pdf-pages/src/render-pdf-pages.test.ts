@@ -3,6 +3,7 @@ import { beforeAll, describe, expect, it } from 'vite-plus/test';
 
 import { createFixturePdf } from '../test-utils/create-fixture-pdf';
 import { createScanPdf } from '../test-utils/create-scan-pdf';
+import { createUnmappedTextPdf } from '../test-utils/create-unmapped-text-pdf';
 import { renderPdfPages } from './render-pdf-pages';
 import type { RenderOptions, RenderedPage } from './render-pdf-pages';
 
@@ -124,6 +125,16 @@ describe('pdf page rendering', () => {
 		const { text } = await renderFirstPage(pdf);
 
 		expect(text).toBe('Zeile eins\nZeile zwei');
+	});
+
+	// The TSG-Echo issues of 2012 map glyphs to U+FFFD, and the Sanity import refuses a dataset that
+	// holds one, so `pnpm run db:sync` failed on them.
+	it('drops the replacement characters of glyphs without a character', async () => {
+		const pdf = await createUnmappedTextPdf('XXXX Lesbar XX');
+
+		const { text } = await renderFirstPage(pdf);
+
+		expect(text).toBe('Lesbar');
 	});
 
 	// Without its data files pdf.js would skip scans silently; a missing directory has to fail loudly.
