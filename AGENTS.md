@@ -198,6 +198,7 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 
 - `test-utils/**` counts as test code next to the `*.test.*` and `*.spec.ts` files, so its fakes are neither analysed as production code nor scored for coverage.
 - `docs/superpowers/**` is left out of the analysis (`sonar.exclusions`): the HTML mockups next to the design specs are throwaway code nobody ships.
+- `scripts/**` at the root is analysed but not scored for coverage (`sonar.coverage.exclusions`). Those scripts (`db:sync`) are run by hand and belong to no workspace, so no Vitest project reaches them, and every change to one failed the gate's 80% on new code (WEB-404). The `scripts` folders of the workspaces are not affected; `apps/studio/scripts` keeps its tests.
 - A rule that misfires is switched off in `sonar.issue.ignore.multicriteria`, limited to the files where it misfires, and never through "Accept" or "False positive" in the Sonar UI, which leaves no trace in the repository. The current entries (WEB-387):
   - `css:S8776` and `css:S8767` in `apps/web/src/app/globals.css`: the CSS analyzer does not know Tailwind v4's `@utility`, so the nesting and the declarations inside a utility look invalid to it.
   - `typescript:S5257` and `typescript:S6819` in `packages/email/**`: mail clients need `<table role="presentation">` for layout. oxlint's `jsx-a11y/prefer-tag-over-role` is off there for the same reason.
