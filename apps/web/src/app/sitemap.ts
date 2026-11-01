@@ -21,13 +21,35 @@ import { getBaseUrl } from '@/utils/url';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const baseUrl = getBaseUrl();
 
-	// Fetch dynamic content from Sanity
+	// Each query carries the types it reads as tags. The revalidation webhook expires the tag of the
+	// changed document's type, which is what refreshes these cached fetches; `revalidatePath` on the
+	// sitemap only regenerates the route and would render it from the cached data again (WEB-403).
 	const [newsArticles, newsCategories, departments, groups, echoIssues] = await Promise.all([
-		client.fetch<SitemapNewsArticlesQueryResult>(sitemapNewsArticlesQuery),
-		client.fetch<SitemapNewsCategoriesQueryResult>(sitemapNewsCategoriesQuery),
-		client.fetch<SitemapDepartmentsQueryResult>(sitemapDepartmentsQuery),
-		client.fetch<SitemapGroupsQueryResult>(sitemapGroupsQuery),
-		client.fetch<SitemapEchoIssuesQueryResult>(sitemapEchoIssuesQuery),
+		client.fetch<SitemapNewsArticlesQueryResult>(
+			sitemapNewsArticlesQuery,
+			{},
+			{ next: { tags: ['news.article', 'news.category'] } },
+		),
+		client.fetch<SitemapNewsCategoriesQueryResult>(
+			sitemapNewsCategoriesQuery,
+			{},
+			{ next: { tags: ['news.category'] } },
+		),
+		client.fetch<SitemapDepartmentsQueryResult>(
+			sitemapDepartmentsQuery,
+			{},
+			{ next: { tags: ['department'] } },
+		),
+		client.fetch<SitemapGroupsQueryResult>(
+			sitemapGroupsQuery,
+			{},
+			{ next: { tags: ['group', 'department'] } },
+		),
+		client.fetch<SitemapEchoIssuesQueryResult>(
+			sitemapEchoIssuesQuery,
+			{},
+			{ next: { tags: ['echo.issue'] } },
+		),
 	]);
 
 	// Static pages
