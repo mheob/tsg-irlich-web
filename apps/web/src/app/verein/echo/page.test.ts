@@ -7,6 +7,7 @@ import EchoOverviewPage, { generateMetadata } from '@/app/verein/echo/page';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
+import { PortableText } from '@/components/ui/portable-text';
 import type { client } from '@/lib/sanity/client';
 import { aboutUsHeroImageQuery } from '@/lib/sanity/queries/pages/about-us';
 import {
@@ -142,6 +143,38 @@ describe('the tsg-echo archive', () => {
 			subTitle: 'Vereinsgeschichte zum Durchblättern',
 			title: 'TSG-Echo',
 		});
+	});
+
+	it('renders the blocks of its intro', async () => {
+		const blocks = [
+			{
+				_key: 'intro1',
+				_type: 'block',
+				children: [{ _key: 'intro1s', _type: 'span', marks: [], text: 'Das TSG ECHO …' }],
+				markDefs: [],
+				style: 'normal',
+			},
+		];
+		mockArchive({
+			page: {
+				...PAGE,
+				intro: { _type: 'simpleBlockContent', text: blocks },
+			} as unknown as typeof PAGE,
+		});
+
+		const intro = findElement(await EchoOverviewPage(props()), PortableText);
+
+		expect(intro?.props.value).toStrictEqual(blocks);
+	});
+
+	it('leaves the intro out when it holds no text', async () => {
+		mockArchive({
+			page: { ...PAGE, intro: { _type: 'simpleBlockContent' } } as unknown as typeof PAGE,
+		});
+
+		const page = await EchoOverviewPage(props());
+
+		expect(findElement(page, PortableText)).toBeUndefined();
 	});
 
 	it('shows the hero image of the about page', async () => {
