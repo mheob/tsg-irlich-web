@@ -14,11 +14,13 @@ interface WebhookBody {
 
 type RevalidateHandler = (slug?: string) => void;
 
+/** The news routes, the group pages that show the latest articles, and the sitemap, which lists every article and category. */
 function revalidateNewsRoutes(): void {
 	revalidatePath('/news');
 	revalidatePath('/news/[category]', 'page');
 	revalidatePath('/news/[category]/[slug]', 'page');
 	revalidatePath('/angebot/[group]/[singleGroup]', 'page');
+	revalidatePath('/sitemap.xml');
 }
 
 /**
@@ -61,8 +63,11 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	departmentsPage: () => {
 		revalidatePath('/angebot');
 	},
-	// An issue appears in the archive and has its own page.
-	'echo.issue': revalidateEchoRoutes,
+	// An issue appears in the archive and has its own page, and the sitemap lists the indexable ones.
+	'echo.issue': () => {
+		revalidateEchoRoutes();
+		revalidatePath('/sitemap.xml');
+	},
 	echoOverview: () => {
 		revalidatePath(ECHO_OVERVIEW_PATH);
 	},
