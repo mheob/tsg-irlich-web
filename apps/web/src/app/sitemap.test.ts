@@ -233,8 +233,8 @@ describe(sitemap, () => {
 		expect(revalidate).toBe(3600);
 	});
 
-	// WEB-403: the webhook expires the tag of every document type it is called for, which reaches
-	// these fetches through their tags.
+	// WEB-403: the webhook expires the tag of every document type it is called for, so the hourly
+	// regeneration reads these fetches fresh.
 	it.each([
 		[sitemapNewsArticlesQuery, ['news.article', 'news.category']],
 		[sitemapNewsCategoriesQuery, ['news.category']],
