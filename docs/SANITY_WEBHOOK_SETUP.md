@@ -59,13 +59,11 @@ Without the staging webhook, every content change on staging that is not read th
 
    **Filter** (optional, to track only specific documents). Every type the route handles has to be in it, `site-settings` above all: the menu and the footer data live there, and without it a menu change waits out the layout's 12-hour cache. The filter lives in Sanity, not in the repository, so adding or renaming a type in the route's `REVALIDATION_MAP` means updating the filter of **both** webhooks too. Until October 2026 the production filter still listed `settings`, `navigation` and `group`, which no document is called, and menu changes never fired it.
 
-   The filter below is the one for the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. The live webhooks are switched over when the department migration is rolled out, not when this change merges, so until then they keep the old filter. `accessibility` joined with the page images (WEB-389), when the page got a hero image of its own: the staging webhook gets it when the change merges, the production webhook together with the WEB-384 switch.
+   Both live webhooks carry the filter below since 2026-11-01. It belongs to the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. `accessibility` joined with the page images (WEB-389), when the page got a hero image of its own, and `searchPage` with the site search (WEB-204), whose singleton holds the placeholder of the search panel in the navigation on every page.
 
    ```groq
    _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "searchPage", "site-settings", "testimonial", "venue"]
    ```
-
-   `searchPage` joined with the site search (WEB-204): the singleton holds the placeholder of the search panel, which sits in the navigation on every page. This repository does not change the live webhooks, so `searchPage` has to be added to the filter of **both** of them by hand, or an edit of the placeholder waits out the cache of the layout. The staging webhook (dataset `development`) gets it when this change is merged into `next`, the production webhook together with the release that brings WEB-384 to `main`, since the search reaches production only with that release.
 
    **Projection** (what is sent to the webhook):
 
