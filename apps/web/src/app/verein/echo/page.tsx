@@ -87,9 +87,9 @@ export default async function EchoOverviewPage({
 			/>
 
 			<section className="container mx-auto py-10 md:py-28">
-				{page.intro && (
+				{page.intro?.text && (
 					<div className="mx-auto prose max-w-3xl md:prose-xl">
-						<PortableText value={page.intro} />
+						<PortableText value={page.intro.text} />
 					</div>
 				)}
 
