@@ -1,19 +1,8 @@
-import { access } from 'node:fs/promises';
-import path from 'node:path';
-
 import { createCanvas } from '@napi-rs/canvas';
 import type { Canvas, SKRSContext2D } from '@napi-rs/canvas';
-import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import type { PDFDocumentProxy, PDFPageProxy, PageViewport } from 'pdfjs-dist/legacy/build/pdf.mjs';
-// Under Node pdf.js runs its worker in-process and would import this file at runtime, which
-// Next.js' output tracing never sees (the spike failed with "Setting up fake worker failed").
-// Importing it statically ships the file, and evaluating it sets `globalThis.pdfjsWorker`, where
-// pdf.js looks for an in-process worker first.
-// oxlint-disable-next-line import/no-unassigned-import -- imported for that side effect only
-import 'pdfjs-dist/legacy/build/pdf.worker.mjs';
 
-/** A file every complete pdf.js data directory carries. */
-const PROBE_FILE = path.join('wasm', 'openjpeg.wasm');
+import { extractText, loadPdf } from './pdf-document';
 
 const DEFAULT_MAX_EDGE = 2000;
 const DEFAULT_QUALITY = 85;
@@ -21,73 +10,6 @@ const FIRST_PAGE = 1;
 const ORIGIN = 0;
 const PAPER = '#ffffff';
 const UNIT_SCALE = 1;
-
-/**
- * Finds the pdfjs-dist directory next to this package. `process.getBuiltinModule` keeps bundlers
- * from rewriting the lookup (Turbopack turns `require.resolve` into a module id), which is also
- * why a Next.js route passes `dataDir` itself.
- *
- * @returns The absolute path of the pdfjs-dist package.
- */
-function getDefaultDataDir(): string {
-	const { createRequire } = process.getBuiltinModule('node:module');
-	return path.dirname(createRequire(import.meta.url).resolve('pdfjs-dist/package.json'));
-}
-
-/**
- * Points pdf.js at its WebAssembly decoders, standard fonts, CMaps and ICC profiles, which it reads
- * from disk at runtime. Without the decoders it skips CCITT, JBIG2 and JPEG 2000 images silently,
- * which is how black-and-white scans are stored, and the page comes out blank.
- *
- * @param dataDir - The pdfjs-dist directory.
- * @returns The `getDocument` options for the data files.
- * @throws {Error} When the directory does not hold the pdf.js data files.
- */
-async function getDataOptions(dataDir: string): Promise<PdfjsDataOptions> {
-	const found = await access(path.join(dataDir, PROBE_FILE)).then(
-		() => true,
-		() => false,
-	);
-	if (!found) {
-		throw new Error(`Die Daten von pdf.js fehlen unter ${dataDir}.`);
-	}
-	const folder = (name: string): string => `${path.join(dataDir, name)}${path.sep}`;
-	return {
-		cMapUrl: folder('cmaps'),
-		iccUrl: folder('iccs'),
-		standardFontDataUrl: folder('standard_fonts'),
-		wasmUrl: folder('wasm'),
-	};
-}
-
-/**
- * Tells text items apart from the marked-content markers pdf.js can mix into a page's text.
- *
- * @param item - One entry of `getTextContent().items`.
- * @returns Whether the entry carries text.
- */
-function isTextItem(item: TextContentItem): item is TextItem {
-	return 'str' in item;
-}
-
-/**
- * Joins the text items of a page, keeping its line breaks and collapsing runs of spaces. Glyphs
- * that their font maps to U+FFFD carry no text and are dropped: some PDFs declare a whole font that
- * way, and the Sanity import refuses a dataset holding the character.
- *
- * @param page - The page to read.
- * @returns The page's text, empty for a scan without a text layer.
- */
-async function extractText(page: PDFPageProxy): Promise<string> {
-	const content = await page.getTextContent();
-	return content.items
-		.filter(isTextItem)
-		.map((item) => `${item.str}${item.hasEOL ? '\n' : ' '}`)
-		.join('')
-		.replaceAll('�', '')
-		.replaceAll(/[ \t]+/gu, ' ')
-		.trim();
-}
 
 /**
  * Creates a canvas covered in paper white. A transparent area would turn black in the JPEG.
@@ -163,8 +85,7 @@ async function* renderPdfPages(
 		maxEdge: options.maxEdge ?? DEFAULT_MAX_EDGE,
 		quality: options.quality ?? DEFAULT_QUALITY,
 	};
-	const data = await getDataOptions(options.dataDir ?? getDefaultDataDir());
-	const loadingTask = getDocument({ ...data, data: new Uint8Array(bytes), verbosity: 0 });
+	const loadingTask = await loadPdf(bytes, options.dataDir);
 
 	try {
 		const pdf = await loadingTask.promise;
@@ -201,18 +122,10 @@ interface RenderedPage {
 
 type RenderSettings = Required<Omit<RenderOptions, 'dataDir'>>;
 
-type PdfjsDataOptions = Record<'cMapUrl' | 'iccUrl' | 'standardFontDataUrl' | 'wasmUrl', string>;
-
 interface PaperCanvas {
 	canvas: Canvas;
 	context: SKRSContext2D;
 }
-
-/** An entry of a page's text content: a text item or a marked-content marker. */
-type TextContentItem = Awaited<ReturnType<PDFPageProxy['getTextContent']>>['items'][number];
-
-/** A text item; pdf.js does not export the type from its entry point. */
-type TextItem = Extract<TextContentItem, { str: string }>;
 
 export { renderPdfPages };
 export type { RenderOptions, RenderedPage };
