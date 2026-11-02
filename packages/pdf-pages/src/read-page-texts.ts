@@ -1,6 +1,22 @@
+import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.mjs';
+
 import { extractText, loadPdf } from './pdf-document';
 
 const FIRST_PAGE = 1;
+
+/**
+ * Reads the text of one page and frees what pdf.js kept for it.
+ *
+ * @param pdf - The loaded document.
+ * @param index - The 1-based page number.
+ * @returns The page's text, empty for a page without a text layer.
+ */
+async function readPageText(pdf: PDFDocumentProxy, index: number): Promise<string> {
+	const page = await pdf.getPage(index);
+	const text = await extractText(page);
+	page.cleanup();
+	return text;
+}
 
 /**
  * Reads the text layer of every page without rendering it, to find the pages a scan left without
@@ -16,15 +32,9 @@ async function readPageTexts(bytes: Uint8Array, options: TextOptions = {}): Prom
 
 	try {
 		const pdf = await loadingTask.promise;
-		const texts: string[] = [];
-		for (let index = FIRST_PAGE; index <= pdf.numPages; index++) {
-			// oxlint-disable-next-line no-await-in-loop -- pdf.js hands out one page after the other
-			const page = await pdf.getPage(index);
-			// oxlint-disable-next-line no-await-in-loop -- see above
-			texts.push(await extractText(page));
-			page.cleanup();
-		}
-		return texts;
+		const indexes = Array.from({ length: pdf.numPages }, (_, offset) => FIRST_PAGE + offset);
+		// Without a canvas a page holds only its text, so every page can be read at once.
+		return await Promise.all(indexes.map(async (index) => readPageText(pdf, index)));
 	} finally {
 		await loadingTask.destroy();
 	}
