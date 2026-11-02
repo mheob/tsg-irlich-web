@@ -5,7 +5,7 @@ import type { OcrTools } from './ocrmypdf';
 import type { SwapStore, SwapTarget } from './swap-store';
 import { needsRecognition, prepareTextLayer } from './text-layer';
 import type { PreparedPdf, TextLayerDeps } from './text-layer';
-import { waitForRender } from './wait-for-render';
+import { RENDER_TIMEOUT_MS, RERENDER_HINT, waitForRender } from './wait-for-render';
 
 const SOURCE_LABELS: Record<PreparedPdf['source'], string> = {
 	cached: 'schon erkannt',
@@ -13,8 +13,7 @@ const SOURCE_LABELS: Record<PreparedPdf['source'], string> = {
 	recognized: 'erkannt',
 };
 
-const RERENDER =
-	'Die PDF ist schon getauscht, aber ihr Render ist nicht fertig. Im Studio „Seiten neu erzeugen“ wählen und das Skript erneut starten.';
+const RERENDER = `Die PDF ist schon getauscht, aber ihr Render ist nicht fertig. ${RERENDER_HINT}`;
 
 /**
  * A rejection reason as text.
@@ -110,13 +109,34 @@ async function awaitRunningRender(
 }
 
 /**
+ * Whether the render of an issue's current PDF will not finish anymore: it failed, it never
+ * started, or the platform killed it before it could write `failed`, which leaves it `pending` for
+ * good.
+ *
+ * @param target - The issue, already carrying its new PDF.
+ * @param now - The current time in milliseconds.
+ * @returns `true` when only „Seiten neu erzeugen“ helps.
+ */
+function isStuck(target: SwapTarget, now: number): boolean {
+	const { render } = target;
+	if (render.source !== target.pdf.assetId || render.status === 'failed') {
+		return true;
+	}
+	return (
+		render.status === 'pending' &&
+		render.startedAt !== undefined &&
+		now - Date.parse(render.startedAt) > RENDER_TIMEOUT_MS
+	);
+}
+
+/**
  * Handles an issue that already carries this PDF: done, still rendering, or stuck.
  *
  * @param target - The issue.
  * @param deps - The store, the clock and the log.
  * @param dryRun - Whether to only look.
  * @returns `skipped`, or `checked` in a dry run while the render is still running.
- * @throws {Error} For a render that failed or never started on this PDF.
+ * @throws {Error} For a render that failed, never started on this PDF, or was cut off.
  */
 async function checkSwapped(
 	target: SwapTarget,
@@ -124,7 +144,7 @@ async function checkSwapped(
 	dryRun: boolean,
 ): Promise<EntryOutcome> {
 	const { render } = target;
-	if (render.source !== target.pdf.assetId || render.status === 'failed') {
+	if (isStuck(target, deps.now())) {
 		throw new Error(RERENDER);
 	}
 	if (render.status === 'done') {

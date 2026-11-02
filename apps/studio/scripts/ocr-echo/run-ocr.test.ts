@@ -233,6 +233,11 @@ describe('the text layer run', () => {
 	it.each([
 		['a failed render', { ...DONE, error: 'kaputt', status: 'failed' as const }],
 		['a render of another PDF', { ...DONE, source: OLD_PDF }],
+		// The platform killed it before it could write `failed`; the clock of the run stands at 0.
+		[
+			'a render pending for over 15 minutes',
+			{ ...DONE, startedAt: new Date(-900_001).toISOString(), status: 'pending' as const },
+		],
 	])('fails an already swapped issue with %s', async (_case, render) => {
 		const { deps } = createDeps({
 			[SCAN.documentId]: target(SCAN.documentId, {
@@ -244,6 +249,7 @@ describe('the text layer run', () => {
 		const report = await runOcrSwap([SCAN], deps, { dryRun: false });
 
 		expect(report.failed).toStrictEqual([{ documentId: SCAN.documentId, error: RERENDER }]);
+		expect(deps.store.readRender).not.toHaveBeenCalled();
 	});
 
 	it('fails an entry whose render fails and still runs the next one', async () => {

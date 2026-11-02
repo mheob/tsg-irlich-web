@@ -90,7 +90,8 @@ describe('waiting for the render', () => {
 		const deps = createDeps(PENDING);
 
 		await expect(waitForRender(TARGET, NEW_PDF, deps)).resolves.toStrictEqual({
-			error: 'Der Render ist nach 15 Minuten nicht fertig.',
+			error:
+				'Der Render ist nach 15 Minuten nicht fertig. Im Studio „Seiten neu erzeugen“ wählen und das Skript erneut starten.',
 			ok: false,
 		});
 		expect(deps.now()).toBe(900_000);

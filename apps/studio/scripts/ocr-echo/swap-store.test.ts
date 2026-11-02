@@ -82,6 +82,14 @@ describe('the swap store', () => {
 		);
 	});
 
+	it('only ever looks at TSG-Echo issues, so a mistyped id cannot swap another document', async () => {
+		const { client, fake } = createFakeClient([row('drafts.echo-2024')]);
+
+		await createSwapStore(client).findTarget('echo-2024');
+
+		expect(fake.fetch.mock.calls[0]?.[0]).toMatch(/^\*\[_type == "echo\.issue" && /u);
+	});
+
 	it('prefers the draft over the published document', async () => {
 		const { client } = createFakeClient([row('echo-2024'), row('drafts.echo-2024')]);
 
@@ -94,6 +102,7 @@ describe('the swap store', () => {
 				error: undefined,
 				pdfRef: OLD_PDF,
 				source: OLD_PDF,
+				startedAt: undefined,
 				status: 'done',
 				textLength: 2812,
 			},
@@ -227,7 +236,10 @@ describe('the swap store', () => {
 	it('reads the render state of the draft, and of the published issue once it is gone', async () => {
 		const withDraft = createFakeClient([
 			row('echo-2024'),
-			row('drafts.echo-2024', { pdfRef: NEW_PDF, render: { source: NEW_PDF, status: 'pending' } }),
+			row('drafts.echo-2024', {
+				pdfRef: NEW_PDF,
+				render: { source: NEW_PDF, startedAt: '2026-11-02T07:00:00.000Z', status: 'pending' },
+			}),
 		]);
 		const published = createFakeClient([row('echo-2024', { textLength: 41_181 })]);
 
@@ -237,6 +249,7 @@ describe('the swap store', () => {
 			error: undefined,
 			pdfRef: NEW_PDF,
 			source: NEW_PDF,
+			startedAt: '2026-11-02T07:00:00.000Z',
 			status: 'pending',
 			textLength: 2812,
 		});

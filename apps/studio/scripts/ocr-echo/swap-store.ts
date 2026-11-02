@@ -7,12 +7,13 @@ const VERSIONS_PREFIX = 'versions.';
 const HTTP_CONFLICT = 409;
 const CONFLICT_MESSAGE = 'Die Ausgabe wurde inzwischen geändert; das Skript erneut starten.';
 
-const ISSUE_QUERY = /* groq */ `*[_id in [$id, $draftId] || _id in path($versions)]{
+// Restricted to issues, so a mistyped id in the list can never swap the PDF of another document.
+const ISSUE_QUERY = /* groq */ `*[_type == "echo.issue" && (_id in [$id, $draftId] || _id in path($versions))]{
 	_id,
 	_rev,
 	"pdf": pdf.asset->{ _id, originalFilename, sha1hash },
 	"pdfRef": pdf.asset._ref,
-	"render": render{ error, source, status },
+	"render": render{ error, source, startedAt, status },
 	"textLength": coalesce(length(extractedText), 0)
 }`;
 
@@ -27,6 +28,7 @@ function toRenderState(row: IssueRow): RenderState {
 		error: row.render?.error ?? undefined,
 		pdfRef: row.pdfRef ?? undefined,
 		source: row.render?.source ?? undefined,
+		startedAt: row.render?.startedAt ?? undefined,
 		status: row.render?.status ?? undefined,
 		textLength: row.textLength,
 	};
@@ -176,7 +178,12 @@ interface IssueRow {
 	_rev: string;
 	pdf: { _id: string; originalFilename?: string | null; sha1hash?: string | null } | null;
 	pdfRef: string | null;
-	render: { error?: string | null; source?: string | null; status?: RenderStatus | null } | null;
+	render: {
+		error?: string | null;
+		source?: string | null;
+		startedAt?: string | null;
+		status?: RenderStatus | null;
+	} | null;
 	textLength: number;
 }
 
@@ -199,6 +206,8 @@ interface RenderState {
 	pdfRef?: string;
 	/** The PDF the last render claimed. */
 	source?: string;
+	/** When the last render claimed the document, as an ISO timestamp. */
+	startedAt?: string;
 	status?: RenderStatus;
 	/** The length of `extractedText`, `0` without one. */
 	textLength: number;

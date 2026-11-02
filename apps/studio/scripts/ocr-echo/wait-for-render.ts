@@ -5,6 +5,8 @@ const POLL_INTERVAL_MS = 5000;
 const START_TIMEOUT_MS = 120_000;
 /** The render route gives up after 800 s itself, so a render this old will not finish anymore. */
 const RENDER_TIMEOUT_MS = 900_000;
+/** What an editor does about a render that will not finish. */
+const RERENDER_HINT = 'Im Studio „Seiten neu erzeugen“ wählen und das Skript erneut starten.';
 
 /**
  * What a finished render of the new PDF means.
@@ -42,7 +44,7 @@ function judgeTime(claimed: boolean, elapsed: number): RenderResult | undefined 
 		};
 	}
 	if (elapsed >= RENDER_TIMEOUT_MS) {
-		return { error: 'Der Render ist nach 15 Minuten nicht fertig.', ok: false };
+		return { error: `Der Render ist nach 15 Minuten nicht fertig. ${RERENDER_HINT}`, ok: false };
 	}
 	return undefined;
 }
@@ -104,5 +106,5 @@ interface WaitDeps {
 
 type RenderResult = { error: string; ok: false } | { ok: true; textLength: number };
 
-export { waitForRender };
+export { RENDER_TIMEOUT_MS, RERENDER_HINT, waitForRender };
 export type { RenderResult, WaitDeps };
