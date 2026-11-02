@@ -26,7 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -57,7 +57,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 
 ## TSG-Echo issues
 
-`echo.issue` holds one issue of the club magazine. Editors fill in title, slug, release date, PDF, intro and meta; everything in the group "Seiten (automatisch)" (`pages`, `extractedText`, `render`) is read-only and written by the web app's render route (`apps/web/src/app/api/echo/render`), which a webhook calls (see `docs/SANITY_WEBHOOK_SETUP.md`). `render.status` is `pending`, `done` or `failed`; `render.error` carries the German reason of a failure. The document action "Seiten neu erzeugen" (`actions/regenerate-echo-pages.tsx`) removes `render`, which makes the webhook fire again. A run still `pending` 15 minutes after `render.startedAt` was cut off by the platform; the list then shows "Abgebrochen – „Seiten neu erzeugen“". `validatePdfFile` (`shared/fields/pdf.ts`) checks the extension in the asset reference, because the stored value carries no mime type. The AI Assist preset "Intro erzeugen" in `plugins/assist.ts` reads `extractedText` through a `fieldRef`; scanned issues have no text layer, so it has nothing to work with there.
+`echo.issue` holds one issue of the club magazine. Editors fill in title, slug, release date, PDF, intro and meta; everything in the group "Seiten (automatisch)" (`pages`, `extractedText`, `render`) is read-only and written by the web app's render route (`apps/web/src/app/api/echo/render`), which a webhook calls (see `docs/SANITY_WEBHOOK_SETUP.md`). `render.status` is `pending`, `done` or `failed`; `render.error` carries the German reason of a failure. The document action "Seiten neu erzeugen" (`actions/regenerate-echo-pages.tsx`) removes `render`, which makes the webhook fire again. A run still `pending` 15 minutes after `render.startedAt` was cut off by the platform; the list then shows "Abgebrochen – „Seiten neu erzeugen“". `validatePdfFile` (`shared/fields/pdf.ts`) checks the extension in the asset reference, because the stored value carries no mime type. The AI Assist preset "Intro erzeugen" in `plugins/assist.ts` reads `extractedText` through a `fieldRef`. A PDF without a text layer leaves it nothing to work with; [TSG-Echo text layer](#tsg-echo-text-layer) gives such a PDF one.
 
 `indexable` ("In Suchmaschinen auffindbar", initially on) decides whether search engines may find an issue. Off, the website marks its page `noindex, nofollow`, leaves it out of the sitemap and serves its files through `/echo-archiv` with `X-Robots-Tag: noindex` (WEB-367). The import of the old issues switches it off. It only fully works if it is off before an issue is first published: Sanity serves every asset under a content-hash URL that stays live, so a PDF or a page image that was public once stays reachable at its old CDN address, and uploading the same file again gives the same URL.
 
@@ -107,6 +107,48 @@ The intro is a draft from the cover, the next two pages and the text layer (`cla
 The editors then review the intros in the release and publish it as a whole. Archiving the release in the studio discards its versions, but the archived release keeps its id. To start over, run again with `--release <neue-id>`.
 
 **Privacy.** An uploaded asset is public on `cdn.sanity.io` from the moment of the upload, even while its document waits in the release. Its URL is not guessable, but the dataset is no place for test copies of real issues: try the script with synthetic PDFs.
+
+## TSG-Echo text layer
+
+`scripts/ocr-echo.ts` gives the PDFs without a text layer one and swaps them into the issues (WEB-402). The render route and the import only read a PDF's text layer, so the 26 scans of 1979–1988 had an empty `extractedText`, and the rasterized web PDFs of 2024 and 2025 only the text of their ads. That left „Intro erzeugen“ and the website search without the club's topics. The script fixes the PDF itself, so nothing that reads it needs to know about OCR. The modules under `scripts/ocr-echo/` take their collaborators as arguments and are tested without Sanity, pdf.js, OCRmyPDF or the network; the folder rules are shared with the import (`scripts/shared/archive-folder.ts`).
+
+**Tools.** OCRmyPDF and Tesseract's German, once per machine:
+
+```bash
+brew install ocrmypdf tesseract-lang
+```
+
+The script checks both before it touches anything, and only when an entry needs OCR. It runs OCRmyPDF with `--mode skip --language deu --output-type pdf --optimize 0`: only pages without text are recognized, the text sits invisibly on top, and the page images stay byte for byte as they were.
+
+**Input.** The archive folder (the same rules as for the import: in the home directory, outside the repository) holds an `ocr-manifest.json`, which names the issue whose PDF each file replaces. `dokument` is the published id, without `drafts.`:
+
+```json
+[
+	{ "datei": "1979 Erste Exemplare/1979_01.pdf", "dokument": "echo-archiv-1979-01" },
+	{ "datei": "ab 2024 (neues ECHO)/2024_TSG_Echo_45_Jahre_Web_Text.pdf", "dokument": "echo-2024" }
+]
+```
+
+The ids of the imported scans are `echo-archiv-<file name>`, as the import derives them. `--manifest <file>` reads another `.json` list inside the folder.
+
+**Running it.** A dry run is the default. It already recognizes, but writes nothing to Sanity:
+
+```bash
+pnpm --filter studio run ocr:echo --dataset development --folder ~/dev/customer/tsg/echo-archiv
+pnpm --filter studio run ocr:echo --dataset development --folder ~/dev/customer/tsg/echo-archiv --no-dry-run
+```
+
+`development` comes first, since staging renders its issues; then `production`. Run `pnpm exec sanity login` first, the script writes as the logged-in user.
+
+**What it does per entry.**
+
+- A PDF with text on every page is taken as it is. Any other goes through OCRmyPDF into `mit-textebene/<same path>` inside the folder, through a `.tmp` file that only becomes the result once complete. An earlier result there is reused; delete it to recognize the PDF again.
+- It swaps only in the draft. An issue with a draft gets its `pdf.asset` replaced, against the revision it read. An issue that only exists published gets a new draft with the new PDF and stays as it is until an editor publishes the draft: a published issue drops off the website while its pages are rendered again, and stays off when that fails. An issue in a release is refused with the release's name, because publishing the release would bring the old PDF back.
+- The upload keeps the old PDF's file name. `render` is not touched: its `source` no longer matches the PDF, so the render webhook fires.
+- It waits until the webhook has rebuilt pages and `extractedText`, polling every 5 s, so one render runs on Vercel at a time. A render that does not start within 2 minutes points at the webhook; one not done after 15 minutes fails the entry.
+- A rerun skips every issue whose PDF already has the same `sha1hash` and a finished render, and waits for one still rendering. One whose render failed asks for „Seiten neu erzeugen“ in the studio and a new run.
+
+A failed entry does not stop the others. The run ends with a summary and exits with 1 if an entry failed. The old PDFs and page images stay in the dataset as unused assets, reachable at their CDN addresses; the intros are written afterwards in the studio with „Intro erzeugen“.
 
 ## Main menu
 
