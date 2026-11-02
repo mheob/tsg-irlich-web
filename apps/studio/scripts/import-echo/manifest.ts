@@ -4,6 +4,8 @@ import { z } from 'zod';
 
 import { slugify } from '@/utils/strings';
 
+import { isPdfInFolder } from '../shared/archive-folder';
+
 const ID_PREFIX = 'echo-archiv-';
 const PDF_EXTENSION = /\.pdf$/iu;
 const NON_ID_CHARACTERS = /[^a-z0-9]+/gu;
@@ -49,12 +51,7 @@ function toDocumentId(file: string): string {
  *   letters or digits.
  */
 function isImportablePdf(file: string): boolean {
-	return (
-		!path.isAbsolute(file) &&
-		!file.split(/[/\\]/u).includes('..') &&
-		PDF_EXTENSION.test(file) &&
-		toIdPart(file) !== ''
-	);
+	return isPdfInFolder(file) && toIdPart(file) !== '';
 }
 
 const manifestSchema = z
