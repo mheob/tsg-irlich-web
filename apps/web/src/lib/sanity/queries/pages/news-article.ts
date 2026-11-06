@@ -44,6 +44,17 @@ const newsArticleContentQuery = defineQuery(`
 			"slug": slug.current,
 			title
 		},
+		downloads[] {
+			_key,
+			title,
+			document {
+				asset -> {
+					originalFilename,
+					size,
+					url,
+				}
+			}
+		},
 		excerpt,
 		${featuredImage},
 		${meta},

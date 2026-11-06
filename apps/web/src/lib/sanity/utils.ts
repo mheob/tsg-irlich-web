@@ -1,6 +1,6 @@
 import { createImageUrlBuilder } from '@sanity/image-url';
 
-import type { SanityFileAsset, SanityImage, SanityImageReference } from '@/types/sanity.types';
+import type { SanityImage, SanityImageReference } from '@/types/sanity.types';
 
 import { client } from './client';
 
@@ -19,7 +19,8 @@ const BYTES_PER_KB = 1024;
  * ```
  */
 function getDownloadFileUrl(
-	downloadAsset?: null | Pick<SanityFileAsset, 'originalFilename' | 'url'>,
+	// A projection such as `asset-> { originalFilename, url }` types a missing field as `null`.
+	downloadAsset?: null | { originalFilename?: null | string; url?: null | string },
 ): string {
 	if (!downloadAsset?.url || !downloadAsset.originalFilename) {
 		return '#!';
