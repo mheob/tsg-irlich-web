@@ -24,11 +24,6 @@ minimumReleaseAgeExclude:
   - "@mheob/*"
 
 overrides:
-  # puppeteer-core (through lighthouse, through @lhci/cli) pins @puppeteer/browsers 2.x, whose
-  # extract-zip 2.0.1 has no fixed release (GHSA-jmr9-qjv8-65gv). 3.x dropped extract-zip for
-  # modern-tar. Only the browser downloader lives behind it, and Lighthouse CI never runs it —
-  # both CI and the local path point at a Chrome that is already installed
-  "@puppeteer/browsers": "^3.2.1"
   # @module-federation/dts-plugin (through the Sanity CLI's workbench) pins adm-zip 0.6.0, which
   # allocates whatever uncompressed size an archive declares (GHSA-7q85-xj36-vmfc); 0.6.1 fixes it
   adm-zip: "^0.6.1"
@@ -40,11 +35,6 @@ overrides:
   # prebuild-install and prints Node's DEP0176 deprecation on every install. 13.x ships the
   # prebuilt bindings inside the package, so nothing is built at install time any more
   better-sqlite3: "^13.0.3"
-  # chromium-bidi 14 (through puppeteer-core, lighthouse and @lhci/cli) pins zod 3, which can
-  # exhaust memory while validating oversized constrained collections (GHSA-mrhx-c7xc-m3w5); only
-  # zod 4.6.6 fixes it. chromium-bidi only parses WebDriver BiDi messages, and Lighthouse drives
-  # Chrome over CDP, so this repo's Lighthouse run never loads it
-  chromium-bidi>zod: "^4.6.7"
   # react-email → conf → ajv pulls fast-uri 3.1.5, vulnerable to improper hex-encoding
   # handling in URL normalization (CVE-2026-76172); 3.1.6 fixes it and stays in ajv's ^3 range
   fast-uri: "^3.1.6"
@@ -56,23 +46,17 @@ overrides:
   # GHSA-673q-mjm6-r5xr) and a Server Actions denial of service (CVE-2026-94482).
   # The override replaces the `catalog:` spec of apps/web as well, so it has to move together
   # with the catalog entry, or the app stays on the older release
-  next: "^16.4.3"
+  next: "^16.4.5"
   # @tailwindcss/typography pins 6.0.10, which is vulnerable to uncontrolled recursion
   # in `toString()` (CVE-2026-9358, fixed in 6.1.3) and parses flat selectors in quadratic time
   # (CVE-2026-104844), which only 7.1.6 fixes. 7.0's one breaking change makes insertions during
   # iteration safe, and the plugin inserts nothing while it iterates; the generated CSS is
   # byte-identical to the one 6.1.4 produced
   postcss-selector-parser: "^7.1.6"
-  # @puppeteer/browsers 3.x wants a proxy-agent that @lhci/cli and puppeteer-core still pin to
-  # 6.5.0. 8.x is the same `ProxyAgent` surface and only carries the proxy support behind a
+  # @puppeteer/browsers 3.x (through puppeteer-core) wants proxy-agent >=8.0.1, while @lhci/cli
+  # still asks for ^6.5.0 and lighthouse for ^7.1.0. 8.x is the same `ProxyAgent` surface and only carries the proxy support behind a
   # browser download and an `lhci upload` — neither of which this repo's Lighthouse run does
   proxy-agent: "^8.0.2"
-  # sanity-plugin-media pins zod 3 (GHSA-mrhx-c7xc-m3w5, fixed only in zod 4.6.6) for its four
-  # asset, tag and folder form schemas, which use nothing zod 4 changed. Its @hookform/resolvers 4
-  # reads a failed parse from zod 3's `errors` array, which zod 4 no longer has, so the forms
-  # would throw instead of showing the message; the catalog's resolvers 6 read both versions
-  sanity-plugin-media>@hookform/resolvers: "^6.0.0"
-  sanity-plugin-media>zod: "^4.6.7"
   smol-toml: ">=1.6.1"
   # @lhci/cli pulls tmp 0.0.33 (through inquirer → external-editor) and 0.1.0, both of which
   # write through a symlinked path parameter (GHSA-52f5-9888-hmc6, GHSA-ph9p-34f9-6g65); 0.2.6
@@ -88,16 +72,16 @@ overrides:
 # manifests reference it with `catalog:`. Only workspace packages stay on `workspace:*`.
 catalog:
   # Vite+ toolchain: `vp migrate` re-pins these to the release it runs, keep them together
-  vite: npm:@voidzero-dev/vite-plus-core@1.4.0
-  vite-plus: 1.4.0
-  vitest: 5.0.5
-  "@vitest/coverage-v8": 5.0.5
+  vite: npm:@voidzero-dev/vite-plus-core@1.5.0
+  vite-plus: 1.5.0
+  vitest: 5.1.0
+  "@vitest/coverage-v8": 5.1.0
 
   # Repository tooling: TypeScript, lint and format presets, commits, hooks, tasks and audits
   "@commitlint/cli": ^21.2.4
-  "@mheob/commitlint-config": ^2.0.9
+  "@mheob/commitlint-config": ^3.0.0
   "@mheob/oxfmt-config": ^1.3.3
-  "@mheob/oxlint-config": ^4.1.1
+  "@mheob/oxlint-config": ^4.1.2
   "@mheob/tsconfig": ^3.0.2
   "@types/node": ^26.6.6
   cve-lite-cli: ^1.40.0
@@ -116,64 +100,64 @@ catalog:
   # Next.js app
   "@base-ui/react": ^1.9.0
   "@gullabs/react-flipbook": ^3.2.2
-  "@hookform/resolvers": ^6.0.1
+  "@hookform/resolvers": ^7.0.3
   "@icons-pack/react-simple-icons": ^13.15.1
   "@vercel/analytics": ^2.0.1
   "@vercel/speed-insights": ^2.0.0
   class-variance-authority: ^0.7.1
-  lucide-react: ^1.62.0
-  motion: ^14.7.1
-  next: ^16.4.3
+  lucide-react: ^1.69.0
+  motion: ^14.9.1
+  next: ^16.4.5
   next-safe-action: ^8.7.3
   react-hook-form: ^7.91.0
-  resend: ^6.35.0
+  resend: ^6.37.0
   schema-dts: ^2.1.0
   server-only: ^0.0.1
   zod: ^4.6.7
 
   # Styling
-  "@tailwindcss/postcss": ^4.3.3
+  "@tailwindcss/postcss": ^4.3.4
   "@tailwindcss/typography": ^0.5.20
   clsx: ^2.1.1
   postcss: ^8.5.32
   postcss-load-config: ^6.0.1
   tailwind-merge: ^3.7.0
-  tailwindcss: ^4.3.3
+  tailwindcss: ^4.3.4
 
   # Sanity: the Studio, its plugins and the clients of the web app
-  "@sanity/assist": ^6.2.5
-  "@sanity/client": ^8.11.0
+  "@sanity/assist": ^6.2.6
+  "@sanity/client": ^8.14.1
   "@sanity/icons": ^5.2.3
   "@sanity/image-url": ^2.1.1
   "@sanity/locale-de-de": ^1.1.37
   "@sanity/ui": ^4.4.10
-  "@sanity/vision": ^6.20.0
+  "@sanity/vision": ^6.22.0
   next-sanity: ^13.4.0
   react-icons: ^5.7.0
-  sanity: ^6.20.0
-  sanity-plugin-media: ^6.6.0
+  sanity: ^6.22.0
+  sanity-plugin-media: ^6.6.2
   slugify: ^1.6.9
   styled-components: ^6.6.0
 
   # E-mail templates
-  "@react-email/render": ^2.1.1
-  "@react-email/ui": ^6.11.4
-  react-email: ^6.11.4
+  "@react-email/render": ^2.2.0
+  "@react-email/ui": ^6.11.6
+  react-email: ^6.11.6
 
   # Tests: Vitest environment and plugins, end-to-end, accessibility and Lighthouse
   "@axe-core/playwright": ^4.14.0
-  "@lhci/cli": ^0.15.1
+  "@lhci/cli": ^0.16.0
   "@playwright/test": ^1.64.1
   "@testing-library/react": ^16.3.3
   "@testing-library/user-event": ^14.6.8
-  "@vitejs/plugin-react": ^6.1.2
-  jsdom: ^30.1.3
+  "@vitejs/plugin-react": ^6.2.1
+  jsdom: ^31.0.0
   msw: ^3.0.3
 
   # PDF pages: rendering and text extraction for the TSG-Echo, plus pdf-lib for the test fixtures
-  "@napi-rs/canvas": ^1.0.13
+  "@napi-rs/canvas": ^1.1.0
   pdf-lib: ^1.17.1
-  pdfjs-dist: ^6.4.299
+  pdfjs-dist: ^6.5.438
 
 peerDependencyRules:
   allowAny:

@@ -42,13 +42,4 @@ ignore:
           repository's own configuration, never outside input, and neither runs in the deployed
           app. Revisit once picomatch publishes a patched release.
         expires: 2026-11-16T00:00:00.000Z
-  SNYK-JS-ZOD-20510278:
-    - '*':
-        reason: >-
-          zod 4.6.6 fixes CVE-2023-54404, and the web app runs 4.6.7. The remaining match is zod
-          3.25.76, which reaches this project only through chromium-bidi below @lhci/cli
-          (lighthouse, puppeteer-core), a dev dependency that parses the DevTools protocol messages
-          of a local Chrome during a Lighthouse run and never outside input. The 3.x line has no
-          fixed release. Revisit once chromium-bidi moves to zod 4.
-        expires: 2026-11-16T00:00:00.000Z
 patch: {}
