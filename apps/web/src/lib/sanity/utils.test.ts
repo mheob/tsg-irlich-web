@@ -119,29 +119,29 @@ describe('converting a byte count to a human readable size', () => {
 	it('reports whole bytes without a decimal', async () => {
 		const { getFileSize } = await loadWithEnv<UtilsModule>('@/lib/sanity/utils', SANITY_ENV);
 
-		// index stays 0 (the "B" unit), and `toFixed(0)` drops the decimal point entirely.
+		// index stays 0 (the "B" unit), and `toFixed(0)` drops the decimal separator entirely.
 		expect(getFileSize(512)).toBe('512 B');
 	});
 
-	it('reports kilobytes with one decimal', async () => {
+	it('reports kilobytes with one decimal behind a comma', async () => {
 		const { getFileSize } = await loadWithEnv<UtilsModule>('@/lib/sanity/utils', SANITY_ENV);
 
 		// 1024 crosses into the "KB" unit once (index 1), so `toFixed(1)` keeps one decimal.
-		expect(getFileSize(1024)).toBe('1.0 KB');
+		expect(getFileSize(1024)).toBe('1,0 KB');
 	});
 
 	it('reports megabytes with two decimals', async () => {
 		const { getFileSize } = await loadWithEnv<UtilsModule>('@/lib/sanity/utils', SANITY_ENV);
 
 		// 1,572,864 = 1.5 * 1024 * 1024 crosses into "MB" (index 2), so `toFixed(2)` keeps two decimals.
-		expect(getFileSize(1_572_864)).toBe('1.50 MB');
+		expect(getFileSize(1_572_864)).toBe('1,50 MB');
 	});
 
 	it('reports gigabytes with three decimals', async () => {
 		const { getFileSize } = await loadWithEnv<UtilsModule>('@/lib/sanity/utils', SANITY_ENV);
 
 		// 2 * 1024^3 crosses into "GB" (index 3), so `toFixed(3)` keeps three decimals.
-		expect(getFileSize(2 * 1024 ** 3)).toBe('2.000 GB');
+		expect(getFileSize(2 * 1024 ** 3)).toBe('2,000 GB');
 	});
 
 	it('caps at the gigabyte unit for a value far beyond it', async () => {
@@ -150,7 +150,7 @@ describe('converting a byte count to a human readable size', () => {
 		// The loop stops once index reaches the last unit (GB, index 3), so a value equivalent to
 		// 3 TB is reported as an oversized "GB" figure rather than continuing to a "TB" unit that
 		// does not exist in the implementation's `units` array.
-		expect(getFileSize(3 * 1024 ** 4)).toBe('3072.000 GB');
+		expect(getFileSize(3 * 1024 ** 4)).toBe('3072,000 GB');
 	});
 });
 

@@ -46,7 +46,7 @@ describe('tsg-echo issue helpers', () => {
 			}),
 		).toStrictEqual({
 			href: 'https://cdn.sanity.io/files/p/d/abc.pdf?dl=tsg-echo-2025.pdf',
-			size: '12.00 MB',
+			size: '12,00 MB',
 		});
 	});
 
@@ -148,7 +148,7 @@ describe('tsg-echo issue helpers', () => {
 				),
 			).toStrictEqual({
 				href: '/echo-archiv/files/abc.pdf?dl=tsg-echo-1984-1.pdf',
-				size: '1.00 MB',
+				size: '1,00 MB',
 			});
 		});
 	});
