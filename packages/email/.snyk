@@ -1,6 +1,16 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 version: v1.25.1
 ignore:
+  SNYK-JS-GLOB-22112102:
+    - '*':
+        reason: >-
+          glob is only fixed in 14.0.2, a major release react-email has not moved to yet, and Snyk
+          still lists the 13.0.7 backport as affected. The flaw only hits a caller that bounds a
+          walk with an AbortSignal. 13.0.6 reaches this package only through the react-email CLI,
+          which lists the template folder for its preview and export commands; the components the
+          templates import and rendering a mail with @react-email/render never load it. Revisit
+          once react-email moves to glob 14.
+        expires: 2026-12-06T00:00:00.000Z
   SNYK-JS-MINIMATCH-22111072:
     - '*':
         reason: >-
