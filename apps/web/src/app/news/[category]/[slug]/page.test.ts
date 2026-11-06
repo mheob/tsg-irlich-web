@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import type { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import NewsArticlePage, { generateMetadata } from '@/app/news/[category]/[slug]/page';
@@ -17,8 +17,9 @@ import {
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 
-import { findElement, findElements } from '../../../../../test-utils/react-tree';
+import { findElement, findElements, sectionTypes } from '../../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../../test-utils/sanity-live-mock';
+import { Downloads } from './_sections/downloads';
 import { Sponsors } from './_sections/sponsors';
 // `src/lib/sanity/api.ts` asserts the project variables at import time, and the page reaches it
 // through `urlForImage`. `vi.hoisted` runs before the imports are evaluated; `globalThis` because
@@ -87,6 +88,14 @@ function routeProps(): PageProps<'/news/[category]/[slug]'> {
 	return {
 		params: Promise.resolve({ category: 'vereinsleben', slug: 'sommerfest' }),
 	} as unknown as PageProps<'/news/[category]/[slug]'>;
+}
+
+function articleElement(page: ReactNode): ReactElement<{ children?: ReactNode }> {
+	const article = findElement<{ children?: ReactNode }>(page, 'article');
+	if (!article) {
+		throw new Error('Expected the page to render an article element.');
+	}
+	return article;
 }
 
 async function renderWithBody(body: unknown[]): Promise<ReactNode> {
@@ -345,6 +354,20 @@ describe('news article page', () => {
 
 			expect(findElements(page, PortableText)).toStrictEqual([]);
 			expect(findElement(page, Separator)).toBeUndefined();
+		});
+
+		it('offers the downloads of the article below its text', async () => {
+			const downloads = [{ _key: 'jhv', document: { asset: null }, title: 'Einladung JHV' }];
+			mockSanity({
+				article: { ...ARTICLE, body: [{ _key: 'spacer', _type: 'spacer' }], downloads },
+			});
+
+			const article = articleElement(await NewsArticlePage(routeProps()));
+
+			expect(sectionTypes(article).at(-1)).toBe(Downloads);
+			expect(findElement(article.props.children, Downloads)?.props.downloads).toStrictEqual(
+				downloads,
+			);
 		});
 
 		it('shows the sponsors only when there are sponsors', async () => {

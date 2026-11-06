@@ -1,6 +1,6 @@
 import { createImageUrlBuilder } from '@sanity/image-url';
 
-import type { SanityFileAsset, SanityImage, SanityImageReference } from '@/types/sanity.types';
+import type { SanityImage, SanityImageReference } from '@/types/sanity.types';
 
 import { client } from './client';
 
@@ -19,7 +19,8 @@ const BYTES_PER_KB = 1024;
  * ```
  */
 function getDownloadFileUrl(
-	downloadAsset?: null | Pick<SanityFileAsset, 'originalFilename' | 'url'>,
+	// A projection such as `asset-> { originalFilename, url }` types a missing field as `null`.
+	downloadAsset?: null | { originalFilename?: null | string; url?: null | string },
 ): string {
 	if (!downloadAsset?.url || !downloadAsset.originalFilename) {
 		return '#!';
@@ -31,10 +32,11 @@ function getDownloadFileUrl(
  * Converts a file size in bytes to a human-readable string.
  *
  * @param sanitySize - The file size in bytes.
- * @returns The human-readable file size (e.g., "1.2 MB", "512 KB", "—" if size is undefined/null/0).
+ * @returns The human-readable file size with a German decimal comma (e.g., "1,2 MB", "512 B", "—"
+ * if size is undefined/null/0).
  *
  * @example
- * getFileSize(1234567) // "1.18 MB"
+ * getFileSize(1234567) // "1,18 MB"
  * getFileSize(0) // "—"
  * getFileSize(undefined) // "—"
  */
@@ -49,7 +51,7 @@ function getFileSize(sanitySize?: number): string {
 		size /= BYTES_PER_KB;
 		index += 1;
 	}
-	return `${size.toFixed(index)} ${units[index]}`;
+	return `${size.toFixed(index).replace('.', ',')} ${units[index]}`;
 }
 
 const imageBuilder = createImageUrlBuilder(client);

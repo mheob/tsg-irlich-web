@@ -32,6 +32,7 @@ import { getBaseUrl } from '@/utils/url';
 import { getArticlePath } from '../../_shared/utils';
 import { Author } from './_sections/author';
 import { Categories } from './_sections/categories';
+import { Downloads } from './_sections/downloads';
 import { SocialMedia } from './_sections/social-media';
 import { Sponsors } from './_sections/sponsors';
 
@@ -238,6 +239,8 @@ export default async function NewsArticlePage({
 							}
 						}
 					})}
+
+					<Downloads downloads={article.downloads} />
 				</article>
 
 				<aside className="pt-10 lg:pt-0 lg:pl-10">

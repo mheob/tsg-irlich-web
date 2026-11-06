@@ -51,7 +51,7 @@ describe('the downloads section', () => {
 		const { getByRole } = renderWithUser(<Downloads {...buildSection([download('beitritt')])} />);
 
 		const link = getByRole('link', {
-			name: 'Formular beitritt Dateigröße: 2.0 KB PDF herunterladen',
+			name: 'Formular beitritt Dateigröße: 2,0 KB PDF herunterladen',
 		});
 
 		expect(link.getAttribute('href')).toBe('https://cdn.example/beitritt?dl=beitritt.pdf');
@@ -60,7 +60,7 @@ describe('the downloads section', () => {
 	it('shows the file size of a document', () => {
 		const { getByText } = renderWithUser(<Downloads {...buildSection([download('beitritt')])} />);
 
-		expect(getByText(/Dateigröße: 2\.0 KB/u)).not.toBeNull();
+		expect(getByText(/Dateigröße: 2,0 KB/u)).not.toBeNull();
 	});
 
 	it('shows a dash for a document whose size is unknown', () => {

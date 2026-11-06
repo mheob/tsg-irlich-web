@@ -1,6 +1,6 @@
 import { RiArticleLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 import { content, excerpt, general, meta } from '@/shared/field-groups';
 import { contentField } from '@/shared/fields/content';
@@ -14,6 +14,9 @@ import { formatDate } from '@/utils/time';
  * search, also when picking the target of a link (WEB-369).
  */
 const TITLE_SEARCH_WEIGHT = 5;
+
+/** More than a handful of files under an article buries the ones that matter (WEB-277). */
+const MAX_DOWNLOADS = 5;
 
 const newsArticle = defineType({
 	fields: [
@@ -59,6 +62,18 @@ const newsArticle = defineType({
 				{ type: 'mainImage' },
 				{ type: 'spacer' },
 			],
+		}),
+
+		defineField({
+			description:
+				'PDF-Dateien, die unter dem Artikel zum Herunterladen angeboten werden, z. B. eine Einladung oder ein Flyer. Wichtige Inhalte wie eine Tagesordnung gehören trotzdem in den Text: Suchmaschinen und die Suche der Website lesen keine Dokumente.',
+			group: 'content',
+			name: 'downloads',
+			of: [defineArrayMember({ type: 'documentDownload' })],
+			title: 'Downloads',
+			type: 'array',
+			validation: (Rule) =>
+				Rule.max(MAX_DOWNLOADS).error(`Maximal ${MAX_DOWNLOADS} Downloads dürfen gesetzt werden`),
 		}),
 	],
 	groups: [general, meta, excerpt, content],

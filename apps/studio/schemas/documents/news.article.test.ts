@@ -9,11 +9,85 @@ interface NewsArticleSelection {
 	readonly title?: string;
 }
 
+interface ChainRule {
+	error: (message: string) => ChainRule;
+	max: (count: number) => ChainRule;
+	required: () => ChainRule;
+}
+
+interface ArticleField {
+	readonly group?: string;
+	readonly name: string;
+	readonly of?: readonly { readonly type: string }[];
+	readonly type: string;
+	readonly validation?: (rule: ChainRule) => unknown;
+}
+
 function prepareNewsArticle(selection: NewsArticleSelection): PreviewValue {
 	return (newsArticle.preview.prepare as unknown as (value: NewsArticleSelection) => PreviewValue)(
 		selection,
 	);
 }
+
+function getArticleField(name: string): ArticleField {
+	const field = (newsArticle.fields as readonly ArticleField[]).find(
+		(candidate) => candidate.name === name,
+	);
+	if (!field) {
+		throw new Error(`Expected the news article to declare a "${name}" field.`);
+	}
+	return field;
+}
+
+/**
+ * Runs the validation of a field against a rule that only writes down the calls it receives, which
+ * is all a builder chain like `Rule.max(5).error(…)` leaves to look at.
+ *
+ * @param field - The field of the news article.
+ * @returns The calls of the chain, in order, with their argument.
+ */
+function recordValidationChain(field: ArticleField): string[] {
+	if (!field.validation) {
+		throw new Error(`Expected the news article to validate its "${field.name}" field.`);
+	}
+
+	const calls: string[] = [];
+	const rule: ChainRule = {
+		error: (message) => {
+			calls.push(`error: ${message}`);
+			return rule;
+		},
+		max: (count) => {
+			calls.push(`max: ${count}`);
+			return rule;
+		},
+		required: () => {
+			calls.push('required');
+			return rule;
+		},
+	};
+	field.validation(rule);
+	return calls;
+}
+
+describe('news article downloads', () => {
+	it('offers the PDF downloads in the content group, right after the sections', () => {
+		const names = (newsArticle.fields as readonly ArticleField[]).map((field) => field.name);
+		const downloads = getArticleField('downloads');
+
+		expect(names.indexOf('downloads')).toBe(names.indexOf('body') + 1);
+		expect(downloads.group).toBe('content');
+		expect(downloads.type).toBe('array');
+		expect(downloads.of?.map((member) => member.type)).toStrictEqual(['documentDownload']);
+	});
+
+	it('allows at most five downloads and requires none', () => {
+		expect(recordValidationChain(getArticleField('downloads'))).toStrictEqual([
+			'max: 5',
+			'error: Maximal 5 Downloads dürfen gesetzt werden',
+		]);
+	});
+});
 
 describe('news article preview', () => {
 	// The expected date prefix is hard-coded rather than produced by calling `formatDate` — its own

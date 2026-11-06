@@ -178,7 +178,7 @@ describe('a tsg-echo issue page', () => {
 		expect(button?.props).toMatchObject({
 			href: 'https://cdn.sanity.io/x.pdf?dl=tsg-echo-2025.pdf',
 		});
-		expect(button?.props.children).toStrictEqual(['PDF herunterladen (', '1.00 MB', ')']);
+		expect(button?.props.children).toStrictEqual(['PDF herunterladen (', '1,00 MB', ')']);
 	});
 
 	// Review focus 5.

@@ -45,7 +45,7 @@ describe('the newest issue', () => {
 	it('offers the PDF with its size', () => {
 		const { getByRole } = renderWithUser(<LatestIssue issue={ISSUE} />);
 
-		expect(getByRole('link', { name: 'PDF herunterladen (1.00 MB)' }).getAttribute('href')).toBe(
+		expect(getByRole('link', { name: 'PDF herunterladen (1,00 MB)' }).getAttribute('href')).toBe(
 			'https://cdn.sanity.io/x.pdf?dl=tsg-echo-2025.pdf',
 		);
 	});
