@@ -40,13 +40,4 @@ ignore:
           from this repository's own configuration, never outside input, and neither is part of the
           static studio bundle. Revisit once picomatch publishes a patched release.
         expires: 2026-11-16T00:00:00.000Z
-  SNYK-JS-ZOD-20510278:
-    - '*':
-        reason: >-
-          zod 4.6.6 fixes CVE-2023-54404, and the studio's own zod is 4.6.7. The remaining match is
-          zod 3.25.76, which sanity-plugin-media 6.5 requires; the 3.x line has no fixed release.
-          The studio is a static single-page app: the plugin's schemas run in the editor's own
-          browser, and no outside input reaches a server through them. Revisit once
-          sanity-plugin-media moves to zod 4.
-        expires: 2026-11-16T00:00:00.000Z
 patch: {}

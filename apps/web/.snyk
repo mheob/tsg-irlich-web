@@ -20,6 +20,18 @@ ignore:
           glob patterns from this repository's own configuration and never outside input. Revisit
           once braces publishes a patched release.
         expires: 2026-11-16T00:00:00.000Z
+  SNYK-JS-GLOB-22112102:
+    - '*':
+        reason: >-
+          glob is only fixed in 14.0.2, a major release none of its dependents has moved to yet,
+          and Snyk still lists the 13.0.7 backport as affected. The flaw only hits a caller that
+          bounds a walk with an AbortSignal. 13.0.6 reaches this project through tooling only: the
+          react-email CLI (through @tsgi-web/email), which lists the template folder, and
+          @sentry/bundler-plugins below lighthouse (through @lhci/cli, a dev dependency), which
+          globs only for a source map upload that this repository's Lighthouse run never does.
+          Rendering a mail does not load it, and neither runs in the deployed website or sees
+          outside input. Revisit once react-email and Lighthouse move to glob 14.
+        expires: 2026-12-06T00:00:00.000Z
   SNYK-JS-MINIMATCH-22111072:
     - '*':
         reason: >-
@@ -41,14 +53,5 @@ ignore:
           as the optional peer of get-it below @sanity/client. Both compile glob patterns from this
           repository's own configuration, never outside input, and neither runs in the deployed
           app. Revisit once picomatch publishes a patched release.
-        expires: 2026-11-16T00:00:00.000Z
-  SNYK-JS-ZOD-20510278:
-    - '*':
-        reason: >-
-          zod 4.6.6 fixes CVE-2023-54404, and the web app runs 4.6.7. The remaining match is zod
-          3.25.76, which reaches this project only through chromium-bidi below @lhci/cli
-          (lighthouse, puppeteer-core), a dev dependency that parses the DevTools protocol messages
-          of a local Chrome during a Lighthouse run and never outside input. The 3.x line has no
-          fixed release. Revisit once chromium-bidi moves to zod 4.
         expires: 2026-11-16T00:00:00.000Z
 patch: {}

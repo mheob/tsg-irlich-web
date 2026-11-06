@@ -127,7 +127,7 @@ tsg-web/
 ### Prerequisites
 
 - **Node.js** ^26.13.0
-- **pnpm** 12.15.0 package manager
+- **pnpm** 12.18.0 package manager
 - **Git** for version control
 
 ### Installation
