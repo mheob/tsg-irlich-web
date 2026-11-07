@@ -1,9 +1,18 @@
-/** What `getSlugHistoryPatch` needs to know about a department or a group. */
+/**
+ * The types whose own slug is their address, so their history is a list of former slugs. A group
+ * is served below its department and remembers paths instead.
+ */
+const SLUG_HISTORY_TYPES = ['department', 'news.article', 'news.category'] as const;
+
+/** A type whose history is a list of former slugs, see `SLUG_HISTORY_TYPES`. */
+type SlugHistoryType = (typeof SLUG_HISTORY_TYPES)[number];
+
+/** What `getSlugHistoryPatch` needs to know about a department, a group or a news document. */
 type SlugHistoryInput =
 	| {
 			draft: { previousSlugs?: string[]; slug?: string };
 			published?: { slug?: string };
-			type: 'department';
+			type: SlugHistoryType;
 	  }
 	| {
 			draft: { departmentSlug?: string; previousPaths?: string[]; slug?: string };
@@ -61,8 +70,19 @@ function getGroupPath(
 }
 
 /**
- * Works out what a department or a group has to remember when its draft is published: the former
- * slug of a department, or the former `<department slug>/<group slug>` path of a group.
+ * Tells whether a type remembers former slugs rather than former paths.
+ *
+ * @param type - The name of a document type.
+ * @returns Whether the type is one of `SLUG_HISTORY_TYPES`.
+ */
+function isSlugHistoryType(type: string): type is SlugHistoryType {
+	return (SLUG_HISTORY_TYPES as readonly string[]).includes(type);
+}
+
+/**
+ * Works out what a document has to remember when its draft is published: the former slug of a
+ * department, a news article or a news category, or the former `<department slug>/<group slug>`
+ * path of a group.
  *
  * A group whose new path is not known yet, because its department only exists as a draft, still
  * records the old path. The caller only asks when the department or the slug of the group changed.
@@ -71,9 +91,9 @@ function getGroupPath(
  * @returns The fields to set on the draft, or `undefined` when there is nothing to remember.
  */
 function getSlugHistoryPatch(input: SlugHistoryInput): Record<string, string[]> | undefined {
-	if (input.type === 'department') {
+	if (input.type !== 'group') {
 		if (!input.draft.slug) {
-			// A department's slug is required, so a draft without one is not about to be published.
+			// The slug is required, so a draft without one is not about to be published.
 			return undefined;
 		}
 
@@ -93,5 +113,5 @@ function getSlugHistoryPatch(input: SlugHistoryInput): Record<string, string[]> 
 	return previousPaths && { previousPaths };
 }
 
-export type { SlugHistoryInput };
-export { appendToHistory, getSlugHistoryPatch };
+export type { SlugHistoryInput, SlugHistoryType };
+export { appendToHistory, getSlugHistoryPatch, isSlugHistoryType };

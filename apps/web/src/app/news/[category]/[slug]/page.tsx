@@ -19,6 +19,7 @@ import { sanityFetch } from '@/lib/sanity/live';
 import {
 	newsArticleContentQuery,
 	newsArticleHeroQuery,
+	newsArticleRedirectQuery,
 } from '@/lib/sanity/queries/pages/news-article';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
@@ -26,6 +27,7 @@ import { urlForImage } from '@/lib/sanity/utils';
 import { getGalleryImages } from '@/utils/image';
 import { getInternalHref } from '@/utils/links';
 import { getPageMetadata } from '@/utils/metadata';
+import { resolveNewsArticleRedirect } from '@/utils/news-redirect';
 import { getNewsArticleSchema } from '@/utils/structured-data';
 import { getLastModified } from '@/utils/time';
 import { getBaseUrl } from '@/utils/url';
@@ -98,7 +100,27 @@ export default async function NewsArticlePage({
 			sanityFetch({ query: sponsorsQuery }),
 		]);
 
-	if (!article || !hero) {
+	if (!article) {
+		// An article whose slug changed stays reachable under its old address, which was shared on
+		// Facebook, Instagram and WhatsApp. Only a slug no article uses today gets here, so the article
+		// that has a slug now never redirects, and the target is always a current path, so it cannot
+		// loop. A renamed category needs nothing of its own here: the article is still found by its
+		// slug, and the category check below sends it to its first category.
+		const { data: match } = await sanityFetch({
+			params: { slug },
+			query: newsArticleRedirectQuery,
+			stega: false,
+		});
+		const target = resolveNewsArticleRedirect(match);
+
+		if (target) {
+			permanentRedirect(target);
+		}
+
+		notFound();
+	}
+
+	if (!hero) {
 		notFound();
 	}
 

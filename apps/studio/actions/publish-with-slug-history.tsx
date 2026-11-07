@@ -4,7 +4,7 @@ import { useClient, useDocumentOperation } from 'sanity';
 
 import { settle } from '@tsgi-web/shared';
 
-import { getSlugHistoryPatch } from '@/utils/slug-history';
+import { getSlugHistoryPatch, isSlugHistoryType } from '@/utils/slug-history';
 
 const SLUG_HISTORY_API_VERSION = '2026-10-01';
 
@@ -17,7 +17,7 @@ const DEPARTMENT_SLUGS_QUERY = '*[_id in $ids]{ _id, "slug": slug.current }';
 const DEPARTMENT_SLUGS_TIMEOUT_MS = 5000;
 
 /** What an editor is told when the history could not be saved, and which field to fill in by hand. */
-const DEPARTMENT_HISTORY_FAILED = {
+const SLUG_HISTORY_FAILED = {
 	description: 'Bitte unter „Frühere Slugs“ von Hand eintragen.',
 	title: 'Der frühere Slug konnte nicht gespeichert werden.',
 };
@@ -26,7 +26,7 @@ const GROUP_HISTORY_FAILED = {
 	title: 'Die frühere Adresse konnte nicht gespeichert werden.',
 };
 
-/** The fields of a department or a group that its slug history reads. */
+/** The fields of a document that its slug history reads. */
 interface SlugHistoryDocument {
 	department?: { _ref?: string };
 	previousPaths?: string[];
@@ -47,9 +47,9 @@ interface ResolveSlugHistoryPatchOptions {
 }
 
 /**
- * Reads the fields of a department or group document.
+ * Reads the fields of a document with a slug history.
  *
- * @param document - A draft or published document of one of those types.
+ * @param document - A draft or published document of one of the types with a slug history.
  * @returns The fields the slug history reads.
  */
 function readDocument(document: SanityDocument): SlugHistoryDocument {
@@ -81,12 +81,15 @@ async function resolveSlugHistoryPatch({
 	const draftFields = readDocument(draft);
 	const publishedFields = readDocument(published);
 
-	if (type === 'department') {
+	if (isSlugHistoryType(type)) {
 		return getSlugHistoryPatch({
 			draft: { previousSlugs: draftFields.previousSlugs, slug: draftFields.slug?.current },
 			published: { slug: publishedFields.slug?.current },
 			type,
 		});
+	}
+	if (type !== 'group') {
+		return undefined;
 	}
 
 	const draftDepartmentId = draftFields.department?._ref;
@@ -127,9 +130,9 @@ async function resolveSlugHistoryPatch({
 }
 
 /**
- * Wraps the publish action of a department or a group. Before the original runs, it records what
- * the published document was called (its slug, or for a group its `<department>/<group>` path), so
- * the website can redirect the old URL.
+ * Wraps the publish action of a department, a group, a news article or a news category. Before the
+ * original runs, it records what the published document was called (its slug, or for a group its
+ * `<department>/<group>` path), so the website can redirect the old URL.
  *
  * Label, icon, shortcut, tone, dialog and disabled state all stay the original's; only `onHandle`
  * does something first. A history that cannot be worked out never blocks publishing.
@@ -184,7 +187,7 @@ function createPublishWithSlugHistoryAction(
 					// Publishing goes on, so the editor has to hear that the history is theirs to fill in.
 					console.warn('The slug history could not be worked out before publishing', outcome.error);
 					toast.push({
-						...(props.type === 'department' ? DEPARTMENT_HISTORY_FAILED : GROUP_HISTORY_FAILED),
+						...(props.type === 'group' ? GROUP_HISTORY_FAILED : SLUG_HISTORY_FAILED),
 						closable: true,
 						status: 'warning',
 					});
