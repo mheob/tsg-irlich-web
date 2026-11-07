@@ -59,9 +59,9 @@ export function NewsArticlePreview({
 				</div>
 
 				<Link href={`/news/${categories[0].slug}/${slug}`}>
-					<h2 className="line-clamp-2 h-[2lh] text-2xl font-bold hyphens-auto md:text-3xl">
+					<h3 className="line-clamp-2 h-[2lh] text-2xl font-bold hyphens-auto md:text-3xl">
 						{title}
-					</h2>
+					</h3>
 				</Link>
 
 				<p className="line-clamp-3 h-[3lh] text-sm text-muted-foreground md:text-xl">{excerpt}</p>

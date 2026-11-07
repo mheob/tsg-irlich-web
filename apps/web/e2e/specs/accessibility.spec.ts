@@ -1,3 +1,5 @@
+import type { Page } from '@playwright/test';
+
 import { expectNoAxeViolations } from '../support/axe';
 import {
 	firstDrillDown,
@@ -30,15 +32,37 @@ const STATIC_ROUTES = [
 	'/suche',
 ];
 
+/**
+ * axe's `page-has-heading-one` only asks for at least one `h1`. A page carries exactly one: the
+ * hero's title, or the content's own headline where the hero steps back (a group, an article).
+ *
+ * @param page - The page to check, already settled.
+ * @returns Nothing; a page with no or several `h1` fails the test.
+ */
+async function expectOneH1(page: Page): Promise<void> {
+	await expect(page.locator('h1'), 'a page carries exactly one h1').toHaveCount(1);
+}
+
 test.describe('accessibility', () => {
 	for (const route of STATIC_ROUTES) {
 		test(`meets WCAG 2.1 AA on ${route}`, async ({ page }, testInfo) => {
 			await page.goto(route);
 			await waitForPage(page);
 
+			await expectOneH1(page);
 			await expectNoAxeViolations(page, testInfo, route);
 		});
 	}
+
+	// A link that leads nowhere lands on the not-found page, the one route without a hero.
+	test('meets WCAG 2.1 AA on the not-found page', async ({ page }, testInfo) => {
+		const response = await page.goto('/diese-seite-gibt-es-nicht');
+		await waitForPage(page);
+
+		expect(response?.status()).toBe(404);
+		await expectOneH1(page);
+		await expectNoAxeViolations(page, testInfo, 'not found');
+	});
 
 	// Without a term the search page shows „Häufig gesucht“; with one it shows the summary, the tabs
 	// and both groups of hits instead, which is markup the scan above never sees.
@@ -46,6 +70,7 @@ test.describe('accessibility', () => {
 		await page.goto('/suche?q=Tanzen');
 		await waitForPage(page);
 
+		await expectOneH1(page);
 		await expectNoAxeViolations(page, testInfo, '/suche');
 	});
 
@@ -80,6 +105,7 @@ test.describe('accessibility', () => {
 	test('meets WCAG 2.1 AA on a department page', async ({ page }, testInfo) => {
 		await openFirstDepartment(page);
 
+		await expectOneH1(page);
 		await expectNoAxeViolations(page, testInfo, '/angebot/[group]');
 	});
 
@@ -90,12 +116,14 @@ test.describe('accessibility', () => {
 		await expect(page).toHaveURL(/\/angebot\/[^/]+\/[^/]+$/u);
 		await waitForPage(page);
 
+		await expectOneH1(page);
 		await expectNoAxeViolations(page, testInfo, '/angebot/[group]/[singleGroup]');
 	});
 
 	test('meets WCAG 2.1 AA on a news article', async ({ page }, testInfo) => {
 		await openFirstArticle(page);
 
+		await expectOneH1(page);
 		await expectNoAxeViolations(page, testInfo, '/news/[category]/[slug]');
 	});
 
@@ -109,6 +137,7 @@ test.describe('accessibility', () => {
 		await page.goto(`/news/${category}`);
 		await waitForPage(page);
 
+		await expectOneH1(page);
 		await expectNoAxeViolations(page, testInfo, '/news/[category]');
 	});
 
@@ -117,6 +146,7 @@ test.describe('accessibility', () => {
 		// The book replaces the server-rendered cover once its chunk has loaded.
 		await page.getByRole('button', { name: 'Nächste Seite' }).waitFor();
 
+		await expectOneH1(page);
 		await expectNoAxeViolations(page, testInfo, '/verein/echo/[slug]');
 	});
 });

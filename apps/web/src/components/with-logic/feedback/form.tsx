@@ -102,7 +102,8 @@ export function FeedbackForm() {
 		<section className="md:bg-background-low-contrast md:py-32">
 			<Card className="container">
 				<CardHeader>
-					<CardTitle className="mb-4 text-3xl/tight md:mb-8 md:text-7xl">
+					{/* The card is the page's only section, right below the hero's h1. */}
+					<CardTitle className="mb-4 text-3xl/tight md:mb-8 md:text-7xl" level="h2">
 						Gib uns dein Feedback zur neuen Webseite
 					</CardTitle>
 

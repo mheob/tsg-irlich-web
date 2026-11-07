@@ -43,7 +43,8 @@ describe('a chronicle card', () => {
 	it('shows its title and excerpt', () => {
 		const { getByRole, getByText } = renderWithUser(<ChronicleCard category={buildCategory()} />);
 
-		expect(getByRole('heading', { name: 'Gründung' })).not.toBeNull();
+		// The cards sit below the h2 of the chronicle section.
+		expect(getByRole('heading', { level: 3, name: 'Gründung' })).not.toBeNull();
 		expect(getByText('Wie alles begann.')).not.toBeNull();
 	});
 

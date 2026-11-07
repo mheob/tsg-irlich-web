@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { stegaClean } from 'next-sanity';
 import { notFound } from 'next/navigation';
 
 import { ContactForm } from '@/components/section/contact-form';
@@ -48,6 +49,8 @@ export default async function ContactPage() {
 			/>
 			<ContactForm
 				images={resolveSectionImages(siteImages?.contactFormImages, CONTACT_FORM_TITLE)}
+				// The hero already heads the page with the same words; a second heading would only repeat it.
+				isTitleHeading={stegaClean(page.title) !== CONTACT_FORM_TITLE}
 				receiver={page.content.receiver}
 			/>
 			<ContactPersons {...page.content.contactPersonsSection} />

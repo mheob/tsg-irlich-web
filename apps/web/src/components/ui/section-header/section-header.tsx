@@ -8,7 +8,11 @@ interface SectionHeaderProps extends Omit<ComponentPropsWithoutRef<'div'>, 'titl
 	descriptionClassName?: string;
 	isCentered?: boolean;
 	isCenteredOnDesktop?: boolean;
-	level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+	/**
+	 * The element the title renders as. `div` keeps the look of a heading without being one, for a
+	 * header whose page carries its heading elsewhere.
+	 */
+	level?: 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 	subTitle?: string;
 	title?: ReactNode | string;
 }
@@ -23,7 +27,7 @@ export function SectionHeader({
 	subTitle,
 	title = 'DER TITEL FEHLT',
 }: Readonly<SectionHeaderProps>) {
-	const HeadingTag = level;
+	const TitleTag = level;
 
 	return (
 		<header
@@ -48,7 +52,7 @@ export function SectionHeader({
 				</div>
 			)}
 
-			<HeadingTag className={styles.title}>{title}</HeadingTag>
+			<TitleTag className={styles.title}>{title}</TitleTag>
 
 			{typeof children === 'string' && !children.startsWith('<') ? (
 				<p

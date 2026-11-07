@@ -42,6 +42,12 @@ describe('the wide news article preview', () => {
 		);
 	});
 
+	it('heads the preview with the title one level below its section', () => {
+		const { getByRole } = renderWithUser(<NewsArticlePreviewWide {...buildArticle()} />);
+
+		expect(getByRole('heading', { level: 3, name: 'Sommerfest 2026' })).not.toBeNull();
+	});
+
 	it('links every category to its overview', () => {
 		const { getByRole } = renderWithUser(<NewsArticlePreviewWide {...buildArticle()} />);
 

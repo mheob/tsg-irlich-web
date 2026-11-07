@@ -30,10 +30,15 @@
 	right: 0;
 }
 
+/* The font repeats what `globals.css` gives every heading, so a title rendered as a `div` looks the
+   same as one rendered as a heading. */
 .title {
 	margin-top: 1rem;
+	font-family: var(--font-sans-serif);
 	font-size: 2rem;
+	font-weight: bold;
 	line-height: var(--leading-tight);
+	text-wrap: balance;
 }
 
 @media (min-width: 48rem) {
