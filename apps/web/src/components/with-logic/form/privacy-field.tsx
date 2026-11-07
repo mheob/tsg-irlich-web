@@ -29,6 +29,7 @@ export function PrivacyField({ form }: Readonly<PrivacyFieldProps>) {
 							<FormControl>
 								<Checkbox
 									aria-labelledby={labelId}
+									aria-required="true"
 									checked={field.value}
 									className="mt-0.5"
 									// oxlint-disable-next-line react/jsx-handler-names

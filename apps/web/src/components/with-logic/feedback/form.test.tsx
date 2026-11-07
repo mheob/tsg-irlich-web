@@ -1,9 +1,11 @@
+import { within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { createLinearIssue } from '@/actions/create-linear-issue';
 
 import { renderWithUser } from '../../../../test-utils/render';
 import type { RenderWithUserResult } from '../../../../test-utils/render';
+import { danglingIdReferences, hydrate, renderOnServer } from '../../../../test-utils/ssr';
 import { FeedbackForm } from './form';
 
 // `feedback/form.tsx` imports `createLinearIssue` and calls it directly (wrapped in `settle()`),
@@ -201,5 +203,81 @@ describe('the feedback form', () => {
 
 		const enabledButton = await findByRole('button', { name: 'Feedback senden' });
 		expect(enabledButton.hasAttribute('disabled')).toBe(false);
+	});
+
+	it('lets the browser fill in the email address', () => {
+		const { getByRole } = renderForm();
+
+		const email = getByRole('textbox', { name: 'E-Mail (optional)' });
+
+		expect(email.getAttribute('autocomplete')).toBe('email');
+		expect(email.getAttribute('type')).toBe('email');
+	});
+
+	it('tells assistive technology which fields are required', () => {
+		const { getByRole } = renderForm();
+
+		expect(getByRole('textbox', { name: 'Titel' }).getAttribute('aria-required')).toBe('true');
+		expect(getByRole('textbox', { name: 'Beschreibung' }).getAttribute('aria-required')).toBe(
+			'true',
+		);
+		expect(privacyCheckbox(getByRole).getAttribute('aria-required')).toBe('true');
+		expect(
+			getByRole('textbox', { name: 'E-Mail (optional)' }).getAttribute('aria-required'),
+		).toBeNull();
+	});
+
+	it('describes a field only with descriptions that are on the page', async () => {
+		const { findByText, getByRole, user } = renderForm();
+		const title = getByRole('textbox', { name: 'Titel' });
+
+		expect(title.getAttribute('aria-describedby')).toBeNull();
+		expect(
+			getByRole('textbox', {
+				description: 'Falls wir Rückfragen haben oder dich über den Status informieren sollen.',
+				name: 'E-Mail (optional)',
+			}),
+		).not.toBeNull();
+
+		await user.click(getByRole('button', { name: 'Feedback senden' }));
+		await findByText('Der Titel muss mindestens 5 Zeichen lang sein');
+
+		expect(
+			getByRole('textbox', {
+				description: 'Der Titel muss mindestens 5 Zeichen lang sein',
+				name: 'Titel',
+			}),
+		).toBe(title);
+		for (const field of [
+			title,
+			getByRole('textbox', { name: 'Beschreibung' }),
+			getByRole('textbox', { name: 'E-Mail (optional)' }),
+			privacyCheckbox(getByRole),
+		]) {
+			expect(danglingIdReferences(field)).toStrictEqual([]);
+		}
+	});
+
+	// A submission before hydration would otherwise go out as the browser's default, a GET with
+	// the title, the description and the address in the URL.
+	it('posts the form, never sending the entries in the URL', () => {
+		const { getByRole } = renderForm();
+
+		expect(getByRole('button', { name: 'Feedback senden' }).closest('form')?.method).toBe('post');
+	});
+
+	it('only lets the form be sent once it is hydrated', () => {
+		const form = <FeedbackForm />;
+		const container = renderOnServer(form);
+		const submit = () => within(container).getByRole('button', { name: 'Feedback senden' });
+
+		expect(submit().hasAttribute('disabled')).toBe(true);
+
+		const root = hydrate(container, form);
+
+		expect(root.onRecoverableError).not.toHaveBeenCalled();
+		expect(submit().hasAttribute('disabled')).toBe(false);
+
+		root.unmount();
 	});
 });

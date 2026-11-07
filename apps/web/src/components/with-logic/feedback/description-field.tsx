@@ -36,6 +36,7 @@ export function DescriptionField({ form }: Readonly<DescriptionFieldProps>) {
 					<FormLabel>Beschreibung</FormLabel>
 					<FormControl>
 						<Textarea
+							aria-required="true"
 							className="min-h-30 resize-y"
 							placeholder={getDescriptionPlaceholder()}
 							{...field}

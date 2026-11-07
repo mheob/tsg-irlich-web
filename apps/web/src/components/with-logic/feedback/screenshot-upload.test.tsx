@@ -175,12 +175,12 @@ describe('the screenshot upload', () => {
 
 		const survivingSource = getByRole('img', { name: 'Screenshot 2' }).getAttribute('src');
 
-		await user.click(getByRole('button', { name: 'Remove screenshot 1' }));
+		await user.click(getByRole('button', { name: 'Screenshot 1 entfernen' }));
 
 		expect(queryAllByRole('img')).toHaveLength(1);
 		const remaining = getByRole('img', { name: 'Screenshot 1' });
 		expect(remaining.getAttribute('src')).toBe(survivingSource);
-		expect(queryByRole('button', { name: 'Remove screenshot 2' })).toBeNull();
+		expect(queryByRole('button', { name: 'Screenshot 2 entfernen' })).toBeNull();
 	});
 
 	it('surfaces an upload failure without leaving a half-added entry', async () => {
@@ -305,9 +305,6 @@ describe('the screenshot upload', () => {
 		await expect(findByText('Upload failed')).resolves.not.toBeNull();
 	});
 
-	// The button that clears a failed tile carries no accessible name — unlike the one on an
-	// uploaded tile, which is labelled `Remove screenshot N`. Pinning the defect: it is the only
-	// button on screen in this state, so the test can still reach it.
 	it('clears a failed tile when its button is used', async () => {
 		mockedUploadToLinear.mockResolvedValue({ serverError: 'Der Server hat ein Problem.' });
 		const { findByText, getByLabelText, getByRole, queryAllByRole, user } = renderUpload();
@@ -315,7 +312,9 @@ describe('the screenshot upload', () => {
 		await user.upload(getByLabelText(DROP_ZONE_LABEL), buildImageFile('screenshot.png'));
 		await findByText('Der Server hat ein Problem.');
 
-		await user.click(getByRole('button'));
+		await user.click(
+			getByRole('button', { name: 'Fehlgeschlagenen Upload screenshot.png entfernen' }),
+		);
 
 		expect(queryAllByRole('img')).toHaveLength(0);
 	});

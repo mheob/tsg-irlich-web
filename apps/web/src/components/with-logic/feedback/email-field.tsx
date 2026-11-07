@@ -18,7 +18,7 @@ export function EmailField({ form }: Readonly<EmailFieldProps>) {
 						E-Mail <span className="text-base text-muted-foreground md:text-lg">(optional)</span>
 					</FormLabel>
 					<FormControl>
-						<Input placeholder="deine@email.de" type="email" {...field} />
+						<Input autoComplete="email" placeholder="deine@email.de" type="email" {...field} />
 					</FormControl>
 					<FormDescription>
 						Falls wir Rückfragen haben oder dich über den Status informieren sollen.
