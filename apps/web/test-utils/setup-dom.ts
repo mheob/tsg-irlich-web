@@ -326,19 +326,6 @@ function setReducedMotion(value: boolean): void {
 	reducedMotion = value;
 }
 
-let inView = true;
-
-/**
- * Escape hatch for a test that needs `useInView` to report an element as not yet visible (for
- * example, to assert a `NumberTicker` has not started counting). Shared module state — the central
- * `afterEach` below resets it back to `true` after every test, so a case may change it freely.
- *
- * @param value - The value `useInView()` resolves to from now on.
- */
-function setInView(value: boolean): void {
-	inView = value;
-}
-
 interface MotionValueMock<T> {
 	get: () => T;
 	on: (event: 'change', listener: (value: T) => void) => () => void;
@@ -407,7 +394,6 @@ function useSpringMock<T>(source: MotionValueMock<T>): MotionValueMock<T> {
 vi.mock('motion/react', () => ({
 	AnimatePresence: AnimatePresenceMock,
 	motion: motionMock,
-	useInView: () => inView,
 	useMotionValue: useMotionValueMock,
 	useReducedMotion: () => reducedMotion,
 	useSpring: useSpringMock,
@@ -418,7 +404,7 @@ vi.mock('motion/react', () => ({
 // this, every element `renderWithUser` mounts into `document.body` stays there for the rest of the
 // file, and a later case can find (and interact with) an earlier case's still-mounted tree. This is
 // the one `afterEach` every `dom` test in this project gets for free; it also resets the mock state
-// above (`routerMock`'s call history, `currentPathname`, `reducedMotion`, `inView`) so a case that
+// above (`routerMock`'s call history, `currentPathname`, `reducedMotion`) so a case that
 // used one of the setters or asserted on `routerMock` never leaks into the next test.
 afterEach(() => {
 	cleanup();
@@ -428,14 +414,12 @@ afterEach(() => {
 	routerMock.replace.mockReset();
 	currentPathname = '/';
 	reducedMotion = true;
-	inView = true;
 });
 
 export {
 	createMatchMediaStub,
 	dispatchMediaQueryChange,
 	routerMock,
-	setInView,
 	setPathname,
 	setReducedMotion,
 };
