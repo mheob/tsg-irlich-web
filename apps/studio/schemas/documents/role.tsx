@@ -3,6 +3,8 @@
 import { RiTeamLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
+import { validateLineSpacing } from '@/utils/whitespace';
+
 const role = defineType({
 	fields: [
 		defineField({
@@ -14,6 +16,7 @@ const role = defineType({
 			validation: (Rule) => [
 				Rule.required().min(2).error('Der Name muss mindestens 2 Zeichen lang sein'),
 				Rule.max(64).warning('Der Name sollte nicht länger als 64 Zeichen sein'),
+				Rule.custom(validateLineSpacing),
 			],
 		}),
 
