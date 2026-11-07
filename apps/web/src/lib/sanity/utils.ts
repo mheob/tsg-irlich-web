@@ -3,7 +3,7 @@ import type { ImageFormat } from '@sanity/image-url';
 
 import type { SanityImage, SanityImageReference } from '@/types/sanity.types';
 
-import { client } from './client';
+import { dataset, projectId } from './api';
 
 const BYTES_PER_KB = 1024;
 
@@ -55,7 +55,9 @@ function getFileSize(sanitySize?: number): string {
 	return `${size.toFixed(index).replace('.', ',')} ${units[index]}`;
 }
 
-const imageBuilder = createImageUrlBuilder(client);
+// Built from the project details rather than the client, so a client component that renders a
+// Sanity image does not bring `@sanity/client` into the browser (WEB-412).
+const imageBuilder = createImageUrlBuilder({ dataset, projectId });
 
 /**
  * Quality of the images requested from Sanity.
