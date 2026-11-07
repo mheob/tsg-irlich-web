@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import RootLayout, { metadata } from '@/app/layout';
 import { JsonLd } from '@/components/ui/json-ld';
-import { DisableDraftMode } from '@/components/with-logic/disable-draft-mode';
+import { DisableDraftModeLazy } from '@/components/with-logic/disable-draft-mode-lazy';
 import { Navigation } from '@/components/with-logic/navigation/navigation';
 import type { client } from '@/lib/sanity/client';
 import { searchPlaceholderQuery } from '@/lib/sanity/queries/search';
@@ -186,7 +186,7 @@ describe('the root layout', () => {
 		const layout = await RootLayout({ children: null });
 
 		expect(findElement(layout, VisualEditing)).toBeUndefined();
-		expect(findElement(layout, DisableDraftMode)).toBeUndefined();
+		expect(findElement(layout, DisableDraftModeLazy)).toBeUndefined();
 	});
 
 	it('adds the visual editing and the exit link while draft mode is on', async () => {
@@ -196,6 +196,6 @@ describe('the root layout', () => {
 		const layout = await RootLayout({ children: null });
 
 		expect(findElement(layout, VisualEditing)).toBeDefined();
-		expect(findElement(layout, DisableDraftMode)).toBeDefined();
+		expect(findElement(layout, DisableDraftModeLazy)).toBeDefined();
 	});
 });
