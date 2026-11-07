@@ -2,6 +2,8 @@
 
 import { defineField } from 'sanity';
 
+import { validateTextSpacing } from '@/utils/whitespace';
+
 const excerptField = defineField({
 	description: 'Kurze Beschreibung, die auf den Übersichtsseiten angezeigt wird.',
 	group: 'excerpt',
@@ -13,6 +15,7 @@ const excerptField = defineField({
 		Rule.min(130)
 			.max(160)
 			.warning('Der Vorschautext sollte idealerweise von 130 bis 160 Zeichen lang sein.'),
+		Rule.custom(validateTextSpacing),
 	],
 });
 

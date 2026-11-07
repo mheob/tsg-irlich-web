@@ -3,6 +3,7 @@
 import { defineField } from 'sanity';
 
 import { slugify } from '@/utils/strings';
+import { validateLineSpacing } from '@/utils/whitespace';
 
 /**
  * A hidden slug field for a document.
@@ -81,6 +82,7 @@ const subTitleField = defineField({
 	validation: (Rule) => [
 		Rule.required().min(3).error('Der Untertitel muss mindestens 3 Zeichen lang sein'),
 		Rule.max(50).warning('Der Untertitel sollte nicht länger als 50 Zeichen sein'),
+		Rule.custom(validateLineSpacing),
 	],
 });
 
@@ -92,6 +94,7 @@ const titleField = defineField({
 	validation: (Rule) => [
 		Rule.required().min(3).error('Der Titel muss mindestens 3 Zeichen lang sein'),
 		Rule.max(65).warning('Der Titel sollte nicht länger als 65 Zeichen sein'),
+		Rule.custom(validateLineSpacing),
 	],
 });
 
