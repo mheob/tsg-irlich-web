@@ -112,6 +112,16 @@ export default async function NewsArticlePage({
 			<JsonLd data={articleSchema} />
 
 			<Hero
+				// The hero's title is the same on every article, so the breadcrumb ends in the headline. The
+				// category is the one of the URL, matched by its slug, which stega must not change.
+				breadcrumb={{
+					page: article.title,
+					parents: {
+						[`/news/${category}`]: article.categories?.find(
+							(entry) => stegaClean(entry?.slug) === category,
+						)?.title,
+					},
+				}}
 				image={
 					article.featuredImage?.alt && imageSource
 						? { alt: article.featuredImage.alt, src: imageSource }

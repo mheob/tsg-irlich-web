@@ -71,10 +71,21 @@ test.describe('structured data', () => {
 		expect(typesOf(blocks)).toStrictEqual(
 			expect.arrayContaining(['BreadcrumbList', 'NewsArticle', 'SportsOrganization', 'WebSite']),
 		);
-		expect(blocks.find((block) => block['@type'] === 'NewsArticle')).toMatchObject({
+		const article = blocks.find((block) => block['@type'] === 'NewsArticle');
+		const trail = blocks.find((block) => block['@type'] === 'BreadcrumbList') as
+			| { itemListElement: { name: string }[] }
+			| undefined;
+
+		expect(article).toMatchObject({
 			datePublished: expect.any(String),
 			headline: expect.any(String),
 		});
+		// The trail carries the names the visible breadcrumb shows: the headline, not the hero's
+		// title, and the category's title, not its humanised slug.
+		expect(trail?.itemListElement.at(-1)?.name).toBe(article?.headline);
+		await expect(
+			page.getByRole('navigation', { name: 'breadcrumb' }).getByRole('link').nth(2),
+		).toHaveText(trail?.itemListElement.at(2)?.name ?? '');
 	});
 
 	test('marks up the FAQ of a department once', async ({ page }) => {

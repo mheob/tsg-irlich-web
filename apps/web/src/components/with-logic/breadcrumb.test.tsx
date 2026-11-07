@@ -11,7 +11,7 @@ describe('breadcrumb', () => {
 	it('renders the home link, one link per pathname segment before the last, and the current page as plain text', () => {
 		setPathname('/verein/vorstand-team');
 		const { getByRole, getByText } = renderWithUser(
-			<Breadcrumb baseUrl={BASE_URL} currentPage="Der Vorstand" />,
+			<Breadcrumb baseUrl={BASE_URL} names={{ page: 'Der Vorstand' }} />,
 		);
 
 		const nav = getByRole('navigation', { name: 'Breadcrumb' });
@@ -28,7 +28,7 @@ describe('breadcrumb', () => {
 	it('leaves the last segment of a three-segment pathname out of the links', () => {
 		setPathname('/a/b/c');
 		const { getByRole } = renderWithUser(
-			<Breadcrumb baseUrl={BASE_URL} currentPage="Current Page" />,
+			<Breadcrumb baseUrl={BASE_URL} names={{ page: 'Current Page' }} />,
 		);
 
 		const nav = getByRole('navigation', { name: 'Breadcrumb' });
@@ -45,7 +45,7 @@ describe('breadcrumb', () => {
 	it('links every parent segment to the path up to it, however deep the page sits', () => {
 		setPathname('/a/b/c/d');
 		const { getByRole } = renderWithUser(
-			<Breadcrumb baseUrl={BASE_URL} currentPage="Current Page" />,
+			<Breadcrumb baseUrl={BASE_URL} names={{ page: 'Current Page' }} />,
 		);
 
 		const nav = getByRole('navigation', { name: 'Breadcrumb' });
@@ -62,7 +62,7 @@ describe('breadcrumb', () => {
 	it('humanises a hyphenated, mixed-case segment into title-cased words', () => {
 		setPathname('/MEIN-Verein/team');
 		const { getByRole } = renderWithUser(
-			<Breadcrumb baseUrl={BASE_URL} currentPage="Teamübersicht" />,
+			<Breadcrumb baseUrl={BASE_URL} names={{ page: 'Teamübersicht' }} />,
 		);
 
 		const nav = getByRole('navigation', { name: 'Breadcrumb' });
@@ -73,10 +73,30 @@ describe('breadcrumb', () => {
 	it('marks the current page as programmatically identifiable through aria-current, regardless of its class-only styling', () => {
 		setPathname('/verein/vorstand-team');
 		const { getByText } = renderWithUser(
-			<Breadcrumb baseUrl={BASE_URL} currentPage="Der Vorstand" />,
+			<Breadcrumb baseUrl={BASE_URL} names={{ page: 'Der Vorstand' }} />,
 		);
 
 		expect(getByText('Der Vorstand').getAttribute('aria-current')).toBe('page');
+	});
+
+	it('names the pages above the current one after the titles given for their paths', () => {
+		setPathname('/angebot/fussball/1-mannschaft');
+		const { getByRole, getByText } = renderWithUser(
+			<Breadcrumb
+				baseUrl={BASE_URL}
+				names={{ page: '1. Mannschaft', parents: { '/angebot/fussball': 'Fußball' } }}
+			/>,
+		);
+
+		const nav = getByRole('navigation', { name: 'Breadcrumb' });
+		const links = within(nav).getAllByRole('link');
+
+		expect(links.map((link) => [link.getAttribute('href'), link.textContent])).toStrictEqual([
+			['/', 'Home'],
+			['/angebot', 'Angebot'],
+			['/angebot/fussball', 'Fußball'],
+		]);
+		expect(getByText('1. Mannschaft').getAttribute('aria-current')).toBe('page');
 	});
 
 	it('names the current page after its own segment when no title is given', () => {
@@ -89,7 +109,7 @@ describe('breadcrumb', () => {
 	it('describes the trail as structured data with absolute links', () => {
 		setPathname('/verein/vorstand-team');
 		const { container } = renderWithUser(
-			<Breadcrumb baseUrl={BASE_URL} currentPage="Der Vorstand" />,
+			<Breadcrumb baseUrl={BASE_URL} names={{ page: 'Der Vorstand' }} />,
 		);
 
 		const script = container.querySelector<HTMLScriptElement>('script[type="application/ld+json"]');
@@ -106,5 +126,29 @@ describe('breadcrumb', () => {
 				},
 			],
 		});
+	});
+
+	it('describes the trail by the names meant for the structured data, and shows the others', () => {
+		setPathname('/angebot/fussball/1-mannschaft');
+		const { container, getByRole } = renderWithUser(
+			<Breadcrumb
+				baseUrl={BASE_URL}
+				names={{ page: 'Erste (Vorschau)', parents: { '/angebot/fussball': 'Fußball (Vorschau)' } }}
+				schemaNames={{ page: 'Erste', parents: { '/angebot/fussball': 'Fußball' } }}
+			/>,
+		);
+
+		const nav = getByRole('navigation', { name: 'Breadcrumb' });
+		const script = container.querySelector<HTMLScriptElement>('script[type="application/ld+json"]');
+		const schema = JSON.parse(String(script?.text)) as { itemListElement: { name: string }[] };
+
+		expect(within(nav).getByRole('link', { name: 'Fußball (Vorschau)' })).not.toBeNull();
+		expect(within(nav).getByText('Erste (Vorschau)')).not.toBeNull();
+		expect(schema.itemListElement.map((item) => item.name)).toStrictEqual([
+			'Home',
+			'Angebot',
+			'Fußball',
+			'Erste',
+		]);
 	});
 });

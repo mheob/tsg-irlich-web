@@ -19,6 +19,7 @@ import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 
 import { findElement, findElements, sectionTypes } from '../../../../../test-utils/react-tree';
 import { sanityFetchMock } from '../../../../../test-utils/sanity-live-mock';
+import { encodeLikeDraftMode } from '../../../../../test-utils/stega';
 import { Downloads } from './_sections/downloads';
 import { Sponsors } from './_sections/sponsors';
 // `src/lib/sanity/api.ts` asserts the project variables at import time, and the page reaches it
@@ -54,6 +55,7 @@ function imageBlock(key: string, overrides: Record<string, unknown> = {}): Recor
 }
 
 const HERO = { subtitle: 'Aktuelles', title: 'News' };
+const CATEGORY_DOCUMENT = { _id: 'category-vereinsleben', _type: 'news.category' };
 const ARTICLE = {
 	excerpt: 'Ein Rückblick auf das Sommerfest.',
 	featuredImage: { alt: 'Das Sommerfest', asset: { _ref: ASSET_REF, _type: 'reference' } },
@@ -252,6 +254,53 @@ describe('news article page', () => {
 				subTitle: 'Aktuelles',
 				title: 'News',
 			});
+		});
+
+		it('ends the breadcrumb in the headline, below the category of the URL', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					categories: [
+						{ slug: 'fussball', title: 'Fußball' },
+						{ slug: 'vereinsleben', title: 'Vereinsleben' },
+					],
+				},
+			});
+
+			const hero = findElement(await NewsArticlePage(routeProps()), Hero);
+
+			expect(hero?.props.breadcrumb).toStrictEqual({
+				page: 'Sommerfest 2026',
+				parents: { '/news/vereinsleben': 'Vereinsleben' },
+			});
+		});
+
+		it('finds the category of the URL by its slug in draft mode as well', async () => {
+			mockSanity({
+				article: {
+					...ARTICLE,
+					categories: [
+						{
+							slug: encodeLikeDraftMode('vereinsleben', CATEGORY_DOCUMENT),
+							title: 'Vereinsleben',
+						},
+					],
+				},
+			});
+
+			const hero = findElement(await NewsArticlePage(routeProps()), Hero);
+
+			expect(hero?.props.breadcrumb?.parents).toStrictEqual({
+				'/news/vereinsleben': 'Vereinsleben',
+			});
+		});
+
+		it('leaves the category of the URL unnamed when the article does not list it', async () => {
+			mockSanity({ article: { ...ARTICLE, categories: [{ slug: 'fussball', title: 'Fußball' }] } });
+
+			const hero = findElement(await NewsArticlePage(routeProps()), Hero);
+
+			expect(hero?.props.breadcrumb?.parents).toStrictEqual({ '/news/vereinsleben': undefined });
 		});
 
 		it('describes the article as structured data under its canonical URL', async () => {

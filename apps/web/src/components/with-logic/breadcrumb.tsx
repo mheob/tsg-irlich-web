@@ -6,6 +6,7 @@ import { Fragment } from 'react';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import { getBreadcrumbItems, getBreadcrumbListSchema } from '@/utils/breadcrumb';
+import type { BreadcrumbNames } from '@/utils/breadcrumb';
 
 import {
 	BreadcrumbItem,
@@ -22,12 +23,23 @@ const LAST_INDEX = -1;
 interface BreadcrumbProps extends ComponentPropsWithoutRef<typeof ShadcnBreadcrumb> {
 	/** The site's base URL, which the structured data needs for absolute links. */
 	baseUrl: string;
-	currentPage?: string;
+	/** The titles of the page and the pages above it, as the trail shows them. */
+	names?: BreadcrumbNames;
+	/**
+	 * The same titles cleaned of the stega encoding draft mode adds, for the structured data. The
+	 * visible trail keeps the encoding, and with it the click-to-edit overlays. Defaults to `names`.
+	 */
+	schemaNames?: BreadcrumbNames;
 }
 
-export default function Breadcrumb({ baseUrl, currentPage, ...props }: Readonly<BreadcrumbProps>) {
+export default function Breadcrumb({
+	baseUrl,
+	names,
+	schemaNames = names,
+	...props
+}: Readonly<BreadcrumbProps>) {
 	const pathname = usePathname();
-	const items = getBreadcrumbItems(pathname, currentPage);
+	const items = getBreadcrumbItems(pathname, names);
 	const page = items.at(LAST_INDEX);
 
 	return (
@@ -51,7 +63,7 @@ export default function Breadcrumb({ baseUrl, currentPage, ...props }: Readonly<
 				</BreadcrumbList>
 			</ShadcnBreadcrumb>
 
-			<JsonLd data={getBreadcrumbListSchema(baseUrl, items)} />
+			<JsonLd data={getBreadcrumbListSchema(baseUrl, getBreadcrumbItems(pathname, schemaNames))} />
 		</>
 	);
 }

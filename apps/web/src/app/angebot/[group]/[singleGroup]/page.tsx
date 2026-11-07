@@ -123,6 +123,11 @@ export default async function SingleGroupsPage({
 		<>
 			<JsonLd data={groupSchema} />
 			<Hero
+				// The hero's title is the same on every group, so the breadcrumb ends in the group's.
+				breadcrumb={{
+					page: groupData.title,
+					parents: { [`/angebot/${group}`]: groupData.departmentTitle },
+				}}
 				image={getHeroImage(
 					[groupData.heroImage, groupData.featuredImage, siteImages?.fallbackImage],
 					groupData.title,

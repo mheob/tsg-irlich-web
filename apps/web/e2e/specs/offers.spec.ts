@@ -23,10 +23,18 @@ test.describe('offers', () => {
 		await firstGroup.click();
 
 		await expect(page).toHaveURL(groupHref ?? '');
-		// The department segment of the breadcrumb comes from the slug, so it carries no umlaut.
-		await expect(page.getByRole('navigation', { name: 'breadcrumb' })).toContainText(
-			/fu(?:ß|ss)ball/iu,
+
+		// The trail names the department and the group by their titles, not by the slug or the
+		// hero's title that every group shares.
+		const breadcrumb = page.getByRole('navigation', { name: 'breadcrumb' });
+		const groupHeading = await page.getByRole('heading', { level: 1 }).textContent();
+		const groupName = groupHeading?.trim() ?? '';
+
+		await expect(breadcrumb.getByRole('link', { exact: true, name: 'Fußball' })).toHaveAttribute(
+			'href',
+			'/angebot/fussball',
 		);
+		await expect(breadcrumb.locator('[aria-current="page"]')).toHaveText(groupName);
 	});
 
 	test('offers a group page for every department listed on the overview', async ({ page }) => {

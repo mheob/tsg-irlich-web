@@ -326,6 +326,12 @@ describe('department page', () => {
 			expect(hero?.props).toMatchObject({ subTitle: 'Wir bieten dir', title: 'Bereich: Fußball' });
 		});
 
+		it('ends the breadcrumb in the department, without the prefix of the hero', async () => {
+			const hero = findElement(await renderPage(), Hero);
+
+			expect(hero?.props.breadcrumb).toStrictEqual({ page: 'Fußball' });
+		});
+
 		it('shows the hero image of the department', async () => {
 			const image = findElement(await renderPage(), Hero)?.props.image;
 

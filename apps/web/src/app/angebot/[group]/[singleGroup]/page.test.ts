@@ -66,6 +66,7 @@ const PAGE = {
 
 const GROUP = {
 	_id: 'group-herren-1',
+	departmentTitle: 'Fußball',
 	description: { text: [{ _key: 'description', _type: 'block' }] },
 	featuredImage: { alt: 'Die Mannschaft', asset: { _ref: ASSET_REF, _type: 'reference' } },
 	images: [],
@@ -323,6 +324,17 @@ describe('single group page', () => {
 				image: { alt: 'Die Mannschaft' },
 				subTitle: 'Eine Gruppe der TSG',
 				title: 'Gruppe',
+			});
+		});
+
+		it('ends the breadcrumb in the group, below its department, instead of the shared title', async () => {
+			mockSanity();
+
+			const hero = findElement(await SingleGroupsPage(routeProps()), Hero);
+
+			expect(hero?.props.breadcrumb).toStrictEqual({
+				page: 'Herren 1',
+				parents: { '/angebot/fussball': 'Fußball' },
 			});
 		});
 
