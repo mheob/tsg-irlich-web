@@ -53,7 +53,8 @@ function buildContact(contact: LlmsTxtQueryResult['contact']): string[] {
 function formatTrainingTime(time: TrainingTime): string {
 	const details = [time.venue, SEASON_LABELS[time.season]].filter(Boolean).join(', ');
 	const hours = `${time.startTime}–${time.endTime} Uhr`;
-	return `  - Training: ${WEEKDAY_LABELS[time.weekday]} ${hours}${details ? ` (${details})` : ''}`;
+	const suffix = details ? ` (${details})` : '';
+	return `  - Training: ${WEEKDAY_LABELS[time.weekday]} ${hours}${suffix}`;
 }
 
 /**
@@ -75,10 +76,10 @@ function buildPrices(prices: LlmsTxtQueryResult['prices']): string[] {
 	return [
 		'## Mitgliedsbeiträge',
 		'',
-		...tiers.map(
-			({ price, subtitle, title }) =>
-				`- ${title}${subtitle ? ` (${subtitle})` : ''}: ${PRICE_FORMAT.format(price)} € monatlich`,
-		),
+		...tiers.map(({ price, subtitle, title }) => {
+			const label = subtitle ? `${title} (${subtitle})` : title;
+			return `- ${label}: ${PRICE_FORMAT.format(price)} € monatlich`;
+		}),
 		'',
 	];
 }
