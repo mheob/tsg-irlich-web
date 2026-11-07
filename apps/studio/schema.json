@@ -4509,6 +4509,16 @@
 				},
 				"optional": false
 			},
+			"previousSlugs": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
+			},
 			"categories": {
 				"type": "objectAttribute",
 				"value": {
@@ -5961,6 +5971,16 @@
 					"name": "slug"
 				},
 				"optional": false
+			},
+			"previousSlugs": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
 			},
 			"meta": {
 				"type": "objectAttribute",

@@ -1,6 +1,6 @@
 import { stegaClean } from 'next-sanity';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
@@ -14,8 +14,13 @@ import {
 	newsArticlesTotalForCategoryQuery,
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
-import { newsCategoriesQuery, newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
+import {
+	newsCategoriesQuery,
+	newsCategoryQuery,
+	newsCategoryRedirectQuery,
+} from '@/lib/sanity/queries/shared/news';
 import { getPageHeroImage } from '@/utils/hero-image';
+import { resolveNewsCategoryRedirect } from '@/utils/news-redirect';
 
 import { CategoryCombobox } from '../_sections/category-combobox';
 import { LatestNewsPagination } from '../_sections/latest-news-pagination';
@@ -29,7 +34,8 @@ const ITEMS_PER_PAGE = 9;
  * @param props - The category and the page to show.
  * @param props.categoryParameter - The category segment of the request.
  * @param props.currentPage - The page shown, from 1; a page beyond the last one is not found.
- * @returns The page of the category; an unknown category is not found.
+ * @returns The page of the category. A former slug of a category redirects to its current one, any
+ * other unknown category is not found.
  */
 async function NewsCategory({ categoryParameter, currentPage }: Readonly<NewsCategoryProps>) {
 	const start = (currentPage - 1) * ITEMS_PER_PAGE + START_INDEX;
@@ -57,8 +63,26 @@ async function NewsCategory({ categoryParameter, currentPage }: Readonly<NewsCat
 		sanityFetch({ query: newsOverviewHeroImageQuery }),
 	]);
 
+	if (!category) {
+		// A category whose slug changed stays reachable under its old address, on the same page. Only a
+		// slug no category uses today gets here, so the target is always a current category and cannot
+		// loop. The articles below it redirect on their own page.
+		const { data: currentSlug } = await sanityFetch({
+			params: { slug: categoryParameter },
+			query: newsCategoryRedirectQuery,
+			stega: false,
+		});
+		const target = resolveNewsCategoryRedirect(currentSlug, currentPage);
+
+		if (target) {
+			permanentRedirect(target);
+		}
+
+		notFound();
+	}
+
 	const isBeyondLastPage = currentPage > 1 && start >= totalArticles;
-	if (!page || !category || isBeyondLastPage) {
+	if (!page || isBeyondLastPage) {
 		notFound();
 	}
 

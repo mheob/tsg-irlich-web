@@ -7,10 +7,19 @@ const SLUG_HISTORY_DESCRIPTION =
 /** A slug the way the website writes it: lowercase letters, digits and hyphens. */
 const SLUG_PATTERN = /^[a-z0-9-]+$/u;
 
+/**
+ * A slug of a news article as it may have been published. Until WEB-421 nothing checked the slug of
+ * an article, and some went out with capitals (`Einladung-JHV-2026`), whose links still have to
+ * redirect.
+ */
+const ARTICLE_SLUG_PATTERN = /^[a-zA-Z0-9-]+$/u;
+
 /** `<department slug>/<group slug>`, without `/angebot` in front and without slashes around. */
 const PATH_PATTERN = /^[a-z0-9-]+\/[a-z0-9-]+$/u;
 
 const PREVIOUS_SLUG_MESSAGE = 'Bitte nur den Slug eintragen, z. B. kurse';
+const PREVIOUS_ARTICLE_SLUG_MESSAGE =
+	'Bitte nur den Slug ohne /news und Kategorie eintragen, z. B. heimsieg-gegen-engers';
 const PREVIOUS_PATH_MESSAGE =
 	'Bitte Abteilung und Gruppe ohne /angebot eintragen, z. B. kurse/yoga';
 
@@ -35,7 +44,7 @@ function createHistoryValidator(
 	};
 }
 
-/** The slugs a department used to have, so their old URLs can redirect. */
+/** The slugs a department or a news category used to have, so their old URLs can redirect. */
 const previousSlugsField = defineField({
 	description: SLUG_HISTORY_DESCRIPTION,
 	name: 'previousSlugs',
@@ -43,6 +52,16 @@ const previousSlugsField = defineField({
 	title: 'Frühere Slugs',
 	type: 'array',
 	validation: (Rule) => Rule.custom(createHistoryValidator(SLUG_PATTERN, PREVIOUS_SLUG_MESSAGE)),
+});
+
+/**
+ * The slugs a news article used to have, so their old URLs can redirect. The category is not part of
+ * the entry: the website finds an article by its slug alone and sends any category to its first one.
+ */
+const previousArticleSlugsField = defineField({
+	...previousSlugsField,
+	validation: (Rule) =>
+		Rule.custom(createHistoryValidator(ARTICLE_SLUG_PATTERN, PREVIOUS_ARTICLE_SLUG_MESSAGE)),
 });
 
 /** The `<department slug>/<group slug>` paths a group used to have, so their old URLs can redirect. */
@@ -55,4 +74,4 @@ const previousPathsField = defineField({
 	validation: (Rule) => Rule.custom(createHistoryValidator(PATH_PATTERN, PREVIOUS_PATH_MESSAGE)),
 });
 
-export { previousPathsField, previousSlugsField };
+export { previousArticleSlugsField, previousPathsField, previousSlugsField };

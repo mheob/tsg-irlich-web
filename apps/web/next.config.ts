@@ -1,5 +1,8 @@
 import type { NextConfig } from 'next';
 
+// With the extension: Node.js loads this file with its own TypeScript support, as an ES module.
+import { getLegacyRedirects } from './src/lib/redirects/legacy-redirects.ts';
+
 /**
  * The overviews that page through their content with `?seite=N`. A page that reads its search
  * parameters renders on every request, so each one serves only its first page itself, and the later
@@ -47,14 +50,17 @@ const nextConfig: NextConfig = {
 	},
 	// The internal route of a later page has no address of its own: a request for it goes to the public
 	// one, so a page is never listed twice. Redirects apply before the rewrites, and only to the
-	// requested path, so the rewritten request does not come back here.
+	// requested path, so the rewritten request does not come back here. The addresses of the old
+	// WordPress site follow (WEB-420).
 	// oxlint-disable-next-line typescript/require-await -- Next.js takes an async function only
-	redirects: async () =>
-		PAGINATED_OVERVIEWS.map((overview) => ({
+	redirects: async () => [
+		...PAGINATED_OVERVIEWS.map((overview) => ({
 			destination: `${overview}?seite=:page`,
 			permanent: true,
 			source: `${overview}/seite/:page`,
 		})),
+		...getLegacyRedirects(),
+	],
 	// Before the files: `/news` and `/verein/echo` are pages of their own, which would answer first.
 	// oxlint-disable-next-line typescript/require-await -- Next.js takes an async function only
 	rewrites: async () => ({

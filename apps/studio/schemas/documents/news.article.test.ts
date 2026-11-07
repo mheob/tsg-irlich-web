@@ -1,6 +1,9 @@
 import type { PreviewValue } from 'sanity';
 import { describe, expect, it } from 'vite-plus/test';
 
+import { formattedSlugField } from '@/shared/fields/general';
+import { previousArticleSlugsField } from '@/shared/fields/slug-history';
+
 import newsArticle from './news.article';
 
 interface NewsArticleSelection {
@@ -21,6 +24,10 @@ interface ArticleField {
 	readonly of?: readonly { readonly type: string }[];
 	readonly type: string;
 	readonly validation?: (rule: ChainRule) => unknown;
+}
+
+interface ValidatedField {
+	readonly validation?: unknown;
 }
 
 function prepareNewsArticle(selection: NewsArticleSelection): PreviewValue {
@@ -69,6 +76,25 @@ function recordValidationChain(field: ArticleField): string[] {
 	field.validation(rule);
 	return calls;
 }
+
+describe('news article slug', () => {
+	it('checks the format of the slug', () => {
+		expect((getArticleField('slug') as ValidatedField).validation).toBe(
+			(formattedSlugField as ValidatedField).validation,
+		);
+	});
+
+	it('keeps its former slugs in the general group, right below the slug', () => {
+		const names = (newsArticle.fields as readonly ArticleField[]).map((field) => field.name);
+		const history = getArticleField('previousSlugs');
+
+		expect(names.indexOf('previousSlugs')).toBe(names.indexOf('slug') + 1);
+		expect(history.group).toBe('general');
+		expect((history as ValidatedField).validation).toBe(
+			(previousArticleSlugsField as ValidatedField).validation,
+		);
+	});
+});
 
 describe('news article downloads', () => {
 	it('offers the PDF downloads in the content group, right after the sections', () => {

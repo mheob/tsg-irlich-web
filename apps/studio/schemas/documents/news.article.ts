@@ -5,8 +5,10 @@ import { defineArrayMember, defineField, defineType } from 'sanity';
 import { content, excerpt, general, meta } from '@/shared/field-groups';
 import { contentField } from '@/shared/fields/content';
 import { excerptField, featuredImageField } from '@/shared/fields/excerpt';
-import { slugField, titleField } from '@/shared/fields/general';
+import { formattedSlugField, titleField } from '@/shared/fields/general';
 import { authorField, metaField } from '@/shared/fields/meta';
+import { previousArticleSlugsField } from '@/shared/fields/slug-history';
+import { getFieldWithGroup } from '@/utils/fields';
 import { formatDate } from '@/utils/time';
 
 /**
@@ -31,7 +33,8 @@ const newsArticle = defineType({
 		}),
 
 		defineField({ ...titleField, options: { search: { weight: TITLE_SEARCH_WEIGHT } } }),
-		slugField,
+		formattedSlugField,
+		getFieldWithGroup(previousArticleSlugsField, 'general'),
 
 		defineField({
 			group: 'general',
