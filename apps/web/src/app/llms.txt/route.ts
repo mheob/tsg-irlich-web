@@ -2,8 +2,14 @@ import { client } from '@/lib/sanity/client';
 import { llmsTxtQuery } from '@/lib/sanity/queries/llms';
 import type { LlmsTxtQueryResult } from '@/types/sanity.types';
 import { getInternalHref } from '@/utils/links';
-import { SITE_NAME } from '@/utils/metadata';
+import { CLUB_FOUNDING_YEAR, CLUB_LEGAL_NAME, SITE_NAME } from '@/utils/metadata';
+import { SEASON_LABELS, WEEKDAY_LABELS } from '@/utils/training';
 import { getBaseUrl } from '@/utils/url';
+
+type Department = LlmsTxtQueryResult['departments'][number];
+type TrainingTime = NonNullable<Department['groups'][number]['trainingTimes']>[number];
+
+const PRICE_FORMAT = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 2 });
 
 const LLMS_TXT_RESPONSE_HEADERS = {
 	'Cache-Control': 'public, max-age=3600, s-maxage=3600',
@@ -37,10 +43,47 @@ function buildContact(contact: LlmsTxtQueryResult['contact']): string[] {
 	return [`Anschrift: ${address}`, `E-Mail: ${contact.email}`, `Telefon: ${contact.phone}`];
 }
 
-function buildDepartment(
-	department: LlmsTxtQueryResult['departments'][number],
-	baseUrl: string,
-): string[] {
+/**
+ * Describes one training time as a nested list entry below its group, so a language model can answer
+ * when and where a group trains (WEB-424).
+ *
+ * @param time - The training time.
+ * @returns The list entry.
+ */
+function formatTrainingTime(time: TrainingTime): string {
+	const details = [time.venue, SEASON_LABELS[time.season]].filter(Boolean).join(', ');
+	const hours = `${time.startTime}–${time.endTime} Uhr`;
+	return `  - Training: ${WEEKDAY_LABELS[time.weekday]} ${hours}${details ? ` (${details})` : ''}`;
+}
+
+/**
+ * Lists the membership fees the home page and the membership page show.
+ *
+ * @param prices - The fees from the pricing section, or `null` without one.
+ * @returns The section, or nothing without fees.
+ */
+function buildPrices(prices: LlmsTxtQueryResult['prices']): string[] {
+	const tiers = prices
+		? [prices.pricingYouth, prices.pricingAdult, prices.pricingFamily].filter((tier) =>
+				Boolean(tier.title),
+			)
+		: [];
+	if (tiers.length === 0) {
+		return [];
+	}
+
+	return [
+		'## Mitgliedsbeiträge',
+		'',
+		...tiers.map(
+			({ price, subtitle, title }) =>
+				`- ${title}${subtitle ? ` (${subtitle})` : ''}: ${PRICE_FORMAT.format(price)} € monatlich`,
+		),
+		'',
+	];
+}
+
+function buildDepartment(department: Department, baseUrl: string): string[] {
 	const departmentHref = getInternalHref({ _type: 'department', slug: department.slug });
 	if (!departmentHref) {
 		return [];
@@ -48,7 +91,12 @@ function buildDepartment(
 
 	const entries = department.groups.flatMap((group) => {
 		const href = getInternalHref(group);
-		return href ? [link(group.title, `${baseUrl}${href}`, group.description)] : [];
+		return href
+			? [
+					link(group.title, `${baseUrl}${href}`, group.description),
+					...(group.trainingTimes ?? []).map((time) => formatTrainingTime(time)),
+				]
+			: [];
 	});
 
 	return [
@@ -77,9 +125,12 @@ function buildLlmsTxt(content: LlmsTxtQueryResult, baseUrl: string): string {
 		`# ${SITE_NAME}`,
 		'',
 		...(content.description ? [`> ${content.description}`, ''] : []),
+		`Gegründet: ${CLUB_FOUNDING_YEAR}`,
+		`Vereinsname: ${CLUB_LEGAL_NAME}`,
 		...buildContact(content.contact),
 		'',
 		...content.departments.flatMap((department) => buildDepartment(department, baseUrl)),
+		...buildPrices(content.prices),
 		'## Verein',
 		'',
 		link('Über den Verein', `${baseUrl}/verein`, content.aboutUs),

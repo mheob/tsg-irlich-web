@@ -147,6 +147,81 @@ describe('llms.txt', () => {
 		expect(text).toContain('- [Sitemap](http://localhost:3000/sitemap.xml)');
 	});
 
+	it('names the founding year and the registered name of the club', async () => {
+		const text = await llmsTxt();
+
+		expect(text).toContain('Gegründet: 1882\nVereinsname: TSG Irlich 1882 e.V.\nAnschrift:');
+	});
+
+	it('lists the training times below their group', async () => {
+		const text = await llmsTxt({
+			...CONTENT,
+			departments: [
+				{
+					description: null,
+					groups: [
+						{
+							_type: 'group',
+							department: 'fussball',
+							description: 'Kreisliga C.',
+							slug: '1-mannschaft',
+							title: '1. Mannschaft',
+							trainingTimes: [
+								{
+									endTime: '21:00',
+									season: 'yearly',
+									startTime: '19:30',
+									venue: 'Pappelstadion',
+									weekday: 'wednesday',
+								},
+								{
+									endTime: '20:00',
+									season: 'winter',
+									startTime: '18:30',
+									venue: 'Sporthalle Irlich',
+									weekday: 'friday',
+								},
+							],
+						},
+					],
+					slug: 'fussball',
+					title: 'Fußball',
+				},
+			],
+		});
+
+		expect(text).toContain(
+			[
+				'- [1. Mannschaft](http://localhost:3000/angebot/fussball/1-mannschaft): Kreisliga C.',
+				'  - Training: Mittwoch 19:30–21:00 Uhr (Pappelstadion, Ganzjährig)',
+				'  - Training: Freitag 18:30–20:00 Uhr (Sporthalle Irlich, Winter)',
+			].join('\n'),
+		);
+	});
+
+	it('lists the membership fees after the departments', async () => {
+		const text = await llmsTxt({
+			...CONTENT,
+			prices: {
+				pricingAdult: { price: 10, subtitle: 'ab 18 Jahre', title: 'Erwachsene' },
+				pricingFamily: { price: 15, subtitle: 'für Familien', title: 'Familientarif' },
+				pricingYouth: { price: 7.5, subtitle: 'bis 17 Jahre', title: 'Jugend' },
+			},
+		});
+
+		expect(text).toContain(
+			[
+				'## Mitgliedsbeiträge',
+				'',
+				'- Jugend (bis 17 Jahre): 7,5 € monatlich',
+				'- Erwachsene (ab 18 Jahre): 10 € monatlich',
+				'- Familientarif (für Familien): 15 € monatlich',
+				'',
+				'## Verein',
+			].join('\n'),
+		);
+	});
+
 	it('skips a group without the slug of its department', async () => {
 		const text = await llmsTxt({
 			...CONTENT,
@@ -199,11 +274,16 @@ describe('llms.txt', () => {
 			departments: [],
 			description: null,
 			membership: null,
+			prices: null,
 		});
 
 		expect(text).not.toContain('>');
 		expect(text).not.toContain('Anschrift');
-		expect(text.startsWith('# TSG Irlich\n\n## Verein\n')).toBe(true);
+		expect(
+			text.startsWith(
+				'# TSG Irlich\n\nGegründet: 1882\nVereinsname: TSG Irlich 1882 e.V.\n\n## Verein\n',
+			),
+		).toBe(true);
 		expect(text).toContain('- [Über den Verein](http://localhost:3000/verein)\n');
 		expect(text).not.toMatch(/\n{3}/u);
 	});

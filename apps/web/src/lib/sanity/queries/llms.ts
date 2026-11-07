@@ -7,8 +7,8 @@ import { defineQuery } from 'next-sanity';
  * linked through the slug of their department.
  *
  * @returns The club description, the contact details, the descriptions of the club and membership
- * pages, and every department in the order the offer shows them, each with its own meta description
- * and its groups with theirs
+ * pages, the membership fees, and every department in the order the offer shows them, each with its
+ * own meta description and its groups with theirs and their training times
  */
 const llmsTxtQuery = defineQuery(`
 	{
@@ -24,10 +24,22 @@ const llmsTxtQuery = defineQuery(`
 				"description": meta.metaDescription,
 				"slug": slug.current,
 				title,
+				"trainingTimes": training.trainingTimes[] {
+					endTime,
+					season,
+					startTime,
+					"venue": coalesce(venue->location.name, venue->title),
+					weekday,
+				},
 			},
 		},
 		"description": *[_type == 'home'][0].meta.metaDescription,
 		"membership": *[_type == 'membership'][0].meta.metaDescription,
+		"prices": *[_type == 'home'][0].content.pricingSection {
+			pricingAdult { price, subtitle, title },
+			pricingFamily { price, subtitle, title },
+			pricingYouth { price, subtitle, title },
+		},
 	}
 `);
 

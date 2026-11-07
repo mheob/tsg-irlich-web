@@ -5,6 +5,13 @@ import type { client } from '@/lib/sanity/client';
 
 import { clientFetchMock } from '../../../test-utils/sanity-client-mock';
 
+// The preview images go through `urlForSharedImage`, which reaches `src/lib/sanity/api.ts`, and that
+// asserts its project variables at import time. `vi.hoisted` runs before the imports are evaluated.
+vi.hoisted(() => {
+	globalThis.process.env.NEXT_PUBLIC_SANITY_DATASET = 'test-dataset';
+	globalThis.process.env.NEXT_PUBLIC_SANITY_PROJECT_ID = 'test-project';
+});
+
 vi.mock(import('@/lib/sanity/client'), () => ({
 	client: { fetch: vi.fn() } as unknown as typeof client,
 }));
@@ -12,7 +19,7 @@ vi.mock(import('@/lib/sanity/client'), () => ({
 const mockedFetch = clientFetchMock();
 
 const ARTICLE = {
-	author: { email: 'redaktion@tsg-irlich.de', firstName: 'Ada', lastName: 'Lovelace' },
+	author: { firstName: 'Ada', lastName: 'Lovelace' },
 	category: 'vereinsleben',
 	categoryTitle: 'Vereinsleben',
 	excerpt: 'Ein Rückblick auf das Sommerfest.',
@@ -72,10 +79,39 @@ describe('rss feed', () => {
 		expect(xml).toContain('<pubDate>Wed, 01 Jul 2026 08:00:00 GMT</pubDate>');
 	});
 
-	it('names the author as address plus full name', async () => {
+	it('names the author without an email address', async () => {
 		const xml = await feed();
 
-		expect(xml).toContain('<author>redaktion@tsg-irlich.de (Ada Lovelace)</author>');
+		expect(xml).toContain('<dc:creator><![CDATA[Ada Lovelace]]></dc:creator>');
+		expect(xml).not.toContain('<author>');
+		expect(xml).not.toContain('@');
+	});
+
+	it('attaches the preview image as a 16:9 JPEG', async () => {
+		const xml = await feed([
+			{
+				...ARTICLE,
+				featuredImage: { asset: { _ref: 'image-abc123def456-1600x900-jpg', _type: 'reference' } },
+			},
+		]);
+
+		expect(xml).toMatch(
+			/<media:content url="https:\/\/cdn\.sanity\.io\/images\/test-project\/test-dataset\/abc123def456-1600x900\.jpg\?[^"]*fm=jpg[^"]*" medium="image" type="image\/jpeg" width="1200" height="675"\/>/u,
+		);
+		expect(xml).not.toMatch(/url="[^"]*&(?!amp;)/u);
+	});
+
+	it('leaves the image out when the article has none', async () => {
+		const xml = await feed();
+
+		expect(xml).not.toContain('<media:content');
+	});
+
+	it('declares the namespaces of the creator and the image', async () => {
+		const xml = await feed([]);
+
+		expect(xml).toContain('xmlns:dc="http://purl.org/dc/elements/1.1/"');
+		expect(xml).toContain('xmlns:media="http://search.yahoo.com/mrss/"');
 	});
 
 	it('adds the category when the article has one', async () => {

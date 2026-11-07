@@ -113,19 +113,18 @@ describe('the footer', () => {
 		expect(queryAllByRole('button')).toHaveLength(0);
 	});
 
-	it('lists the social media channels the document carries', async () => {
-		const { getByRole, user } = await renderFooter({
+	it('links the social media profiles the document carries directly', async () => {
+		const { getByRole } = await renderFooter({
 			facebook: 'https://facebook.example/tsg',
 			instagram: 'https://instagram.example/tsg',
 		});
 
-		const facebook = getByRole('button', { name: 'facebook' });
-		const instagram = getByRole('button', { name: 'instagram' });
-		await user.hover(facebook);
-		await user.hover(instagram);
-
-		expect(facebook.getAttribute('href')).toBe('https://facebook.example/tsg');
-		expect(instagram.getAttribute('href')).toBe('https://instagram.example/tsg');
+		expect(getByRole('link', { name: 'facebook' }).getAttribute('href')).toBe(
+			'https://facebook.example/tsg',
+		);
+		expect(getByRole('link', { name: 'instagram' }).getAttribute('href')).toBe(
+			'https://instagram.example/tsg',
+		);
 	});
 
 	it('shows only the email link when the document carries no social media', async () => {
@@ -140,7 +139,8 @@ describe('the footer', () => {
 			instagram: 'https://x.example',
 		});
 
-		expect(contactLinks(getAllByRole('button'))).toHaveLength(2);
-		expect(queryByRole('button', { name: 'facebook' })).toBeNull();
+		expect(contactLinks(getAllByRole('button'))).toHaveLength(1);
+		expect(queryByRole('link', { name: 'instagram' })).not.toBeNull();
+		expect(queryByRole('link', { name: 'facebook' })).toBeNull();
 	});
 });

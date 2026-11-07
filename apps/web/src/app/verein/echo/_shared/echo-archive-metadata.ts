@@ -23,6 +23,7 @@ async function getEchoArchiveMetadata(currentPage: number): Promise<Metadata> {
 	return getPageMetadata({
 		image: heroImage,
 		meta: page.meta,
+		pageNumber: currentPage,
 		path: getPaginatedPath(ECHO_OVERVIEW_PATH, currentPage),
 		title: page.title,
 	});

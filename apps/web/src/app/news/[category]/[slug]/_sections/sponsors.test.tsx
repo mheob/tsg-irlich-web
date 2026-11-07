@@ -43,6 +43,28 @@ describe('the sponsors beside an article', () => {
 		expect(getByRole('img', { name: 'Sponsor two' })).not.toBeNull();
 	});
 
+	it("links each logo to the sponsor's website, marked as sponsored", () => {
+		const { getByRole } = renderWithUser(
+			<Sponsors
+				sponsors={buildSponsors([{ ...sponsor('one'), website: 'https://sponsor.example/' }])}
+			/>,
+		);
+
+		const link = getByRole('link', { name: 'Sponsor one' });
+		expect(link.getAttribute('href')).toBe('https://sponsor.example/');
+		expect(link.getAttribute('rel')).toBe('sponsored noopener noreferrer');
+		expect(link.getAttribute('target')).toBe('_blank');
+	});
+
+	it('shows the logo without a link when the sponsor has no website', () => {
+		const { getByRole, queryByRole } = renderWithUser(
+			<Sponsors sponsors={buildSponsors([sponsor('one')])} />,
+		);
+
+		expect(getByRole('img', { name: 'Sponsor one' })).not.toBeNull();
+		expect(queryByRole('link')).toBeNull();
+	});
+
 	it('skips a sponsor without a logo', () => {
 		const { queryAllByRole } = renderWithUser(
 			<Sponsors sponsors={buildSponsors([sponsor('one', {}), sponsor('two')])} />,

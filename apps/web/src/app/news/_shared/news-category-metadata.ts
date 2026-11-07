@@ -30,6 +30,7 @@ async function getNewsCategoryMetadata(
 	return getPageMetadata({
 		image: heroImage,
 		meta: category.meta,
+		pageNumber: currentPage,
 		path: getPaginatedPath(`/news/${category.slug}`, currentPage),
 		title: category.title,
 	});

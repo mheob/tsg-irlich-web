@@ -89,8 +89,12 @@ describe('the hero of the home page', () => {
 
 		const navigation = getByRole('navigation', { name: 'Social Media' });
 
-		expect(within(navigation).getAllByRole('button')).toHaveLength(2);
-		expect(within(navigation).getByRole('button', { name: 'facebook' })).not.toBeNull();
-		expect(within(navigation).getByRole('button', { name: 'instagram' })).not.toBeNull();
+		expect(within(navigation).getAllByRole('link')).toHaveLength(2);
+		expect(within(navigation).getByRole('link', { name: 'facebook' }).getAttribute('href')).toBe(
+			'https://facebook.example',
+		);
+		expect(within(navigation).getByRole('link', { name: 'instagram' }).getAttribute('href')).toBe(
+			'https://instagram.example',
+		);
 	});
 });
