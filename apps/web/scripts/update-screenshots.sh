@@ -11,6 +11,10 @@ set -euo pipefail
 # baseline that means something. The repository is bind-mounted, but every directory a Linux install
 # would otherwise overwrite — the workspace `node_modules` trees and the Next.js build output — is a
 # named volume, so the host's macOS install stays untouched and the second run starts warm.
+#
+# Any arguments go to Playwright in place of the default `--update-snapshots`, which only rewrites a
+# baseline that fails its comparison. A change smaller than `maxDiffPixelRatio` passes, so its
+# baseline stays as it was; `--update-snapshots=all` rewrites every one.
 
 readonly IMAGE='mcr.microsoft.com/playwright:v1.64.1-noble@sha256:47b510dd9230bf0b9bfc9b20102241e577ea7a99334ab4c3ca19f19770e9b8ea'
 readonly VOLUME_PREFIX='tsg-irlich-e2e'
@@ -92,5 +96,5 @@ exec docker run --rm --init \
 		rm -rf /work/apps/web/.next/cache/images
 		# Not `pnpm run … -- --update-snapshots`: the separator is forwarded verbatim, and Playwright
 		# reads everything after it as a positional test filter instead of as a flag.
-		pnpm --filter web exec playwright test --grep @visual --update-snapshots
-	'
+		pnpm --filter web exec playwright test --grep @visual "$@"
+	' bash "${@:---update-snapshots}"
