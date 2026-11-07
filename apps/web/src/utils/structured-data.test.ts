@@ -129,6 +129,18 @@ describe('the news article', () => {
 		]);
 	});
 
+	it('offers the image as JPEG, which every crawler reads', async () => {
+		const { getNewsArticleSchema } = await loadStructuredData();
+
+		const { image } = getNewsArticleSchema(BASE_URL, '/news/fussball/sommerfest', ARTICLE);
+
+		expect(image).toStrictEqual([
+			expect.stringContaining('fm=jpg'),
+			expect.stringContaining('fm=jpg'),
+			expect.stringContaining('fm=jpg'),
+		]);
+	});
+
 	it('prefers the meta description over the excerpt', async () => {
 		const { getNewsArticleSchema } = await loadStructuredData();
 

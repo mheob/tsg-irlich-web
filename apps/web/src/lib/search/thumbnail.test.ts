@@ -26,7 +26,7 @@ const COVER = {
 describe('search thumbnails', () => {
 	it('crops a department image to 480 by 270', () => {
 		expect(getSearchThumbnail(CARD_IMAGE, 'department')).toStrictEqual({
-			src: 'https://cdn.sanity.io/images/test-project/test-dataset/card-1600x900.jpg?w=480&h=270&q=90&fit=crop',
+			src: 'https://cdn.sanity.io/images/test-project/test-dataset/card-1600x900.jpg?w=480&h=270&fm=webp&q=90&fit=crop',
 			unoptimized: false,
 		});
 	});

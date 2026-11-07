@@ -8,7 +8,7 @@ import type {
 	WithContext,
 } from 'schema-dts';
 
-import { urlForImage } from '@/lib/sanity/utils';
+import { urlForSharedImage } from '@/lib/sanity/utils';
 import type { AnyImage } from '@/types/image.types';
 
 import { type FaqEntry, isCompleteFaq } from './faq';
@@ -89,7 +89,7 @@ function getOrganizationId(baseUrl: string): string {
  */
 function getImageUrls(image?: AnyImage | null): string[] | undefined {
 	const urls = IMAGE_SIZES.map(({ height, width }) =>
-		urlForImage(image ?? undefined, height, width),
+		urlForSharedImage(image ?? undefined, height, width),
 	).filter((url): url is string => Boolean(url));
 
 	return urls.length > 0 ? urls : undefined;

@@ -100,6 +100,35 @@ describe('gallery', () => {
 		}
 	});
 
+	it.each([1, 2, 3, 5])(
+		'leaves all %i thumbnails to load lazily by default, as a gallery mostly sits further down',
+		(count) => {
+			const { getAllByRole } = renderGallery(buildImages(count));
+
+			for (const image of getAllByRole('img')) {
+				expect(image.getAttribute('loading')).toBeNull();
+				expect(image.getAttribute('fetchpriority')).toBeNull();
+			}
+		},
+	);
+
+	it.each([1, 2, 3, 5])(
+		'loads only the first of %i thumbnails at once and with high priority when the gallery opens the page',
+		(count) => {
+			const { getAllByRole } = renderWithUser(
+				<Gallery images={buildImages(count)} isAboveTheFold />,
+			);
+
+			const [first, ...others] = getAllByRole('img');
+			expect(first?.getAttribute('loading')).toBe('eager');
+			expect(first?.getAttribute('fetchpriority')).toBe('high');
+			for (const image of others) {
+				expect(image.getAttribute('loading')).toBeNull();
+				expect(image.getAttribute('fetchpriority')).toBeNull();
+			}
+		},
+	);
+
 	it('renders nothing for an empty image list', () => {
 		const images = buildImages(0);
 		const { container } = render(<Gallery images={images} />);

@@ -43,7 +43,7 @@ export function Vision(props: Readonly<VisionProps>) {
 								alt={large.alt}
 								className="rounded-full"
 								src={large.src}
-								sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, (max-width: 768px) 256px, 320px"
+								sizes="(min-width: 64rem) 20rem, (min-width: 48rem) 16rem, (min-width: 40rem) 12rem, 10rem"
 								fill
 							/>
 						</div>
@@ -63,7 +63,7 @@ export function Vision(props: Readonly<VisionProps>) {
 								alt={medium.alt}
 								className="rounded-full"
 								src={medium.src}
-								sizes="(max-width: 640px) 128px, (max-width: 768px) 116px, (max-width: 768px) 192px, 256px"
+								sizes="(min-width: 64rem) 16rem, (min-width: 48rem) 12rem, (min-width: 40rem) 10rem, 8rem"
 								fill
 							/>
 						</div>
@@ -83,7 +83,7 @@ export function Vision(props: Readonly<VisionProps>) {
 								alt={small.alt}
 								className="rounded-full"
 								src={small.src}
-								sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
+								sizes="(min-width: 48rem) 12rem, (min-width: 40rem) 10rem, 8rem"
 								fill
 							/>
 						</div>

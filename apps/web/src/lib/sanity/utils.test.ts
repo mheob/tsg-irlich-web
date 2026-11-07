@@ -212,6 +212,38 @@ describe('generating a sanity image url', () => {
 		expect(params.has('w')).toBe(false);
 		expect(params.has('h')).toBe(false);
 	});
+
+	it.each([
+		['a cropped', 300],
+		['an uncropped', undefined],
+	])('asks Sanity for %s image as WebP, whatever format was uploaded', async (_shape, height) => {
+		const { urlForImage } = await loadWithEnv<UtilsModule>('@/lib/sanity/utils', SANITY_ENV);
+
+		const url = urlForImage(buildImage(), height);
+
+		expect(new URL(assertUrlDefined(url)).searchParams.get('fm')).toBe('webp');
+	});
+});
+
+describe('generating a sanity image url for another service', () => {
+	it('returns undefined when the asset reference is missing', async () => {
+		const { urlForSharedImage } = await loadWithEnv<UtilsModule>('@/lib/sanity/utils', SANITY_ENV);
+
+		expect(urlForSharedImage({ _type: 'image' }, 630, 1200)).toBeUndefined();
+	});
+
+	it('crops the image like a website image, but asks Sanity for JPEG', async () => {
+		const { urlForSharedImage } = await loadWithEnv<UtilsModule>('@/lib/sanity/utils', SANITY_ENV);
+
+		const url = urlForSharedImage(buildImage(), 630, 1200);
+
+		const params = new URL(assertUrlDefined(url)).searchParams;
+		expect(params.get('w')).toBe('1200');
+		expect(params.get('h')).toBe('630');
+		expect(params.get('fit')).toBe('crop');
+		expect(params.get('q')).toBe('90');
+		expect(params.get('fm')).toBe('jpg');
+	});
 });
 
 describe('generating a scaled down sanity image url', () => {
@@ -230,5 +262,13 @@ describe('generating a scaled down sanity image url', () => {
 		expect(params.get('w')).toBe('2560');
 		expect(params.get('fit')).toBe('max');
 		expect(params.has('h')).toBe(false);
+	});
+
+	it('asks Sanity for the image as WebP, whatever format was uploaded', async () => {
+		const { urlForImageMax } = await loadWithEnv<UtilsModule>('@/lib/sanity/utils', SANITY_ENV);
+
+		const url = urlForImageMax(buildImage(), 2560);
+
+		expect(new URL(assertUrlDefined(url)).searchParams.get('fm')).toBe('webp');
 	});
 });

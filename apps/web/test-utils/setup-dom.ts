@@ -105,7 +105,9 @@ Element.prototype.getAnimations = () => [];
 interface NextImageMockProps {
 	alt: string;
 	className?: string;
+	fetchPriority?: 'auto' | 'high' | 'low';
 	height?: number | string;
+	loading?: 'eager' | 'lazy';
 	src: string;
 	style?: CSSProperties;
 	width?: number | string;
@@ -113,10 +115,12 @@ interface NextImageMockProps {
 
 /**
  * Stands in for `next/image`'s `Image`: a plain `<img>` forwarding the props a test can query or
- * assert on (`src`, `alt`, `width`, `height`, `className`, `style`) and silently dropping the Next-only ones
- * (`fill`, `preload`, `quality`, `sizes`, `loader`, `placeholder`, `blurDataURL`, …) that would
- * otherwise land on the DOM node and trigger a React "unknown prop" warning. `alt` is forwarded
- * verbatim, so a test can query the image by its accessible name.
+ * assert on (`src`, `alt`, `width`, `height`, `className`, `style`, `loading`, `fetchPriority`) and
+ * silently dropping the Next-only ones (`fill`, `preload`, `quality`, `sizes`, `loader`,
+ * `placeholder`, `blurDataURL`, …) that would otherwise land on the DOM node and trigger a React
+ * "unknown prop" warning. `alt` is forwarded verbatim, so a test can query the image by its
+ * accessible name. `loading` and `fetchPriority` arrive only as given: the real component turns a
+ * missing `loading` into `lazy`, the stand-in leaves the attribute out.
  *
  * Escape hatch: this mock carries no per-test state, so a test that needs different `next/image`
  * behaviour overrides the whole module itself with its own `vi.mock('next/image', () => ({...}))`
@@ -126,7 +130,9 @@ interface NextImageMockProps {
  * @param props - The props `next/image`'s `Image` was rendered with.
  * @param props.alt - Forwarded verbatim to the `<img>`.
  * @param props.className - Forwarded verbatim to the `<img>`.
+ * @param props.fetchPriority - Forwarded verbatim to the `<img>` (as `fetchpriority`).
  * @param props.height - Forwarded verbatim to the `<img>`.
+ * @param props.loading - Forwarded verbatim to the `<img>`.
  * @param props.src - Forwarded verbatim to the `<img>`.
  * @param props.style - Forwarded verbatim to the `<img>`.
  * @param props.width - Forwarded verbatim to the `<img>`.
@@ -135,12 +141,23 @@ interface NextImageMockProps {
 function NextImageMock({
 	alt,
 	className,
+	fetchPriority,
 	height,
+	loading,
 	src,
 	style,
 	width,
 }: NextImageMockProps): ReactElement {
-	return createElement('img', { alt, className, height, src, style, width });
+	return createElement('img', {
+		alt,
+		className,
+		fetchPriority,
+		height,
+		loading,
+		src,
+		style,
+		width,
+	});
 }
 
 vi.mock('next/image', () => ({ default: NextImageMock }));
