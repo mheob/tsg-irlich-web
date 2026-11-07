@@ -5,9 +5,12 @@ import { ContactForwardEmail } from '@tsgi-web/email';
 
 import type * as sendContactFormModule from '@/actions/send-contact-form';
 import { resend } from '@/lib/resend';
+import type { client } from '@/lib/sanity/client';
+import { contactReceiversQuery } from '@/lib/sanity/queries/pages/contact';
 import type { ContactFormData } from '@/lib/validations/contact-form';
 
 import { loadWithEnv } from '../../test-utils/env';
+import { clientFetchMock } from '../../test-utils/sanity-client-mock';
 
 type SendContactFormModule = typeof sendContactFormModule;
 
@@ -33,6 +36,21 @@ vi.mock(import('@tsgi-web/email'), () => ({ ContactForwardEmail: vi.fn() }));
 
 const mockedContactForwardEmail = vi.mocked(ContactForwardEmail);
 
+// The action looks the receiver's address up in the contact page instead of trusting the client
+// (WEB-410), so the receiver list it reads is the one thing it needs from Sanity.
+vi.mock(import('@/lib/sanity/client'), () => ({
+	client: { fetch: vi.fn() } as unknown as typeof client,
+}));
+
+const mockedFetch = clientFetchMock();
+
+// The receiver list of the contact page as `contactReceiversQuery` returns it. The keys stand in
+// for Sanity's generated `_key`s, which is all the form ever submits.
+const RECEIVERS = [
+	{ _key: 'general', email: 'info@tsg-irlich.de', name: 'Allgemeine Anfrage' },
+	{ _key: 'football', email: 'trainer@tsg-irlich.de', name: 'Trainerteam Fußball' },
+];
+
 // A stand-in for whatever `ContactForwardEmail(...)` returns, so the full-payload assertion below
 // can compare `react` against a known value instead of describing a rendered element tree.
 const CONTACT_FORWARD_EMAIL_STUB = 'contact-forward-email-stub' as unknown as ReturnType<
@@ -43,6 +61,11 @@ const CONTACT_FORWARD_EMAIL_STUB = 'contact-forward-email-stub' as unknown as Re
 // citation) masks every thrown `Error` behind this fixed message in the envelope, logging the real
 // message first via `console.error('Action error:', e.message)`.
 const GENERIC_SERVER_ERROR = 'Something went wrong while executing the operation.';
+
+// What the action answers for a receiver key the contact page does not list.
+const UNKNOWN_RECEIVER = {
+	validationErrors: { receiver: { _errors: ['Unbekannter Empfänger.'] } },
+};
 
 const MESSAGE = 'Dies ist eine ausführliche Testnachricht für das Kontaktformular.';
 
@@ -69,22 +92,39 @@ describe('choosing the email recipient', () => {
 		vi.restoreAllMocks();
 		mockedSend.mockReset();
 		mockedContactForwardEmail.mockReset();
+		mockedFetch.mockReset();
 	});
 
-	it('sends to the receiver in production when one is given', async () => {
+	it('sends to the address the receiver key stands for in production', async () => {
 		mockSendSuccess();
+		mockedFetch.mockResolvedValue(RECEIVERS);
 		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
 			'@/actions/send-contact-form',
 			{ NODE_ENV: 'production' },
 		);
 
-		await sendContactForm(
-			validContactInput({
-				receiver: { email: 'trainer@tsg-irlich.de', label: 'Trainerteam Fußball' },
-			}),
-		);
+		await sendContactForm(validContactInput({ receiver: 'football' }));
 
 		expect(mockedSend.mock.calls[0][0].to).toBe('trainer@tsg-irlich.de');
+	});
+
+	it('reads the receivers from the published contact page, cached under its type', async () => {
+		mockSendSuccess();
+		mockedFetch.mockResolvedValue(RECEIVERS);
+		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
+			'@/actions/send-contact-form',
+			{ NODE_ENV: 'production' },
+		);
+
+		await sendContactForm(validContactInput({ receiver: 'football' }));
+
+		// The `contact` tag is what the revalidation webhook expires (`revalidateTag(body._type)`), so
+		// a receiver an editor removes stops working as soon as the change is published.
+		expect(mockedFetch).toHaveBeenCalledExactlyOnceWith(
+			contactReceiversQuery,
+			{},
+			{ next: { revalidate: 3600, tags: ['contact'] }, perspective: 'published' },
+		);
 	});
 
 	it('falls back to info@tsg-irlich.de in production without a receiver', async () => {
@@ -97,22 +137,101 @@ describe('choosing the email recipient', () => {
 		await sendContactForm(validContactInput());
 
 		expect(mockedSend.mock.calls[0][0].to).toBe('info@tsg-irlich.de');
+		expect(mockedFetch).not.toHaveBeenCalled();
 	});
 
 	it('forces it@tsg-irlich.de outside production even when a receiver is given', async () => {
 		mockSendSuccess();
+		mockedFetch.mockResolvedValue(RECEIVERS);
 		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
 			'@/actions/send-contact-form',
 			{ NODE_ENV: 'development' },
 		);
 
-		await sendContactForm(
+		await sendContactForm(validContactInput({ receiver: 'football' }));
+
+		expect(mockedSend.mock.calls[0][0].to).toBe('it@tsg-irlich.de');
+	});
+});
+
+describe('refusing a receiver the contact page does not list', () => {
+	afterEach(() => {
+		vi.restoreAllMocks();
+		mockedSend.mockReset();
+		mockedContactForwardEmail.mockReset();
+		mockedFetch.mockReset();
+	});
+
+	it('refuses an unknown receiver key without sending anything', async () => {
+		mockedFetch.mockResolvedValue(RECEIVERS);
+		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
+			'@/actions/send-contact-form',
+			{ NODE_ENV: 'production' },
+		);
+
+		const result = await sendContactForm(validContactInput({ receiver: 'deleted-receiver' }));
+
+		expect(result).toStrictEqual(UNKNOWN_RECEIVER);
+		expect(mockedSend).not.toHaveBeenCalled();
+	});
+
+	it('refuses an email address handed in as the receiver key', async () => {
+		mockedFetch.mockResolvedValue(RECEIVERS);
+		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
+			'@/actions/send-contact-form',
+			{ NODE_ENV: 'production' },
+		);
+
+		const result = await sendContactForm(validContactInput({ receiver: 'victim@example.com' }));
+
+		expect(result).toStrictEqual(UNKNOWN_RECEIVER);
+		expect(mockedSend).not.toHaveBeenCalled();
+	});
+
+	it('refuses a key that only matches a receiver address, not its key', async () => {
+		mockedFetch.mockResolvedValue(RECEIVERS);
+		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
+			'@/actions/send-contact-form',
+			{ NODE_ENV: 'production' },
+		);
+
+		const result = await sendContactForm(validContactInput({ receiver: 'trainer@tsg-irlich.de' }));
+
+		expect(result).toStrictEqual(UNKNOWN_RECEIVER);
+		expect(mockedSend).not.toHaveBeenCalled();
+	});
+
+	it('refuses every receiver key while the contact page is missing', async () => {
+		mockedFetch.mockResolvedValue(null);
+		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
+			'@/actions/send-contact-form',
+			{ NODE_ENV: 'production' },
+		);
+
+		const result = await sendContactForm(validContactInput({ receiver: 'football' }));
+
+		expect(result).toStrictEqual(UNKNOWN_RECEIVER);
+		expect(mockedSend).not.toHaveBeenCalled();
+	});
+
+	it('refuses the address object the form used to submit, before asking Sanity', async () => {
+		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
+			'@/actions/send-contact-form',
+			{ NODE_ENV: 'production' },
+		);
+
+		const result = await sendContactForm(
 			validContactInput({
-				receiver: { email: 'trainer@tsg-irlich.de', label: 'Trainerteam Fußball' },
+				// A request built by hand, past the form's types: the shape the form used to submit.
+				receiver: { email: 'victim@example.com', label: 'Vorstand' } as unknown as string,
 			}),
 		);
 
-		expect(mockedSend.mock.calls[0][0].to).toBe('it@tsg-irlich.de');
+		expect(result).toStrictEqual({
+			validationErrors: { receiver: { _errors: ['Kein Empfänger ausgewählt.'] } },
+		});
+		expect(mockedFetch).not.toHaveBeenCalled();
+		expect(mockedSend).not.toHaveBeenCalled();
 	});
 });
 
@@ -121,6 +240,7 @@ describe('building the resend request', () => {
 		vi.restoreAllMocks();
 		mockedSend.mockReset();
 		mockedContactForwardEmail.mockReset();
+		mockedFetch.mockReset();
 	});
 
 	it('sets bcc to it@tsg-irlich.de, replyTo to the sender and the exact subject', async () => {
@@ -154,6 +274,7 @@ describe('building the resend request', () => {
 
 	it('passes the input-derived props to the contact forward email, plus a baseUrl', async () => {
 		mockSendSuccess();
+		mockedFetch.mockResolvedValue(RECEIVERS);
 		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
 			'@/actions/send-contact-form',
 			{ NODE_ENV: 'development' },
@@ -164,7 +285,7 @@ describe('building the resend request', () => {
 				email: 'sender@example.com',
 				message: MESSAGE,
 				name: 'Erika Musterfrau',
-				receiver: { email: 'trainer@tsg-irlich.de', label: 'Trainerteam Fußball' },
+				receiver: 'football',
 			}),
 		);
 
@@ -175,7 +296,8 @@ describe('building the resend request', () => {
 		// is left unstubbed by the `{ NODE_ENV: 'development' }` env below and is unset in this test
 		// run, then `NODE_ENV`, which is `'development'` here — so it falls through to the localhost
 		// default. Hard-coded here rather than imported, per the "never derive an expected value from a
-		// constant the implementation also imports" rule.
+		// constant the implementation also imports" rule. `receiver` is the name the contact page gives
+		// the submitted key, not anything the client sent.
 		expect(props).toStrictEqual({
 			baseUrl: 'http://localhost:3000',
 			contactEmail: 'sender@example.com',
@@ -191,6 +313,7 @@ describe('surfacing a resend failure', () => {
 		vi.restoreAllMocks();
 		mockedSend.mockReset();
 		mockedContactForwardEmail.mockReset();
+		mockedFetch.mockReset();
 	});
 
 	it('surfaces "Email could not be sent" when resend returns an error, after logging it', async () => {
@@ -219,6 +342,7 @@ describe('validating the submitted input', () => {
 		vi.restoreAllMocks();
 		mockedSend.mockReset();
 		mockedContactForwardEmail.mockReset();
+		mockedFetch.mockReset();
 	});
 
 	it('never calls send when the input fails contactFormSchema', async () => {

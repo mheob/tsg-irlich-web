@@ -41,4 +41,16 @@ test.describe('contact form', () => {
 		await expect(page.getByText('Deine Anfrage wurde erfolgreich übermittelt.')).toBeHidden();
 		await expect(form.getByRole('textbox', { name: 'Name' })).toBeVisible();
 	});
+
+	test('keeps the receiver addresses out of the page', async ({ page }) => {
+		const response = await page.goto('/kontakt');
+		const html = await response?.text();
+
+		// WEB-410: the receiver select used to carry the addresses as its values, so they stood in the
+		// prerendered HTML and in the RSC payload inlined into it. These two belong to no contact
+		// person, so the recorded contact page can only have listed them as receivers.
+		expect(html).not.toContain('mitglieder@tsg-irlich.de');
+		expect(html).not.toContain('pr@tsg-irlich.de');
+		await expect(page.getByRole('combobox', { name: 'Empfänger' })).toBeVisible();
+	});
 });

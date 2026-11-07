@@ -2,13 +2,15 @@
 
 import { z } from 'zod';
 
-const receiverSchema = z.object(
-	{
-		email: z.email({ message: 'Kein Empfänger ausgewählt.' }),
-		label: z.string({ message: 'Kein Empfänger ausgewählt.' }),
-	},
-	{ error: 'Kein Empfänger ausgewählt.' },
-);
+const NO_RECEIVER_MESSAGE = 'Kein Empfänger ausgewählt.';
+
+/**
+ * The `_key` of an entry in the contact page's receiver list. The form never submits an address:
+ * the server action resolves the key against Sanity and refuses one it does not find (WEB-410).
+ */
+const receiverSchema = z
+	.string({ error: NO_RECEIVER_MESSAGE })
+	.min(1, { error: NO_RECEIVER_MESSAGE });
 
 export const contactFormSchema = z.object({
 	email: z.email({ message: 'Die E-Mail Adresse ist ungültig.' }),

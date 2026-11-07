@@ -9,7 +9,8 @@ const VALID_PAYLOAD = {
 	privacy: true,
 };
 
-const VALID_RECEIVER = { email: 'receiver@example.com', label: 'Vorstand' };
+// The `_key` of an entry in the contact page's receiver list, never an address.
+const VALID_RECEIVER = '14c26e91ca4c';
 
 describe('the base contact form schema', () => {
 	it('parses a complete valid payload without a receiver', () => {
@@ -71,10 +72,17 @@ describe('the base contact form schema', () => {
 		expect(result.success).toBe(true);
 	});
 
-	it('rejects a receiver with a bad email with the receiver message', () => {
+	it('rejects an empty receiver key with the receiver message', () => {
+		const result = contactFormSchema.safeParse({ ...VALID_PAYLOAD, receiver: '' });
+
+		expect(result.success).toBe(false);
+		expect(result.error?.issues[0]?.message).toBe('Kein Empfänger ausgewählt.');
+	});
+
+	it('rejects a receiver handed in as an address object with the receiver message', () => {
 		const result = contactFormSchema.safeParse({
 			...VALID_PAYLOAD,
-			receiver: { email: 'not-an-email', label: 'Vorstand' },
+			receiver: { email: 'victim@example.com', label: 'Vorstand' },
 		});
 
 		expect(result.success).toBe(false);
