@@ -19,15 +19,18 @@ import { CONTACT_FORM_TITLE } from '@/constants/contact-form';
 import { contactFormSchema, contactFormWithReceiverSchema } from '@/lib/validations/contact-form';
 import type { ContactFormData } from '@/lib/validations/contact-form';
 import type { ResolvedImage } from '@/types/image.types';
-import type { ContactNameMail } from '@/types/sanity.types';
+import type { ContactPageQueryResult } from '@/types/sanity.types.generated';
 
 import { PrivacyField } from '../with-logic/form/privacy-field';
 
-function mapSelectItems(receiver?: ContactNameMail[]): { label: string; value: string }[] {
+/** The receivers the contact page offers: a key and a name, never an address (WEB-410). */
+type ContactReceivers = NonNullable<ContactPageQueryResult>['content']['receiver'];
+
+function mapSelectItems(receiver?: ContactReceivers): { label: string; value: string }[] {
 	return (
-		receiver?.map(({ email, name }) => ({
+		receiver?.map(({ _key, name }) => ({
 			label: name,
-			value: email,
+			value: _key,
 		})) ?? []
 	);
 }
@@ -37,7 +40,7 @@ type SubmitResult = null | { error: string; success: false } | { success: true }
 interface ContactFormProps {
 	/** The three round images next to the form, large, medium and small; a missing one leaves its place empty. */
 	images: readonly (ResolvedImage | undefined)[];
-	receiver?: ContactNameMail[];
+	receiver?: ContactReceivers;
 }
 
 export function ContactForm({ images, receiver }: Readonly<ContactFormProps>) {
@@ -174,11 +177,7 @@ export function ContactForm({ images, receiver }: Readonly<ContactFormProps>) {
 											<FormField
 												render={({ field }) => (
 													<SelectWithLabel
-														onValueChange={(value) => {
-															const selected = selectItems.find((item) => item.value === value);
-															field?.onChange({ email: value, label: selected?.label ?? '' });
-														}}
-														field={{ ...field, value: field.value?.email ?? '' }}
+														field={{ ...field, value: field.value ?? '' }}
 														placeholder="Wähle eine Empfängergruppe"
 														selectItems={selectItems}
 														wrapperClassName="w-full"

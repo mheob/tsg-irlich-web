@@ -23,6 +23,12 @@ const CONTACT_IMAGES = [
 	{ alt: 'PR-Team bei der Arbeit', src: 'https://cdn.sanity.io/contact-3.webp' },
 ];
 
+// The receivers the contact page offers, as its query projects them: a key and a name, no address.
+const RECEIVERS = [
+	{ _key: 'general', name: 'Allgemeine Anfrage' },
+	{ _key: 'football', name: 'Trainerteam Fußball' },
+];
+
 function renderForm(images: Parameters<typeof ContactForm>[0]['images'] = CONTACT_IMAGES) {
 	return renderWithUser(<ContactForm images={images} />);
 }
@@ -191,5 +197,47 @@ describe('the contact form', () => {
 
 		const enabledButton = await findByRole('button', { name: 'Kontaktiere uns' });
 		expect(enabledButton.hasAttribute('disabled')).toBe(false);
+	});
+
+	it('submits the key of the chosen receiver, never its address', async () => {
+		mockedSendContactForm.mockResolvedValue({});
+		const { findByRole, getByLabelText, getByRole, user } = renderWithUser(
+			<ContactForm images={CONTACT_IMAGES} receiver={RECEIVERS} />,
+		);
+
+		await user.click(getByRole('combobox', { name: 'Empfänger' }));
+		await user.click(await findByRole('option', { name: 'Trainerteam Fußball' }));
+		await user.type(getByLabelText('Name'), 'Max Mustermann');
+		await user.type(getByLabelText('E-Mail'), 'max@mustermann.de');
+		await user.type(getByLabelText('Nachricht'), VALID_MESSAGE);
+		await user.click(privacyCheckbox(getByRole));
+
+		await user.click(getByRole('button', { name: 'Kontaktiere uns' }));
+
+		await findByRole('heading', { name: 'Vielen Dank!' });
+
+		expect(mockedSendContactForm).toHaveBeenCalledExactlyOnceWith({
+			email: 'max@mustermann.de',
+			message: VALID_MESSAGE,
+			name: 'Max Mustermann',
+			privacy: true,
+			receiver: 'football',
+		});
+	});
+
+	it('insists on a receiver while the form offers a choice', async () => {
+		const { findByText, getByLabelText, getByRole, user } = renderWithUser(
+			<ContactForm images={CONTACT_IMAGES} receiver={RECEIVERS} />,
+		);
+
+		await user.type(getByLabelText('Name'), 'Max Mustermann');
+		await user.type(getByLabelText('E-Mail'), 'max@mustermann.de');
+		await user.type(getByLabelText('Nachricht'), VALID_MESSAGE);
+		await user.click(privacyCheckbox(getByRole));
+
+		await user.click(getByRole('button', { name: 'Kontaktiere uns' }));
+
+		await expect(findByText('Kein Empfänger ausgewählt.')).resolves.not.toBeNull();
+		expect(mockedSendContactForm).not.toHaveBeenCalled();
 	});
 });

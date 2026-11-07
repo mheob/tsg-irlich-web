@@ -41,7 +41,7 @@ function buildPage(meta?: Record<string, unknown>): Record<string, unknown> {
 	return {
 		content: {
 			contactPersonsSection: { contactPersons: [], title: 'Ansprechpartner' },
-			receiver: 'vorstand@tsg-irlich.de',
+			receiver: [{ _key: 'board', name: 'Vorstand' }],
 		},
 		meta,
 		subtitle: 'So erreichst du uns',
@@ -103,12 +103,12 @@ describe('contact page', () => {
 			expect(hero?.props).toMatchObject({ subTitle: 'So erreichst du uns', title: 'Kontakt' });
 		});
 
-		it('addresses the form at the receiver the document names', async () => {
+		it('offers the form the receivers the document names, by key and name only', async () => {
 			mockedFetch.mockResolvedValue(buildPage());
 
 			const form = findElement(await ContactPage(), ContactForm);
 
-			expect(form?.props.receiver).toBe('vorstand@tsg-irlich.de');
+			expect(form?.props.receiver).toStrictEqual([{ _key: 'board', name: 'Vorstand' }]);
 		});
 
 		it('shows the contact images of the site settings next to the form', async () => {

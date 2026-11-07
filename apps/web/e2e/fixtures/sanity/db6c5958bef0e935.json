@@ -1,0 +1,53 @@
+{
+	"body": {
+		"ms": 14,
+		"result": [
+			{
+				"_key": "14c26e91ca4c",
+				"email": "info@tsg-irlich.de",
+				"name": "Allgemeine Anfrage"
+			},
+			{
+				"_key": "0577ca0f261c",
+				"email": "mitglieder@tsg-irlich.de",
+				"name": "Mitgliedschaft"
+			},
+			{
+				"_key": "0e55ba2bf947",
+				"email": "finanzen@tsg-irlich.de",
+				"name": "Finanzielles"
+			},
+			{
+				"_key": "c42f4339cde8",
+				"email": "pr@tsg-irlich.de",
+				"name": "Öffentlichkeitsarbeit"
+			},
+			{
+				"_key": "103e8bd9a5f2",
+				"email": "breitensport@tsg-irlich.de",
+				"name": "Abteilungsleitung Breitensport"
+			},
+			{
+				"_key": "22c8a7a5f886",
+				"email": "fussball@tsg-irlich.de",
+				"name": "Abteilungsleitung Fußball"
+			}
+		],
+		"syncTags": [
+			"s1:PeVrtw",
+			"s1:N029bQ",
+			"s1:kG7Arw",
+			"s1:eOuqJg",
+			"s1:WU9DBg",
+			"s1:bW4l3Q",
+			"s1:LD/aiQ",
+			"s1:SgUpiQ",
+			"s1:BpJQvw",
+			"s1:y+gLqA",
+			"s1:NuVTmQ",
+			"s1:B7LhMw",
+			"s1:yJoVrQ"
+		]
+	},
+	"url": "/v2025-02-19/data/query/development?query=*%5B_type+%3D%3D+%27contact%27%5D%5B0%5D.content.receiver%5B%5D+%7B+_key%2C+email%2C+name+%7D&returnQuery=false&perspective=published"
+}

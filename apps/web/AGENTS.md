@@ -209,6 +209,8 @@ Inter, Oswald and Bebas Neue live in `src/app/_assets/fonts/<font>/`, each with 
 
 Forms use react-hook-form with a Zod schema from `src/lib/validations`. The matching server action lives in `src/actions`, is built with `actionClient` from `@/lib/actions/safe-action` (next-safe-action) and validates the same schema via `.inputSchema()`.
 
+An action never mails an address the client hands it. The contact form submits the `_key` of the chosen receiver, and `sendContactForm` looks the address up in the published contact page (`contactReceiversQuery`, tagged `contact`, which the revalidation webhook expires) and refuses a key the page does not list (WEB-410). The props of a client component end up in the HTML and the RSC payload, so a query that feeds one projects only the fields it shows: `contactPageQuery` keeps the receivers' key and name, not their address.
+
 ## Testing
 
 Vitest splits this app into two projects, defined in `vitest.config.ts`, by file extension: `.test.tsx` anywhere under `src/` runs in the `dom` project (jsdom); `.test.ts` runs in `node`, except under `src/components/**` and `src/hooks/**`, which also run in `dom`.

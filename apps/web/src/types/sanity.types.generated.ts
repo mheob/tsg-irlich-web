@@ -2796,7 +2796,7 @@ export type AccessibilityPageQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/contact.ts
 // Variable: contactPageQuery
-// Query: *[_type == 'contact'][0] {		...,		content {			...,			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
+// Query: *[_type == 'contact'][0] {		...,		content {			...,			receiver[] { _key, name },			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type ContactPageQueryResult = {
   _id: string;
   _type: "contact";
@@ -2809,11 +2809,10 @@ export type ContactPageQueryResult = {
   heroImage: ExtendedImage;
   meta?: MetaFields;
   content: {
-    receiver: Array<
-      {
-        _key: string;
-      } & ContactNameMail
-    >;
+    receiver: Array<{
+      _key: string;
+      name: string;
+    }>;
     contactPersonsSection: {
       title: string;
       subtitle: string;
@@ -2832,6 +2831,15 @@ export type ContactPageQueryResult = {
     };
   };
 } | null;
+
+// Source: src/lib/sanity/queries/pages/contact.ts
+// Variable: contactReceiversQuery
+// Query: *[_type == 'contact'][0].content.receiver[] { _key, email, name }
+export type ContactReceiversQueryResult = Array<{
+  _key: string;
+  email: string;
+  name: string;
+}> | null;
 
 // Source: src/lib/sanity/queries/pages/contact.ts
 // Variable: contactHeroImageQuery
@@ -5159,7 +5167,8 @@ declare global {
     '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
     "*[_type == 'aboutUs'][0].heroImage": AboutUsHeroImageQueryResult;
     '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': AccessibilityPageQueryResult;
-    '\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
+    '\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\treceiver[] { _key, name },\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
+    "*[_type == 'contact'][0].content.receiver[] { _key, email, name }": ContactReceiversQueryResult;
     "*[_type == 'contact'][0].heroImage": ContactHeroImageQueryResult;
     "\n\t*[_type == 'echoOverview'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t\tintro,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n": EchoOverviewPageQueryResult;
     '\n\t*[_type == \'newsOverview\'][0].content.contactPersonsSection {\n\t\t...,\n\t\tcontactPersons[]-> {\n\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t}\n\t}\n': EchoContactPersonsQueryResult;
