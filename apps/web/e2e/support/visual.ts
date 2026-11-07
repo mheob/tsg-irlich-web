@@ -36,10 +36,11 @@ const FREEZE_UI = `
  * frames while timers keep firing, so the number looks settled at 97% of its target — which is
  * exactly how CI captured `58+` against a baseline holding `60+`.
  *
- * An observer that never reports leaves the counters at the value the server rendered, and that
- * value is the same in every run. `useInView` in `number-ticker.tsx` is the only intersection
- * observer the application uses today; a reveal-on-scroll pattern added later would be captured in
- * its hidden state and needs this stub revisited.
+ * An observer that never reports leaves the counters at the value the server rendered, which is
+ * their final value: `number-ticker.tsx` only resets a counter to its start value when the first
+ * report finds it off screen. The observer in `number-ticker.tsx` is the only one the application
+ * uses today; a reveal-on-scroll pattern added later would be captured in its hidden state and
+ * needs this stub revisited.
  */
 const SILENCE_OBSERVED_ELEMENTS = `
 	class SilentIntersectionObserver {
