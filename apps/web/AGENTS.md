@@ -80,6 +80,9 @@ Every content image comes from Sanity (WEB-389); the app ships no content image 
 - `siteImagesQuery` serves the three vision images (home and club page), the three images next to the contact form (home and contact page) and the fallback image of the offer cards and heroes. `resolveSectionImages` (`src/utils/section-images.ts`) keeps every image at its position, so a missing one leaves its place empty.
 - An image without a file never breaks a page; the component leaves it out. The one exception is a person's portrait: `Portrait` (`src/components/ui/portrait.tsx`) shows the initials in its place. It is a server component, so the circle has its final size from the first paint, and the author box, the wide article preview and the contact persons all go through it.
 - Every page with a hero image except home hands it to `getPageMetadata` as `image`, so it becomes the preview image when `meta.openGraphImage` is empty.
+- Sanity delivers every image as WebP (`fm=webp`), whatever was uploaded (WEB-411). The optimizer re-encodes it to AVIF or WebP anyway, but it fetches the source first, and the home hero's PNG source shrinks from 2.8 MB to about 386 KB. Open graph and JSON-LD images go through `urlForSharedImage` instead, which crops the same way but asks for JPEG: other services read them, and not every one of them reads WebP.
+- A hero is the largest contentful paint of its page, so `Hero` and the home hero load their image with `loading="eager"` and `fetchPriority="high"`. Next.js 16 recommends that pair over `preload`, which neither sets `fetchpriority` nor suits an image whose role depends on the viewport. Every other image loads lazily: an image that is `hidden` on a phone (the club intro, the circles next to the contact form) must not be preloaded, or the phone downloads it anyway, and `Gallery` gives its first image priority only when the caller sets `isAboveTheFold`.
+- An image with `fill` needs `sizes`, or its `srcset` is chosen for `100vw` and a card a third of the screen wide downloads a full-width file. Write the breakpoints in `rem` as Tailwind does (`(min-width: 48rem) 50vw, 100vw`), and request a Sanity source at least as wide as the widest candidate on a sharp screen: the optimizer never scales up.
 
 ## Structured data
 
@@ -229,7 +232,7 @@ A `vi.fn()` created inside a `vi.mock(import('…'), factory)` is not reset by `
 
 `@testing-library/jest-dom` is not installed — there is no `toBeInTheDocument()`/`toHaveAttribute()`; use `.toBeNull()`/`.not.toBeNull()` and plain attribute checks instead (see `badge.test.tsx`).
 
-No animation prop (`initial`, `animate`, `transition`, `layoutId`, …) is ever observable through the `motion/react` mock, regardless of what a hook like `useReducedMotion` returns; `next/image`'s Next-only props (`fill`, `preload`, `sizes`, `loader`, `placeholder`, `blurDataURL`) are silently dropped rather than forwarded. Both are real, harness-imposed coverage gaps, not something to work around.
+No animation prop (`initial`, `animate`, `transition`, `layoutId`, …) is ever observable through the `motion/react` mock, regardless of what a hook like `useReducedMotion` returns; `next/image`'s Next-only props (`fill`, `preload`, `sizes`, `loader`, `placeholder`, `blurDataURL`) are silently dropped rather than forwarded. Both are real, harness-imposed coverage gaps, not something to work around. `loading` and `fetchPriority` are standard attributes and do reach the `<img>`, but only as given: the stand-in has no `lazy` default, so a lazy image shows no `loading` attribute at all.
 
 Assert what a user can observe — role, label, text, accessible name, href — never a class name and never a test-only `data-testid`.
 

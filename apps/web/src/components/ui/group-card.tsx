@@ -9,7 +9,15 @@ import type { AnyImage } from '@/types/sanity.types';
 
 const getFirstLetter = (title: string) => title.charAt(0).toUpperCase();
 
-const IMAGE_SIZE = { height: 270, width: 480 };
+/**
+ * The source the optimizer scales from: a card spans the full width of a phone, which takes about
+ * 1,100 px on a sharp screen. The optimizer never scales an image up, so a smaller source caps every
+ * width the browser picks.
+ */
+const IMAGE_SIZE = { height: 675, width: 1200 };
+
+/** One column, two from `md`, three from `xl`, as the grids of the offer pages lay the cards out. */
+const IMAGE_SIZES = '(min-width: 80rem) 33vw, (min-width: 48rem) 50vw, 100vw';
 
 interface GroupCardProps {
 	/** The image of the site settings that stands in when the card has none with a file. */
@@ -41,7 +49,15 @@ export function GroupCard({
 	return (
 		<article className="relative aspect-video shadow-lg transition-transform duration-200 hover:scale-105">
 			<div className="absolute inset-0 z-[-1] rounded-xl bg-black/50" />
-			{src && <Image alt={title} className="absolute inset-0 z-[-2] rounded-xl" src={src} fill />}
+			{src && (
+				<Image
+					alt={title}
+					className="absolute inset-0 z-[-2] rounded-xl"
+					sizes={IMAGE_SIZES}
+					src={src}
+					fill
+				/>
+			)}
 
 			<Link aria-label={`Mehr über "${title}" erfahren`} href={href}>
 				<div className="flex h-full flex-row items-end justify-between p-6">

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { urlForImage } from '@/lib/sanity/utils';
+import { urlForSharedImage } from '@/lib/sanity/utils';
 import type { AnyImage } from '@/types/image.types';
 
 type OpenGraph = NonNullable<Metadata['openGraph']>;
@@ -44,7 +44,11 @@ function getOpenGraphImageOptions(image?: AnyImage | null, title?: string | null
 		return undefined;
 	}
 
-	const imageUrl = urlForImage(image, OPEN_GRAPH_IMAGE_SIZE.height, OPEN_GRAPH_IMAGE_SIZE.width);
+	const imageUrl = urlForSharedImage(
+		image,
+		OPEN_GRAPH_IMAGE_SIZE.height,
+		OPEN_GRAPH_IMAGE_SIZE.width,
+	);
 
 	if (!imageUrl) {
 		return undefined;

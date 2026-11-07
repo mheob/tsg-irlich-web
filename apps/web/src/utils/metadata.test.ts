@@ -77,6 +77,14 @@ describe('open graph image options', () => {
 		expect(url).toContain('fit=crop');
 	});
 
+	it('requests the image as JPEG, which every social platform reads', async () => {
+		const { getOpenGraphImageOptions } = await loadMetadata();
+
+		const url = imageUrlOf(getOpenGraphImageOptions(buildImage(), 'Sommerfest'));
+
+		expect(new URL(url).searchParams.get('fm')).toBe('jpg');
+	});
+
 	it('prefers the alt text of the image', async () => {
 		const { getOpenGraphImageOptions } = await loadMetadata();
 

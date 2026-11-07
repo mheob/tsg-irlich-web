@@ -124,22 +124,41 @@ export function ContactForm({ images, receiver }: Readonly<ContactFormProps>) {
 						</div>
 					) : (
 						<>
+							{/* Shown from `lg` only, where every circle has a fixed size: `sizes` names it. */}
 							<div className="hidden lg:relative lg:block lg:w-1/2">
 								{large && (
 									<div className="absolute top-0 right-0 grid size-60 place-content-center rounded-full bg-secondary lg:size-80">
-										<Image alt={large.alt} className="rounded-full" src={large.src} fill />
+										<Image
+											alt={large.alt}
+											className="rounded-full"
+											sizes="20rem"
+											src={large.src}
+											fill
+										/>
 									</div>
 								)}
 
 								{medium && (
 									<div className="absolute top-[42%] right-[calc(60%-8rem)] grid size-64 place-content-center rounded-full bg-secondary">
-										<Image alt={medium.alt} className="rounded-full" src={medium.src} fill />
+										<Image
+											alt={medium.alt}
+											className="rounded-full"
+											sizes="16rem"
+											src={medium.src}
+											fill
+										/>
 									</div>
 								)}
 
 								{small && (
 									<div className="absolute right-[calc(30%-8rem)] bottom-0 grid size-52 place-content-center rounded-full bg-secondary">
-										<Image alt={small.alt} className="rounded-full" src={small.src} fill />
+										<Image
+											alt={small.alt}
+											className="rounded-full"
+											sizes="13rem"
+											src={small.src}
+											fill
+										/>
 									</div>
 								)}
 							</div>

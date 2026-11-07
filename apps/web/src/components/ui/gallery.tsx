@@ -21,7 +21,7 @@ function GalleryThumbnail({
 	hasRoundedCorners,
 	image,
 	index,
-	isPreloaded = false,
+	isPriority = false,
 	sizes,
 }: Readonly<GalleryThumbnailProps>) {
 	return (
@@ -32,10 +32,11 @@ function GalleryThumbnail({
 			<Image
 				alt={image.alt}
 				className="object-cover transition-transform duration-300 hover:scale-105"
+				fetchPriority={isPriority ? 'high' : undefined}
+				loading={isPriority ? 'eager' : undefined}
 				sizes={sizes}
 				src={image.src}
 				fill
-				preload={isPreloaded}
 			/>
 		</LightboxTrigger>
 	);
@@ -45,7 +46,13 @@ function GalleryThumbnail({
 //
 // Up to three images keep the bespoke layouts of the group pages (single hero, side by side, hero
 // plus two). Everything above that falls back to a uniform responsive grid.
-function Gallery({ className, hasRoundedCorners = true, images, title }: Readonly<GalleryProps>) {
+function Gallery({
+	className,
+	hasRoundedCorners = true,
+	images,
+	isAboveTheFold = false,
+	title,
+}: Readonly<GalleryProps>) {
 	if (images.length === 0) {
 		return null;
 	}
@@ -67,8 +74,8 @@ function Gallery({ className, hasRoundedCorners = true, images, title }: Readonl
 								hasRoundedCorners={hasRoundedCorners}
 								image={images[0]}
 								index={0}
+								isPriority={isAboveTheFold}
 								sizes={SIZES.full}
-								isPreloaded
 							/>
 						</div>
 					)}
@@ -81,7 +88,7 @@ function Gallery({ className, hasRoundedCorners = true, images, title }: Readonl
 										hasRoundedCorners={hasRoundedCorners}
 										image={image}
 										index={index}
-										isPreloaded={index === 0}
+										isPriority={isAboveTheFold && index === 0}
 										sizes={SIZES.half}
 									/>
 								</div>
@@ -96,8 +103,8 @@ function Gallery({ className, hasRoundedCorners = true, images, title }: Readonl
 									hasRoundedCorners={hasRoundedCorners}
 									image={images[0]}
 									index={0}
+									isPriority={isAboveTheFold}
 									sizes={SIZES.hero}
-									isPreloaded
 								/>
 							</div>
 
@@ -122,7 +129,7 @@ function Gallery({ className, hasRoundedCorners = true, images, title }: Readonl
 										hasRoundedCorners={hasRoundedCorners}
 										image={image}
 										index={index}
-										isPreloaded={index === 0}
+										isPriority={isAboveTheFold && index === 0}
 										sizes={SIZES.third}
 									/>
 								</div>
@@ -140,6 +147,12 @@ interface GalleryProps {
 	/** Whether the thumbnails are rendered with rounded corners. */
 	hasRoundedCorners?: boolean;
 	images: GalleryImage[];
+	/**
+	 * Whether the gallery opens the page, so that its first image may be the largest contentful
+	 * paint. That image is then loaded at once and with high priority; every other one waits until it
+	 * nears the viewport. Off by default, since a gallery usually sits further down.
+	 */
+	isAboveTheFold?: boolean;
 	title?: string;
 }
 
@@ -147,7 +160,8 @@ interface GalleryThumbnailProps {
 	hasRoundedCorners: boolean;
 	image: GalleryImage;
 	index: number;
-	isPreloaded?: boolean;
+	/** Loads the image at once and with high priority instead of lazily. */
+	isPriority?: boolean;
 	sizes: string;
 }
 

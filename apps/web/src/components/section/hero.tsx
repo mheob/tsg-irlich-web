@@ -24,10 +24,14 @@ export function Hero({ children, image, subTitle, title, ...props }: Readonly<He
 			)}
 			{...props}
 		>
+			{/* The hero opens every page that has one and is its largest contentful paint, so the
+			    browser fetches it at once and ahead of everything else instead of lazily. */}
 			{image?.alt && image.src && (
 				<Image
 					alt={image.alt}
 					className="absolute inset-0 -z-10 object-cover"
+					fetchPriority="high"
+					loading="eager"
 					src={image.src}
 					style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
 					fill

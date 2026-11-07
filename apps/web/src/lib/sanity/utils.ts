@@ -1,4 +1,5 @@
 import { createImageUrlBuilder } from '@sanity/image-url';
+import type { ImageFormat } from '@sanity/image-url';
 
 import type { SanityImage, SanityImageReference } from '@/types/sanity.types';
 
@@ -66,10 +67,55 @@ const imageBuilder = createImageUrlBuilder(client);
 const SOURCE_QUALITY = 90;
 
 /**
- * Generates a URL for a Sanity image with optional dimensions.
+ * The format Sanity delivers the images of the website in.
  *
- * The format is intentionally left to Sanity (and therefore matches the source asset), because the
- * Next.js image optimizer converts the image to AVIF or WebP before it reaches the browser.
+ * WebP, whatever the editors uploaded: the Next.js image optimizer still re-encodes every image to
+ * AVIF or WebP, but it first has to fetch the source, and the browser loads the pages of a TSG-Echo
+ * issue straight from the Sanity CDN. A PNG of 2.8 MB, the source of the home hero, arrives as about
+ * 386 KB, which shortens every uncached first request.
+ */
+const SOURCE_FORMAT = 'webp' satisfies ImageFormat;
+
+/**
+ * The format of the images other services fetch: open graph previews and structured data. Not every
+ * social platform reads WebP, while every one reads JPEG, and the size of these images never
+ * reaches a visitor.
+ */
+const SHARED_FORMAT = 'jpg' satisfies ImageFormat;
+
+/**
+ * Builds the URL of a Sanity image in the given format: cropped when a height is given, otherwise
+ * scaled to fit its own aspect ratio.
+ *
+ * @param image - The Sanity image object to generate a URL for
+ * @param format - The format Sanity converts the image to
+ * @param size - The height to crop to, and the width, which defaults to the height
+ * @param size.height - The height to crop to; without it the image is not cropped
+ * @param size.width - The width to crop to
+ * @returns A URL string for the processed image, or undefined if image is invalid
+ */
+function buildImageUrl(
+	image: null | SanityImage | SanityImageReference | undefined,
+	format: ImageFormat,
+	{ height, width }: { height?: number; width?: number },
+): string | undefined {
+	if (!image?.asset?._ref) {
+		return undefined;
+	}
+	return height
+		? imageBuilder
+				.image(image)
+				.width(width ?? height)
+				.height(height)
+				.fit('crop')
+				.format(format)
+				.quality(SOURCE_QUALITY)
+				.url()
+		: imageBuilder.image(image).fit('max').format(format).quality(SOURCE_QUALITY).url();
+}
+
+/**
+ * Generates a URL for a Sanity image with optional dimensions, as WebP.
  *
  * @param image - The Sanity image object to generate a URL for
  * @param height - Optional height to resize the image to
@@ -92,20 +138,27 @@ const urlForImage = (
 	image: null | SanityImage | SanityImageReference | undefined,
 	height?: number,
 	width?: number,
-): string | undefined => {
-	if (!image?.asset?._ref) {
-		return undefined;
-	}
-	return height
-		? imageBuilder
-				.image(image)
-				.width(width ?? height)
-				.height(height)
-				.fit('crop')
-				.quality(SOURCE_QUALITY)
-				.url()
-		: imageBuilder.image(image).fit('max').quality(SOURCE_QUALITY).url();
-};
+): string | undefined => buildImageUrl(image, SOURCE_FORMAT, { height, width });
+
+/**
+ * Generates a URL for a Sanity image that another service fetches, an open graph preview or the
+ * image of structured data. It is cropped like {@link urlForImage}, but delivered as JPEG.
+ *
+ * @param image - The Sanity image object to generate a URL for
+ * @param height - The height to crop the image to
+ * @param width - The width to crop the image to
+ * @returns A URL string for the processed image, or undefined if image is invalid
+ *
+ * @example
+ * ```ts
+ * const openGraphUrl = urlForSharedImage(sanityImage, 630, 1200);
+ * ```
+ */
+const urlForSharedImage = (
+	image: null | SanityImage | SanityImageReference | undefined,
+	height: number,
+	width: number,
+): string | undefined => buildImageUrl(image, SHARED_FORMAT, { height, width });
 
 /**
  * Generates a URL for a Sanity image that is scaled down to fit a maximum width.
@@ -129,7 +182,13 @@ const urlForImageMax = (
 	if (!image?.asset?._ref) {
 		return undefined;
 	}
-	return imageBuilder.image(image).width(maxWidth).fit('max').quality(SOURCE_QUALITY).url();
+	return imageBuilder
+		.image(image)
+		.width(maxWidth)
+		.fit('max')
+		.format(SOURCE_FORMAT)
+		.quality(SOURCE_QUALITY)
+		.url();
 };
 
-export { getDownloadFileUrl, getFileSize, urlForImage, urlForImageMax };
+export { getDownloadFileUrl, getFileSize, urlForImage, urlForImageMax, urlForSharedImage };

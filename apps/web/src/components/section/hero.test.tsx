@@ -20,6 +20,16 @@ describe('the hero of a page', () => {
 		);
 	});
 
+	it('loads the image at once and with high priority, as the largest paint of the page', () => {
+		const { getByRole } = renderWithUser(
+			<Hero image={{ alt: 'Ein Büro', src: 'https://cdn.sanity.io/hero.webp' }} title="Kontakt" />,
+		);
+
+		const image = getByRole('img', { name: 'Ein Büro' });
+		expect(image.getAttribute('loading')).toBe('eager');
+		expect(image.getAttribute('fetchpriority')).toBe('high');
+	});
+
 	it('positions the image at the hotspot it is given', () => {
 		const { getByRole } = renderWithUser(
 			<Hero

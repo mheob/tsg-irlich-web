@@ -43,7 +43,6 @@ function Intro({ content }: Readonly<IntroProps>) {
 								sizes="(min-width: 1024px) 50vw, 100vw"
 								src={mainImage.src}
 								fill
-								preload
 							/>
 						</LightboxTrigger>
 					</div>
