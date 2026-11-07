@@ -2,7 +2,7 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
-import { useId, useMemo } from 'react';
+import { use, useId, useLayoutEffect, useMemo, useState } from 'react';
 import type { ComponentProps, ReactElement } from 'react';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
@@ -29,7 +29,8 @@ function FormField<
 
 function FormItem({ className, ...props }: ComponentProps<'div'>) {
 	const id = useId();
-	const value = useMemo(() => ({ id }), [id]);
+	const [hasDescription, setHasDescription] = useState(false);
+	const value = useMemo(() => ({ hasDescription, id, setHasDescription }), [hasDescription, id]);
 
 	return (
 		<FormItemContext value={value}>
@@ -53,14 +54,18 @@ function FormLabel({ className, ...props }: ComponentProps<typeof Label>) {
 }
 
 // Hands the field's id and its error wiring to whatever control it wraps, without rendering an
-// element of its own — `children` is the element Base UI renders.
+// element of its own — `children` is the element Base UI renders. `aria-describedby` names only
+// what is on the page: the description once one has mounted, the message while there is one.
 function FormControl({ children, ...props }: Readonly<FormControlProps>) {
-	const { error, formDescriptionId, formItemId, formMessageId } = useFormField();
+	const { error, formDescriptionId, formItemId, formMessageId, hasDescription } = useFormField();
+	const describedBy = [hasDescription && formDescriptionId, error?.message && formMessageId]
+		.filter(Boolean)
+		.join(' ');
 
 	return useRender({
 		props: mergeProps(
 			{
-				'aria-describedby': error ? `${formDescriptionId} ${formMessageId}` : formDescriptionId,
+				'aria-describedby': describedBy || undefined,
 				'aria-invalid': Boolean(error),
 				'data-slot': 'form-control',
 				id: formItemId,
@@ -73,6 +78,16 @@ function FormControl({ children, ...props }: Readonly<FormControlProps>) {
 
 function FormDescription({ className, ...props }: ComponentProps<'p'>) {
 	const { formDescriptionId } = useFormField();
+	const setHasDescription = use(FormItemContext)?.setHasDescription;
+
+	// A layout effect, so the control is described before the browser paints the hydrated form. The
+	// server markup cannot know about a sibling yet and leaves the reference out until then.
+	useLayoutEffect(() => {
+		setHasDescription?.(true);
+		return () => {
+			setHasDescription?.(false);
+		};
+	}, [setHasDescription]);
 
 	return (
 		<p

@@ -6,7 +6,7 @@ import type { PopularSearches } from '@/lib/search/popular';
 
 /** The pill a popular search is drawn as. */
 const CHIP_CLASS_NAME =
-	'inline-flex items-center rounded-full border-2 border-primary px-3 py-1.5 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none motion-reduce:transition-none';
+	'inline-flex items-center rounded-full border-2 border-primary px-3 py-1.5 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:outline-none motion-reduce:transition-none';
 
 const LINK_CLASS_NAME =
 	'text-sm font-semibold text-primary-light underline underline-offset-4 hover:text-primary focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:text-base';

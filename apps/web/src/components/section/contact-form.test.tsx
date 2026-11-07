@@ -1,9 +1,11 @@
+import { within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { sendContactForm } from '@/actions/send-contact-form';
 
 import { renderWithUser } from '../../../test-utils/render';
 import type { RenderWithUserResult } from '../../../test-utils/render';
+import { danglingIdReferences, hydrate, renderOnServer } from '../../../test-utils/ssr';
 import { ContactForm } from './contact-form';
 
 // `contact-form.tsx` imports `sendContactForm` and calls it directly (wrapped in `settle()`), it
@@ -255,5 +257,106 @@ describe('the contact form', () => {
 
 		await expect(findByText('Kein Empfänger ausgewählt.')).resolves.not.toBeNull();
 		expect(mockedSendContactForm).not.toHaveBeenCalled();
+	});
+
+	// `Select.Root` renders no element of its own, so the error wiring has to reach the trigger.
+	it('marks the receiver select as invalid and describes it with the error', async () => {
+		const { findByText, getByRole, user } = renderWithUser(
+			<ContactForm images={CONTACT_IMAGES} receiver={RECEIVERS} />,
+		);
+
+		await user.click(getByRole('button', { name: 'Kontaktiere uns' }));
+		await findByText('Kein Empfänger ausgewählt.');
+
+		const select = getByRole('combobox', {
+			description: 'Kein Empfänger ausgewählt.',
+			name: 'Empfänger',
+		});
+		expect(select.getAttribute('aria-invalid')).toBe('true');
+	});
+
+	it('lets the browser fill in the name and the email address', () => {
+		const { getByRole } = renderForm();
+
+		const name = getByRole('textbox', { name: 'Name' });
+		const email = getByRole('textbox', { name: 'E-Mail' });
+
+		expect(name.getAttribute('autocomplete')).toBe('name');
+		expect(email.getAttribute('autocomplete')).toBe('email');
+		expect(email.getAttribute('type')).toBe('email');
+	});
+
+	it('tells assistive technology that every field is required', () => {
+		const { getByRole } = renderWithUser(
+			<ContactForm images={CONTACT_IMAGES} receiver={RECEIVERS} />,
+		);
+
+		const fields = [
+			getByRole('textbox', { name: 'Name' }),
+			getByRole('textbox', { name: 'E-Mail' }),
+			getByRole('combobox', { name: 'Empfänger' }),
+			getByRole('textbox', { name: 'Nachricht' }),
+			privacyCheckbox(getByRole),
+		];
+
+		expect(fields.map((field) => field.getAttribute('aria-required'))).toStrictEqual(
+			Array.from({ length: fields.length }, () => 'true'),
+		);
+	});
+
+	it('describes a field only with descriptions that are on the page', async () => {
+		const { findByText, getByRole, user } = renderForm();
+		const name = getByRole('textbox', { name: 'Name' });
+
+		expect(name.getAttribute('aria-describedby')).toBeNull();
+
+		await user.click(getByRole('button', { name: 'Kontaktiere uns' }));
+		await findByText('Der Name muss mindestens 2 Zeichen lang sein.');
+
+		expect(
+			getByRole('textbox', {
+				description: 'Der Name muss mindestens 2 Zeichen lang sein.',
+				name: 'Name',
+			}),
+		).toBe(name);
+		for (const field of [
+			name,
+			getByRole('textbox', { name: 'Nachricht' }),
+			privacyCheckbox(getByRole),
+		]) {
+			expect(danglingIdReferences(field)).toStrictEqual([]);
+		}
+	});
+
+	it('marks an empty field as invalid once the form was submitted', async () => {
+		const { findByText, getByRole, user } = renderForm();
+
+		await user.click(getByRole('button', { name: 'Kontaktiere uns' }));
+		await findByText('Der Name muss mindestens 2 Zeichen lang sein.');
+
+		expect(getByRole('textbox', { name: 'Name' }).getAttribute('aria-invalid')).toBe('true');
+	});
+
+	// A submission before hydration would otherwise go out as the browser's default, a GET with
+	// name, address and message in the URL, and from there into the history and the server logs.
+	it('posts the form, never sending the entries in the URL', () => {
+		const { getByRole } = renderForm();
+
+		expect(getByRole('button', { name: 'Kontaktiere uns' }).closest('form')?.method).toBe('post');
+	});
+
+	it('only lets the form be sent once it is hydrated', () => {
+		const form = <ContactForm images={CONTACT_IMAGES} receiver={RECEIVERS} />;
+		const container = renderOnServer(form);
+		const submit = () => within(container).getByRole('button', { name: 'Kontaktiere uns' });
+
+		expect(submit().hasAttribute('disabled')).toBe(true);
+
+		const root = hydrate(container, form);
+
+		expect(root.onRecoverableError).not.toHaveBeenCalled();
+		expect(submit().hasAttribute('disabled')).toBe(false);
+
+		root.unmount();
 	});
 });

@@ -11,7 +11,7 @@ function ComboboxInput({ className, ...props }: ComponentProps<typeof BaseCombob
 		<BaseCombobox.InputGroup className="relative w-full" data-slot="combobox-input-group">
 			<BaseCombobox.Input
 				className={cn(
-					'flex w-full rounded-md border border-input bg-background-high-contrast py-2 pr-10 pl-4 text-base shadow-sm transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 md:text-lg',
+					'flex w-full rounded-md border border-input bg-background-high-contrast py-2 pr-10 pl-4 text-base shadow-sm transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-lg',
 					className,
 				)}
 				data-slot="combobox-input"

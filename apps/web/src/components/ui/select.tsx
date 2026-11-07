@@ -25,7 +25,7 @@ function SelectTrigger({
 	return (
 		<BaseSelect.Trigger
 			className={cn(
-				'flex w-full items-center justify-between gap-2 rounded-md border border-input bg-background-high-contrast px-4 py-2 text-base whitespace-nowrap shadow-sm transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-disabled:cursor-not-allowed data-disabled:opacity-50 data-placeholder:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 md:text-lg [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4 [&_svg:not([class*="text-"])]:text-muted-foreground',
+				'flex w-full items-center justify-between gap-2 rounded-md border border-input bg-background-high-contrast px-4 py-2 text-base whitespace-nowrap shadow-sm transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:inset-ring-2 aria-invalid:inset-ring-destructive-foreground data-disabled:cursor-not-allowed data-disabled:opacity-50 data-placeholder:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 md:text-lg [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4 [&_svg:not([class*="text-"])]:text-muted-foreground',
 				className,
 			)}
 			data-slot="select-trigger"
@@ -151,6 +151,7 @@ function SelectWithLabel({
 	field,
 	onValueChange,
 	placeholder,
+	required,
 	selectItems,
 	wrapperClassName,
 	...props
@@ -158,27 +159,30 @@ function SelectWithLabel({
 	return (
 		<FormItem className={wrapperClassName}>
 			<FormLabel>{children}</FormLabel>
-			<FormControl>
-				<Select
-					{...props}
-					// `items` is what makes `SelectValue` render the item's label rather than its raw value.
-					items={selectItems}
-					// oxlint-disable-next-line typescript/no-unsafe-assignment
-					onValueChange={onValueChange ?? field?.onChange}
-					value={field?.value}
-				>
-					<SelectTrigger>
+			<Select
+				{...props}
+				// `items` is what makes `SelectValue` render the item's label rather than its raw value.
+				items={selectItems}
+				// oxlint-disable-next-line typescript/no-unsafe-assignment
+				onValueChange={onValueChange ?? field?.onChange}
+				required={required}
+				value={field?.value}
+			>
+				{/* `Select` renders no element of its own, so the id, the error state and the
+				    descriptions go onto the trigger, the control a user operates (WEB-418). */}
+				<FormControl>
+					<SelectTrigger aria-required={required}>
 						<SelectValue placeholder={placeholder} />
 					</SelectTrigger>
-					<SelectContent>
-						{selectItems.map(({ label, value }) => (
-							<SelectItem key={value} value={value}>
-								{label}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
-			</FormControl>
+				</FormControl>
+				<SelectContent>
+					{selectItems.map(({ label, value }) => (
+						<SelectItem key={value} value={value}>
+							{label}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
 			<FormMessage />
 		</FormItem>
 	);

@@ -33,6 +33,24 @@ const STATIC_ROUTES = [
 ];
 
 /**
+ * The two forms in the state the route scans never reach: submitted empty, with every error
+ * message, the invalid marking and the descriptions the fields point at (WEB-418). Each is keyed by
+ * its route, since it is the same page.
+ */
+const FORM_ERROR_STATES = [
+	{
+		error: 'Der Name muss mindestens 2 Zeichen lang sein.',
+		route: '/kontakt',
+		submit: 'Kontaktiere uns',
+	},
+	{
+		error: 'Der Titel muss mindestens 5 Zeichen lang sein',
+		route: '/kontakt/feedback',
+		submit: 'Feedback senden',
+	},
+];
+
+/**
  * axe's `page-has-heading-one` only asks for at least one `h1`. A page carries exactly one: the
  * hero's title, or the content's own headline where the hero steps back (a group, an article).
  *
@@ -98,6 +116,22 @@ test.describe('accessibility', () => {
 
 		await expectNoAxeViolations(page, testInfo, 'search panel');
 	});
+
+	// The submit button stays disabled until the form is hydrated, so the click waits for that, and
+	// the errors come from react-hook-form on the client.
+	for (const { error, route, submit } of FORM_ERROR_STATES) {
+		test(`meets WCAG 2.1 AA on the form of ${route} submitted empty`, async ({
+			page,
+		}, testInfo) => {
+			await page.goto(route);
+			await waitForPage(page);
+
+			await page.getByRole('button', { name: submit }).click();
+			await expect(page.getByText(error)).toBeVisible();
+
+			await expectNoAxeViolations(page, testInfo, route);
+		});
+	}
 
 	// The dynamic routes are reached by clicking through, not by a hard-coded slug: the recorded
 	// fixtures are re-recorded from the live dataset, and a slug that disappears would turn a

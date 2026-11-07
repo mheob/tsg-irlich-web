@@ -212,7 +212,7 @@ export function ScreenshotUpload({
 			<label
 				className={cn(
 					// The input inside is only visually hidden, so the ring shows where keyboard focus is
-					`relative flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors has-focus-visible:border-ring has-focus-visible:ring-[3px] has-focus-visible:ring-ring/50`,
+					`relative flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors has-focus-visible:border-ring has-focus-visible:ring-[3px] has-focus-visible:ring-ring`,
 					isDragging
 						? 'border-primary bg-primary/5'
 						: `border-muted-foreground/25 hover:border-muted-foreground/50`,
@@ -262,8 +262,10 @@ export function ScreenshotUpload({
 								fill
 							/>
 							<button
-								aria-label={`Remove screenshot ${index + 1}`}
-								className="absolute top-1 right-1 rounded-full bg-destructive p-1 text-destructive-foreground opacity-0 transition-opacity group-hover:opacity-100"
+								aria-label={`Screenshot ${index + 1} entfernen`}
+								// Hidden until hover only where a mouse can hover; a touch screen and the keyboard
+								// always see it (WEB-418).
+								className="absolute top-1 right-1 rounded-full bg-destructive p-1 text-destructive-foreground transition-opacity pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100 pointer-fine:focus-visible:opacity-100"
 								onClick={() => {
 									removeUrl(url);
 								}}
@@ -294,6 +296,7 @@ export function ScreenshotUpload({
 							</div>
 							{file.progress === 'error' && (
 								<button
+									aria-label={`Fehlgeschlagenen Upload ${file.name} entfernen`}
 									className="absolute top-1 right-1 rounded-full bg-destructive p-1 text-destructive-foreground"
 									onClick={() => {
 										removeUploading(file.id);
