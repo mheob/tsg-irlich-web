@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test';
 
-import { previousPathsField, previousSlugsField } from './slug-history';
+import { previousArticleSlugsField, previousPathsField, previousSlugsField } from './slug-history';
 
 interface HistoryError {
 	readonly message: string;
@@ -18,6 +18,8 @@ interface FakeRule {
 }
 
 const SLUG_MESSAGE = 'Bitte nur den Slug eintragen, z. B. kurse';
+const ARTICLE_MESSAGE =
+	'Bitte nur den Slug ohne /news und Kategorie eintragen, z. B. heimsieg-gegen-engers';
 const PATH_MESSAGE = 'Bitte Abteilung und Gruppe ohne /angebot eintragen, z. B. kurse/yoga';
 
 // The validation is a single `Rule.custom` on the array, so a rule that hands the function back is
@@ -73,6 +75,44 @@ describe('previous slugs field', () => {
 
 	it('rejects an empty entry', () => {
 		expect(validate([''])).toStrictEqual([{ message: SLUG_MESSAGE, path: [0] }]);
+	});
+});
+
+describe('previous article slugs field', () => {
+	const validate = getValidator(previousArticleSlugsField);
+
+	it('is the same field as the history of the other types', () => {
+		expect(previousArticleSlugsField.name).toBe('previousSlugs');
+		expect(previousArticleSlugsField.title).toBe('Frühere Slugs');
+	});
+
+	it('accepts a slug as the website writes it', () => {
+		expect(validate(['heimsieg-engers'])).toBe(true);
+	});
+
+	// Until WEB-421 no rule kept capitals out of an article slug, and their links have to redirect.
+	it('accepts a former slug with capitals', () => {
+		expect(validate(['Einladung-JHV-2026', 'niederlage-heimbach-II'])).toBe(true);
+	});
+
+	it('accepts an empty list and a field that was never filled in', () => {
+		expect(validate([])).toBe(true);
+		expect(validate()).toBe(true);
+	});
+
+	it('rejects the path of the article, which never matches a slug', () => {
+		expect(validate(['/news/fussball/heimsieg-engers', 'fussball/heimsieg-engers'])).toStrictEqual([
+			{ message: ARTICLE_MESSAGE, path: [0] },
+			{ message: ARTICLE_MESSAGE, path: [1] },
+		]);
+	});
+
+	it('rejects spaces, umlauts and an empty entry', () => {
+		expect(validate(['heimsieg engers', 'fußball', ''])).toStrictEqual([
+			{ message: ARTICLE_MESSAGE, path: [0] },
+			{ message: ARTICLE_MESSAGE, path: [1] },
+			{ message: ARTICLE_MESSAGE, path: [2] },
+		]);
 	});
 });
 

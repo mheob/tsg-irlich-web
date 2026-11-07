@@ -16,6 +16,7 @@ import { SelectWithLabel } from '@/components/ui/select';
 import { TextareaWithLabel } from '@/components/ui/textarea';
 import { ErrorAlert, Form, FormField, SuccessAlert } from '@/components/with-logic/form';
 import { CONTACT_FORM_TITLE } from '@/constants/contact-form';
+import { useIsHydrated } from '@/hooks/use-is-hydrated';
 import { contactFormSchema, contactFormWithReceiverSchema } from '@/lib/validations/contact-form';
 import type { ContactFormData } from '@/lib/validations/contact-form';
 import type { ResolvedImage } from '@/types/image.types';
@@ -56,6 +57,7 @@ export function ContactForm({
 	const [large, medium, small] = images;
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitResult, setSubmitResult] = useState<SubmitResult>(null);
+	const isHydrated = useIsHydrated();
 
 	const titleLevel = isTitleHeading ? 'h2' : 'div';
 	const selectItems = mapSelectItems(receiver);
@@ -175,7 +177,15 @@ export function ContactForm({
 							</div>
 
 							<Form {...form}>
-								<form className="flex-1" onSubmit={form.handleSubmit(onSubmit)}>
+								{/* Until hydration the submit button is disabled, so the browser never sends the form
+								    itself; `post` keeps the entries out of the URL should it ever do so. `noValidate`
+								    leaves the checks to the schema, which names what is wrong in German. */}
+								<form
+									className="flex-1"
+									method="post"
+									onSubmit={form.handleSubmit(onSubmit)}
+									noValidate
+								>
 									<SectionHeader
 										isCenteredOnDesktop={false}
 										level={titleLevel}
@@ -186,7 +196,12 @@ export function ContactForm({
 									<div className="mt-10 flex flex-col gap-10 md:mt-20">
 										<FormField
 											render={({ field }) => (
-												<InputWithLabel field={field} placeholder="Max Mustermann">
+												<InputWithLabel
+													aria-required="true"
+													autoComplete="name"
+													field={field}
+													placeholder="Max Mustermann"
+												>
 													<UserRound /> Name
 												</InputWithLabel>
 											)}
@@ -196,7 +211,13 @@ export function ContactForm({
 
 										<FormField
 											render={({ field }) => (
-												<InputWithLabel field={field} placeholder="max@mustermann.de">
+												<InputWithLabel
+													aria-required="true"
+													autoComplete="email"
+													field={field}
+													placeholder="max@mustermann.de"
+													type="email"
+												>
 													<Mail /> E-Mail
 												</InputWithLabel>
 											)}
@@ -210,6 +231,7 @@ export function ContactForm({
 													<SelectWithLabel
 														field={{ ...field, value: field.value ?? '' }}
 														placeholder="Wähle eine Empfängergruppe"
+														required
 														selectItems={selectItems}
 														wrapperClassName="w-full"
 													>
@@ -224,6 +246,7 @@ export function ContactForm({
 										<FormField
 											render={({ field }) => (
 												<TextareaWithLabel
+													aria-required="true"
 													description="Wenn du einen Rückruf wünschst, schreib uns deine Telefonnummer in die Nachricht."
 													field={field}
 													placeholder="Hallo liebes Team von der TSG Irlich! Ich wende mich mit folgendem Anliegen an euch..."
@@ -239,7 +262,12 @@ export function ContactForm({
 
 										{submitResult?.error && <ErrorAlert error={submitResult.error} />}
 
-										<Button className="mt-5" disabled={isSubmitting} type="submit" fullWidth>
+										<Button
+											className="mt-5"
+											disabled={isSubmitting || !isHydrated}
+											type="submit"
+											fullWidth
+										>
 											{isSubmitting ? (
 												<>
 													<Loader2 className="mr-2 inline size-6 animate-spin" /> Wird gesendet...

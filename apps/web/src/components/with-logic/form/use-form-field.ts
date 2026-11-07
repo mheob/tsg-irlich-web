@@ -8,6 +8,7 @@ export const useFormField = (): {
 	id: string;
 	error?: FieldError;
 	formDescriptionId: string;
+	hasDescription: boolean;
 	formItemId: string;
 	formMessageId: string;
 	invalid: boolean;
@@ -31,6 +32,7 @@ export const useFormField = (): {
 		formDescriptionId: `${itemContext.id}-form-item-description`,
 		formItemId: `${itemContext.id}-form-item`,
 		formMessageId: `${itemContext.id}-form-item-message`,
+		hasDescription: itemContext.hasDescription,
 		id: itemContext.id,
 		name: fieldContext.name,
 		...fieldState,

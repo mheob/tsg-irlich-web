@@ -203,6 +203,85 @@ describe('publish action with slug history', () => {
 		});
 	});
 
+	describe('for a news article', () => {
+		const props = createProps({
+			draft: { _id: 'drafts.jhv', slug: { current: 'einladung-jhv-2026' } } as never,
+			id: 'jhv',
+			published: { _id: 'jhv', slug: { current: 'Einladung-JHV-2026' } } as never,
+			type: 'news.article',
+		});
+
+		it('remembers the published slug before it publishes', async () => {
+			await click(wrap(props));
+
+			expect(studio.execute).toHaveBeenCalledWith([
+				{ set: { previousSlugs: ['Einladung-JHV-2026'] } },
+			]);
+			expect(calls).toStrictEqual(['patch', 'publish']);
+			expect(studio.fetch).not.toHaveBeenCalled();
+		});
+
+		it('names the former slugs when the history cannot be worked out', async () => {
+			vi.spyOn(console, 'warn').mockReturnValue();
+			const broken = createProps({
+				draft: {
+					_id: 'drafts.jhv',
+					previousSlugs: 'kaputt',
+					slug: { current: 'einladung-jhv-2026' },
+				} as never,
+				id: 'jhv',
+				published: { _id: 'jhv', slug: { current: 'Einladung-JHV-2026' } } as never,
+				type: 'news.article',
+			});
+
+			await click(wrap(broken));
+
+			expect(calls).toStrictEqual(['publish']);
+			expect(studio.pushToast).toHaveBeenCalledExactlyOnceWith(
+				expect.objectContaining({
+					description: 'Bitte unter „Frühere Slugs“ von Hand eintragen.',
+					status: 'warning',
+				}),
+			);
+		});
+	});
+
+	describe('for a news category', () => {
+		it('remembers the published slug before it publishes', async () => {
+			await click(
+				wrap(
+					createProps({
+						draft: { _id: 'drafts.jedermaenner', slug: { current: 'jedermaenner' } } as never,
+						id: 'jedermaenner',
+						published: { _id: 'jedermaenner', slug: { current: 'jedermanner' } } as never,
+						type: 'news.category',
+					}),
+				),
+			);
+
+			expect(studio.execute).toHaveBeenCalledWith([{ set: { previousSlugs: ['jedermanner'] } }]);
+			expect(calls).toStrictEqual(['patch', 'publish']);
+		});
+	});
+
+	describe('for a type without a slug history', () => {
+		it('only publishes', async () => {
+			await click(
+				wrap(
+					createProps({
+						draft: { _id: 'drafts.anna', slug: { current: 'anna' } } as never,
+						id: 'anna',
+						published: { _id: 'anna', slug: { current: 'anne' } } as never,
+						type: 'person',
+					}),
+				),
+			);
+
+			expect(studio.execute).not.toHaveBeenCalled();
+			expect(calls).toStrictEqual(['publish']);
+		});
+	});
+
 	describe('for a group', () => {
 		const movedGroup = createProps({
 			draft: {

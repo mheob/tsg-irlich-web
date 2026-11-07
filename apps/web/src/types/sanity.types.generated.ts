@@ -830,6 +830,7 @@ export type NewsArticle = {
   publishedAt: string;
   title: string;
   slug: Slug;
+  previousSlugs?: Array<string>;
   categories: Array<
     {
       _key: string;
@@ -1090,6 +1091,7 @@ export type NewsCategory = {
   _rev: string;
   title: string;
   slug: Slug;
+  previousSlugs?: Array<string>;
   meta?: MetaFields;
 };
 
@@ -3797,6 +3799,14 @@ export type NewsArticleContentQueryResult = {
   title: string;
 } | null;
 
+// Source: src/lib/sanity/queries/pages/news-article.ts
+// Variable: newsArticleRedirectQuery
+// Query: *[		_type == 'news.article' &&		$slug in previousSlugs &&		defined(slug.current) &&		defined(categories[0]->slug.current) &&		!(_id in path('drafts.**'))	] | order(_updatedAt desc, _id asc)[0] {		"category": categories[0]->slug.current,		"slug": slug.current,	}
+export type NewsArticleRedirectQueryResult = {
+  category: string | null;
+  slug: string;
+} | null;
+
 // Source: src/lib/sanity/queries/pages/news-overview-category.ts
 // Variable: newsOverviewCategoryPageQuery
 // Query: *[_type == 'newsOverviewCategory'][0] {		...,		content {			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			},			emptyCategoryNotice		}	}
@@ -5058,6 +5068,11 @@ export type NewsCategoryQueryResult = {
   } | null;
 } | null;
 
+// Source: src/lib/sanity/queries/shared/news.ts
+// Variable: newsCategoryRedirectQuery
+// Query: *[		_type == 'news.category' &&		$slug in previousSlugs &&		defined(slug.current) &&		!(_id in path('drafts.**'))	] | order(_updatedAt desc, _id asc)[0].slug.current
+export type NewsCategoryRedirectQueryResult = string | null;
+
 // Source: src/lib/sanity/queries/shared/organization.ts
 // Variable: organizationQuery
 // Query: *[_type == 'site-settings'][0] {		contact { email, phone, postalAddress },		socialFields,	}
@@ -5183,6 +5198,7 @@ declare global {
     '\n\t{\n\t\t"membership": *[_type == \'membership\'][0] {\n\t\t\t...,\n\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\tdownloadsSection {\n\t\t\t\t...,\n\t\t\t\tdownloads[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdocument {\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"pricingSection": *[_type == \'home\'][0].content.pricingSection\n\t}\n': MembershipPageQueryResult;
     "\n\t*[_type == 'news-article-page'][0] {\n\t\ttitle,\n\t\tsubtitle,\n\t}\n": NewsArticleHeroQueryResult;
     '\n\t*[_type == \'news.article\' && slug.current == $slug][0] {\n\t\t_updatedAt,\n\t\tauthor -> {\n\t\t\temail,\n\t\t\tfirstName,\n\t\t\timage,\n\t\t\tlastName,\n\t\t\tjobTitle,\n\t\t},\n\t\tbody[] {\n\t\t\t...,\n\t\t\t_type == "blockContent" => { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\t\t_type == "grid" => {\n\t\t\t\titems[] {\n\t\t\t\t\t...,\n\t\t\t\t\t_type == "blockContent" => { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tcategories[] -> {\n\t\t\t"slug": slug.current,\n\t\t\ttitle\n\t\t},\n\t\tdownloads[] {\n\t\t\t_key,\n\t\t\ttitle,\n\t\t\tdocument {\n\t\t\t\tasset -> {\n\t\t\t\t\toriginalFilename,\n\t\t\t\t\tsize,\n\t\t\t\t\turl,\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\texcerpt,\n\t\tfeaturedImage,\n\t\tmeta { metaTitle, metaDescription, openGraphImage},\n\t\tpublishedAt,\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}\n': NewsArticleContentQueryResult;
+    "\n\t*[\n\t\t_type == 'news.article' &&\n\t\t$slug in previousSlugs &&\n\t\tdefined(slug.current) &&\n\t\tdefined(categories[0]->slug.current) &&\n\t\t!(_id in path('drafts.**'))\n\t] | order(_updatedAt desc, _id asc)[0] {\n\t\t\"category\": categories[0]->slug.current,\n\t\t\"slug\": slug.current,\n\t}\n": NewsArticleRedirectQueryResult;
     '\n\t*[_type == \'newsOverviewCategory\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t},\n\t\t\temptyCategoryNotice\n\t\t}\n\t}\n': NewsOverviewCategoryPageQueryResult;
     '\n\t*[_type == \'news.article\' && $category in categories[]->slug.current]\n\t| order(publishedAt desc) [$start..$end] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedForCategoryQueryResult;
     '\n\tcount(*[_type == "news.article" && $category in categories[]->slug.current])\n': NewsArticlesTotalForCategoryQueryResult;
@@ -5210,6 +5226,7 @@ declare global {
     'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
     '{\n\t"categories": *[_type == \'news.category\'] {\n\t\t"articleCount": count(*[_type == \'news.article\' && references(^._id)]),\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}[slug == $current || articleCount > 0] | order(title asc),\n\t"total": count(*[_type == \'news.article\'])\n}': NewsCategoriesQueryResult;
     "\n\t*[_type == 'news.category' && slug.current == $slug][0] {\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n": NewsCategoryQueryResult;
+    "\n\t*[\n\t\t_type == 'news.category' &&\n\t\t$slug in previousSlugs &&\n\t\tdefined(slug.current) &&\n\t\t!(_id in path('drafts.**'))\n\t] | order(_updatedAt desc, _id asc)[0].slug.current\n": NewsCategoryRedirectQueryResult;
     "\n\t*[_type == 'site-settings'][0] {\n\t\tcontact { email, phone, postalAddress },\n\t\tsocialFields,\n\t}\n": OrganizationQueryResult;
     "*[_type == 'site-settings'][0] { visionImages, contactFormImages, fallbackImage }": SiteImagesQueryResult;
     "*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;

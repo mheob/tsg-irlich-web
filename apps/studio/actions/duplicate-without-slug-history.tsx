@@ -14,7 +14,7 @@ function withoutSlugHistory(document: SanityDocumentLike): SanityDocumentLike {
 }
 
 /**
- * Wraps the duplicate action of a department or a group, so the copy starts with an empty slug
+ * Wraps the duplicate action of a document with a slug history, so the copy starts with an empty slug
  * history. The studio's own action takes a `mapDocument` that it runs on the copy before creating
  * it, for a draft as for a version in a release.
  *

@@ -117,7 +117,15 @@ export function FeedbackForm() {
 						<SuccessAlert identifier={submitResult.identifier} />
 					) : (
 						<Form {...form}>
-							<form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+							{/* `Submit` stays disabled until hydration, so the browser never sends the form itself;
+							    `post` keeps the entries out of the URL should it ever do so. `noValidate` leaves
+							    the checks to the schema, which names what is wrong in German. */}
+							<form
+								className="space-y-6"
+								method="post"
+								onSubmit={form.handleSubmit(onSubmit)}
+								noValidate
+							>
 								<FeedbackTypeField form={form} />
 								<TitleField form={form} />
 								<DescriptionField form={form} />

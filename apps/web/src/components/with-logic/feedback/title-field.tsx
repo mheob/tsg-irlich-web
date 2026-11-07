@@ -16,7 +16,7 @@ export function TitleField({ form }: Readonly<TitleFieldProps>) {
 				<FormItem>
 					<FormLabel>Titel</FormLabel>
 					<FormControl>
-						<Input placeholder="Kurze Zusammenfassung..." {...field} />
+						<Input aria-required="true" placeholder="Kurze Zusammenfassung..." {...field} />
 					</FormControl>
 					<FormMessage />
 				</FormItem>

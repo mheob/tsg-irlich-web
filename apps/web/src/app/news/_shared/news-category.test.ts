@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { ContactPersons } from '@/components/section/contact-persons';
@@ -11,7 +11,11 @@ import {
 	newsArticlesTotalForCategoryQuery,
 	newsOverviewCategoryPageQuery,
 } from '@/lib/sanity/queries/pages/news-overview-category';
-import { newsCategoriesQuery, newsCategoryQuery } from '@/lib/sanity/queries/shared/news';
+import {
+	newsCategoriesQuery,
+	newsCategoryQuery,
+	newsCategoryRedirectQuery,
+} from '@/lib/sanity/queries/shared/news';
 
 import { META_OPEN_GRAPH_IMAGE, PAGE_HERO_IMAGE } from '../../../../test-utils/page-images';
 import { findElement } from '../../../../test-utils/react-tree';
@@ -37,6 +41,9 @@ vi.mock(import('next/navigation'), () => ({
 	notFound: vi.fn(() => {
 		throw new Error('NEXT_NOT_FOUND');
 	}),
+	permanentRedirect: vi.fn(() => {
+		throw new Error('NEXT_REDIRECT');
+	}),
 }));
 
 const mockedSanityFetch = sanityFetchMock();
@@ -59,6 +66,7 @@ interface NewsResults {
 	categories?: unknown;
 	category?: unknown;
 	page?: unknown;
+	redirect?: null | string;
 	total?: number;
 }
 
@@ -67,6 +75,7 @@ function mockSanity({
 	categories = CATEGORIES,
 	category = CATEGORY,
 	page = OVERVIEW,
+	redirect = null,
 	total = 0,
 }: NewsResults = {}): void {
 	// The queries run inside one `Promise.all`, so keying on the query keeps the fixtures
@@ -79,6 +88,7 @@ function mockSanity({
 		if (query === newsCategoryQuery) return { data: category };
 		if (query === newsCategoriesQuery) return { data: categories };
 		if (query === newsArticlesPaginatedForCategoryQuery) return { data: articles };
+		if (query === newsCategoryRedirectQuery) return { data: redirect };
 		throw new Error(`unexpected query: ${query}`);
 	});
 }
@@ -108,6 +118,8 @@ function paginationParams(): Record<string, unknown> | undefined {
 describe('news category', () => {
 	afterEach(() => {
 		mockedSanityFetch.mockReset();
+		vi.mocked(notFound).mockClear();
+		vi.mocked(permanentRedirect).mockClear();
 	});
 
 	describe('metadata', () => {
@@ -192,6 +204,54 @@ describe('news category', () => {
 
 			await expect(NewsCategory(categoryPage())).rejects.toThrow('NEXT_NOT_FOUND');
 			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
+		});
+
+		it('looks up nothing in the slug histories when only the overview document is missing', async () => {
+			mockSanity({ page: null });
+
+			await expect(NewsCategory(categoryPage())).rejects.toThrow('NEXT_NOT_FOUND');
+			expect(mockedSanityFetch.mock.calls.map(([options]) => options.query)).not.toContain(
+				newsCategoryRedirectQuery,
+			);
+		});
+
+		// WEB-421: a renamed category broke the links to it.
+		describe('under a former slug', () => {
+			it('redirects to the category that used to have the slug', async () => {
+				mockSanity({ category: null, redirect: 'vereinsleben-neu' });
+
+				await expect(NewsCategory(categoryPage())).rejects.toThrow('NEXT_REDIRECT');
+				expect(vi.mocked(permanentRedirect)).toHaveBeenCalledExactlyOnceWith(
+					'/news/vereinsleben-neu',
+				);
+			});
+
+			it('keeps a later page under its public address', async () => {
+				mockSanity({ category: null, redirect: 'vereinsleben-neu' });
+
+				await expect(NewsCategory(categoryPage(3))).rejects.toThrow('NEXT_REDIRECT');
+				expect(vi.mocked(permanentRedirect)).toHaveBeenCalledExactlyOnceWith(
+					'/news/vereinsleben-neu?seite=3',
+				);
+			});
+
+			it('looks the slug up in the histories without stega encoding', async () => {
+				mockSanity({ category: null, redirect: 'vereinsleben-neu' });
+
+				await expect(NewsCategory(categoryPage())).rejects.toThrow('NEXT_REDIRECT');
+				expect(mockedSanityFetch).toHaveBeenCalledWith({
+					params: { slug: 'vereinsleben' },
+					query: newsCategoryRedirectQuery,
+					stega: false,
+				});
+			});
+
+			it('is not found when no category ever had the slug', async () => {
+				mockSanity({ category: null });
+
+				await expect(NewsCategory(categoryPage(2))).rejects.toThrow('NEXT_NOT_FOUND');
+				expect(vi.mocked(permanentRedirect)).not.toHaveBeenCalled();
+			});
 		});
 
 		it.each([

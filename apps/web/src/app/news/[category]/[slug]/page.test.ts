@@ -16,6 +16,7 @@ import { ZoomableImage } from '@/components/ui/zoomable-image';
 import {
 	newsArticleContentQuery,
 	newsArticleHeroQuery,
+	newsArticleRedirectQuery,
 } from '@/lib/sanity/queries/pages/news-article';
 import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
@@ -73,6 +74,7 @@ const ARTICLE = {
 interface ArticleResults {
 	article?: unknown;
 	hero?: unknown;
+	redirect?: unknown;
 	socialMedia?: unknown;
 	sponsors?: null | unknown[];
 }
@@ -80,6 +82,7 @@ interface ArticleResults {
 function mockSanity({
 	article = ARTICLE,
 	hero = HERO,
+	redirect = null,
 	socialMedia = { instagram: 'https://instagram.example' },
 	sponsors = [],
 }: ArticleResults = {}): void {
@@ -87,10 +90,15 @@ function mockSanity({
 	mockedSanityFetch.mockImplementation(async ({ query }) => {
 		if (query === newsArticleHeroQuery) return { data: hero };
 		if (query === newsArticleContentQuery) return { data: article };
+		if (query === newsArticleRedirectQuery) return { data: redirect };
 		if (query === socialMediaQuery) return { data: socialMedia };
 		if (query === sponsorsQuery) return { data: sponsors };
 		throw new Error(`unexpected query: ${query}`);
 	});
+}
+
+function queriesSent(): unknown[] {
+	return mockedSanityFetch.mock.calls.map(([options]) => options.query);
 }
 
 function routeProps(): PageProps<'/news/[category]/[slug]'> {
@@ -257,6 +265,62 @@ describe('news article page', () => {
 
 			await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_NOT_FOUND');
 			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
+		});
+
+		it('looks up nothing in the slug histories when only the hero document is missing', async () => {
+			mockSanity({ hero: null });
+
+			await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_NOT_FOUND');
+			expect(queriesSent()).not.toContain(newsArticleRedirectQuery);
+		});
+
+		// WEB-421: a renamed article broke every link shared on Facebook, Instagram and WhatsApp.
+		describe('under a former slug', () => {
+			it('redirects to the article that used to have the slug, under its first category', async () => {
+				mockSanity({ article: null, redirect: { category: 'fussball', slug: 'sommerfest-2026' } });
+
+				await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_REDIRECT');
+				expect(vi.mocked(permanentRedirect)).toHaveBeenCalledExactlyOnceWith(
+					'/news/fussball/sommerfest-2026',
+				);
+			});
+
+			it('looks the slug up in the histories without stega encoding', async () => {
+				mockSanity({ article: null, redirect: { category: 'fussball', slug: 'sommerfest-2026' } });
+
+				await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_REDIRECT');
+				expect(mockedSanityFetch).toHaveBeenCalledWith({
+					params: { slug: 'sommerfest' },
+					query: newsArticleRedirectQuery,
+					stega: false,
+				});
+			});
+
+			it('is not found when no article ever had the slug', async () => {
+				mockSanity({ article: null });
+
+				await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_NOT_FOUND');
+				expect(vi.mocked(permanentRedirect)).not.toHaveBeenCalled();
+			});
+
+			it('is not found when the article that had the slug has no category', async () => {
+				mockSanity({ article: null, redirect: { category: null, slug: 'sommerfest-2026' } });
+
+				await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_NOT_FOUND');
+				expect(vi.mocked(permanentRedirect)).not.toHaveBeenCalled();
+			});
+		});
+
+		// A renamed category leaves the slug of the article alone, so the article is still found and
+		// the category check sends the old path on, without a history lookup.
+		it('sends the old path of a renamed category on to the article under its current one', async () => {
+			mockSanity({ article: { ...ARTICLE, categories: [{ slug: 'vereinsleben-neu' }] } });
+
+			await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_REDIRECT');
+			expect(vi.mocked(permanentRedirect)).toHaveBeenCalledWith(
+				'/news/vereinsleben-neu/sommerfest',
+			);
+			expect(queriesSent()).not.toContain(newsArticleRedirectQuery);
 		});
 
 		// WEB-415: the article rendered under any category segment, and the cache would have kept a copy
