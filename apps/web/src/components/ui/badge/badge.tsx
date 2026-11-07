@@ -6,8 +6,8 @@ import { cn } from '@tsgi-web/shared';
 
 import { badgeVariants } from './variants';
 
-export function Badge({ className, render, variant, ...props }: Readonly<BadgeProps>) {
-	const variantClassName = badgeVariants({ variant });
+export function Badge({ className, render, size, variant, ...props }: Readonly<BadgeProps>) {
+	const variantClassName = badgeVariants({ size, variant });
 
 	return useRender({
 		defaultTagName: 'span',
