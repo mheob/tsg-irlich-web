@@ -7,33 +7,63 @@ interface BreadcrumbItem {
 	path: string;
 }
 
+/**
+ * The names the server knows for the pages on a breadcrumb trail.
+ *
+ * A slug cannot carry the name of its page: `fussball` is "Fußball", `pr-team` is "PR-Team". So the
+ * page passes the titles of its documents, and a name that is missing or empty leaves its item to
+ * the humanised segment.
+ */
+interface BreadcrumbNames {
+	/** The title of the page itself, which names the last item. */
+	page?: string | null;
+	/** The titles of the pages above it, by their path (`/angebot/fussball`). */
+	parents?: Readonly<Record<string, string | null | undefined>>;
+}
+
 /** Segments the club writes differently from their humanised slug. */
 const SEGMENT_NAMES: Record<string, string> = { echo: 'TSG-Echo' };
+
+/**
+ * Picks the name of an item, skipping the candidates that are missing or empty.
+ *
+ * @param fallback - The name when no candidate has text.
+ * @param candidates - The names to try first, in the order they take precedence.
+ * @returns The first candidate with text, or the fallback.
+ */
+function pickName(fallback: string, ...candidates: (string | null | undefined)[]): string {
+	return candidates.find((name): name is string => Boolean(name?.trim())) ?? fallback;
+}
 
 /**
  * Derives the breadcrumb trail of a page from its path.
  *
  * The trail starts at the home page and has one item per path segment, each pointing at the path up
- * to that segment. The segments are humanised for their names (`weitere-sportarten` becomes
- * "Weitere Sportarten"), except the last one, which is the page itself and takes its title.
+ * to that segment. An item takes the name the page passes for it, and the last one is the page
+ * itself. Without a name the segment is humanised (`weitere-sportarten` becomes "Weitere
+ * Sportarten").
  *
  * @param pathname - The path of the page.
- * @param currentPage - The title of the page, used as the name of the last item.
+ * @param names - The titles of the page and the pages above it.
  * @returns The trail, from the home page down to the page.
  */
-function getBreadcrumbItems(pathname: string, currentPage?: string): BreadcrumbItem[] {
+function getBreadcrumbItems(pathname: string, names: BreadcrumbNames = {}): BreadcrumbItem[] {
 	const segments = pathname.split('/').filter(Boolean);
-	const items = segments.map((segment, index) => ({
-		name: SEGMENT_NAMES[segment] ?? capitalizeWords(segment),
-		path: `/${segments.slice(0, index + 1).join('/')}`,
-	}));
-	const page = items.pop();
+	const items = segments.map((segment, index) => {
+		const path = `/${segments.slice(0, index + 1).join('/')}`;
+		const isPage = index === segments.length - 1;
 
-	return [
-		{ name: 'Home', path: '/' },
-		...items,
-		...(page ? [{ name: currentPage ?? page.name, path: page.path }] : []),
-	];
+		return {
+			name: pickName(
+				capitalizeWords(segment),
+				isPage ? names.page : names.parents?.[path],
+				SEGMENT_NAMES[segment],
+			),
+			path,
+		};
+	});
+
+	return [{ name: 'Home', path: '/' }, ...items];
 }
 
 /**
@@ -60,5 +90,5 @@ function getBreadcrumbListSchema(
 	};
 }
 
-export type { BreadcrumbItem };
+export type { BreadcrumbItem, BreadcrumbNames };
 export { getBreadcrumbItems, getBreadcrumbListSchema };

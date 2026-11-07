@@ -1,15 +1,23 @@
+import { stegaClean } from 'next-sanity';
 import Image from 'next/image';
 import type { ImageProps } from 'next/image';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
+import type { BreadcrumbNames } from '@/utils/breadcrumb';
 import { getBaseUrl } from '@/utils/url';
 
 import { SectionHeader } from '../ui/section-header';
 import Breadcrumb from '../with-logic/breadcrumb';
 
 interface HeroProps extends ComponentPropsWithoutRef<'section'> {
+	/**
+	 * The titles the breadcrumb names the page and the pages above it by. The page is named after the
+	 * hero's `title` unless `page` is given, which a page whose hero title is a generic one (a group,
+	 * an article) passes along with the parents a slug cannot spell (a department, a category).
+	 */
+	breadcrumb?: BreadcrumbNames;
 	image?: { alt: ImageProps['alt']; objectPosition?: string; src: ImageProps['src'] };
 	/**
 	 * Whether the title is the page's `h1`, which it is by default. A page whose content carries the
@@ -21,6 +29,7 @@ interface HeroProps extends ComponentPropsWithoutRef<'section'> {
 }
 
 export function Hero({
+	breadcrumb,
 	children,
 	image,
 	isTitleHeading = true,
@@ -28,6 +37,8 @@ export function Hero({
 	title,
 	...props
 }: Readonly<HeroProps>) {
+	const breadcrumbNames: BreadcrumbNames = { page: title, ...breadcrumb };
+
 	return (
 		<section
 			className={cn(
@@ -61,7 +72,13 @@ export function Hero({
 					{children}
 				</SectionHeader>
 
-				<Breadcrumb baseUrl={getBaseUrl()} currentPage={title} />
+				{/* The structured data gets the titles cleaned of the stega encoding draft mode adds. The
+				    visible trail keeps it, and with it the click-to-edit overlays. */}
+				<Breadcrumb
+					baseUrl={getBaseUrl()}
+					names={breadcrumbNames}
+					schemaNames={stegaClean(breadcrumbNames)}
+				/>
 			</div>
 		</section>
 	);

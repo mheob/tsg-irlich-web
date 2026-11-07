@@ -104,6 +104,9 @@ export default async function DepartmentPage({ params }: Readonly<PageProps<'/an
 		<>
 			{faqPageSchema && <JsonLd data={faqPageSchema} />}
 			<Hero
+				// The hero puts the shared prefix in front ("Bereich: Fußball"), the breadcrumb only needs
+				// the department.
+				breadcrumb={{ page: department.title }}
 				image={getHeroImage(
 					[department.heroImage, department.cardImage, siteImages?.fallbackImage],
 					department.title,

@@ -52,6 +52,7 @@ const groupPageQuery = defineQuery(`
 		department->slug.current == $department
 	][0] {
 		_id,
+		"departmentTitle": department->title,
 		description,
 		${featuredImage},
 		heroImage,

@@ -1,7 +1,26 @@
+import { within } from '@testing-library/react';
 import { describe, expect, it } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../test-utils/render';
+import { setPathname } from '../../../test-utils/setup-dom';
+import { encodeLikeDraftMode } from '../../../test-utils/stega';
 import { Hero } from './hero';
+
+const DEPARTMENT_DOCUMENT = { _id: 'department-fussball', _type: 'department' };
+const GROUP_DOCUMENT = { _id: 'group-1-mannschaft', _type: 'group' };
+
+/**
+ * Reads the names of the breadcrumb's structured data.
+ *
+ * @param container - The rendered hero.
+ * @returns The name of every item, from the home page down.
+ */
+function readSchemaNames(container: HTMLElement): string[] {
+	const script = container.querySelector<HTMLScriptElement>('script[type="application/ld+json"]');
+	const schema = JSON.parse(String(script?.text)) as { itemListElement: { name: string }[] };
+
+	return schema.itemListElement.map((item) => item.name);
+}
 
 describe('the hero of a page', () => {
 	it('heads the page with its title', () => {
@@ -63,5 +82,71 @@ describe('the hero of a page', () => {
 		const { queryByRole } = renderWithUser(<Hero title="Kontakt" />);
 
 		expect(queryByRole('img')).toBeNull();
+	});
+
+	describe('breadcrumb', () => {
+		it('ends in the title of the hero', () => {
+			setPathname('/kontakt');
+			const { getByRole } = renderWithUser(<Hero title="Kontakt" />);
+
+			const nav = getByRole('navigation', { name: 'Breadcrumb' });
+
+			expect(within(nav).getByText('Kontakt').getAttribute('aria-current')).toBe('page');
+		});
+
+		it('ends in the title of the page instead of a generic hero title, below the parents it names', () => {
+			setPathname('/angebot/fussball/1-mannschaft');
+			const { container, getByRole } = renderWithUser(
+				<Hero
+					breadcrumb={{ page: '1. Mannschaft', parents: { '/angebot/fussball': 'Fußball' } }}
+					isTitleHeading={false}
+					title="Angebote"
+				/>,
+			);
+
+			const nav = getByRole('navigation', { name: 'Breadcrumb' });
+
+			expect(within(nav).getByRole('link', { name: 'Fußball' }).getAttribute('href')).toBe(
+				'/angebot/fussball',
+			);
+			expect(within(nav).getByText('1. Mannschaft').getAttribute('aria-current')).toBe('page');
+			expect(within(nav).queryByText('Angebote')).toBeNull();
+			expect(readSchemaNames(container)).toStrictEqual([
+				'Home',
+				'Angebot',
+				'Fußball',
+				'1. Mannschaft',
+			]);
+		});
+
+		it('keeps the stega encoding out of the structured data, and on the visible trail', () => {
+			setPathname('/angebot/fussball/1-mannschaft');
+			const department = encodeLikeDraftMode('Fußball', DEPARTMENT_DOCUMENT);
+			const group = encodeLikeDraftMode('1. Mannschaft', GROUP_DOCUMENT);
+			const { container, getByRole } = renderWithUser(
+				<Hero
+					breadcrumb={{ page: group, parents: { '/angebot/fussball': department } }}
+					title={encodeLikeDraftMode('Angebote', {
+						_id: 'singleGroupPage',
+						_type: 'singleGroupPage',
+					})}
+				/>,
+			);
+
+			const nav = getByRole('navigation', { name: 'Breadcrumb' });
+
+			expect(readSchemaNames(container)).toStrictEqual([
+				'Home',
+				'Angebot',
+				'Fußball',
+				'1. Mannschaft',
+			]);
+			const links = within(nav).getAllByRole('link');
+
+			// The text itself, which carries the invisible characters the overlays read.
+			expect(links.at(-1)?.getAttribute('href')).toBe('/angebot/fussball');
+			expect(links.at(-1)?.textContent).toBe(department);
+			expect(nav.querySelector('[aria-current="page"]')?.textContent).toBe(group);
+		});
 	});
 });

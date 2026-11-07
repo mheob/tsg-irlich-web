@@ -106,6 +106,9 @@ test.describe('news', () => {
 		await expect(page).toHaveURL(/\/news\/[^/]+\/[^/]+/u);
 
 		const breadcrumb = page.getByRole('navigation', { name: 'breadcrumb' });
+		// The trail ends in the headline, not in the hero's title that every article shares.
+		await expect(breadcrumb.locator('[aria-current="page"]')).toHaveText(title);
+
 		const categoryLink = breadcrumb.getByRole('link').nth(2);
 		const categoryText = await categoryLink.textContent();
 		const categoryName = categoryText?.trim() ?? '';
@@ -113,6 +116,8 @@ test.describe('news', () => {
 		await categoryLink.click();
 
 		await expect(page).toHaveURL(/\/news\/[^/]+$/u);
+		// The category is named by its title, which heads its page, not by its humanised slug.
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText(categoryName);
 		await expect(page.getByRole('navigation', { name: 'breadcrumb' })).toContainText(categoryName);
 
 		await breadcrumb.getByRole('link', { name: 'News', exact: true }).click();
