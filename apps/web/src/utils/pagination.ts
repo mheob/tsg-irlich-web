@@ -11,6 +11,51 @@ function getPageNumber(page?: string | string[]): number {
 }
 
 /**
+ * The folder of the internal route that serves the later pages of a cached overview. `next.config.ts`
+ * rewrites `/news?seite=2` to `/news/seite/2`, which is cached like any static page, unlike a page
+ * that reads its search parameters. The public address keeps the parameter.
+ */
+const PAGE_SEGMENT = 'seite';
+
+/** A whole number without leading zeros, the only spelling the rewrite passes on. */
+const LATER_PAGE_PATTERN = /^[1-9]\d*$/u;
+
+/** The internal page segment at the end of a path, `/seite/<n>`. */
+const PAGE_SEGMENT_SUFFIX = new RegExp(`/${PAGE_SEGMENT}/[1-9]\\d*$`, 'u');
+
+/**
+ * Reads the page number from the internal page segment of a cached overview.
+ *
+ * Only the later pages come through it: the first page is the overview itself, and a number in
+ * another spelling (`02`, `2.5`) is no address the rewrite produces.
+ *
+ * @param segment - The `[page]` segment of the internal route.
+ * @returns The page number, or `undefined` when the segment names no later page.
+ */
+function getLaterPageNumber(segment: string): number | undefined {
+	if (!LATER_PAGE_PATTERN.test(segment)) {
+		return undefined;
+	}
+
+	const pageNumber = Number(segment);
+	return Number.isSafeInteger(pageNumber) && pageNumber >= 2 ? pageNumber : undefined;
+}
+
+/**
+ * Turns the path of the internal route that serves a later page back into the overview's path.
+ *
+ * A prerendered page knows the path it was rendered for (`/news/seite/2`), while the browser shows the
+ * address it asked for (`/news?seite=2`). What the page derives from its path has to come out the same
+ * for both, or the hydration fails.
+ *
+ * @param pathname - A path, possibly ending in the internal page segment.
+ * @returns The path without that segment.
+ */
+function getOverviewPath(pathname: string): string {
+	return pathname.replace(PAGE_SEGMENT_SUFFIX, '');
+}
+
+/**
  * Builds the canonical path of a page of a paginated overview.
  *
  * Every page points at itself, since each one lists different articles. The first page drops the
@@ -99,5 +144,12 @@ interface PageCountOptions {
 
 type PaginationSlot = 'ellipsis-end' | 'ellipsis-start' | number;
 
-export { getPageCount, getPageNumber, getPaginatedPath, getPaginationRange };
+export {
+	getLaterPageNumber,
+	getOverviewPath,
+	getPageCount,
+	getPageNumber,
+	getPaginatedPath,
+	getPaginationRange,
+};
 export type { PaginationSlot };

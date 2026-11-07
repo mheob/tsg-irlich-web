@@ -5028,7 +5028,7 @@ export type NewsArticlesTotalQueryResult = number;
 
 // Source: src/lib/sanity/queries/shared/news.ts
 // Variable: newsCategoriesQuery
-// Query: {	"categories": *[		_type == 'news.category'		&& (slug.current == $current || count(*[_type == 'news.article' && references(^._id)]) > 0)	] | order(title asc) {		"articleCount": count(*[_type == 'news.article' && references(^._id)]),		"slug": slug.current,		title,	},	"total": count(*[_type == 'news.article'])}
+// Query: {	"categories": *[_type == 'news.category'] {		"articleCount": count(*[_type == 'news.article' && references(^._id)]),		"slug": slug.current,		title,	}[slug == $current || articleCount > 0] | order(title asc),	"total": count(*[_type == 'news.article'])}
 export type NewsCategoriesQueryResult = {
   categories: Array<{
     articleCount: number;
@@ -5208,7 +5208,7 @@ declare global {
     '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [0..2] {\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesQueryResult;
     '\n\t*[_type == \'news.article\'] | order(publishedAt desc) [$start..$end] { // $start = 3, $end = 8\n\t\t\n\t_id,\n\tpublishedAt,\n\tauthor->{ firstName, lastName, image },\n\tcategories[]->{ title, "slug": slug.current },\n\texcerpt,\n\tmeta { metaTitle, metaDescription, openGraphImage},\n\tfeaturedImage,\n\t"slug": slug.current,\n\ttitle,\n\n\t}\n': NewsArticlesPaginatedQueryResult;
     'count(*[_type == "news.article"])': NewsArticlesTotalQueryResult;
-    "{\n\t\"categories\": *[\n\t\t_type == 'news.category'\n\t\t&& (slug.current == $current || count(*[_type == 'news.article' && references(^._id)]) > 0)\n\t] | order(title asc) {\n\t\t\"articleCount\": count(*[_type == 'news.article' && references(^._id)]),\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t},\n\t\"total\": count(*[_type == 'news.article'])\n}": NewsCategoriesQueryResult;
+    '{\n\t"categories": *[_type == \'news.category\'] {\n\t\t"articleCount": count(*[_type == \'news.article\' && references(^._id)]),\n\t\t"slug": slug.current,\n\t\ttitle,\n\t}[slug == $current || articleCount > 0] | order(title asc),\n\t"total": count(*[_type == \'news.article\'])\n}': NewsCategoriesQueryResult;
     "\n\t*[_type == 'news.category' && slug.current == $slug][0] {\n\t\t\"slug\": slug.current,\n\t\ttitle,\n\t\tmeta { metaTitle, metaDescription, openGraphImage}\n\t}\n": NewsCategoryQueryResult;
     "\n\t*[_type == 'site-settings'][0] {\n\t\tcontact { email, phone, postalAddress },\n\t\tsocialFields,\n\t}\n": OrganizationQueryResult;
     "*[_type == 'site-settings'][0] { visionImages, contactFormImages, fallbackImage }": SiteImagesQueryResult;

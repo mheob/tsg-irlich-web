@@ -96,7 +96,6 @@ describe('sanity revalidation webhook', () => {
 	it.each([
 		['accessibility', ['/barrierefreiheit']],
 		['departmentsPage', ['/angebot']],
-		['echoOverview', ['/verein/echo']],
 		['home', ['/']],
 		['imprint', ['/impressum']],
 		['membership', ['/mitgliedschaft']],
@@ -110,6 +109,19 @@ describe('sanity revalidation webhook', () => {
 		expect(revalidatedPaths()).toStrictEqual(expected);
 	});
 
+	// WEB-415: the later pages are cached under the internal route `next.config.ts` rewrites
+	// `?seite=N` to, and only that route reaches them.
+	it('revalidates every page of the archive for its own document', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'echoOverview' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
+			['/verein/echo'],
+			['/verein/echo/seite/[page]', 'page'],
+		]);
+	});
+
 	it('revalidates the archive and every issue page for a tsg-echo issue', async () => {
 		mockedParseBody.mockResolvedValue(
 			parsed({ _type: 'echo.issue', slug: { current: 'tsg-echo-2025' } }),
@@ -119,6 +131,7 @@ describe('sanity revalidation webhook', () => {
 
 		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
 			['/verein/echo'],
+			['/verein/echo/seite/[page]', 'page'],
 			['/verein/echo/[slug]', 'page'],
 			['/sitemap.xml'],
 		]);
@@ -146,8 +159,11 @@ describe('sanity revalidation webhook', () => {
 
 		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
 			['/news'],
+			['/news/seite/[page]', 'page'],
 			['/news/[category]', 'page'],
+			['/news/[category]/seite/[page]', 'page'],
 			['/verein/echo'],
+			['/verein/echo/seite/[page]', 'page'],
 			['/verein/echo/[slug]', 'page'],
 		]);
 	});
@@ -203,6 +219,10 @@ describe('sanity revalidation webhook', () => {
 			'/angebot',
 			'/kontakt',
 			'/news',
+			'/news/seite/[page]',
+			'/news/[category]',
+			'/news/[category]/seite/[page]',
+			'/news/[category]/[slug]',
 			'/mitgliedschaft',
 			'/verein',
 		]);
@@ -264,7 +284,9 @@ describe('sanity revalidation webhook', () => {
 		// whole route is revalidated instead.
 		expect(revalidatedPaths()).toStrictEqual([
 			'/news',
+			'/news/seite/[page]',
 			'/news/[category]',
+			'/news/[category]/seite/[page]',
 			'/news/[category]/[slug]',
 			'/angebot/[group]/[singleGroup]',
 			'/sitemap.xml',
@@ -291,6 +313,7 @@ describe('sanity revalidation webhook', () => {
 			await POST(REQUEST);
 
 			expect(mockedRevalidatePath).toHaveBeenCalledWith('/news/[category]', 'page');
+			expect(mockedRevalidatePath).toHaveBeenCalledWith('/news/[category]/seite/[page]', 'page');
 		},
 	);
 
@@ -303,10 +326,44 @@ describe('sanity revalidation webhook', () => {
 
 		expect(revalidatedPaths()).toStrictEqual([
 			'/news',
+			'/news/seite/[page]',
 			'/news/[category]',
+			'/news/[category]/seite/[page]',
 			'/news/[category]/[slug]',
 			'/angebot/[group]/[singleGroup]',
 			'/sitemap.xml',
+		]);
+	});
+
+	// WEB-415: the category pages and the articles are cached since; before, they rendered on every
+	// request and needed no revalidation for these types.
+	it('revalidates every page of every category for the texts of the category pages', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'newsOverviewCategory' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
+			['/news/[category]', 'page'],
+			['/news/[category]/seite/[page]', 'page'],
+		]);
+	});
+
+	it('revalidates every article for the hero they share', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'news-article-page' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/news/[category]/[slug]', 'page']]);
+	});
+
+	it('revalidates the home page and every article for the sponsors', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'sponsors' }));
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
+			['/'],
+			['/news/[category]/[slug]', 'page'],
 		]);
 	});
 

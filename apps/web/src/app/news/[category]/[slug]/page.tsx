@@ -4,7 +4,7 @@
 import type { Metadata } from 'next';
 import { stegaClean } from 'next-sanity';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 
 import { cn } from '@tsgi-web/shared';
 
@@ -24,6 +24,7 @@ import { socialMediaQuery } from '@/lib/sanity/queries/shared/social-media';
 import { sponsorsQuery } from '@/lib/sanity/queries/shared/sponsors';
 import { urlForImage } from '@/lib/sanity/utils';
 import { getGalleryImages } from '@/utils/image';
+import { getInternalHref } from '@/utils/links';
 import { getPageMetadata } from '@/utils/metadata';
 import { getNewsArticleSchema } from '@/utils/structured-data';
 import { getLastModified } from '@/utils/time';
@@ -38,6 +39,17 @@ import { Sponsors } from './_sections/sponsors';
 
 const IMAGE_SIZE = { height: 600, width: 1920 };
 const CONTENT_IMAGE_SIZE = { height: 450, width: 800 };
+
+/**
+ * Prerenders no article at build time. The empty list is what makes the route static: every article
+ * is rendered on its first request and then served from the cache until the revalidation webhook
+ * expires it. Without `generateStaticParams` the route would render on every request.
+ *
+ * @returns No params.
+ */
+export function generateStaticParams(): { category: string; slug: string }[] {
+	return [];
+}
 
 export async function generateMetadata({
 	params,
@@ -90,12 +102,28 @@ export default async function NewsArticlePage({
 		notFound();
 	}
 
+	// The query finds an article by its slug alone, so it would render under any category segment,
+	// and the cache would keep a copy for every one somebody typed. It lives under its first
+	// category, where every link points; another segment is sent there, and an article without a
+	// category has no page. Draft mode marks the slugs with stega, which the path must not carry.
+	const articlePath = getInternalHref({
+		_type: 'news.article',
+		category: stegaClean(article.categories?.[0]?.slug),
+		slug: stegaClean(article.slug),
+	});
+	if (!articlePath) {
+		notFound();
+	}
+	if (articlePath !== `/news/${category}/${slug}`) {
+		permanentRedirect(articlePath);
+	}
+
 	const imageSource = urlForImage(article.featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
 	// Only the fields the structured data reads, cleaned of the stega encoding draft mode adds, which
 	// leaves the rendered article and its click-to-edit overlays alone.
 	const articleSchema = getNewsArticleSchema(
 		getBaseUrl(),
-		getArticlePath(article, category, slug),
+		articlePath,
 		stegaClean({
 			_updatedAt: article._updatedAt,
 			author: article.author,

@@ -59,10 +59,10 @@ Without the staging webhook, every content change on staging that is not read th
 
    **Filter** (optional, to track only specific documents). Every type the route handles has to be in it, `site-settings` above all: the menu and the footer data live there, and without it a menu change waits out the layout's 12-hour cache. The filter lives in Sanity, not in the repository, so adding or renaming a type in the route's `REVALIDATION_MAP` means updating the filter of **both** webhooks too. Until October 2026 the production filter still listed `settings`, `navigation` and `group`, which no document is called, and menu changes never fired it.
 
-   Both live webhooks carry the filter below since 2026-11-01. It belongs to the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. `accessibility` joined with the page images (WEB-389), when the page got a hero image of its own, and `searchPage` with the site search (WEB-204), whose singleton holds the placeholder of the search panel in the navigation on every page.
+   Both live webhooks carry the filter below since 2026-11-01. It belongs to the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. `accessibility` joined with the page images (WEB-389), when the page got a hero image of its own, and `searchPage` with the site search (WEB-204), whose singleton holds the placeholder of the search panel in the navigation on every page. `news-article-page`, `newsOverviewCategory` and `sponsors` joined with WEB-415, when the articles and the category pages became cached: until then they rendered on every request and needed no webhook. A hook without them leaves those pages on their old texts until the next article or category change revalidates the news routes.
 
    ```groq
-   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news.article", "news.category", "newsOverview", "person", "privacy", "searchPage", "site-settings", "testimonial", "venue"]
+   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news-article-page", "news.article", "news.category", "newsOverview", "newsOverviewCategory", "person", "privacy", "searchPage", "site-settings", "sponsors", "testimonial", "venue"]
    ```
 
    **Projection** (what is sent to the webhook):
@@ -120,18 +120,21 @@ vercel --prod
 
 The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/revalidate/route.ts) automatically revalidates:
 
-- **News** (`_type: "news.article"`, `"news.category"`): `/news`, every category page `/news/[category]` and article `/news/[category]/[slug]`, the group pages, which show the latest articles of their category, and `/sitemap.xml`, which lists every article and category
+- **News** (`_type: "news.article"`, `"news.category"`): `/news`, every category page `/news/[category]` and article `/news/[category]/[slug]`, the group pages, which show the latest articles of their category, and `/sitemap.xml`, which lists every article and category. The later pages of the overview and the categories (`?seite=N`) are cached under the internal routes `next.config.ts` rewrites them to, `/news/seite/[page]` and `/news/[category]/seite/[page]`, and only those paths reach them, so every handler that revalidates an overview names them too (WEB-415)
+- **Category pages** (`_type: "newsOverviewCategory"`, their texts and contact persons): every page of every category
+- **Article hero** (`_type: "news-article-page"`): every article
+- **Sponsors** (`_type: "sponsors"`): the home page and every article
 - **Department** (`_type: "department"`): the home page, which links the departments, and the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`
 - **Group** (`_type: "group"`): the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`. The payload only carries the slug of the group, not the one of its department, so a single group path cannot be built
 - **Offer pages** (`_type: "departmentsPage"`, `"groupsPage"`): `/angebot`, or every department page `/angebot/[group]`
 - **FAQ** (`_type: "faq"`): every department page `/angebot/[group]`. A question can belong to several departments, and the payload carries none it belonged to before
-- **Person** (`_type: "person"`): every page that shows contact persons, among them `/verein` with the TSG-Echo pages below it (layout revalidation)
-- **News overview** (`_type: "newsOverview"`): `/news`, the category pages `/news/[category]`, which show its hero image, and the TSG-Echo pages, which show its contact persons
+- **Person** (`_type: "person"`): every page that shows contact persons, among them `/verein` with the TSG-Echo pages below it (layout revalidation), every page of the news overview and the categories, and every article, which names its author
+- **News overview** (`_type: "newsOverview"`): every page of `/news`, every page of the categories, which show its hero image, and the TSG-Echo pages, which show its contact persons
 - **About page** (`_type: "aboutUs"`): `/verein` with the TSG-Echo pages below it (layout revalidation), which show its hero image
 - **Contact page** (`_type: "contact"`): `/kontakt` with the feedback page below it (layout revalidation), which shows its hero image
 - **Accessibility** (`_type: "accessibility"`): `/barrierefreiheit`
 - **Testimonial** (`_type: "testimonial"`): Homepage `/`
-- **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): the archive `/verein/echo`; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before, and `/sitemap.xml`, which lists the indexable issues (on Vercel the sitemap only follows within the hour, through its `revalidate = 3600`; the call does not reach its cache entry, see WEB-403). A webhook with a type filter needs both types in it.
+- **TSG-Echo** (`_type: "echo.issue"`, `"echoOverview"`): every page of the archive, `/verein/echo` and the internal route `/verein/echo/seite/[page]` its later pages are cached under; an issue also revalidates every page of `/verein/echo/[slug]`, since the payload does not carry the slug it had before, and `/sitemap.xml`, which lists the indexable issues (on Vercel the sitemap only follows within the hour, through its `revalidate = 3600`; the call does not reach its cache entry, see WEB-403). A webhook with a type filter needs both types in it.
 - **Site settings** (`_type: "site-settings"`, the menu and the footer data): all pages (layout revalidation). The root layout tags its two fetches `site-settings`, so the tag revalidation reaches them too.
 - **Search page** (`_type: "searchPage"`, the placeholder of the search panel and the popular searches): all pages (layout revalidation), because the navigation in the root layout shows the placeholder. The root layout, `/suche` and the popular searches tag their fetches `searchPage`, so the tag revalidation reaches them too.
 

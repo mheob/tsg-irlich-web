@@ -55,7 +55,7 @@ test.describe('news', () => {
 		expect(scrollWidth).toBe(clientWidth);
 	});
 
-	// Only the first page: the recorded fixtures hold no query for a later one.
+	// The first page; page 2 has a test of its own below.
 	test('shows how many articles and pages the overview holds', async ({ page }) => {
 		await page.goto('/news');
 		await waitForPage(page);
@@ -72,6 +72,67 @@ test.describe('news', () => {
 			'/news?seite=2',
 		);
 		await expect(pagination.getByRole('link', { name: 'Vorherige Seite' })).toHaveCount(0);
+	});
+
+	// WEB-415: a later page keeps its address, while `next.config.ts` serves it from an internal route
+	// that can be cached. Page 2 is the only later page the fixtures hold.
+	test('serves a later page of the overview under its own address', async ({ page }) => {
+		await page.goto('/news?seite=2');
+		await waitForPage(page);
+
+		const pagination = page.getByRole('navigation', { name: 'Seiten' });
+
+		await expect(page).toHaveURL('/news?seite=2');
+		await expect(page.getByText(/^Artikel 10–15 von \d+$/u)).toBeVisible();
+		await expect(pagination.getByRole('link', { name: 'Seite 2' })).toHaveAttribute(
+			'aria-current',
+			'page',
+		);
+		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+			'href',
+			/\/news\?seite=2$/u,
+		);
+		// The trail is the overview's: the internal route must not show through.
+		await expect(page.getByRole('navigation', { name: 'breadcrumb' })).not.toContainText('Seite');
+	});
+
+	test('sends a request for the internal route of a later page to its address', async ({
+		page,
+	}) => {
+		const response = await page.request.get('/news/seite/2', { maxRedirects: 0 });
+
+		expect(response.status()).toBe(308);
+		expect(response.headers().location).toBe('/news?seite=2');
+	});
+
+	// WEB-415: an article rendered under any category segment, and the cache would have kept a copy for
+	// every one somebody typed. The browser follows the redirect itself: on its first, uncached render
+	// `next start` sends the `Location` header twice, which only a browser shows to be harmless. Each
+	// project invents a category of its own, so both meet that first render.
+	test('sends an article under another category on to its first category', async ({
+		page,
+	}, testInfo) => {
+		await page.goto('/news');
+		await waitForPage(page);
+
+		const headline = page
+			.getByRole('main')
+			.getByRole('article')
+			.first()
+			.getByRole('heading')
+			.first();
+		const href = await headline
+			.getByRole('link')
+			.or(headline.locator('xpath=ancestor::a'))
+			.first()
+			.getAttribute('href');
+		const slug = href?.split('/').at(-1) ?? '';
+
+		const response = await page.goto(`/news/erfunden-${testInfo.project.name}/${slug}`);
+
+		expect(response?.request().redirectedFrom()).not.toBeNull();
+		await expect(page).toHaveURL(href ?? '');
+		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 	});
 
 	test('fits the page links of a long overview onto a narrow phone', async ({ page }) => {

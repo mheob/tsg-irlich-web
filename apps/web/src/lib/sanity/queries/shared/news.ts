@@ -31,20 +31,18 @@ const newsArticlesTotalQuery = defineQuery(`count(*[_type == "news.article"])`);
 
 /**
  * Every category that holds at least one article, plus the one being shown even when it is empty,
- * so the category combobox can preselect it.
+ * so the category combobox can preselect it. The articles of each category are counted once, in the
+ * projection, and the filter after it reads that count.
  *
  * **IMPORTANT:** The param `current` is required: the slug of the category page, or an empty string
  * on the overview.
  */
 const newsCategoriesQuery = defineQuery(`{
-	"categories": *[
-		_type == 'news.category'
-		&& (slug.current == $current || count(*[_type == 'news.article' && references(^._id)]) > 0)
-	] | order(title asc) {
+	"categories": *[_type == 'news.category'] {
 		"articleCount": count(*[_type == 'news.article' && references(^._id)]),
 		"slug": slug.current,
 		title,
-	},
+	}[slug == $current || articleCount > 0] | order(title asc),
 	"total": count(*[_type == 'news.article'])
 }`);
 

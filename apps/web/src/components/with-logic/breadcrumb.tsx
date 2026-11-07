@@ -7,6 +7,7 @@ import type { ComponentPropsWithoutRef } from 'react';
 
 import { getBreadcrumbItems, getBreadcrumbListSchema } from '@/utils/breadcrumb';
 import type { BreadcrumbNames } from '@/utils/breadcrumb';
+import { getOverviewPath } from '@/utils/pagination';
 
 import {
 	BreadcrumbItem,
@@ -38,7 +39,9 @@ export default function Breadcrumb({
 	schemaNames = names,
 	...props
 }: Readonly<BreadcrumbProps>) {
-	const pathname = usePathname();
+	// A later page of a cached overview is prerendered under its internal path, the browser shows its
+	// public one. Both have to give the same trail, or the hydration fails.
+	const pathname = getOverviewPath(usePathname());
 	const items = getBreadcrumbItems(pathname, names);
 	const page = items.at(LAST_INDEX);
 

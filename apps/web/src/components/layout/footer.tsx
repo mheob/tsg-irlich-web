@@ -4,9 +4,7 @@ import Link from 'next/link';
 import { TSGLogo } from '@tsgi-web/shared';
 
 import { GoToGoogleMaps } from '@/components/section/go-to-google-maps';
-import { client } from '@/lib/sanity/client';
-import { organizationQuery } from '@/lib/sanity/queries/shared/organization';
-import type { OrganizationQueryResult } from '@/types/sanity.types';
+import { getOrganization } from '@/lib/sanity/organization';
 import { getSocialMediaEntries } from '@/utils/icon';
 import { SITE_NAME } from '@/utils/metadata';
 
@@ -22,7 +20,7 @@ const accessibility: { href: string; label: string } = {
 const currentYear = new Date().getFullYear();
 
 export default async function Footer() {
-	const organization = await client.fetch<OrganizationQueryResult>(organizationQuery);
+	const organization = await getOrganization();
 
 	const email = organization?.contact?.email;
 	const postalAddress = organization?.contact?.postalAddress;
