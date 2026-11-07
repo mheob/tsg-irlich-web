@@ -40,14 +40,24 @@ type SubmitResult = null | { error: string; success: false } | { success: true }
 interface ContactFormProps {
 	/** The three round images next to the form, large, medium and small; a missing one leaves its place empty. */
 	images: readonly (ResolvedImage | undefined)[];
+	/**
+	 * Whether the title is a heading, which it is by default. A page whose `h1` already reads the
+	 * same (`/kontakt`) turns it off, and the title keeps its look as plain text.
+	 */
+	isTitleHeading?: boolean;
 	receiver?: ContactReceivers;
 }
 
-export function ContactForm({ images, receiver }: Readonly<ContactFormProps>) {
+export function ContactForm({
+	images,
+	isTitleHeading = true,
+	receiver,
+}: Readonly<ContactFormProps>) {
 	const [large, medium, small] = images;
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitResult, setSubmitResult] = useState<SubmitResult>(null);
 
+	const titleLevel = isTitleHeading ? 'h2' : 'div';
 	const selectItems = mapSelectItems(receiver);
 	const hasReceiverSelect = selectItems.length > 0;
 
@@ -114,6 +124,7 @@ export function ContactForm({ images, receiver }: Readonly<ContactFormProps>) {
 							<SectionHeader
 								className="mb-10"
 								isCenteredOnDesktop={false}
+								level={titleLevel}
 								title={CONTACT_FORM_TITLE}
 								isCentered
 							/>
@@ -167,6 +178,7 @@ export function ContactForm({ images, receiver }: Readonly<ContactFormProps>) {
 								<form className="flex-1" onSubmit={form.handleSubmit(onSubmit)}>
 									<SectionHeader
 										isCenteredOnDesktop={false}
+										level={titleLevel}
 										title={CONTACT_FORM_TITLE}
 										isCentered
 									/>

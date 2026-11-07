@@ -1,7 +1,7 @@
 export default function NotFound() {
 	return (
 		<div className="flex h-screen flex-col items-center justify-center">
-			<h2 className="text-2xl font-bold md:text-5xl">Falscher Link? Falsche Adresse?</h2>
+			<h1 className="text-2xl font-bold md:text-5xl">Falscher Link? Falsche Adresse?</h1>
 			<p className="pt-4 text-lg md:pt-8 md:text-2xl">
 				Die angeforderte Seite konnte nicht gefunden werden.
 			</p>

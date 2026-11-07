@@ -14,7 +14,11 @@ function CounterItem({ prefix = '', suffix = '', title, value }: Readonly<Stats>
 				<NumberTicker value={value} />
 				{suffix}
 			</div>
-			<h2 className="text-center text-lg md:text-xl xl:text-2xl">{title}</h2>
+			{/* A label, not a heading: nothing follows it that it would head. It keeps the look the
+			    heading gave it, against the paragraph defaults of `globals.css`. */}
+			<p className="text-center font-sans-serif text-lg font-bold text-balance hyphens-manual text-foreground md:text-xl xl:text-2xl">
+				{title}
+			</p>
 		</div>
 	);
 }

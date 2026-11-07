@@ -12,6 +12,8 @@
  * on one viewport but not the other is the same defect either way.
  */
 export const KNOWN_VIOLATIONS: Readonly<Record<string, readonly string[]>> = {
-	// Empty on purpose: every violation the sweep has found so far is fixed. An entry added here
-	// names the ticket that removes it again.
+	// The body of the recorded article opens with an h3 right below the h1 of its headline. The
+	// levels come from the editors' block styles, not from the code, so the fix is the content and a
+	// rule in the studio that keeps a body from skipping a level (WEB-301).
+	'/news/[category]/[slug]': ['heading-order'],
 };

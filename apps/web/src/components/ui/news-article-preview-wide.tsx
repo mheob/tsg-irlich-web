@@ -50,9 +50,9 @@ export function NewsArticlePreviewWide({
 						</Link>
 					))}
 				</div>
-				<h2 className="line-clamp-2 text-2xl font-bold md:text-3xl">
+				<h3 className="line-clamp-2 text-2xl font-bold md:text-3xl">
 					<Link href={`/news/${categories[0].slug}/${slug}`}>{title}</Link>
-				</h2>
+				</h3>
 				<p className="line-clamp-3 text-sm md:text-xl">{excerpt}</p>
 
 				<div className="flex items-center gap-3">
