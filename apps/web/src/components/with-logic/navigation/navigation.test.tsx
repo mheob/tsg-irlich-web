@@ -93,6 +93,24 @@ describe('navigation', () => {
 		expect(getByRole('navigation', { name: 'Hauptnavigation' })).not.toBeNull();
 	});
 
+	// WEB-419: without a `<header>` the page had no banner landmark to jump to.
+	it('sets the bar as the banner landmark, with the navigation inside it', () => {
+		const { getByRole } = renderNavigation();
+
+		expect(
+			within(getByRole('banner')).getByRole('navigation', { name: 'Hauptnavigation' }),
+		).not.toBeNull();
+	});
+
+	// The name says where the link leads, not what the image shows (WEB-419).
+	it('names the logo link after its target, the home page', () => {
+		const { getByRole } = renderNavigation();
+
+		expect(getByRole('link', { name: 'TSG Irlich – zur Startseite' }).getAttribute('href')).toBe(
+			'/',
+		);
+	});
+
 	it('renders every resolvable entry in the desktop bar and in the mobile menu, and drops the rest', () => {
 		const { container, getAllByRole, queryAllByRole } = renderNavigation();
 
@@ -198,7 +216,7 @@ describe('navigation', () => {
 		const { getByRole, user } = renderNavigation();
 
 		const toggle = getByRole('button', { name: 'Menü' });
-		const logo = getByRole('link', { name: 'Logo der TSG Irlich 1882 e. V.' });
+		const logo = getByRole('link', { name: 'TSG Irlich – zur Startseite' });
 		logo.focus();
 
 		await user.keyboard('{Escape}');
@@ -351,7 +369,7 @@ describe('navigation', () => {
 			const { findByRole, getAllByRole, getByRole, queryByRole, user } = renderNavigation();
 			const [desktopLupe, mobileLupe] = getAllByRole('button', { name: 'Suche öffnen' });
 			const barControls = [
-				getByRole('link', { name: 'Logo der TSG Irlich 1882 e. V.' }),
+				getByRole('link', { name: 'TSG Irlich – zur Startseite' }),
 				// The desktop group comes first, the mobile menu's copy sits in its own container.
 				getAllByRole('button', { name: 'Verein' })[0],
 				getByRole('link', { name: 'Kontakt' }),

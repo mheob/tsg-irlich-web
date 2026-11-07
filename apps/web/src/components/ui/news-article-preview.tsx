@@ -8,6 +8,7 @@ import type { NewsArticlesQueryResult } from '@/types/sanity.types';
 import { getLocaleDate } from '@/utils/time';
 
 import { badgeVariants } from './badge';
+import { ARTICLE_LINK_CLASS_NAME } from './news-article-link';
 
 const IMAGE_SIZE = { height: 450, width: 800 };
 
@@ -22,18 +23,20 @@ export function NewsArticlePreview({
 }: Readonly<NewsArticlePreviewProps>) {
 	const featuredImageSource = urlForImage(featuredImage, IMAGE_SIZE.height, IMAGE_SIZE.width);
 
+	// The title is the card's one link to the article and stretches over the whole card, the image
+	// included, so a keyboard meets the article once, under its title. The category links sit above
+	// it (`relative z-10`) and stay links of their own.
 	return (
 		<article
-			className={cn('group flex flex-col rounded-xl bg-background shadow-lg', {
+			className={cn('group relative flex flex-col rounded-xl bg-background shadow-lg', {
 				'md:grid md:grid-cols-2': columns === 2,
 			})}
 		>
 			{featuredImageSource && (
-				<Link
-					className={cn('relative block min-h-48 flex-1 overflow-hidden rounded-t-xl', {
+				<div
+					className={cn('relative min-h-48 flex-1 overflow-hidden rounded-t-xl', {
 						'md:rounded-s-xl md:rounded-se-none': columns === 2,
 					})}
-					href={`/news/${categories[0].slug}/${slug}`}
 				>
 					<Image
 						alt={featuredImage.alt}
@@ -42,7 +45,7 @@ export function NewsArticlePreview({
 						src={featuredImageSource}
 						fill
 					/>
-				</Link>
+				</div>
 			)}
 
 			<div className="flex flex-col gap-4 p-5">
@@ -58,18 +61,18 @@ export function NewsArticlePreview({
 					</time>
 				</div>
 
-				<Link href={`/news/${categories[0].slug}/${slug}`}>
-					<h3 className="line-clamp-2 h-[2lh] text-2xl font-bold hyphens-auto md:text-3xl">
+				<h3 className="line-clamp-2 h-[2lh] text-2xl font-bold hyphens-auto md:text-3xl">
+					<Link className={ARTICLE_LINK_CLASS_NAME} href={`/news/${categories[0].slug}/${slug}`}>
 						{title}
-					</h3>
-				</Link>
+					</Link>
+				</h3>
 
 				<p className="line-clamp-3 h-[3lh] text-sm text-muted-foreground md:text-xl">{excerpt}</p>
 
 				<div className="flex flex-wrap gap-4">
 					{categories?.map((category) => (
 						<Link
-							className={badgeVariants({ size: 'sm' })}
+							className={cn(badgeVariants({ size: 'sm' }), 'relative z-10')}
 							href={`/news/${category.slug}`}
 							key={category.slug}
 						>

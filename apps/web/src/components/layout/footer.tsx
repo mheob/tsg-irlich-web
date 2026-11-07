@@ -19,6 +19,13 @@ const accessibility: { href: string; label: string } = {
 };
 const currentYear = new Date().getFullYear();
 
+/**
+ * The text links at the bottom. An inline link is only as tall as its glyphs (about 20 px); as an
+ * inline block it takes the full line height of 24 px, the minimum target size of WCAG 2.2 (2.5.8),
+ * without moving a single line.
+ */
+const TEXT_LINK_CLASS_NAME = 'inline-block hover:text-secondary';
+
 export default async function Footer() {
 	const organization = await getOrganization();
 
@@ -90,21 +97,24 @@ export default async function Footer() {
 				<section className="mt-12 flex flex-col-reverse items-center gap-4 md:flex-row md:justify-between">
 					<div className="mt-4 md:mt-0">
 						©{currentYear} TSG Irlich. Alle Rechte vorbehalten. |{' '}
-						<Link className="font-bold text-secondary hover:text-white" href="/kontakt/feedback">
+						<Link
+							className="inline-block font-bold text-secondary hover:text-white"
+							href="/kontakt/feedback"
+						>
 							Feedback geben
 						</Link>
 					</div>
 					<nav aria-label="Fußzeilennavigation" className="flex items-center gap-4">
 						<div className="gap-2 sm:flex sm:items-center sm:gap-4">
-							<Link className="hover:text-secondary" href={imprint?.href}>
+							<Link className={TEXT_LINK_CLASS_NAME} href={imprint?.href}>
 								{imprint?.label}
 							</Link>{' '}
 							|{' '}
-							<Link className="hover:text-secondary" href={privacy?.href}>
+							<Link className={TEXT_LINK_CLASS_NAME} href={privacy?.href}>
 								{privacy?.label}
 							</Link>{' '}
 							|{' '}
-							<Link className="hover:text-secondary" href={accessibility?.href}>
+							<Link className={TEXT_LINK_CLASS_NAME} href={accessibility?.href}>
 								{accessibility?.label}
 							</Link>
 						</div>

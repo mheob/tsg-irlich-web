@@ -1,3 +1,5 @@
+// oxlint-disable import/max-dependencies -- the root layout wires the fonts, the chrome every page
+// shares (skip link, navigation, footer) and the site-wide scripts.
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
@@ -8,6 +10,7 @@ import { EMPTY_ARRAY, cn } from '@tsgi-web/shared';
 
 import Footer from '@/components/layout/footer';
 import { JsonLd } from '@/components/ui/json-ld';
+import { SkipLink } from '@/components/ui/skip-link';
 import { DisableDraftModeLazy } from '@/components/with-logic/disable-draft-mode-lazy';
 import { Navigation } from '@/components/with-logic/navigation/navigation';
 import { client } from '@/lib/sanity/client';
@@ -34,6 +37,9 @@ import './globals.css';
 
 /** The type of the search page, whose placeholder the panel of the navigation shows. */
 const SEARCH_PAGE_TAG = 'searchPage';
+
+/** The id of `<main>`, which the skip link leads to. */
+const MAIN_CONTENT_ID = 'main';
 
 export const metadata: Metadata = {
 	alternates: { types: FEED_ALTERNATES },
@@ -92,8 +98,13 @@ export default async function RootLayout({
 	return (
 		<html lang="de">
 			<body className={cn(`${fontVariables} antialiased`, 'flex h-screen flex-col')}>
+				<SkipLink targetId={MAIN_CONTENT_ID} />
 				<Navigation navItems={navItems} searchPlaceholder={searchPlaceholder} />
-				<main className="grid flex-1">{children}</main>
+				{/* Focusable for the skip link only, so it takes no outline: the focus is not meant to
+				    stay on it, the next Tab moves on to the first control of the page. */}
+				<main className="grid flex-1 outline-none" id={MAIN_CONTENT_ID} tabIndex={-1}>
+					{children}
+				</main>
 				<Footer />
 				<JsonLd data={getSiteGraph(getBaseUrl(), organization)} />
 				<Analytics />

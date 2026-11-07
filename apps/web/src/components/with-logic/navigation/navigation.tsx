@@ -106,15 +106,17 @@ function Navigation({ navItems, searchPlaceholder }: Readonly<NavigationProps>) 
 	// under the pointer, above the dimmed page. Everything in the bar but the menu toggle is `inert`
 	// meanwhile, so no click opens a menu over the panel or moves the focus into the hidden bar. The
 	// toggle stays live because opening the menu is how the search gives way to it.
+	//
+	// The fixed bar is the page's banner landmark. The navigation landmark inside it holds the logo
+	// and both menus; the desktop menu's own root renders as a `<div>` so it does not open a second one.
 	return (
-		<nav
-			aria-label="Hauptnavigation"
+		<header
 			className={cn('fixed inset-x-0 top-0 z-50 bg-background/70 transition-all duration-300', {
 				'bg-background': isMobileOpen || isSearchOpen,
 				'shadow-sm backdrop-blur-md': isScrolled,
 			})}
 		>
-			<div className="container mx-auto">
+			<nav aria-label="Hauptnavigation" className="container mx-auto">
 				<div
 					className={cn('relative flex items-center justify-between lg:h-32', {
 						'lg:h-16': isScrolled,
@@ -123,7 +125,7 @@ function Navigation({ navItems, searchPlaceholder }: Readonly<NavigationProps>) 
 					{/* Logo */}
 					<div className="h-full w-40" inert={isSearchOpen}>
 						<Link
-							aria-label="Logo der TSG Irlich 1882 e. V."
+							aria-label="TSG Irlich – zur Startseite"
 							className="absolute top-2 left-0 block"
 							href="/"
 						>
@@ -219,10 +221,10 @@ function Navigation({ navItems, searchPlaceholder }: Readonly<NavigationProps>) 
 						</ButtonLink>
 					</div>
 				</div>
-			</div>
+			</nav>
 
 			{/* Not before the first press of a lupe: until then no code of the panel is loaded. The
-			    dialog is portalled to the end of `<body>`, outside this landmark. */}
+			    dialog is portalled to the end of `<body>`, outside the banner. */}
 			{hasOpenedSearch && (
 				<Suspense fallback={null}>
 					<SearchPanel
@@ -234,7 +236,7 @@ function Navigation({ navItems, searchPlaceholder }: Readonly<NavigationProps>) 
 					/>
 				</Suspense>
 			)}
-		</nav>
+		</header>
 	);
 }
 

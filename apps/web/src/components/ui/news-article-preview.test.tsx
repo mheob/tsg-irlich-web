@@ -31,12 +31,27 @@ function buildArticle(overrides: Record<string, unknown> = {}): NewsArticlesQuer
 }
 
 describe('the news article preview', () => {
-	it('links its title and image to the article below its category', () => {
-		const { getAllByRole } = renderWithUser(<NewsArticlePreview article={buildArticle()} />);
+	it('links its title to the article below its category', () => {
+		const { getByRole } = renderWithUser(<NewsArticlePreview article={buildArticle()} />);
 
-		const targets = getAllByRole('link').map((link) => link.getAttribute('href'));
+		expect(getByRole('link', { name: 'Sommerfest 2026' }).getAttribute('href')).toBe(
+			'/news/vereinsleben/sommerfest',
+		);
+	});
 
-		expect(targets).toContain('/news/vereinsleben/sommerfest');
+	// WEB-419: the image used to be a second link to the same article, a second tab stop named by
+	// the image's alt text. The title link now covers the whole card instead.
+	it('links the article once, so a keyboard meets it as a single tab stop', () => {
+		const { getAllByRole, getByRole } = renderWithUser(
+			<NewsArticlePreview article={buildArticle()} />,
+		);
+
+		const toArticle = getAllByRole('link').filter(
+			(link) => link.getAttribute('href') === '/news/vereinsleben/sommerfest',
+		);
+
+		expect(toArticle).toHaveLength(1);
+		expect(getByRole('img', { name: 'Das Sommerfest' }).closest('a')).toBeNull();
 	});
 
 	it('heads the preview with the title one level below its section', () => {

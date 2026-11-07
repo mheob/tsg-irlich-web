@@ -257,6 +257,54 @@ test.describe('navigation', () => {
 		).toBeVisible();
 	});
 
+	test('skips the navigation with the first Tab and lands in the content', async ({
+		browserName,
+		page,
+	}) => {
+		test.skip(
+			browserName === 'webkit',
+			'WebKit, like Safari by default, leaves links out of the Tab order',
+		);
+
+		await page.goto('/');
+		await waitForPage(page);
+
+		const skipLink = page.getByRole('link', { name: 'Zum Inhalt springen' });
+
+		// Shrunk to the one pixel of `sr-only` until it takes the focus, then shown above the fixed bar.
+		const hiddenBox = await skipLink.boundingBox();
+		expect(hiddenBox?.width).toBeLessThanOrEqual(1);
+
+		await page.keyboard.press('Tab');
+		await expect(skipLink).toBeFocused();
+		await expect(skipLink).toBeInViewport();
+
+		const shownBox = await skipLink.boundingBox();
+		expect(shownBox?.width).toBeGreaterThan(1);
+
+		// Following it moves the focus onto `<main>`, so the next Tab starts in the content and not in
+		// the bar again.
+		await page.keyboard.press('Enter');
+		await expect(page.getByRole('main')).toBeFocused();
+
+		await page.keyboard.press('Tab');
+		await expect(page.getByRole('main').locator(':focus')).toHaveCount(1);
+	});
+
+	test('carries the navigation in the banner, with a logo link that names its target', async ({
+		page,
+	}) => {
+		await page.goto('/');
+		await waitForPage(page);
+
+		const banner = page.getByRole('banner');
+
+		await expect(banner.getByRole('navigation', { name: 'Hauptnavigation' })).toHaveCount(1);
+		await expect(
+			banner.getByRole('link', { exact: true, name: 'TSG Irlich – zur Startseite' }),
+		).toHaveAttribute('href', '/');
+	});
+
 	test('names every navigation landmark, so a landmark list can tell them apart', async ({
 		page,
 	}) => {

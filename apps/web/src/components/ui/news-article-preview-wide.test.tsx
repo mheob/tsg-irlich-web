@@ -42,6 +42,21 @@ describe('the wide news article preview', () => {
 		);
 	});
 
+	// WEB-419: the image used to be a second link to the same article, a second tab stop named by
+	// the image's alt text. The title link now covers the whole card instead.
+	it('links the article once, so a keyboard meets it as a single tab stop', () => {
+		const { getAllByRole, getByRole } = renderWithUser(
+			<NewsArticlePreviewWide {...buildArticle()} />,
+		);
+
+		const toArticle = getAllByRole('link').filter(
+			(link) => link.getAttribute('href') === '/news/vereinsleben/sommerfest',
+		);
+
+		expect(toArticle).toHaveLength(1);
+		expect(getByRole('img', { name: 'Das Sommerfest' }).closest('a')).toBeNull();
+	});
+
 	it('heads the preview with the title one level below its section', () => {
 		const { getByRole } = renderWithUser(<NewsArticlePreviewWide {...buildArticle()} />);
 
