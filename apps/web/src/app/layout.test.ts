@@ -2,10 +2,13 @@ import { VisualEditing } from 'next-sanity/visual-editing';
 import type * as visualEditing from 'next-sanity/visual-editing';
 import type localFont from 'next/font/local';
 import { draftMode } from 'next/headers';
+import { Children } from 'react';
+import type { ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import RootLayout, { metadata } from '@/app/layout';
 import { JsonLd } from '@/components/ui/json-ld';
+import { SkipLink } from '@/components/ui/skip-link';
 import { DisableDraftModeLazy } from '@/components/with-logic/disable-draft-mode-lazy';
 import { Navigation } from '@/components/with-logic/navigation/navigation';
 import type { client } from '@/lib/sanity/client';
@@ -178,6 +181,24 @@ describe('the root layout', () => {
 		expect(findElement(layout, Navigation)?.props.navItems).toStrictEqual([]);
 		expect(findElement(layout, Navigation)?.props.searchPlaceholder).toBeNull();
 		warnSpy.mockRestore();
+	});
+
+	// WEB-419: the skip link is the first focusable element of every page, and its target can take
+	// the focus, so the next Tab starts in the content.
+	it('opens the body with a skip link to the main content', async () => {
+		mockDraftMode(false);
+		mockedFetch.mockResolvedValue({ mainNavigation: [NAV_ITEM] });
+
+		const layout = await RootLayout({ children: null });
+		const [firstChild] = Children.toArray(
+			findElement<{ children?: ReactNode }>(layout, 'body')?.props.children,
+		);
+
+		expect(firstChild).toMatchObject({ props: { targetId: 'main' }, type: SkipLink });
+		expect(findElement<{ id?: string; tabIndex?: number }>(layout, 'main')?.props).toMatchObject({
+			id: 'main',
+			tabIndex: -1,
+		});
 	});
 
 	it('leaves the visual editing out while draft mode is off', async () => {

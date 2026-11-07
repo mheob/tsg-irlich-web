@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 
 import { expectNoAxeViolations } from '../support/axe';
 import {
@@ -41,6 +41,29 @@ const STATIC_ROUTES = [
  */
 async function expectOneH1(page: Page): Promise<void> {
 	await expect(page.locator('h1'), 'a page carries exactly one h1').toHaveCount(1);
+}
+
+/** The minimum target size of WCAG 2.2 (2.5.8), in CSS pixels. */
+const MIN_TARGET_SIZE = 24;
+
+/**
+ * Checks that every element a locator matches is at least 24 × 24 px. The sweep runs WCAG 2.1, which
+ * has no AA criterion for target sizes, so this is what holds them for the links the 2026 audit
+ * measured too small (WEB-419).
+ *
+ * @param targets - The links to measure, on a settled page.
+ * @returns Nothing; a smaller target fails the test.
+ */
+async function expectTargetSize(targets: Locator): Promise<void> {
+	await expect(targets.first()).toBeVisible();
+
+	for (const target of await targets.all()) {
+		const box = await target.boundingBox();
+		const name = await target.textContent();
+
+		expect(box?.height, `height of „${name}“`).toBeGreaterThanOrEqual(MIN_TARGET_SIZE);
+		expect(box?.width, `width of „${name}“`).toBeGreaterThanOrEqual(MIN_TARGET_SIZE);
+	}
 }
 
 test.describe('accessibility', () => {
@@ -148,5 +171,59 @@ test.describe('accessibility', () => {
 
 		await expectOneH1(page);
 		await expectNoAxeViolations(page, testInfo, '/verein/echo/[slug]');
+	});
+
+	test('gives category tags and footer links a target of at least 24 × 24 px', async ({
+		isMobile,
+		page,
+	}) => {
+		test.skip(!isMobile, 'the audit measured them on a phone, where they are smallest');
+
+		await page.goto('/');
+		await waitForPage(page);
+
+		const footer = page.getByRole('contentinfo');
+
+		await expectTargetSize(
+			footer.getByRole('link', {
+				name: /^(?:Feedback geben|Impressum|Datenschutz|Barrierefreiheit)$/u,
+			}),
+		);
+		// The categories of the wide cards on the home page are plain text links.
+		await expectTargetSize(
+			page.getByRole('main').getByRole('article').locator('a[href^="/news/"]'),
+		);
+
+		await page.goto('/news');
+		await waitForPage(page);
+
+		await expectTargetSize(
+			page.getByRole('main').getByRole('article').first().locator('a[href^="/news/"]'),
+		);
+	});
+
+	// The anchor next to a heading of the article body used to show on hover only (WCAG 2.4.7).
+	test('shows the anchor of a heading on keyboard focus', async ({ browserName, page }) => {
+		test.skip(
+			browserName === 'webkit',
+			'WebKit, like Safari by default, leaves links out of the Tab order',
+		);
+
+		await openFirstArticle(page);
+
+		const anchor = page
+			.getByRole('main')
+			.getByRole('link', { name: 'Zum Abschnitt springen' })
+			.first();
+
+		await expect(anchor).toHaveCSS('opacity', '0');
+
+		// Reached by keyboard, so `:focus-visible` applies: a step forward from the anchor and back.
+		await anchor.focus();
+		await page.keyboard.press('Tab');
+		await page.keyboard.press('Shift+Tab');
+
+		await expect(anchor).toBeFocused();
+		await expect(anchor).toHaveCSS('opacity', '1');
 	});
 });
