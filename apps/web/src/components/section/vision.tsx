@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { cn } from '@tsgi-web/shared';
 
 import { ButtonLink } from '@/components/ui/button';
+import { PortableText } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import type { ResolvedImage } from '@/types/image.types';
 import type { AboutUs, Home } from '@/types/sanity.types';
@@ -105,7 +106,14 @@ export function Vision(props: Readonly<VisionProps>) {
 							{props.cta}
 						</ButtonLink>
 					)}
-					{props._type === 'aboutUs' && <LongVisionDialog {...props} />}
+					{props._type === 'aboutUs' && (
+						<LongVisionDialog
+							ctaLongVision={props.ctaLongVision}
+							longVisionTitle={props.longVisionTitle}
+						>
+							{props.longVision?.text && <PortableText value={props.longVision.text} />}
+						</LongVisionDialog>
+					)}
 				</div>
 			</div>
 		</section>

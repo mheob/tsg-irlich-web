@@ -1,20 +1,27 @@
 'use client';
 
+import type { ReactNode } from 'react';
+
 import type { AboutUs } from '@/types/sanity.types';
 
 import { Button } from '../ui/button';
 import { Dialog, DialogDescription, DialogPopup, DialogTitle, DialogTrigger } from '../ui/dialog';
-import { PortableText } from '../ui/portable-text';
 import { ScrollArea } from '../ui/scroll-area';
 
 type LongVisionDialogProps = Pick<
 	AboutUs['content']['visionSection'],
-	'ctaLongVision' | 'longVision' | 'longVisionTitle'
->;
+	'ctaLongVision' | 'longVisionTitle'
+> & {
+	/**
+	 * The long vision, rendered on the server by `Vision`. Rendering the portable text here would
+	 * ship `@portabletext/react` and the Sanity client with it to the browser (WEB-412).
+	 */
+	children?: ReactNode;
+};
 
 export function LongVisionDialog({
+	children,
 	ctaLongVision,
-	longVision,
 	longVisionTitle,
 }: Readonly<LongVisionDialogProps>) {
 	return (
@@ -27,7 +34,7 @@ export function LongVisionDialog({
 						className="prose-sm mt-10 text-base tracking-normal md:text-lg lg:prose"
 						render={<div />}
 					>
-						{longVision?.text && <PortableText value={longVision.text} />}
+						{children}
 					</DialogDescription>
 				</ScrollArea>
 			</DialogPopup>
