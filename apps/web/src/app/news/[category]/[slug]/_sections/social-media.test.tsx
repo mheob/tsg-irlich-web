@@ -19,8 +19,8 @@ describe('the social media links beside an article', () => {
 		expect(getByRole('heading', { name: 'Folge uns!' })).not.toBeNull();
 	});
 
-	it('reveals each channel once the visitor interacts with it', async () => {
-		const { getByRole, user } = renderWithUser(
+	it('links each profile directly', () => {
+		const { getByRole } = renderWithUser(
 			<SocialMedia
 				socialMedia={buildSocialMedia({
 					facebook: 'https://facebook.example',
@@ -29,13 +29,12 @@ describe('the social media links beside an article', () => {
 			/>,
 		);
 
-		const facebook = getByRole('button', { name: 'facebook' });
-		const instagram = getByRole('button', { name: 'instagram' });
-		await user.hover(facebook);
-		await user.hover(instagram);
-
-		expect(facebook.getAttribute('href')).toBe('https://facebook.example');
-		expect(instagram.getAttribute('href')).toBe('https://instagram.example');
+		expect(getByRole('link', { name: 'facebook' }).getAttribute('href')).toBe(
+			'https://facebook.example',
+		);
+		expect(getByRole('link', { name: 'instagram' }).getAttribute('href')).toBe(
+			'https://instagram.example',
+		);
 	});
 
 	it('renders nothing without a social media document', () => {

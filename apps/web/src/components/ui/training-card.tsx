@@ -3,6 +3,7 @@ import { Calendar, Clock, CloudSnow, LucideMessageCircleWarning, MapPin, Sun } f
 import { cn } from '@tsgi-web/shared';
 
 import type { TrainingTimeSection } from '@/types/sanity.types';
+import { SEASON_LABELS, WEEKDAY_LABELS } from '@/utils/training';
 
 import { GoToGoogleMaps } from '../section/go-to-google-maps';
 import { Button } from './button';
@@ -11,22 +12,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './car
 interface TrainingCardProps {
 	training: TrainingTimeSection;
 }
-
-const WEEKDAY_LABELS = {
-	friday: 'Freitag',
-	monday: 'Montag',
-	saturday: 'Samstag',
-	sunday: 'Sonntag',
-	thursday: 'Donnerstag',
-	tuesday: 'Dienstag',
-	wednesday: 'Mittwoch',
-} as const;
-
-const SEASON_LABELS = {
-	summer: 'Sommer',
-	winter: 'Winter',
-	yearly: 'Ganzjährig',
-} as const;
 
 export function TrainingCard({ training }: Readonly<TrainingCardProps>) {
 	const weekdayLabel = WEEKDAY_LABELS[training.weekday];

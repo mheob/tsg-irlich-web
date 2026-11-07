@@ -12,7 +12,7 @@ import { urlForSharedImage } from '@/lib/sanity/utils';
 import type { AnyImage } from '@/types/image.types';
 
 import { type FaqEntry, isCompleteFaq } from './faq';
-import { SITE_NAME } from './metadata';
+import { CLUB_FOUNDING_YEAR, CLUB_LEGAL_NAME, SITE_NAME } from './metadata';
 import { getLastModified } from './time';
 
 /**
@@ -130,6 +130,8 @@ function getSiteGraph(baseUrl: string, organization?: Organization | null): Grap
 				'@type': 'SportsOrganization',
 				address: address ? getPostalAddress(address) : undefined,
 				email: organization?.contact?.email ?? undefined,
+				foundingDate: CLUB_FOUNDING_YEAR,
+				legalName: CLUB_LEGAL_NAME,
 				logo: `${baseUrl}/tsg-irlich-logo.png`,
 				name: SITE_NAME,
 				// Profiles only: the WhatsApp link opens a chat and does not stand for the club.

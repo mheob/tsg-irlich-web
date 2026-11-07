@@ -203,6 +203,35 @@ describe('page metadata', () => {
 		expect(metadata.title).toStrictEqual({ absolute: 'Mehr als Sport – wir sind die TSG Irlich.' });
 	});
 
+	it('names a later page of a paginated overview in its title', async () => {
+		const { getPageMetadata } = await loadMetadata();
+
+		const metadata = getPageMetadata({ pageNumber: 2, path: '/news?seite=2', title: 'Aktuelles' });
+
+		expect(metadata.title).toBe('Aktuelles – Seite 2');
+		expect(metadata.openGraph?.title).toBe('Aktuelles – Seite 2');
+	});
+
+	it('adds the page to a meta title that names the club as well', async () => {
+		const { getPageMetadata } = await loadMetadata();
+
+		const metadata = getPageMetadata({
+			meta: { metaTitle: 'Neuigkeiten der TSG Irlich' },
+			pageNumber: 3,
+			path: '/news?seite=3',
+		});
+
+		expect(metadata.title).toStrictEqual({ absolute: 'Neuigkeiten der TSG Irlich – Seite 3' });
+	});
+
+	it('keeps the title of the first page as it is', async () => {
+		const { getPageMetadata } = await loadMetadata();
+
+		const metadata = getPageMetadata({ pageNumber: 1, path: '/news', title: 'Aktuelles' });
+
+		expect(metadata.title).toBe('Aktuelles');
+	});
+
 	it('leaves the layout title in place when the page has none', async () => {
 		const { getPageMetadata } = await loadMetadata();
 

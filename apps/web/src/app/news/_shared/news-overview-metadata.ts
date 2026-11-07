@@ -22,6 +22,7 @@ async function getNewsOverviewMetadata(currentPage: number): Promise<Metadata> {
 	return getPageMetadata({
 		image: page.heroImage,
 		meta: page.meta,
+		pageNumber: currentPage,
 		path: getPaginatedPath('/news', currentPage),
 		title: page.title,
 	});

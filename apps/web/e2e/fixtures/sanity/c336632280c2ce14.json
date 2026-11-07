@@ -1,0 +1,1729 @@
+{
+	"body": {
+		"result": [
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Am vergangenen Sonntag musste sich die TSG Irlich beim SV Melsbach II mit 2:1 (1:0) geschlagen geben. Dabei vergab die TSG einige Gelegenheiten.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Spieler der TSG und vom SVM beim Handshake",
+					"asset": {
+						"_ref": "image-1bea8d1321c73eb805d65d40c03bb390be2f678b-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09872450154257034,
+						"left": 0.017682253752589014,
+						"right": 0.029470422920981926,
+						"top": 0.0663075010360547
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4931159920799374,
+						"width": 0.6915429067603914,
+						"x": 0.4960706102772024,
+						"y": 0.3334944973983516
+					}
+				},
+				"publishedAt": "2026-10-31T15:31:36.884Z",
+				"slug": "niederlage-in-melsbach",
+				"title": "Zu viele Chancen vergeben – TSG verliert knapp in Melsbach"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich und der TuS Gladbach haben sich am vergangenen Wochenende 2:2 (1:1) getrennt. Die TSG geriet zweimal in Rückstand und fand jeweils eine Antwort. ",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Hartes Duell: Ein Spieler der Gäste im Duell mit einem TSG-Spieler",
+					"asset": {
+						"_ref": "image-da4162d2e66055244fa752567b66180322c712f2-4284x5712-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.3601658703006701,
+						"left": 0,
+						"right": 0.014852598768085227,
+						"top": 0.20793081610064398
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.20726402388282125,
+						"width": 0.8415710710995108,
+						"x": 0.48267211919234854,
+						"y": 0.4359499163067836
+					}
+				},
+				"publishedAt": "2026-10-24T12:39:00.000Z",
+				"slug": "unentschieden-gladbach",
+				"title": "Zweimal zurückgekommen: TSG und Gladbach trennen sich 2:2"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat beim bisherigen Tabellenführer CSV Neuwied II einen überraschenden 1:2-Auswärtssieg eingefahren. Dennis Kari erzielte beide Treffer.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Stürmer Dennis Kari schirmt den Ball gegen seinen Gegenspieler ab",
+					"asset": {
+						"_ref": "image-05946dc67658375d96184ba8b90a4c4b465b680b-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.574533367425211,
+						"width": 0.5599874996448763,
+						"x": 0.49818176652745816,
+						"y": 0.5054547004176255
+					}
+				},
+				"publishedAt": "2026-10-09T16:05:39.346Z",
+				"slug": "auswaertssieg-csv",
+				"title": "Kari-Doppelpack sichert Auswärtssieg beim Tabellenführer"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich musste sich am Sonntag in einem hitzigen und umkämpften Derby im Pappelstadion dem TuS Rodenbach mit 1:2 geschlagen geben.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Beide Teams beim Abklatschen vor Spielbeginn im Pappelstadion",
+					"asset": {
+						"_ref": "image-6b40624a6d67436f9e116e455c5768ef91fa5568-5730x3290-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6671509158352582,
+						"width": 0.8529953865573441,
+						"x": 0.4779493079836017,
+						"y": 0.5480070794468377
+					}
+				},
+				"publishedAt": "2026-10-02T15:49:00.000Z",
+				"slug": "derby-pleite-rodenbach",
+				"title": "Leidenschaftliches Derby – TSG verliert knapp gegen Rodenbach"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "rope-skipping",
+				"categoryTitle": "Rope Skipping",
+				"excerpt": "Melina Dinter feiert in diesem Jahr ihr ganz persönliches Jubiläum: 15 Jahre, in denen sie die Rope-Skipping-Gruppe mit viel Engagement aufgebaut hat.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Ein Gruppenbild der Ropeskipperinnen von vor einigen Jahren in einer Kletterhalle, wie sie Urkunden halten. Trainerin Melina Dinter steht links neben der Gruppe.",
+					"asset": {
+						"_ref": "image-abed9a0fc999d86fe8c511cf14c7313c264949c0-5120x3840-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.1543449888520311,
+						"left": 0,
+						"right": 0,
+						"top": 0.07443308499646528
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.646521163714154,
+						"width": 0.9359400241174886,
+						"x": 0.49199250301468594,
+						"y": 0.4466984813026785
+					}
+				},
+				"publishedAt": "2026-09-29T15:00:00.000Z",
+				"slug": "dinter-jubilaeum",
+				"title": "15 Jahre beim Rope Skipping: Melina Dinter feiert Jubiläum"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich musste am Freitagabend eine knappe Auswärtsniederlage hinnehmen. Bei der dritten Mannschaft des SC Bendorf-Sayn unterlag die TSG mit 0:1.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Spieler der TSG duellieren sich mit den Gastgebern aus Bendorf",
+					"asset": {
+						"_ref": "image-1e55f64e40bf64a42aa1dfa9aea29bdf7e4d52a8-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.0627241638168321,
+						"left": 0.0760712213604823,
+						"right": 0.07607122136048246,
+						"top": 0.16815414129618816
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4768537826340814,
+						"width": 0.8478575572790352,
+						"x": 0.4999999999999999,
+						"y": 0.60676453415631
+					}
+				},
+				"publishedAt": "2026-09-26T13:58:47.882Z",
+				"slug": "niederlage-bendorf",
+				"title": "Gebrauchter Abend in Bendorf – TSG unterliegt knapp"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "frauengymnastik",
+				"categoryTitle": "Frauengymnastik",
+				"excerpt": "Am 5. August 2026 hieß es für die Mittwochsgirls der TSG Irlich wieder: Gemeinsam unterwegs sein und einen schönen Tag miteinander verbringen!",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Alle Mittwochsgirls gemeinsam auf einem Gruppenbild vor einer gelben Hauswand ",
+					"asset": {
+						"_ref": "image-99650bdb7af6ad848db3a7b33ea9bba4b1569c99-5184x3888-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.114253086084072,
+						"left": 0,
+						"right": 0,
+						"top": 0.1966257001468269
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.504016670918197,
+						"width": 0.9070265699640963,
+						"x": 0.513012182601135,
+						"y": 0.5478590904161468
+					}
+				},
+				"publishedAt": "2026-09-22T15:10:00.000Z",
+				"slug": "mittwochsgirls-unterwegs-in-cochem",
+				"title": "Mittwochsgirls unterwegs: Ein schöner Tag in Cochem"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat sich mit einem Heimsieg zurückgemeldet. Im Pappelstadion setzte sich die TSG mit 4:1 (2:1) gegen den FC Rojava Neuwied durch.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Spieler der TSG in Türkisen Trikots wie sie durch den Regen und über den durchweichten Platz laufen",
+					"asset": {
+						"_ref": "image-ceffebe1ba7e9ee7595355f13b916231949399b1-6000x4000-jpg",
+						"_type": "reference"
+					}
+				},
+				"publishedAt": "2026-09-18T14:21:00.000Z",
+				"slug": "heimsieg-rojava-neuwied",
+				"title": "Heimsieg in der Schlammschlacht – drei Punkte für Frank!"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "jedermanner",
+				"categoryTitle": "Jedermänner",
+				"excerpt": "Die Jedermänner waren vier Tage in Stuttgart unterwegs. Tolle Programmpunkte und jede Menge Geselligkeit sorgten für eine abwechslungsreiche Tour.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Alle Teilnehmer der Tour gemeinsam auf einem Gruppenbild in der Innenstadt von Stuttgart",
+					"asset": {
+						"_ref": "image-86d4d16093925a4b63a45512f999616e1e4b109f-5849x3462-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.7099261658106689,
+						"width": 0.8020367878348228,
+						"x": 0.46650233819692516,
+						"y": 0.4624717750795386
+					}
+				},
+				"publishedAt": "2026-09-15T15:00:00.000Z",
+				"slug": "jedermaenner-unterwegs-stuttgart",
+				"title": "Jedermänner unterwegs: Vier abwechslungsreiche Tage in Stuttgart"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich musste sich im Derby bei der SG Feldkirchen II mit 2:3 (0:2) geschlagen geben. Ein Gegentreffer nach einer Ecke entschied die Begegnung.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Ein Foto vom Sportplatz in Hüllenberg bei Sonnenuntergang",
+					"asset": {
+						"_ref": "image-6e9bdd2679f0a34509f33537ebae16ea8f86716b-5712x4284-jpg",
+						"_type": "reference"
+					}
+				},
+				"publishedAt": "2026-09-12T13:47:00.000Z",
+				"slug": "derbyniederlage-feldkirchen",
+				"title": "TSG verliert umkämpftes Derby gegen Feldkirchen"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Am Pappelstadion rollen die Bagger an… Nein, soweit ist es noch nicht! Trotzdem gibt es gute Neuigkeiten für unser Vereinsheim in der Gotenstraße zu vermelden.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Die neuen Solar-Kollektoren auf dem Dach vom Vereinsheim",
+					"asset": {
+						"_ref": "image-90c50d085e1536919f93c0c85942ae20a857becc-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.13212111101843357,
+						"left": 0,
+						"right": 0,
+						"top": 0.09208441070981734
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.49019934940362014,
+						"width": 0.8598688027570063,
+						"x": 0.5040037484926569,
+						"y": 0.5453749270164318
+					}
+				},
+				"publishedAt": "2026-09-10T15:44:00.000Z",
+				"slug": "modernisierung-vereinsheim",
+				"title": "Modernisierung am Vereinsheim – fit für die Zukunft!"
+			},
+			{
+				"_updatedAt": "2026-11-07T17:11:21Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Gegen die bis dahin noch ungeschlagene SG Weißenthurm II drehte die TSG einen 1:3-Rückstand und feierte vor heimischer Kulisse einen umjubelten 4:3-Erfolg.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Spielmacher Marc Diether behauptet den Ball gegen mehrere Gegner",
+					"asset": {
+						"_ref": "image-54411da2474ba83b2bd4c6a50ea2190d4c6d5947-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.49820668946534313,
+						"width": 0.5248978230044209,
+						"x": 0.532029360246893,
+						"y": 0.5226874635082158
+					}
+				},
+				"publishedAt": "2026-09-04T13:15:53.118Z",
+				"slug": "heimsieg-weissenthurm-ii",
+				"title": "TSG dreht 1:3-Rückstand gegen SG Weißenthurm II"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Unser Vorstandsmitglied Philipp Pfeiffer hat erfolgreich den DFB-Basis-Vereinsmanager-Lehrgang beim Fußballverband Rheinland absolviert.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Philipp steht mit seiner Teilnahmebescheinigung im Pappelstadion.",
+					"asset": {
+						"_ref": "image-dd5b8127e0d9c87d31b78d3b1803ba32c509f8b5-1024x820-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.41682282833337964,
+						"width": 0.7498250991755798,
+						"x": 0.5170992142397546,
+						"y": 0.214588372674952
+					}
+				},
+				"publishedAt": "2026-09-01T14:15:00.000Z",
+				"slug": "pfeiffer-vereinsmanager-lehrgang",
+				"title": "Philipp Pfeifer absolviert DFB-Vereinsmanager-Lehrgang"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "veranstaltungen",
+				"categoryTitle": "Veranstaltungen",
+				"excerpt": "Ein rundum gelungenes Fest: Am 15. August hatten die Irlicher Ortsvereine zum Rheinuferfest in die Irlicher Rheinanlagen eingeladen.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Tolles Ambiente am Rhein - das Festgelände beim Sonnenuntergang",
+					"asset": {
+						"_ref": "image-6dcf53100aaee1ff57f72b5d19851117df2a67c8-1600x1200-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.27422593268494083,
+						"left": 0,
+						"right": 0.004086149336383356,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4860532875414998,
+						"width": 0.9278115279897368,
+						"x": 0.4639057639948684,
+						"y": 0.41192082952030307
+					}
+				},
+				"publishedAt": "2026-08-30T09:19:00.000Z",
+				"slug": "rheinuferfest-nachbericht",
+				"title": "Sommerabend am Rhein: Rheinuferfest lockt über 1.000 Besucher!"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Nach zwei Siegen musste die TSG Irlich am dritten Spieltag ihre erste Niederlage hinnehmen. Beim FV Engers III unterlag die TSG am Wasserturm mit 2:4 (1:2)",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Umkämpftes Spiel: Shakehandy nach einem Zweikampf in Engers",
+					"asset": {
+						"_ref": "image-22ac4007d7288149bf1f6e6a61f94dd8f5aea3ba-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5859368349365794,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.3692430447667489
+					}
+				},
+				"publishedAt": "2026-08-28T15:39:00.000Z",
+				"slug": "tsg-verliert-in-engers",
+				"title": "Erste Saisonniederlage am Wasserturm – TSG verliert in Engers"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat auch ihr zweites Ligaspiel gewonnen. Gegen die Zweitvertretung des VfL Oberbieber setzte sich die TSG verdient mit 3:1 (1:0) durch.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Gemeinsamer Jubel nach dem Heimsieg",
+					"asset": {
+						"_ref": "image-7b0d4817ae2caca98573501e5259f6bd691684e1-3024x4032-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.22305480526269933,
+						"left": 0,
+						"right": 0,
+						"top": 0.34015857802561644
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.29737736342249715,
+						"width": 0.8364221144126764,
+						"x": 0.49628232078210627,
+						"y": 0.5669164415788097
+					}
+				},
+				"publishedAt": "2026-08-21T15:07:27.430Z",
+				"slug": "heimsieg-oberbieber",
+				"title": "Souveräner Heimsieg – TSG schlägt Oberbieber II mit 3:1"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die #11fürIrlich hat am 1. Spieltag die ersten drei Punkte der neuen Saison eingefahren. Beim SV Rengsdorf II setzte sich die TSG mit 3:2 (2:0) durch.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Das Team der TSG bei der Besprechung in der Halbzeitpause",
+					"asset": {
+						"_ref": "image-74c5e630d48dc538e8b15e643c5530d1ce67ceb8-5999x3374-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6029819359316225,
+						"width": 0.8217269154325507,
+						"x": 0.5891365422837247,
+						"y": 0.4439692248290596
+					}
+				},
+				"publishedAt": "2026-08-15T15:14:00.000Z",
+				"slug": "spaeter-treffer-sieg-in-rengsdorf",
+				"title": "TSG trifft spät in Rengsdorf und feiert ersten Saisonsieg"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Der Pflichtspielauftakt ist misslungen. In der 1. Runde des Bitburger Kreispokals unterlag die TSG dem SV Türkiyemspor Ransbach-Baumbach II mit 2:6 (0:3).",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "TSG-Spieler mit Ball am Fuß im Zweikampf mit dem gegnerischen Spieler",
+					"asset": {
+						"_ref": "image-e2e168c8227dd2c4226b73a6b00c92cfac02436f-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6072615699309639,
+						"width": 0.7999943180203983,
+						"x": 0.49272706610983275,
+						"y": 0.33635898747123516
+					}
+				},
+				"publishedAt": "2026-08-05T15:32:00.000Z",
+				"slug": "pokal-aus-tuerkiyemspor",
+				"title": "Pokal-Aus zum Saisonauftakt – TSG unterliegt Türkiyemspor mit 2:6"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Nach zwei Skifreizeiten in den vergangenen Jahren heißt es auch 2027 wieder: Ski anschnallen und gemeinsam eine unvergessliche Woche in den Bergen verbringen!",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Banner Skitour 2027 mit Bergen im Hintergrund ",
+					"asset": {
+						"_ref": "image-dade8defa1621162fd705ddadf3dad82180a490a-5669x1890-png",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.9543796850713262,
+						"width": 0.47261215663975353,
+						"x": 0.5009505473945949,
+						"y": 0.5
+					}
+				},
+				"publishedAt": "2026-07-31T18:47:00.000Z",
+				"slug": "anmeldung-skitour-2027",
+				"title": "Skitour 2027 – Gemeinsam ins Skigebiet Gitschberg-Jochtal"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "rope-skipping",
+				"categoryTitle": "Rope Skipping",
+				"excerpt": "Große Erfolge für die TSG Irlich: Zwei Landesmeistertitel und weitere Top-Platzierungen im Rope Skipping.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Alle Teilnehmerinnen der TSG Irlich zusammen mit ihren Urkunden und Medaillen. Dabei steht die Trainerin Melina Dinter. ",
+					"asset": {
+						"_ref": "image-52be9b96adf97082909f706ddc4edc158010cb4b-5712x4284-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6797063975310701,
+						"width": 0.7997622549962766,
+						"x": 0.5060163809705058,
+						"y": 0.4185041764647224
+					}
+				},
+				"publishedAt": "2026-06-20T14:58:00.000Z",
+				"slug": "erfolgreiche-wettkampftage-rope-skipperinnen",
+				"title": "Erfolgreiche Wettkampftage für die Rope Skipperinnen der TSG"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "veranstaltungen",
+				"categoryTitle": "Veranstaltungen",
+				"excerpt": "Die Vorfreude in Irlich steigt: Am Samstag, den 15. August 2026, findet in den Rheinanlagen endlich wieder das Rheinuferfest statt.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Tolles Ambiente am Rhein: Die Besucher des Rheinuferfests",
+					"asset": {
+						"_ref": "image-e8b223aabbbc2426375651ed25a43f25ebd5fc5a-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.586287430144299,
+						"width": 0.8999062876835761,
+						"x": 0.4969971886305073,
+						"y": 0.6414630077571106
+					}
+				},
+				"publishedAt": "2026-06-19T08:35:43.135Z",
+				"slug": "rheinuferfest-2026",
+				"title": "Rheinuferfest geht 2026 in die sechste Runde"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Auch in diesem Jahr war die TSG Irlich wieder mit einer großen Gruppe beim Neuwieder Deichlauf vertreten. Rund 40 Läufer gingen für die TSG an den Start.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Sportlerinnen und Sportler auf der Laufbahn des Rhein-Wied Stadions",
+					"asset": {
+						"_ref": "image-94174b8318595dad3ebd2c93d10ef6f5bf7beaeb-886x886-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.23772363913208983,
+						"left": 0,
+						"right": 0,
+						"top": 0.18577682310076676
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5006389689488281,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.47402659198433844
+					}
+				},
+				"publishedAt": "2026-06-15T20:34:12.979Z",
+				"slug": "deichlauf-2026",
+				"title": "TSG Irlich beim Deichlauf 2026 erfolgreich vertreten"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Knapp 40 Mitglieder nahmen an der diesjährigen JHV der TSG Irlich im Vereinsheim „Pappelstübchen“ teil. In diesem Jahr standen keine Vorstandswahlen an.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Ehrungen bei der diesjährigen JHV",
+					"asset": {
+						"_ref": "image-12d169f09e9060bdae9fb5bb00762d6ea7862676-3024x4032-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0.09449375090854657,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.3962932421224203,
+						"width": 0.8062546923114493,
+						"x": 0.5544593777278642,
+						"y": 0.5055695761900617
+					}
+				},
+				"publishedAt": "2026-06-03T15:28:00.000Z",
+				"slug": "jahreshauptversammlung-2026",
+				"title": "JHV 2026: TSG Irlich blickt auf erfolgreiches Vereinsjahr zurück"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "veranstaltungen",
+				"categoryTitle": "Veranstaltungen",
+				"excerpt": "Am vergangenen Samstag fiel um 11 Uhr auf dem Parkplatz des REWE Müller in Irlich der offizielle Startschuss für die StickerStars-Aktion der TSG Irlich.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Das Team von REWE Müller mit den Verantwortlichen der TSG Irlich",
+					"asset": {
+						"_ref": "image-147f0b3274393b19ee35a0ce778293a998e546c9-2048x1538-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5714081919851876,
+						"width": 0.8963473931042844,
+						"x": 0.520457718502048,
+						"y": 0.5980675917255469
+					}
+				},
+				"publishedAt": "2026-06-02T16:02:00.000Z",
+				"slug": "kickoff-stickerstars",
+				"title": "Gelungener Start für die StickerStars-Aktion der TSG Irlich"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Mit einem torreichen und kuriosen Spiel verabschiedete sich die TSG Irlich am Pfingstsonntag in die Sommerpause. Gegen Niederbieber II gewann die TSG mit 3:5!",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Im Duell: Der Niederbieberer im blauen Trikot gegen TSG-Spieler in türkis",
+					"asset": {
+						"_ref": "image-506cd43b3afba0981595f170b13ee1e8ef1184e9-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.0467094836933856,
+						"left": 0,
+						"right": 0.03291906469819557,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.53157060638919,
+						"width": 0.8104929518725499,
+						"x": 0.48709928545611253,
+						"y": 0.4659688047376762
+					}
+				},
+				"publishedAt": "2026-05-29T13:08:00.000Z",
+				"slug": "spektakel-niederbieber",
+				"title": "Spektakel zum Saisonabschluss – TSG gewinnt 5:3 in Niederbieber"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Im letzten Heimspiel der Saison 25/26 trennte sich die TSG Irlich am vergangenen Sonntag mit 1:1 (0:0) vom SSV Heimbach-Weis II. Hier geht´s zum Spielbericht.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Im Duell: Max und Dominik kämpfen um den Ball",
+					"asset": {
+						"_ref": "image-acad7e29a78bdf9f5073be51b03f2943c56cea1c-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.47151555592626576,
+						"width": 0.7882503405899859,
+						"x": 0.495551477743487,
+						"y": 0.44261406289098343
+					}
+				},
+				"publishedAt": "2026-05-23T12:42:00.000Z",
+				"slug": "punkteteilung-ssv-heimbach",
+				"title": "Punkteteilung im letzten Heimspiel gegen den SSV Heimbach-W. II"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die 1. Mannschaft der TSG Irlich hat ihre starke Form eindrucksvoll bestätigt und das Auswärtsspiel bei der SG Neuwied III klar mit 9:0 (3:0) gewonnen.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Im Duell: SG-Spieler im schwarzen Trikot gegen TSG-Stürmer Dennis Kari",
+					"asset": {
+						"_ref": "image-0225a3ca1499085fa0c2847c8c23deb4831db7f5-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.14680123446492618,
+						"left": 0,
+						"right": 0.12900714543887454,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6263241304529151,
+						"width": 0.46172880696193724,
+						"x": 0.366989184530264,
+						"y": 0.48932354658436894
+					}
+				},
+				"publishedAt": "2026-05-16T16:27:34.558Z",
+				"slug": "kantersieg-neuwied",
+				"title": "TSG feiert 9:0-Kantersieg in Neuwied – fünfter Sieg in Folge!"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat sich eindrucksvoll für die deutliche Hinspiel-Niederlage revanchiert und das Heimspiel gegen den CSV Neuwied II mit 1:0 gewonnen.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Ein Spieler des CSV Neuwied im schwarzen Trikot im Duell mit dem TSG Spieler im blauen Trikot.",
+					"asset": {
+						"_ref": "image-c55eec42155abe9626166767d4ea687d91c96609-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09341896738677122,
+						"left": 0,
+						"right": 0.14146300775711074,
+						"top": 0.038702143631662356
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.49553757611143556,
+						"width": 0.5587065921539193,
+						"x": 0.40124280590541345,
+						"y": 0.47597797981483014
+					}
+				},
+				"publishedAt": "2026-05-06T20:29:11.515Z",
+				"slug": "tsg-gewinnt-csv",
+				"title": "Revanche geglückt – TSG gewinnt 1:0 gegen CSV Neuwied II"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "20 Jahre Engagement bei der TSG Irlich: Melanie Klein prägt die Kinder- und Jugendarbeit des Vereins mit Herzblut. Jetzt mehr über ihr Jubiläum erfahren!",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Melanie Klein mit einigen Kindern auf einer Turnmatte im Jahr 2009",
+					"asset": {
+						"_ref": "image-e1f97bbf9f2ef8178a70126ce6111f7785e4f371-2560x1706-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4870407730495925,
+						"width": 0.9236344103440777,
+						"x": 0.496363543349718,
+						"y": 0.43997285642069695
+					}
+				},
+				"publishedAt": "2026-05-05T15:10:00.000Z",
+				"slug": "20-jahre-ehrenamt-melanie-klein-feiert-jubilaeum",
+				"title": "20 Jahre Ehrenamt - Melanie Klein feiert Jubiläum"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat am Sonntag ein echtes Ausrufezeichen gesetzt und das Auswärtsspiel beim VfL Oberbieber II klar mit 6:1 (1:1) gewonnen.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "TSG-Stürmer Dennis Kari beim Torabschluss gegen den Keeper der Gastgeber",
+					"asset": {
+						"_ref": "image-715717dbb5ef480da03619d5858e22f8ec1b7287-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.07606973058637084,
+						"left": 0.12633803208496677,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.48219200934189677,
+						"width": 0.6530152639919925,
+						"x": 0.6334556676953874,
+						"y": 0.4666360830761531
+					}
+				},
+				"publishedAt": "2026-05-02T13:58:00.000Z",
+				"slug": "auswaertssieg-oberbieber",
+				"title": "TSG dreht auf: Deutlicher 6:1-Auswärtssieg in Oberbieber"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "veranstaltungen",
+				"categoryTitle": "Veranstaltungen",
+				"excerpt": "Ab sofort ist die Anmeldung für das beliebte Dorfturnier im Rahmen des „TSG Vaddertach“ geöffnet. Jetzt anmelden und mit eurem Team dabei sein!",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Der Champion aus 2025: Die Chicken Steau Friends Irlich beim Jubel über den Turniersieg",
+					"asset": {
+						"_ref": "image-afde39b499ffa22d2293c267517b9817aa82dc87-1980x3520-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.24158010241404537,
+						"left": 0,
+						"right": 0,
+						"top": 0.30478419897585957
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.22891002194586657,
+						"width": 0.8152175076360435,
+						"x": 0.5574323962752838,
+						"y": 0.4768251645940015
+					}
+				},
+				"publishedAt": "2026-04-25T15:21:00.000Z",
+				"slug": "anmeldung-dorfturnier",
+				"title": "Anmeldung fürs Dorfturnier ab sofort möglich!"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich hat nach dem Auswärtssieg in Gladbach erneut nachgelegt und ihr Heimspiel gegen die SG Leutesdorf souverän mit 3:0 (1:0) gewonnen.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Ein Spieler der TSG beim Heimspiel gegen Leutesdorf mit seinem Gegenspieler in grün.",
+					"asset": {
+						"_ref": "image-8d81b35acb24c98834ad26bfd3a73d67134f60d7-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.46884644257235797,
+						"width": 0.8007062029082218,
+						"x": 0.4003531014541109,
+						"y": 0.25444157144048707
+					}
+				},
+				"publishedAt": "2026-04-25T10:25:00.000Z",
+				"slug": "heimsieg-leutesdorf",
+				"title": "TSG überzeugt beim 3:0-Heimsieg gegen die SG Leutesdorf"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Eine tolle Woche im Schnee liegt hinter der TSG Irlich: 32 Teilnehmer erlebten im Ahrntal abwechslungsreiche Skitage und jede Menge gemeinsame Highlights.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Alle Teilnehmerinnen und Teilnehmer der Skitour wie sie in voller Ausrüstung auf der Piste ien Gruppenbild aufnehmen",
+					"asset": {
+						"_ref": "image-9de26abb5f7f000f99ceac781b3d682447d4760c-2048x1636-jpg",
+						"_type": "reference"
+					}
+				},
+				"publishedAt": "2026-04-18T19:20:00.000Z",
+				"slug": "rueckblick-tsg-skitour-2026",
+				"title": "Rückblick auf die TSG-Skitour 2026"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "TSG Irlich feiert nach Rückstand einen umkämpften 4:3-Auswärtssieg in Gladbach – mit Doppelpacker Kari und Spannung bis zur letzten Minute.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Der TSG Stürmer beim Torabschluss. Der Keeper der Gastgeber kann nichts machen.",
+					"asset": {
+						"_ref": "image-bba612cd5e98675e1611ea85f6fd7a904ca20e9c-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.03736758695470848,
+						"left": 0.05694108488336531,
+						"right": 0.02224261128256457,
+						"top": 0.05071315372424723
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6023021102677454,
+						"width": 0.812272360775155,
+						"x": 0.5173492368004005,
+						"y": 0.5226874635082158
+					}
+				},
+				"publishedAt": "2026-04-15T14:58:00.000Z",
+				"slug": "auswaertssieg-gladbach",
+				"title": "Auswärtssieg in Gladbach – TSG holt erste Punkte im Jahr 2026!"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Am vergangenen Sonntag musste die TSG Irlich eine deutliche Niederlage hinnehmen. Gegen den Tabellenführer HSV Neuwied II unterlag die TSG klar mit 1:8.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Enges Duell im Pappelstadion: Der HSV Angreifer beim Torschuss",
+					"asset": {
+						"_ref": "image-d886b82d76b35f0c623e748f8921e8a0c7bc9411-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5836183167903912,
+						"width": 0.7028387132649373,
+						"x": 0.5391469958573135,
+						"y": 0.4879889899074151
+					}
+				},
+				"publishedAt": "2026-04-03T18:23:00.000Z",
+				"slug": "heimniederlage-hsv-neuwied",
+				"title": "Deutliche Heimniederlage gegen den Tabellenführer HSV Neuwied"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die Seniorenmannschaft der TSG Irlich verliert mit 0:3 bei der SG Neuwied II, zeigt aber bis zur 70. Minute eine ordentliche Leistung. Hier gibt´s alle Infos.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Die Spieler der TSG im Duell mit dem Spieler der SG Neuwied.",
+					"asset": {
+						"_ref": "image-91d78258a4b4f60ca2439193f8519b46982535a5-3024x4032-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.130912810023012,
+						"left": 0,
+						"right": 0,
+						"top": 0.3409187761015938
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.25816074320293186,
+						"width": 0.9854537521342777,
+						"x": 0.5072731239328612,
+						"y": 0.5995482826216654
+					}
+				},
+				"publishedAt": "2026-03-28T15:54:00.000Z",
+				"slug": "tsg-unterliegt-neuwied",
+				"title": "TSG zeigt gute Leistung – unterliegt aber in Neuwied mit 0:3"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Die TSG Irlich muss sich im Lokalderby dem TuS Rodenbach mit 0:2 geschlagen geben. Zwei Treffer im zweiten Durchgang entscheiden die Partie zugunsten der Gäste.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Enges Duell: Der TSG-Verteidiger im Zweikampf mit dem Rodenbacher",
+					"asset": {
+						"_ref": "image-32df3b6bc73e2a416359e8c7cf0ee3b9061f07bb-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6072615699309639,
+						"width": 0.9272706610983267,
+						"x": 0.4854541322196653,
+						"y": 0.4481803460325578
+					}
+				},
+				"publishedAt": "2026-03-21T16:58:00.000Z",
+				"slug": "derby-niederlage-rodenbach",
+				"title": "Derby-Niederlage: TSG unterliegt Rodenbach mit 0:2"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "„TSG Vaddertach“ im Pappelstadion: Beliebtes Dorfturnier, Live-Musik mit „De Knocheläcker“ und MFZ Irlich, Bierbrunnen & tolles Programm für die ganze Familie.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Ein Blick von oben: Eine Drohnenaufnahme vom letzten Vereinsfest im Pappelstadion",
+					"asset": {
+						"_ref": "image-07f743e21b878b2acd37892707a9c00936aeb92f-2239x1259-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6349086065562919,
+						"width": 0.7785054909847154,
+						"x": 0.49639846326804415,
+						"y": 0.5912728483609271
+					}
+				},
+				"publishedAt": "2026-03-18T16:40:00.000Z",
+				"slug": "tsg-vaddertach-2026",
+				"title": "„TSG Vaddertach“ im Pappelstadion – save the date!"
+			},
+			{
+				"_updatedAt": "2026-11-07T17:11:21Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "Die TSG Irlich lädt alle Mitglieder zur Jahreshauptversammlung am 17. April ein. Neben Berichten aus dem Vereinsleben stehen auch Ehrungen auf dem Programm.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Ein Blick in den Saal: Die Jahreshauptversammlung war im letzten Jahr gut besucht.",
+					"asset": {
+						"_ref": "image-bf85780be1a38e5b963d87017c22e7cda92b79cb-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.46350821586454255,
+						"width": 0.8778856709739624,
+						"x": 0.5610571645130188,
+						"y": 0.6454666777879724
+					}
+				},
+				"publishedAt": "2026-03-15T23:52:00.000Z",
+				"slug": "einladung-jhv-2026",
+				"title": "Einladung zur Jahreshauptversammlung der TSG Irlich"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "jugend",
+				"categoryTitle": "Jugend",
+				"excerpt": "Die U19 startet mit einem souveränem 3:0-Sieg gegen Raiffeisen-United ins Pflichtspieljahr: starke Defensive und kein Gegentor sorgen für Tabellenplatz 5.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Umkämpft, aber stets fair: U19-Spieler im Kopfballduell mit dem Gegenspieler",
+					"asset": {
+						"_ref": "image-2633e3e3514a5bf0413f86f7afa33f9f240eeffa-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.18273246399045429,
+						"left": 0.07818403931929885,
+						"right": 0,
+						"top": 0.057274354385067755
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4981675615784541,
+						"width": 0.7309014460638086,
+						"x": 0.5400011363959203,
+						"y": 0.3854512912298646
+					}
+				},
+				"publishedAt": "2026-03-12T15:54:00.000Z",
+				"slug": "u19-sieg-raiffeisen",
+				"title": "Souveräner U19-Heimsieg zum Pflichtspielstart"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Bittere Derbyniederlage in Feldkirchen, die TSG zeigt aber eine starke Anfangsphase, die Mut macht. Jetzt soll im Heimderby gegen Rodenbach die Antwort folgen.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Auswärts in Feldkirchen: Spielmacher Tuvanna Nakschbandi im Duell mit seinem Gegenspieler",
+					"asset": {
+						"_ref": "image-28d3b863aa1c033939dbb8340859e0b94c7d006f-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6563538736895935,
+						"width": 0.8109037188556493,
+						"x": 0.40545185942782463,
+						"y": 0.45090769624137045
+					}
+				},
+				"publishedAt": "2026-03-09T10:15:00.000Z",
+				"slug": "derby-niederlage-feldkirchen",
+				"title": "Derby-Niederlage zum Pflichtspielauftakt"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "senioren",
+				"categoryTitle": "Senioren",
+				"excerpt": "Nach der Winterpause hat Trainer Dominik Fleuth die Verantwortlichen informiert, dass er sein Traineramt aus beruflichen Gründen niederlegen muss.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Trainer Dominik Fleuth bei der Ansprache",
+					"asset": {
+						"_ref": "image-098060d74cd015be9388d76c5a070b02b38028be-800x1000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.43392092195354975,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.33943677196266975,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.2731308282892841
+					}
+				},
+				"publishedAt": "2026-03-05T13:52:30.096Z",
+				"slug": "veraenderung-trainerteam",
+				"title": "Veränderung im Trainerteam der Seniorenmannschaft"
+			},
+			{
+				"_updatedAt": "2026-11-07T18:11:37Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Mit zahlreichen Auftritten beenden die Diamonds die Session 2025/26. Die letzte Karnevalswoche und der gemeinsame Umzug in Irlich bildeten einen rundum gelungenen Abschluss.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Gesamtes Bild aller TSG Karnevalisten beim Umzug in Irlich 2026",
+					"asset": {
+						"_ref": "image-39ea18f07c0b601ba6e2ad8551ccedac58adbc39-1024x768-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.09550528961365352,
+						"left": 0,
+						"right": 0,
+						"top": 0.14647261675141737
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6223624992693906,
+						"width": 0.8392074346834999,
+						"x": 0.4585196387866035,
+						"y": 0.5579957916885849
+					}
+				},
+				"publishedAt": "2026-03-01T07:17:00.000Z",
+				"slug": "erfolgreicher-sessionsabschluss-diamonds",
+				"title": "Erfolgreicher Sessions-Abschluss: Diamonds glänzen nochmal"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Ein ganzes Wochenende voller Auftritte, Emotionen und Heimspiel-Highlights: Erlebe, wie unsere Diamonds die Säle zum Beben bringen!",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Funky diamonds auf der großen Bühne der KG Irlich",
+					"asset": {
+						"_ref": "image-109c64020ccc3487187bf803565f7dadca85908f-1451x881-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.021188054519217972,
+						"left": 0,
+						"right": 0,
+						"top": 0.13450934534354575
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.658287991630855,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5350651023820688
+					}
+				},
+				"publishedAt": "2026-02-09T16:25:00.000Z",
+				"slug": "diamonds-rocken-heimspiel-wochenende",
+				"title": "Irlich Vür Bäi! Diamonds rocken das Heimspiel-Wochenende"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Prall gefülltes Karnevalswochenende der Diamonds mit starken Auftritten, großem Gruppenfoto und Vorfreude aufs große Heimspiel bei der KG Irlich.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Die Little Diamonds der TSG beim Fototermin am Weiherplatz in Irlich",
+					"asset": {
+						"_ref": "image-54bd84bc19a7641ae26160dcc4ddd4eca39cd833-1600x1066-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4869302486705992,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.42085626176301794
+					}
+				},
+				"publishedAt": "2026-02-04T16:27:00.000Z",
+				"slug": "heimspiel-light-diamonds",
+				"title": "\"Heimspiel Light\" für die Little und Funky Diamonds"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Sophie",
+					"lastName": "Thomé"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Rückblick auf ein erfolgreiches Tanzwochenende der TSG Irlich: Fünf Auftritte, begeistertes Publikum und viel karnevalistische Stimmung.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Tänzerinnen und Tänzer der \"Magic Diamonds\" in leuchtend silbernen Kostümen auf einer dunklen Bühne",
+					"asset": {
+						"_ref": "image-32950a5c86b9a6617d9ade28e82183ae5de41e80-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6126736555015767,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.44613483337594817
+					}
+				},
+				"publishedAt": "2026-01-27T09:14:39.238Z",
+				"slug": "rueckblick-wochenende",
+				"title": "Diamonds unterwegs: Rückblick auf ein gelungenes Wochenende"
+			},
+			{
+				"_updatedAt": "2026-11-07T17:11:21Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "verein",
+				"categoryTitle": "Gesamtverein",
+				"excerpt": "TSG Irlich erlebt mit über 70 Mitgliedern einen mitreißenden Eishockey-Abend beim EHC Neuwied – mit Blick hinter die Kulissen und einem spektakulären 7:2-Sieg.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Die ca. 70 Besucher der TSG vor der Eishalle Neuwied mit EHC-Manager Carsten Billigmann",
+					"asset": {
+						"_ref": "image-44de46ef946027eb06ed55658bf118fe50eb0347-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.39144215530903326,
+						"width": 0.9399437726101455,
+						"x": 0.49499531438417865,
+						"y": 0.6214446576028025
+					}
+				},
+				"publishedAt": "2026-01-24T18:39:00.000Z",
+				"slug": "besuch-ehc-neuwied",
+				"title": "TSG Irlich zu Gast beim EHC in der Bärenhöhle"
+			},
+			{
+				"_updatedAt": "2026-11-07T17:11:21Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "diamonds",
+				"categoryTitle": "Diamonds",
+				"excerpt": "Sweet, Magic, Little & Funky Diamonds begeistern mit Premieren, Showtänzen und Hebefiguren – lies, wie das große TSG-Auftrittswochenende lief!",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Die Sweet Diamonds als Cowgirls beim ersten Auftritt in Niederbreitbach",
+					"asset": {
+						"_ref": "image-801e77397856ae893238a0dbc9552083f0d554e4-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0.002669113353907749,
+						"right": 0.022242611282564575,
+						"top": 0.03202936024689296
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.6396696972224539,
+						"width": 0.970639753107015,
+						"x": 0.49243751216392795,
+						"y": 0.5720660605555092
+					}
+				},
+				"publishedAt": "2026-01-22T16:11:00.000Z",
+				"slug": "diamonds-niederbreitbach",
+				"title": "TSG-Invasion in Niederbreitbach - Sweet Diamonds feiern Bühnenpremiere"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "jugend",
+				"categoryTitle": "Jugend",
+				"excerpt": "Die TSG Irlich hat ein spannendes Hallenfußball-Wochenende ausgerichtet: Vier U13-Turniere, packende Duelle und ein Highlight mit der Masters-Qualifikation – hier gibt’s alle Details.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Viel los in der Turnhalle: Hallenturnier vor gefüllten Rängen",
+					"asset": {
+						"_ref": "image-5a1bbc465b13f9a96a80f1aa616e606e35c5ce1e-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5008758028192509,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.5480440403703395
+					}
+				},
+				"publishedAt": "2026-01-21T15:51:00.000Z",
+				"slug": "erfolgreiches-turnier-wochenende",
+				"title": "Budenzauber in Niederbieber: Erfolgreiches Turnier-Wochenende"
+			},
+			{
+				"_updatedAt": "2026-11-01T13:29:58Z",
+				"author": {
+					"firstName": "Philipp",
+					"lastName": "Pfeiffer"
+				},
+				"category": "jugend",
+				"categoryTitle": "Jugend",
+				"excerpt": "Daniel Baldus, Jugendleiter und U13-Trainer der TSG Irlich, hat die C-Lizenz erworben und stärkt damit die Jugendarbeit des Vereins. Mehr erfahren!",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Daniel Baldus nach dem Erhalt seiner C-Lizenz",
+					"asset": {
+						"_ref": "image-b3cf1f3d1012d1dec28884c52198488b96684445-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.10676453415630999,
+						"left": 0,
+						"right": 0,
+						"top": 0.03736758695470848
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4555008758028192,
+						"width": 0.543572671837106,
+						"x": 0.5110103083548067,
+						"y": 0.298481941779965
+					}
+				},
+				"publishedAt": "2026-01-20T15:38:00.000Z",
+				"slug": "c-lizenz-baldus",
+				"title": "Jugendleiter Daniel Baldus erlangt DFB-C-Lizenz"
+			}
+		],
+		"syncTags": [
+			"s1:GNFE5A",
+			"s1:uv+Zzg",
+			"s1:Ik/M0w",
+			"s1:+YVtFA",
+			"s1:bmIwtw",
+			"s1:8Qkb8Q",
+			"s1:SvG3tg",
+			"s1:yx3Vpw",
+			"s1:gDNQog",
+			"s1:vJBgQg",
+			"s1:ycr7jw"
+		],
+		"ms": 30
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27+%26%26+defined%28publishedAt%29%5D+%7C+order%28publishedAt+desc%29+%5B0..49%5D+%7B%0A%09%09title%2C%0A%09%09excerpt%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A%09%09%22categoryTitle%22%3A+categories%5B0%5D-%3Etitle%2C%0A%09%09%22author%22%3A+author-%3E%7B+firstName%2C+lastName+%7D%2C%0A%09%09featuredImage%2C%0A%09%09publishedAt%2C%0A%09%09_updatedAt%0A%09%7D%0A&returnQuery=false"
+}

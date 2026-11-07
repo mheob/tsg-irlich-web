@@ -3,6 +3,7 @@ import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
+import { SponsorLink } from '@/components/ui/sponsor-link';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { SponsorsQueryResult } from '@/types/sanity.types';
 
@@ -30,14 +31,15 @@ export function Sponsors({ className, sponsors, ...props }: Readonly<SponsorsPro
 							return null;
 						}
 						return (
-							<Image
-								alt={sponsor.name}
-								className="rounded-xl"
-								height={120}
-								key={sponsor._id}
-								src={sponsorLogoSrc}
-								width={420}
-							/>
+							<SponsorLink key={sponsor._id} website={sponsor.website}>
+								<Image
+									alt={sponsor.name}
+									className="block rounded-xl"
+									height={120}
+									src={sponsorLogoSrc}
+									width={420}
+								/>
+							</SponsorLink>
 						);
 					})}
 			</div>

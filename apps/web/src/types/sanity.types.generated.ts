@@ -1948,7 +1948,7 @@ export type EchoRenderStateQueryResult =
 
 // Source: src/lib/sanity/queries/llms.ts
 // Variable: llmsTxtQuery
-// Query: {		"aboutUs": *[_type == 'aboutUs'][0].meta.metaDescription,		"contact": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },		"departments": *[_type == 'department' && defined(slug.current)] | order(sortOrder asc) {			title,			"description": meta.metaDescription,			"slug": slug.current,			"groups": *[_type == 'group' && department._ref == ^._id] | order(sortOrder asc) {				_type,				"department": ^.slug.current,				"description": meta.metaDescription,				"slug": slug.current,				title,			},		},		"description": *[_type == 'home'][0].meta.metaDescription,		"membership": *[_type == 'membership'][0].meta.metaDescription,	}
+// Query: {		"aboutUs": *[_type == 'aboutUs'][0].meta.metaDescription,		"contact": *[_type == 'site-settings'][0].contact { email, phone, postalAddress },		"departments": *[_type == 'department' && defined(slug.current)] | order(sortOrder asc) {			title,			"description": meta.metaDescription,			"slug": slug.current,			"groups": *[_type == 'group' && department._ref == ^._id] | order(sortOrder asc) {				_type,				"department": ^.slug.current,				"description": meta.metaDescription,				"slug": slug.current,				title,				"trainingTimes": training.trainingTimes[] {					endTime,					season,					startTime,					"venue": coalesce(venue->location.name, venue->title),					weekday,				},			},		},		"description": *[_type == 'home'][0].meta.metaDescription,		"membership": *[_type == 'membership'][0].meta.metaDescription,		"prices": *[_type == 'home'][0].content.pricingSection {			pricingAdult { price, subtitle, title },			pricingFamily { price, subtitle, title },			pricingYouth { price, subtitle, title },		},	}
 export type LlmsTxtQueryResult = {
   aboutUs: string | null;
   contact: {
@@ -1971,10 +1971,41 @@ export type LlmsTxtQueryResult = {
       description: string | null;
       slug: string;
       title: string;
+      trainingTimes: Array<{
+        endTime: string;
+        season: "summer" | "winter" | "yearly";
+        startTime: string;
+        venue: string;
+        weekday:
+          | "friday"
+          | "monday"
+          | "saturday"
+          | "sunday"
+          | "thursday"
+          | "tuesday"
+          | "wednesday";
+      }> | null;
     }>;
   }>;
   description: string | null;
   membership: string | null;
+  prices: {
+    pricingAdult: {
+      price: number;
+      subtitle: string;
+      title: string;
+    };
+    pricingFamily: {
+      price: number;
+      subtitle: string;
+      title: string;
+    };
+    pricingYouth: {
+      price: number;
+      subtitle: string;
+      title: string;
+    };
+  } | null;
 };
 
 // Source: src/lib/sanity/queries/main-navigation.ts
@@ -4459,7 +4490,7 @@ export type PrivacyPageQueryResult = {
 
 // Source: src/lib/sanity/queries/rss.ts
 // Variable: rssNewsArticlesQuery
-// Query: *[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..49] {		title,		excerpt,		"slug": slug.current,		"category": categories[0]->slug.current,		"categoryTitle": categories[0]->title,		"author": author->{ firstName, lastName, email },		publishedAt,		_updatedAt	}
+// Query: *[_type == 'news.article' && defined(publishedAt)] | order(publishedAt desc) [0..49] {		title,		excerpt,		"slug": slug.current,		"category": categories[0]->slug.current,		"categoryTitle": categories[0]->title,		"author": author->{ firstName, lastName },		featuredImage,		publishedAt,		_updatedAt	}
 export type RssNewsArticlesQueryResult = Array<{
   title: string;
   excerpt: string;
@@ -4469,8 +4500,8 @@ export type RssNewsArticlesQueryResult = Array<{
   author: {
     firstName: string;
     lastName: string;
-    email: string;
   };
+  featuredImage: MainImage;
   publishedAt: string;
   _updatedAt: string;
 }>;
@@ -5114,7 +5145,7 @@ export type SocialMediaQueryResult = SocialFields | null;
 
 // Source: src/lib/sanity/queries/shared/sponsors.ts
 // Variable: sponsorsQuery
-// Query: *[_type == 'sponsors'] {		_id,		name,		logo,	} | order(name asc)
+// Query: *[_type == 'sponsors'] {		_id,		name,		logo,		website,	} | order(name asc)
 export type SponsorsQueryResult = Array<{
   _id: string;
   name: string;
@@ -5125,6 +5156,7 @@ export type SponsorsQueryResult = Array<{
     crop?: SanityImageCrop;
     _type: "image";
   };
+  website: string;
 }>;
 
 // Source: src/lib/sanity/queries/sitemap.ts
@@ -5178,7 +5210,7 @@ declare global {
     "\n\t*[_type == 'department' && $slug in previousSlugs && !(_id in path('drafts.**'))] | order(_updatedAt desc, _id asc)[0].slug.current\n": DepartmentRedirectQueryResult;
     "\n\t*[_type == 'department' && defined(slug.current)].slug.current\n": DepartmentSlugsQueryResult;
     '\n\t*[_id == $id][0] {\n\t\t_id,\n\t\t_rev,\n\t\t"pdfRef": pdf.asset._ref,\n\t\t"renderSource": render.source,\n\t\t"renderStartedAt": render.startedAt\n\t}\n': EchoRenderStateQueryResult;
-    '\n\t{\n\t\t"aboutUs": *[_type == \'aboutUs\'][0].meta.metaDescription,\n\t\t"contact": *[_type == \'site-settings\'][0].contact { email, phone, postalAddress },\n\t\t"departments": *[_type == \'department\' && defined(slug.current)] | order(sortOrder asc) {\n\t\t\ttitle,\n\t\t\t"description": meta.metaDescription,\n\t\t\t"slug": slug.current,\n\t\t\t"groups": *[_type == \'group\' && department._ref == ^._id] | order(sortOrder asc) {\n\t\t\t\t_type,\n\t\t\t\t"department": ^.slug.current,\n\t\t\t\t"description": meta.metaDescription,\n\t\t\t\t"slug": slug.current,\n\t\t\t\ttitle,\n\t\t\t},\n\t\t},\n\t\t"description": *[_type == \'home\'][0].meta.metaDescription,\n\t\t"membership": *[_type == \'membership\'][0].meta.metaDescription,\n\t}\n': LlmsTxtQueryResult;
+    '\n\t{\n\t\t"aboutUs": *[_type == \'aboutUs\'][0].meta.metaDescription,\n\t\t"contact": *[_type == \'site-settings\'][0].contact { email, phone, postalAddress },\n\t\t"departments": *[_type == \'department\' && defined(slug.current)] | order(sortOrder asc) {\n\t\t\ttitle,\n\t\t\t"description": meta.metaDescription,\n\t\t\t"slug": slug.current,\n\t\t\t"groups": *[_type == \'group\' && department._ref == ^._id] | order(sortOrder asc) {\n\t\t\t\t_type,\n\t\t\t\t"department": ^.slug.current,\n\t\t\t\t"description": meta.metaDescription,\n\t\t\t\t"slug": slug.current,\n\t\t\t\ttitle,\n\t\t\t\t"trainingTimes": training.trainingTimes[] {\n\t\t\t\t\tendTime,\n\t\t\t\t\tseason,\n\t\t\t\t\tstartTime,\n\t\t\t\t\t"venue": coalesce(venue->location.name, venue->title),\n\t\t\t\t\tweekday,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\t"description": *[_type == \'home\'][0].meta.metaDescription,\n\t\t"membership": *[_type == \'membership\'][0].meta.metaDescription,\n\t\t"prices": *[_type == \'home\'][0].content.pricingSection {\n\t\t\tpricingAdult { price, subtitle, title },\n\t\t\tpricingFamily { price, subtitle, title },\n\t\t\tpricingYouth { price, subtitle, title },\n\t\t},\n\t}\n': LlmsTxtQueryResult;
     '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_type,\n\t\t\t\n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n,\n\t\t\thasTwoColumns,\n\t\t\t"children": coalesce(children[] { \n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n, description }, [])\n\t\t}\n\t}\n': MainNavigationQueryResult;
     '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
     "*[_type == 'aboutUs'][0].heroImage": AboutUsHeroImageQueryResult;
@@ -5213,7 +5245,7 @@ declare global {
     "*[_type == 'groupsPage'][0]": OfferGroupsPageQueryResult;
     '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
     '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tintroText { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': PrivacyPageQueryResult;
-    '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName, email },\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
+    '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName },\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
     "\n\t*[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]\n\t| score(\n\tboost(title match text::query($q), 10),\n\tboost(searchTerms[] match text::query($q), 8),\n\tboost(subtitle match text::query($q), 3),\n\tboost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),\n\tboost(intro.text[].children[].text match text::query($q), 3),\n\tboost(content.introSection.intro.text[].children[].text match text::query($q), 3),\n\tboost(description.text[].children[].text match text::query($q), 3),\n\tboost(question match text::query($q), 3),\n\tboost([firstName, lastName] match text::query($q), 3),\n\tboost(answer[].children[].text match text::query($q), 1),\n\tboost(training.trainingDescription.text[].children[].text match text::query($q), 1),\n\tboost(content.visionSection.longVision.text[].children[].text match text::query($q), 1),\n\tboost(references(*[_type == 'role' && title match text::query($q)]._id), 1),\n\tboost(affiliations[].taskDescription match text::query($q), 1),\n\tboost(indexable != false, 0) && boost(extractedText match text::query($q), 1),\n\tboost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),\n\tboost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([\n\t\ttitle,\n\t\tsearchTerms[],\n\t\tsubtitle,\n\t\tintro.text[].children[].text,\n\t\tcontent.introSection.intro.text[].children[].text,\n\t\tdescription.text[].children[].text,\n\t\tquestion,\n\t\tfirstName,\n\t\tlastName,\n\t\tanswer[].children[].text,\n\t\ttraining.trainingDescription.text[].children[].text,\n\t\tcontent.visionSection.longVision.text[].children[].text,\n\t\taffiliations[].taskDescription\n\t] match text::query($q), 1)\n)\n\t| order(_score desc) [_score != 0] [0...$limit] {\n\t\t\n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n,\n\t\t\"_score\": math::sum([_score]),\n\t\t_type == 'faq' => {\n\t\t\tquestion,\n\t\t\t\"targets\": departments[]-> { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'person' => {\n\t\t\tfirstName,\n\t\t\tlastName,\n\t\t\t\"nameMatches\": [firstName, lastName] match text::query($q),\n\t\t\t\"affiliations\": affiliations[] {\n\t\t\t\t\"role\": role->title,\n\t\t\t\t\"roleMatches\": [role->title, taskDescription] match text::query($q),\n\t\t\t\t\"team\": team-> { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t\t},\n\t\t\t\"listedOn\": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory'] && references(^._id)] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t}\n\t}\n": SearchCandidatesQueryResult;
     '\n\t*[_type == \'news.article\' && [title, body[].text[].children[].text] match text::query($q)]\n\t| score(\n\t\tboost(title match text::query($q), 10),\n\t\tboost(body[].text[].children[].text match text::query($q), 1),\n\t\tboost([title, body[].text[].children[].text] match text::query($q), 1)\n\t)\n\t| order(_score desc, publishedAt desc) [$start...$end] {\n\t\t\n\t_id,\n\t_type,\n\ttitle,\n\t"slug": slug.current,\n\t"department": department-> { title, "slug": slug.current },\n\t"category": categories[0]-> { title, "slug": slug.current },\n\tpublishedAt,\n\tindexable,\n\t"image": select(\n\t\t_type == \'department\' => cardImage,\n\t\t_type in [\'group\', \'news.article\'] => featuredImage,\n\t\t_type == \'echo.issue\' => pages[0],\n\t\t_type == \'home\' => null,\n\t\theroImage\n\t)\n,\n\t\t"_score": math::sum([_score])\n\t}\n': SearchNewsQueryResult;
     "count(*[_type == 'news.article' && [title, body[].text[].children[].text] match text::query($q)])": SearchNewsCountQueryResult;
@@ -5230,7 +5262,7 @@ declare global {
     "\n\t*[_type == 'site-settings'][0] {\n\t\tcontact { email, phone, postalAddress },\n\t\tsocialFields,\n\t}\n": OrganizationQueryResult;
     "*[_type == 'site-settings'][0] { visionImages, contactFormImages, fallbackImage }": SiteImagesQueryResult;
     "*[_type == 'site-settings'][0].socialFields": SocialMediaQueryResult;
-    "\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t} | order(name asc)\n": SponsorsQueryResult;
+    "\n\t*[_type == 'sponsors'] {\n\t\t_id,\n\t\tname,\n\t\tlogo,\n\t\twebsite,\n\t} | order(name asc)\n": SponsorsQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..9999] {\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsArticlesQueryResult;
     '\n\t*[_type == \'news.category\'] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapNewsCategoriesQueryResult;
     '\n\t*[_type == \'department\' && defined(slug.current)] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapDepartmentsQueryResult;

@@ -65,6 +65,8 @@ describe('the site graph', () => {
 				streetAddress: 'Gotenstraße 20',
 			},
 			email: 'info@tsg-irlich.de',
+			foundingDate: '1882',
+			legalName: 'TSG Irlich 1882 e.V.',
 			logo: 'https://www.tsg-irlich.de/tsg-irlich-logo.png',
 			name: 'TSG Irlich',
 			sameAs: ['https://facebook.example/tsg', 'https://instagram.example/tsg'],
@@ -92,6 +94,8 @@ describe('the site graph', () => {
 		expect(getSiteGraph(BASE_URL, null)['@graph'][0]).toMatchObject({
 			address: undefined,
 			email: undefined,
+			foundingDate: '1882',
+			legalName: 'TSG Irlich 1882 e.V.',
 			name: 'TSG Irlich',
 			sameAs: [],
 		});

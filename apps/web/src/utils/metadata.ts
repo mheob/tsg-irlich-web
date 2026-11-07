@@ -10,6 +10,14 @@ type OpenGraphImages = OpenGraph['images'];
 const SITE_NAME = 'TSG Irlich';
 
 /**
+ * The club's registered name and founding year, as the imprint and the club history state them. They
+ * never change, so they live here instead of in the site settings. The structured data and llms.txt
+ * name them (WEB-424).
+ */
+const CLUB_LEGAL_NAME = 'TSG Irlich 1882 e.V.';
+const CLUB_FOUNDING_YEAR = '1882';
+
+/**
  * The open graph fields every page shares.
  *
  * Next.js merges metadata shallowly: a page that sets `openGraph` replaces the layout's object
@@ -92,6 +100,11 @@ interface PageMetadataOptions {
 	meta?: PageMeta | null;
 	/** Open graph fields that extend or replace the defaults, such as an article's dates. */
 	openGraph?: OpenGraph;
+	/**
+	 * The page of a paginated overview, from 1. A later page names its number in the title, so the
+	 * pages of `/news` or the TSG-Echo archive do not all share one title in search results.
+	 */
+	pageNumber?: number;
 	/** The canonical path of the page, resolved against `metadataBase`. */
 	path: string;
 	/** The document title, used when `meta` sets none and as the image's alt text. */
@@ -110,6 +123,7 @@ interface PageMetadataOptions {
  * @param options.image - The image to use when `meta` sets no open graph image.
  * @param options.meta - The `meta` object the editors maintain for the document.
  * @param options.openGraph - Open graph fields that extend or replace the defaults.
+ * @param options.pageNumber - The page of a paginated overview, from 1.
  * @param options.path - The canonical path of the page.
  * @param options.title - The document title.
  * @returns The page's metadata.
@@ -119,10 +133,12 @@ function getPageMetadata({
 	image,
 	meta,
 	openGraph,
+	pageNumber = 1,
 	path,
 	title,
 }: PageMetadataOptions): Metadata {
-	const pageTitle = meta?.metaTitle ?? title ?? '';
+	const baseTitle = meta?.metaTitle ?? title ?? '';
+	const pageTitle = baseTitle && pageNumber > 1 ? `${baseTitle} – Seite ${pageNumber}` : baseTitle;
 	const pageDescription = meta?.metaDescription ?? description ?? '';
 	// The first image that has a file wins: an image object without one has no URL, and taking it
 	// because it is set would leave the page without a preview image.
@@ -144,4 +160,12 @@ function getPageMetadata({
 	};
 }
 
-export { FEED_ALTERNATES, SITE_NAME, SITE_OPEN_GRAPH, getOpenGraphImageOptions, getPageMetadata };
+export {
+	CLUB_FOUNDING_YEAR,
+	CLUB_LEGAL_NAME,
+	FEED_ALTERNATES,
+	SITE_NAME,
+	SITE_OPEN_GRAPH,
+	getOpenGraphImageOptions,
+	getPageMetadata,
+};
