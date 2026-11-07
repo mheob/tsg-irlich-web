@@ -41,4 +41,37 @@ describe('the vision section', () => {
 			'https://cdn.sanity.io/vision-3.webp',
 		]);
 	});
+
+	it('shows the long vision of the club page in its dialog', async () => {
+		const { findByRole, getByRole, user } = renderWithUser(
+			<Vision
+				_type="aboutUs"
+				ctaLongVision="Unsere ganze Vision"
+				images={VISION_IMAGES}
+				intro="Sport verbindet."
+				longVision={{
+					_type: 'blockContent',
+					text: [
+						{
+							_key: 'vision-block',
+							_type: 'block',
+							children: [
+								{ _key: 'vision-span', _type: 'span', marks: [], text: 'Ein Verein für alle.' },
+							],
+							markDefs: [],
+							style: 'normal',
+						},
+					],
+				}}
+				longVisionTitle="Die Vision der TSG"
+				subtitle="Unsere Vision"
+				title="Gemeinsam bewegen"
+			/>,
+		);
+
+		await user.click(getByRole('button', { name: 'Unsere ganze Vision' }));
+
+		const dialog = await findByRole('dialog', { name: 'Die Vision der TSG' });
+		expect(dialog.textContent).toContain('Ein Verein für alle.');
+	});
 });

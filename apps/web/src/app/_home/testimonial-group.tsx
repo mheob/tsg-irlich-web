@@ -1,17 +1,17 @@
-'use client';
-
 import { Quote } from 'lucide-react';
 import Image from 'next/image';
 import type { HTMLAttributes } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
-import { useMediaQuery } from '@/hooks/use-media-query';
 import { urlForImage } from '@/lib/sanity/utils';
 import type { HomePageTestimonialsQueryResult } from '@/types/sanity.types';
 import { getInitials } from '@/utils/image';
 
-const IMAGE_SIZE = { desktop: 96, mobile: 40 };
+/** The edge of the portrait from the `md` breakpoint up; a phone shows it at 40 px (`size-10`). */
+const IMAGE_SIZE = 96;
+/** Which width of the portrait the browser fetches, matching `size-10 md:size-24`. */
+const IMAGE_SIZES = '(max-width: 767px) 40px, 96px';
 
 type Testimonial = NonNullable<HomePageTestimonialsQueryResult>[number];
 interface TestimonialItemProps extends Testimonial {
@@ -28,9 +28,7 @@ function TestimonialItem({
 	quote,
 	role,
 }: Readonly<TestimonialItemProps>) {
-	const isMobile = useMediaQuery('(max-width: 48rem)');
-
-	const imageSource = urlForImage(image, IMAGE_SIZE.desktop);
+	const imageSource = urlForImage(image, IMAGE_SIZE);
 
 	return (
 		<article
@@ -39,23 +37,26 @@ function TestimonialItem({
 				{
 					'rounded-xl border-primary-foreground bg-primary text-primary-foreground': isHighlighted,
 				},
-				{ 'py-6 pr-10 pl-5': !isHighlighted && isMobile },
-				{ 'mr-2 -ml-6 py-6 pr-10 pl-5': isHighlighted && isMobile },
-				{ 'my-6 -mr-14 -ml-36 py-6 pr-36 pl-14': isHighlighted && !isMobile },
+				// The layout switches with CSS, so the server already renders the one a phone shows and
+				// nothing jumps when the page hydrates (WEB-412).
+				'py-6 pr-10 pl-5',
+				{ 'md:p-0': !isHighlighted },
+				{ 'mr-2 -ml-6 md:my-6 md:-mr-14 md:-ml-36 md:pr-36 md:pl-14': isHighlighted },
 			)}
 		>
 			<div className="flex items-center gap-5">
 				{imageSource ? (
 					<Image
 						className={cn(
-							'rounded-full border-2 md:border-4',
+							'size-10 rounded-full border-2 md:size-24 md:border-4',
 							{ 'border-primary': !isHighlighted },
 							{ 'border-primary-foreground': isHighlighted },
 						)}
 						alt={image.alt}
-						height={isMobile ? IMAGE_SIZE.mobile : IMAGE_SIZE.desktop}
+						height={IMAGE_SIZE}
+						sizes={IMAGE_SIZES}
 						src={imageSource}
-						width={isMobile ? IMAGE_SIZE.mobile : IMAGE_SIZE.desktop}
+						width={IMAGE_SIZE}
 					/>
 				) : (
 					<div

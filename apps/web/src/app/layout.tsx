@@ -9,7 +9,7 @@ import { EMPTY_ARRAY, cn } from '@tsgi-web/shared';
 
 import Footer from '@/components/layout/footer';
 import { JsonLd } from '@/components/ui/json-ld';
-import { DisableDraftMode } from '@/components/with-logic/disable-draft-mode';
+import { DisableDraftModeLazy } from '@/components/with-logic/disable-draft-mode-lazy';
 import { Navigation } from '@/components/with-logic/navigation/navigation';
 import { client } from '@/lib/sanity/client';
 import { SanityLive } from '@/lib/sanity/live';
@@ -173,7 +173,7 @@ export default async function RootLayout({
 				{isDraftMode && (
 					<>
 						<VisualEditing />
-						<DisableDraftMode />
+						<DisableDraftModeLazy />
 					</>
 				)}
 			</body>

@@ -19,6 +19,13 @@ export default defineConfig({
 			// harness cannot reach at all (see `AGENTS.md`).
 			thresholds: { branches: 88, functions: 91, lines: 94, statements: 94 },
 		},
+		// `src/lib/sanity/api.ts` asserts the project variables at import time, and the image URL
+		// builder (`src/lib/sanity/utils.ts`) reads them from there, so every test that renders a
+		// Sanity image needs them, also the ones that mock the client away.
+		env: {
+			NEXT_PUBLIC_SANITY_DATASET: 'test-dataset',
+			NEXT_PUBLIC_SANITY_PROJECT_ID: 'test-project',
+		},
 		projects: [
 			{
 				extends: true,

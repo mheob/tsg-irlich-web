@@ -5,7 +5,7 @@ import { useRef } from 'react';
 
 import { Button, ButtonLink } from '@/components/ui/button';
 import { ExternalLink } from '@/components/ui/external-link';
-import { printGoogleMapsLink } from '@/utils/url';
+import { printGoogleMapsLink } from '@/utils/google-maps';
 
 import type { DialogActions } from '../ui/dialog';
 import {

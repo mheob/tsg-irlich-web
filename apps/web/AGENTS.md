@@ -129,7 +129,7 @@ The resolved target is added as `target` next to the untouched `link` reference,
 
 ## Draft mode
 
-`/api/draft-mode/enable` validates the studio's preview secret and turns Next.js draft mode on, `/api/draft-mode/disable` turns it off again. The root layout renders `<VisualEditing />` and the "Vorschau beenden" link only while draft mode is enabled. Draft content needs `SANITY_API_READ_TOKEN`; it is read at import time in `src/lib/sanity/live.ts`, so a missing token fails the build.
+`/api/draft-mode/enable` validates the studio's preview secret and turns Next.js draft mode on, `/api/draft-mode/disable` turns it off again. The root layout renders `<VisualEditing />` and the "Vorschau beenden" link only while draft mode is enabled. Both load through `next/dynamic` with `ssr: false`: `next-sanity` does that for `<VisualEditing />` itself, and `DisableDraftModeLazy` (`src/components/with-logic/disable-draft-mode-lazy.tsx`) for the link. A client component the layout imports statically lands in the JavaScript every page shares, rendered or not, and the link's `useIsPresentationTool` brings the whole Visual Editing runtime with it — about 410 KB raw that every visitor downloaded until WEB-412. Draft content needs `SANITY_API_READ_TOKEN`; it is read at import time in `src/lib/sanity/live.ts`, so a missing token fails the build.
 
 ## TSG-Echo render route
 
@@ -197,6 +197,8 @@ The search (WEB-204) finds pages and news. It has two surfaces, the panel in the
 
 Read them through `env('KEY')` from `@/lib/env` — never `process.env` directly. The helper validates a single variable lazily with Zod and caches it. A new variable has to be added to the schema in `src/lib/env.ts`, to `globalEnv` (or the matching task) in the root `turbo.json`, and to the list in the root `AGENTS.md`.
 
+Keep `@/lib/env` out of client components, also indirectly. Zod and the whole schema come with it, and a client component in the root layout puts them into the JavaScript of every page: the footer's Google Maps dialog did that through `src/utils/url.ts` until WEB-412, which is why `printGoogleMapsLink` lives in `src/utils/google-maps.ts`. The Sanity image builder (`src/lib/sanity/utils.ts`) is built from `projectId` and `dataset` of `src/lib/sanity/api.ts` instead of the client for the same reason.
+
 ## Fonts
 
 Inter, Oswald and Bebas Neue live in `src/app/_assets/fonts/<font>/`, each with its OFL license, and are loaded by `next/font/local` in the root layout. They used to come through `next/font/google`, which fetches them from Google on every build without a warm Turbopack cache. Google sometimes answers with `/l/font?kit=…&skey=…` URLs, and Turbopack then fails the build with "next/font/google queries have exactly one entry" ([vercel/next.js#99114](https://github.com/vercel/next.js/issues/99114)). The first deployment of a branch takes over Production's build cache, which Turbopack cannot reuse across Next.js versions, so it hit exactly those builds.
@@ -219,6 +221,8 @@ An action never mails an address the client hands it. The contact form submits t
 Vitest splits this app into two projects, defined in `vitest.config.ts`, by file extension: `.test.tsx` anywhere under `src/` runs in the `dom` project (jsdom); `.test.ts` runs in `node`, except under `src/components/**` and `src/hooks/**`, which also run in `dom`.
 
 The app imports no static image (see „Page images“), so the test setup needs no stub for one; `test-utils/page-images.ts` holds Sanity image fixtures for the page tests.
+
+`vitest.config.ts` sets `NEXT_PUBLIC_SANITY_DATASET` and `NEXT_PUBLIC_SANITY_PROJECT_ID` (`test-dataset`, `test-project`) for both projects. `src/lib/sanity/api.ts` asserts them at import time, and every module that builds a Sanity image URL reaches it, also in tests that mock the client away.
 
 `renderWithUser` (`test-utils/render.tsx`) is the entry point for a `.test.tsx` case — it wraps Testing Library's `render` and returns the usual result plus a `user` (`@testing-library/user-event`) already set up against the same document.
 
