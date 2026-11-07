@@ -40,6 +40,7 @@ pnpm run test:lighthouse # Lighthouse CI against LHCI_BASE_URL (a deployed previ
 | `src/components/ui` | Shadcn-style wrappers around Base UI (CVA variants in `variants.ts`) |
 | `src/components/with-logic` | components that own state, hooks or browser APIs |
 | `src/lib/sanity` | client, live/preview bindings, GROQ queries, image helpers |
+| `src/lib/redirects` | the redirects of the old WordPress addresses, read by `next.config.ts` |
 | `src/lib/search` | the site search: input rules, the merge into pages, snippets, the `searchSite` seam |
 | `src/lib/validations` | Zod schemas shared by forms and server actions |
 | `src/types` | hand-written types plus the generated Sanity types |
@@ -121,6 +122,16 @@ The GROQ side lives in `src/lib/sanity/queries/index.ts`:
 - `blockContent` does the same for the `internalLink` **marks** of a portable text field and has to be applied to every `blockContent` that is rendered, including nested ones (`grid.items[]`, `imageCard.description`).
 
 The resolved target is added as `target` next to the untouched `link` reference, and empty arrays are coalesced, so that the query result still matches the generated schema types.
+
+## Redirects of the old site
+
+The addresses of the WordPress site that ran until the relaunch are redirected permanently (308) by `getLegacyRedirects()` in `src/lib/redirects/legacy-redirects.ts`, which `redirects()` in `next.config.ts` appends to the pagination redirects (WEB-420). `next.config.ts` imports it with the `.ts` extension: Node.js loads the config with its own TypeScript support, as an ES module, and resolves no extensionless import.
+
+- The old departments, groups and teams go to their page below `/angebot`, the old news sub-categories to today's flat categories, the event calendar (`/veranstaltungen`, `/events`, `/venues`) to the category `veranstaltungen`, the club pages one by one to `/verein`, `/mitgliedschaft` or `/`, the feeds to `/feed.xml` and Yoast's sitemaps to `/sitemap.xml`. `/verein` and `/news` have real pages below them, so nothing there is caught by a wildcard; within the old sections `/:rest*` takes the sub-pages along.
+- The old articles lived directly below the domain. None of them exists in Sanity, so they go to `/news`. Only the slugs in `legacy-article-slugs.ts` are redirected, the ones the Wayback Machine captured, so a root page added later is never caught; they are joined into a few alternations, since Next.js refuses a `source` whose regular expression exceeds 4096 characters.
+- Every source is written without the trailing slash WordPress used: Next.js answers `/foo/` with its own 308 to `/foo` first. A parameter the destination does not use is dropped, not appended to the query.
+- The unit test resolves addresses through Next.js's own matcher (`next/dist/shared/lib/router/utils/path-match`) and checks that no redirect ends in another one, that no page of the app is caught and that no article slug is a top-level route; `e2e/specs/redirects.spec.ts` checks the hops on the running server.
+- 23 of these addresses were bulk redirects in the Vercel dashboard (project → Redirects) before, which the test repeats one by one. They live outside the repository and can be deleted there once this table is in production. Until then the dashboard's `/veranstaltungen` → `/` may answer before this table's `/news/veranstaltungen`.
 
 ## Main navigation
 
