@@ -15,10 +15,16 @@ function buildStats(count: number): Stats[] {
 
 describe('the counter', () => {
 	it('renders one entry per value, each with its title', () => {
-		const { getByRole } = renderWithUser(<Counter values={buildStats(3)} />);
+		const { getByText } = renderWithUser(<Counter values={buildStats(3)} />);
 
-		expect(getByRole('heading', { name: 'Kennzahl 1' })).not.toBeNull();
-		expect(getByRole('heading', { name: 'Kennzahl 3' })).not.toBeNull();
+		expect(getByText('Kennzahl 1')).not.toBeNull();
+		expect(getByText('Kennzahl 3')).not.toBeNull();
+	});
+
+	it('labels its values without turning the labels into headings', () => {
+		const { queryAllByRole } = renderWithUser(<Counter values={buildStats(4)} />);
+
+		expect(queryAllByRole('heading')).toStrictEqual([]);
 	});
 
 	it('wraps a value in its prefix and suffix', () => {

@@ -117,6 +117,8 @@ export default async function NewsArticlePage({
 						? { alt: article.featuredImage.alt, src: imageSource }
 						: undefined
 				}
+				// The headline of the article below is the page's h1, not the generic title of the hero.
+				isTitleHeading={false}
 				subTitle={hero.subtitle}
 				title={hero.title}
 			/>

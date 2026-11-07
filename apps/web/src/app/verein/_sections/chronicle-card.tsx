@@ -40,7 +40,7 @@ export function ChronicleCard({
 				</div>
 
 				<div className="px-4 md:px-8">
-					<h2 className="pt-4 text-xl md:pt-8 md:text-3xl">{title}</h2>
+					<h3 className="pt-4 text-xl md:pt-8 md:text-3xl">{title}</h3>
 					<p className="pt-4 text-sm text-muted-foreground md:pt-8 md:text-lg">{excerpt}</p>
 				</div>
 			</div>

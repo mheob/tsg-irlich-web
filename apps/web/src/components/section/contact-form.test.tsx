@@ -70,6 +70,22 @@ describe('the contact form', () => {
 		]);
 	});
 
+	it('heads the form with its title', () => {
+		const { getByRole } = renderForm();
+
+		expect(getByRole('heading', { level: 2, name: 'Kontaktiere uns' })).not.toBeNull();
+	});
+
+	it('shows its title as plain text on a page whose h1 already reads the same', () => {
+		const { getAllByText, queryByRole } = renderWithUser(
+			<ContactForm images={CONTACT_IMAGES} isTitleHeading={false} />,
+		);
+
+		expect(queryByRole('heading', { name: 'Kontaktiere uns' })).toBeNull();
+		// The title stays on screen; the other match is the submit button.
+		expect(getAllByText('Kontaktiere uns')).toHaveLength(2);
+	});
+
 	it('names the privacy checkbox with the text standing next to it', () => {
 		const { getByRole, getByText } = renderForm();
 

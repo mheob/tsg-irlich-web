@@ -39,6 +39,12 @@ describe('the news article preview', () => {
 		expect(targets).toContain('/news/vereinsleben/sommerfest');
 	});
 
+	it('heads the preview with the title one level below its section', () => {
+		const { getByRole } = renderWithUser(<NewsArticlePreview article={buildArticle()} />);
+
+		expect(getByRole('heading', { level: 3, name: 'Sommerfest 2026' })).not.toBeNull();
+	});
+
 	it('links its category to the category overview', () => {
 		const { getByRole } = renderWithUser(<NewsArticlePreview article={buildArticle()} />);
 

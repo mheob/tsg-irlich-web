@@ -11,11 +11,23 @@ import Breadcrumb from '../with-logic/breadcrumb';
 
 interface HeroProps extends ComponentPropsWithoutRef<'section'> {
 	image?: { alt: ImageProps['alt']; objectPosition?: string; src: ImageProps['src'] };
+	/**
+	 * Whether the title is the page's `h1`, which it is by default. A page whose content carries the
+	 * `h1` itself (a group, an article) turns it off, and the title keeps its look as plain text.
+	 */
+	isTitleHeading?: boolean;
 	subTitle?: string;
 	title: string;
 }
 
-export function Hero({ children, image, subTitle, title, ...props }: Readonly<HeroProps>) {
+export function Hero({
+	children,
+	image,
+	isTitleHeading = true,
+	subTitle,
+	title,
+	...props
+}: Readonly<HeroProps>) {
 	return (
 		<section
 			className={cn(
@@ -39,7 +51,13 @@ export function Hero({ children, image, subTitle, title, ...props }: Readonly<He
 			)}
 
 			<div className="flex h-full flex-col items-center justify-center pt-40">
-				<SectionHeader subTitle={subTitle} title={title} isCentered isCenteredOnDesktop>
+				<SectionHeader
+					level={isTitleHeading ? 'h1' : 'div'}
+					subTitle={subTitle}
+					title={title}
+					isCentered
+					isCenteredOnDesktop
+				>
 					{children}
 				</SectionHeader>
 

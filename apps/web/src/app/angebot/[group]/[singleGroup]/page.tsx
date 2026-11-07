@@ -127,6 +127,8 @@ export default async function SingleGroupsPage({
 					[groupData.heroImage, groupData.featuredImage, siteImages?.fallbackImage],
 					groupData.title,
 				)}
+				// The name of the group below is the page's h1, not the generic title of the hero.
+				isTitleHeading={false}
 				subTitle={page.subtitle}
 				title={page.title}
 			/>

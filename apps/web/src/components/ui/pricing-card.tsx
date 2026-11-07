@@ -54,7 +54,7 @@ export function PricingCard({
 
 					<div>
 						<p className="text-lg">{subtitle}</p>
-						<h2 className="font-serif text-2xl uppercase">{title}</h2>
+						<h3 className="font-serif text-2xl uppercase">{title}</h3>
 					</div>
 				</header>
 
@@ -63,7 +63,7 @@ export function PricingCard({
 					<div className="my-6 text-center text-5xl font-bold">
 						{price} € <span className="text-sm">/monatlich</span>
 					</div>
-					<h3 className="font-sans text-lg font-bold">{benefitsTitle}</h3>
+					<h4 className="font-sans text-lg font-bold">{benefitsTitle}</h4>
 					<ul className="mt-4 md:text-lg">
 						{benefits.map((benefit) => (
 							<li className="flex items-start gap-2" key={benefit}>

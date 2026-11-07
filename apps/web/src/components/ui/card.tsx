@@ -25,11 +25,16 @@ function CardHeader({ className, ...props }: ComponentProps<'header'>) {
 	);
 }
 
-function CardTitle({ className, ...props }: ComponentProps<'h3'>) {
+interface CardTitleProps extends ComponentProps<'h3'> {
+	/** The heading level, `h3` for a card below a section's `h2`; a card that heads a section uses `h2`. */
+	level?: 'h2' | 'h3' | 'h4';
+}
+
+function CardTitle({ className, level: HeadingTag = 'h3', ...props }: Readonly<CardTitleProps>) {
 	return (
-		<h3 className={className} data-slot="card-title" {...props}>
+		<HeadingTag className={className} data-slot="card-title" {...props}>
 			{props.children}
-		</h3>
+		</HeadingTag>
 	);
 }
 

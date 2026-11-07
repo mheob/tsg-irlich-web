@@ -61,6 +61,15 @@ describe('the feedback form', () => {
 		mockedCreateLinearIssue.mockReset();
 	});
 
+	// The form is the only section of `/kontakt/feedback`, right below the hero's h1.
+	it('heads the form with an h2', () => {
+		const { getByRole } = renderForm();
+
+		expect(
+			getByRole('heading', { level: 2, name: 'Gib uns dein Feedback zur neuen Webseite' }),
+		).not.toBeNull();
+	});
+
 	it('names the privacy checkbox with the text standing next to it', () => {
 		const { getByRole, getByText } = renderForm();
 

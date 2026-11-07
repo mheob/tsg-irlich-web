@@ -5,9 +5,21 @@ import { Hero } from './hero';
 
 describe('the hero of a page', () => {
 	it('heads the page with its title', () => {
-		const { getByRole } = renderWithUser(<Hero subTitle="So erreichst du uns" title="Kontakt" />);
+		const { getAllByRole, getByRole } = renderWithUser(
+			<Hero subTitle="So erreichst du uns" title="Kontakt" />,
+		);
 
-		expect(getByRole('heading', { name: 'Kontakt' })).not.toBeNull();
+		expect(getByRole('heading', { level: 1, name: 'Kontakt' })).not.toBeNull();
+		expect(getAllByRole('heading')).toHaveLength(1);
+	});
+
+	it('shows its title as plain text when the content below heads the page', () => {
+		const { getByText, queryAllByRole } = renderWithUser(
+			<Hero isTitleHeading={false} subTitle="Abteilungen" title="Angebote" />,
+		);
+
+		expect(queryAllByRole('heading')).toStrictEqual([]);
+		expect(getByText('Angebote')).not.toBeNull();
 	});
 
 	it('shows the image by its alt text', () => {
