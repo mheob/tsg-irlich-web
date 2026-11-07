@@ -14,11 +14,31 @@ interface WebhookBody {
 
 type RevalidateHandler = (slug?: string) => void;
 
+/**
+ * The pages of every category. `next.config.ts` rewrites a later page (`?seite=N`) to an internal
+ * route, and a rewritten page is cached under that route, so it has to be named here as well.
+ */
+function revalidateNewsCategories(): void {
+	revalidatePath('/news/[category]', 'page');
+	revalidatePath('/news/[category]/seite/[page]', 'page');
+}
+
+/** The news overview and the categories, each with the internal route of its later pages. */
+function revalidateNewsOverviews(): void {
+	revalidatePath('/news');
+	revalidatePath('/news/seite/[page]', 'page');
+	revalidateNewsCategories();
+}
+
+/** Every article. The payload carries no category, so the whole route is revalidated. */
+function revalidateNewsArticles(): void {
+	revalidatePath('/news/[category]/[slug]', 'page');
+}
+
 /** The news routes, the group pages that show the latest articles, and the sitemap, which lists every article and category. */
 function revalidateNewsRoutes(): void {
-	revalidatePath('/news');
-	revalidatePath('/news/[category]', 'page');
-	revalidatePath('/news/[category]/[slug]', 'page');
+	revalidateNewsOverviews();
+	revalidateNewsArticles();
 	revalidatePath('/angebot/[group]/[singleGroup]', 'page');
 	revalidatePath('/sitemap.xml');
 }
@@ -34,12 +54,18 @@ function revalidateOfferRoutes(): void {
 	revalidatePath('/llms.txt');
 }
 
+/** Every page of the archive, the later ones through the internal route the rewrite serves them from. */
+function revalidateEchoArchive(): void {
+	revalidatePath(ECHO_OVERVIEW_PATH);
+	revalidatePath(`${ECHO_OVERVIEW_PATH}/seite/[page]`, 'page');
+}
+
 /**
  * The archive and every issue page. The slug of an earlier version of an issue is not in the
  * payload, so the whole issue route is revalidated.
  */
 function revalidateEchoRoutes(): void {
-	revalidatePath(ECHO_OVERVIEW_PATH);
+	revalidateEchoArchive();
 	revalidatePath(`${ECHO_OVERVIEW_PATH}/[slug]`, 'page');
 }
 
@@ -68,9 +94,7 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 		revalidateEchoRoutes();
 		revalidatePath('/sitemap.xml');
 	},
-	echoOverview: () => {
-		revalidatePath(ECHO_OVERVIEW_PATH);
-	},
+	echoOverview: revalidateEchoArchive,
 	// A question can belong to several departments, and the payload carries none it belonged to
 	// before, so every department page is revalidated.
 	faq: () => {
@@ -96,18 +120,23 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	// category with its article count.
 	'news.article': revalidateNewsRoutes,
 	'news.category': revalidateNewsRoutes,
+	// The hero of every article.
+	'news-article-page': revalidateNewsArticles,
 	// The category pages show the hero image of the news overview, the TSG-Echo pages its contact
 	// persons.
 	newsOverview: () => {
-		revalidatePath('/news');
-		revalidatePath('/news/[category]', 'page');
+		revalidateNewsOverviews();
 		revalidateEchoRoutes();
 	},
+	// The texts and the contact persons of every category page.
+	newsOverviewCategory: revalidateNewsCategories,
 	person: () => {
 		revalidatePath('/');
 		revalidatePath('/angebot', 'layout');
 		revalidatePath('/kontakt');
-		revalidatePath('/news');
+		// The contact persons of the overviews, and the author of an article.
+		revalidateNewsOverviews();
+		revalidateNewsArticles();
 		revalidatePath('/mitgliedschaft');
 		// The about page and the TSG-Echo pages below it.
 		revalidatePath('/verein', 'layout');
@@ -123,6 +152,11 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	// The menu and the footer data, rendered by the root layout on every page.
 	'site-settings': () => {
 		revalidatePath('/', 'layout');
+	},
+	// The home page and every article show the sponsors.
+	sponsors: () => {
+		revalidatePath('/');
+		revalidateNewsArticles();
 	},
 	testimonial: () => {
 		revalidatePath('/');

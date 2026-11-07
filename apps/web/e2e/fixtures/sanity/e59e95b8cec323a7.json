@@ -1,0 +1,407 @@
+{
+	"body": {
+		"result": [
+			{
+				"_id": "e943a0c2-e57d-43cd-815f-00211b1e9657",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "senioren",
+						"title": "Senioren"
+					},
+					{
+						"slug": "fussball",
+						"title": "Fußball"
+					}
+				],
+				"excerpt": "Die TSG Irlich musste sich im Derby bei der SG Feldkirchen II mit 2:3 (0:2) geschlagen geben. Ein Gegentreffer nach einer Ecke entschied die Begegnung. ",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Ein Foto vom Sportplatz in Hüllenberg bei Sonnenuntergang",
+					"asset": {
+						"_ref": "image-6e9bdd2679f0a34509f33537ebae16ea8f86716b-5712x4284-jpg",
+						"_type": "reference"
+					}
+				},
+				"meta": null,
+				"publishedAt": "2026-09-12T13:47:00.000Z",
+				"slug": "derbyniederlage-feldkirchen",
+				"title": "TSG verliert umkämpftes Derby gegen Feldkirchen"
+			},
+			{
+				"_id": "ec305fb6-a493-4399-8ddc-d26be19e6125",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "verein",
+						"title": "Gesamtverein"
+					}
+				],
+				"excerpt": "Am Pappelstadion rollen die Bagger an… Nein, soweit ist es noch nicht! Trotzdem gibt es gute Neuigkeiten für unser Vereinsheim in der Gotenstraße zu vermelden.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Die neuen Solar-Kollektoren auf dem Dach vom Vereinsheim",
+					"asset": {
+						"_ref": "image-90c50d085e1536919f93c0c85942ae20a857becc-4032x3024-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.13212111101843357,
+						"left": 0,
+						"right": 0,
+						"top": 0.09208441070981734
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.49019934940362014,
+						"width": 0.8598688027570063,
+						"x": 0.5040037484926569,
+						"y": 0.5453749270164318
+					}
+				},
+				"meta": {
+					"metaDescription": "Am Pappelstadion rollen die Bagger an… Nein, soweit ist es noch nicht! Trotzdem gibt es gute Neuigkeiten für unser Vereinsheim in der Gotenstraße zu vermelden.",
+					"metaTitle": "TSG Irlich: Vereinsheim mit moderner Wärmetechnik",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-09-10T15:44:00.000Z",
+				"slug": "modernisierung-vereinsheim",
+				"title": "Modernisierung am Vereinsheim – fit für die Zukunft!"
+			},
+			{
+				"_id": "8b45157a-a573-4fca-874c-e6a32f9bd2b2",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "senioren",
+						"title": "Senioren"
+					},
+					{
+						"slug": "fussball",
+						"title": "Fußball"
+					}
+				],
+				"excerpt": "Gegen die bis dahin noch ungeschlagene SG Weißenthurm II drehte die TSG einen 1:3-Rückstand und feierte vor heimischer Kulisse einen umjubelten 4:3-Erfolg.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Spielmacher Marc Diether behauptet den Ball gegen mehrere Gegner",
+					"asset": {
+						"_ref": "image-54411da2474ba83b2bd4c6a50ea2190d4c6d5947-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.49820668946534313,
+						"width": 0.5248978230044209,
+						"x": 0.532029360246893,
+						"y": 0.5226874635082158
+					}
+				},
+				"meta": {
+					"metaDescription": "Gegen die bis dahin noch ungeschlagene SG Weißenthurm II drehte die TSG einen 1:3-Rückstand und feierte vor heimischer Kulisse einen umjubelten 4:3-Erfolg.",
+					"metaTitle": "TSG dreht 1:3-Rückstand gegen SG Weißenthurm II",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-09-04T13:15:53.118Z",
+				"slug": "Heimsieg-weissenthurm-ii",
+				"title": "TSG dreht 1:3-Rückstand gegen SG Weißenthurm II"
+			},
+			{
+				"_id": "a84c54d6-001e-4094-8db4-c77b90c88f0c",
+				"author": {
+					"firstName": "Sophie ",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Sophie Thomé in einer blauen Jacke der TSG Irlich vor einer weißen Leinwand. ",
+						"asset": {
+							"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6740816500468764,
+							"width": 0.6978607346799625,
+							"x": 0.4942576493650388,
+							"y": 0.40427639989772435
+						}
+					},
+					"lastName": "Thomé"
+				},
+				"categories": [
+					{
+						"slug": "verein",
+						"title": "Gesamtverein"
+					}
+				],
+				"excerpt": "Unser Vorstandsmitglied Philipp Pfeiffer hat erfolgreich den DFB-Basis-Vereinsmanager-Lehrgang beim Fußballverband Rheinland absolviert.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Philipp steht mit seiner Teilnahmebescheinigung im Pappelstadion.",
+					"asset": {
+						"_ref": "image-dd5b8127e0d9c87d31b78d3b1803ba32c509f8b5-1024x820-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.41682282833337964,
+						"width": 0.7498250991755798,
+						"x": 0.5170992142397546,
+						"y": 0.214588372674952
+					}
+				},
+				"meta": {
+					"metaDescription": "Unser Vorstandsmitglied Philipp Pfeiffer hat erfolgreich den DFB-Basis-Vereinsmanager-Lehrgang beim Fußballverband Rheinland absolviert.",
+					"metaTitle": "TSG Irlich: Philipp ist DFB-Basis-Vereinsmanager",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-09-01T14:15:00.000Z",
+				"slug": "pfeiffer-vereinsmanager-lehrgang",
+				"title": "Philipp Pfeifer absolviert DFB-Vereinsmanager-Lehrgang"
+			},
+			{
+				"_id": "8baf3bb8-20e9-4437-9c91-0155422e04e0",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "veranstaltungen",
+						"title": "Veranstaltungen"
+					}
+				],
+				"excerpt": "Ein rundum gelungenes Fest: Am 15. August hatten die Irlicher Ortsvereine zum Rheinuferfest in die Irlicher Rheinanlagen eingeladen.",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Tolles Ambiente am Rhein - das Festgelände beim Sonnenuntergang",
+					"asset": {
+						"_ref": "image-6dcf53100aaee1ff57f72b5d19851117df2a67c8-1600x1200-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0.27422593268494083,
+						"left": 0,
+						"right": 0.004086149336383356,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.4860532875414998,
+						"width": 0.9278115279897368,
+						"x": 0.4639057639948684,
+						"y": 0.41192082952030307
+					}
+				},
+				"meta": {
+					"metaDescription": "Rheinuferfest Irlich begeistert über 1.000 Gäste mit Live-Musik, sommerlichem Wetter und toller Stimmung direkt am Rhein bis spät in die Nacht.",
+					"metaTitle": "Rheinuferfest 2026: TSG Irlich feiert mit über 1.000 Gästen",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-08-30T09:19:00.000Z",
+				"slug": "rheinuferfest-nachbericht",
+				"title": "Sommerabend am Rhein: Rheinuferfest lockt über 1.000 Besucher!"
+			},
+			{
+				"_id": "57fc9d1d-816f-40be-8795-2d1f37d682e1",
+				"author": {
+					"firstName": "Philipp",
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Philipp Pfeiffer im Polo-Shirt der TSG Irlich",
+						"asset": {
+							"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.09074985403286345,
+							"left": 0,
+							"right": 0.026691133539077486,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.6927356852875811,
+							"width": 0.6490937792297277,
+							"x": 0.510074160141839,
+							"y": 0.46890832100794233
+						}
+					},
+					"lastName": "Pfeiffer"
+				},
+				"categories": [
+					{
+						"slug": "senioren",
+						"title": "Senioren"
+					},
+					{
+						"slug": "fussball",
+						"title": "Fußball"
+					}
+				],
+				"excerpt": "Nach zwei Siegen musste die TSG Irlich am dritten Spieltag ihre erste Niederlage hinnehmen. Beim FV Engers III unterlag die TSG am Wasserturm mit 2:4 (1:2)",
+				"featuredImage": {
+					"_type": "mainImage",
+					"alt": "Umkämpftes Spiel: Shakehandy nach einem Zweikampf in Engers",
+					"asset": {
+						"_ref": "image-22ac4007d7288149bf1f6e6a61f94dd8f5aea3ba-6000x4000-jpg",
+						"_type": "reference"
+					},
+					"crop": {
+						"_type": "sanity.imageCrop",
+						"bottom": 0,
+						"left": 0,
+						"right": 0,
+						"top": 0
+					},
+					"hotspot": {
+						"_type": "sanity.imageHotspot",
+						"height": 0.5859368349365794,
+						"width": 1,
+						"x": 0.5,
+						"y": 0.3692430447667489
+					}
+				},
+				"meta": {
+					"metaDescription": "Nach zwei Siegen musste die TSG Irlich am dritten Spieltag ihre erste Niederlage hinnehmen. Beim FV Engers III unterlag die TSG am Wasserturm mit 2:4 (1:2)",
+					"metaTitle": "TSG Irlich verliert 2:4 beim FV Engers III",
+					"openGraphImage": null
+				},
+				"publishedAt": "2026-08-28T15:39:00.000Z",
+				"slug": "tsg-verliert-in-engers",
+				"title": "Erste Saisonniederlage am Wasserturm – TSG verliert in Engers "
+			}
+		],
+		"syncTags": [
+			"s1:GNFE5A",
+			"s1:uv+Zzg",
+			"s1:c5Grjg",
+			"s1:gDNQog",
+			"s1:vJBgQg",
+			"s1:Ik/M0w",
+			"s1:+YVtFA"
+		],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27news.article%27%5D+%7C+order%28publishedAt+desc%29+%5B%24start..%24end%5D+%7B+%2F%2F+%24start+%3D+3%2C+%24end+%3D+8%0A%09%09%0A%09_id%2C%0A%09publishedAt%2C%0A%09author-%3E%7B+firstName%2C+lastName%2C+image+%7D%2C%0A%09categories%5B%5D-%3E%7B+title%2C+%22slug%22%3A+slug.current+%7D%2C%0A%09excerpt%2C%0A%09meta+%7B+metaTitle%2C+metaDescription%2C+openGraphImage%7D%2C%0A%09featuredImage%2C%0A%09%22slug%22%3A+slug.current%2C%0A%09title%2C%0A%0A%09%7D%0A&%24end=14&%24start=9&cacheMode=noStale&returnQuery=false&perspective=published&tag=next-loader.fetch.fetch-sync-tags"
+}

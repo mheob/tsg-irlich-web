@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vite-plus/test';
 
-import { getPageCount, getPageNumber, getPaginatedPath, getPaginationRange } from './pagination';
+import {
+	getLaterPageNumber,
+	getOverviewPath,
+	getPageCount,
+	getPageNumber,
+	getPaginatedPath,
+	getPaginationRange,
+} from './pagination';
 
 describe('the page number of a paginated overview', () => {
 	it('is the first page without a parameter', () => {
@@ -22,6 +29,41 @@ describe('the page number of a paginated overview', () => {
 	it.each(['abc', '0', '-2', 'Infinity'])('is the first page for %s', (page) => {
 		expect(getPageNumber(page)).toBe(1);
 	});
+});
+
+describe('the page number in the internal segment of a cached overview', () => {
+	it.each([
+		['2', 2],
+		['10', 10],
+		['123', 123],
+	])('reads %s', (segment, pageNumber) => {
+		expect(getLaterPageNumber(segment)).toBe(pageNumber);
+	});
+
+	// The overview itself is the first page, and the rewrite passes no other spelling on.
+	it.each(['1', '0', '02', '2.5', '-2', 'abc', '', '99999999999999999999'])(
+		'names no later page for %j',
+		(segment) => {
+			expect(getLaterPageNumber(segment)).toBeUndefined();
+		},
+	);
+});
+
+describe('the path of an overview behind its internal page segment', () => {
+	it.each([
+		['/news/seite/2', '/news'],
+		['/news/fussball/seite/12', '/news/fussball'],
+		['/verein/echo/seite/3', '/verein/echo'],
+	])('turns %s into %s', (pathname, overview) => {
+		expect(getOverviewPath(pathname)).toBe(overview);
+	});
+
+	it.each(['/news', '/news/seite', '/news/seite/neu', '/news/seite/2/mehr', '/'])(
+		'leaves %s alone',
+		(pathname) => {
+			expect(getOverviewPath(pathname)).toBe(pathname);
+		},
+	);
 });
 
 describe('the canonical path of a paginated overview page', () => {

@@ -1,8 +1,11 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import type { ReactElement, ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
-import NewsArticlePage, { generateMetadata } from '@/app/news/[category]/[slug]/page';
+import NewsArticlePage, {
+	generateMetadata,
+	generateStaticParams,
+} from '@/app/news/[category]/[slug]/page';
 import { Hero } from '@/components/section/hero';
 import { Gallery } from '@/components/ui/gallery';
 import { JsonLd } from '@/components/ui/json-ld';
@@ -37,6 +40,9 @@ vi.mock(import('next/navigation'), () => ({
 	notFound: vi.fn(() => {
 		throw new Error('NEXT_NOT_FOUND');
 	}),
+	permanentRedirect: vi.fn(() => {
+		throw new Error('NEXT_REDIRECT');
+	}),
 }));
 
 const mockedSanityFetch = sanityFetchMock();
@@ -57,8 +63,10 @@ function imageBlock(key: string, overrides: Record<string, unknown> = {}): Recor
 const HERO = { subtitle: 'Aktuelles', title: 'News' };
 const CATEGORY_DOCUMENT = { _id: 'category-vereinsleben', _type: 'news.category' };
 const ARTICLE = {
+	categories: [{ slug: 'vereinsleben', title: 'Vereinsleben' }],
 	excerpt: 'Ein Rückblick auf das Sommerfest.',
 	featuredImage: { alt: 'Das Sommerfest', asset: { _ref: ASSET_REF, _type: 'reference' } },
+	slug: 'sommerfest',
 	title: 'Sommerfest 2026',
 };
 
@@ -108,6 +116,13 @@ async function renderWithBody(body: unknown[]): Promise<ReactNode> {
 describe('news article page', () => {
 	afterEach(() => {
 		mockedSanityFetch.mockReset();
+		vi.mocked(notFound).mockClear();
+		vi.mocked(permanentRedirect).mockClear();
+	});
+
+	// WEB-415: without the list the route rendered on every request.
+	it('prerenders no article at build time, so every article is cached on its first request', () => {
+		expect(generateStaticParams()).toStrictEqual([]);
 	});
 
 	describe('metadata', () => {
@@ -244,6 +259,57 @@ describe('news article page', () => {
 			expect(vi.mocked(notFound)).toHaveBeenCalledWith();
 		});
 
+		// WEB-415: the article rendered under any category segment, and the cache would have kept a copy
+		// for every one somebody typed.
+		it('sends a request under another category on to the first category of the article', async () => {
+			mockSanity({
+				article: { ...ARTICLE, categories: [{ slug: 'fussball' }, { slug: 'vereinsleben' }] },
+			});
+
+			await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_REDIRECT');
+			expect(vi.mocked(permanentRedirect)).toHaveBeenCalledWith('/news/fussball/sommerfest');
+		});
+
+		it('renders under the first category without redirecting', async () => {
+			mockSanity();
+
+			await NewsArticlePage(routeProps());
+
+			expect(vi.mocked(permanentRedirect)).not.toHaveBeenCalled();
+		});
+
+		it('compares the path without the stega encoding of draft mode', async () => {
+			const article = { _id: 'article-sommerfest', _type: 'news.article' };
+			mockSanity({
+				article: {
+					...ARTICLE,
+					categories: [{ slug: encodeLikeDraftMode('vereinsleben', article) }],
+					slug: encodeLikeDraftMode('sommerfest', article),
+				},
+			});
+
+			await NewsArticlePage(routeProps());
+
+			expect(vi.mocked(permanentRedirect)).not.toHaveBeenCalled();
+		});
+
+		it('redirects to a path without the stega encoding of draft mode', async () => {
+			const article = { _id: 'article-sommerfest', _type: 'news.article' };
+			mockSanity({
+				article: { ...ARTICLE, categories: [{ slug: encodeLikeDraftMode('fussball', article) }] },
+			});
+
+			await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_REDIRECT');
+			expect(vi.mocked(permanentRedirect)).toHaveBeenCalledWith('/news/fussball/sommerfest');
+		});
+
+		it('has no page for an article without a category', async () => {
+			mockSanity({ article: { ...ARTICLE, categories: null } });
+
+			await expect(NewsArticlePage(routeProps())).rejects.toThrow('NEXT_NOT_FOUND');
+			expect(vi.mocked(permanentRedirect)).not.toHaveBeenCalled();
+		});
+
 		it('heads the page with the featured image and the shared hero titles', async () => {
 			mockSanity();
 
@@ -261,8 +327,8 @@ describe('news article page', () => {
 				article: {
 					...ARTICLE,
 					categories: [
-						{ slug: 'fussball', title: 'Fußball' },
 						{ slug: 'vereinsleben', title: 'Vereinsleben' },
+						{ slug: 'fussball', title: 'Fußball' },
 					],
 				},
 			});
@@ -295,22 +361,12 @@ describe('news article page', () => {
 			});
 		});
 
-		it('leaves the category of the URL unnamed when the article does not list it', async () => {
-			mockSanity({ article: { ...ARTICLE, categories: [{ slug: 'fussball', title: 'Fußball' }] } });
-
-			const hero = findElement(await NewsArticlePage(routeProps()), Hero);
-
-			expect(hero?.props.breadcrumb?.parents).toStrictEqual({ '/news/vereinsleben': undefined });
-		});
-
 		it('describes the article as structured data under its canonical URL', async () => {
 			mockSanity({
 				article: {
 					...ARTICLE,
 					_updatedAt: '2026-06-03T08:00:00Z',
-					categories: [{ slug: 'fussball' }],
 					publishedAt: '2026-06-01T18:00:00Z',
-					slug: 'sommerfest',
 				},
 			});
 
@@ -321,7 +377,7 @@ describe('news article page', () => {
 				dateModified: '2026-06-03T08:00:00Z',
 				datePublished: '2026-06-01T18:00:00Z',
 				headline: 'Sommerfest 2026',
-				mainEntityOfPage: 'http://localhost:3000/news/fussball/sommerfest',
+				mainEntityOfPage: 'http://localhost:3000/news/vereinsleben/sommerfest',
 			});
 		});
 
