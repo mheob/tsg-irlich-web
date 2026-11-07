@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test';
 
-import { appendToHistory, getSlugHistoryPatch } from './slug-history';
+import { appendToHistory, getSlugHistoryPatch, isSlugHistoryType } from './slug-history';
 
 describe('slug history of a value', () => {
 	it('records the published slug when the slug changes', () => {
@@ -81,6 +81,26 @@ describe('slug history patch', () => {
 		).toStrictEqual({ previousSlugs: ['tanz'] });
 	});
 
+	it('records the old slug of a news article', () => {
+		expect(
+			getSlugHistoryPatch({
+				type: 'news.article',
+				published: { slug: 'Einladung-JHV-2026' },
+				draft: { slug: 'einladung-jhv-2026' },
+			}),
+		).toStrictEqual({ previousSlugs: ['Einladung-JHV-2026'] });
+	});
+
+	it('records the old slug of a news category and keeps the earlier ones', () => {
+		expect(
+			getSlugHistoryPatch({
+				type: 'news.category',
+				published: { slug: 'jedermanner' },
+				draft: { previousSlugs: ['jedermann'], slug: 'jedermaenner' },
+			}),
+		).toStrictEqual({ previousSlugs: ['jedermann', 'jedermanner'] });
+	});
+
 	it('records nothing for a department that was never published', () => {
 		expect(getSlugHistoryPatch({ type: 'department', draft: { slug: 'tanzen' } })).toBeUndefined();
 	});
@@ -135,5 +155,17 @@ describe('slug history patch', () => {
 				draft: { slug: 'yoga' },
 			}),
 		).toBeUndefined();
+	});
+});
+
+describe('types with a slug history', () => {
+	it('names the types that remember former slugs', () => {
+		expect(
+			['department', 'news.article', 'news.category'].every((type) => isSlugHistoryType(type)),
+		).toBe(true);
+	});
+
+	it('leaves out the group, which remembers paths, and every other type', () => {
+		expect(['group', 'person', 'news'].some((type) => isSlugHistoryType(type))).toBe(false);
 	});
 });

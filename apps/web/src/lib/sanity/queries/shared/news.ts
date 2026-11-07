@@ -55,6 +55,25 @@ const newsCategoryQuery = defineQuery(`
 	}
 `);
 
+/**
+ * Query to find the current slug of a news category that used to have another one
+ *
+ * The perspective decides which versions are candidates, as for the departments (see
+ * `departmentRedirectQuery`). Two categories may list the same former slug, so the most recently
+ * updated one wins and the id breaks a tie, which makes every request answer the same.
+ *
+ * @param slug - The slug that no category uses any more
+ * @returns The current slug of the category that used to have it, or `null` when none did
+ */
+const newsCategoryRedirectQuery = defineQuery(`
+	*[
+		_type == 'news.category' &&
+		$slug in previousSlugs &&
+		defined(slug.current) &&
+		!(_id in path('drafts.**'))
+	] | order(_updatedAt desc, _id asc)[0].slug.current
+`);
+
 export {
 	newsArticle,
 	newsArticlesQuery,
@@ -62,4 +81,5 @@ export {
 	newsArticlesTotalQuery,
 	newsCategoriesQuery,
 	newsCategoryQuery,
+	newsCategoryRedirectQuery,
 };

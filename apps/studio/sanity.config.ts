@@ -18,7 +18,7 @@ const singletonTypes = new Set(['privacy', 'site-settings']);
 
 // Define the document types whose publish action remembers former slugs, so old URLs can redirect,
 // and whose duplicate action leaves that history behind, so a copy cannot take over the redirects
-const slugHistoryTypes = new Set(['department', 'group']);
+const slugHistoryTypes = new Set(['department', 'group', 'news.article', 'news.category']);
 
 export default defineConfig({
 	dataset,

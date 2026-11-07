@@ -42,6 +42,37 @@ const slugField = defineField({
 	validation: (Rule) => [Rule.required().error('Die Slug ist erforderlich')],
 });
 
+/**
+ * The shape of a slug the website can serve as it is: lowercase letters and digits, words joined by
+ * single hyphens. A capital made an address that only worked as typed (WEB-421), and an umlaut or a
+ * space has to be encoded in every link.
+ */
+const SLUG_FORMAT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/u;
+
+const SLUG_FORMAT_MESSAGE =
+	'Der Slug darf nur Kleinbuchstaben, Ziffern und einzelne Bindestriche enthalten, z. B. heimsieg-gegen-engers. „Generieren“ erzeugt ihn passend aus dem Titel.';
+
+/**
+ * Checks the shape of a slug. A missing slug passes, because the required rule already names it.
+ *
+ * @param value - The value of a slug field.
+ * @param value.current - The slug itself.
+ * @returns `true`, or the message for an editor.
+ */
+function validateSlugFormat(value?: { current?: string }): string | true {
+	const slug = value?.current;
+	return !slug || SLUG_FORMAT.test(slug) ? true : SLUG_FORMAT_MESSAGE;
+}
+
+/** The slug field plus the check of its shape, for the documents whose slug is checked. */
+const formattedSlugField = defineField({
+	...slugField,
+	validation: (Rule) => [
+		Rule.required().error('Die Slug ist erforderlich'),
+		Rule.custom(validateSlugFormat),
+	],
+});
+
 const subTitleField = defineField({
 	group: 'general',
 	name: 'subtitle',
@@ -93,6 +124,7 @@ function removeGroupFromField(
 export {
 	defaultHeroFields,
 	defaultPageSectionFields,
+	formattedSlugField,
 	getHiddenSlugField,
 	getDefaultPageSectionFieldsWithGroup,
 	introField,
@@ -100,4 +132,5 @@ export {
 	slugField,
 	subTitleField,
 	titleField,
+	validateSlugFormat,
 };
