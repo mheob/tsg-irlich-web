@@ -1,3 +1,4 @@
+import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vite-plus/test';
 
 import type { Stats } from '@/types/sanity.types';
@@ -35,6 +36,21 @@ describe('the counter', () => {
 
 		expect(getByText(/über/u)).not.toBeNull();
 		expect(getByText(/\+/u)).not.toBeNull();
+	});
+
+	it('sends every figure with its final value, once, so a crawler reads the real numbers', () => {
+		const values = [
+			{ suffix: '+', title: 'Mitglieder', value: 650 },
+			{ prefix: '< ', title: 'Jahre Tradition', value: 1200 },
+		] as unknown as Stats[];
+		const markup = document.createElement('div');
+		markup.innerHTML = renderToString(<Counter values={values} />);
+
+		const figures = [...markup.querySelectorAll('p')].map(
+			(label) => `${label.previousElementSibling?.textContent} ${label.textContent}`,
+		);
+
+		expect(figures).toStrictEqual(['650+ Mitglieder', '< 1.200 Jahre Tradition']);
 	});
 
 	it('says so when there are no values at all', () => {
