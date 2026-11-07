@@ -106,9 +106,11 @@ test.describe('news', () => {
 	});
 
 	// WEB-415: an article rendered under any category segment, and the cache would have kept a copy for
-	// every one somebody typed. The browser follows the redirect itself: on its first, uncached render
-	// `next start` sends the `Location` header twice, which only a browser shows to be harmless. Each
-	// project invents a category of its own, so both meet that first render.
+	// every one somebody typed. Only the headers are checked, not where a browser ends up: on the
+	// first, uncached render of a redirect `next start` sends `Location` twice (Next.js 16.4 records it
+	// in the cache entry and appends the entry's headers again), and WebKit joins both into one broken
+	// URL. Vercel sends it once, on the first render as on every later one (checked on the preview of
+	// WEB-415). Each project invents a category of its own, so both meet that first render.
 	test('sends an article under another category on to its first category', async ({
 		page,
 	}, testInfo) => {
@@ -128,11 +130,17 @@ test.describe('news', () => {
 			.getAttribute('href');
 		const slug = href?.split('/').at(-1) ?? '';
 
-		const response = await page.goto(`/news/erfunden-${testInfo.project.name}/${slug}`);
+		const response = await page.request.get(`/news/erfunden-${testInfo.project.name}/${slug}`, {
+			maxRedirects: 0,
+		});
+		const locations = response
+			.headersArray()
+			.filter(({ name }) => name.toLowerCase() === 'location')
+			.map(({ value }) => value);
 
-		expect(response?.request().redirectedFrom()).not.toBeNull();
-		await expect(page).toHaveURL(href ?? '');
-		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+		expect(response.status()).toBe(308);
+		expect(locations.length).toBeGreaterThan(0);
+		expect(new Set(locations)).toStrictEqual(new Set([href]));
 	});
 
 	test('fits the page links of a long overview onto a narrow phone', async ({ page }) => {
