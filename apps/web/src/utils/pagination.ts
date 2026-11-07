@@ -21,7 +21,7 @@ const PAGE_SEGMENT = 'seite';
 const LATER_PAGE_PATTERN = /^[1-9]\d*$/u;
 
 /** The internal page segment at the end of a path, `/seite/<n>`. */
-const PAGE_SEGMENT_SUFFIX = new RegExp(`/${PAGE_SEGMENT}/[1-9]\\d*$`, 'u');
+const PAGE_SEGMENT_SUFFIX = new RegExp(String.raw`/${PAGE_SEGMENT}/[1-9]\d*$`, 'u');
 
 /**
  * Reads the page number from the internal page segment of a cached overview.
