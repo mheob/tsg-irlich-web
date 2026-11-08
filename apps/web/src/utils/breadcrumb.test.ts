@@ -21,6 +21,15 @@ describe('the breadcrumb trail', () => {
 		});
 	});
 
+	it('skips the registration segment, which has no page of its own', () => {
+		expect(
+			getBreadcrumbItems('/anmeldung/dorfturnier-2027', { page: 'Dorfturnier 2027' }),
+		).toStrictEqual([
+			{ name: 'Home', path: '/' },
+			{ name: 'Dorfturnier 2027', path: '/anmeldung/dorfturnier-2027' },
+		]);
+	});
+
 	it('is only the home page for the home page', () => {
 		expect(getBreadcrumbItems('/')).toStrictEqual([{ name: 'Home', path: '/' }]);
 	});

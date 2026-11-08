@@ -6703,6 +6703,14 @@ export type SitemapEchoIssuesQueryResult = Array<{
   lastModified: string;
 }>;
 
+// Source: src/lib/sanity/queries/sitemap.ts
+// Variable: sitemapFormsQuery
+// Query: *[_type == 'form' && defined(slug.current)] {		"slug": slug.current,		"lastModified": _updatedAt	}
+export type SitemapFormsQueryResult = Array<{
+  slug: string;
+  lastModified: string;
+}>;
+
 // Query TypeMap
 declare global {
   interface SanityQueries {
@@ -6773,6 +6781,7 @@ declare global {
     '\n\t*[_type == \'department\' && defined(slug.current)] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapDepartmentsQueryResult;
     '\n\t*[_type == \'group\' && defined(department->slug.current)] {\n\t\t_type,\n\t\t"department": department->slug.current,\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapGroupsQueryResult;
     "\n\t*[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0 && indexable != false] {\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapEchoIssuesQueryResult;
+    '\n\t*[_type == \'form\' && defined(slug.current)] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapFormsQueryResult;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

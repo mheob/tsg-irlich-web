@@ -100,6 +100,10 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	faq: () => {
 		revalidatePath('/angebot/[group]', 'page');
 	},
+	// The registration pages show the form's texts and its fields.
+	form: () => {
+		revalidatePath('/anmeldung/[slug]', 'page');
+	},
 	group: revalidateOfferRoutes,
 	// The groups page holds the content of every department page.
 	groupsPage: () => {

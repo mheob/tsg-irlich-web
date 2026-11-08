@@ -21,6 +21,9 @@ interface BreadcrumbNames {
 	parents?: Readonly<Record<string, string | null | undefined>>;
 }
 
+/** Segments that only group pages and have no page of their own, so the trail leaves them out. */
+const SKIPPED_SEGMENTS = new Set(['anmeldung']);
+
 /** Segments the club writes differently from their humanised slug. */
 const SEGMENT_NAMES: Record<string, string> = { echo: 'TSG-Echo' };
 
@@ -41,7 +44,7 @@ function pickName(fallback: string, ...candidates: (string | null | undefined)[]
  * The trail starts at the home page and has one item per path segment, each pointing at the path up
  * to that segment. An item takes the name the page passes for it, and the last one is the page
  * itself. Without a name the segment is humanised (`weitere-sportarten` becomes "Weitere
- * Sportarten").
+ * Sportarten"). A segment that has no page of its own (`/anmeldung`) is left out of the trail.
  *
  * @param pathname - The path of the page.
  * @param names - The titles of the page and the pages above it.
@@ -49,7 +52,11 @@ function pickName(fallback: string, ...candidates: (string | null | undefined)[]
  */
 function getBreadcrumbItems(pathname: string, names: BreadcrumbNames = {}): BreadcrumbItem[] {
 	const segments = pathname.split('/').filter(Boolean);
-	const items = segments.map((segment, index) => {
+	const items = segments.flatMap((segment, index) => {
+		if (SKIPPED_SEGMENTS.has(segment)) {
+			return [];
+		}
+
 		const path = `/${segments.slice(0, index + 1).join('/')}`;
 		const isPage = index === segments.length - 1;
 

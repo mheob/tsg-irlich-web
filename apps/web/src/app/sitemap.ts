@@ -4,6 +4,7 @@ import { client } from '@/lib/sanity/client';
 import {
 	sitemapDepartmentsQuery,
 	sitemapEchoIssuesQuery,
+	sitemapFormsQuery,
 	sitemapGroupsQuery,
 	sitemapNewsArticlesQuery,
 	sitemapNewsCategoriesQuery,
@@ -11,6 +12,7 @@ import {
 import type {
 	SitemapDepartmentsQueryResult,
 	SitemapEchoIssuesQueryResult,
+	SitemapFormsQueryResult,
 	SitemapGroupsQueryResult,
 	SitemapNewsArticlesQueryResult,
 	SitemapNewsCategoriesQueryResult,
@@ -33,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	// Each query carries the types it reads as tags, which the revalidation webhook expires for the
 	// changed document's type. They keep the hourly regeneration from rendering cached data that is
 	// older than the change (WEB-403).
-	const [newsArticles, newsCategories, departments, groups, echoIssues] = await Promise.all([
+	const [newsArticles, newsCategories, departments, groups, echoIssues, forms] = await Promise.all([
 		client.fetch<SitemapNewsArticlesQueryResult>(
 			sitemapNewsArticlesQuery,
 			{},
@@ -59,6 +61,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			{},
 			{ next: { tags: ['echo.issue'] } },
 		),
+		client.fetch<SitemapFormsQueryResult>(sitemapFormsQuery, {}, { next: { tags: ['form'] } }),
 	]);
 
 	// Static pages
@@ -182,6 +185,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		url: `${baseUrl}${getEchoIssuePath(echoIssue.slug)}`,
 	}));
 
+	// Registration pages (e.g., /anmeldung/dorfturnier-2027)
+	const formPages: MetadataRoute.Sitemap = forms.flatMap((form) => {
+		const href = getInternalHref({ _type: 'form', slug: form.slug });
+		if (!href) {
+			return [];
+		}
+
+		return [
+			{
+				changeFrequency: 'weekly' as const,
+				lastModified: new Date(form.lastModified),
+				priority: 0.5,
+				url: `${baseUrl}${href}`,
+			},
+		];
+	});
+
 	return [
 		...staticPages,
 		...departmentPages,
@@ -189,5 +209,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		...newsCategoryPages,
 		...newsArticlePages,
 		...echoIssuePages,
+		...formPages,
 	];
 }

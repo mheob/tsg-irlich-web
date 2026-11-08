@@ -73,9 +73,24 @@ const sitemapEchoIssuesQuery = defineQuery(`
 	}
 `);
 
+/**
+ * Query to get every form for the sitemap
+ *
+ * A form without a slug has no page, so it is left out here.
+ *
+ * @returns All forms with slug and updated date
+ */
+const sitemapFormsQuery = defineQuery(`
+	*[_type == 'form' && defined(slug.current)] {
+		"slug": slug.current,
+		"lastModified": _updatedAt
+	}
+`);
+
 export {
 	sitemapDepartmentsQuery,
 	sitemapEchoIssuesQuery,
+	sitemapFormsQuery,
 	sitemapGroupsQuery,
 	sitemapNewsArticlesQuery,
 	sitemapNewsCategoriesQuery,
