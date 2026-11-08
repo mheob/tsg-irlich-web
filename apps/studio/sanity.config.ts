@@ -1,6 +1,9 @@
+import type { DocumentActionComponent } from 'sanity';
 import { defineConfig } from 'sanity';
 
+import { CleanFormSubmissionsAction } from './actions/clean-form-submissions';
 import { createDuplicateWithoutSlugHistoryAction } from './actions/duplicate-without-slug-history';
+import { ExportFormSubmissionsAction } from './actions/export-form-submissions';
 import { createPublishWithSlugHistoryAction } from './actions/publish-with-slug-history';
 import { RegenerateEchoPagesAction } from './actions/regenerate-echo-pages';
 import { Logo } from './components/logo';
@@ -20,6 +23,20 @@ const singletonTypes = new Set(['privacy', 'site-settings']);
 // and whose duplicate action leaves that history behind, so a copy cannot take over the redirects
 const slugHistoryTypes = new Set(['department', 'group', 'news.article', 'news.category']);
 
+// Define the form types whose actions differ: the form gets an export and a clean-up, a submission
+// is never duplicated
+const formActionTypes = new Set(['form', 'form.submission']);
+
+function getFormActions(
+	input: DocumentActionComponent[],
+	schemaType: string,
+): DocumentActionComponent[] {
+	if (schemaType === 'form') {
+		return [...input, ExportFormSubmissionsAction, CleanFormSubmissionsAction];
+	}
+	return input.filter(({ action }) => action !== 'duplicate');
+}
+
 export default defineConfig({
 	dataset,
 	document: {
@@ -31,6 +48,9 @@ export default defineConfig({
 			}
 			if (context.schemaType === echoIssue.name) {
 				return [...input, RegenerateEchoPagesAction];
+			}
+			if (formActionTypes.has(context.schemaType)) {
+				return getFormActions(input, context.schemaType);
 			}
 			if (slugHistoryTypes.has(context.schemaType)) {
 				return input.map((action) => {
