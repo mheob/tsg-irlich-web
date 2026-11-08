@@ -131,11 +131,12 @@ describe('the field renderer', () => {
 	});
 
 	it('renders choice as buttons, select or checkboxes', async () => {
-		const { getByRole, user } = renderFields(CHOICES);
+		const { findByRole, getByRole, user } = renderFields(CHOICES);
 
 		await user.click(getByRole('button', { name: 'Hobby' }));
 		await user.click(getByRole('combobox', { name: 'Größe' }));
-		await user.click(getByRole('option', { name: 'M' }));
+		// The popup mounts a tick after the click, so the option is awaited.
+		await user.click(await findByRole('option', { name: 'M' }));
 		await user.click(getByRole('checkbox', { name: 'Pommes' }));
 
 		const category = within(
