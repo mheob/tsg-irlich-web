@@ -43,7 +43,7 @@ const formAnswer = defineType({
 		defineField({
 			hidden: ({ parent }: { parent?: { values?: unknown } }) => parent?.values === undefined,
 			name: 'values',
-			of: [{ type: 'string' }],
+			of: [defineArrayMember({ type: 'string' })],
 			title: 'Werte',
 			type: 'array',
 		}),

@@ -1,7 +1,20 @@
 import { RiGroupLine } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 import { createBaseFields, prepareFieldPreview, readParentValue } from './base';
+
+/** The kinds of fields a group entry can hold: every type of the form except a group. */
+const GROUP_FIELD_TYPES = [
+	'formFieldText',
+	'formFieldTextarea',
+	'formFieldEmail',
+	'formFieldPhone',
+	'formFieldNumber',
+	'formFieldDate',
+	'formFieldChoice',
+	'formFieldConsent',
+	'formFieldNote',
+] as const;
 
 const formFieldGroup = defineType({
 	fields: [
@@ -33,17 +46,7 @@ const formFieldGroup = defineType({
 		}),
 		defineField({
 			name: 'fields',
-			of: [
-				{ type: 'formFieldText' },
-				{ type: 'formFieldTextarea' },
-				{ type: 'formFieldEmail' },
-				{ type: 'formFieldPhone' },
-				{ type: 'formFieldNumber' },
-				{ type: 'formFieldDate' },
-				{ type: 'formFieldChoice' },
-				{ type: 'formFieldConsent' },
-				{ type: 'formFieldNote' },
-			],
+			of: GROUP_FIELD_TYPES.map((type) => defineArrayMember({ type })),
 			title: 'Felder',
 			type: 'array',
 			validation: (Rule) => Rule.required().min(1),

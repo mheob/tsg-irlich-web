@@ -5,11 +5,31 @@ import { FORM_DEFAULT_TEXTS } from '@tsgi-web/shared';
 import form from './form';
 
 interface FormField {
+	readonly description?: string;
 	readonly group?: string;
 	readonly hidden?: (context: { document?: Record<string, unknown> }) => boolean;
 	readonly initialValue?: unknown;
 	readonly name: string;
+	readonly validation?: (rule: FakeRule) => unknown;
 }
+
+type Validator = (value: unknown, context: { document?: Record<string, unknown> }) => unknown;
+
+/** The rule methods the form's validations call; `custom` remembers the level it gets. */
+interface FakeRule {
+	custom: (fn: Validator) => { level: string; validate: Validator } & Record<string, unknown>;
+	required: () => FakeRule & { min: () => { error: () => string } };
+}
+
+const fakeRule: FakeRule = {
+	custom: (validate) => ({
+		error: () => ({ level: 'error', validate }),
+		level: 'error',
+		validate,
+		warning: () => ({ level: 'warning', validate }),
+	}),
+	required: () => ({ ...fakeRule, min: () => ({ error: () => 'required' }) }),
+};
 
 const fields = form.fields as unknown as readonly FormField[];
 
@@ -142,6 +162,42 @@ describe('form document', () => {
 		expect(getField('waitlistConfirmationText').initialValue).toBe(
 			'Vielen Dank! Du stehst auf der Warteliste. Wir melden uns, sobald ein Platz frei wird.',
 		);
+	});
+
+	it('describes what the clean-up date does', () => {
+		expect(getField('cleanupAt').description).toBe(
+			'Ab diesem Tag löscht die Bereinigung die als „löschen“ markierten Angaben und kürzt Datumsangaben auf das Jahr. Die Anmeldungen selbst bleiben erhalten.',
+		);
+	});
+
+	it('warns about a missing or early clean-up date', () => {
+		const rule = getField('cleanupAt').validation?.(fakeRule) as {
+			level: string;
+			validate: Validator;
+		};
+
+		expect(rule.level).toBe('warning');
+		expect(rule.validate(undefined, { document: { fields: [{ retention: 'delete' }] } })).toBe(
+			'Ohne Datum werden die als „löschen“ markierten Angaben nie bereinigt.',
+		);
+		expect(rule.validate('2027-06-01', { document: { eventDate: '2027-05-14T11:00:00Z' } })).toBe(
+			true,
+		);
+	});
+
+	it('warns when the confirmation recipient is cleaned up', () => {
+		const rules = getField('fields').validation?.(fakeRule) as {
+			level: string;
+			validate: Validator;
+		}[];
+		const recipientRule = rules.at(-1);
+		const cleanedRecipient = [{ isConfirmationRecipient: true, retention: 'delete' }];
+
+		expect(recipientRule?.level).toBe('warning');
+		expect(recipientRule?.validate(cleanedRecipient, { document: {} })).toBe(
+			'Die Adresse der Bestätigungsmail bleibt im Mailversand gespeichert, auch wenn sie bereinigt wird.',
+		);
+		expect(rules[1]?.validate(cleanedRecipient, { document: {} })).toBe(true);
 	});
 
 	it('hides showRemaining without capacity', () => {

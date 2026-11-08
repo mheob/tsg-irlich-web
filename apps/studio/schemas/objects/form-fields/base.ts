@@ -1,4 +1,4 @@
-import { defineField, type FieldDefinition } from 'sanity';
+import { defineField, type FieldDefinition, type Path } from 'sanity';
 
 type RetentionValue = 'delete' | 'keep' | 'year';
 
@@ -117,4 +117,28 @@ function readParentValue(context: { readonly parent?: unknown }, key: string): u
 	return typeof parent === 'object' && parent !== null ? Reflect.get(parent, key) : undefined;
 }
 
-export { baseFieldDefinitions, createBaseFields, prepareFieldPreview, readParentValue };
+/** The array of a form, and of a group, that holds the fields. */
+const FIELDS_SEGMENT = 'fields';
+
+/**
+ * Hides a marker that only means something on a field of the form itself, such as the field that
+ * names a submission or receives the confirmation. The website reads both from the top-level fields
+ * only, so inside a group they would do nothing. The `path` of a `hidden` callback leads from the
+ * document to the marker: `fields[_key=…].isLabel` at the top, `fields[_key=…].fields[_key=…].isLabel`
+ * inside a group.
+ *
+ * @param context - The context the studio passes to a `hidden` callback.
+ * @param context.path - The path of the marker in the document.
+ * @returns `true` inside a group.
+ */
+function hideInsideGroup({ path }: { readonly path: Path }): boolean {
+	return path.filter((segment) => segment === FIELDS_SEGMENT).length > 1;
+}
+
+export {
+	baseFieldDefinitions,
+	createBaseFields,
+	hideInsideGroup,
+	prepareFieldPreview,
+	readParentValue,
+};

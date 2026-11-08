@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 import { formAnswerPreview } from './form-answer';
 
@@ -18,7 +18,7 @@ const formGroupAnswer = defineType({
 		defineField({
 			hidden: ({ parent }: { parent?: { values?: unknown } }) => parent?.values === undefined,
 			name: 'values',
-			of: [{ type: 'string' }],
+			of: [defineArrayMember({ type: 'string' })],
 			title: 'Werte',
 			type: 'array',
 		}),

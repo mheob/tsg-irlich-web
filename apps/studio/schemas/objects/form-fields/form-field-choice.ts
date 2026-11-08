@@ -1,5 +1,5 @@
 import { RiListCheck2 } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 import { baseFieldDefinitions, prepareFieldPreview, readParentValue } from './base';
 
@@ -8,7 +8,7 @@ const formFieldChoice = defineType({
 		...baseFieldDefinitions,
 		defineField({
 			name: 'options',
-			of: [{ type: 'string' }],
+			of: [defineArrayMember({ type: 'string' })],
 			title: 'Optionen',
 			type: 'array',
 			validation: (Rule) => Rule.required().min(2).unique(),

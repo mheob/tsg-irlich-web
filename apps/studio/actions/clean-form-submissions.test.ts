@@ -83,7 +83,7 @@ describe('clean form submissions action', () => {
 
 		expect(opened.dialog).toMatchObject({
 			message:
-				'Adressen und Geburtsdaten aller Eingänge dieses Formulars jetzt bereinigen? Das lässt sich nicht rückgängig machen.',
+				'Die als „löschen“ markierten Angaben aller noch nicht bereinigten Eingänge jetzt löschen und Datumsangaben auf das Jahr kürzen, unabhängig vom Datum „Bereinigen ab“? Das lässt sich nicht rückgängig machen.',
 			type: 'confirm',
 		});
 	});
@@ -96,6 +96,16 @@ describe('clean form submissions action', () => {
 		expect(studio.cleanSubmissions).toHaveBeenCalledWith(expect.anything(), 'form-1');
 		expect(studio.pushToast).toHaveBeenCalledExactlyOnceWith(
 			expect.objectContaining({ status: 'success', title: '3 Eingänge bereinigt' }),
+		);
+	});
+
+	it('names a single cleaned submission in the singular', async () => {
+		studio.cleanSubmissions.mockResolvedValue(1);
+
+		await confirm(createProps({}));
+
+		expect(studio.pushToast).toHaveBeenCalledExactlyOnceWith(
+			expect.objectContaining({ status: 'success', title: '1 Eingang bereinigt' }),
 		);
 	});
 

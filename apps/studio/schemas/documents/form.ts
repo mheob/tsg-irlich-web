@@ -15,7 +15,12 @@ import {
 } from '@/shared/field-groups';
 import { formattedSlugField, titleField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
-import { isRegistrationForm, validateFormFields } from '@/utils/form-validation';
+import {
+	isRegistrationForm,
+	validateCleanupDate,
+	validateFormFields,
+	validateRecipientRetention,
+} from '@/utils/form-validation';
 
 /** The kinds of fields an editor can add to a form, in the order the menu offers them. */
 const FIELD_TYPES = [
@@ -89,6 +94,7 @@ const form = defineType({
 			validation: (Rule) => [
 				Rule.required().min(1).error('Ein Formular braucht mindestens ein Feld'),
 				Rule.custom((fields, context) => validateFormFields(fields, context.document)),
+				Rule.custom((fields) => validateRecipientRetention(fields)).warning(),
 			],
 		}),
 
@@ -132,12 +138,15 @@ const form = defineType({
 			type: 'boolean',
 		}),
 		defineField({
-			description: 'Ab diesem Tag löscht die Bereinigung die Anmeldungen dieses Formulars.',
+			description:
+				'Ab diesem Tag löscht die Bereinigung die als „löschen“ markierten Angaben und kürzt Datumsangaben auf das Jahr. Die Anmeldungen selbst bleiben erhalten.',
 			group: 'registration',
 			hidden: hideUnlessRegistration,
 			name: 'cleanupAt',
 			title: 'Bereinigen ab',
 			type: 'date',
+			validation: (Rule) =>
+				Rule.custom((value, context) => validateCleanupDate(value, context.document)).warning(),
 		}),
 
 		// Mails
