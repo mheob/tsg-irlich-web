@@ -1,11 +1,11 @@
 import { Select as BaseSelect } from '@base-ui/react/select';
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
-import type { ComponentProps, HTMLAttributes } from 'react';
+import type { ComponentProps, HTMLAttributes, ReactNode } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
 import { cn } from '@tsgi-web/shared';
 
-import { FormControl, FormItem, FormLabel, FormMessage } from '../with-logic/form';
+import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from '../with-logic/form';
 
 const Select = BaseSelect.Root;
 
@@ -124,6 +124,7 @@ function SelectItem({ children, className, ...props }: ComponentProps<typeof Bas
 
 function SelectWithLabel({
 	children,
+	description,
 	field,
 	onValueChange,
 	placeholder,
@@ -159,6 +160,7 @@ function SelectWithLabel({
 					))}
 				</SelectContent>
 			</Select>
+			{description && <FormDescription className="max-w-none px-3">{description}</FormDescription>}
 			<FormMessage />
 		</FormItem>
 	);
@@ -166,6 +168,7 @@ function SelectWithLabel({
 
 interface SelectWithLabelProps extends ComponentProps<typeof Select> {
 	children?: HTMLAttributes<HTMLLabelElement>['children'];
+	description?: ReactNode;
 	field?: FieldValues;
 	placeholder?: ComponentProps<typeof SelectValue>['placeholder'];
 	// Base UI types an item's `value` as `any`; the app only ever uses strings, and saying so keeps

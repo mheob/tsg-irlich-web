@@ -1,9 +1,9 @@
-import type { ComponentProps, HTMLAttributes } from 'react';
+import type { ComponentProps, HTMLAttributes, ReactNode } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
 import { cn } from '@tsgi-web/shared';
 
-import { FormControl, FormItem, FormLabel, FormMessage } from '../with-logic/form';
+import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from '../with-logic/form';
 
 function Input({ className, type, ...props }: ComponentProps<'input'>) {
 	return (
@@ -24,12 +24,14 @@ function Input({ className, type, ...props }: ComponentProps<'input'>) {
 
 interface InputWithLabelProps extends ComponentProps<typeof Input> {
 	children?: HTMLAttributes<HTMLLabelElement>['children'];
+	description?: ReactNode;
 	field?: FieldValues;
 	wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
 function InputWithLabel({
 	children,
+	description,
 	field,
 	wrapperClassName,
 	...props
@@ -40,6 +42,7 @@ function InputWithLabel({
 			<FormControl>
 				<Input {...field} {...props} />
 			</FormControl>
+			{description && <FormDescription className="max-w-none px-3">{description}</FormDescription>}
 			<FormMessage />
 		</FormItem>
 	);

@@ -2,6 +2,31 @@ import type { FormFieldDefinition } from '@/lib/forms/types';
 
 type FieldOverrides = Record<string, unknown>;
 
+/** A part of a paragraph: plain text, or text that links to `href`. */
+type TextPart = string | { href: string; text: string };
+
+/**
+ * Builds a `simpleBlockContent` value the way the form queries project it, as the `text` of a
+ * consent or a note: one paragraph made of the given parts.
+ *
+ * @param parts - The pieces of the paragraph, in order.
+ * @returns The block content with every link as a `link` mark.
+ */
+function blockText(...parts: readonly TextPart[]): Record<string, unknown> {
+	const markDefs: Record<string, string>[] = [];
+	const children = parts.map((part, index) => {
+		if (typeof part === 'string') {
+			return { _key: `span-${index}`, _type: 'span', marks: [], text: part };
+		}
+		markDefs.push({ _key: `link-${index}`, _type: 'link', href: part.href });
+		return { _key: `span-${index}`, _type: 'span', marks: [`link-${index}`], text: part.text };
+	});
+	return {
+		_type: 'simpleBlockContent',
+		text: [{ _key: 'block-0', _type: 'block', children, markDefs, style: 'normal' }],
+	};
+}
+
 /**
  * Builds a field the way the query projects it: every attribute present, `null` where the type
  * has none. The cast is the price of keeping fixtures short.
@@ -83,4 +108,4 @@ const DORFTURNIER_FIELDS: readonly FormFieldDefinition[] = [
 	}),
 ];
 
-export { DORFTURNIER_FIELDS, field };
+export { blockText, DORFTURNIER_FIELDS, field };
