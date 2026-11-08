@@ -1,6 +1,6 @@
 # Formular-Baukasten mit Anmeldung zum Dorfturnier — Design-Spec
 
-Datum: 2026-11-08 · Status: umgesetzt (PR folgt) · Ticket: [WEB-278](https://linear.app/tsg-irlich/issue/WEB-278)
+Datum: 2026-11-08 · Status: umgesetzt in [#771](https://github.com/mheob/tsg-irlich-web/pull/771) · Ticket: [WEB-278](https://linear.app/tsg-irlich/issue/WEB-278)
 
 Scope: Die Redaktion baut Formulare selbst im Studio. Jedes Formular hat eine eigene Landingpage auf der Website, speichert die Eingänge in Sanity, verschickt Mails an den Veranstalter und an den Absender und lässt sich als Excel-Datei exportieren. Die erste Version liefert nur den Formulartyp **Anmeldung**. Das erste echte Formular ist die Anmeldung zum Dorfturnier 2027.
 
