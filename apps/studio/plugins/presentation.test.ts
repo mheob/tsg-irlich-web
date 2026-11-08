@@ -23,6 +23,7 @@ describe('main document routes', () => {
 			'/news/:category/:slug',
 			'/news/:category',
 			'/news',
+			'/anmeldung/:slug',
 		]);
 	});
 
@@ -49,6 +50,7 @@ describe('location queries', () => {
 		expect(Object.keys(LOCATION_QUERIES).toSorted()).toStrictEqual([
 			'department',
 			'faq',
+			'form',
 			'group',
 			'news.article',
 			'news.category',
@@ -75,6 +77,20 @@ describe('location queries', () => {
 		expect(query).toContain('_id in ^.departments[]._ref');
 		expect(query).toContain('defined(slug.current)');
 		expect(query).toContain('"href": "/angebot/" + slug.current');
+	});
+
+	it('finds a form by its slug', () => {
+		const formRoute = mainDocuments.find((document) => document.route === '/anmeldung/:slug');
+
+		expect(formRoute).toHaveProperty('filter', '_type == "form" && slug.current == $slug');
+	});
+
+	it('shows a form on its registration page', () => {
+		const query = LOCATION_QUERIES.form;
+
+		expect(query).toContain('"href": "/anmeldung/" + slug.current');
+		expect(query).toContain('"title": coalesce(title, "Ohne Titel")');
+		expect(query).toContain('defined(slug.current) =>');
 	});
 
 	it('leave out a location whose slug is not set yet', () => {

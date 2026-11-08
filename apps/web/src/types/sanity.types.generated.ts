@@ -509,6 +509,171 @@ export type ImageCard = {
   image: ExtendedImage;
 };
 
+export type FormGroupEntry = {
+  _type: "formGroupEntry";
+  answers?: Array<
+    {
+      _key: string;
+    } & FormGroupAnswer
+  >;
+};
+
+export type FormGroupAnswer = {
+  _type: "formGroupAnswer";
+  key?: string;
+  label?: string;
+  fieldType?: string;
+  retention?: string;
+  value?: string;
+  values?: Array<string>;
+};
+
+export type FormFieldTextarea = {
+  _type: "formFieldTextarea";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  maxLength?: number;
+};
+
+export type FormFieldText = {
+  _type: "formFieldText";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  maxLength?: number;
+  isLabel?: boolean;
+};
+
+export type FormFieldPhone = {
+  _type: "formFieldPhone";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+};
+
+export type FormFieldNumber = {
+  _type: "formFieldNumber";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  min?: number;
+  max?: number;
+};
+
+export type FormFieldNote = {
+  _type: "formFieldNote";
+  title?: string;
+  text?: SimpleBlockContent;
+};
+
+export type FormFieldGroup = {
+  _type: "formFieldGroup";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  itemLabel: string;
+  minItems?: number;
+  maxItems?: number;
+  fields: Array<
+    | ({
+        _key: string;
+      } & FormFieldText)
+    | ({
+        _key: string;
+      } & FormFieldTextarea)
+    | ({
+        _key: string;
+      } & FormFieldEmail)
+    | ({
+        _key: string;
+      } & FormFieldPhone)
+    | ({
+        _key: string;
+      } & FormFieldNumber)
+    | ({
+        _key: string;
+      } & FormFieldDate)
+    | ({
+        _key: string;
+      } & FormFieldChoice)
+    | ({
+        _key: string;
+      } & FormFieldConsent)
+    | ({
+        _key: string;
+      } & FormFieldNote)
+  >;
+};
+
+export type FormFieldEmail = {
+  _type: "formFieldEmail";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  isConfirmationRecipient?: boolean;
+};
+
+export type FormFieldDate = {
+  _type: "formFieldDate";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "year" | "delete";
+  minAge?: number;
+  referenceDate?: string;
+};
+
+export type FormFieldConsent = {
+  _type: "formFieldConsent";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  text: SimpleBlockContent;
+};
+
+export type FormFieldChoice = {
+  _type: "formFieldChoice";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  options: Array<string>;
+  isMultiple?: boolean;
+  display?: "buttons" | "select";
+};
+
+export type FormAnswer = {
+  _type: "formAnswer";
+  key?: string;
+  label?: string;
+  fieldType?: string;
+  retention?: string;
+  value?: string;
+  values?: Array<string>;
+  entries?: Array<
+    {
+      _key: string;
+    } & FormGroupEntry
+  >;
+};
+
 export type ExternalLink = {
   _type: "externalLink";
   href?: string;
@@ -591,6 +756,100 @@ export type SiteSettings = {
     } & ExtendedImage
   >;
   fallbackImage: ExtendedImage;
+};
+
+export type FormReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "form";
+};
+
+export type FormSubmission = {
+  _id: string;
+  _type: "form.submission";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  form?: FormReference;
+  submittedAt?: string;
+  status: "registered" | "waitlist" | "cancelled";
+  label?: string;
+  answers?: Array<
+    {
+      _key: string;
+    } & FormAnswer
+  >;
+  cleanedAt?: string;
+};
+
+export type Form = {
+  _id: string;
+  _type: "form";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  formType: "registration";
+  title: string;
+  slug: Slug;
+  heroImage?: ExtendedImage;
+  intro?: SimpleBlockContent;
+  eventDate?: string;
+  location?: string;
+  fields: Array<
+    | ({
+        _key: string;
+      } & FormFieldText)
+    | ({
+        _key: string;
+      } & FormFieldTextarea)
+    | ({
+        _key: string;
+      } & FormFieldEmail)
+    | ({
+        _key: string;
+      } & FormFieldPhone)
+    | ({
+        _key: string;
+      } & FormFieldNumber)
+    | ({
+        _key: string;
+      } & FormFieldDate)
+    | ({
+        _key: string;
+      } & FormFieldChoice)
+    | ({
+        _key: string;
+      } & FormFieldConsent)
+    | ({
+        _key: string;
+      } & FormFieldGroup)
+    | ({
+        _key: string;
+      } & FormFieldNote)
+  >;
+  registrationStart?: string;
+  registrationEnd?: string;
+  capacity?: number;
+  showRemaining?: boolean;
+  cleanupAt?: string;
+  notifyOrganizer?: boolean;
+  receivers?: Array<
+    {
+      _key: string;
+    } & ContactNameMail
+  >;
+  sendConfirmation?: boolean;
+  confirmationSubject?: string;
+  confirmationText?: string;
+  waitlistConfirmationText?: string;
+  includeAnswersInConfirmation?: boolean;
+  beforeStartText?: string;
+  afterEndText?: string;
+  waitlistNotice?: string;
+  successText?: string;
+  waitlistSuccessText?: string;
+  meta?: MetaFields;
 };
 
 export type Venue = {
@@ -1650,12 +1909,28 @@ export type AllSanitySchemaTypes =
   | MainNavigationLink
   | InternalLink
   | ImageCard
+  | FormGroupEntry
+  | FormGroupAnswer
+  | FormFieldTextarea
+  | FormFieldText
+  | FormFieldPhone
+  | FormFieldNumber
+  | FormFieldNote
+  | FormFieldGroup
+  | FormFieldEmail
+  | FormFieldDate
+  | FormFieldConsent
+  | FormFieldChoice
+  | FormAnswer
   | ExternalLink
   | SanityFileAssetReference
   | DocumentDownload
   | ContactNameMail
   | Columns
   | SiteSettings
+  | FormReference
+  | FormSubmission
+  | Form
   | Venue
   | SanityImageCrop
   | SanityImageHotspot

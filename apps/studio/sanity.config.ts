@@ -61,10 +61,13 @@ export default defineConfig({
 	plugins: getPlugins(),
 	projectId,
 	schema: {
-		// Filter out singleton types from the global “New document” menu options, then add the template
-		// behind "Neu" in the groups of a department
+		// Filter out singleton types and form submissions (which only the website creates) from the
+		// global “New document” menu options, then add the template behind "Neu" in the groups of a
+		// department
 		templates: (templates) => [
-			...templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+			...templates.filter(
+				({ schemaType }) => !singletonTypes.has(schemaType) && schemaType !== 'form.submission',
+			),
 			groupByDepartmentTemplate,
 		],
 		types: schemaTypes,

@@ -2615,6 +2615,1128 @@
 		}
 	},
 	{
+		"name": "formGroupEntry",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formGroupEntry"
+					}
+				},
+				"answers": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "array",
+						"of": {
+							"type": "object",
+							"attributes": {
+								"_key": {
+									"type": "objectAttribute",
+									"value": {
+										"type": "string"
+									}
+								}
+							},
+							"rest": {
+								"type": "inline",
+								"name": "formGroupAnswer"
+							}
+						}
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formGroupAnswer",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formGroupAnswer"
+					}
+				},
+				"key": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"fieldType": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"value": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"values": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "array",
+						"of": {
+							"type": "string"
+						}
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldTextarea",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldTextarea"
+					}
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"helpText": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"isRequired": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"width": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "full"
+							},
+							{
+								"type": "string",
+								"value": "half"
+							}
+						]
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "keep"
+							},
+							{
+								"type": "string",
+								"value": "delete"
+							}
+						]
+					},
+					"optional": true
+				},
+				"maxLength": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "number"
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldText",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldText"
+					}
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"helpText": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"isRequired": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"width": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "full"
+							},
+							{
+								"type": "string",
+								"value": "half"
+							}
+						]
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "keep"
+							},
+							{
+								"type": "string",
+								"value": "delete"
+							}
+						]
+					},
+					"optional": true
+				},
+				"maxLength": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "number"
+					},
+					"optional": true
+				},
+				"isLabel": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldPhone",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldPhone"
+					}
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"helpText": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"isRequired": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"width": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "full"
+							},
+							{
+								"type": "string",
+								"value": "half"
+							}
+						]
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "keep"
+							},
+							{
+								"type": "string",
+								"value": "delete"
+							}
+						]
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldNumber",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldNumber"
+					}
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"helpText": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"isRequired": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"width": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "full"
+							},
+							{
+								"type": "string",
+								"value": "half"
+							}
+						]
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "keep"
+							},
+							{
+								"type": "string",
+								"value": "delete"
+							}
+						]
+					},
+					"optional": true
+				},
+				"min": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "number"
+					},
+					"optional": true
+				},
+				"max": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "number"
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldNote",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldNote"
+					}
+				},
+				"title": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"text": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "inline",
+						"name": "simpleBlockContent"
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldGroup",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldGroup"
+					}
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"helpText": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"isRequired": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"width": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "full"
+							},
+							{
+								"type": "string",
+								"value": "half"
+							}
+						]
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "keep"
+							},
+							{
+								"type": "string",
+								"value": "delete"
+							}
+						]
+					},
+					"optional": true
+				},
+				"itemLabel": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"minItems": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "number"
+					},
+					"optional": true
+				},
+				"maxItems": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "number"
+					},
+					"optional": true
+				},
+				"fields": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "array",
+						"of": {
+							"type": "union",
+							"of": [
+								{
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "formFieldText"
+									}
+								},
+								{
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "formFieldTextarea"
+									}
+								},
+								{
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "formFieldEmail"
+									}
+								},
+								{
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "formFieldPhone"
+									}
+								},
+								{
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "formFieldNumber"
+									}
+								},
+								{
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "formFieldDate"
+									}
+								},
+								{
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "formFieldChoice"
+									}
+								},
+								{
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "formFieldConsent"
+									}
+								},
+								{
+									"type": "object",
+									"attributes": {
+										"_key": {
+											"type": "objectAttribute",
+											"value": {
+												"type": "string"
+											}
+										}
+									},
+									"rest": {
+										"type": "inline",
+										"name": "formFieldNote"
+									}
+								}
+							]
+						}
+					},
+					"optional": false
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldEmail",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldEmail"
+					}
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"helpText": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"isRequired": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"width": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "full"
+							},
+							{
+								"type": "string",
+								"value": "half"
+							}
+						]
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "keep"
+							},
+							{
+								"type": "string",
+								"value": "delete"
+							}
+						]
+					},
+					"optional": true
+				},
+				"isConfirmationRecipient": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldDate",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldDate"
+					}
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"helpText": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"isRequired": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"width": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "full"
+							},
+							{
+								"type": "string",
+								"value": "half"
+							}
+						]
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "keep"
+							},
+							{
+								"type": "string",
+								"value": "year"
+							},
+							{
+								"type": "string",
+								"value": "delete"
+							}
+						]
+					},
+					"optional": true
+				},
+				"minAge": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "number"
+					},
+					"optional": true
+				},
+				"referenceDate": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldConsent",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldConsent"
+					}
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"helpText": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"isRequired": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"width": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "full"
+							},
+							{
+								"type": "string",
+								"value": "half"
+							}
+						]
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "keep"
+							},
+							{
+								"type": "string",
+								"value": "delete"
+							}
+						]
+					},
+					"optional": true
+				},
+				"text": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "inline",
+						"name": "simpleBlockContent"
+					},
+					"optional": false
+				}
+			}
+		}
+	},
+	{
+		"name": "formFieldChoice",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formFieldChoice"
+					}
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": false
+				},
+				"helpText": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"isRequired": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"width": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "full"
+							},
+							{
+								"type": "string",
+								"value": "half"
+							}
+						]
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "keep"
+							},
+							{
+								"type": "string",
+								"value": "delete"
+							}
+						]
+					},
+					"optional": true
+				},
+				"options": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "array",
+						"of": {
+							"type": "string"
+						}
+					},
+					"optional": false
+				},
+				"isMultiple": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				},
+				"display": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "union",
+						"of": [
+							{
+								"type": "string",
+								"value": "buttons"
+							},
+							{
+								"type": "string",
+								"value": "select"
+							}
+						]
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
+		"name": "formAnswer",
+		"type": "type",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "formAnswer"
+					}
+				},
+				"key": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"label": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"fieldType": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"retention": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"value": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					},
+					"optional": true
+				},
+				"values": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "array",
+						"of": {
+							"type": "string"
+						}
+					},
+					"optional": true
+				},
+				"entries": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "array",
+						"of": {
+							"type": "object",
+							"attributes": {
+								"_key": {
+									"type": "objectAttribute",
+									"value": {
+										"type": "string"
+									}
+								}
+							},
+							"rest": {
+								"type": "inline",
+								"name": "formGroupEntry"
+							}
+						}
+					},
+					"optional": true
+				}
+			}
+		}
+	},
+	{
 		"name": "externalLink",
 		"type": "type",
 		"value": {
@@ -3098,6 +4220,544 @@
 					"name": "extendedImage"
 				},
 				"optional": false
+			}
+		}
+	},
+	{
+		"type": "type",
+		"name": "form.reference",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_ref": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					}
+				},
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "reference"
+					}
+				},
+				"_weak": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			},
+			"dereferencesTo": "form"
+		}
+	},
+	{
+		"name": "form.submission",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "form.submission"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"form": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "form.reference"
+				},
+				"optional": true
+			},
+			"submittedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"status": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "union",
+					"of": [
+						{
+							"type": "string",
+							"value": "registered"
+						},
+						{
+							"type": "string",
+							"value": "waitlist"
+						},
+						{
+							"type": "string",
+							"value": "cancelled"
+						}
+					]
+				},
+				"optional": false
+			},
+			"label": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"answers": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"_key": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								}
+							}
+						},
+						"rest": {
+							"type": "inline",
+							"name": "formAnswer"
+						}
+					}
+				},
+				"optional": true
+			},
+			"cleanedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			}
+		}
+	},
+	{
+		"name": "form",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "form"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"formType": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "union",
+					"of": [
+						{
+							"type": "string",
+							"value": "registration"
+						}
+					]
+				},
+				"optional": false
+			},
+			"title": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"slug": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "slug"
+				},
+				"optional": false
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": true
+			},
+			"intro": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "simpleBlockContent"
+				},
+				"optional": true
+			},
+			"eventDate": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"location": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"fields": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "union",
+						"of": [
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldText"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldTextarea"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldEmail"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldPhone"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldNumber"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldDate"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldChoice"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldConsent"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldGroup"
+								}
+							},
+							{
+								"type": "object",
+								"attributes": {
+									"_key": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										}
+									}
+								},
+								"rest": {
+									"type": "inline",
+									"name": "formFieldNote"
+								}
+							}
+						]
+					}
+				},
+				"optional": false
+			},
+			"registrationStart": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"registrationEnd": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"capacity": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "number"
+				},
+				"optional": true
+			},
+			"showRemaining": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "boolean"
+				},
+				"optional": true
+			},
+			"cleanupAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"notifyOrganizer": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "boolean"
+				},
+				"optional": true
+			},
+			"receivers": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"_key": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								}
+							}
+						},
+						"rest": {
+							"type": "inline",
+							"name": "contactNameMail"
+						}
+					}
+				},
+				"optional": true
+			},
+			"sendConfirmation": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "boolean"
+				},
+				"optional": true
+			},
+			"confirmationSubject": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"confirmationText": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"waitlistConfirmationText": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"includeAnswersInConfirmation": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "boolean"
+				},
+				"optional": true
+			},
+			"beforeStartText": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"afterEndText": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"waitlistNotice": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"successText": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"waitlistSuccessText": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"meta": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "metaFields"
+				},
+				"optional": true
 			}
 		}
 	},

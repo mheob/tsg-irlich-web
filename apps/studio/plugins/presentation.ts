@@ -21,6 +21,7 @@ const mainDocuments = defineDocuments([
 	{ filter: `_type == "news.article" && slug.current == $slug`, route: '/news/:category/:slug' },
 	{ filter: `_type == "news.category" && slug.current == $category`, route: '/news/:category' },
 	{ route: '/news', type: 'newsOverview' },
+	{ filter: `_type == "form" && slug.current == $slug`, route: '/anmeldung/:slug' },
 ]);
 
 /**
@@ -48,6 +49,16 @@ const LOCATION_QUERIES: Record<string, string> = {
 			"href": "/angebot/" + slug.current,
 			"title": coalesce(title, "Ohne Titel")
 		}
+	}`,
+	form: `*[_id == $id][0] {
+		"locations": array::compact([
+			select(
+				defined(slug.current) => {
+					"href": "/anmeldung/" + slug.current,
+					"title": coalesce(title, "Ohne Titel")
+				}
+			)
+		])
 	}`,
 	group: `*[_id == $id][0] {
 		"locations": array::compact([

@@ -4,6 +4,7 @@ import author from './documents/author';
 import department from './documents/department';
 import echoIssue from './documents/echo.issue';
 import faq from './documents/faq';
+import form from './documents/form';
 import formSubmission from './documents/form.submission';
 import group from './documents/group';
 import honoraryMember from './documents/honorary-member';
@@ -82,6 +83,7 @@ export const schemaTypes = [
 	sponsors,
 	testimonial,
 	venue,
+	form,
 	formSubmission,
 
 	siteSettings,
