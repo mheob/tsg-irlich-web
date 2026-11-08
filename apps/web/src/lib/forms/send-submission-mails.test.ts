@@ -149,6 +149,8 @@ describe('submission mails', () => {
 			subject: 'Deine Anmeldung: Dorfturnier',
 			to: 'team@example.com',
 		});
+		// The confirmation goes to the submitter alone: no organizer reads along.
+		expect(sentTo('Deine Anmeldung')).not.toHaveProperty('bcc');
 		expect(mockedConfirmation).toHaveBeenCalledExactlyOnceWith({
 			formTitle: 'Dorfturnier',
 			hasHiddenFields: true,
@@ -181,9 +183,14 @@ describe('submission mails', () => {
 		await sendMails({ form, status: 'waitlist' });
 
 		expect(mockedConfirmation.mock.calls.map(([props]) => props.text)).toStrictEqual([
-			FORM_DEFAULT_TEXTS.success,
-			FORM_DEFAULT_TEXTS.waitlistSuccess,
+			'Vielen Dank! Deine Anmeldung ist bei uns eingegangen.',
+			'Vielen Dank! Du stehst auf der Warteliste. Wir melden uns, sobald ein Platz frei wird.',
 		]);
+		expect(FORM_DEFAULT_TEXTS).toMatchObject({
+			confirmation: 'Vielen Dank! Deine Anmeldung ist bei uns eingegangen.',
+			waitlistConfirmation:
+				'Vielen Dank! Du stehst auf der Warteliste. Wir melden uns, sobald ein Platz frei wird.',
+		});
 	});
 
 	it('includes answers only when configured', async () => {

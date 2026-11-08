@@ -182,6 +182,7 @@ const form = defineType({
 		defineField({
 			group: 'mails',
 			hidden: hideUnlessRegistration,
+			initialValue: FORM_DEFAULT_TEXTS.confirmation,
 			name: 'confirmationText',
 			title: 'Text der Bestätigung',
 			type: 'text',
@@ -189,6 +190,7 @@ const form = defineType({
 		defineField({
 			group: 'mails',
 			hidden: hideUnlessRegistration,
+			initialValue: FORM_DEFAULT_TEXTS.waitlistConfirmation,
 			name: 'waitlistConfirmationText',
 			title: 'Text der Bestätigung für die Warteliste',
 			type: 'text',

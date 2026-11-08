@@ -75,8 +75,7 @@ describe('registration panel', () => {
 			formId: 'form-dorfturnier',
 			isPreview: false,
 			isWaitlist: false,
-			successText:
-				'Vielen Dank! Deine Anmeldung ist eingegangen. Eine Bestätigung kommt per E-Mail.',
+			successText: 'Vielen Dank! Deine Anmeldung ist eingegangen.',
 			waitlistSuccessText:
 				'Vielen Dank! Du stehst auf der Warteliste. Wir melden uns, sobald ein Platz frei wird.',
 		});

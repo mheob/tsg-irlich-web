@@ -135,6 +135,15 @@ describe('form document', () => {
 		]);
 	});
 
+	it('defaults the confirmation texts', () => {
+		expect(getField('confirmationText').initialValue).toBe(
+			'Vielen Dank! Deine Anmeldung ist bei uns eingegangen.',
+		);
+		expect(getField('waitlistConfirmationText').initialValue).toBe(
+			'Vielen Dank! Du stehst auf der Warteliste. Wir melden uns, sobald ein Platz frei wird.',
+		);
+	});
+
 	it('hides showRemaining without capacity', () => {
 		const { hidden } = getField('showRemaining');
 

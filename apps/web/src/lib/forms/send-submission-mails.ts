@@ -89,8 +89,8 @@ async function sendConfirmationMail(
 	const { hasHiddenFields, sections } = toEmailSections(answers);
 	const text =
 		status === 'waitlist'
-			? textOr(form.waitlistConfirmationText, FORM_DEFAULT_TEXTS.waitlistSuccess)
-			: textOr(form.confirmationText, FORM_DEFAULT_TEXTS.success);
+			? textOr(form.waitlistConfirmationText, FORM_DEFAULT_TEXTS.waitlistConfirmation)
+			: textOr(form.confirmationText, FORM_DEFAULT_TEXTS.confirmation);
 	await sendMail({
 		from: SENDER,
 		react: FormSubmissionConfirmationEmail({
