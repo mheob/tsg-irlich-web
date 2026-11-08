@@ -1,6 +1,6 @@
 import { useToast } from '@sanity/ui/toast';
 import { RiFileExcel2Line } from 'react-icons/ri';
-import type { DocumentActionDescription, DocumentActionProps } from 'sanity';
+import type { DocumentActionDescription, DocumentActionProps, SanityClient } from 'sanity';
 import { useClient } from 'sanity';
 
 import { buildExportSheets, settle } from '@tsgi-web/shared';
@@ -23,7 +23,7 @@ const berlinDate = new Intl.DateTimeFormat('en-CA', {
 });
 
 async function exportSubmissions(
-	client: ReturnType<typeof useClient>,
+	client: Pick<SanityClient, 'fetch'>,
 	formId: string,
 ): Promise<boolean> {
 	const { fields, slug, submissions } = await loadExportData(client, formId);
