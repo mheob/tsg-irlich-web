@@ -15,7 +15,7 @@ const intro = {
 
 const stats = {
 	name: 'stats',
-	title: 'Stats',
+	title: 'Statistiken',
 };
 
 const vision = {

@@ -38,7 +38,7 @@ const aboutUsPage = defineType({
 			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
-	groups: [general, meta, content],
+	groups: [general, content, meta],
 	icon: RiInformationLine,
 	name: 'aboutUs',
 	preview: getSinglePagePreview('Über uns'),

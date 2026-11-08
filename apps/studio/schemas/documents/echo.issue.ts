@@ -137,7 +137,7 @@ const echoIssue = defineType({
 			type: 'object',
 		}),
 	],
-	groups: [general, meta, pages],
+	groups: [general, pages, meta],
 	icon: RiBookOpenLine,
 	name: 'echo.issue',
 	orderings: [

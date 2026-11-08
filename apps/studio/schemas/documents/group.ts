@@ -4,13 +4,14 @@ import { RiTeamLine } from 'react-icons/ri';
 import type { Reference, SlugValidationContext } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
+import { content, general, images, meta } from '@/shared/field-groups';
 import { emailField } from '@/shared/fields/contact';
 import { dosbIconField } from '@/shared/fields/dosb-icon';
 import { slugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { searchTermsField } from '@/shared/fields/search-terms';
 import { previousPathsField } from '@/shared/fields/slug-history';
-import { getFieldWithoutGroup } from '@/utils/fields';
+import { getFieldWithGroup } from '@/utils/fields';
 import { getPreviewIcon } from '@/utils/preview-icon';
 
 const GROUP_API_VERSION = '2026-10-01';
@@ -64,6 +65,7 @@ const group = defineType({
 	fields: [
 		defineField({
 			description: 'Unter welcher Abteilung die Gruppe auf der Website erscheint.',
+			group: 'general',
 			name: 'department',
 			title: 'Abteilung',
 			to: [{ type: 'department' }],
@@ -72,6 +74,7 @@ const group = defineType({
 		}),
 
 		defineField({
+			group: 'general',
 			name: 'title',
 			title: 'Name',
 			type: 'string',
@@ -81,21 +84,22 @@ const group = defineType({
 			],
 		}),
 
-		searchTermsField,
+		getFieldWithGroup(searchTermsField, 'general'),
 
 		{
-			...getFieldWithoutGroup(slugField),
+			...getFieldWithGroup(slugField, 'general'),
 			options: { ...slugField.options, isUnique: isGroupSlugUniqueInDepartment },
 		},
 
-		previousPathsField,
+		getFieldWithGroup(previousPathsField, 'general'),
 
-		getFieldWithoutGroup(emailField),
+		getFieldWithGroup(emailField, 'content'),
 
-		getFieldWithoutGroup(metaField),
+		getFieldWithGroup(metaField, 'meta'),
 
 		defineField({
 			description: 'Optional, Fallback: Name. Wird für die Gruppen-Übersicht verwendet.',
+			group: 'general',
 			name: 'overviewTitle',
 			title: 'Übersichtstitel',
 			type: 'string',
@@ -107,6 +111,7 @@ const group = defineType({
 
 		defineField({
 			description: 'Die Sortierreihenfolge wird für die Gruppen-Übersicht verwendet.',
+			group: 'general',
 			name: 'sortOrder',
 			title: 'Sortierreihenfolge',
 			type: 'number',
@@ -115,18 +120,20 @@ const group = defineType({
 
 		defineField({
 			description: 'Eine Beschreibung der Gruppe / Mannschaft.',
+			group: 'content',
 			name: 'description',
 			title: 'Beschreibung',
 			type: 'simpleBlockContent',
 			validation: (Rule) => [Rule.required().error('Beschreibung ist erforderlich')],
 		}),
 
-		dosbIconField,
+		getFieldWithGroup(dosbIconField, 'general'),
 
 		// Keeps the name of the former background image, so the existing images stay without a migration.
 		defineField({
 			description:
 				'Das Kachelbild erscheint auf den Gruppenkacheln der Abteilungsseite. Fehlen Hero- oder Open-Graph-Bild, dient es als Rückfall.',
+			group: 'images',
 			name: 'featuredImage',
 			title: 'Kachelbild',
 			type: 'extendedImage',
@@ -135,6 +142,7 @@ const group = defineType({
 
 		defineField({
 			description: 'Optional. Ohne Hero-Bild zeigt die Gruppenseite das Kachelbild.',
+			group: 'images',
 			name: 'heroImage',
 			title: 'Hero-Bild',
 			type: 'extendedImage',
@@ -142,6 +150,7 @@ const group = defineType({
 
 		defineField({
 			description: 'Es können bis zu drei Bilder ausgewählt werden.',
+			group: 'images',
 			name: 'images',
 			of: [{ type: 'extendedImage' }],
 			title: 'Bildergalerie',
@@ -164,6 +173,7 @@ const group = defineType({
 					type: 'array',
 				}),
 			],
+			group: 'content',
 			hidden: ({ document }) => isRefereeGroup(document?.title),
 			name: 'training',
 			title: 'Trainingszeiten und -orte',
@@ -180,12 +190,14 @@ const group = defineType({
 		defineField({
 			description:
 				'Aus dieser Kategorie werden die drei neuesten News-Artikel auf der Gruppenseite angezeigt. Leer lassen, wenn keine Kategorie passt.',
+			group: 'content',
 			name: 'newsCategory',
 			title: 'News-Kategorie',
 			to: [{ type: 'news.category' }],
 			type: 'reference',
 		}),
 	],
+	groups: [general, content, images, meta],
 	icon: RiTeamLine,
 	name: 'group',
 	orderings: [

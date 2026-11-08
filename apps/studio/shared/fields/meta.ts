@@ -2,7 +2,7 @@ import { defineField } from 'sanity';
 
 const authorField = defineField({
 	description: 'Autor für Beitrag auswählen',
-	group: 'meta',
+	group: 'general',
 	name: 'author',
 	title: 'Autor',
 	to: [{ type: 'author' }],

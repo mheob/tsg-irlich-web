@@ -79,7 +79,7 @@ const newsArticle = defineType({
 				Rule.max(MAX_DOWNLOADS).error(`Maximal ${MAX_DOWNLOADS} Downloads dürfen gesetzt werden`),
 		}),
 	],
-	groups: [general, meta, excerpt, content],
+	groups: [general, content, excerpt, meta],
 	icon: RiArticleLine,
 	name: 'news.article',
 	orderings: [

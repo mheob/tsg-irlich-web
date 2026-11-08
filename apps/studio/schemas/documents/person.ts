@@ -5,9 +5,9 @@ import type { PreviewValue, Reference, ValidationContext } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
 import TextInput from '@/components/text-input';
-import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { contactAsField, phoneField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
+import { getFieldWithoutGroup } from '@/utils/fields';
 
 const PERSON_API_VERSION = '2026-10-01';
 
@@ -92,12 +92,11 @@ const person = defineType({
 		portraitPictureField,
 
 		// Contact
-		phoneField,
-		contactAsField,
+		getFieldWithoutGroup(phoneField),
+		getFieldWithoutGroup(contactAsField),
 
 		// AdditionalInformation
 		defineField({
-			group: 'additionalInformation',
 			name: 'affiliations',
 			of: [
 				defineField({
@@ -173,7 +172,6 @@ const person = defineType({
 			type: 'array',
 		}),
 	],
-	groups: [personal, contact, additionalInformation],
 	icon: RiUserSmileLine,
 	name: 'person',
 	preview: {

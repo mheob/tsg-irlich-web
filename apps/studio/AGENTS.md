@@ -46,7 +46,8 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 - Icons come from `react-icons/ri` or `@sanity/icons`.
 - Give every document type an icon of its own. The desk lists the single pages by their type icon, so pages sharing one look alike (WEB-427). Where the documents of one type need telling apart, a `preview.media` does it: `getPreviewIcon` in `utils/preview-icon.ts` draws a stored DOSB pictogram or club icon one em in size, like the Remix icons next to it.
 - Reuse `shared/fields/*` instead of redeclaring title, slug, meta or content fields, and attach them to a group with `getFieldWithGroup` from `utils/fields.ts`.
-- Group names come from `shared/field-groups.ts` so the tabs stay consistent across documents.
+- Group names come from `shared/field-groups.ts` so the tabs stay consistent across documents. Their titles are German („Allgemein“, „Inhalt“, „Bilder“, „SEO & Teilen“), and a document lists them as Allgemein, Inhalt, its own tabs, SEO & Teilen (WEB-428).
+- A document with tabs puts every field into one, leaves no tab empty and has at least two; a small one (up to about six fields, such as author, person or FAQ) has none. A shared field brings its tab along (`group: 'general'`), so a document without tabs strips it with `getFieldWithoutGroup` and one with tabs sets its own with `getFieldWithGroup`. `schemas/groups.test.ts` checks these rules for every document type.
 
 ## Adding a document type
 

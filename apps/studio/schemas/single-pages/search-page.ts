@@ -141,7 +141,7 @@ const searchPage = defineType({
 			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
-	groups: [general, meta, content],
+	groups: [general, content, meta],
 	icon: RiSearchLine,
 	name: 'searchPage',
 	preview: getSinglePagePreview('Suche'),

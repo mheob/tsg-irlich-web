@@ -116,7 +116,7 @@ const imprintPage = defineType({
 			validation: (Rule) => [Rule.required().error('Bildnachweis ist erforderlich')],
 		}),
 	],
-	groups: [general, meta, content],
+	groups: [general, content, meta],
 	icon: RiScales3Line,
 	name: 'imprint',
 	preview: getSinglePagePreview('Impressum'),

@@ -4,9 +4,9 @@ import { RiQuillPenLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
-import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { emailField } from '@/shared/fields/contact';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
+import { getFieldWithoutGroup } from '@/utils/fields';
 
 const author = defineType({
 	fields: [
@@ -16,12 +16,11 @@ const author = defineType({
 		portraitPictureField,
 
 		// Contact
-		emailField,
+		getFieldWithoutGroup(emailField),
 
 		// AdditionalInformation
 		defineField({
 			description: 'Der Jobtitel bzw. Rolle oder Funktion des Autors.',
-			group: 'additionalInformation',
 			name: 'jobTitle',
 			title: 'Jobtitel',
 			type: 'string',
@@ -31,7 +30,6 @@ const author = defineType({
 			],
 		}),
 	],
-	groups: [personal, contact, additionalInformation],
 	icon: RiQuillPenLine,
 	name: 'author',
 	preview: {

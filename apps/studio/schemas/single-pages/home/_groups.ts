@@ -25,7 +25,7 @@ const pricing = {
 
 const stats = {
 	name: 'stats',
-	title: 'Stats',
+	title: 'Statistiken',
 };
 
 const testimonial = {

@@ -10,7 +10,7 @@ const departments = {
 
 const stats = {
 	name: 'stats',
-	title: 'Stats',
+	title: 'Statistiken',
 };
 
 export { contactPersons, departments, stats };

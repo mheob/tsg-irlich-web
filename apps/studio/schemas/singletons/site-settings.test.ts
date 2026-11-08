@@ -97,8 +97,8 @@ describe('images of the site settings', () => {
 			),
 		).toStrictEqual(['images', 'images', 'images']);
 		expect(
-			(siteSettings as unknown as { groups: { name: string; title: string }[] }).groups.at(-1),
-		).toStrictEqual({ name: 'images', title: 'Bilder' });
+			(siteSettings as unknown as { groups: { name: string; title: string }[] }).groups,
+		).toContainEqual({ name: 'images', title: 'Bilder' });
 	});
 
 	it.each([

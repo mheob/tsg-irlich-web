@@ -1,7 +1,5 @@
-const additionalInformation = {
-	name: 'additionalInformation',
-	title: 'Zusätzliche Informationen',
-};
+// The tabs of the editor. Their titles are German like every other label of the studio, and a
+// document lists them in the order Allgemein, Inhalt, its own tabs, SEO & Teilen.
 
 const contact = {
 	name: 'contact',
@@ -15,17 +13,22 @@ const content = {
 
 const excerpt = {
 	name: 'excerpt',
-	title: 'Zusammenfassung',
+	title: 'Vorschau',
 };
 
 const general = {
 	name: 'general',
-	title: 'General',
+	title: 'Allgemein',
+};
+
+const images = {
+	name: 'images',
+	title: 'Bilder',
 };
 
 const meta = {
 	name: 'meta',
-	title: 'Meta information',
+	title: 'SEO & Teilen',
 };
 
 const pages = {
@@ -33,9 +36,4 @@ const pages = {
 	title: 'Seiten (automatisch)',
 };
 
-const personal = {
-	name: 'personal',
-	title: 'Persönliches',
-};
-
-export { additionalInformation, contact, content, excerpt, general, meta, pages, personal };
+export { contact, content, excerpt, general, images, meta, pages };
