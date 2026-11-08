@@ -22,6 +22,12 @@ const DEPARTMENT_TYPE = 'department';
 /** The document type of a group, which is served below its department. */
 const GROUP_TYPE = 'group';
 
+/** The document type of a form, which is served below the registration pages. */
+const FORM_TYPE = 'form';
+
+/** The path of the registration pages, below which every form lives. */
+const REGISTRATION_PATH = '/anmeldung';
+
 /** The path of the offer page, below which every department lives. */
 const OFFER_PATH = '/angebot';
 
@@ -53,6 +59,7 @@ const PATH_RESOLVERS = new Map<string, PathResolver>([
 	[HOME_TYPE, () => '/'],
 	[DEPARTMENT_TYPE, (slug) => `${OFFER_PATH}/${slug}`],
 	[GROUP_TYPE, getGroupPath],
+	[FORM_TYPE, (slug) => `${REGISTRATION_PATH}/${slug}`],
 	[NEWS_ARTICLE_TYPE, (slug, category) => (category ? `/news/${category}/${slug}` : undefined)],
 	[NEWS_CATEGORY_TYPE, (slug) => `/news/${slug}`],
 	[ECHO_OVERVIEW_TYPE, () => ECHO_OVERVIEW_PATH],

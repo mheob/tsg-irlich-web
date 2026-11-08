@@ -39,6 +39,7 @@
 		"@tsgi-web/shared": "workspace:*",
 		"@vercel/analytics": "catalog:",
 		"@vercel/speed-insights": "catalog:",
+		"botid": "catalog:",
 		"class-variance-authority": "catalog:",
 		"lucide-react": "catalog:",
 		"motion": "catalog:",

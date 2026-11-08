@@ -8,6 +8,8 @@ const schemas = {
 	CLEVERREACH_CLIENT_SECRET: z.string().min(1, 'Missing CLEVERREACH_CLIENT_SECRET'),
 	CLEVERREACH_FORM_ID: z.string().min(1, 'Missing CLEVERREACH_FORM_ID'),
 	CLEVERREACH_LIST_ID: z.string().min(1, 'Missing CLEVERREACH_LIST_ID'),
+	// Vercel sends it as a bearer token with every cron request.
+	CRON_SECRET: z.string().min(1, 'Missing CRON_SECRET'),
 	LINEAR_API_KEY: z.string().min(1, 'Missing LINEAR_API_KEY'),
 	LINEAR_ASSIGNEE_ID: z.string().min(1, 'Missing LINEAR_ASSIGNEE_ID'),
 	LINEAR_LABEL_ID: z.string().min(1, 'Missing LINEAR_LABEL_ID'),

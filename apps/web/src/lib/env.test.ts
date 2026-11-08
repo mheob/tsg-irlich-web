@@ -74,6 +74,14 @@ describe('validated environment variable access', () => {
 		expect(env('NEXT_PUBLIC_SANITY_STUDIO_URL')).toBeUndefined();
 	});
 
+	it('requires CRON_SECRET', async () => {
+		const { env } = await loadWithEnv<EnvModule>('@/lib/env', {
+			CRON_SECRET: undefined,
+		});
+
+		expect(() => env('CRON_SECRET')).toThrow(/CRON_SECRET/u);
+	});
+
 	it('caches the first read even after process.env changes', async () => {
 		const { env } = await loadWithEnv<EnvModule>('@/lib/env', {
 			LINEAR_TEAM_ID: 'first-value',

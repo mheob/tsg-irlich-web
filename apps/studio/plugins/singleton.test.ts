@@ -201,6 +201,7 @@ describe('page structure', () => {
 			DIVIDER_TITLE,
 			'Abteilungen',
 			'FAQ',
+			'Formulare',
 			'Gruppen',
 			'Personen',
 			'Sponsoren',

@@ -90,4 +90,10 @@ describe('resolving internal link targets', () => {
 			'/verein/echo/tsg-echo-2025',
 		);
 	});
+
+	it('resolves a form below the registration pages', () => {
+		expect(getInternalHref({ _type: 'form', slug: 'dorfturnier-2027' })).toBe(
+			'/anmeldung/dorfturnier-2027',
+		);
+	});
 });

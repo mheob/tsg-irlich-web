@@ -5,6 +5,7 @@ import type { client } from '@/lib/sanity/client';
 import {
 	sitemapDepartmentsQuery,
 	sitemapEchoIssuesQuery,
+	sitemapFormsQuery,
 	sitemapGroupsQuery,
 	sitemapNewsArticlesQuery,
 	sitemapNewsCategoriesQuery,
@@ -39,6 +40,7 @@ interface SanityResults {
 	categories?: unknown[];
 	departments?: unknown[];
 	echoIssues?: unknown[];
+	forms?: unknown[];
 	groups?: unknown[];
 }
 
@@ -47,6 +49,7 @@ function mockSanity({
 	categories = [],
 	departments = [],
 	echoIssues = [],
+	forms = [],
 	groups = [],
 }: SanityResults): void {
 	// The queries run inside one `Promise.all`, so keying on the query keeps the fixtures
@@ -58,6 +61,7 @@ function mockSanity({
 		if (query === sitemapDepartmentsQuery) return departments;
 		if (query === sitemapGroupsQuery) return groups;
 		if (query === sitemapEchoIssuesQuery) return echoIssues;
+		if (query === sitemapFormsQuery) return forms;
 		throw new Error(`unexpected query: ${query}`);
 	});
 }
@@ -211,6 +215,28 @@ describe(sitemap, () => {
 		]);
 	});
 
+	it('lists a form below the registration pages', async () => {
+		const entries = await urls({
+			forms: [{ lastModified: '2026-11-01T10:00:00Z', slug: 'dorfturnier-2027' }],
+		});
+
+		expect(entries).toContain('http://localhost:3000/anmeldung/dorfturnier-2027');
+	});
+
+	it('gives a form its change frequency, priority and last modification date', async () => {
+		mockSanity({ forms: [{ lastModified: '2026-11-01T10:00:00Z', slug: 'dorfturnier-2027' }] });
+
+		const entries = await sitemap();
+		const entry = entries.find((item) => item.url.endsWith('/anmeldung/dorfturnier-2027'));
+
+		expect(entry).toStrictEqual({
+			changeFrequency: 'weekly',
+			lastModified: new Date('2026-11-01T10:00:00Z'),
+			priority: 0.5,
+			url: 'http://localhost:3000/anmeldung/dorfturnier-2027',
+		});
+	});
+
 	it('orders dynamic entries after the static ones', async () => {
 		const entries = await urls({
 			articles: [ARTICLE],
@@ -241,6 +267,7 @@ describe(sitemap, () => {
 		[sitemapDepartmentsQuery, ['department']],
 		[sitemapGroupsQuery, ['group', 'department']],
 		[sitemapEchoIssuesQuery, ['echo.issue']],
+		[sitemapFormsQuery, ['form']],
 	])('tags a query with the document types it lists (%#)', async (query, tags) => {
 		mockSanity({});
 

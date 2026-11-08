@@ -26,7 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, and `create-e2e-form.ts`, which seeds the e2e registration form) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -151,6 +151,21 @@ pnpm --filter studio run ocr:echo --dataset development --folder ~/dev/customer/
 - A rerun skips every issue whose PDF already has the same `sha1hash` and a finished render, and waits for one still rendering. One whose render failed, or has been `pending` for more than 15 minutes because the platform cut it off, asks for „Seiten neu erzeugen“ in the studio and a new run. Only issues of type `echo.issue` are looked up, so a mistyped id cannot swap the PDF of another document.
 
 A failed entry does not stop the others. The run ends with a summary and exits with 1 if an entry failed. The old PDFs and page images stay in the dataset as unused assets, reachable at their CDN addresses; the intros are written afterwards in the studio with „Intro erzeugen“.
+
+## Forms and submissions
+
+The editors build forms themselves. `form` ("Formular", `schemas/documents/form.ts`) is an ordinary document with the tabs Allgemein, Inhalt, Felder, Anmeldung, Mails, Texte and SEO & Teilen. Its `fields` array holds the ten field types (text, textarea, email, phone, number, date, choice, consent, group, note). The website renders the page at `/anmeldung/[slug]` and builds its validation from these definitions (see `apps/web/AGENTS.md`).
+
+- A field's **`_key` is its technical key.** The answers of a submission, the schema and the Excel export refer to the field by `_key`, not by its label, so an editor can rename a label without orphaning submissions. Never regenerate a key of a field that already has submissions; deleting a field leaves its old answers stored under the key, and the Excel export lists them in a trailing column of their own, a deleted group in a sheet named after the label its answers carry.
+- `validateFormFields` (`utils/form-validation.ts`) checks the markers the schema cannot express: at most one field is the `isLabel` field that names a submission, at most one email field is the `isConfirmationRecipient`, and `sendConfirmation` needs such a field. `receivers` is required only while `notifyOrganizer` is on. Both markers are hidden inside a group (`hideInsideGroup` in `schemas/objects/form-fields/base.ts`, which reads the `path` of the `hidden` callback), because the website only reads them from the top-level fields.
+- Three warnings, not errors, guard the clean-up (`utils/form-validation.ts`): `validateRecipientRetention` on `fields` when the confirmation recipient has a retention other than `keep` (the mail service keeps the address anyway), and `validateCleanupDate` on `cleanupAt` when a field, a group's sub-fields included, has a retention but no day is set, or when the day falls on or before the event day in Berlin (`eventDate`, without one `registrationEnd`). The daily run starts at 03:00 UTC, so a clean-up on the event day itself would already remove the answers before the event.
+- A group (`formFieldGroup`) needs at least `max(minItems ?? 0, isRequired ? 1 : 0)` entries on the website: `isRequired` with no minimum or a minimum of 0 still asks for one, and a minimum of 1 or more makes the group required.
+- `confirmationText` and `waitlistConfirmationText` start with `FORM_DEFAULT_TEXTS.confirmation` and `.waitlistConfirmation`, which the website also uses for an empty field; `successText` and `waitlistSuccessText` start with the page texts `success` and `waitlistSuccess`. The page's `success` promises no mail, since a form may send none.
+- **`form.submission`** (`schemas/documents/form.submission.ts`) is `liveEdit: true`, so it has no draft and editing it writes the published document at once. Its id has a dot (`form.submission.<uuid>`), which makes it **private**: the public API never returns it, and the website creates and reads it only with the write client. Editors see it in the studio only. It is excluded from `schema.templates` (`sanity.config.ts`), so nobody creates one by hand, and from the default list (`isExcludedDefaultListItem`).
+- `answers` are `formAnswer` and `formGroupAnswer` objects that carry a copy of the label and the `retention` of the field at submission time (`delete` or `year`), so the clean-up still knows what to remove after the form has changed.
+- **Desk:** the group "Formulare" (`getGroupForms` in `structure/index.ts`) lists the forms; opening one offers "Formular bearbeiten" and "Eingänge" (`getSubmissionsOfFormList`, the submissions of that form ordered by `submittedAt`).
+- **Document actions** (`actions/`, wired through `getFormActions` in `sanity.config.ts`): on a `form`, "Als Excel exportieren" writes every submission of the form into an `.xlsx` file named after the slug and the Berlin date, and "Jetzt bereinigen" applies the retention of every answer to every submission of the form that is not cleaned yet, at once and whatever `cleanupAt` says. The daily cron (`/api/forms/cleanup`) does the same, but only for forms whose `cleanupAt` has begun. A `form.submission` gets no "Duplicate" action. The Excel file is written in the browser with `write-excel-file` (`write-excel-file/browser`); every string is a text cell.
+- `form` has no slug history and is neither a singleton nor a single page.
 
 ## Main menu
 

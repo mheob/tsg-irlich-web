@@ -35,6 +35,7 @@
 		"sanity-plugin-media": "catalog:",
 		"slugify": "catalog:",
 		"styled-components": "catalog:",
+		"write-excel-file": "catalog:",
 		"zod": "catalog:"
 	},
 	"devDependencies": {

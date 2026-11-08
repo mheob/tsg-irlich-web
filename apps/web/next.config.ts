@@ -1,3 +1,6 @@
+import process from 'node:process';
+
+import { withBotId } from 'botid/next/config';
 import type { NextConfig } from 'next';
 
 // With the extension: Node.js loads this file with its own TypeScript support, as an ES module.
@@ -20,6 +23,19 @@ const LATER_PAGE_QUERY = {
 	type: 'query',
 	value: String.raw`(?<page>[2-9]|[1-9]\d+)`,
 } as const;
+
+/**
+ * The end-to-end build: the Playwright web server sets `E2E_MOCK=1` for `next build` and
+ * `next start`, and nothing else does. BotID only works on Vercel, and the MSW preload cannot
+ * replace a module inside the Turbopack bundle, so this build swaps both entry points of the package
+ * for stubs and leaves out the rewrites of `withBotId`. The app keeps calling `checkBotId()`.
+ */
+const isE2eBuild = process.env.E2E_MOCK === '1';
+
+const E2E_BOTID_ALIASES = {
+	'botid/client/core': './e2e/mocks/botid-client.ts',
+	'botid/server': './e2e/mocks/botid-server.ts',
+};
 
 const nextConfig: NextConfig = {
 	experimental: {
@@ -75,6 +91,7 @@ const nextConfig: NextConfig = {
 	// @napi-rs/canvas ships a native binary that Turbopack cannot bundle ("non-ecmascript
 	// placeable asset"); pdfjs-dist stays external with it so its worker resolves next to it.
 	serverExternalPackages: ['@napi-rs/canvas', 'pdfjs-dist'],
+	...(isE2eBuild && { turbopack: { resolveAlias: E2E_BOTID_ALIASES } }),
 };
 
-export default nextConfig;
+export default isE2eBuild ? nextConfig : withBotId(nextConfig);

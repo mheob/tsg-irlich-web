@@ -509,6 +509,171 @@ export type ImageCard = {
   image: ExtendedImage;
 };
 
+export type FormGroupEntry = {
+  _type: "formGroupEntry";
+  answers?: Array<
+    {
+      _key: string;
+    } & FormGroupAnswer
+  >;
+};
+
+export type FormGroupAnswer = {
+  _type: "formGroupAnswer";
+  key?: string;
+  label?: string;
+  fieldType?: string;
+  retention?: string;
+  value?: string;
+  values?: Array<string>;
+};
+
+export type FormFieldTextarea = {
+  _type: "formFieldTextarea";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  maxLength?: number;
+};
+
+export type FormFieldText = {
+  _type: "formFieldText";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  maxLength?: number;
+  isLabel?: boolean;
+};
+
+export type FormFieldPhone = {
+  _type: "formFieldPhone";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+};
+
+export type FormFieldNumber = {
+  _type: "formFieldNumber";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  min?: number;
+  max?: number;
+};
+
+export type FormFieldNote = {
+  _type: "formFieldNote";
+  title?: string;
+  text?: SimpleBlockContent;
+};
+
+export type FormFieldGroup = {
+  _type: "formFieldGroup";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  itemLabel: string;
+  minItems?: number;
+  maxItems?: number;
+  fields: Array<
+    | ({
+        _key: string;
+      } & FormFieldText)
+    | ({
+        _key: string;
+      } & FormFieldTextarea)
+    | ({
+        _key: string;
+      } & FormFieldEmail)
+    | ({
+        _key: string;
+      } & FormFieldPhone)
+    | ({
+        _key: string;
+      } & FormFieldNumber)
+    | ({
+        _key: string;
+      } & FormFieldDate)
+    | ({
+        _key: string;
+      } & FormFieldChoice)
+    | ({
+        _key: string;
+      } & FormFieldConsent)
+    | ({
+        _key: string;
+      } & FormFieldNote)
+  >;
+};
+
+export type FormFieldEmail = {
+  _type: "formFieldEmail";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  isConfirmationRecipient?: boolean;
+};
+
+export type FormFieldDate = {
+  _type: "formFieldDate";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "year" | "delete";
+  minAge?: number;
+  referenceDate?: string;
+};
+
+export type FormFieldConsent = {
+  _type: "formFieldConsent";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  text: SimpleBlockContent;
+};
+
+export type FormFieldChoice = {
+  _type: "formFieldChoice";
+  label: string;
+  helpText?: string;
+  isRequired?: boolean;
+  width?: "full" | "half";
+  retention?: "keep" | "delete";
+  options: Array<string>;
+  isMultiple?: boolean;
+  display?: "buttons" | "select";
+};
+
+export type FormAnswer = {
+  _type: "formAnswer";
+  key?: string;
+  label?: string;
+  fieldType?: string;
+  retention?: string;
+  value?: string;
+  values?: Array<string>;
+  entries?: Array<
+    {
+      _key: string;
+    } & FormGroupEntry
+  >;
+};
+
 export type ExternalLink = {
   _type: "externalLink";
   href?: string;
@@ -591,6 +756,100 @@ export type SiteSettings = {
     } & ExtendedImage
   >;
   fallbackImage: ExtendedImage;
+};
+
+export type FormReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "form";
+};
+
+export type FormSubmission = {
+  _id: string;
+  _type: "form.submission";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  form?: FormReference;
+  submittedAt?: string;
+  status: "registered" | "waitlist" | "cancelled";
+  label?: string;
+  answers?: Array<
+    {
+      _key: string;
+    } & FormAnswer
+  >;
+  cleanedAt?: string;
+};
+
+export type Form = {
+  _id: string;
+  _type: "form";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  formType: "registration";
+  title: string;
+  slug: Slug;
+  heroImage?: ExtendedImage;
+  intro?: SimpleBlockContent;
+  eventDate?: string;
+  location?: string;
+  fields: Array<
+    | ({
+        _key: string;
+      } & FormFieldText)
+    | ({
+        _key: string;
+      } & FormFieldTextarea)
+    | ({
+        _key: string;
+      } & FormFieldEmail)
+    | ({
+        _key: string;
+      } & FormFieldPhone)
+    | ({
+        _key: string;
+      } & FormFieldNumber)
+    | ({
+        _key: string;
+      } & FormFieldDate)
+    | ({
+        _key: string;
+      } & FormFieldChoice)
+    | ({
+        _key: string;
+      } & FormFieldConsent)
+    | ({
+        _key: string;
+      } & FormFieldGroup)
+    | ({
+        _key: string;
+      } & FormFieldNote)
+  >;
+  registrationStart?: string;
+  registrationEnd?: string;
+  capacity?: number;
+  showRemaining?: boolean;
+  cleanupAt?: string;
+  notifyOrganizer?: boolean;
+  receivers?: Array<
+    {
+      _key: string;
+    } & ContactNameMail
+  >;
+  sendConfirmation?: boolean;
+  confirmationSubject?: string;
+  confirmationText?: string;
+  waitlistConfirmationText?: string;
+  includeAnswersInConfirmation?: boolean;
+  beforeStartText?: string;
+  afterEndText?: string;
+  waitlistNotice?: string;
+  successText?: string;
+  waitlistSuccessText?: string;
+  meta?: MetaFields;
 };
 
 export type Venue = {
@@ -1650,12 +1909,28 @@ export type AllSanitySchemaTypes =
   | MainNavigationLink
   | InternalLink
   | ImageCard
+  | FormGroupEntry
+  | FormGroupAnswer
+  | FormFieldTextarea
+  | FormFieldText
+  | FormFieldPhone
+  | FormFieldNumber
+  | FormFieldNote
+  | FormFieldGroup
+  | FormFieldEmail
+  | FormFieldDate
+  | FormFieldConsent
+  | FormFieldChoice
+  | FormAnswer
   | ExternalLink
   | SanityFileAssetReference
   | DocumentDownload
   | ContactNameMail
   | Columns
   | SiteSettings
+  | FormReference
+  | FormSubmission
+  | Form
   | Venue
   | SanityImageCrop
   | SanityImageHotspot
@@ -1975,6 +2250,1202 @@ export type EchoRenderStateQueryResult =
       renderStartedAt: string | null;
     }
   | null;
+
+// Source: src/lib/sanity/queries/forms.ts
+// Variable: formPageQuery
+// Query: *[_type == 'form' && slug.current == $slug][0] {		_id,		formType,		title,		heroImage,		intro,		eventDate,		location,		registrationStart,		registrationEnd,		capacity,		showRemaining,		beforeStartText,		afterEndText,		waitlistNotice,		successText,		waitlistSuccessText,		meta,		fields[] {     _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) },  fields[] {   _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) } } }	}
+export type FormPageQueryResult = {
+  _id: string;
+  formType: "registration";
+  title: string;
+  heroImage: ExtendedImage | null;
+  intro: SimpleBlockContent | null;
+  eventDate: string | null;
+  location: string | null;
+  registrationStart: string | null;
+  registrationEnd: string | null;
+  capacity: number | null;
+  showRemaining: boolean | null;
+  beforeStartText: string | null;
+  afterEndText: string | null;
+  waitlistNotice: string | null;
+  successText: string | null;
+  waitlistSuccessText: string | null;
+  meta: MetaFields | null;
+  fields: Array<
+    | {
+        _key: string;
+        _type: "formFieldChoice";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: Array<string>;
+        isMultiple: boolean | null;
+        display: "buttons" | "select" | null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldConsent";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: {
+          _type: "simpleBlockContent";
+          text:
+            | Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: "bullet" | "number";
+                markDefs:
+                  | Array<{
+                      href?: string;
+                      _type: "link";
+                      _key: string;
+                    }>
+                  | Array<never>;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }>
+            | Array<never>;
+        };
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldDate";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | "year" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: number | null;
+        referenceDate: string | null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldEmail";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: boolean | null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldGroup";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: string;
+        minItems: number | null;
+        maxItems: number | null;
+        title: null;
+        text: null;
+        fields: Array<
+          | {
+              _key: string;
+              _type: "formFieldChoice";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: Array<string>;
+              isMultiple: boolean | null;
+              display: "buttons" | "select" | null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldConsent";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: {
+                _type: "simpleBlockContent";
+                text:
+                  | Array<{
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?: "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs:
+                        | Array<{
+                            href?: string;
+                            _type: "link";
+                            _key: string;
+                          }>
+                        | Array<never>;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }>
+                  | Array<never>;
+              };
+            }
+          | {
+              _key: string;
+              _type: "formFieldDate";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | "year" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: number | null;
+              referenceDate: string | null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldEmail";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: boolean | null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldNote";
+              label: null;
+              helpText: null;
+              isRequired: null;
+              width: null;
+              retention: null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: string | null;
+              text: {
+                _type: "simpleBlockContent";
+                text:
+                  | Array<{
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?: "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs:
+                        | Array<{
+                            href?: string;
+                            _type: "link";
+                            _key: string;
+                          }>
+                        | Array<never>;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }>
+                  | Array<never>;
+              } | null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldNumber";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: number | null;
+              max: number | null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldPhone";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldText";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: number | null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: boolean | null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldTextarea";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: number | null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+        >;
+      }
+    | {
+        _key: string;
+        _type: "formFieldNote";
+        label: null;
+        helpText: null;
+        isRequired: null;
+        width: null;
+        retention: null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: string | null;
+        text: {
+          _type: "simpleBlockContent";
+          text:
+            | Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: "bullet" | "number";
+                markDefs:
+                  | Array<{
+                      href?: string;
+                      _type: "link";
+                      _key: string;
+                    }>
+                  | Array<never>;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }>
+            | Array<never>;
+        } | null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldNumber";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: number | null;
+        max: number | null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldPhone";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldText";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: number | null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: boolean | null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldTextarea";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: number | null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+  >;
+} | null;
+
+// Source: src/lib/sanity/queries/forms.ts
+// Variable: formByIdQuery
+// Query: *[_type == 'form' && _id == $id][0] {		_id,		formType,		title,		"slug": slug.current,		eventDate,		location,		registrationStart,		registrationEnd,		capacity,		notifyOrganizer,		receivers[] { email, name },		sendConfirmation,		confirmationSubject,		confirmationText,		waitlistConfirmationText,		includeAnswersInConfirmation,		fields[] {     _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) },  fields[] {   _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) } } }	}
+export type FormByIdQueryResult = {
+  _id: string;
+  formType: "registration";
+  title: string;
+  slug: string;
+  eventDate: string | null;
+  location: string | null;
+  registrationStart: string | null;
+  registrationEnd: string | null;
+  capacity: number | null;
+  notifyOrganizer: boolean | null;
+  receivers: Array<{
+    email: string;
+    name: string;
+  }> | null;
+  sendConfirmation: boolean | null;
+  confirmationSubject: string | null;
+  confirmationText: string | null;
+  waitlistConfirmationText: string | null;
+  includeAnswersInConfirmation: boolean | null;
+  fields: Array<
+    | {
+        _key: string;
+        _type: "formFieldChoice";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: Array<string>;
+        isMultiple: boolean | null;
+        display: "buttons" | "select" | null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldConsent";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: {
+          _type: "simpleBlockContent";
+          text:
+            | Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: "bullet" | "number";
+                markDefs:
+                  | Array<{
+                      href?: string;
+                      _type: "link";
+                      _key: string;
+                    }>
+                  | Array<never>;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }>
+            | Array<never>;
+        };
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldDate";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | "year" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: number | null;
+        referenceDate: string | null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldEmail";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: boolean | null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldGroup";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: string;
+        minItems: number | null;
+        maxItems: number | null;
+        title: null;
+        text: null;
+        fields: Array<
+          | {
+              _key: string;
+              _type: "formFieldChoice";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: Array<string>;
+              isMultiple: boolean | null;
+              display: "buttons" | "select" | null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldConsent";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: {
+                _type: "simpleBlockContent";
+                text:
+                  | Array<{
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?: "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs:
+                        | Array<{
+                            href?: string;
+                            _type: "link";
+                            _key: string;
+                          }>
+                        | Array<never>;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }>
+                  | Array<never>;
+              };
+            }
+          | {
+              _key: string;
+              _type: "formFieldDate";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | "year" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: number | null;
+              referenceDate: string | null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldEmail";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: boolean | null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldNote";
+              label: null;
+              helpText: null;
+              isRequired: null;
+              width: null;
+              retention: null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: string | null;
+              text: {
+                _type: "simpleBlockContent";
+                text:
+                  | Array<{
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?: "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs:
+                        | Array<{
+                            href?: string;
+                            _type: "link";
+                            _key: string;
+                          }>
+                        | Array<never>;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }>
+                  | Array<never>;
+              } | null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldNumber";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: number | null;
+              max: number | null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldPhone";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldText";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: number | null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: boolean | null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+          | {
+              _key: string;
+              _type: "formFieldTextarea";
+              label: string;
+              helpText: string | null;
+              isRequired: boolean | null;
+              width: "full" | "half" | null;
+              retention: "delete" | "keep" | null;
+              maxLength: number | null;
+              min: null;
+              max: null;
+              minAge: null;
+              referenceDate: null;
+              options: null;
+              isMultiple: null;
+              display: null;
+              isLabel: null;
+              isConfirmationRecipient: null;
+              itemLabel: null;
+              minItems: null;
+              maxItems: null;
+              title: null;
+              text: null;
+            }
+        >;
+      }
+    | {
+        _key: string;
+        _type: "formFieldNote";
+        label: null;
+        helpText: null;
+        isRequired: null;
+        width: null;
+        retention: null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: string | null;
+        text: {
+          _type: "simpleBlockContent";
+          text:
+            | Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: "bullet" | "number";
+                markDefs:
+                  | Array<{
+                      href?: string;
+                      _type: "link";
+                      _key: string;
+                    }>
+                  | Array<never>;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }>
+            | Array<never>;
+        } | null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldNumber";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: number | null;
+        max: number | null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldPhone";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldText";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: number | null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: boolean | null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+    | {
+        _key: string;
+        _type: "formFieldTextarea";
+        label: string;
+        helpText: string | null;
+        isRequired: boolean | null;
+        width: "full" | "half" | null;
+        retention: "delete" | "keep" | null;
+        maxLength: number | null;
+        min: null;
+        max: null;
+        minAge: null;
+        referenceDate: null;
+        options: null;
+        isMultiple: null;
+        display: null;
+        isLabel: null;
+        isConfirmationRecipient: null;
+        itemLabel: null;
+        minItems: null;
+        maxItems: null;
+        title: null;
+        text: null;
+        fields: null;
+      }
+  >;
+} | null;
+
+// Source: src/lib/sanity/queries/forms.ts
+// Variable: formRegisteredCountQuery
+// Query: count(*[_type == "form.submission" && form._ref == $formId && status == "registered" && !(_id in path("drafts.**"))])
+export type FormRegisteredCountQueryResult = number;
+
+// Source: src/lib/sanity/queries/forms.ts
+// Variable: dueSubmissionsQuery
+// Query: *[_type == "form.submission" && !defined(cleanedAt) && form->cleanupAt <= now() && !(_id in path("drafts.**"))]{ _id, _rev, answers }
+export type DueSubmissionsQueryResult = Array<{
+  _id: string;
+  _rev: string;
+  answers: Array<
+    {
+      _key: string;
+    } & FormAnswer
+  > | null;
+}>;
 
 // Source: src/lib/sanity/queries/llms.ts
 // Variable: llmsTxtQuery
@@ -5232,6 +6703,14 @@ export type SitemapEchoIssuesQueryResult = Array<{
   lastModified: string;
 }>;
 
+// Source: src/lib/sanity/queries/sitemap.ts
+// Variable: sitemapFormsQuery
+// Query: *[_type == 'form' && defined(slug.current)] {		"slug": slug.current,		"lastModified": _updatedAt	}
+export type SitemapFormsQueryResult = Array<{
+  slug: string;
+  lastModified: string;
+}>;
+
 // Query TypeMap
 declare global {
   interface SanityQueries {
@@ -5240,6 +6719,10 @@ declare global {
     "\n\t*[_type == 'department' && $slug in previousSlugs && !(_id in path('drafts.**'))] | order(_updatedAt desc, _id asc)[0].slug.current\n": DepartmentRedirectQueryResult;
     "\n\t*[_type == 'department' && defined(slug.current)].slug.current\n": DepartmentSlugsQueryResult;
     '\n\t*[_id == $id][0] {\n\t\t_id,\n\t\t_rev,\n\t\t"pdfRef": pdf.asset._ref,\n\t\t"renderSource": render.source,\n\t\t"renderStartedAt": render.startedAt\n\t}\n': EchoRenderStateQueryResult;
+    '\n\t*[_type == \'form\' && slug.current == $slug][0] {\n\t\t_id,\n\t\tformType,\n\t\ttitle,\n\t\theroImage,\n\t\tintro,\n\t\teventDate,\n\t\tlocation,\n\t\tregistrationStart,\n\t\tregistrationEnd,\n\t\tcapacity,\n\t\tshowRemaining,\n\t\tbeforeStartText,\n\t\tafterEndText,\n\t\twaitlistNotice,\n\t\tsuccessText,\n\t\twaitlistSuccessText,\n\t\tmeta,\n\t\tfields[] { \n  \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n,\n  fields[] { \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n }\n }\n\t}\n': FormPageQueryResult;
+    '\n\t*[_type == \'form\' && _id == $id][0] {\n\t\t_id,\n\t\tformType,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\teventDate,\n\t\tlocation,\n\t\tregistrationStart,\n\t\tregistrationEnd,\n\t\tcapacity,\n\t\tnotifyOrganizer,\n\t\treceivers[] { email, name },\n\t\tsendConfirmation,\n\t\tconfirmationSubject,\n\t\tconfirmationText,\n\t\twaitlistConfirmationText,\n\t\tincludeAnswersInConfirmation,\n\t\tfields[] { \n  \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n,\n  fields[] { \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n }\n }\n\t}\n': FormByIdQueryResult;
+    'count(*[_type == "form.submission" && form._ref == $formId && status == "registered" && !(_id in path("drafts.**"))])': FormRegisteredCountQueryResult;
+    '*[_type == "form.submission" && !defined(cleanedAt) && form->cleanupAt <= now() && !(_id in path("drafts.**"))]{ _id, _rev, answers }': DueSubmissionsQueryResult;
     '\n\t{\n\t\t"aboutUs": *[_type == \'aboutUs\'][0].meta.metaDescription,\n\t\t"contact": *[_type == \'site-settings\'][0].contact { email, phone, postalAddress },\n\t\t"departments": *[_type == \'department\' && defined(slug.current)] | order(sortOrder asc) {\n\t\t\ttitle,\n\t\t\t"description": meta.metaDescription,\n\t\t\t"slug": slug.current,\n\t\t\t"groups": *[_type == \'group\' && department._ref == ^._id] | order(sortOrder asc) {\n\t\t\t\t_type,\n\t\t\t\t"department": ^.slug.current,\n\t\t\t\t"description": meta.metaDescription,\n\t\t\t\t"slug": slug.current,\n\t\t\t\ttitle,\n\t\t\t\t"trainingTimes": training.trainingTimes[] {\n\t\t\t\t\tendTime,\n\t\t\t\t\tseason,\n\t\t\t\t\tstartTime,\n\t\t\t\t\t"venue": coalesce(venue->location.name, venue->title),\n\t\t\t\t\tweekday,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\t"description": *[_type == \'home\'][0].meta.metaDescription,\n\t\t"membership": *[_type == \'membership\'][0].meta.metaDescription,\n\t\t"prices": *[_type == \'home\'][0].content.pricingSection {\n\t\t\tpricingAdult { price, subtitle, title },\n\t\t\tpricingFamily { price, subtitle, title },\n\t\t\tpricingYouth { price, subtitle, title },\n\t\t},\n\t}\n': LlmsTxtQueryResult;
     '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_type,\n\t\t\t\n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n,\n\t\t\thasTwoColumns,\n\t\t\t"children": coalesce(children[] { \n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n, description }, [])\n\t\t}\n\t}\n': MainNavigationQueryResult;
     '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
@@ -5298,6 +6781,7 @@ declare global {
     '\n\t*[_type == \'department\' && defined(slug.current)] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapDepartmentsQueryResult;
     '\n\t*[_type == \'group\' && defined(department->slug.current)] {\n\t\t_type,\n\t\t"department": department->slug.current,\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapGroupsQueryResult;
     "\n\t*[_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0 && indexable != false] {\n\t\t\"slug\": slug.current,\n\t\t\"lastModified\": _updatedAt\n\t}\n": SitemapEchoIssuesQueryResult;
+    '\n\t*[_type == \'form\' && defined(slug.current)] {\n\t\t"slug": slug.current,\n\t\t"lastModified": _updatedAt\n\t}\n': SitemapFormsQueryResult;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

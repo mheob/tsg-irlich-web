@@ -6,6 +6,7 @@ import {
 	RiParentLine,
 	RiQuestionAnswerLine,
 	RiSettings5Line,
+	RiSurveyLine,
 	RiTeamLine,
 	RiTrophyLine,
 } from 'react-icons/ri';
@@ -16,6 +17,7 @@ type DocumentGroup =
 	| 'departments'
 	| 'echo'
 	| 'faq'
+	| 'forms'
 	| 'groups'
 	| 'news'
 	| 'persons'
@@ -122,6 +124,53 @@ function getGroupFaq(S: StructureBuilder): ListItemBuilder[] {
 				S.documentTypeList('faq')
 					.title('FAQ')
 					.defaultOrdering([{ direction: 'asc', field: 'sortOrder' }]),
+			),
+	];
+}
+
+/**
+ * Returns the list of the submissions of one form, oldest first. Submissions come from the website,
+ * so the list offers no "Neu".
+ *
+ * @param S - The structure builder.
+ * @param formId - The id of the form document.
+ * @returns The list of the submissions of the form.
+ */
+function getSubmissionsOfFormList(S: StructureBuilder, formId: string): DocumentListBuilder {
+	return S.documentList()
+		.title('Eingänge')
+		.schemaType('form.submission')
+		.filter('_type == "form.submission" && form._ref == $formId')
+		.params({ formId })
+		.defaultOrdering([{ direction: 'asc', field: 'submittedAt' }])
+		.initialValueTemplates([]);
+}
+
+/**
+ * Returns the group for the forms: each form opens its editor and its submissions.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the forms.
+ */
+function getGroupForms(S: StructureBuilder): ListItemBuilder[] {
+	return [
+		S.listItem()
+			.title('Formulare')
+			.id('form')
+			.icon(RiSurveyLine)
+			.child(
+				S.documentTypeList('form')
+					.title('Formulare')
+					.child((formId) =>
+						S.list()
+							.title('Formular')
+							.items([
+								S.listItem()
+									.title('Formular bearbeiten')
+									.child(S.document().schemaType('form').documentId(formId)),
+								S.listItem().title('Eingänge').child(getSubmissionsOfFormList(S, formId)),
+							]),
+					),
 			),
 	];
 }
@@ -251,6 +300,8 @@ function isExcludedDefaultListItem(id?: string): boolean {
 		'department',
 		'echo.issue',
 		'faq',
+		'form',
+		'form.submission',
 		'group',
 		'honoraryMember',
 		'media.folder',
@@ -275,35 +326,20 @@ function getGroup(
 	name: DocumentGroup,
 	typeDefinitionArray?: DocumentDefinition[],
 ): ListItemBuilder[] {
-	switch (name) {
-		case 'departments': {
-			return getGroupDepartments(S);
-		}
-		case 'echo': {
-			return getGroupEcho(S);
-		}
-		case 'faq': {
-			return getGroupFaq(S);
-		}
-		case 'news': {
-			return getGroupNews(S);
-		}
-		case 'persons': {
-			return getGroupPersons(S);
-		}
-		case 'groups': {
-			return getGroupGroups(S);
-		}
-		case 'settings': {
-			return getGroupSettings(S);
-		}
-		case 'single-pages': {
-			return getGroupSinglePages(S, typeDefinitionArray);
-		}
-		default: {
-			return getGroupSettings(S);
-		}
-	}
+	const groups: Record<DocumentGroup, () => ListItemBuilder[]> = {
+		departments: () => getGroupDepartments(S),
+		echo: () => getGroupEcho(S),
+		faq: () => getGroupFaq(S),
+		forms: () => getGroupForms(S),
+		groups: () => getGroupGroups(S),
+		news: () => getGroupNews(S),
+		persons: () => getGroupPersons(S),
+		settings: () => getGroupSettings(S),
+		'single-pages': () => getGroupSinglePages(S, typeDefinitionArray),
+	};
+	// An unknown name still falls back to the settings, as before.
+	const resolve = (groups as Partial<typeof groups>)[name] ?? groups.settings;
+	return resolve();
 }
 
-export { getGroup, getGroupsOfDepartmentList, isExcludedDefaultListItem };
+export { getGroup, getGroupsOfDepartmentList, getSubmissionsOfFormList, isExcludedDefaultListItem };

@@ -16,6 +16,11 @@ const excerpt = {
 	title: 'Vorschau',
 };
 
+const formFields = {
+	name: 'formFields',
+	title: 'Felder',
+};
+
 const general = {
 	name: 'general',
 	title: 'Allgemein',
@@ -24,6 +29,11 @@ const general = {
 const images = {
 	name: 'images',
 	title: 'Bilder',
+};
+
+const mails = {
+	name: 'mails',
+	title: 'Mails',
 };
 
 const meta = {
@@ -36,4 +46,26 @@ const pages = {
 	title: 'Seiten (automatisch)',
 };
 
-export { contact, content, excerpt, general, images, meta, pages };
+const registration = {
+	name: 'registration',
+	title: 'Anmeldung',
+};
+
+const texts = {
+	name: 'texts',
+	title: 'Texte',
+};
+
+export {
+	contact,
+	content,
+	excerpt,
+	formFields,
+	general,
+	images,
+	mails,
+	meta,
+	pages,
+	registration,
+	texts,
+};

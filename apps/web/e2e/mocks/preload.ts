@@ -1,8 +1,8 @@
 /**
  * Server-side network mocks for the end-to-end suite.
  *
- * The site renders on the server, so the requests that matter — Sanity queries, the CleverReach
- * newsletter API, Resend, Linear — never reach the browser and cannot be intercepted with
+ * The site renders on the server, so the requests that matter — Sanity queries and mutations, the
+ * CleverReach newsletter API, Resend, Linear — never reach the browser and cannot be intercepted with
  * Playwright's `page.route`. This file is preloaded into the Next.js process instead
  * (`NODE_OPTIONS='--import ./e2e/mocks/preload.ts'`), before any application code is imported, so
  * MSW is installed on every HTTP client the app happens to use.
@@ -159,6 +159,24 @@ async function handleSanity(request: Request): Promise<Response> {
 		return new HttpResponse('', {
 			headers: { 'content-type': 'text/event-stream' },
 		});
+	}
+
+	// The registration form stores its submissions with the write client. Answered here even while
+	// recording, so no run ever writes to the dataset.
+	if (url.pathname.includes('/data/mutate/')) {
+		return HttpResponse.json({
+			results: [{ id: 'form.submission.e2e', operation: 'create' }],
+			transactionId: 'e2e',
+		});
+	}
+
+	// The count of registered submissions: always none, so a form shows all of its places and no
+	// recording depends on the submissions the dataset happens to hold.
+	if (
+		url.pathname.includes('/data/query/') &&
+		url.searchParams.get('query')?.includes('"form.submission"')
+	) {
+		return HttpResponse.json({ ms: 1, query: '', result: 0 });
 	}
 
 	if (isRecording) {

@@ -122,6 +122,16 @@ describe('sanity revalidation webhook', () => {
 		]);
 	});
 
+	it('revalidates every registration page for a form', async () => {
+		mockedParseBody.mockResolvedValue(
+			parsed({ _type: 'form', slug: { current: 'dorfturnier-2027' } }),
+		);
+
+		await POST(REQUEST);
+
+		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/anmeldung/[slug]', 'page']]);
+	});
+
 	it('revalidates the archive and every issue page for a tsg-echo issue', async () => {
 		mockedParseBody.mockResolvedValue(
 			parsed({ _type: 'echo.issue', slug: { current: 'tsg-echo-2025' } }),

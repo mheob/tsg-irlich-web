@@ -153,7 +153,10 @@ const InternalLink: PortableTextMarkComponent = ({ children, value }) => {
 	);
 };
 
-const Link: PortableTextMarkComponent = async ({ children, value }) => {
+// Synchronous on purpose: client components render portable text too (the registration form's
+// consent), and React suspends a client tree on an `async` component.
+// oxlint-disable-next-line typescript/promise-function-async
+const Link: PortableTextMarkComponent = ({ children, value }) => {
 	// oxlint-disable-next-line typescript/no-unsafe-assignment typescript/no-unsafe-member-access
 	const href = value?.href ?? value?.url;
 	if (!href || typeof href !== 'string') {

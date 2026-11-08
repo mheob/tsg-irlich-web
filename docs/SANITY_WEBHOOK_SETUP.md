@@ -61,8 +61,10 @@ Without the staging webhook, every content change on staging that is not read th
 
    Both live webhooks carry the filter below since 2026-11-01. It belongs to the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. `accessibility` joined with the page images (WEB-389), when the page got a hero image of its own, and `searchPage` with the site search (WEB-204), whose singleton holds the placeholder of the search panel in the navigation on every page. `news-article-page`, `newsOverviewCategory` and `sponsors` joined with WEB-415, when the articles and the category pages became cached: until then they rendered on every request and needed no webhook. A hook without them leaves those pages on their old texts until the next article or category change revalidates the news routes.
 
+   `form` (WEB-278, the registration forms at `/anmeldung/[slug]`) is part of the filter below, but **both live webhooks, production and development, still need the change in Sanity**: the filter lives there, not in this repository, so until someone adds `"form"` to each hook a published form does not revalidate its page or the sitemap. This is a rollout step after the form builder is merged.
+
    ```groq
-   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "group", "groupsPage", "home", "imprint", "membership", "news-article-page", "news.article", "news.category", "newsOverview", "newsOverviewCategory", "person", "privacy", "searchPage", "site-settings", "sponsors", "testimonial", "venue"]
+   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "form", "group", "groupsPage", "home", "imprint", "membership", "news-article-page", "news.article", "news.category", "newsOverview", "newsOverviewCategory", "person", "privacy", "searchPage", "site-settings", "sponsors", "testimonial", "venue"]
    ```
 
    **Projection** (what is sent to the webhook):
@@ -124,6 +126,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **Category pages** (`_type: "newsOverviewCategory"`, their texts and contact persons): every page of every category
 - **Article hero** (`_type: "news-article-page"`): every article
 - **Sponsors** (`_type: "sponsors"`): the home page and every article
+- **Form** (`_type: "form"`): the page `/anmeldung/[slug]`, and `/sitemap.xml` through the generic `revalidateTag('form')`, since its query of the forms carries that tag
 - **Department** (`_type: "department"`): the home page, which links the departments, and the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`
 - **Group** (`_type: "group"`): the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`. The payload only carries the slug of the group, not the one of its department, so a single group path cannot be built
 - **Offer pages** (`_type: "departmentsPage"`, `"groupsPage"`): `/angebot`, or every department page `/angebot/[group]`

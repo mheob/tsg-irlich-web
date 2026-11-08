@@ -19,13 +19,17 @@ const config: KnipConfig = {
 			ignoreDependencies: ['@vitest/coverage-v8', 'vitest'],
 		},
 		'apps/studio': {
-			// Run through `sanity exec` (`import:echo`, `ocr:echo`), which Knip's script parser skips
-			entry: ['scripts/import-echo.ts', 'scripts/ocr-echo.ts'],
+			// Run through `sanity exec` (`import:echo`, `ocr:echo` and the e2e form by hand), which Knip's
+			// script parser skips
+			entry: ['scripts/create-e2e-form.ts', 'scripts/import-echo.ts', 'scripts/ocr-echo.ts'],
 		},
 		'apps/web': {
 			entry: [
 				// Loaded with `--import` from `NODE_OPTIONS` of the Playwright web server
 				'e2e/mocks/preload.ts',
+				// Swapped in for BotID by `turbopack.resolveAlias` in the e2e build (`next.config.ts`)
+				'e2e/mocks/botid-client.ts',
+				'e2e/mocks/botid-server.ts',
 				// Lighthouse CI `require()`s it in `lhci autorun`, and Knip has no Lighthouse plugin
 				'lighthouserc.cjs',
 			],
