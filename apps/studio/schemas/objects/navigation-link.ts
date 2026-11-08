@@ -163,7 +163,6 @@ interface NavigationLinkPreview {
 export default navigationLink;
 export {
 	isExternalLink,
-	MAX_DESCRIPTION_LENGTH,
 	navigationLinkFields,
 	navigationTitleField,
 	prepareNavigationLink,

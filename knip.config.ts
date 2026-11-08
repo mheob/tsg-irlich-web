@@ -1,0 +1,36 @@
+import type { KnipConfig } from 'knip';
+
+/**
+ * Knip reports unused files, exports, dependencies and catalog entries across every workspace. Its
+ * plugins find the entry points of Next.js, Sanity, Vitest, Playwright, React Email, Lefthook and
+ * the GitHub workflows on their own; the entries below are the ones no plugin can see.
+ */
+const config: KnipConfig = {
+	// A type that shapes an exported function's parameters or result is part of that function's API,
+	// even when no other module names it. Values used only in their own file stay reported.
+	ignoreExportsUsedInFile: { interface: true, type: true },
+	ignoreIssues: {
+		// Sanity TypeGen writes a type for every schema type and query, whether the app reads it or not
+		'apps/web/src/types/sanity.types.generated.ts': ['types'],
+	},
+	workspaces: {
+		'.': {
+			// `vp migrate` pins the Vite+ toolchain in the root manifest and re-adds them on every run
+			ignoreDependencies: ['@vitest/coverage-v8', 'vitest'],
+		},
+		'apps/studio': {
+			// Run through `sanity exec` (`import:echo`, `ocr:echo`), which Knip's script parser skips
+			entry: ['scripts/import-echo.ts', 'scripts/ocr-echo.ts'],
+		},
+		'apps/web': {
+			entry: [
+				// Loaded with `--import` from `NODE_OPTIONS` of the Playwright web server
+				'e2e/mocks/preload.ts',
+				// Lighthouse CI `require()`s it in `lhci autorun`, and Knip has no Lighthouse plugin
+				'lighthouserc.cjs',
+			],
+		},
+	},
+};
+
+export default config;

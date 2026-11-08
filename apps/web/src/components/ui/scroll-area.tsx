@@ -36,4 +36,4 @@ function ScrollArea({ children, className, ...props }: ComponentProps<typeof Bas
 	);
 }
 
-export { ScrollArea, ScrollBar };
+export { ScrollArea };

@@ -51,15 +51,6 @@ function DialogPopup({
 	);
 }
 
-function DialogHeader({ className, ...props }: Readonly<HTMLAttributes<HTMLDivElement>>) {
-	return (
-		<div
-			className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)}
-			{...props}
-		/>
-	);
-}
-
 function DialogFooter({ className, ...props }: Readonly<HTMLAttributes<HTMLDivElement>>) {
 	return (
 		<div
@@ -97,7 +88,6 @@ export {
 	DialogBackdrop,
 	DialogPopup,
 	DialogPopupPrimitive,
-	DialogHeader,
 	DialogFooter,
 	DialogTitle,
 	DialogDescription,

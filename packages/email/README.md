@@ -36,4 +36,3 @@ Open [localhost:3001](http://localhost:3001) to preview email templates in your 
 ## Dependencies
 
 - `@react-email/components` - React Email component library
-- `@tsgi-web/shared` - Shared utilities and components (TSGLogo, etc.)

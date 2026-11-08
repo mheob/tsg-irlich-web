@@ -247,6 +247,7 @@ chore(deps): update all non-major dependencies
 
    ```bash
    pnpm run lint              # Run linting
+   pnpm run knip              # Find unused files, exports and dependencies
    pnpm run typecheck         # Run type checking
    pnpm run build             # Ensure build succeeds
    ```

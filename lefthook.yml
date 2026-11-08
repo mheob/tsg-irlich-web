@@ -24,6 +24,8 @@ pre-push:
       timeout: "120s"
     - name: format
       run: pnpm run format:check
+    - name: knip
+      run: pnpm run knip
     # `--deny-warnings` keeps the repository at zero lint warnings
     - name: lint
       run: pnpm exec turbo run lint -- --deny-warnings && pnpm run lint:root --deny-warnings

@@ -1,3 +1,4 @@
+import path from 'node:path';
 import process from 'node:process';
 
 import { defineConfig, devices, type ReporterDescription } from '@playwright/test';
@@ -13,12 +14,13 @@ const isCi = Boolean(process.env.CI);
 // has to be loaded first: `loadEnvFile` never overwrites a variable that is already set, so the
 // dummy token would win otherwise.
 if (process.env.E2E_RECORD === '1') {
-	process.loadEnvFile('.env.local');
+	process.loadEnvFile(path.join(import.meta.dirname, '.env.local'));
 }
 
 // Dummy credentials for every service the mocks intercept, plus the two public Sanity values the
 // recorded fixtures are keyed by. Loading them here keeps the suite runnable without `.env.local`.
-process.loadEnvFile('.env.e2e');
+// Both files resolve from this config, not the working directory: Knip loads it from the root.
+process.loadEnvFile(path.join(import.meta.dirname, '.env.e2e'));
 
 const baseURL = `http://localhost:${E2E_PORT}`;
 
