@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-import { markDefsWithLinks } from '@/lib/sanity/queries';
+import { blockContent } from '@/lib/sanity/queries';
 
 /** What every field type shares in the projection; a type without an attribute yields `null`. */
 const formFieldAttributes = /* groq */ `
@@ -25,7 +25,7 @@ const formFieldAttributes = /* groq */ `
   minItems,
   maxItems,
   title,
-  text[] { ..., ${markDefsWithLinks} }
+  text { ${blockContent} }
 `;
 
 /** The fields of a form, with the fields of a group nested one level down. */

@@ -2253,7 +2253,7 @@ export type EchoRenderStateQueryResult =
 
 // Source: src/lib/sanity/queries/forms.ts
 // Variable: formPageQuery
-// Query: *[_type == 'form' && slug.current == $slug][0] {		_id,		formType,		title,		heroImage,		intro,		eventDate,		location,		registrationStart,		registrationEnd,		capacity,		showRemaining,		beforeStartText,		afterEndText,		waitlistNotice,		successText,		waitlistSuccessText,		meta,		fields[] {     _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) },  fields[] {   _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) } } }	}
+// Query: *[_type == 'form' && slug.current == $slug][0] {		_id,		formType,		title,		heroImage,		intro,		eventDate,		location,		registrationStart,		registrationEnd,		capacity,		showRemaining,		beforeStartText,		afterEndText,		waitlistNotice,		successText,		waitlistSuccessText,		meta,		fields[] {     _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) },  fields[] {   _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) } } }	}
 export type FormPageQueryResult = {
   _id: string;
   formType: "registration";
@@ -2320,7 +2320,31 @@ export type FormPageQueryResult = {
         minItems: null;
         maxItems: null;
         title: null;
-        text: null;
+        text: {
+          _type: "simpleBlockContent";
+          text:
+            | Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: "bullet" | "number";
+                markDefs:
+                  | Array<{
+                      href?: string;
+                      _type: "link";
+                      _key: string;
+                    }>
+                  | Array<never>;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }>
+            | Array<never>;
+        };
         fields: null;
       }
     | {
@@ -2443,7 +2467,31 @@ export type FormPageQueryResult = {
               minItems: null;
               maxItems: null;
               title: null;
-              text: null;
+              text: {
+                _type: "simpleBlockContent";
+                text:
+                  | Array<{
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?: "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs:
+                        | Array<{
+                            href?: string;
+                            _type: "link";
+                            _key: string;
+                          }>
+                        | Array<never>;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }>
+                  | Array<never>;
+              };
             }
           | {
               _key: string;
@@ -2515,7 +2563,31 @@ export type FormPageQueryResult = {
               minItems: null;
               maxItems: null;
               title: string | null;
-              text: null;
+              text: {
+                _type: "simpleBlockContent";
+                text:
+                  | Array<{
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?: "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs:
+                        | Array<{
+                            href?: string;
+                            _type: "link";
+                            _key: string;
+                          }>
+                        | Array<never>;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }>
+                  | Array<never>;
+              } | null;
             }
           | {
               _key: string;
@@ -2637,7 +2709,31 @@ export type FormPageQueryResult = {
         minItems: null;
         maxItems: null;
         title: string | null;
-        text: null;
+        text: {
+          _type: "simpleBlockContent";
+          text:
+            | Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: "bullet" | "number";
+                markDefs:
+                  | Array<{
+                      href?: string;
+                      _type: "link";
+                      _key: string;
+                    }>
+                  | Array<never>;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }>
+            | Array<never>;
+        } | null;
         fields: null;
       }
     | {
@@ -2745,7 +2841,7 @@ export type FormPageQueryResult = {
 
 // Source: src/lib/sanity/queries/forms.ts
 // Variable: formByIdQuery
-// Query: *[_type == 'form' && _id == $id][0] {		_id,		formType,		title,		"slug": slug.current,		eventDate,		location,		registrationStart,		registrationEnd,		capacity,		notifyOrganizer,		receivers[] { email, name },		sendConfirmation,		confirmationSubject,		confirmationText,		waitlistConfirmationText,		includeAnswersInConfirmation,		fields[] {     _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) },  fields[] {   _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) } } }	}
+// Query: *[_type == 'form' && _id == $id][0] {		_id,		formType,		title,		"slug": slug.current,		eventDate,		location,		registrationStart,		registrationEnd,		capacity,		notifyOrganizer,		receivers[] { email, name },		sendConfirmation,		confirmationSubject,		confirmationText,		waitlistConfirmationText,		includeAnswersInConfirmation,		fields[] {     _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) },  fields[] {   _key,  _type,  label,  helpText,  isRequired,  width,  retention,  maxLength,  min,  max,  minAge,  referenceDate,  options,  isMultiple,  display,  isLabel,  isConfirmationRecipient,  itemLabel,  minItems,  maxItems,  title,  text {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) } } }	}
 export type FormByIdQueryResult = {
   _id: string;
   formType: "registration";
@@ -2814,7 +2910,31 @@ export type FormByIdQueryResult = {
         minItems: null;
         maxItems: null;
         title: null;
-        text: null;
+        text: {
+          _type: "simpleBlockContent";
+          text:
+            | Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: "bullet" | "number";
+                markDefs:
+                  | Array<{
+                      href?: string;
+                      _type: "link";
+                      _key: string;
+                    }>
+                  | Array<never>;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }>
+            | Array<never>;
+        };
         fields: null;
       }
     | {
@@ -2937,7 +3057,31 @@ export type FormByIdQueryResult = {
               minItems: null;
               maxItems: null;
               title: null;
-              text: null;
+              text: {
+                _type: "simpleBlockContent";
+                text:
+                  | Array<{
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?: "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs:
+                        | Array<{
+                            href?: string;
+                            _type: "link";
+                            _key: string;
+                          }>
+                        | Array<never>;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }>
+                  | Array<never>;
+              };
             }
           | {
               _key: string;
@@ -3009,7 +3153,31 @@ export type FormByIdQueryResult = {
               minItems: null;
               maxItems: null;
               title: string | null;
-              text: null;
+              text: {
+                _type: "simpleBlockContent";
+                text:
+                  | Array<{
+                      children?: Array<{
+                        marks?: Array<string>;
+                        text?: string;
+                        _type: "span";
+                        _key: string;
+                      }>;
+                      style?: "normal";
+                      listItem?: "bullet" | "number";
+                      markDefs:
+                        | Array<{
+                            href?: string;
+                            _type: "link";
+                            _key: string;
+                          }>
+                        | Array<never>;
+                      level?: number;
+                      _type: "block";
+                      _key: string;
+                    }>
+                  | Array<never>;
+              } | null;
             }
           | {
               _key: string;
@@ -3131,7 +3299,31 @@ export type FormByIdQueryResult = {
         minItems: null;
         maxItems: null;
         title: string | null;
-        text: null;
+        text: {
+          _type: "simpleBlockContent";
+          text:
+            | Array<{
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: "span";
+                  _key: string;
+                }>;
+                style?: "normal";
+                listItem?: "bullet" | "number";
+                markDefs:
+                  | Array<{
+                      href?: string;
+                      _type: "link";
+                      _key: string;
+                    }>
+                  | Array<never>;
+                level?: number;
+                _type: "block";
+                _key: string;
+              }>
+            | Array<never>;
+        } | null;
         fields: null;
       }
     | {
@@ -6519,8 +6711,8 @@ declare global {
     "\n\t*[_type == 'department' && $slug in previousSlugs && !(_id in path('drafts.**'))] | order(_updatedAt desc, _id asc)[0].slug.current\n": DepartmentRedirectQueryResult;
     "\n\t*[_type == 'department' && defined(slug.current)].slug.current\n": DepartmentSlugsQueryResult;
     '\n\t*[_id == $id][0] {\n\t\t_id,\n\t\t_rev,\n\t\t"pdfRef": pdf.asset._ref,\n\t\t"renderSource": render.source,\n\t\t"renderStartedAt": render.startedAt\n\t}\n': EchoRenderStateQueryResult;
-    '\n\t*[_type == \'form\' && slug.current == $slug][0] {\n\t\t_id,\n\t\tformType,\n\t\ttitle,\n\t\theroImage,\n\t\tintro,\n\t\teventDate,\n\t\tlocation,\n\t\tregistrationStart,\n\t\tregistrationEnd,\n\t\tcapacity,\n\t\tshowRemaining,\n\t\tbeforeStartText,\n\t\tafterEndText,\n\t\twaitlistNotice,\n\t\tsuccessText,\n\t\twaitlistSuccessText,\n\t\tmeta,\n\t\tfields[] { \n  \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }\n,\n  fields[] { \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }\n }\n }\n\t}\n': FormPageQueryResult;
-    '\n\t*[_type == \'form\' && _id == $id][0] {\n\t\t_id,\n\t\tformType,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\teventDate,\n\t\tlocation,\n\t\tregistrationStart,\n\t\tregistrationEnd,\n\t\tcapacity,\n\t\tnotifyOrganizer,\n\t\treceivers[] { email, name },\n\t\tsendConfirmation,\n\t\tconfirmationSubject,\n\t\tconfirmationText,\n\t\twaitlistConfirmationText,\n\t\tincludeAnswersInConfirmation,\n\t\tfields[] { \n  \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }\n,\n  fields[] { \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }\n }\n }\n\t}\n': FormByIdQueryResult;
+    '\n\t*[_type == \'form\' && slug.current == $slug][0] {\n\t\t_id,\n\t\tformType,\n\t\ttitle,\n\t\theroImage,\n\t\tintro,\n\t\teventDate,\n\t\tlocation,\n\t\tregistrationStart,\n\t\tregistrationEnd,\n\t\tcapacity,\n\t\tshowRemaining,\n\t\tbeforeStartText,\n\t\tafterEndText,\n\t\twaitlistNotice,\n\t\tsuccessText,\n\t\twaitlistSuccessText,\n\t\tmeta,\n\t\tfields[] { \n  \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n,\n  fields[] { \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n }\n }\n\t}\n': FormPageQueryResult;
+    '\n\t*[_type == \'form\' && _id == $id][0] {\n\t\t_id,\n\t\tformType,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\teventDate,\n\t\tlocation,\n\t\tregistrationStart,\n\t\tregistrationEnd,\n\t\tcapacity,\n\t\tnotifyOrganizer,\n\t\treceivers[] { email, name },\n\t\tsendConfirmation,\n\t\tconfirmationSubject,\n\t\tconfirmationText,\n\t\twaitlistConfirmationText,\n\t\tincludeAnswersInConfirmation,\n\t\tfields[] { \n  \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n,\n  fields[] { \n  _key,\n  _type,\n  label,\n  helpText,\n  isRequired,\n  width,\n  retention,\n  maxLength,\n  min,\n  max,\n  minAge,\n  referenceDate,\n  options,\n  isMultiple,\n  display,\n  isLabel,\n  isConfirmationRecipient,\n  itemLabel,\n  minItems,\n  maxItems,\n  title,\n  text { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n }\n }\n\t}\n': FormByIdQueryResult;
     'count(*[_type == "form.submission" && form._ref == $formId && status == "registered" && !(_id in path("drafts.**"))])': FormRegisteredCountQueryResult;
     '*[_type == "form.submission" && !defined(cleanedAt) && form->cleanupAt <= now() && !(_id in path("drafts.**"))]{ _id, _rev, answers }': DueSubmissionsQueryResult;
     '\n\t{\n\t\t"aboutUs": *[_type == \'aboutUs\'][0].meta.metaDescription,\n\t\t"contact": *[_type == \'site-settings\'][0].contact { email, phone, postalAddress },\n\t\t"departments": *[_type == \'department\' && defined(slug.current)] | order(sortOrder asc) {\n\t\t\ttitle,\n\t\t\t"description": meta.metaDescription,\n\t\t\t"slug": slug.current,\n\t\t\t"groups": *[_type == \'group\' && department._ref == ^._id] | order(sortOrder asc) {\n\t\t\t\t_type,\n\t\t\t\t"department": ^.slug.current,\n\t\t\t\t"description": meta.metaDescription,\n\t\t\t\t"slug": slug.current,\n\t\t\t\ttitle,\n\t\t\t\t"trainingTimes": training.trainingTimes[] {\n\t\t\t\t\tendTime,\n\t\t\t\t\tseason,\n\t\t\t\t\tstartTime,\n\t\t\t\t\t"venue": coalesce(venue->location.name, venue->title),\n\t\t\t\t\tweekday,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\t"description": *[_type == \'home\'][0].meta.metaDescription,\n\t\t"membership": *[_type == \'membership\'][0].meta.metaDescription,\n\t\t"prices": *[_type == \'home\'][0].content.pricingSection {\n\t\t\tpricingAdult { price, subtitle, title },\n\t\t\tpricingFamily { price, subtitle, title },\n\t\t\tpricingYouth { price, subtitle, title },\n\t\t},\n\t}\n': LlmsTxtQueryResult;
