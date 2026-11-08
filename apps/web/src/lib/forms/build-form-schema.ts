@@ -19,6 +19,13 @@ const INTEGER_PATTERN = /^-?\d+$/u;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/u;
 const emailSchema = z.email();
 
+/** Caps for inputs the editor left unbounded, so nothing unlimited reaches Sanity or a mail. */
+const DEFAULT_TEXT_MAX_LENGTH = 500;
+const DEFAULT_TEXTAREA_MAX_LENGTH = 5000;
+const EMAIL_MAX_LENGTH = 254;
+const NUMBER_MAX_LENGTH = 15;
+const DEFAULT_GROUP_MAX_ITEMS = 100;
+
 /**
  * Whether a `YYYY-MM-DD` string names a day that exists, so `2027-02-30` fails.
  *
@@ -56,15 +63,14 @@ function checkedString(
 }
 
 function buildTextSchema(field: AnyFormField): z.ZodType {
-	const { maxLength } = field;
+	const maxLength =
+		field.maxLength ??
+		(field._type === 'formFieldTextarea' ? DEFAULT_TEXTAREA_MAX_LENGTH : DEFAULT_TEXT_MAX_LENGTH);
 	let schema = z.string().trim();
 	if (field.isRequired) {
 		schema = schema.min(1, { error: REQUIRED_MESSAGE });
 	}
-	if (maxLength) {
-		schema = schema.max(maxLength, { error: `Bitte höchstens ${maxLength} Zeichen eingeben.` });
-	}
-	return schema;
+	return schema.max(maxLength, { error: `Bitte höchstens ${maxLength} Zeichen eingeben.` });
 }
 
 function buildNumberSchema(field: AnyFormField): z.ZodType {
@@ -79,7 +85,7 @@ function buildNumberSchema(field: AnyFormField): z.ZodType {
 				}
 				return;
 			}
-			if (!INTEGER_PATTERN.test(value)) {
+			if (value.length > NUMBER_MAX_LENGTH || !INTEGER_PATTERN.test(value)) {
 				context.addIssue({ code: 'custom', message: INTEGER_MESSAGE });
 			} else if (typeof min === 'number' && Number(value) < min) {
 				context.addIssue({ code: 'custom', message: `Bitte mindestens ${min} eingeben.` });
@@ -116,7 +122,13 @@ function buildChoiceSchema(field: AnyFormField): z.ZodType {
 	if (field.isMultiple) {
 		return z
 			.array(z.string().refine((value) => options.includes(value), { error: CHOICE_MESSAGE }))
-			.min(field.isRequired ? 1 : 0, { error: MULTIPLE_CHOICE_MESSAGE });
+			.min(field.isRequired ? 1 : 0, { error: MULTIPLE_CHOICE_MESSAGE })
+			.refine(
+				(values) => values.length <= options.length && new Set(values).size === values.length,
+				{
+					error: CHOICE_MESSAGE,
+				},
+			);
 	}
 	return z
 		.string()
@@ -125,10 +137,9 @@ function buildChoiceSchema(field: AnyFormField): z.ZodType {
 		});
 }
 
-function buildConsentSchema(field: AnyFormField): z.ZodType {
-	return field.isRequired
-		? z.boolean().refine((value) => value, { error: CONSENT_MESSAGE })
-		: z.boolean();
+// A consent is always mandatory: items created through the API or an import carry no `isRequired`.
+function buildConsentSchema(): z.ZodType {
+	return z.boolean().refine((value) => value, { error: CONSENT_MESSAGE });
 }
 
 function buildGroupSchema(
@@ -136,18 +147,15 @@ function buildGroupSchema(
 ): z.ZodType {
 	const { itemLabel } = field;
 	const minItems = field.minItems ?? (field.isRequired ? 1 : 0);
-	let schema = z
+	const schema = z
 		// buildShape and buildGroupSchema call each other, so one is used before its definition.
 		// oxlint-disable-next-line no-use-before-define
 		.array(z.object(buildShape(field.fields)))
 		.min(minItems, { error: `Bitte mindestens ${minItems} Einträge „${itemLabel}“ angeben.` });
-	const { maxItems } = field;
-	if (maxItems) {
-		schema = schema.max(maxItems, {
-			error: `Bitte höchstens ${maxItems} Einträge „${itemLabel}“ angeben.`,
-		});
-	}
-	return schema;
+	const maxItems = field.maxItems ?? DEFAULT_GROUP_MAX_ITEMS;
+	return schema.max(maxItems, {
+		error: `Bitte höchstens ${maxItems} Einträge „${itemLabel}“ angeben.`,
+	});
 }
 
 const SCHEMA_BUILDERS: Partial<Record<string, (field: AnyFormField) => z.ZodType>> = {
@@ -155,7 +163,11 @@ const SCHEMA_BUILDERS: Partial<Record<string, (field: AnyFormField) => z.ZodType
 	formFieldConsent: buildConsentSchema,
 	formFieldDate: buildDateSchema,
 	formFieldEmail: (field) =>
-		checkedString(field, (value) => emailSchema.safeParse(value).success, EMAIL_MESSAGE),
+		checkedString(
+			field,
+			(value) => value.length <= EMAIL_MAX_LENGTH && emailSchema.safeParse(value).success,
+			EMAIL_MESSAGE,
+		),
 	formFieldNumber: buildNumberSchema,
 	formFieldPhone: (field) =>
 		checkedString(field, (value) => PHONE_PATTERN.test(value), PHONE_MESSAGE),

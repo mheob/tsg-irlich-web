@@ -217,10 +217,86 @@ describe('form schema', () => {
 		]);
 	});
 
-	it('accepts an optional consent that stays unchecked', () => {
-		const schema = buildFormSchema([field('formFieldConsent', 'c', 'C')]);
+	it('requires consent even when the field is not marked required', () => {
+		const unmarked = field('formFieldConsent', 'c', 'C', { isRequired: null });
+		const optional = field('formFieldConsent', 'd', 'D', { isRequired: false });
 
-		expect(schema.safeParse({ c: false }).success).toBe(true);
+		expect(messagesOf({ c: false }, [unmarked])).toStrictEqual([
+			'c: Bitte bestätige dies, um fortzufahren.',
+		]);
+		expect(messagesOf({ d: false }, [optional])).toStrictEqual([
+			'd: Bitte bestätige dies, um fortzufahren.',
+		]);
+		expect(messagesOf({ d: true }, [optional])).toStrictEqual([]);
+	});
+});
+
+function manyEntries(count: number): { n: string }[] {
+	return Array.from({ length: count }, () => ({ n: 'x' }));
+}
+
+describe('input caps', () => {
+	it('caps text without maxLength at 500 characters', () => {
+		const text = field('formFieldText', 't', 'T');
+
+		expect(messagesOf({ t: 'x'.repeat(500) }, [text])).toStrictEqual([]);
+		expect(messagesOf({ t: 'x'.repeat(501) }, [text])).toStrictEqual([
+			't: Bitte höchstens 500 Zeichen eingeben.',
+		]);
+	});
+
+	it('caps a textarea without maxLength at 5000 characters', () => {
+		const area = field('formFieldTextarea', 't', 'T');
+
+		expect(messagesOf({ t: 'x'.repeat(5000) }, [area])).toStrictEqual([]);
+		expect(messagesOf({ t: 'x'.repeat(5001) }, [area])).toStrictEqual([
+			't: Bitte höchstens 5000 Zeichen eingeben.',
+		]);
+	});
+
+	it('caps an email at 254 characters', () => {
+		const mail = field('formFieldEmail', 'm', 'M');
+		const longest = `${'a'.repeat(64)}@${'b'.repeat(63)}.${'c'.repeat(63)}.${'d'.repeat(63)}.de`;
+
+		expect(longest.length).toBeGreaterThan(254);
+		expect(messagesOf({ m: longest }, [mail])).toStrictEqual([
+			'm: Bitte gib eine gültige E-Mail-Adresse ein.',
+		]);
+	});
+
+	it('caps a number at 15 characters', () => {
+		const number = field('formFieldNumber', 'n', 'N');
+
+		expect(messagesOf({ n: '1'.repeat(15) }, [number])).toStrictEqual([]);
+		expect(messagesOf({ n: '1'.repeat(16) }, [number])).toStrictEqual([
+			'n: Bitte gib eine ganze Zahl ein.',
+		]);
+	});
+
+	it('rejects duplicate options of a multiple choice', () => {
+		const choice = field('formFieldChoice', 'c', 'C', { isMultiple: true, options: ['a', 'b'] });
+
+		expect(messagesOf({ c: ['a', 'a'] }, [choice])).toStrictEqual(['c: Bitte wähle eine Option.']);
+	});
+
+	it('rejects more entries than a multiple choice has options', () => {
+		const choice = field('formFieldChoice', 'c', 'C', { isMultiple: true, options: ['a'] });
+
+		expect(messagesOf({ c: ['a', 'b'] }, [choice])).toStrictEqual([
+			'c.1: Bitte wähle eine Option.',
+			'c: Bitte wähle eine Option.',
+		]);
+	});
+
+	it('caps a group without maxItems at 100 entries', () => {
+		const group = field('formFieldGroup', 'g', 'G', {
+			fields: [field('formFieldText', 'n', 'N')],
+			itemLabel: 'Eintrag',
+		});
+		expect(messagesOf({ g: manyEntries(100) }, [group])).toStrictEqual([]);
+		expect(messagesOf({ g: manyEntries(101) }, [group])).toStrictEqual([
+			'g: Bitte höchstens 100 Einträge „Eintrag“ angeben.',
+		]);
 	});
 });
 
