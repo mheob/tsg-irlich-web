@@ -98,10 +98,85 @@ function uniqueSheetName(label: string, taken: Set<string>): string {
 	return name;
 }
 
+interface GroupSheetSource {
+	fields: readonly FormFieldShape[];
+	key: string;
+	label: string;
+}
+
+interface NumberedSubmission {
+	number: number;
+	submission: ExportSubmission;
+}
+
+/**
+ * The groups that get a sheet: every group field of the form, followed by every group whose field
+ * was deleted but whose entries are still stored. Such a group is named by the label its answers
+ * carry and has no defined columns, so all of its columns come from the stored answers.
+ *
+ * @param fields - The current fields of the form.
+ * @param submissions - The submissions, sorted.
+ * @returns One source per sheet, the current groups first.
+ */
+function toGroupSources(
+	fields: readonly FormFieldShape[],
+	submissions: readonly ExportSubmission[],
+): GroupSheetSource[] {
+	const sources: GroupSheetSource[] = fields
+		.filter((field) => field._type === GROUP_FIELD_TYPE)
+		.map((group) => ({ fields: group.fields ?? [], key: group._key, label: group.label ?? '' }));
+
+	for (const answer of submissions.flatMap((submission) => submission.answers)) {
+		if (answer.entries && !sources.some((source) => source.key === answer.key)) {
+			sources.push({ fields: [], key: answer.key, label: answer.label });
+		}
+	}
+
+	return sources;
+}
+
+/**
+ * Lays out the entries of one group: a row per entry, numbered like its submission and named by the
+ * submission's label.
+ *
+ * @param source - The group.
+ * @param numbered - The submissions with their numbers.
+ * @param taken - The sheet names already used, lowercased; the new name is added.
+ * @returns The sheet.
+ */
+function buildGroupSheet(
+	source: GroupSheetSource,
+	numbered: readonly NumberedSubmission[],
+	taken: Set<string>,
+): ExportSheet {
+	const entries = numbered.flatMap(({ number, submission }) =>
+		(findAnswer(submission.answers, source.key)?.entries ?? []).map((entry) => ({
+			entry,
+			number,
+			submission,
+		})),
+	);
+	const columns = withOrphans(
+		toColumns(source.fields),
+		entries.flatMap(({ entry }) => entry.answers),
+	);
+
+	return {
+		name: uniqueSheetName(source.label, taken),
+		rows: [
+			['Nr.', 'Bezeichnung', ...columns.map((column) => column.label)],
+			...entries.map(({ entry, number, submission }) =>
+				entryRow([String(number), submission.label ?? ''], entry.answers, columns),
+			),
+		],
+	};
+}
+
 /**
  * Lays out the submissions of a form for a spreadsheet export: one main sheet with a row per
- * submission and one sheet per group field with a row per entry. Answers whose field no longer
- * exists get their own trailing column.
+ * submission and one sheet per group with a row per entry. Answers whose field no longer exists
+ * get their own trailing column, and a deleted group keeps a sheet of its own, named after the
+ * label its answers carry.
  *
  * @param fields - The current fields of the form.
  * @param submissions - The submissions to export, in any order.
@@ -136,31 +211,9 @@ function buildExportSheets(
 		return [mainSheet];
 	}
 
-	const groupSheets = fields
-		.filter((field) => field._type === GROUP_FIELD_TYPE)
-		.map((group): ExportSheet => {
-			const entries = numbered.flatMap(({ number, submission }) =>
-				(findAnswer(submission.answers, group._key)?.entries ?? []).map((entry) => ({
-					entry,
-					number,
-					submission,
-				})),
-			);
-			const columns = withOrphans(
-				toColumns(group.fields ?? []),
-				entries.flatMap(({ entry }) => entry.answers),
-			);
-
-			return {
-				name: uniqueSheetName(group.label ?? '', taken),
-				rows: [
-					['Nr.', 'Bezeichnung', ...columns.map((column) => column.label)],
-					...entries.map(({ entry, number, submission }) =>
-						entryRow([String(number), submission.label ?? ''], entry.answers, columns),
-					),
-				],
-			};
-		});
+	const groupSheets = toGroupSources(fields, sorted).map((source) =>
+		buildGroupSheet(source, numbered, taken),
+	);
 
 	return [mainSheet, ...groupSheets];
 }

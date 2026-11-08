@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vite-plus/test';
 
 import { buildExportSheets } from './export-sheets';
-import type { ExportSubmission, FormAnswer, FormFieldShape } from './types';
+import type { ExportSubmission, FormAnswer, FormFieldShape, FormGroupAnswer } from './types';
 
 const fields: FormFieldShape[] = [
 	{ _key: 'team', _type: 'formFieldText', label: 'Teamname' },
@@ -18,6 +18,17 @@ const fields: FormFieldShape[] = [
 	},
 	{ _key: 'privacy', _type: 'formFieldConsent', label: 'Datenschutz' },
 ];
+
+function coach(key: string, value: string): FormGroupAnswer {
+	return {
+		_key: key,
+		_type: 'formGroupAnswer',
+		fieldType: 'formFieldText',
+		key: 'coachName',
+		label: 'Name',
+		value,
+	};
+}
 
 function text(key: string, label: string, value: string): FormAnswer {
 	return { _key: key, _type: 'formAnswer', fieldType: 'formFieldText', key, label, value };
@@ -191,6 +202,40 @@ describe('export sheets', () => {
 			'Trikot',
 		]);
 		expect(sheets[1]?.rows[1]?.at(-1)).toBe('7');
+	});
+
+	it('keeps a sheet for a deleted group', () => {
+		const withDeletedGroup: ExportSubmission = {
+			...second,
+			answers: [
+				...second.answers,
+				{
+					_key: 'coaches',
+					_type: 'formAnswer',
+					entries: [
+						{ _key: 'c1', _type: 'formGroupEntry', answers: [coach('n1', 'Trainerin')] },
+						{ _key: 'c2', _type: 'formGroupEntry', answers: [coach('n2', 'Betreuer')] },
+					],
+					fieldType: 'formFieldGroup',
+					key: 'coaches',
+					label: 'Mitspieler',
+				},
+			],
+			label: 'Die Zweiten',
+		};
+		const sheets = buildExportSheets(fields, [first, withDeletedGroup]);
+
+		expect(sheets.map((sheet) => sheet.name)).toStrictEqual([
+			'Anmeldungen',
+			'Mitspieler',
+			'Mitspieler (2)',
+		]);
+		expect(sheets[0]?.rows[0]).not.toContain('Mitspieler');
+		expect(sheets[2]?.rows).toStrictEqual([
+			['Nr.', 'Bezeichnung', 'Name'],
+			['2', 'Die Zweiten', 'Trainerin'],
+			['2', 'Die Zweiten', 'Betreuer'],
+		]);
 	});
 
 	it('sanitises and shortens sheet names', () => {
