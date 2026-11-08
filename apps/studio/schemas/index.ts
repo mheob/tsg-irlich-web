@@ -4,6 +4,7 @@ import author from './documents/author';
 import department from './documents/department';
 import echoIssue from './documents/echo.issue';
 import faq from './documents/faq';
+import formSubmission from './documents/form.submission';
 import group from './documents/group';
 import honoraryMember from './documents/honorary-member';
 import newsArticle from './documents/news.article';
@@ -18,6 +19,9 @@ import contactTo from './objects/contact-to';
 import documentDownload from './objects/document-download';
 import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
+import formAnswer from './objects/form-answer';
+import formGroupAnswer from './objects/form-group-answer';
+import formGroupEntry from './objects/form-group-entry';
 import imageCard from './objects/image-card';
 import internalLink from './objects/internal-link';
 import mainNavigationLink from './objects/main-navigation-link';
@@ -68,6 +72,7 @@ export const schemaTypes = [
 	sponsors,
 	testimonial,
 	venue,
+	formSubmission,
 
 	siteSettings,
 
@@ -77,6 +82,9 @@ export const schemaTypes = [
 	documentDownload,
 	extendedImage,
 	externalLink,
+	formAnswer,
+	formGroupAnswer,
+	formGroupEntry,
 	imageCard,
 	internalLink,
 	mainNavigationLink,
