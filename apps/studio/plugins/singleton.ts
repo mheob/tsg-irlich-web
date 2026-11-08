@@ -42,6 +42,7 @@ function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureReso
 		const middleListItems = [
 			...getGroup(S, 'departments'),
 			...getGroup(S, 'faq'),
+			...getGroup(S, 'forms'),
 			...getGroup(S, 'persons'),
 			...getGroup(S, 'groups'),
 			...getGroup(S, 'echo'),

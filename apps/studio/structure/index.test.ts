@@ -1,7 +1,12 @@
 import type { StructureBuilder } from 'sanity/structure';
 import { describe, expect, it } from 'vite-plus/test';
 
-import { getGroup, getGroupsOfDepartmentList, isExcludedDefaultListItem } from './index';
+import {
+	getGroup,
+	getGroupsOfDepartmentList,
+	getSubmissionsOfFormList,
+	isExcludedDefaultListItem,
+} from './index';
 import { groupByDepartmentTemplate } from './templates';
 
 interface RecordedCall {
@@ -57,6 +62,11 @@ describe('excluded default list items', () => {
 
 	it('excludes the FAQ, which has its own desk entry', () => {
 		expect(isExcludedDefaultListItem('faq')).toBe(false);
+	});
+
+	it('excludes form and form.submission, which have their own desk entry', () => {
+		expect(isExcludedDefaultListItem('form')).toBe(false);
+		expect(isExcludedDefaultListItem('form.submission')).toBe(false);
 	});
 
 	it('does not exclude a type with no dedicated place', () => {
@@ -178,6 +188,61 @@ describe('desk group resolution', () => {
 		});
 	});
 
+	it('lists forms under Formulare', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		getGroup(structureBuilder, 'forms');
+
+		const lists = calls
+			.filter((call) => call.method === 'documentTypeList')
+			.map((call) => call.args[0]);
+		const ids = calls.filter((call) => call.method === 'id').map((call) => call.args[0]);
+		const titles = calls.filter((call) => call.method === 'title').map((call) => call.args[0]);
+
+		expect(lists).toStrictEqual(['form']);
+		expect(ids).toStrictEqual(['form']);
+		expect(titles).toContain('Formulare');
+	});
+
+	it('opens editor and submissions for a form', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		getGroup(structureBuilder, 'forms');
+
+		const resolver = calls
+			.filter((call) => call.method === 'child')
+			.map((call) => call.args[0])
+			.find((argument) => typeof argument === 'function') as (formId: string) => unknown;
+		const callsBeforeResolving = calls.length;
+		resolver('form-dorfturnier');
+		const resolved = calls.slice(callsBeforeResolving);
+
+		expect(resolved).toContainEqual({ args: ['Formular bearbeiten'], method: 'title' });
+		expect(resolved).toContainEqual({ args: ['form'], method: 'schemaType' });
+		expect(resolved).toContainEqual({ args: ['form-dorfturnier'], method: 'documentId' });
+		expect(resolved).toContainEqual({ args: ['Eingänge'], method: 'title' });
+	});
+
+	it('filters the submissions of the picked form by its reference', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		getGroup(structureBuilder, 'forms');
+
+		const resolver = calls
+			.filter((call) => call.method === 'child')
+			.map((call) => call.args[0])
+			.find((argument) => typeof argument === 'function') as (formId: string) => unknown;
+		const callsBeforeResolving = calls.length;
+		resolver('form-dorfturnier');
+		const resolved = calls.slice(callsBeforeResolving);
+
+		expect(resolved).toContainEqual({ args: [{ formId: 'form-dorfturnier' }], method: 'params' });
+		expect(resolved).toContainEqual({
+			args: ['_type == "form.submission" && form._ref == $formId'],
+			method: 'filter',
+		});
+	});
+
 	it('resolves the settings group when called directly with a known group name', () => {
 		const { calls, structureBuilder } = createRecordingStructureBuilder();
 
@@ -262,5 +327,27 @@ describe('group by department template', () => {
 		expect(groupByDepartmentTemplate.parameters).toStrictEqual([
 			{ name: 'departmentId', type: 'string' },
 		]);
+	});
+});
+
+describe('submissions of a form', () => {
+	it('offers no template for submissions', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		getSubmissionsOfFormList(structureBuilder, 'form-dorfturnier');
+
+		expect(calls).toContainEqual({ args: [[]], method: 'initialValueTemplates' });
+	});
+
+	it('lists the submissions of a form by submission date', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		getSubmissionsOfFormList(structureBuilder, 'form-dorfturnier');
+
+		expect(calls).toContainEqual({ args: ['form.submission'], method: 'schemaType' });
+		expect(calls).toContainEqual({
+			args: [[{ direction: 'asc', field: 'submittedAt' }]],
+			method: 'defaultOrdering',
+		});
 	});
 });
