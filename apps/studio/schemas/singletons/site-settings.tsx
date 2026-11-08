@@ -6,7 +6,7 @@ import { defineArrayMember, defineField, defineType } from 'sanity';
 
 import { withRichDescription } from '@/components/rich-field-description';
 import { phoneFieldRegex } from '@/constants/regex';
-import { meta } from '@/shared/field-groups';
+import { images, meta } from '@/shared/field-groups';
 import { metaField } from '@/shared/fields/meta';
 import { postalAddressFields } from '@/shared/fields/postal-address';
 
@@ -182,12 +182,12 @@ const siteSettings = defineType({
 		}),
 	],
 	groups: [
-		meta,
 		{ name: 'contact', title: 'Kontakt' },
-		{ name: 'misc', title: 'Misc' },
 		{ name: 'navigation', title: 'Navigation' },
-		{ name: 'social', title: 'Social' },
-		{ name: 'images', title: 'Bilder' },
+		{ name: 'social', title: 'Social Media' },
+		{ name: 'misc', title: 'Newsletter' },
+		images,
+		meta,
 	],
 	icon: RiSettings5Line,
 	name: 'site-settings',

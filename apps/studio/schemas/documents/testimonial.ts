@@ -4,7 +4,6 @@ import { RiChatQuoteLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
-import { personal } from '@/shared/field-groups';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
 
 const testimonial = defineType({
@@ -15,7 +14,6 @@ const testimonial = defineType({
 		portraitPictureField,
 		{
 			description: 'Die Rolle oder Funktion des Zitierenden.',
-			group: 'personal',
 			name: 'role',
 			title: 'Rolle',
 			type: 'string',
@@ -28,7 +26,6 @@ const testimonial = defineType({
 		// Quote
 		defineField({
 			description: 'Das Zitat über die TSG.',
-			group: 'quote',
 			name: 'quote',
 			title: 'Zitat',
 			type: 'text',
@@ -38,7 +35,6 @@ const testimonial = defineType({
 			],
 		}),
 	],
-	groups: [personal, { name: 'quote', title: 'Zitat' }],
 	icon: RiChatQuoteLine,
 	name: 'testimonial',
 	preview: {

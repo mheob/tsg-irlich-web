@@ -1,7 +1,7 @@
 import { RiShieldKeyholeLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
-import { contact, general, meta } from '@/shared/field-groups';
+import { contact, content, general, meta } from '@/shared/field-groups';
 import { addressField, emailField, phoneField } from '@/shared/fields/contact';
 import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { getHeroImageField, LANDSCAPE_HERO_DESCRIPTION } from '@/shared/fields/hero-image';
@@ -41,7 +41,7 @@ const privacyPage = defineType({
 			validation: (Rule) => [Rule.required().error('Datenschutzerklärung ist erforderlich')],
 		}),
 	],
-	groups: [general, meta, contact, { name: 'content', title: 'Erklärung' }],
+	groups: [general, content, contact, meta],
 	icon: RiShieldKeyholeLine,
 	name: 'privacy',
 	preview: getSinglePagePreview('Datenschutzerklärung'),

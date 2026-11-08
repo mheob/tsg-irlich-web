@@ -58,7 +58,7 @@ const membershipPage = defineType({
 			group: 'content',
 		}),
 	],
-	groups: [general, meta, content],
+	groups: [general, content, meta],
 	icon: RiUserAddLine,
 	name: 'membership',
 	preview: getSinglePagePreview('Mitgliedschaft'),

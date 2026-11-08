@@ -36,7 +36,7 @@ const offerPage = defineType({
 			validation: (Rule) => Rule.required(),
 		}),
 	],
-	groups: [general, meta, content],
+	groups: [general, content, meta],
 	icon: RiRunLine,
 	name: 'departmentsPage',
 	preview: getSinglePagePreview('Sportangebot'),

@@ -26,7 +26,7 @@ const socialFields = defineField({
 	],
 	icon: RiShareLine,
 	name: 'socialFields',
-	title: 'Social',
+	title: 'Social Media',
 	type: 'object',
 });
 

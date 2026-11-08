@@ -34,7 +34,7 @@ const newsOverviewPage = defineType({
 			validation: (Rule) => [Rule.required().error('Inhalte sind erforderlich')],
 		}),
 	],
-	groups: [general, meta, content],
+	groups: [general, content, meta],
 	icon: RiNewspaperLine,
 	name: 'newsOverview',
 	preview: getSinglePagePreview('News Übersicht'),

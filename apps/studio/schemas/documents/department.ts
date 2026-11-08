@@ -4,12 +4,13 @@ import { RiTrophyLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
+import { content, general, images, meta } from '@/shared/field-groups';
 import { dosbIconField } from '@/shared/fields/dosb-icon';
 import { introField, slugField } from '@/shared/fields/general';
 import { metaField } from '@/shared/fields/meta';
 import { searchTermsField } from '@/shared/fields/search-terms';
 import { previousSlugsField } from '@/shared/fields/slug-history';
-import { getFieldWithoutGroup } from '@/utils/fields';
+import { getFieldWithGroup } from '@/utils/fields';
 
 /**
  * Builds the list preview of a department: its name, its position in the sort order and its card image.
@@ -35,6 +36,7 @@ function prepareDepartmentPreview({
 const department = defineType({
 	fields: [
 		defineField({
+			group: 'general',
 			name: 'title',
 			title: 'Name',
 			type: 'string',
@@ -44,17 +46,18 @@ const department = defineType({
 			],
 		}),
 
-		searchTermsField,
+		getFieldWithGroup(searchTermsField, 'general'),
 
-		getFieldWithoutGroup(slugField),
+		getFieldWithGroup(slugField, 'general'),
 
-		previousSlugsField,
+		getFieldWithGroup(previousSlugsField, 'general'),
 
-		dosbIconField,
+		getFieldWithGroup(dosbIconField, 'general'),
 
 		defineField({
 			description:
 				'Die Sortierreihenfolge bestimmt die Reihenfolge auf der Startseite und unter /angebot.',
+			group: 'general',
 			name: 'sortOrder',
 			title: 'Sortierreihenfolge',
 			type: 'number',
@@ -63,6 +66,7 @@ const department = defineType({
 
 		defineField({
 			description: 'Gruppen dieser Abteilung sind Mannschaften (im JSON-LD `SportsTeam`).',
+			group: 'general',
 			initialValue: false,
 			name: 'isTeamSport',
 			title: 'Mannschaftssport',
@@ -72,6 +76,7 @@ const department = defineType({
 		defineField({
 			description:
 				'Das Kachelbild erscheint auf den Kacheln unter /angebot. Fehlen Hero- oder Open-Graph-Bild, dient es als Rückfall.',
+			group: 'images',
 			name: 'cardImage',
 			title: 'Kachelbild',
 			type: 'extendedImage',
@@ -80,30 +85,34 @@ const department = defineType({
 
 		defineField({
 			description: 'Optional. Ohne Hero-Bild zeigt die Seite das Kachelbild.',
+			group: 'images',
 			name: 'heroImage',
 			title: 'Hero-Bild',
 			type: 'extendedImage',
 		}),
 
 		{
-			...getFieldWithoutGroup(introField),
+			...getFieldWithGroup(introField, 'content'),
 			description:
 				'Optional. Ersetzt auf der Abteilungsseite das gemeinsame Intro des Abschnitts „Gruppen“.',
 		},
 
-		getFieldWithoutGroup(metaField),
+		getFieldWithGroup(metaField, 'meta'),
 
 		defineField({
-			description: 'Optional. Ohne Statistiken zeigt die Abteilungsseite keinen Stats-Abschnitt.',
+			description:
+				'Optional. Ohne Statistiken zeigt die Abteilungsseite keinen Statistik-Abschnitt.',
+			group: 'content',
 			name: 'stats',
 			of: [{ type: 'stats' }],
-			title: 'Stats',
+			title: 'Statistiken',
 			type: 'array',
 			validation: (Rule) => [Rule.max(4).error('Maximal 4 Statistiken dürfen gesetzt werden')],
 		}),
 
 		defineField({
 			description: 'Optional. Die Reihenfolge hier ist die Reihenfolge auf der Abteilungsseite.',
+			group: 'content',
 			name: 'contactPersons',
 			of: [defineArrayMember({ to: [{ type: 'person' }], type: 'reference' })],
 			title: 'Ansprechpartner',
@@ -111,6 +120,7 @@ const department = defineType({
 			validation: (Rule) => [Rule.unique().error('Eine Person darf nur einmal ausgewählt werden')],
 		}),
 	],
+	groups: [general, content, images, meta],
 	icon: RiTrophyLine,
 	name: 'department',
 	orderings: [

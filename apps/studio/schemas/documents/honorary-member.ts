@@ -4,7 +4,6 @@ import { RiMedalLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
-import { additionalInformation, contact, personal } from '@/shared/field-groups';
 import { firstNameField, lastNameField, portraitPictureField } from '@/shared/fields/personal';
 
 const honoraryMember = defineType({
@@ -15,7 +14,6 @@ const honoraryMember = defineType({
 		portraitPictureField,
 
 		defineField({
-			group: 'personal',
 			name: 'memberSince',
 			title: 'Mitglied seit',
 			type: 'string',
@@ -25,7 +23,6 @@ const honoraryMember = defineType({
 			],
 		}),
 	],
-	groups: [personal, contact, additionalInformation],
 	icon: RiMedalLine,
 	name: 'honoraryMember',
 	preview: {

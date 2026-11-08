@@ -5,7 +5,6 @@ import { defineField } from 'sanity';
 import { validateLineSpacing } from '@/utils/whitespace';
 
 const firstNameField = defineField({
-	group: 'personal',
 	name: 'firstName',
 	title: 'Vorname',
 	type: 'string',
@@ -17,7 +16,6 @@ const firstNameField = defineField({
 });
 
 const lastNameField = defineField({
-	group: 'personal',
 	name: 'lastName',
 	title: 'Nachname',
 	type: 'string',
@@ -30,7 +28,6 @@ const lastNameField = defineField({
 
 const portraitPictureField = defineField({
 	description: 'Erweitertes Porträtbild des Autors mit einem Alt-Text.',
-	group: 'personal',
 	name: 'image',
 	title: 'Porträtbild',
 	type: 'extendedImage',
