@@ -285,7 +285,7 @@ The editors build a form in the studio (`form` document, see `apps/studio/AGENTS
 
 ### The clean-up cron
 
-`GET /api/forms/cleanup` (`src/app/api/forms/cleanup/route.ts`) clears the answers of every submission whose retention has run out (`dueSubmissionsQuery`, `cleanAnswers`) and sets `cleanedAt`, in one transaction with `ifRevisionId` per document. It answers 401 without `Authorization: Bearer <CRON_SECRET>` (compared with `timingSafeEqual`) and `{ cleaned: n }` otherwise. `vercel.json` schedules it daily at 03:00 UTC; Vercel sends the bearer token itself once `CRON_SECRET` exists as an environment variable of the project (Production and Preview). The studio's "Eingänge bereinigen" action does the same by hand.
+`GET /api/forms/cleanup` (`src/app/api/forms/cleanup/route.ts`) clears the answers of every submission whose retention has run out (`dueSubmissionsQuery`, `cleanAnswers`) and sets `cleanedAt`, in one transaction with `ifRevisionId` per document. It answers 401 without `Authorization: Bearer <CRON_SECRET>` (compared with `timingSafeEqual`) and `{ cleaned: n }` otherwise. `vercel.json` schedules it daily at 03:00 UTC; Vercel sends the bearer token itself once `CRON_SECRET` exists as an environment variable of the project (Production and Preview). The studio's "Jetzt bereinigen" action does the same by hand.
 
 ## Testing
 
