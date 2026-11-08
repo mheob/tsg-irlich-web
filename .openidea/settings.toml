@@ -1,8 +1,49 @@
-[languages.python]
-interpreter = "/opt/homebrew/bin/python3"
-
 [languages.oxfmt]
 runOnSave = true
 
-[languages.typescript]
-version = "workspace"
+# Vite+ keeps the oxlint and oxfmt settings in vite.config.ts, and oxlint and oxfmt read it only
+# when started through `vp` (or with VP_VERSION set). The built-in oxlint server never starts here:
+# it needs .oxlintrc.json or oxlint.config.ts. Without `runOnSave` for the external oxfmt, which
+# would ignore vite.config.ts, formatting goes through the language server below.
+[languageServers.oxlint-vite-plus]
+command = "node_modules/.bin/vp"
+args = ["lint", "--lsp"]
+languages = ["typescript", "typescriptreact", "javascript", "javascriptreact"]
+rootMarkers = ["vite.config.ts"]
+
+[languageServers.oxfmt-vite-plus]
+command = "node_modules/.bin/vp"
+args = ["fmt", "--lsp"]
+languages = [
+	"typescript",
+	"typescriptreact",
+	"javascript",
+	"javascriptreact",
+	"markdown",
+	"json",
+	"jsonc",
+	"yaml",
+	"toml",
+]
+rootMarkers = ["vite.config.ts"]
+
+# Spelling through codebook, which reads codebook.toml (de + en_us, project words).
+# Needs codebook-lsp on the PATH (`brew install codebook-lsp`).
+[languageServers.codebook]
+command = "codebook-lsp"
+args = ["serve"]
+languages = [
+	"typescript",
+	"typescriptreact",
+	"javascript",
+	"javascriptreact",
+	"markdown",
+	"json",
+	"jsonc",
+	"yaml",
+	"css",
+	"html",
+	"toml",
+	"plaintext",
+]
+rootMarkers = ["codebook.toml"]
