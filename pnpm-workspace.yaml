@@ -87,6 +87,7 @@ catalog:
   cve-lite-cli: ^1.40.0
   czg: ^1.14.0
   eslint-plugin-better-tailwindcss: ^4.10.0
+  knip: ^6.44.1
   lefthook: ^2.2.2
   turbo: ^2.11.10
   typescript: ^7.0.2
@@ -140,7 +141,6 @@ catalog:
   styled-components: ^6.6.0
 
   # E-mail templates
-  "@react-email/render": ^2.2.0
   "@react-email/ui": ^6.11.6
   react-email: ^6.11.6
 

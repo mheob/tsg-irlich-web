@@ -48,22 +48,8 @@ function CardDescription({ className, ...props }: ComponentProps<'p'>) {
 	);
 }
 
-function CardAction({ className, ...props }: ComponentProps<'div'>) {
-	return (
-		<div
-			className={cn('col-start-2 row-span-2 row-start-1 self-start justify-self-end', className)}
-			data-slot="card-action"
-			{...props}
-		/>
-	);
-}
-
 function CardContent({ className, ...props }: ComponentProps<'div'>) {
 	return <div className={className} data-slot="card-content" {...props} />;
 }
 
-function CardFooter({ className, ...props }: ComponentProps<'div'>) {
-	return <div className={cn('flex items-center', className)} data-slot="card-footer" {...props} />;
-}
-
-export { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter };
+export { Card, CardHeader, CardTitle, CardDescription, CardContent };

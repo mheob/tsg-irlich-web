@@ -135,5 +135,5 @@ interface PreparedPdf {
 	source: 'cached' | 'original' | 'recognized';
 }
 
-export { OUTPUT_FOLDER, needsRecognition, prepareTextLayer };
+export { needsRecognition, prepareTextLayer };
 export type { PreparedPdf, TextLayerDeps };

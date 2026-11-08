@@ -9,10 +9,6 @@ import { FormControl, FormItem, FormLabel, FormMessage } from '../with-logic/for
 
 const Select = BaseSelect.Root;
 
-function SelectGroup({ ...props }: ComponentProps<typeof BaseSelect.Group>) {
-	return <BaseSelect.Group data-slot="select-group" {...props} />;
-}
-
 function SelectValue({ ...props }: ComponentProps<typeof BaseSelect.Value>) {
 	return <BaseSelect.Value data-slot="select-value" {...props} />;
 }
@@ -106,16 +102,6 @@ function SelectContent({ children, className, ...props }: ComponentProps<typeof 
 	);
 }
 
-function SelectLabel({ className, ...props }: ComponentProps<typeof BaseSelect.GroupLabel>) {
-	return (
-		<BaseSelect.GroupLabel
-			className={cn('px-2 py-1.5 text-sm font-semibold text-muted-foreground', className)}
-			data-slot="select-label"
-			{...props}
-		/>
-	);
-}
-
 function SelectItem({ children, className, ...props }: ComponentProps<typeof BaseSelect.Item>) {
 	return (
 		<BaseSelect.Item
@@ -133,16 +119,6 @@ function SelectItem({ children, className, ...props }: ComponentProps<typeof Bas
 			</span>
 			<BaseSelect.ItemText>{children}</BaseSelect.ItemText>
 		</BaseSelect.Item>
-	);
-}
-
-function SelectSeparator({ className, ...props }: ComponentProps<typeof BaseSelect.Separator>) {
-	return (
-		<BaseSelect.Separator
-			className={cn('pointer-events-none -mx-1 my-1 h-px bg-border', className)}
-			data-slot="select-separator"
-			{...props}
-		/>
 	);
 }
 
@@ -198,16 +174,4 @@ interface SelectWithLabelProps extends ComponentProps<typeof Select> {
 	wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
-export {
-	Select,
-	SelectGroup,
-	SelectValue,
-	SelectTrigger,
-	SelectContent,
-	SelectLabel,
-	SelectItem,
-	SelectSeparator,
-	SelectScrollUpButton,
-	SelectScrollDownButton,
-	SelectWithLabel,
-};
+export { Select, SelectValue, SelectTrigger, SelectContent, SelectItem, SelectWithLabel };

@@ -33,6 +33,11 @@ jobs:
       - name: Check formatting
         run: pnpm run format:check
 
+      # Unused files, exports, dependencies and catalog entries. Knip reads the sources and the tool
+      # configs only, so it needs no generated types either; the reporter annotates the diff.
+      - name: Check unused code
+        run: pnpm run knip --reporter github-actions
+
       # The type-aware lint rules need the types Next.js generates (route types and
       # the module declarations for image imports), which are not checked in.
       - name: Generate Route Types
