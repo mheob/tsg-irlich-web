@@ -20,6 +20,16 @@ import documentDownload from './objects/document-download';
 import extendedImage from './objects/extended-image';
 import externalLink from './objects/external-link';
 import formAnswer from './objects/form-answer';
+import formFieldChoice from './objects/form-fields/form-field-choice';
+import formFieldConsent from './objects/form-fields/form-field-consent';
+import formFieldDate from './objects/form-fields/form-field-date';
+import formFieldEmail from './objects/form-fields/form-field-email';
+import formFieldGroup from './objects/form-fields/form-field-group';
+import formFieldNote from './objects/form-fields/form-field-note';
+import formFieldNumber from './objects/form-fields/form-field-number';
+import formFieldPhone from './objects/form-fields/form-field-phone';
+import formFieldText from './objects/form-fields/form-field-text';
+import formFieldTextarea from './objects/form-fields/form-field-textarea';
 import formGroupAnswer from './objects/form-group-answer';
 import formGroupEntry from './objects/form-group-entry';
 import imageCard from './objects/image-card';
@@ -83,6 +93,16 @@ export const schemaTypes = [
 	extendedImage,
 	externalLink,
 	formAnswer,
+	formFieldChoice,
+	formFieldConsent,
+	formFieldDate,
+	formFieldEmail,
+	formFieldGroup,
+	formFieldNote,
+	formFieldNumber,
+	formFieldPhone,
+	formFieldText,
+	formFieldTextarea,
 	formGroupAnswer,
 	formGroupEntry,
 	imageCard,
