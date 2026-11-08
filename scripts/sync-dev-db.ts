@@ -4,6 +4,8 @@ import { rm, stat } from 'node:fs/promises';
 import { text } from 'node:stream/consumers';
 import { setTimeout } from 'node:timers/promises';
 
+import { excludeTypesFromExport } from './exclude-types-from-export.ts';
+
 const BACKUP_FILE = `${import.meta.dirname}/production-backup.tar.gz`;
 // The Sanity CLI resolves the project ID from the studio config, so it has to run there
 const STUDIO_DIR = `${import.meta.dirname}/../apps/studio`;
@@ -11,6 +13,8 @@ const SOURCE_DATASET = 'production';
 const TARGET_DATASET = 'development';
 const CREATE_RETRY_DELAY_MS = 2000;
 const CREATE_TIMEOUT_MS = 120_000;
+// Submissions hold personal data, and the clean-up cron only runs on production
+const EXCLUDED_TYPES = ['form.submission'];
 
 type Output = 'inherit' | 'pipe';
 
@@ -121,6 +125,9 @@ async function cleanup() {
 async function exportSourceDataset() {
 	console.log('Step 1: Exporting production dataset...');
 	await run(['export', SOURCE_DATASET, BACKUP_FILE]);
+
+	const removed = await excludeTypesFromExport(BACKUP_FILE, EXCLUDED_TYPES);
+	console.log(`${removed} Eingänge nicht übernommen`);
 }
 
 async function recreateTargetDataset() {
