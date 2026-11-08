@@ -33,20 +33,35 @@ const STATIC_ROUTES = [
 ];
 
 /**
- * The two forms in the state the route scans never reach: submitted empty, with every error
- * message, the invalid marking and the descriptions the fields point at (WEB-418). Each is keyed by
- * its route, since it is the same page.
+ * The page of the registration form the e2e suite owns (`apps/studio/scripts/create-e2e-form.ts`).
+ * It exists for the tests alone, so unlike the other dynamic routes it is opened by its slug: no
+ * content edit can take it away.
+ */
+const REGISTRATION_FORM_PATH = '/anmeldung/e2e-anmeldung';
+
+/**
+ * The forms in the state the route scans never reach: submitted empty, with every error message,
+ * the invalid marking and the descriptions the fields point at (WEB-418). Each is keyed by its
+ * route, since it is the same page; `path` is where a dynamic route is opened.
  */
 const FORM_ERROR_STATES = [
 	{
 		error: 'Der Name muss mindestens 2 Zeichen lang sein.',
+		path: '/kontakt',
 		route: '/kontakt',
 		submit: 'Kontaktiere uns',
 	},
 	{
 		error: 'Der Titel muss mindestens 5 Zeichen lang sein',
+		path: '/kontakt/feedback',
 		route: '/kontakt/feedback',
 		submit: 'Feedback senden',
+	},
+	{
+		error: 'Bitte fülle dieses Feld aus.',
+		path: REGISTRATION_FORM_PATH,
+		route: '/anmeldung/[slug]',
+		submit: 'Anmelden',
 	},
 ];
 
@@ -142,11 +157,11 @@ test.describe('accessibility', () => {
 
 	// The submit button stays disabled until the form is hydrated, so the click waits for that, and
 	// the errors come from react-hook-form on the client.
-	for (const { error, route, submit } of FORM_ERROR_STATES) {
+	for (const { error, path, route, submit } of FORM_ERROR_STATES) {
 		test(`meets WCAG 2.1 AA on the form of ${route} submitted empty`, async ({
 			page,
 		}, testInfo) => {
-			await page.goto(route);
+			await page.goto(path);
 			await waitForPage(page);
 
 			await page.getByRole('button', { name: submit }).click();
@@ -196,6 +211,14 @@ test.describe('accessibility', () => {
 
 		await expectOneH1(page);
 		await expectNoAxeViolations(page, testInfo, '/news/[category]');
+	});
+
+	test('meets WCAG 2.1 AA on a registration form', async ({ page }, testInfo) => {
+		await page.goto(REGISTRATION_FORM_PATH);
+		await waitForPage(page);
+
+		await expectOneH1(page);
+		await expectNoAxeViolations(page, testInfo, '/anmeldung/[slug]');
 	});
 
 	test('meets WCAG 2.1 AA on a tsg-echo issue', async ({ page }, testInfo) => {
