@@ -19,6 +19,7 @@ type Form = NonNullable<FormByIdQueryResult>;
 interface SendSubmissionMailsInput {
 	answers: FormAnswer[];
 	form: Form;
+	replyToSubmitter: boolean;
 	status: 'registered' | 'waitlist';
 	submissionId: string;
 	submitterEmail: string | null;
@@ -54,7 +55,14 @@ function isProduction(): boolean {
 }
 
 async function sendOrganizerMail(
-	{ answers, form, status, submissionId, submitterEmail }: SendSubmissionMailsInput,
+	{
+		answers,
+		form,
+		replyToSubmitter,
+		status,
+		submissionId,
+		submitterEmail,
+	}: SendSubmissionMailsInput,
 	receivers: string[],
 ): Promise<void> {
 	const { hasHiddenFields, sections } = toEmailSections(answers);
@@ -67,7 +75,7 @@ async function sendOrganizerMail(
 			status,
 			studioUrl: `${studioUrl}/intent/edit/id=${submissionId};type=form.submission`,
 		}),
-		...(submitterEmail ? { replyTo: submitterEmail } : {}),
+		...(submitterEmail && replyToSubmitter ? { replyTo: submitterEmail } : {}),
 		subject: `Neuer Eingang: ${form.title}${status === 'waitlist' ? ' (Warteliste)' : ''}`,
 		to: isProduction() ? receivers : DEVELOPMENT_RECEIVER,
 	});
@@ -106,6 +114,8 @@ async function sendConfirmationMail(
  * the address of the submitter.
  * @param input.answers - The stored answers.
  * @param input.form - The form as `formByIdQuery` returns it.
+ * @param input.replyToSubmitter - Whether the submitter's address may be the reply address; `false`
+ * when its field is cleaned up.
  * @param input.status - Where the submission landed.
  * @param input.submissionId - The `_id` of the stored submission, for the studio link.
  * @param input.submitterEmail - The value of the email field marked as the recipient, if any.

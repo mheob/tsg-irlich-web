@@ -135,4 +135,15 @@ function getConfirmationRecipient(
 	return field ? toText(values[field._key]) : null;
 }
 
-export { getConfirmationRecipient, getSubmissionLabel, toAnswers };
+/**
+ * Whether the clean-up deletes or anonymises the value of a field, so it must not reach a mail
+ * header or a snapshot that outlives the clean-up.
+ *
+ * @param field - The field.
+ * @returns `true` for `delete` and `year`.
+ */
+function hasRetention(field: AnyFormField | undefined): boolean {
+	return field !== undefined && Object.keys(toRetention(field)).length > 0;
+}
+
+export { getConfirmationRecipient, getSubmissionLabel, hasRetention, toAnswers };

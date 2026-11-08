@@ -13,7 +13,12 @@ import { getRegisteredCount, submissionsTag } from '@/lib/forms/registered-count
 import { getRegistrationState } from '@/lib/forms/registration-state';
 import type { RegistrationState } from '@/lib/forms/registration-state';
 import { sendSubmissionMails } from '@/lib/forms/send-submission-mails';
-import { getConfirmationRecipient, getSubmissionLabel, toAnswers } from '@/lib/forms/to-answers';
+import {
+	getConfirmationRecipient,
+	getSubmissionLabel,
+	hasRetention,
+	toAnswers,
+} from '@/lib/forms/to-answers';
 import type { FormValues } from '@/lib/forms/types';
 import { client } from '@/lib/sanity/client';
 import { formByIdQuery } from '@/lib/sanity/queries/forms';
@@ -68,14 +73,21 @@ async function storeSubmission(
 	form: Form,
 	values: FormValues,
 	status: 'registered' | 'waitlist',
-): Promise<{ answers: FormAnswer[]; submissionId: string; submitterEmail: string | null }> {
+): Promise<{
+	answers: FormAnswer[];
+	replyToSubmitter: boolean;
+	submissionId: string;
+	submitterEmail: string | null;
+}> {
 	const parsed = buildFormSchema(form.fields).safeParse(values);
 	if (!parsed.success) {
 		throw new Error('Invalid submission');
 	}
 
 	const answers = toAnswers(form.fields, parsed.data);
-	const label = getSubmissionLabel(form.fields, parsed.data);
+	// A cleaned field must not outlive the clean-up in the label or reach a mail header.
+	const labelField = form.fields.find((field) => field.isLabel);
+	const label = hasRetention(labelField) ? null : getSubmissionLabel(form.fields, parsed.data);
 	const submissionId = `form.submission.${randomUUID()}`;
 
 	await getWriteClient().create({
@@ -91,6 +103,7 @@ async function storeSubmission(
 
 	return {
 		answers,
+		replyToSubmitter: !hasRetention(form.fields.find((field) => field.isConfirmationRecipient)),
 		submissionId,
 		submitterEmail: getConfirmationRecipient(form.fields, parsed.data),
 	};

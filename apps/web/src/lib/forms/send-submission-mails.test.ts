@@ -87,6 +87,7 @@ async function sendMails(
 	await sendSubmissionMails({
 		answers: ANSWERS,
 		form: buildForm(),
+		replyToSubmitter: true,
 		status: 'registered',
 		submissionId: 'form.submission.abc',
 		submitterEmail: 'team@example.com',
@@ -234,6 +235,17 @@ describe('submission mails', () => {
 
 		expect(sentTo('Deine Anmeldung')).not.toHaveProperty('replyTo');
 		expect(sentTo('Neuer Eingang')).not.toHaveProperty('replyTo');
+	});
+
+	it('does not reply to a submitter whose address is cleaned up', async () => {
+		mockedSend.mockResolvedValue({ data: { id: '1' }, error: null, headers: null });
+
+		await sendMails({ replyToSubmitter: false });
+
+		expect(sentTo('Neuer Eingang')).not.toHaveProperty('replyTo');
+		expect(sentTo('Neuer Eingang')).not.toHaveProperty('bcc');
+		expect(sentTo('Deine Anmeldung')).toMatchObject({ to: 'team@example.com' });
+		expect(sentTo('Deine Anmeldung')).not.toHaveProperty('bcc');
 	});
 
 	it('logs instead of throwing', async () => {

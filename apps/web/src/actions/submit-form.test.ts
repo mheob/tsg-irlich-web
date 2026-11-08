@@ -194,6 +194,55 @@ describe('submitting a form', () => {
 		expect(writeCreate.mock.calls[0][0]).not.toHaveProperty('label');
 	});
 
+	it('leaves the label out when its field is cleaned up', async () => {
+		mockedFetch.mockResolvedValue({
+			...FORM,
+			fields: [
+				field('formFieldText', 'team', 'Teamname', { isLabel: true, retention: 'delete' }),
+			] as Form['fields'],
+		});
+
+		await submit();
+
+		expect(writeCreate.mock.calls[0][0]).not.toHaveProperty('label');
+	});
+
+	it('replies to the field marked as recipient, not the first email field', async () => {
+		mockedFetch.mockResolvedValue({
+			...FORM,
+			fields: [
+				field('formFieldEmail', 'first', 'Erste'),
+				field('formFieldEmail', 'second', 'Zweite', { isConfirmationRecipient: true }),
+			] as Form['fields'],
+		});
+
+		await submit({ values: { first: 'a@example.com', second: 'b@example.com' } });
+
+		const payloads = mockedSend.mock.calls.map(([payload]) => payload);
+		const organizer = payloads.find((payload) => payload.subject?.startsWith('Neuer Eingang'));
+		expect(organizer?.replyTo).toBe('b@example.com');
+		expect(organizer).not.toHaveProperty('bcc');
+	});
+
+	it('sends no reply address when the recipient field is cleaned up', async () => {
+		mockedFetch.mockResolvedValue({
+			...FORM,
+			fields: [
+				field('formFieldEmail', 'mail', 'E-Mail', {
+					isConfirmationRecipient: true,
+					retention: 'delete',
+				}),
+			] as Form['fields'],
+		});
+
+		await submit({ values: { mail: 'b@example.com' } });
+
+		const payloads = mockedSend.mock.calls.map(([payload]) => payload);
+		const organizer = payloads.find((payload) => payload.subject?.startsWith('Neuer Eingang'));
+		expect(organizer).not.toHaveProperty('replyTo');
+		expect(organizer).not.toHaveProperty('bcc');
+	});
+
 	it('stamps the submission with the current time', async () => {
 		await submit();
 
