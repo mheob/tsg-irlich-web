@@ -1,4 +1,4 @@
-import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
+import { RiRunLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
@@ -37,7 +37,7 @@ const offerPage = defineType({
 		}),
 	],
 	groups: [general, meta, content],
-	icon: RiBookletLine,
+	icon: RiRunLine,
 	name: 'departmentsPage',
 	preview: getSinglePagePreview('Sportangebot'),
 	title: 'Sportbereiche',

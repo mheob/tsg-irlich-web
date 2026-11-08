@@ -11,6 +11,7 @@ import { metaField } from '@/shared/fields/meta';
 import { searchTermsField } from '@/shared/fields/search-terms';
 import { previousPathsField } from '@/shared/fields/slug-history';
 import { getFieldWithoutGroup } from '@/utils/fields';
+import { getPreviewIcon } from '@/utils/preview-icon';
 
 const GROUP_API_VERSION = '2026-10-01';
 
@@ -212,19 +213,24 @@ const group = defineType({
 	preview: {
 		prepare: ({
 			departmentTitle,
+			icon,
 			sortOrder,
 			title,
 		}: {
 			departmentTitle?: string;
+			icon?: string;
 			sortOrder?: number;
 			title?: string;
 		}) => ({
+			// The pictogram tells the groups of a list apart at a glance; all share the type icon.
+			media: getPreviewIcon(icon),
 			// "Herren" exists in more than one department, so a picker needs the department to tell them apart.
 			subtitle: [departmentTitle, `Sortierreihenfolge: ${sortOrder}`].filter(Boolean).join(' · '),
 			title,
 		}),
 		select: {
 			departmentTitle: 'department.title',
+			icon: 'icon',
 			sortOrder: 'sortOrder',
 			title: 'title',
 		},

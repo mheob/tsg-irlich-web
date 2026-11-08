@@ -1,4 +1,4 @@
-import { RiSettings5Line } from 'react-icons/ri';
+import { RiScales3Line } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
@@ -117,7 +117,7 @@ const imprintPage = defineType({
 		}),
 	],
 	groups: [general, meta, content],
-	icon: RiSettings5Line,
+	icon: RiScales3Line,
 	name: 'imprint',
 	preview: getSinglePagePreview('Impressum'),
 	title: 'Impressum',

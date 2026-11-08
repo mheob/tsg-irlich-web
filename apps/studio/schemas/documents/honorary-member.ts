@@ -1,6 +1,6 @@
 // oxlint-disable no-magic-numbers
 
-import { RiUserSmileLine } from 'react-icons/ri';
+import { RiMedalLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
@@ -26,7 +26,7 @@ const honoraryMember = defineType({
 		}),
 	],
 	groups: [personal, contact, additionalInformation],
-	icon: RiUserSmileLine,
+	icon: RiMedalLine,
 	name: 'honoraryMember',
 	preview: {
 		prepare: ({

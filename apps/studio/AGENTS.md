@@ -44,6 +44,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 - One schema per file, `export default` the definition, and register it in `schemas/index.ts`.
 - File names follow the type name: `news.article.ts` for `news.article`.
 - Icons come from `react-icons/ri` or `@sanity/icons`.
+- Give every document type an icon of its own. The desk lists the single pages by their type icon, so pages sharing one look alike (WEB-427). Where the documents of one type need telling apart, a `preview.media` does it: `getPreviewIcon` in `utils/preview-icon.ts` draws a stored DOSB pictogram or club icon one em in size, like the Remix icons next to it.
 - Reuse `shared/fields/*` instead of redeclaring title, slug, meta or content fields, and attach them to a group with `getFieldWithGroup` from `utils/fields.ts`.
 - Group names come from `shared/field-groups.ts` so the tabs stay consistent across documents.
 
@@ -175,6 +176,7 @@ The migration `main-navigation-menus` turned the earlier `mainNavigationItem` en
 
 - **Slugs.** The slug of a `news.article` and of a `news.category` may only hold lowercase letters and digits, joined by single hyphens (`formattedSlugField` and `validateSlugFormat` in `shared/fields/general.ts`, WEB-421). „Generieren“ builds such a slug from the title. Until then nothing checked it, six article slugs went out with capitals, and their lowercase address answered 404. The migration `lowercase-news-article-slugs` lowercases such a slug and records the old one in the history, so a second run changes nothing.
 - **Slug history.** Both types carry `previousSlugs` („Frühere Slugs“, in the group "Allgemein") and use the publish and duplicate actions of the departments and groups (see "Slug history" above, `slugHistoryTypes` in `sanity.config.ts`). An entry is the bare slug, without `/news` and without a category. An article entry may hold capitals (`previousArticleSlugsField`), because the old slugs did; a category entry may not. The website finds an article by its slug alone and sends every other category to its first one, so a renamed category needs no entry on its articles.
+- **Icon.** A `news.category` carries an optional `icon` („Icon“, `shared/fields/news-category-icon.ts`): a DOSB pictogram, or one of the club icons `Gesamtverein`, `Historie`, `Presse`, `Soziales` and `Veranstaltungen` for news that no sport fits. Only the studio shows it, in the list preview; without one the list shows the type icon, a price tag. The groups show their pictogram the same way (WEB-427). The migration `news-category-icons` gave the 26 categories a first icon by slug. It uses `setIfMissing`, so it keeps what an editor chose and a second run changes nothing. It ran on `development` on 2026-11-08; `production` follows with the next release.
 
 ## Page images
 

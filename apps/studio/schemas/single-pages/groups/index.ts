@@ -1,6 +1,6 @@
 // oxlint-disable no-magic-numbers
 
-import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
+import { RiTeamLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
@@ -41,7 +41,7 @@ const groupsPage = defineType({
 		}),
 	],
 	groups: [general, meta, content],
-	icon: RiBookletLine,
+	icon: RiTeamLine,
 	name: 'groupsPage',
 	preview: {
 		prepare: () => ({ title: 'Gruppen' }),

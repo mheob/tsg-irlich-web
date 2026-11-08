@@ -1,6 +1,6 @@
 // oxlint-disable no-magic-numbers
 
-import { RiTeamLine } from 'react-icons/ri';
+import { RiShieldUserLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { validateLineSpacing } from '@/utils/whitespace';
@@ -27,7 +27,7 @@ const role = defineType({
 			type: 'email',
 		}),
 	],
-	icon: RiTeamLine,
+	icon: RiShieldUserLine,
 	name: 'role',
 	orderings: [
 		{

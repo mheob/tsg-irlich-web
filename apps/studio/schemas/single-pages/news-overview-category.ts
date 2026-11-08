@@ -1,4 +1,4 @@
-import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
+import { RiPriceTag3Line, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general } from '@/shared/field-groups';
@@ -40,7 +40,7 @@ const newsOverviewCategory = defineType({
 		}),
 	],
 	groups: [general, content],
-	icon: RiBookletLine,
+	icon: RiPriceTag3Line,
 	name: 'newsOverviewCategory',
 	preview: {
 		prepare: () => ({ title: 'News Übersicht für Kategorie' }),

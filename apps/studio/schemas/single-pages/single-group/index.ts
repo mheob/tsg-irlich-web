@@ -1,4 +1,4 @@
-import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
+import { RiGroupLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general } from '@/shared/field-groups';
@@ -28,7 +28,7 @@ const singleGroupPage = defineType({
 		}),
 	],
 	groups: [general, content],
-	icon: RiBookletLine,
+	icon: RiGroupLine,
 	name: 'singleGroupPage',
 	preview: {
 		prepare: () => ({ title: 'Einzel-Gruppe' }),

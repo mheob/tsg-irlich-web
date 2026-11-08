@@ -1092,6 +1092,36 @@ export type NewsCategory = {
   title: string;
   slug: Slug;
   previousSlugs?: Array<string>;
+  icon?:
+    | "Badminton"
+    | "Bodenturnen"
+    | "Cheerleading"
+    | "ElternKindTurnen"
+    | "Fitness"
+    | "Fussball"
+    | "Gehen"
+    | "Gymnastik"
+    | "Jujutsu"
+    | "Laufen"
+    | "Medaille"
+    | "Pilates"
+    | "Pokal"
+    | "RopeSkipping"
+    | "SportInGebaeuden"
+    | "Sportakrobatik"
+    | "StepAerobic"
+    | "Taekwondo"
+    | "Tanzen"
+    | "Tischtennis"
+    | "Trainer"
+    | "Turnen"
+    | "Wandern"
+    | "Yoga"
+    | "Gesamtverein"
+    | "Historie"
+    | "Presse"
+    | "Soziales"
+    | "Veranstaltungen";
   meta?: MetaFields;
 };
 
