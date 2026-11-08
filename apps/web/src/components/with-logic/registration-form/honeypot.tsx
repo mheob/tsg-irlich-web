@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 /** The name of the honeypot, in the form and in the action's input. */
-const HONEYPOT_NAME = 'website';
+const HONEYPOT_NAME = 'hp_confirm';
 
 /**
  * A text input no visitor sees, reaches or has filled in by the browser: off-screen, hidden from

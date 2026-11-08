@@ -86,9 +86,13 @@ function RegistrationForm({
 		}
 		setIsSubmitting(true);
 		setResult(null);
-		const website: unknown = form.getValues(HONEYPOT_NAME);
+		const honeypot: unknown = form.getValues(HONEYPOT_NAME);
 		const outcome = await settle(
-			submitForm({ formId, values, website: typeof website === 'string' ? website : '' }),
+			submitForm({
+				formId,
+				hp_confirm: typeof honeypot === 'string' ? honeypot : '',
+				values,
+			}),
 		);
 		setIsSubmitting(false);
 		setResult(getSubmitResult(outcome));

@@ -66,7 +66,7 @@ const FORM: Form = {
 const VALUES = { mail: 'team@example.com', team: 'Chicken Friends' };
 
 async function submit(
-	overrides: { values?: Record<string, unknown>; website?: string } = {},
+	overrides: { hp_confirm?: string; values?: Record<string, unknown> } = {},
 ): ReturnType<typeof submitForm> {
 	const result = await submitForm({ formId: 'form-1', values: VALUES, ...overrides });
 	return result;
@@ -102,7 +102,7 @@ describe('submitting a form', () => {
 	});
 
 	it('returns registered for a filled honeypot without writing', async () => {
-		const result = await submit({ website: 'https://spam.example' });
+		const result = await submit({ hp_confirm: 'https://spam.example' });
 
 		expect(result).toStrictEqual({ data: { status: 'registered' } });
 		expect(mockedCheckBotId).not.toHaveBeenCalled();
@@ -124,6 +124,17 @@ describe('submitting a form', () => {
 		expect(result).toStrictEqual({ serverError: GENERIC_SERVER_ERROR });
 		expect(mockedFetch).not.toHaveBeenCalled();
 		expect(writeCreate).not.toHaveBeenCalled();
+	});
+
+	it('treats a form of another type like an unknown one', async () => {
+		vi.spyOn(console, 'error').mockReturnValue();
+		mockedFetch.mockResolvedValue({ ...FORM, formType: 'survey' });
+
+		const result = await submit();
+
+		expect(result).toStrictEqual({ serverError: GENERIC_SERVER_ERROR });
+		expect(writeCreate).not.toHaveBeenCalled();
+		expect(mockedSend).not.toHaveBeenCalled();
 	});
 
 	it('rejects an unknown form', async () => {

@@ -73,7 +73,7 @@ describe('the registration form', () => {
 		expect(mockedSubmitForm).not.toHaveBeenCalled();
 	});
 
-	it('submits formId, values and an empty website', async () => {
+	it('submits formId, values and an empty honeypot', async () => {
 		mockedSubmitForm.mockResolvedValue({ data: { status: 'registered' } });
 		const rendered = renderForm();
 
@@ -83,29 +83,30 @@ describe('the registration form', () => {
 		await rendered.findByText(SUCCESS_TEXT);
 		expect(mockedSubmitForm).toHaveBeenCalledExactlyOnceWith({
 			formId: 'form-1',
+			hp_confirm: '',
 			values: { mail: 'max@example.com', privacy: true, team: 'FC Irlich' },
-			website: '',
 		});
 	});
 
 	// A bot fills every input it finds; the action answers it as if it had worked.
-	it('passes what was typed into the hidden website field on to the action', async () => {
+	it('passes what was typed into the honeypot on to the action', async () => {
 		mockedSubmitForm.mockResolvedValue({ data: { status: 'registered' } });
 		const rendered = renderForm();
 		// No role query reaches it: the wrapper hides it from assistive technology, as it should.
-		const website = rendered.getByLabelText('Website');
+		const honeypot = rendered.getByLabelText('Website');
 
-		expect([website.tabIndex, website.getAttribute('autocomplete')]).toStrictEqual([-1, 'off']);
-		expect(website.getAttribute('name')).toBe('website');
-		expect(website.closest('[aria-hidden="true"]')).not.toBeNull();
+		expect([honeypot.tabIndex, honeypot.getAttribute('autocomplete')]).toStrictEqual([-1, 'off']);
+		// No name a browser fills in by itself, as it might with `website`.
+		expect(honeypot.getAttribute('name')).toBe('hp_confirm');
+		expect(honeypot.closest('[aria-hidden="true"]')).not.toBeNull();
 
-		await rendered.user.type(website, 'https://spam.example');
+		await rendered.user.type(honeypot, 'https://spam.example');
 		await fillIn(rendered);
 		await rendered.user.click(rendered.getByRole('button', { name: 'Anmelden' }));
 
 		await rendered.findByText(SUCCESS_TEXT);
 		expect(mockedSubmitForm).toHaveBeenCalledWith(
-			expect.objectContaining({ website: 'https://spam.example' }),
+			expect.objectContaining({ hp_confirm: 'https://spam.example' }),
 		);
 	});
 

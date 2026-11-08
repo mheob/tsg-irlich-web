@@ -4,7 +4,7 @@ import type { ReactElement, ReactNode } from 'react';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { PortableText } from '@/components/ui/portable-text';
-import { formatEventDate, formatShortDate } from '@/lib/forms/format';
+import { formatEventDate } from '@/lib/forms/format';
 import type { FormPageQueryResult } from '@/types/sanity.types';
 import { getPageHeroImage } from '@/utils/hero-image';
 
@@ -33,7 +33,8 @@ function Chip({ children, icon }: Readonly<{ children: ReactNode; icon: ReactEle
  * and hides its text from assistive technology.
  *
  * The title is repeated from the large breakpoint on only: the hero shows it on a phone, and as the
- * `h1` of the page. Here it heads the column, so it is an `h2`.
+ * `h1` of the page. Here it heads the column, so it is an `h2`. The image repeats the hero's as
+ * well, so it carries an empty `alt` and screen readers do not hear its description twice.
  *
  * @param props - The column's props.
  * @param props.eventDate - When the event takes place, an ISO date time.
@@ -57,8 +58,9 @@ function RegistrationInfo({
 	const image = getPageHeroImage(heroImage, title);
 	const media = image && (
 		<div className="relative aspect-video overflow-hidden rounded-lg">
+			{/* The hero above shows the same image with its description, so this copy is decorative */}
 			<Image
-				alt={image.alt}
+				alt=""
 				className="object-cover"
 				sizes="(min-width: 1024px) 40vw, 100vw"
 				src={image.src}
@@ -90,7 +92,7 @@ function RegistrationInfo({
 					{eventDate && <Chip icon={<CalendarDays />}>{formatEventDate(eventDate)}</Chip>}
 					{location && <Chip icon={<MapPin />}>{location}</Chip>}
 					{registrationEnd && (
-						<Chip icon={<Hourglass />}>{`bis ${formatShortDate(registrationEnd)}`}</Chip>
+						<Chip icon={<Hourglass />}>{`bis ${formatEventDate(registrationEnd)}`}</Chip>
 					)}
 				</ul>
 

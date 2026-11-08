@@ -31,7 +31,7 @@ describe('registration info', () => {
 
 		expect(getByText('Fr., 14.05.2027, 13:00 Uhr')).not.toBeNull();
 		expect(getByText('Pappelstadion')).not.toBeNull();
-		expect(getByText('bis 30.04.2027')).not.toBeNull();
+		expect(getByText('bis Fr., 30.04.2027, 23:59 Uhr')).not.toBeNull();
 	});
 
 	it('leaves out the chips the form has no value for', () => {
@@ -89,6 +89,15 @@ describe('registration info', () => {
 		const { queryByRole } = renderInfo({ heroImage: null, intro: null });
 
 		expect(queryByRole('button', { name: 'Mehr zur Veranstaltung' })).toBeNull();
+	});
+
+	// The hero above the column describes the image already.
+	it('marks the repeated image as decorative', () => {
+		const { container } = renderInfo();
+		const images = [...container.querySelectorAll('img')];
+
+		expect(images).toHaveLength(2);
+		expect(images.map((image) => image.getAttribute('alt'))).toStrictEqual(['', '']);
 	});
 
 	it('shows the intro without an image', () => {

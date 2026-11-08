@@ -31,13 +31,20 @@ const FORM_REVALIDATE_SECONDS = 60;
 
 type Form = NonNullable<FormByIdQueryResult>;
 
+/**
+ * Loads the published form by id. A form of another type takes no registrations, so it counts as
+ * unknown, like an id that names no form.
+ *
+ * @param formId - The `_id` the client sent.
+ * @returns The registration form.
+ */
 async function loadForm(formId: string): Promise<Form> {
 	const form = await client.fetch<FormByIdQueryResult>(
 		formByIdQuery,
 		{ id: formId },
 		{ next: { revalidate: FORM_REVALIDATE_SECONDS, tags: ['form'] }, perspective: 'published' },
 	);
-	if (!form) {
+	if (form?.formType !== 'registration') {
 		throw new Error('Unknown form');
 	}
 	return form;
@@ -124,7 +131,7 @@ export const submitForm = actionClient
 	.inputSchema(submitFormInputSchema)
 	.action(async ({ parsedInput }): Promise<{ status: SubmitFormStatus }> => {
 		// A human never sees this field. Answer as if it worked, so a bot learns nothing.
-		if (parsedInput.website) {
+		if (parsedInput.hp_confirm) {
 			return { status: 'registered' };
 		}
 		await assertHuman();
