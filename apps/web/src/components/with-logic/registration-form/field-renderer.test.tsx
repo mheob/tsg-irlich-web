@@ -223,14 +223,29 @@ describe('the field renderer', () => {
 		);
 	});
 
+	// A draft in the preview skips the Studio's required checks: no text, no options yet.
 	it('names a consent without text by its label', () => {
 		const { getByRole } = renderFields([
-			field('formFieldConsent', 'rules', 'Regeln anerkannt', {
-				text: { _type: 'simpleBlockContent', text: [] },
-			}),
+			field('formFieldConsent', 'rules', 'Regeln anerkannt', { text: null }),
 		]);
 
 		expect(getByRole('checkbox', { name: 'Regeln anerkannt' })).not.toBeNull();
+	});
+
+	it('renders a choice without options', () => {
+		const { getByRole, queryAllByRole } = renderFields([
+			field('formFieldChoice', 'cat', 'Kategorie', { display: 'buttons', options: null }),
+			field('formFieldChoice', 'size', 'Größe', { display: 'select', options: null }),
+			field('formFieldChoice', 'food', 'Essen', { isMultiple: true, options: null }),
+		]);
+
+		expect(
+			[getByRole('group', { name: 'Kategorie' }), getByRole('group', { name: 'Essen' })].map(
+				(group) => within(group).queryAllByRole('button').length,
+			),
+		).toStrictEqual([0, 0]);
+		expect(getByRole('combobox', { name: 'Größe' })).not.toBeNull();
+		expect(queryAllByRole('checkbox')).toHaveLength(0);
 	});
 
 	it('renders notes as heading and text', () => {

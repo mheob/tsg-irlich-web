@@ -15,6 +15,16 @@ type ChoiceFieldDefinition = Extract<AnyFormField, { _type: 'formFieldChoice' }>
 
 type Controller = ControllerRenderProps<FieldValues, string>;
 
+/**
+ * The options of a choice. A draft in the preview may have none yet.
+ *
+ * @param field - The choice.
+ * @returns The options, an empty list while there are none.
+ */
+function getOptions(field: ChoiceFieldDefinition): string[] {
+	return field.options ?? [];
+}
+
 function toSelected(value: unknown): string[] {
 	if (Array.isArray(value)) {
 		return value.filter((item): item is string => typeof item === 'string');
@@ -43,7 +53,7 @@ function SelectChoice({ controller, field, wrapperClassName }: Readonly<ChoicePr
 			}}
 			placeholder="Bitte wählen"
 			required={field.isRequired ?? false}
-			selectItems={field.options.map((option) => ({ label: option, value: option }))}
+			selectItems={getOptions(field).map((option) => ({ label: option, value: option }))}
 			wrapperClassName={wrapperClassName}
 		>
 			<FieldLabel isRequired={field.isRequired} label={field.label} />
@@ -80,7 +90,7 @@ function GroupChoice({ controller, field, wrapperClassName }: Readonly<ChoicePro
 						onValueChange={controller.onChange}
 						value={selected}
 					>
-						{field.options.map((option, index) => (
+						{getOptions(field).map((option, index) => (
 							// The label makes the option's text toggle its checkbox.
 							<label className="flex cursor-pointer items-center gap-2" key={option}>
 								<Checkbox
@@ -102,7 +112,7 @@ function GroupChoice({ controller, field, wrapperClassName }: Readonly<ChoicePro
 						value={selected}
 						variant="outline"
 					>
-						{field.options.map((option, index) => (
+						{getOptions(field).map((option, index) => (
 							<ToggleGroupItem
 								className="px-4"
 								key={option}

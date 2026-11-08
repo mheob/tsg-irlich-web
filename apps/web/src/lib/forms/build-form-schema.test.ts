@@ -324,3 +324,20 @@ describe('default values', () => {
 		expect(getDefaultValues([group])).toStrictEqual({ g: [] });
 	});
 });
+
+// A draft in the preview skips the Studio's required checks, so a group may still have no fields.
+describe('a draft group without fields', () => {
+	const group = field('formFieldGroup', 'g', 'G', {
+		fields: null,
+		isRequired: true,
+		itemLabel: 'Eintrag',
+	});
+
+	it('defaults to one empty entry', () => {
+		expect(getDefaultValues([group])).toStrictEqual({ g: [{}] });
+	});
+
+	it('builds a schema that accepts empty entries', () => {
+		expect(buildFormSchema([group]).safeParse({ g: [{}] }).success).toBe(true);
+	});
+});

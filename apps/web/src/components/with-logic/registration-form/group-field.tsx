@@ -1,5 +1,5 @@
 import { Check, CircleAlert, Trash2 } from 'lucide-react';
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { get, useFieldArray, useFormContext, useFormState, useWatch } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,16 @@ type GroupFieldDefinition = Extract<FormFieldDefinition, { _type: 'formFieldGrou
 /** How many fields of an entry make up its summary. */
 const SUMMARY_FIELD_COUNT = 2;
 
+/**
+ * The fields of a group entry. A draft in the preview may have none yet.
+ *
+ * @param field - The group.
+ * @returns The sub-fields, an empty list while there are none.
+ */
+function getSubFields(field: GroupFieldDefinition): GroupFieldDefinition['fields'] {
+	return field.fields ?? [];
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === 'object' && value !== null;
 }
@@ -29,7 +39,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
  */
 function getSummary(field: GroupFieldDefinition, entry: unknown): string {
 	const values = isRecord(entry) ? entry : {};
-	const summary = field.fields
+	const summary = getSubFields(field)
 		.filter((subField) => subField._type === 'formFieldText')
 		.slice(0, SUMMARY_FIELD_COUNT)
 		.map((subField) => values[subField._key])
@@ -114,7 +124,7 @@ function GroupEntry({
 					className="grid gap-6 px-4 pt-2 pb-4 md:grid-cols-2"
 					render={<fieldset aria-label={title} />}
 				>
-					{field.fields.map((subField) => (
+					{getSubFields(field).map((subField) => (
 						<FieldRenderer
 							field={subField}
 							key={subField._key}
@@ -137,12 +147,14 @@ function GroupEntry({
  * @returns The group as a fieldset.
  */
 function GroupField({ field }: Readonly<GroupFieldProps>) {
-	const { control } = useFormContext();
+	const { control, setFocus } = useFormContext();
 	const { append, fields: entries, remove } = useFieldArray({ control, name: field._key });
 	const values: unknown = useWatch({ control, name: field._key });
 	const { errors, submitCount } = useFormState({ control, name: field._key });
 	const [activeIndex, setActiveIndex] = useState<number | null>(0);
 	const [handledSubmitCount, setHandledSubmitCount] = useState(submitCount);
+	// A new object per failed submit, so the same field is focused again after the next one.
+	const [focusRequest, setFocusRequest] = useState<null | { name: string }>(null);
 	const helpTextId = useId();
 	const messageId = useId();
 
@@ -156,9 +168,23 @@ function GroupField({ field }: Readonly<GroupFieldProps>) {
 			.map((_entry, index) => index)
 			.find((index) => hasEntryError(index));
 		if (firstInvalid !== undefined) {
+			const entryName = `${field._key}.${firstInvalid}`;
+			const invalidField = getSubFields(field).find((subField) =>
+				get(errors, `${entryName}.${subField._key}`),
+			);
 			setActiveIndex(firstInvalid);
+			setFocusRequest(invalidField ? { name: `${entryName}.${invalidField._key}` } : null);
 		}
 	}
+
+	// react-hook-form focuses the first invalid field before the entry opens, so a collapsed entry
+	// left it on its detached input. Once the entry is mounted, its field takes the focus, unless
+	// the form already moved it to an invalid field of its own, which comes first.
+	useEffect(() => {
+		if (focusRequest && !document.activeElement?.closest('[aria-invalid="true"]')) {
+			setFocus(focusRequest.name);
+		}
+	}, [focusRequest, setFocus]);
 
 	const message = getGroupMessage(get(errors, field._key));
 	const describedBy = [field.helpText && helpTextId, message && messageId]
@@ -167,7 +193,7 @@ function GroupField({ field }: Readonly<GroupFieldProps>) {
 	const canAdd = entries.length < (field.maxItems ?? Number.POSITIVE_INFINITY);
 
 	const addEntry = () => {
-		append(getDefaultValues(field.fields));
+		append(getDefaultValues(getSubFields(field)));
 		setActiveIndex(entries.length);
 	};
 

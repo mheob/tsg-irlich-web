@@ -140,10 +140,10 @@ describe('the repeatable group', () => {
 		await rendered.user.click(rendered.getByRole('button', { name: 'Anmelden' }));
 
 		const message = await rendered.findByText('Bitte fülle dieses Feld aus.');
-		// The first entry opened with its message; the valid one collapsed with its check mark.
-		expect(
+		// The first entry opened with its message and the focus; the valid one collapsed.
+		expect(document.activeElement).toBe(
 			rendered.getByRole('textbox', { description: message.textContent, name: 'Vorname' }),
-		).not.toBeNull();
+		);
 		expect((rendered.getByRole('textbox', { name: 'Nachname' }) as HTMLInputElement).value).toBe(
 			'Müller',
 		);
@@ -151,6 +151,39 @@ describe('the repeatable group', () => {
 			rendered.getByRole('button', { name: '2 · Schmidt, Lea' }).getAttribute('aria-expanded'),
 		).toBe('false');
 		expect(mockedSubmitForm).not.toHaveBeenCalled();
+	});
+
+	it('leaves the focus on an invalid field ahead of the group', async () => {
+		const rendered = renderWithUser(
+			<RegistrationForm
+				fields={[field('formFieldText', 'team', 'Teamname', { isRequired: true }), players()]}
+				formId="form-1"
+				isWaitlist={false}
+				successText="Danke"
+				waitlistSuccessText="Warteliste"
+			/>,
+		);
+
+		await fillOpenEntry(rendered, 'Müller');
+		await rendered.user.click(rendered.getByRole('button', { name: '+ Spieler hinzufügen' }));
+		await fillOpenEntry(rendered, 'Schmidt', 'Lea');
+		await rendered.user.click(rendered.getByRole('button', { name: 'Anmelden' }));
+
+		await rendered.findAllByText('Bitte fülle dieses Feld aus.');
+		expect(rendered.getByRole('button', { name: 'Spieler 1' }).getAttribute('aria-expanded')).toBe(
+			'true',
+		);
+		expect(document.activeElement).toBe(rendered.getByRole('textbox', { name: 'Teamname' }));
+	});
+
+	// A draft in the preview skips the Studio's required checks, so a group may have no fields yet.
+	it('renders a group without fields', async () => {
+		const { getByRole, user } = renderGroup({ fields: null });
+
+		await user.click(getByRole('button', { name: '+ Spieler hinzufügen' }));
+
+		expect(getByRole('button', { name: '1 · Spieler' })).not.toBeNull();
+		expect(getByRole('group', { name: 'Spieler 2' })).not.toBeNull();
 	});
 
 	it('marks a collapsed entry that still holds an error', async () => {

@@ -80,6 +80,10 @@ function RegistrationForm({
 	const form = useForm<FormValues>(options);
 
 	const onSubmit = async (values: FormValues) => {
+		// The disabled button already stops the browser; this also stops any other way in.
+		if (isPreview) {
+			return;
+		}
 		setIsSubmitting(true);
 		setResult(null);
 		const website: unknown = form.getValues(HONEYPOT_NAME);

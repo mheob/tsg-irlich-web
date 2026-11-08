@@ -1,4 +1,6 @@
-import { within } from '@testing-library/react';
+import { setTimeout as delay } from 'node:timers/promises';
+
+import { fireEvent, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { submitForm } from '@/actions/submit-form';
@@ -222,6 +224,18 @@ describe('the registration form', () => {
 		expect(submit().hasAttribute('disabled')).toBe(false);
 
 		root.unmount();
+	});
+
+	it('never calls the action from the preview, not even on Enter', async () => {
+		const rendered = renderForm({ isPreview: true });
+
+		await fillIn(rendered);
+		await rendered.user.type(rendered.getByRole('textbox', { name: 'Teamname' }), '{Enter}');
+		// A submit event that bypasses the disabled button reaches the handler, which stops it too.
+		fireEvent.submit(rendered.getByRole('button', { name: 'Anmelden' }));
+		await delay(0);
+
+		expect(mockedSubmitForm).not.toHaveBeenCalled();
 	});
 
 	it('disables submitting in the preview', async () => {

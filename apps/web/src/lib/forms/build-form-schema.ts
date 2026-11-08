@@ -142,15 +142,30 @@ function buildConsentSchema(): z.ZodType {
 	return z.boolean().refine((value) => value, { error: CONSENT_MESSAGE });
 }
 
+/**
+ * The fields of a group. The types say a group always has some, which holds for a published form;
+ * a draft in the preview skips the Studio's required checks and may have none yet.
+ *
+ * @param field - The group.
+ * @param field.fields - Its fields, if it has any.
+ * @returns The fields, an empty list while there are none.
+ */
+function getGroupFields(field: {
+	fields?: readonly AnyFormField[] | null;
+}): readonly AnyFormField[] {
+	return field.fields ?? [];
+}
+
 function buildGroupSchema(
 	field: Extract<FormFieldDefinition, { _type: 'formFieldGroup' }>,
 ): z.ZodType {
 	const { itemLabel } = field;
 	const minItems = field.minItems ?? (field.isRequired ? 1 : 0);
+	// buildShape and buildGroupSchema call each other, so one is used before its definition.
+	// oxlint-disable-next-line no-use-before-define
+	const entryShape = buildShape(getGroupFields(field));
 	const schema = z
-		// buildShape and buildGroupSchema call each other, so one is used before its definition.
-		// oxlint-disable-next-line no-use-before-define
-		.array(z.object(buildShape(field.fields)))
+		.array(z.object(entryShape))
 		.min(minItems, { error: `Bitte mindestens ${minItems} Einträge „${itemLabel}“ angeben.` });
 	const maxItems = field.maxItems ?? DEFAULT_GROUP_MAX_ITEMS;
 	return schema.max(maxItems, {
@@ -212,7 +227,7 @@ function buildFormSchema(
 function getFieldDefault(field: AnyFormField): unknown {
 	if (field._type === 'formFieldGroup') {
 		// oxlint-disable-next-line no-use-before-define
-		return field.isRequired ? [getDefaultValues(field.fields)] : [];
+		return field.isRequired ? [getDefaultValues(getGroupFields(field))] : [];
 	}
 	if (field._type === 'formFieldConsent') {
 		return false;

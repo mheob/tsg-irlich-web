@@ -25,7 +25,8 @@ function ConsentField({ field, name, wrapperClassName }: Readonly<ConsentFieldPr
 	const { control } = useFormContext();
 	const labelId = useId();
 	const textId = useId();
-	const blocks = field.text.text;
+	// A draft in the preview may still lack its text.
+	const blocks = field.text?.text ?? [];
 
 	return (
 		<FormField
