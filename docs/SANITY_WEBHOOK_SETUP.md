@@ -126,7 +126,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **Category pages** (`_type: "newsOverviewCategory"`, their texts and contact persons): every page of every category
 - **Article hero** (`_type: "news-article-page"`): every article
 - **Sponsors** (`_type: "sponsors"`): the home page and every article
-- **Form** (`_type: "form"`): the page `/anmeldung/[slug]` and `/sitemap.xml`
+- **Form** (`_type: "form"`): the page `/anmeldung/[slug]`, and `/sitemap.xml` through the generic `revalidateTag('form')`, since its query of the forms carries that tag
 - **Department** (`_type: "department"`): the home page, which links the departments, and the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`
 - **Group** (`_type: "group"`): the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`. The payload only carries the slug of the group, not the one of its department, so a single group path cannot be built
 - **Offer pages** (`_type: "departmentsPage"`, `"groupsPage"`): `/angebot`, or every department page `/angebot/[group]`

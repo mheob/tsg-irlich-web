@@ -147,13 +147,13 @@ pnpm run extract-types && pnpm run typegen:sanity
 
 **Web (.env.local)**:
 
+- `CRON_SECRET` (bearer token of the clean-up cron `/api/forms/cleanup`; only needed in the Vercel project's Production environment, because Vercel runs cron jobs for production deployments only)
 - `LINEAR_API_KEY`,
 - `LINEAR_TEAM_ID`,
 - `NEXT_PUBLIC_SANITY_API_VERSION`
 - `NEXT_PUBLIC_SANITY_DATASET`
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_STUDIO_URL`
-- `CRON_SECRET` (bearer token of the clean-up cron `/api/forms/cleanup`; set it in the Vercel project for Production and Preview)
 - `RESEND_API_KEY`,
 - `SANITY_API_READ_TOKEN`
 - `SANITY_API_WRITE_TOKEN`
