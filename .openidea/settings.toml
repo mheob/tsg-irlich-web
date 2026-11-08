@@ -1,0 +1,8 @@
+[languages.python]
+interpreter = "/opt/homebrew/bin/python3"
+
+[languages.oxfmt]
+runOnSave = true
+
+[languages.typescript]
+version = "workspace"
