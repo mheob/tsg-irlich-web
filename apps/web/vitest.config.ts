@@ -17,7 +17,7 @@ export default defineConfig({
 			// a regression fails the run while normal work does not. Raise them, never lower them.
 			// The remaining gap is a long tail of single branches plus a handful of spots the test
 			// harness cannot reach at all (see `AGENTS.md`).
-			thresholds: { branches: 88, functions: 91, lines: 94, statements: 94 },
+			thresholds: { branches: 94, functions: 97, lines: 97, statements: 97 },
 		},
 		// `src/lib/sanity/api.ts` asserts the project variables at import time, and the image URL
 		// builder (`src/lib/sanity/utils.ts`) reads them from there, so every test that renders a
