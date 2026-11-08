@@ -62,8 +62,10 @@ overrides:
   # write through a symlinked path parameter (GHSA-52f5-9888-hmc6, GHSA-ph9p-34f9-6g65); 0.2.6
   # fixes both and keeps the `fileSync`/`dirSync` API the two call sites use
   tmp: "^0.2.6"
-  # Bounded to v7: jsdom (via the Sanity CLI) deep-imports undici v7 internals that v8 removed
-  undici: "^7.29.0"
+  # Bounded to v7: jsdom (via the Sanity CLI) deep-imports undici v7 internals that v8 removed.
+  # 7.30.2 fixes the redirect and cache interceptor flaws in 7.30.1 (CVE-2026-116630 and three
+  # sibling advisories) that get-it pulls in below @sanity/client
+  undici: "^7.30.2"
   uuid: ">=11.1.1"
   vite@*: "catalog:"
   vitest@*: "catalog:"
