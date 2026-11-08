@@ -1,4 +1,4 @@
-import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
+import { RiNewspaperLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
@@ -35,7 +35,7 @@ const newsOverviewPage = defineType({
 		}),
 	],
 	groups: [general, meta, content],
-	icon: RiBookletLine,
+	icon: RiNewspaperLine,
 	name: 'newsOverview',
 	preview: getSinglePagePreview('News Übersicht'),
 	title: 'News Übersicht',

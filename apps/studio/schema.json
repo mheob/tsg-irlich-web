@@ -5982,6 +5982,131 @@
 				},
 				"optional": true
 			},
+			"icon": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "union",
+					"of": [
+						{
+							"type": "string",
+							"value": "Badminton"
+						},
+						{
+							"type": "string",
+							"value": "Bodenturnen"
+						},
+						{
+							"type": "string",
+							"value": "Cheerleading"
+						},
+						{
+							"type": "string",
+							"value": "ElternKindTurnen"
+						},
+						{
+							"type": "string",
+							"value": "Fitness"
+						},
+						{
+							"type": "string",
+							"value": "Fussball"
+						},
+						{
+							"type": "string",
+							"value": "Gehen"
+						},
+						{
+							"type": "string",
+							"value": "Gymnastik"
+						},
+						{
+							"type": "string",
+							"value": "Jujutsu"
+						},
+						{
+							"type": "string",
+							"value": "Laufen"
+						},
+						{
+							"type": "string",
+							"value": "Medaille"
+						},
+						{
+							"type": "string",
+							"value": "Pilates"
+						},
+						{
+							"type": "string",
+							"value": "Pokal"
+						},
+						{
+							"type": "string",
+							"value": "RopeSkipping"
+						},
+						{
+							"type": "string",
+							"value": "SportInGebaeuden"
+						},
+						{
+							"type": "string",
+							"value": "Sportakrobatik"
+						},
+						{
+							"type": "string",
+							"value": "StepAerobic"
+						},
+						{
+							"type": "string",
+							"value": "Taekwondo"
+						},
+						{
+							"type": "string",
+							"value": "Tanzen"
+						},
+						{
+							"type": "string",
+							"value": "Tischtennis"
+						},
+						{
+							"type": "string",
+							"value": "Trainer"
+						},
+						{
+							"type": "string",
+							"value": "Turnen"
+						},
+						{
+							"type": "string",
+							"value": "Wandern"
+						},
+						{
+							"type": "string",
+							"value": "Yoga"
+						},
+						{
+							"type": "string",
+							"value": "Gesamtverein"
+						},
+						{
+							"type": "string",
+							"value": "Historie"
+						},
+						{
+							"type": "string",
+							"value": "Presse"
+						},
+						{
+							"type": "string",
+							"value": "Soziales"
+						},
+						{
+							"type": "string",
+							"value": "Veranstaltungen"
+						}
+					]
+				},
+				"optional": true
+			},
 			"meta": {
 				"type": "objectAttribute",
 				"value": {

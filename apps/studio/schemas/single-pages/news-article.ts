@@ -1,4 +1,4 @@
-import { RiBookletLine } from 'react-icons/ri';
+import { RiFileTextLine } from 'react-icons/ri';
 import { defineType } from 'sanity';
 
 import { general } from '@/shared/field-groups';
@@ -12,7 +12,7 @@ const newsArticlePage = defineType({
 		...defaultHeroFields,
 	],
 	groups: [general],
-	icon: RiBookletLine,
+	icon: RiFileTextLine,
 	name: 'news-article-page',
 	preview: {
 		prepare: () => ({ title: 'Einzelner News-Artikel' }),

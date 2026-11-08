@@ -1,4 +1,4 @@
-import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
+import { RiUserAddLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
@@ -59,7 +59,7 @@ const membershipPage = defineType({
 		}),
 	],
 	groups: [general, meta, content],
-	icon: RiBookletLine,
+	icon: RiUserAddLine,
 	name: 'membership',
 	preview: getSinglePagePreview('Mitgliedschaft'),
 	title: 'Mitgliedschaft',

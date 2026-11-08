@@ -1,4 +1,4 @@
-import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
+import { RiHome4Line, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
@@ -62,7 +62,7 @@ const homePage = defineType({
 		}),
 	],
 	groups: [general, meta, content],
-	icon: RiBookletLine,
+	icon: RiHome4Line,
 	name: 'home',
 	preview: getSinglePagePreview('Home'),
 	title: 'Home',

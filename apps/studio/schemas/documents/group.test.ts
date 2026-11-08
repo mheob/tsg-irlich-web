@@ -1,3 +1,5 @@
+import { isValidElement, type ReactElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import type { PreviewValue, SlugValidationContext } from 'sanity';
 import { describe, expect, it, vi } from 'vite-plus/test';
 
@@ -14,6 +16,7 @@ interface GroupField {
 
 interface GroupPreviewSelection {
 	readonly departmentTitle?: string;
+	readonly icon?: string;
 	readonly sortOrder?: number;
 	readonly title?: string;
 }
@@ -225,7 +228,11 @@ describe('group preview', () => {
 			title: 'Herren',
 		});
 
-		expect(result).toStrictEqual({ subtitle: 'Fußball · Sortierreihenfolge: 10', title: 'Herren' });
+		expect(result).toStrictEqual({
+			media: undefined,
+			subtitle: 'Fußball · Sortierreihenfolge: 10',
+			title: 'Herren',
+		});
 	});
 
 	// "Herren" exists in two departments, so a picker or a search result is only clear with it.
@@ -247,7 +254,11 @@ describe('group preview', () => {
 	it('shows only the sort order while the group has no department', () => {
 		const result = prepareGroupPreview({ sortOrder: 3, title: 'Herren' });
 
-		expect(result).toStrictEqual({ subtitle: 'Sortierreihenfolge: 3', title: 'Herren' });
+		expect(result).toStrictEqual({
+			media: undefined,
+			subtitle: 'Sortierreihenfolge: 3',
+			title: 'Herren',
+		});
 	});
 
 	// A group created before it got a sort order shows the literal word in the Studio list until an
@@ -255,7 +266,11 @@ describe('group preview', () => {
 	it('stringifies a missing sort order as the literal word "undefined"', () => {
 		const result = prepareGroupPreview({ title: 'Herren' });
 
-		expect(result).toStrictEqual({ subtitle: 'Sortierreihenfolge: undefined', title: 'Herren' });
+		expect(result).toStrictEqual({
+			media: undefined,
+			subtitle: 'Sortierreihenfolge: undefined',
+			title: 'Herren',
+		});
 	});
 
 	it('passes a missing title through as undefined', () => {
@@ -264,6 +279,22 @@ describe('group preview', () => {
 
 	it('reads the title of the referenced department', () => {
 		expect(group.preview.select).toMatchObject({ departmentTitle: 'department.title' });
+	});
+
+	// Every group shares the type icon, so the list tells them apart by their pictogram.
+	it('shows the DOSB pictogram of the group', () => {
+		const media = prepareGroupPreview({
+			icon: 'Taekwondo',
+			sortOrder: 1,
+			title: 'Scorpions',
+		}).media;
+
+		expect(isValidElement(media)).toBe(true);
+		expect(renderToStaticMarkup(media as ReactElement)).toMatch(/^<svg/u);
+	});
+
+	it('reads the pictogram from the icon field', () => {
+		expect(group.preview.select).toMatchObject({ icon: 'icon' });
 	});
 });
 

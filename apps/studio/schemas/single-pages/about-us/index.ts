@@ -1,4 +1,4 @@
-import { RiBookletLine, RiLinksLine } from 'react-icons/ri';
+import { RiInformationLine, RiLinksLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { content, general, meta } from '@/shared/field-groups';
@@ -39,7 +39,7 @@ const aboutUsPage = defineType({
 		}),
 	],
 	groups: [general, meta, content],
-	icon: RiBookletLine,
+	icon: RiInformationLine,
 	name: 'aboutUs',
 	preview: getSinglePagePreview('Über uns'),
 	title: 'Über uns',

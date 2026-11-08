@@ -1,6 +1,6 @@
 // oxlint-disable no-magic-numbers
 
-import { RiParentLine } from 'react-icons/ri';
+import { RiQuillPenLine } from 'react-icons/ri';
 import type { PreviewValue } from 'sanity';
 import { defineField, defineType } from 'sanity';
 
@@ -32,7 +32,7 @@ const author = defineType({
 		}),
 	],
 	groups: [personal, contact, additionalInformation],
-	icon: RiParentLine,
+	icon: RiQuillPenLine,
 	name: 'author',
 	preview: {
 		prepare: ({

@@ -1,4 +1,4 @@
-import { RiSettings5Line } from 'react-icons/ri';
+import { RiShieldKeyholeLine } from 'react-icons/ri';
 import { defineField, defineType } from 'sanity';
 
 import { contact, general, meta } from '@/shared/field-groups';
@@ -42,7 +42,7 @@ const privacyPage = defineType({
 		}),
 	],
 	groups: [general, meta, contact, { name: 'content', title: 'Erklärung' }],
-	icon: RiSettings5Line,
+	icon: RiShieldKeyholeLine,
 	name: 'privacy',
 	preview: getSinglePagePreview('Datenschutzerklärung'),
 	title: 'Datenschutzerklärung',

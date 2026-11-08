@@ -2,6 +2,7 @@ import {
 	RiArticleLine,
 	RiBookOpenLine,
 	RiOpenaiLine,
+	RiPagesLine,
 	RiParentLine,
 	RiQuestionAnswerLine,
 	RiSettings5Line,
@@ -213,7 +214,7 @@ function getGroupSinglePages(
 		S.listItem()
 			.title('Einzelseiten')
 			.id('single-pages')
-			.icon(RiArticleLine)
+			.icon(RiPagesLine)
 			.child(
 				S.list()
 					.title('Einzelseiten')
