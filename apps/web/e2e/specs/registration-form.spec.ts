@@ -26,26 +26,19 @@ async function openForm(page: Page): Promise<Locator> {
 }
 
 /**
- * Adds the first player and returns its entry.
+ * Returns the entry of the first player once the form is hydrated.
  *
- * The button only answers once the form is hydrated, and react-hook-form resets every field at that
- * moment, so this is the first interaction and the text fields are filled afterwards. It is pressed
- * again until the entry shows up, but only while there is none, so a late press cannot add a second.
+ * The group needs at least one player, so the form opens with that entry. react-hook-form resets
+ * every field when the form hydrates, so nothing may be typed before; the submit button stays
+ * disabled until then, which makes it the signal to wait for.
  *
  * @param form - The region with the form.
- * @returns The fields of the new entry.
+ * @returns The fields of the first entry.
  */
-async function addPlayer(form: Locator): Promise<Locator> {
-	const add = form.getByRole('button', { name: '+ Spieler hinzufügen' });
+async function firstPlayer(form: Locator): Promise<Locator> {
+	await expect(form.getByRole('button', { name: 'Anmelden' })).toBeEnabled();
 	const entry = form.getByRole('group', { name: 'Spieler 1' });
-
-	await expect(async () => {
-		if (!(await entry.isVisible())) {
-			await add.click({ timeout: 1000 });
-		}
-
-		await expect(entry).toBeVisible({ timeout: 2000 });
-	}).toPass();
+	await expect(entry).toBeVisible();
 
 	return entry;
 }
@@ -60,7 +53,7 @@ test.describe('registration form', () => {
 
 	test('submits a registration', async ({ page }) => {
 		const form = await openForm(page);
-		const player = await addPlayer(form);
+		const player = await firstPlayer(form);
 
 		await form.getByRole('textbox', { name: 'Teamname' }).fill('Die Testkicker');
 		await form.getByRole('textbox', { name: 'E-Mail' }).fill('team@tsg-irlich.test');
@@ -85,7 +78,7 @@ test.describe('registration form', () => {
 
 	test('rejects an underage player', async ({ page }) => {
 		const form = await openForm(page);
-		const player = await addPlayer(form);
+		const player = await firstPlayer(form);
 
 		await player.getByLabel('Geburtsdatum').fill('2015-01-01');
 		await form.getByRole('button', { name: 'Anmelden' }).click();

@@ -4,7 +4,7 @@ import { get, useFieldArray, useFormContext, useFormState, useWatch } from 'reac
 
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { getDefaultValues } from '@/lib/forms/build-form-schema';
+import { getDefaultValues, getGroupMinItems } from '@/lib/forms/build-form-schema';
 import type { FormFieldDefinition } from '@/lib/forms/types';
 
 import { FieldLabel } from './field-label';
@@ -213,7 +213,7 @@ function GroupField({ field }: Readonly<GroupFieldProps>) {
 				className="mb-3 flex items-center gap-2 text-lg data-[error=true]:text-destructive-foreground md:text-2xl"
 				data-error={Boolean(message)}
 			>
-				<FieldLabel isRequired={field.isRequired} label={field.label} isGroup />
+				<FieldLabel isRequired={getGroupMinItems(field) > 0} label={field.label} isGroup />
 			</legend>
 			{field.helpText && (
 				<p className="text-sm text-muted-foreground" id={helpTextId}>
@@ -240,8 +240,9 @@ function GroupField({ field }: Readonly<GroupFieldProps>) {
 					))}
 				</ul>
 			)}
+			{/* No input of the group's own takes the focus, so the message announces itself */}
 			{message && (
-				<p className="px-3 text-sm text-destructive-foreground" id={messageId}>
+				<p className="px-3 text-sm text-destructive-foreground" id={messageId} role="alert">
 					{message}
 				</p>
 			)}

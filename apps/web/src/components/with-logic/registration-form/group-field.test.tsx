@@ -198,16 +198,32 @@ describe('the repeatable group', () => {
 		expect(rendered.getByRole('button', { name: '2 · Schmidt (fehlerhaft)' })).not.toBeNull();
 	});
 
-	it('names the entries left short of the minimum', async () => {
-		const { findByText, getByRole, user } = renderGroup({ isRequired: false, minItems: 1 });
+	it('announces the entries left short of the minimum', async () => {
+		const { findByRole, getByRole, user } = renderGroup({ isRequired: false, minItems: 1 });
 
-		expect(getByRole('button', { name: '+ Spieler hinzufügen' })).not.toBeNull();
-
+		// A minimum makes the group required, so it opens with one entry; without it, the count is short.
+		await user.click(getByRole('button', { name: 'Spieler 1 entfernen' }));
 		await user.click(getByRole('button', { name: 'Anmelden' }));
 
-		const message = await findByText('Bitte mindestens 1 Einträge „Spieler“ angeben.');
+		const message = await findByRole('alert');
+		expect(message.textContent).toBe('Bitte mindestens 1 Eintrag „Spieler“ angeben.');
 		expect(
-			getByRole('group', { description: message.textContent, name: 'Mitspieler' }),
+			getByRole('group', { description: message.textContent, name: 'Mitspieler (Pflichtfeld)' }),
 		).not.toBeNull();
 	});
+
+	it.each([
+		{ entries: 0, isRequired: false, minItems: 0, name: 'Mitspieler' },
+		{ entries: 1, isRequired: false, minItems: 1, name: 'Mitspieler (Pflichtfeld)' },
+		{ entries: 1, isRequired: true, minItems: 0, name: 'Mitspieler (Pflichtfeld)' },
+		{ entries: 1, isRequired: true, minItems: 1, name: 'Mitspieler (Pflichtfeld)' },
+	])(
+		'marks and opens the group with minItems $minItems and isRequired $isRequired',
+		({ entries, isRequired, minItems, name }) => {
+			const { getByRole, queryAllByRole } = renderGroup({ isRequired, minItems });
+
+			expect(getByRole('group', { name })).not.toBeNull();
+			expect(queryAllByRole('group', { name: 'Spieler 1' })).toHaveLength(entries);
+		},
+	);
 });

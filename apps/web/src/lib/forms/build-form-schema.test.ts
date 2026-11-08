@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vite-plus/test';
 
 import { DORFTURNIER_FIELDS, field } from '../../../test-utils/form-fields';
-import { buildFormSchema, getDefaultValues } from './build-form-schema';
+import { buildFormSchema, getDefaultValues, getGroupMinItems } from './build-form-schema';
 import type { FormFieldDefinition } from './types';
 
 type Values = Record<string, unknown>;
@@ -46,6 +46,10 @@ function messagesOf(
 	return result.success
 		? []
 		: result.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`);
+}
+
+function manyEntries(count: number): { n: string }[] {
+	return Array.from({ length: count }, () => ({ n: 'x' }));
 }
 
 describe('form schema', () => {
@@ -94,9 +98,28 @@ describe('form schema', () => {
 		expect(schema.safeParse({ mail: 'x' }).success).toBe(false);
 	});
 
-	it('rejects an empty required email', () => {
+	it('asks to fill in an empty required email', () => {
 		expect(messagesOf(validValues({ mail: '' }))).toStrictEqual([
-			'mail: Bitte gib eine gültige E-Mail-Adresse ein.',
+			'mail: Bitte fülle dieses Feld aus.',
+		]);
+	});
+
+	it('asks to fill in an empty required phone, number and date', () => {
+		const required = [
+			field('formFieldPhone', 'phone', 'Telefon', { isRequired: true }),
+			field('formFieldNumber', 'age', 'Alter', { isRequired: true }),
+			field('formFieldDate', 'birth', 'Geburtsdatum', { isRequired: true }),
+		];
+
+		expect(messagesOf({ age: ' ', birth: '', phone: '' }, required)).toStrictEqual([
+			'phone: Bitte fülle dieses Feld aus.',
+			'age: Bitte fülle dieses Feld aus.',
+			'birth: Bitte fülle dieses Feld aus.',
+		]);
+		expect(messagesOf({ age: 'x', birth: '1.1.2000', phone: 'abc' }, required)).toStrictEqual([
+			'phone: Bitte gib eine gültige Telefonnummer ein.',
+			'age: Bitte gib eine ganze Zahl ein.',
+			'birth: Bitte gib ein gültiges Datum ein.',
 		]);
 	});
 
@@ -195,6 +218,22 @@ describe('form schema', () => {
 		]);
 	});
 
+	it('names a single entry in the singular', () => {
+		const group = field('formFieldGroup', 'g', 'G', {
+			fields: [field('formFieldText', 'n', 'N')],
+			itemLabel: 'Spieler',
+			maxItems: 1,
+			minItems: 1,
+		});
+
+		expect(messagesOf({ g: [] }, [group])).toStrictEqual([
+			'g: Bitte mindestens 1 Eintrag „Spieler“ angeben.',
+		]);
+		expect(messagesOf({ g: manyEntries(2) }, [group])).toStrictEqual([
+			'g: Bitte höchstens 1 Eintrag „Spieler“ angeben.',
+		]);
+	});
+
 	it('requires one entry of a required group without minimum', () => {
 		const group = field('formFieldGroup', 'g', 'G', {
 			fields: [field('formFieldText', 'n', 'N')],
@@ -230,10 +269,6 @@ describe('form schema', () => {
 		expect(messagesOf({ d: true }, [optional])).toStrictEqual([]);
 	});
 });
-
-function manyEntries(count: number): { n: string }[] {
-	return Array.from({ length: count }, () => ({ n: 'x' }));
-}
 
 describe('input caps', () => {
 	it('caps text without maxLength at 500 characters', () => {
@@ -297,6 +332,40 @@ describe('input caps', () => {
 		expect(messagesOf({ g: manyEntries(101) }, [group])).toStrictEqual([
 			'g: Bitte höchstens 100 Einträge „Eintrag“ angeben.',
 		]);
+	});
+});
+
+// One effective minimum decides the schema, the default entry and the required marker.
+describe('the minimum of a group', () => {
+	const shortOfOne = ['g: Bitte mindestens 1 Eintrag „Eintrag“ angeben.'];
+	const openEntry = [{ n: '' }];
+
+	it.each([
+		{ defaults: [], emptyMessages: [], isRequired: false, minItems: 0, needed: 0 },
+		{ defaults: openEntry, emptyMessages: shortOfOne, isRequired: false, minItems: 1, needed: 1 },
+		{ defaults: openEntry, emptyMessages: shortOfOne, isRequired: true, minItems: 0, needed: 1 },
+		{ defaults: openEntry, emptyMessages: shortOfOne, isRequired: true, minItems: 1, needed: 1 },
+		{ defaults: openEntry, emptyMessages: shortOfOne, isRequired: true, minItems: null, needed: 1 },
+		{
+			defaults: openEntry,
+			emptyMessages: ['g: Bitte mindestens 3 Einträge „Eintrag“ angeben.'],
+			isRequired: false,
+			minItems: 3,
+			needed: 3,
+		},
+	])('needs $needed with minItems $minItems and isRequired $isRequired', (setup) => {
+		const group = field('formFieldGroup', 'g', 'G', {
+			fields: [field('formFieldText', 'n', 'N')],
+			isRequired: setup.isRequired,
+			itemLabel: 'Eintrag',
+			minItems: setup.minItems,
+		});
+
+		expect(getGroupMinItems(setup)).toBe(setup.needed);
+		expect(messagesOf({ g: manyEntries(setup.needed) }, [group])).toStrictEqual([]);
+		expect(messagesOf({ g: [] }, [group])).toStrictEqual(setup.emptyMessages);
+		// The form opens one entry whenever the group needs any, never more.
+		expect(getDefaultValues([group])).toStrictEqual({ g: setup.defaults });
 	});
 });
 

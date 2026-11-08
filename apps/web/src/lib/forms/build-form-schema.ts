@@ -45,6 +45,7 @@ function isCalendarDate(value: string): boolean {
 
 /**
  * A string input that may stay empty unless the field is required; the check only runs on a value.
+ * A required field left empty asks to be filled in, not for a valid format.
  *
  * @param field - The field definition.
  * @param isValid - Decides whether a non-empty, trimmed value is acceptable.
@@ -59,7 +60,15 @@ function checkedString(
 	return z
 		.string()
 		.trim()
-		.refine((value) => (value === '' ? !field.isRequired : isValid(value)), { error: message });
+		.superRefine((value, context) => {
+			if (value === '') {
+				if (field.isRequired) {
+					context.addIssue({ code: 'custom', message: REQUIRED_MESSAGE });
+				}
+			} else if (!isValid(value)) {
+				context.addIssue({ code: 'custom', message });
+			}
+		});
 }
 
 function buildTextSchema(field: AnyFormField): z.ZodType {
@@ -81,7 +90,7 @@ function buildNumberSchema(field: AnyFormField): z.ZodType {
 		.superRefine((value, context) => {
 			if (value === '') {
 				if (field.isRequired) {
-					context.addIssue({ code: 'custom', message: INTEGER_MESSAGE });
+					context.addIssue({ code: 'custom', message: REQUIRED_MESSAGE });
 				}
 				return;
 			}
@@ -101,14 +110,13 @@ function buildDateSchema(field: AnyFormField): z.ZodType {
 		.string()
 		.trim()
 		.superRefine((value, context) => {
-			if (value === '' ? field.isRequired : !isCalendarDate(value)) {
+			if (value === '') {
+				if (field.isRequired) {
+					context.addIssue({ code: 'custom', message: REQUIRED_MESSAGE });
+				}
+			} else if (!isCalendarDate(value)) {
 				context.addIssue({ code: 'custom', message: DATE_MESSAGE });
-			} else if (
-				value !== '' &&
-				minAge &&
-				referenceDate &&
-				getAgeOn(value, referenceDate) < minAge
-			) {
+			} else if (minAge && referenceDate && getAgeOn(value, referenceDate) < minAge) {
 				context.addIssue({
 					code: 'custom',
 					message: `Das Mindestalter ist ${minAge} Jahre am ${formatShortDate(referenceDate)}.`,
@@ -156,20 +164,48 @@ function getGroupFields(field: {
 	return field.fields ?? [];
 }
 
+/**
+ * How many entries a group needs at least. A required group needs one even when the editor set no
+ * minimum, or a minimum of 0, and a minimum makes the group required. The form starts such a group
+ * with one entry open and marks it as required.
+ *
+ * @param field - The group.
+ * @param field.isRequired - Whether the editor marked the group as required.
+ * @param field.minItems - The editor's minimum, if any.
+ * @returns The effective minimum.
+ */
+function getGroupMinItems(field: {
+	isRequired?: boolean | null;
+	minItems?: number | null;
+}): number {
+	return Math.max(field.minItems ?? 0, field.isRequired ? 1 : 0);
+}
+
+/**
+ * Names a number of entries: „1 Eintrag“, otherwise „n Einträge“.
+ *
+ * @param count - The number of entries.
+ * @param itemLabel - What one entry is, such as „Spieler“.
+ * @returns For example `1 Eintrag „Spieler“`.
+ */
+function countEntries(count: number, itemLabel: string): string {
+	return `${count} ${count === 1 ? 'Eintrag' : 'Einträge'} „${itemLabel}“`;
+}
+
 function buildGroupSchema(
 	field: Extract<FormFieldDefinition, { _type: 'formFieldGroup' }>,
 ): z.ZodType {
 	const { itemLabel } = field;
-	const minItems = field.minItems ?? (field.isRequired ? 1 : 0);
+	const minItems = getGroupMinItems(field);
 	// buildShape and buildGroupSchema call each other, so one is used before its definition.
 	// oxlint-disable-next-line no-use-before-define
 	const entryShape = buildShape(getGroupFields(field));
 	const schema = z
 		.array(z.object(entryShape))
-		.min(minItems, { error: `Bitte mindestens ${minItems} Einträge „${itemLabel}“ angeben.` });
+		.min(minItems, { error: `Bitte mindestens ${countEntries(minItems, itemLabel)} angeben.` });
 	const maxItems = field.maxItems ?? DEFAULT_GROUP_MAX_ITEMS;
 	return schema.max(maxItems, {
-		error: `Bitte höchstens ${maxItems} Einträge „${itemLabel}“ angeben.`,
+		error: `Bitte höchstens ${countEntries(maxItems, itemLabel)} angeben.`,
 	});
 }
 
@@ -227,7 +263,7 @@ function buildFormSchema(
 function getFieldDefault(field: AnyFormField): unknown {
 	if (field._type === 'formFieldGroup') {
 		// oxlint-disable-next-line no-use-before-define
-		return field.isRequired ? [getDefaultValues(getGroupFields(field))] : [];
+		return getGroupMinItems(field) > 0 ? [getDefaultValues(getGroupFields(field))] : [];
 	}
 	if (field._type === 'formFieldConsent') {
 		return false;
@@ -241,7 +277,7 @@ function getFieldDefault(field: AnyFormField): unknown {
 /**
  * The initial values of the form: an empty string for text-like fields and single choices, `[]`
  * for multiple choices, `false` for consent, and for a group one entry of sub-field defaults when
- * it is required, otherwise no entry.
+ * it needs at least one (see `getGroupMinItems`), otherwise no entry.
  *
  * @param fields - The fields of the form, or of a group.
  * @returns The values keyed by `_key`; notes have none.
@@ -256,4 +292,4 @@ function getDefaultValues(fields: readonly AnyFormField[]): FormValues {
 	return values;
 }
 
-export { buildFormSchema, getDefaultValues };
+export { buildFormSchema, getDefaultValues, getGroupMinItems };

@@ -63,12 +63,12 @@ describe('the registration form', () => {
 	});
 
 	it('shows the messages on an empty submit and does not call the action', async () => {
-		const { findByText, getByRole, getByText, user } = renderForm();
+		const { findAllByText, getByRole, getByText, user } = renderForm();
 
 		await user.click(getByRole('button', { name: 'Anmelden' }));
 
-		await expect(findByText('Bitte fülle dieses Feld aus.')).resolves.not.toBeNull();
-		expect(getByText('Bitte gib eine gültige E-Mail-Adresse ein.')).not.toBeNull();
+		// The empty email asks to be filled in, like the empty text, not for a valid address.
+		await expect(findAllByText('Bitte fülle dieses Feld aus.')).resolves.toHaveLength(2);
 		expect(getByText('Bitte bestätige dies, um fortzufahren.')).not.toBeNull();
 		expect(mockedSubmitForm).not.toHaveBeenCalled();
 	});
