@@ -2,6 +2,7 @@ import { Body, Container, Head, Html, Preview, Tailwind, Text } from 'react-emai
 
 import { AnswerSections } from '../components/form/answer-sections';
 import type { EmailAnswerSection } from '../components/form/answer-sections';
+import { LineBreaks } from '../components/form/line-breaks';
 import { tailwindConfig } from '../tailwind.config';
 
 function FormSubmissionConfirmationEmail({
@@ -24,7 +25,7 @@ function FormSubmissionConfirmationEmail({
 						{paragraphs.map((paragraph, index) => (
 							// oxlint-disable-next-line react/no-array-index-key
 							<Text className="text-base" key={`${index}-${paragraph}`}>
-								{paragraph}
+								<LineBreaks text={paragraph} />
 							</Text>
 						))}
 
@@ -33,7 +34,7 @@ function FormSubmissionConfirmationEmail({
 								<AnswerSections sections={sections} />
 								{hasHiddenFields ? (
 									<Text className="text-sm">
-										Adressen und Geburtsdaten führen wir hier nicht auf.
+										Angaben, die nach der Veranstaltung gelöscht werden, führen wir hier nicht auf.
 									</Text>
 								) : null}
 							</>

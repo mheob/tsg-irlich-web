@@ -29,7 +29,9 @@ function FormSubmissionNotificationEmail({
 						<AnswerSections sections={sections} />
 
 						{hasHiddenFields ? (
-							<Text className="text-sm">Adressen und Geburtsdaten stehen nur im Studio.</Text>
+							<Text className="text-sm">
+								Angaben, die nach der Veranstaltung gelöscht werden, stehen nur im Studio.
+							</Text>
 						) : null}
 
 						<Text className="text-base">

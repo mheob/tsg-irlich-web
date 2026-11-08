@@ -21,6 +21,18 @@ describe('answer sections', () => {
 		expect(html).toContain('>M<');
 	});
 
+	it('keeps the line breaks of a multi-line value', async () => {
+		const html = await render(
+			<AnswerSections
+				sections={[
+					{ rows: [{ label: 'Anmerkung', value: 'Zeile eins\r\nZeile zwei\nZeile drei' }] },
+				]}
+			/>,
+		);
+
+		expect(html).toMatch(/Zeile eins<br\s*\/?>Zeile zwei<br\s*\/?>Zeile drei/u);
+	});
+
 	it('renders nothing for an empty list', async () => {
 		const html = await render(<AnswerSections sections={[]} />);
 

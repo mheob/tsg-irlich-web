@@ -21,6 +21,20 @@ describe('form submission confirmation email', () => {
 		expect(html.match(/<p /gu)).toHaveLength(2);
 	});
 
+	it('keeps single line breaks inside a paragraph', async () => {
+		const html = await render(
+			FormSubmissionConfirmationEmail({
+				formTitle: 'Sommerfest',
+				hasHiddenFields: false,
+				text: 'Hallo,\nwir freuen uns.\n\nBis bald!',
+			}),
+		);
+
+		expect(html.match(/<p /gu)).toHaveLength(2);
+		expect(html).toMatch(/Hallo,<br\s*\/?>wir freuen uns\./u);
+		expect(html).toContain('>Bis bald!<');
+	});
+
 	it('renders no sections and no note when none were given', async () => {
 		const html = await render(
 			FormSubmissionConfirmationEmail({
@@ -46,7 +60,9 @@ describe('form submission confirmation email', () => {
 
 		expect(html).toContain('Kontakt');
 		expect(html).toContain('Erika Musterfrau');
-		expect(html).toContain('Adressen und Geburtsdaten führen wir hier nicht auf.');
+		expect(html).toContain(
+			'Angaben, die nach der Veranstaltung gelöscht werden, führen wir hier nicht auf.',
+		);
 	});
 
 	it('omits the note when nothing is hidden', async () => {

@@ -22,7 +22,9 @@ describe('form submission notification email', () => {
 
 		expect(html).toContain('Neuer Eingang: Sommerfest');
 		expect(html).toContain('Status: angemeldet');
-		expect(html).toContain('Adressen und Geburtsdaten stehen nur im Studio.');
+		expect(html).toContain(
+			'Angaben, die nach der Veranstaltung gelöscht werden, stehen nur im Studio.',
+		);
 		expect(html).toContain('Eingang im Studio öffnen');
 		expect(html).toContain('href="https://studio.example.com/eingang/1"');
 	});
