@@ -91,8 +91,9 @@ function GroupEntry({
 
 	return (
 		<li>
+			{/* The light card keeps the error messages of its fields at 4.61:1, and its inputs stand out */}
 			<Collapsible
-				className="rounded-md border border-input bg-background-high-contrast"
+				className="rounded-md border border-input bg-background-low-contrast"
 				onOpenChange={onOpenChange}
 				open={isOpen}
 			>

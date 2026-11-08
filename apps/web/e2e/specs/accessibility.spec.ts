@@ -165,7 +165,8 @@ test.describe('accessibility', () => {
 			await waitForPage(page);
 
 			await page.getByRole('button', { name: submit }).click();
-			await expect(page.getByText(error)).toBeVisible();
+			// The registration form shows the same message under every empty required field.
+			await expect(page.getByText(error).first()).toBeVisible();
 
 			await expectNoAxeViolations(page, testInfo, route);
 		});

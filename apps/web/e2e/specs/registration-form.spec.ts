@@ -72,7 +72,8 @@ test.describe('registration form', () => {
 		// The submit button stays disabled until the form is hydrated, so the click waits for that.
 		await form.getByRole('button', { name: 'Anmelden' }).click();
 
-		await expect(form.getByText('Bitte fülle dieses Feld aus.')).toBeVisible();
+		// Teamname, E-Mail and both fields of the player the group opens with.
+		await expect(form.getByText('Bitte fülle dieses Feld aus.')).toHaveCount(4);
 		await expect(form.getByText(FORM_DEFAULT_TEXTS.success)).toBeHidden();
 	});
 
