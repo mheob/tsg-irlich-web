@@ -25,6 +25,7 @@ scripts/production-backup.tar.gz
 
 # AI
 .claude/settings.local.json
+.superpowers/
 
 # CVE
 .cache/cve-lite
