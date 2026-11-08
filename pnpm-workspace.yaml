@@ -142,6 +142,9 @@ catalog:
   slugify: ^1.6.9
   styled-components: ^6.6.0
 
+  # Spam protection: the server action checks every submission with Vercel BotID
+  botid: ^1.5.12
+
   # E-mail templates
   "@react-email/ui": ^6.11.6
   react-email: ^6.11.6

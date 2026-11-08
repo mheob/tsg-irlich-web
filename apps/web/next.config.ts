@@ -1,3 +1,4 @@
+import { withBotId } from 'botid/next/config';
 import type { NextConfig } from 'next';
 
 // With the extension: Node.js loads this file with its own TypeScript support, as an ES module.
@@ -77,4 +78,4 @@ const nextConfig: NextConfig = {
 	serverExternalPackages: ['@napi-rs/canvas', 'pdfjs-dist'],
 };
 
-export default nextConfig;
+export default withBotId(nextConfig);
