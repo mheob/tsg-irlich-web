@@ -1,12 +1,7 @@
 import { RiInboxArchiveLine } from 'react-icons/ri';
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
-// Moves to SUBMISSION_STATUS_LABELS once the shared form constants exist (Task 2).
-const STATUS_LABELS: Readonly<Record<string, string>> = {
-	cancelled: 'abgemeldet',
-	registered: 'angemeldet',
-	waitlist: 'Warteliste',
-};
+import { SUBMISSION_STATUS_LABELS, type SubmissionStatus } from '@tsgi-web/shared';
 
 const submittedAtFormat = new Intl.DateTimeFormat('de-DE', {
 	day: '2-digit',
@@ -32,10 +27,10 @@ function prepareSubmissionPreview({
 	submittedAt,
 }: {
 	label?: string;
-	status?: string;
+	status?: SubmissionStatus;
 	submittedAt?: string;
 }): { subtitle: string; title: string } {
-	const statusLabel = status ? (STATUS_LABELS[status] ?? status) : undefined;
+	const statusLabel = status ? SUBMISSION_STATUS_LABELS[status] : undefined;
 	const date = submittedAt
 		? submittedAtFormat.format(new Date(submittedAt)).replace(',', '')
 		: undefined;
@@ -66,9 +61,9 @@ const formSubmission = defineType({
 			options: {
 				layout: 'radio',
 				list: [
-					{ title: STATUS_LABELS.registered, value: 'registered' },
-					{ title: STATUS_LABELS.waitlist, value: 'waitlist' },
-					{ title: STATUS_LABELS.cancelled, value: 'cancelled' },
+					{ title: SUBMISSION_STATUS_LABELS.registered, value: 'registered' },
+					{ title: SUBMISSION_STATUS_LABELS.waitlist, value: 'waitlist' },
+					{ title: SUBMISSION_STATUS_LABELS.cancelled, value: 'cancelled' },
 				],
 			},
 			title: 'Status',
