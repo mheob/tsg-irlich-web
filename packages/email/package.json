@@ -21,13 +21,11 @@
 	},
 	"dependencies": {
 		"@react-email/ui": "catalog:",
-		"@tsgi-web/shared": "workspace:*",
 		"react": "catalog:",
 		"react-dom": "catalog:",
 		"react-email": "catalog:"
 	},
 	"devDependencies": {
-		"@react-email/render": "catalog:",
 		"@types/node": "catalog:",
 		"@types/react": "catalog:",
 		"@types/react-dom": "catalog:",

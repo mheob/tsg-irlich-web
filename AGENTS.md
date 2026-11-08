@@ -34,6 +34,7 @@ pnpm run lint:fix                    # Lint and autofix
 pnpm run lint:affected               # Lint only affected packages
 pnpm run lint:root                   # Lint root directory files
 pnpm run format                      # Format with oxfmt (format:check to only verify)
+pnpm run knip                        # Find unused files, exports, dependencies and catalog entries
 
 # Testing
 pnpm run test                        # Run every unit test suite
@@ -176,7 +177,8 @@ A new variable also has to be registered in the root `turbo.json` (`globalEnv` o
 - **Vite+** (`vite-plus`) bundles oxlint, oxfmt and Vitest: `vp lint`, `vp fmt` and `vp test` run them
 - **oxlint** with @mheob/oxlint-config (plus oxlint-tsgolint for type-aware rules), configured in the `lint` block of the root `vite.config.ts`. Vite+ reads no nested lint config, so package-specific rules are `lint.overrides` entries there
 - **oxfmt** with @mheob/oxfmt-config, configured in the `fmt` block of the root `vite.config.ts`
-- **Lefthook** runs the git hooks in `lefthook.yml`. `pre-commit` formats and lints the staged files. `pre-push` runs `cve-lite`, `format:check`, lint with `--deny-warnings`, `typecheck` and the unit tests in parallel, and Turbo replays every package that has not changed. `but commit` skips the pre-commit jobs, `but push` runs the pre-push ones (`but push --no-verify` bypasses them)
+- **Knip** reports unused files, exports, dependencies and catalog entries across every workspace (`pnpm run knip`), configured in the root `knip.config.ts`. Its plugins find the entry points of Next.js, Sanity, Vitest, Playwright, React Email, Lefthook and the workflows; the config only names what none of them sees (the `sanity exec` scripts, the e2e preload, `lighthouserc.cjs`). A type or interface that only its own file uses may stay exported, because it shapes the API of the function that returns it; a value may not. The generated Sanity types are exempt. `check.yml` runs it right after the format check, `pre-push` as well. Knip loads every tool config from the repository root, so a config must resolve its files from `import.meta.dirname`, never from the working directory (`apps/web/playwright.config.ts` does that for its env files). Teach the config about a false positive (an `entry`, `ignoreDependencies`) instead of keeping dead code alive with an export. `knip --production` is not wired up yet: neither the studio's Sanity config nor `next.config.ts` count as production entries there, so it reports the whole studio and the redirects as unused
+- **Lefthook** runs the git hooks in `lefthook.yml`. `pre-commit` formats and lints the staged files. `pre-push` runs `cve-lite`, `format:check`, `knip`, lint with `--deny-warnings`, `typecheck` and the unit tests in parallel, and Turbo replays every package that has not changed. `but commit` skips the pre-commit jobs, `but push` runs the pre-push ones (`but push --no-verify` bypasses them)
 - **Commitizen** with czg for conventional commits
 - **Vitest** for unit tests, one `vitest.config.ts` per workspace (`apps/web`, `apps/studio`, `packages/shared`, `packages/email`, `packages/pdf-pages`); tests live next to their source (`foo.ts` → `foo.test.ts`). `vp test` at the root runs all five as projects through `test.projects` in the root `vite.config.ts`; coverage thresholds only apply per workspace, so gate on `pnpm run test:coverage`
 - Import `describe`/`it`/`expect`/`vi` explicitly from `vite-plus/test` (the `vite-plus/prefer-vite-plus-imports` lint rule enforces it) — `globals` stays off

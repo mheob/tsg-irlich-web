@@ -59,6 +59,7 @@ This is a **monorepo** built with **Turbo** and **pnpm** containing:
 - **Vite+** (`vp`) runs the bundled oxlint, oxfmt and Vitest, configured in the root `vite.config.ts`
 - **oxlint** with `@mheob/oxlint-config` (plus oxlint-tsgolint for type-aware rules)
 - **oxfmt** with `@mheob/oxfmt-config` for formatting
+- **Knip** for unused files, exports, dependencies and catalog entries
 - **Vitest** for unit tests, **Playwright** for end-to-end and accessibility tests
 - **Commitlint** with **czg** for conventional commits
 - **Lefthook** for git hooks
@@ -192,6 +193,7 @@ pnpm run lint                   # Lint all apps
 pnpm run lint:affected          # Lint only affected packages
 pnpm run lint:fix               # Lint and autofix
 pnpm run format                 # Format with oxfmt (format:check to only verify)
+pnpm run knip                   # Find unused files, exports and dependencies
 pnpm run test                   # Run every unit test suite
 pnpm run test:affected          # Only the affected packages
 pnpm run test:coverage          # Run with coverage (lcov per workspace)

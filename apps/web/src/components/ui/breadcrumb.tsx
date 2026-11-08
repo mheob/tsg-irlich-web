@@ -1,7 +1,7 @@
 //
 import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
-import { ChevronsRight, Ellipsis } from 'lucide-react';
+import { ChevronsRight } from 'lucide-react';
 import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
@@ -75,21 +75,6 @@ function BreadcrumbSeparator({ children, className, ...props }: ComponentProps<'
 	);
 }
 
-function BreadcrumbEllipsis({ className, ...props }: ComponentProps<'span'>) {
-	return (
-		<span // NOSONAR
-			aria-hidden="true"
-			className={cn('flex size-9 items-center justify-center', className)}
-			data-slot="breadcrumb-ellipsis"
-			role="presentation"
-			{...props}
-		>
-			<Ellipsis className="size-4" />
-			<span className="sr-only">Mehr</span>
-		</span>
-	);
-}
-
 export {
 	Breadcrumb,
 	BreadcrumbList,
@@ -97,5 +82,4 @@ export {
 	BreadcrumbLink,
 	BreadcrumbPage,
 	BreadcrumbSeparator,
-	BreadcrumbEllipsis,
 };

@@ -70,5 +70,5 @@ interface ArchivePlace {
 	repository: string;
 }
 
-export { isInside, isPdfInFolder, resolveFolder, resolveListFile };
+export { isPdfInFolder, resolveFolder, resolveListFile };
 export type { ArchivePlace };

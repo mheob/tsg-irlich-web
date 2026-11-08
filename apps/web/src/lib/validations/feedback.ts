@@ -36,23 +36,4 @@ const feedbackFormSchema = z.object({
 
 type FeedbackFormValues = z.infer<typeof feedbackFormSchema>;
 
-interface LinearIssueResponse {
-	error?: string;
-	issueId?: string;
-	issueIdentifier?: string;
-	success: boolean;
-}
-
-interface UploadResponse {
-	assetUrl?: string;
-	error?: string;
-	success: boolean;
-}
-
-export {
-	MAX_SCREENSHOTS,
-	feedbackFormSchema,
-	type FeedbackFormValues,
-	type LinearIssueResponse,
-	type UploadResponse,
-};
+export { MAX_SCREENSHOTS, feedbackFormSchema, type FeedbackFormValues };
