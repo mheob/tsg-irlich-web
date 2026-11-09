@@ -243,8 +243,17 @@ describe('department page', () => {
 			expect(metadata.alternates?.canonical).toBe('/angebot/fussball');
 		});
 
-		it('takes the description from the shared page', async () => {
+		it('takes the description from the intro of the department', async () => {
 			mockSanity();
+
+			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
+				description: 'Fußball in Irlich',
+				openGraph: { description: 'Fußball in Irlich' },
+			});
+		});
+
+		it('takes the description from the shared page when the department has no intro', async () => {
+			mockSanity({ department: { ...DEPARTMENT, intro: null } });
 
 			await expect(generateMetadata(routeProps())).resolves.toMatchObject({
 				description: 'Gemeinsame Beschreibung',

@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vite-plus/test';
 
-import department, { prepareDepartmentPreview } from './department';
+import department, {
+	prepareDepartmentPreview,
+	validateDepartmentIntro,
+	validateDepartmentMetaDescription,
+} from './department';
 
 interface ChainRule {
 	assetRequired: () => ChainRule;
@@ -45,6 +49,24 @@ function recordValidationChain(name: string): string[] {
 	};
 	field.validation(rule);
 	return calls;
+}
+
+/**
+ * Runs the validation of a field against a rule that hands back the predicate of `custom` once the
+ * chain ends in `warning()`, so the test sees which function a `Rule.custom(fn).warning()` checks with.
+ *
+ * @param name - The name of the field of the department.
+ * @returns The predicate the field checks with, or whatever else the validation returned.
+ */
+function getWarningPredicate(name: string): unknown {
+	const field = department.fields.find((candidate) => candidate.name === name) as
+		| { readonly validation?: (rule: unknown) => unknown }
+		| undefined;
+	if (!field?.validation) {
+		throw new Error(`Expected the department to validate its "${name}" field.`);
+	}
+
+	return field.validation({ custom: (fn: unknown) => ({ warning: () => fn }) });
 }
 
 describe('department document', () => {
@@ -100,6 +122,48 @@ describe('department document', () => {
 			'assetRequired',
 			'error: Kachelbild ist erforderlich',
 		]);
+	});
+
+	// Without its own texts a department page shows the intro and the description all departments
+	// share (WEB-417). A warning, not an error: a new department may go live before its texts exist.
+	describe('own texts', () => {
+		it('only warns when the intro is missing', () => {
+			expect(getWarningPredicate('intro')).toBe(validateDepartmentIntro);
+		});
+
+		it.each([
+			['no intro', undefined],
+			['an empty intro', ''],
+			['an intro of blanks', ' \n '],
+		])('names the shared text for %s', (_description, intro) => {
+			expect(validateDepartmentIntro(intro)).toBe(
+				'Ohne eigenes Intro zeigt die Abteilungsseite den gemeinsamen Text aller Abteilungen.',
+			);
+		});
+
+		it('accepts an intro of its own', () => {
+			expect(validateDepartmentIntro('Fußball in Irlich für alle Altersklassen.')).toBe(true);
+		});
+
+		it('only warns when the meta description is missing', () => {
+			expect(getWarningPredicate('meta')).toBe(validateDepartmentMetaDescription);
+		});
+
+		it.each([
+			['no meta object', undefined],
+			['a meta object without description', { metaTitle: 'Fußball in Irlich' }],
+			['a description of blanks', { metaDescription: '  ' }],
+		])('names the fallback for %s', (_description, meta) => {
+			expect(validateDepartmentMetaDescription(meta)).toBe(
+				'Ohne eigene Meta-Beschreibung steht in Suchergebnissen das Intro oder, ohne Intro, der gemeinsame Text aller Abteilungen.',
+			);
+		});
+
+		it('accepts a meta description of its own', () => {
+			expect(
+				validateDepartmentMetaDescription({ metaDescription: 'Fußball bei der TSG Irlich.' }),
+			).toBe(true);
+		});
 	});
 
 	it('shows the sort order as preview subtitle', () => {

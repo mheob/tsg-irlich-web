@@ -50,7 +50,9 @@ export async function generateMetadata({
 	}
 
 	return getPageMetadata({
-		description: groupsPage.metaDescription,
+		// The meta description of the department wins inside the helper. Without one, the department's
+		// own intro still describes this page better than the text all departments share (WEB-417).
+		description: department.intro ?? groupsPage.metaDescription,
 		image: department.cardImage,
 		meta: department.meta,
 		path: `/angebot/${group}`,
