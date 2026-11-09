@@ -79,7 +79,7 @@ describe('excluded default list items', () => {
 });
 
 describe('desk group resolution', () => {
-	it('resolves the news group for a known group name', () => {
+	it('resolves the news group to the articles and their categories', () => {
 		const { calls, structureBuilder } = createRecordingStructureBuilder();
 
 		getGroup(structureBuilder, 'news');
@@ -106,7 +106,7 @@ describe('desk group resolution', () => {
 
 		expect(lists).toStrictEqual(['echo.issue']);
 		expect(orderings).toStrictEqual([[{ direction: 'desc', field: 'releaseDate' }]]);
-		expect(titles).toContain('TSG-Echo');
+		expect(titles).toContain('TSG-Echo Ausgaben');
 	});
 
 	it('resolves the departments group to one list of the departments by sort order', () => {

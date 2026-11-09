@@ -1,4 +1,4 @@
-// oxlint-disable import/max-dependencies, node/no-process-env
+// oxlint-disable node/no-process-env
 
 import { deDELocale } from '@sanity/locale-de-de';
 import { visionTool } from '@sanity/vision';
@@ -6,21 +6,7 @@ import type { PluginOptions } from 'sanity';
 import { media } from 'sanity-plugin-media';
 import { structureTool } from 'sanity/structure';
 
-import aboutUsPage from '@/schemas/single-pages/about-us';
-import accessibilityPage from '@/schemas/single-pages/accessibility';
-import contactPage from '@/schemas/single-pages/contact';
-import echoOverviewPage from '@/schemas/single-pages/echo-overview';
-import groupsPage from '@/schemas/single-pages/groups';
-import homePage from '@/schemas/single-pages/home';
-import imprintPage from '@/schemas/single-pages/imprint';
-import membershipPage from '@/schemas/single-pages/membership';
-import newsArticlePage from '@/schemas/single-pages/news-article';
-import newsOverviewPage from '@/schemas/single-pages/news-overview';
-import newsOverviewCategoryPage from '@/schemas/single-pages/news-overview-category';
-import departmentsPage from '@/schemas/single-pages/offer';
-import privacyPage from '@/schemas/single-pages/privacy';
-import searchPage from '@/schemas/single-pages/search-page';
-import singleGroupPage from '@/schemas/single-pages/single-group';
+import { singlePages } from '@/schemas/single-pages';
 import siteSettings from '@/schemas/singletons/site-settings';
 
 import { assistWithPresets } from './assist';
@@ -36,44 +22,11 @@ export function getPlugins(): PluginOptions[] {
 	const plugins: PluginOptions[] = [
 		deDELocale(),
 		structureTool({
-			structure: pageStructure([
-				homePage,
-				aboutUsPage,
-				echoOverviewPage,
-				contactPage,
-				departmentsPage,
-				membershipPage,
-				newsArticlePage,
-				newsOverviewPage,
-				newsOverviewCategoryPage,
-				searchPage,
-				groupsPage,
-				singleGroupPage,
-				accessibilityPage,
-				privacyPage,
-				imprintPage,
-				siteSettings,
-			]),
+			structure: pageStructure([...singlePages, siteSettings]),
 		}),
 		// Configures the global "new document" button, and document actions,
 		// To suit the Settings document singleton
-		singletonPlugin([
-			homePage.name,
-			aboutUsPage.name,
-			echoOverviewPage.name,
-			contactPage.name,
-			membershipPage.name,
-			newsArticlePage.name,
-			newsOverviewPage.name,
-			newsOverviewCategoryPage.name,
-			searchPage.name,
-			groupsPage.name,
-			singleGroupPage.name,
-			accessibilityPage.name,
-			privacyPage.name,
-			imprintPage.name,
-			siteSettings.name,
-		]),
+		singletonPlugin([...singlePages, siteSettings].map(({ name }) => name)),
 		media(),
 		// The order of the tools above defines the order of the studio's top navigation:
 		// Structure, Media, Presentation, Vision (development only) and the built-in Releases

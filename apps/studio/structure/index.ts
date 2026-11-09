@@ -1,8 +1,6 @@
 import {
-	RiArticleLine,
 	RiBookOpenLine,
 	RiOpenaiLine,
-	RiPagesLine,
 	RiParentLine,
 	RiQuestionAnswerLine,
 	RiSettings5Line,
@@ -10,7 +8,6 @@ import {
 	RiTeamLine,
 	RiTrophyLine,
 } from 'react-icons/ri';
-import type { DocumentDefinition } from 'sanity';
 import type { DocumentListBuilder, ListItemBuilder, StructureBuilder } from 'sanity/structure';
 
 type DocumentGroup =
@@ -21,26 +18,17 @@ type DocumentGroup =
 	| 'groups'
 	| 'news'
 	| 'persons'
-	| 'settings'
-	| 'single-pages';
+	| 'settings';
 
 /**
- * Returns the group for the news.
+ * Returns the documents of the news: the articles and their categories. The section „News“ of
+ * `structure/sections.ts` lists them below the news pages.
  *
  * @param S - The structure builder.
- * @returns The group for the news.
+ * @returns The list items of the news documents.
  */
 function getGroupNews(S: StructureBuilder): ListItemBuilder[] {
-	return [
-		S.listItem()
-			.title('News')
-			.icon(RiArticleLine)
-			.child(
-				S.list()
-					.title('News')
-					.items([S.documentTypeListItem('news.article'), S.documentTypeListItem('news.category')]),
-			),
-	];
+	return [S.documentTypeListItem('news.article'), S.documentTypeListItem('news.category')];
 }
 
 /**
@@ -52,12 +40,12 @@ function getGroupNews(S: StructureBuilder): ListItemBuilder[] {
 function getGroupEcho(S: StructureBuilder): ListItemBuilder[] {
 	return [
 		S.listItem()
-			.title('TSG-Echo')
+			.title('TSG-Echo Ausgaben')
 			.id('echo')
 			.icon(RiBookOpenLine)
 			.child(
 				S.documentTypeList('echo.issue')
-					.title('TSG-Echo')
+					.title('TSG-Echo Ausgaben')
 					.defaultOrdering([{ direction: 'desc', field: 'releaseDate' }]),
 			),
 	];
@@ -234,58 +222,6 @@ function getGroupSettings(S: StructureBuilder): ListItemBuilder[] {
 }
 
 /**
- * Checks if a singleton list item is excluded.
- *
- * @param id - The id of the singleton list item.
- * @returns True if the singleton list item is excluded, false otherwise.
- */
-function isExcludedSingletonListItem(id?: string): boolean {
-	if (!id) {
-		return false;
-	}
-	return !['site-settings'].includes(id);
-}
-
-/**
- * Returns the group for the single pages.
- *
- * @param S - The structure builder.
- * @param typeDefinitionArray - The array of document definitions.
- * @returns The group for the single pages.
- */
-function getGroupSinglePages(
-	S: StructureBuilder,
-	typeDefinitionArray?: DocumentDefinition[],
-): ListItemBuilder[] {
-	if (!typeDefinitionArray) {
-		return [];
-	}
-	return [
-		S.listItem()
-			.title('Einzelseiten')
-			.id('single-pages')
-			.icon(RiPagesLine)
-			.child(
-				S.list()
-					.title('Einzelseiten')
-					.items(
-						typeDefinitionArray
-							.map((typeDefinition) =>
-								S.listItem()
-									.title(typeDefinition.title ?? typeDefinition.name)
-									.id(typeDefinition.name)
-									.icon(typeDefinition.icon)
-									.child(
-										S.document().schemaType(typeDefinition.name).documentId(typeDefinition.name),
-									),
-							)
-							.filter((typeDefinition) => isExcludedSingletonListItem(typeDefinition.getId())),
-					),
-			),
-	];
-}
-
-/**
  * Checks if a default list item is excluded.
  *
  * @param id - The id of the default list item.
@@ -319,14 +255,9 @@ function isExcludedDefaultListItem(id?: string): boolean {
  *
  * @param S - The structure builder.
  * @param name - The name of the group.
- * @param typeDefinitionArray - The array of document definitions.
  * @returns The group for the given name.
  */
-function getGroup(
-	S: StructureBuilder,
-	name: DocumentGroup,
-	typeDefinitionArray?: DocumentDefinition[],
-): ListItemBuilder[] {
+function getGroup(S: StructureBuilder, name: DocumentGroup): ListItemBuilder[] {
 	const groups: Record<DocumentGroup, () => ListItemBuilder[]> = {
 		departments: () => getGroupDepartments(S),
 		echo: () => getGroupEcho(S),
@@ -336,7 +267,6 @@ function getGroup(
 		news: () => getGroupNews(S),
 		persons: () => getGroupPersons(S),
 		settings: () => getGroupSettings(S),
-		'single-pages': () => getGroupSinglePages(S, typeDefinitionArray),
 	};
 	// An unknown name still falls back to the settings, as before.
 	const resolve = (groups as Partial<typeof groups>)[name] ?? groups.settings;

@@ -31,9 +31,9 @@ const singleGroupPage = defineType({
 	icon: RiGroupLine,
 	name: 'singleGroupPage',
 	preview: {
-		prepare: () => ({ title: 'Einzel-Gruppe' }),
+		prepare: () => ({ title: 'Alle Gruppenseiten' }),
 	},
-	title: 'Einzel-Gruppe',
+	title: 'Alle Gruppenseiten',
 	type: 'document',
 });
 

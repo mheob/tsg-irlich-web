@@ -44,9 +44,9 @@ const groupsPage = defineType({
 	icon: RiTeamLine,
 	name: 'groupsPage',
 	preview: {
-		prepare: () => ({ title: 'Gruppen' }),
+		prepare: () => ({ title: 'Alle Abteilungsseiten' }),
 	},
-	title: 'Gruppen',
+	title: 'Alle Abteilungsseiten',
 	type: 'document',
 });
 
