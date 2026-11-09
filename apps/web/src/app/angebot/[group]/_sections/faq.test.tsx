@@ -8,7 +8,7 @@ import { renderWithUser } from '../../../../../test-utils/render';
 import { encodeLikeDraftMode } from '../../../../../test-utils/stega';
 import { Faq } from './faq';
 
-type DepartmentFaq = NonNullable<DepartmentPageQueryResult>['faqs'][number];
+type DepartmentFaq = NonNullable<NonNullable<DepartmentPageQueryResult>['faqs']>[number];
 
 function faq(id: string, question: null | string, answer: string): DepartmentFaq {
 	return {

@@ -129,7 +129,7 @@ describe('desk group resolution', () => {
 		expect(titles).toContain('Abteilungen');
 	});
 
-	it('resolves the faq group to one list of the FAQ by sort order', () => {
+	it('resolves the faq group to one list of the FAQ by question', () => {
 		const { calls, structureBuilder } = createRecordingStructureBuilder();
 
 		getGroup(structureBuilder, 'faq');
@@ -144,7 +144,7 @@ describe('desk group resolution', () => {
 		const titles = calls.filter((call) => call.method === 'title').map((call) => call.args[0]);
 
 		expect(lists).toStrictEqual(['faq']);
-		expect(orderings).toStrictEqual([[{ direction: 'asc', field: 'sortOrder' }]]);
+		expect(orderings).toStrictEqual([[{ direction: 'asc', field: 'question' }]]);
 		expect(ids).toStrictEqual(['faq']);
 		expect(titles).toContain('FAQ');
 	});

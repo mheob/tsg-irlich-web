@@ -25,9 +25,11 @@ export const departmentCardsQuery = defineQuery(`
  * The groups are the ones that point at the department, and a group without a slug has no page to
  * link to. The contact persons keep the order the editors chose in the department document.
  *
- * The FAQ are the ones whose `departments` list the department. `references()` would not do: an
- * answer that links to the department references it as well. `isMarkedUp` tells whether the
- * department is the first one of a question, the only page whose `FAQPage` names it.
+ * The FAQ come in the order of the department's `faqs` (WEB-431). `isMarkedUp` tells whether this
+ * department is the one to name a question in its `FAQPage`: of all departments whose `faqs` list
+ * the question, the one with the lowest sort order, the id breaking a tie. That lookup checks
+ * `faqs[]._ref`, not `references()`, because an answer that links to a department references it as
+ * well.
  *
  * @param slug - The slug of the department
  * @returns The department with its FAQ, groups and contact persons, or `null` when no department
@@ -42,13 +44,13 @@ export const departmentPageQuery = defineQuery(`
 		heroImage,
 		${meta},
 		stats,
-		"faqs": *[_type == 'faq' && ^._id in departments[]._ref] | order(sortOrder asc, question asc) {
+		"faqs": (faqs[]-> {
 			_id,
 			question,
 			"answer": coalesce(answer[] { ..., ${markDefsWithLinks} }, []),
 			"answerText": pt::text(answer),
-			"isMarkedUp": departments[0]._ref == ^._id,
-		},
+			"isMarkedUp": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc, _id asc)[0]._id == ^._id,
+		})[defined(_id)],
 		"groups": *[_type == 'group' && department._ref == ^._id && defined(slug.current)] | order(sortOrder asc) {
 			featuredImage,
 			icon,

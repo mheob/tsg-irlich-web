@@ -164,6 +164,7 @@ catalog:
   pdf-lib: ^1.17.1
   pdfjs-dist: ^6.5.438
   write-excel-file: ^4.1.1
+  groq-js: ^2.0.1
 
 peerDependencyRules:
   allowAny:

@@ -109,7 +109,8 @@ function getGroupDepartments(S: StructureBuilder): ListItemBuilder[] {
 }
 
 /**
- * Returns the group for the FAQ, ordered like on the department pages.
+ * Returns the group for the FAQ, alphabetically by question. The order on a department page is the
+ * order of its `faqs`, so this list belongs to no page.
  *
  * @param S - The structure builder.
  * @returns The group for the FAQ.
@@ -123,7 +124,7 @@ function getGroupFaq(S: StructureBuilder): ListItemBuilder[] {
 			.child(
 				S.documentTypeList('faq')
 					.title('FAQ')
-					.defaultOrdering([{ direction: 'asc', field: 'sortOrder' }]),
+					.defaultOrdering([{ direction: 'asc', field: 'question' }]),
 			),
 	];
 }

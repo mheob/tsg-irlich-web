@@ -170,6 +170,15 @@ describe('search queries', () => {
 			);
 		});
 
+		// The department lists its questions in `faqs` (WEB-431), so a question finds its pages
+		// backwards, through that field only.
+		it('finds the departments of a FAQ by their faqs field', () => {
+			expect(searchCandidatesQuery).toContain(
+				`"targets": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc)`,
+			);
+			expect(searchCandidatesQuery).not.toContain('departments[]->');
+		});
+
 		// Nobody searches for them, and their long texts would turn up for almost any word.
 		it.each(['imprint', 'privacy', 'accessibility'])('leave out the legal page %s', (type) => {
 			expect(searchCandidatesQuery).not.toContain(`'${type}'`);

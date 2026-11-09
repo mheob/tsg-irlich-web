@@ -9,7 +9,7 @@ import { SectionHeader } from '@/components/ui/section-header';
 import type { DepartmentPageQueryResult, GroupsPage } from '@/types/sanity.types';
 import { isCompleteFaq } from '@/utils/faq';
 
-type DepartmentFaq = NonNullable<DepartmentPageQueryResult>['faqs'][number];
+type DepartmentFaq = NonNullable<NonNullable<DepartmentPageQueryResult>['faqs']>[number];
 
 // The heading is optional in the studio, so a dataset without it still shows a section.
 type FaqProps = Partial<NonNullable<GroupsPage['content']['faqSection']>> & {
