@@ -33,6 +33,32 @@ function prepareDepartmentPreview({
 	return { media, subtitle: `Sortierreihenfolge: ${sortOrder ?? '–'}`, title };
 }
 
+/**
+ * Warns when a department has no intro of its own. The page then shows the intro all departments
+ * share, so six pages read alike (WEB-417).
+ *
+ * @param intro - The intro of the department.
+ * @returns `true`, or the message for an editor.
+ */
+function validateDepartmentIntro(intro?: string): string | true {
+	return intro?.trim()
+		? true
+		: 'Ohne eigenes Intro zeigt die Abteilungsseite den gemeinsamen Text aller Abteilungen.';
+}
+
+/**
+ * Warns when a department has no meta description of its own. The website then describes the page by
+ * its intro, and without one by the description all departments share (WEB-417).
+ *
+ * @param metaValue - The meta object of the department.
+ * @returns `true`, or the message for an editor.
+ */
+function validateDepartmentMetaDescription(metaValue?: MetaFieldsValue): string | true {
+	return metaValue?.metaDescription?.trim()
+		? true
+		: 'Ohne eigene Meta-Beschreibung steht in Suchergebnissen das Intro oder, ohne Intro, der gemeinsame Text aller Abteilungen.';
+}
+
 const department = defineType({
 	fields: [
 		defineField({
@@ -94,10 +120,16 @@ const department = defineType({
 		{
 			...getFieldWithGroup(introField, 'content'),
 			description:
-				'Optional. Ersetzt auf der Abteilungsseite das gemeinsame Intro des Abschnitts „Gruppen“.',
+				'Ersetzt auf der Abteilungsseite das gemeinsame Intro des Abschnitts „Gruppen“. Ohne eigene Meta-Beschreibung steht es auch in Suchergebnissen.',
+			validation: (Rule) => Rule.custom(validateDepartmentIntro).warning(),
 		},
 
-		getFieldWithGroup(metaField, 'meta'),
+		{
+			...getFieldWithGroup(metaField, 'meta'),
+			description:
+				'Ohne eigene Meta-Beschreibung nimmt die Abteilungsseite das Intro, ohne Intro den gemeinsamen Text aller Abteilungen.',
+			validation: (Rule) => Rule.custom(validateDepartmentMetaDescription).warning(),
+		},
 
 		defineField({
 			description:
@@ -157,5 +189,12 @@ const department = defineType({
 	type: 'document',
 });
 
-export { prepareDepartmentPreview };
+/** The value of a `metaFields` object (`schemas/objects/meta.tsx`). */
+interface MetaFieldsValue {
+	metaDescription?: string;
+	metaTitle?: string;
+	openGraphImage?: unknown;
+}
+
+export { prepareDepartmentPreview, validateDepartmentIntro, validateDepartmentMetaDescription };
 export default department;
