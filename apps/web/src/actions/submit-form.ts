@@ -2,11 +2,11 @@
 
 import { randomUUID } from 'node:crypto';
 
-import { checkBotId } from 'botid/server';
 import { revalidateTag } from 'next/cache';
 
 import type { FormAnswer } from '@tsgi-web/shared';
 
+import { assertHuman } from '@/lib/actions/bot-protection';
 import { actionClient } from '@/lib/actions/safe-action';
 import { buildFormSchema } from '@/lib/forms/build-form-schema';
 import { getRegisteredCount, submissionsTag } from '@/lib/forms/registered-count';
@@ -59,13 +59,6 @@ async function getState(form: Form): Promise<RegistrationState> {
 		registrationEnd: form.registrationEnd,
 		registrationStart: form.registrationStart,
 	});
-}
-
-async function assertHuman(): Promise<void> {
-	const verification = await checkBotId();
-	if (verification.isBot) {
-		throw new Error('Bot detected');
-	}
 }
 
 /**

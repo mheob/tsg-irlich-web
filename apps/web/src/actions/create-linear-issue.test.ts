@@ -1,12 +1,22 @@
+import { checkBotId } from 'botid/server';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import type * as createLinearIssueModule from '@/actions/create-linear-issue';
 import type { FeedbackFormValues } from '@/lib/validations/feedback';
 
+import { BOT_VERDICT } from '../../test-utils/botid';
 import { loadWithEnv } from '../../test-utils/env';
 import { createFetchMock, type FetchCall } from '../../test-utils/fetch-mock';
 
 type CreateLinearIssueModule = typeof createLinearIssueModule;
+
+// The action asks BotID first. Every request is human unless a case says otherwise.
+vi.mock(import('botid/server'), async () => {
+	const { HUMAN_VERDICT } = await import('../../test-utils/botid');
+	return { checkBotId: vi.fn<typeof checkBotId>().mockResolvedValue(HUMAN_VERDICT) };
+});
+
+const mockedCheckBotId = vi.mocked(checkBotId);
 
 const LINEAR_ENV = {
 	LINEAR_API_KEY: 'test-api-key',
@@ -144,6 +154,31 @@ describe('building the linear issue description and mutation variables', () => {
 			},
 		});
 		expect(mock.unqueued).toStrictEqual([]);
+	});
+});
+
+describe('turning bots away', () => {
+	let mock: ReturnType<typeof createFetchMock> | undefined;
+
+	afterEach(() => {
+		mock?.restore();
+		vi.restoreAllMocks();
+	});
+
+	it('creates no issue for a request BotID flags as a bot', async () => {
+		mock = createFetchMock();
+		const { createLinearIssue } = await loadWithEnv<CreateLinearIssueModule>(
+			'@/actions/create-linear-issue',
+			LINEAR_ENV,
+		);
+		const errorSpy = vi.spyOn(console, 'error').mockReturnValue();
+		mockedCheckBotId.mockResolvedValueOnce(BOT_VERDICT);
+
+		const result = await createLinearIssue(validFeedbackInput());
+
+		expect(result).toStrictEqual({ serverError: GENERIC_SERVER_ERROR });
+		expect(errorSpy).toHaveBeenCalledExactlyOnceWith('Action error:', 'Bot detected');
+		expect(mock.calls).toStrictEqual([]);
 	});
 });
 

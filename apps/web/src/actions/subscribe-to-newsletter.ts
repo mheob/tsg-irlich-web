@@ -3,6 +3,7 @@
 import { headers } from 'next/headers';
 import { treeifyError } from 'zod';
 
+import { isBotRequest } from '@/lib/actions/bot-protection';
 import { subscribe, subscriberSchema } from '@/lib/cleverreach';
 import type { DoiMetadata } from '@/lib/cleverreach';
 
@@ -74,6 +75,12 @@ export async function subscribeToNewsletter(
 	_previousState: NewsletterFormState,
 	formData: FormData,
 ): Promise<NewsletterFormState> {
+	// The state reaches the browser as it is, so a bot is answered like any other failure.
+	// Throwing instead would hand the error to the page's error boundary.
+	if (await isBotRequest()) {
+		return toErrorState('Request rejected', 'INTERNAL_ERROR');
+	}
+
 	const validated = validateEmail(formData);
 
 	if ('error' in validated) {

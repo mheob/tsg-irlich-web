@@ -4,6 +4,7 @@ import { returnValidationErrors } from 'next-safe-action';
 
 import { ContactForwardEmail } from '@tsgi-web/email';
 
+import { assertHuman } from '@/lib/actions/bot-protection';
 import { actionClient } from '@/lib/actions/safe-action';
 import { env } from '@/lib/env';
 import { resend } from '@/lib/resend';
@@ -43,6 +44,7 @@ async function findReceiver(key: string): Promise<Receiver | undefined> {
 export const sendContactForm = actionClient
 	.inputSchema(contactFormSchema)
 	.action(async ({ parsedInput: data }) => {
+		await assertHuman();
 		const { email, message, name, receiver: receiverKey } = data;
 
 		const receiver = receiverKey === undefined ? undefined : await findReceiver(receiverKey);
