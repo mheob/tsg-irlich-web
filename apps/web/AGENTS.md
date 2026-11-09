@@ -141,7 +141,7 @@ The addresses of the WordPress site that ran until the relaunch are redirected p
 - The old articles lived directly below the domain. None of them exists in Sanity, so they go to `/news`. Only the slugs in `legacy-article-slugs.ts` are redirected, the ones the Wayback Machine captured, so a root page added later is never caught; they are joined into a few alternations, since Next.js refuses a `source` whose regular expression exceeds 4096 characters.
 - Every source is written without the trailing slash WordPress used: Next.js answers `/foo/` with its own 308 to `/foo` first. A parameter the destination does not use is dropped, not appended to the query.
 - The unit test resolves addresses through Next.js's own matcher (`next/dist/shared/lib/router/utils/path-match`) and checks that no redirect ends in another one, that no page of the app is caught and that no article slug is a top-level route; `e2e/specs/redirects.spec.ts` checks the hops on the running server.
-- 23 of these addresses were bulk redirects in the Vercel dashboard (project → Redirects) before, which the test repeats one by one. They live outside the repository and can be deleted there once this table is in production. Until then the dashboard's `/veranstaltungen` → `/` may answer before this table's `/news/veranstaltungen`.
+- 23 of these addresses were bulk redirects in the Vercel dashboard (project → Redirects) until this table reached production, and the test repeats them one by one. They answered before the table, with 301, so the dashboard's `/veranstaltungen` → `/` shadowed this table's `/news/veranstaltungen`. On 2026-11-09 an empty version replaced them there; the old one stays in the dashboard's version list and could be restored.
 
 ## Main navigation
 
