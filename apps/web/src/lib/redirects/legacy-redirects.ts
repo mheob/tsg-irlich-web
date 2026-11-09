@@ -115,8 +115,8 @@ export function toAlternations(slugs: readonly string[], maxLength: number): str
 
 /**
  * The addresses of the old WordPress site and where their content lives today (WEB-420). They used to
- * end in 404, apart from 23 that were entered as bulk redirects in the Vercel dashboard; those are
- * repeated here so they live in the repository.
+ * end in 404, apart from 23 that were bulk redirects in the Vercel dashboard until 2026-11-09; those
+ * are repeated here so they live in the repository.
  *
  * Every source is written without a trailing slash, which WordPress put on every address: Next.js
  * answers `/foo/` with a 308 to `/foo` before any of these rules, so the old address takes two hops.

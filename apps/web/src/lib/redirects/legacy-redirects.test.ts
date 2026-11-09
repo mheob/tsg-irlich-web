@@ -138,9 +138,9 @@ describe('legacy redirects', () => {
 		await expect(resolve(target)).resolves.toBeUndefined();
 	});
 
-	// The 23 bulk redirects of the Vercel dashboard (version of 2026-01-03), exactly as entered there,
-	// so they can be deleted once this table is in production. Only `/veranstaltungen` changes its
-	// target: the news category of the events fits better than the home page.
+	// The 23 bulk redirects the Vercel dashboard held until 2026-11-09 (version of 2026-01-03), exactly
+	// as entered there, which this table took over. Only `/veranstaltungen` changes its target: the
+	// news category of the events fits better than the home page.
 	it.each([
 		['/abteilungen/breitensport/badminton', '/angebot/weitere-sportarten/badminton'],
 		['/abteilungen/breitensport/bewegungstraining-nach-pilates', '/angebot/kurse/pilates'],
