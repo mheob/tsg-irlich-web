@@ -145,7 +145,7 @@ const searchCandidatesQuery = defineQuery(`
 		"_score": math::sum([_score]),
 		_type == 'faq' => {
 			question,
-			"targets": departments[]-> { ${searchTarget} }
+			"targets": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { ${searchTarget} }
 		},
 		_type == 'person' => {
 			firstName,
