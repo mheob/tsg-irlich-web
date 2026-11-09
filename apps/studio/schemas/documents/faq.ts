@@ -1,43 +1,69 @@
 // oxlint-disable no-magic-numbers
 
 import { RiQuestionAnswerLine } from 'react-icons/ri';
-import { defineArrayMember, defineField, defineType } from 'sanity';
+import type { ValidationContext } from 'sanity';
+import { defineArrayMember, defineField, defineType, getPublishedId } from 'sanity';
+import { defineIncomingReferenceDecoration } from 'sanity/structure';
 
 import externalLink from '../objects/external-link';
 import internalLink from '../objects/internal-link';
 
-/** How many department titles the preview names before it only counts the rest. */
-const PREVIEW_DEPARTMENTS = 3;
+/** The API version of the assignment check, the one the other studio checks use. */
+const FAQ_API_VERSION = '2026-10-01';
+
+const UNASSIGNED_WARNING =
+	'Diese Frage steht in keiner Abteilung und erscheint deshalb nirgends auf der Website. Zuordnen lässt sie sich in der Abteilung, Tab „Inhalt“.';
 
 /**
- * Builds the list preview of a FAQ: the question and the departments it appears on. Only the first
- * three titles are selected, so the rest is counted, as in "Fußball, Kurse, Tanzen +3".
+ * Builds the list preview of a FAQ: the question and the start of its answer. The departments that
+ * show the question point at it, not the other way round, and a preview cannot follow such a
+ * reference back.
  *
  * @param selection - The values selected by the preview.
- * @param selection.department0 - The title of the first department.
- * @param selection.department1 - The title of the second department.
- * @param selection.department2 - The title of the third department.
- * @param selection.departments - The references to the departments, read for their number.
+ * @param selection.answer - The answer as Portable Text.
  * @param selection.title - The question.
  * @returns The preview value shown in document lists.
  */
 function prepareFaqPreview({
-	department0,
-	department1,
-	department2,
-	departments,
+	answer,
 	title,
 }: {
-	department0?: string;
-	department1?: string;
-	department2?: string;
-	departments?: readonly unknown[];
+	answer?: readonly FaqPreviewBlock[];
 	title?: string;
-}): { subtitle: string; title?: string } {
-	const titles = [department0, department1, department2].filter(Boolean).join(', ');
-	const more = (departments?.length ?? 0) - PREVIEW_DEPARTMENTS;
+}): { subtitle?: string; title?: string } {
+	const text = answer?.[0]?.children
+		?.map((child) => child.text ?? '')
+		.join('')
+		.trim();
 
-	return { subtitle: more > 0 ? `${titles} +${more}` : titles, title };
+	return { subtitle: text === undefined || text === '' ? undefined : text, title };
+}
+
+/**
+ * Warns while no department lists the question. Such a question appears nowhere on the website,
+ * because only `faqs` of a department puts it on a page (WEB-431). A department draft or a release
+ * version counts, so the check reads the raw perspective.
+ *
+ * @param document - The FAQ.
+ * @param context - The validation context, for its client.
+ * @returns `true`, or the message for an editor.
+ */
+async function validateFaqIsAssigned(
+	document: { _id: string } | undefined,
+	context: Pick<ValidationContext, 'getClient'>,
+): Promise<string | true> {
+	if (!document) {
+		return true;
+	}
+
+	const isAssigned = await context
+		.getClient({ apiVersion: FAQ_API_VERSION })
+		.withConfig({ perspective: 'raw' })
+		.fetch<boolean>('count(*[_type == "department" && $id in faqs[]._ref]) > 0', {
+			id: getPublishedId(document._id),
+		});
+
+	return isAssigned ? true : UNASSIGNED_WARNING;
 }
 
 const faq = defineType({
@@ -76,61 +102,44 @@ const faq = defineType({
 			type: 'array',
 			validation: (Rule) => Rule.required().error('Antwort ist erforderlich'),
 		}),
-
-		defineField({
-			description:
-				'Auf welchen Abteilungsseiten die Frage erscheint. Für Suchmaschinen ausgezeichnet wird sie nur auf der Seite der ersten Abteilung.',
-			name: 'departments',
-			of: [
-				defineArrayMember({
-					options: { disableNew: true },
-					to: [{ type: 'department' }],
-					type: 'reference',
-				}),
-			],
-			title: 'Abteilungen',
-			type: 'array',
-			validation: (Rule) => [
-				Rule.required().min(1).error('Mindestens eine Abteilung ist erforderlich'),
-				Rule.unique().error('Jede Abteilung nur einmal auswählen'),
-			],
-		}),
-
-		defineField({
-			description: 'Kleinere Zahlen stehen weiter oben, auf allen Seiten der Frage.',
-			name: 'sortOrder',
-			title: 'Sortierreihenfolge',
-			type: 'number',
-			validation: (Rule) => Rule.required().error('Sortierreihenfolge ist erforderlich'),
-		}),
 	],
 	icon: RiQuestionAnswerLine,
 	name: 'faq',
 	orderings: [
 		{
-			by: [{ direction: 'asc', field: 'sortOrder' }],
-			name: 'sortOrderAsc',
-			title: 'nach Sortierreihenfolge - aufsteigend',
+			by: [{ direction: 'asc', field: 'question' }],
+			name: 'questionAsc',
+			title: 'nach Frage - aufsteigend',
 		},
 		{
-			by: [{ direction: 'desc', field: 'sortOrder' }],
-			name: 'sortOrderDesc',
-			title: 'nach Sortierreihenfolge - absteigend',
+			by: [{ direction: 'desc', field: 'question' }],
+			name: 'questionDesc',
+			title: 'nach Frage - absteigend',
 		},
 	],
 	preview: {
 		prepare: prepareFaqPreview,
-		select: {
-			department0: 'departments.0.title',
-			department1: 'departments.1.title',
-			department2: 'departments.2.title',
-			departments: 'departments',
-			title: 'question',
-		},
+		select: { answer: 'answer', title: 'question' },
 	},
+	// Read only: the department assigns its questions, so the FAQ links nothing and creates nothing.
+	renderMembers: (members) => [
+		...members,
+		defineIncomingReferenceDecoration({
+			creationAllowed: false,
+			name: 'usedIn',
+			title: 'Verwendet in',
+			types: [{ type: 'department' }],
+		}),
+	],
 	title: 'FAQ',
 	type: 'document',
+	validation: (Rule) => Rule.custom(validateFaqIsAssigned).warning(),
 });
 
-export { prepareFaqPreview };
+/** One block of the answer, as far as the preview reads it. */
+interface FaqPreviewBlock {
+	children?: readonly { text?: string }[];
+}
+
+export { prepareFaqPreview, validateFaqIsAssigned };
 export default faq;
