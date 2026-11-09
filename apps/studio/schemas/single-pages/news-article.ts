@@ -11,9 +11,9 @@ const newsArticlePage = defineType({
 	icon: RiFileTextLine,
 	name: 'news-article-page',
 	preview: {
-		prepare: () => ({ title: 'Einzelner News-Artikel' }),
+		prepare: () => ({ title: 'Alle Artikelseiten' }),
 	},
-	title: 'Einzelner News-Artikel',
+	title: 'Alle Artikelseiten',
 	type: 'document',
 });
 

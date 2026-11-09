@@ -2,7 +2,9 @@ import { definePlugin } from 'sanity';
 import type { DocumentDefinition } from 'sanity';
 import type { StructureResolver } from 'sanity/structure';
 
+import { SinglePageInput } from '@/components/single-page-input';
 import { getGroup, isExcludedDefaultListItem } from '@/structure';
+import { getPageListItems } from '@/structure/sections';
 
 /**
  * This plugin contains all the logic for setting up the singletons
@@ -25,6 +27,8 @@ const singletonPlugin = definePlugin((types: string[]) => ({
 			return previous;
 		},
 	},
+	// Shows above the form of a single page where it sits on the website
+	form: { components: { input: SinglePageInput } },
 	name: 'singletonPlugin',
 }));
 
@@ -37,15 +41,12 @@ const singletonPlugin = definePlugin((types: string[]) => ({
  */
 function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureResolver {
 	return (S) => {
-		// The middle block: the custom groups plus the default root list items (except custom ones),
-		// all sorted by title
+		// The middle block: the documents several areas of the website share, plus the default root
+		// list items (except custom ones), all sorted by title. The FAQ also sits under „Angebot“.
 		const middleListItems = [
-			...getGroup(S, 'departments'),
 			...getGroup(S, 'faq'),
 			...getGroup(S, 'forms'),
 			...getGroup(S, 'persons'),
-			...getGroup(S, 'groups'),
-			...getGroup(S, 'echo'),
 			...S.documentTypeListItems().filter(
 				(listItem) =>
 					!typeDefinitionArray.some((singleton) => singleton.name === listItem.getId()) &&
@@ -56,8 +57,7 @@ function pageStructure(typeDefinitionArray: DocumentDefinition[]): StructureReso
 		return S.list()
 			.title('Base')
 			.items([
-				...getGroup(S, 'news'),
-				...getGroup(S, 'single-pages', typeDefinitionArray),
+				...getPageListItems(S, typeDefinitionArray),
 				S.divider(),
 				...middleListItems,
 				S.divider(),

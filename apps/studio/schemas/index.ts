@@ -49,21 +49,7 @@ import gallery from './sections/gallery';
 import grid from './sections/grid';
 import mainImage from './sections/main-image';
 import spacer from './sections/spacer';
-import aboutUsPage from './single-pages/about-us';
-import accessibilityPage from './single-pages/accessibility';
-import contactPage from './single-pages/contact';
-import echoOverviewPage from './single-pages/echo-overview';
-import groupsPage from './single-pages/groups';
-import homePage from './single-pages/home';
-import imprintPage from './single-pages/imprint';
-import membershipPage from './single-pages/membership';
-import newsArticlePage from './single-pages/news-article';
-import newsOverviewPage from './single-pages/news-overview';
-import newsOverviewCategoryPage from './single-pages/news-overview-category';
-import departmentsPage from './single-pages/offer';
-import privacyPage from './single-pages/privacy';
-import searchPage from './single-pages/search-page';
-import singleGroupPage from './single-pages/single-group';
+import { singlePages } from './single-pages';
 import siteSettings from './singletons/site-settings';
 
 export const schemaTypes = [
@@ -127,19 +113,5 @@ export const schemaTypes = [
 	spacer,
 
 	// Single Pages
-	aboutUsPage,
-	accessibilityPage,
-	contactPage,
-	departmentsPage,
-	echoOverviewPage,
-	groupsPage,
-	homePage,
-	imprintPage,
-	membershipPage,
-	newsArticlePage,
-	newsOverviewCategoryPage,
-	newsOverviewPage,
-	privacyPage,
-	searchPage,
-	singleGroupPage,
+	...singlePages,
 ];

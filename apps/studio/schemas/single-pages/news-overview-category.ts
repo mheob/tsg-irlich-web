@@ -43,9 +43,9 @@ const newsOverviewCategory = defineType({
 	icon: RiPriceTag3Line,
 	name: 'newsOverviewCategory',
 	preview: {
-		prepare: () => ({ title: 'News Übersicht für Kategorie' }),
+		prepare: () => ({ title: 'Alle Kategorieseiten' }),
 	},
-	title: 'News Übersicht für Kategorie',
+	title: 'Alle Kategorieseiten',
 	type: 'document',
 });
 

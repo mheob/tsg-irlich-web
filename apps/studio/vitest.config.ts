@@ -19,7 +19,7 @@ export default defineConfig({
 			reportsDirectory: './coverage',
 			// A floor at the level the suite currently reaches, to keep it from slipping while the
 			// schemas are still largely untested. Raise it with every batch of new tests.
-			thresholds: { branches: 92, functions: 63, lines: 83, statements: 83 },
+			thresholds: { branches: 92, functions: 64, lines: 83, statements: 83 },
 		},
 		environment: 'jsdom',
 		exclude: ['dist/**', 'node_modules/**', '.sanity/**'],

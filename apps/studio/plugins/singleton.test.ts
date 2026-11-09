@@ -1,27 +1,15 @@
 import type { DocumentDefinition } from 'sanity';
-import type { StructureBuilder, StructureResolverContext } from 'sanity/structure';
+import type { StructureResolverContext } from 'sanity/structure';
 import { describe, expect, it } from 'vite-plus/test';
+
+import { SinglePageInput } from '@/components/single-page-input';
+import { DIVIDER_TITLE, createFakeStructureBuilder } from '@/test-utils/fake-structure-builder';
+import type { FakeBuilder } from '@/test-utils/fake-structure-builder';
 
 import { pageStructure, singletonPlugin } from './singleton';
 
-const DIVIDER_TITLE = '———';
-
 interface FakeAction {
 	readonly action: string;
-}
-
-interface FakeBuilder {
-	getId: () => string | undefined;
-	getItems: () => FakeBuilder[];
-	getTitle: () => string | undefined;
-	id: (value: string) => FakeBuilder;
-	items: (value: FakeBuilder[]) => FakeBuilder;
-	title: (value: string) => FakeBuilder;
-}
-
-interface FakeDocumentType {
-	readonly name: string;
-	readonly title: string;
 }
 
 interface FakeTemplateItem {
@@ -34,87 +22,6 @@ type NewDocumentOptionsResolver = (
 	previous: FakeTemplateItem[],
 	context: { creationContext: { type: string } },
 ) => FakeTemplateItem[];
-
-/**
- * Creates a builder that remembers its `id`, `title` and `items` and returns itself for every
- * other chained call (`.icon()`, `.child()`, `.schemaType()`, …).
- *
- * @returns The fake builder.
- */
-function createFakeBuilder(): FakeBuilder {
-	let id: string | undefined;
-	let title: string | undefined;
-	let items: FakeBuilder[] = [];
-	const builder = new Proxy(
-		{},
-		{
-			get(_target, property) {
-				switch (property) {
-					case 'getId': {
-						return () => id;
-					}
-					case 'getItems': {
-						return () => items;
-					}
-					case 'getTitle': {
-						return () => title;
-					}
-					case 'id': {
-						return (value: string) => {
-							id = value;
-							return builder;
-						};
-					}
-					case 'items': {
-						return (value: FakeBuilder[]) => {
-							items = value;
-							return builder;
-						};
-					}
-					case 'title': {
-						return (value: string) => {
-							title = value;
-							return builder;
-						};
-					}
-					default: {
-						return () => builder;
-					}
-				}
-			},
-		},
-	) as FakeBuilder;
-	return builder;
-}
-
-/**
- * `pageStructure` reads ids and titles back out of the list items to filter and sort them, so
- * unlike the call recorder in `structure/index.test.ts` this fake keeps that state.
- *
- * @param documentTypes - The document types `S.documentTypeListItems()` returns.
- * @returns The fake structure builder.
- */
-function createFakeStructureBuilder(documentTypes: readonly FakeDocumentType[]): StructureBuilder {
-	return new Proxy(
-		{},
-		{
-			get(_target, property) {
-				switch (property) {
-					case 'divider': {
-						return () => createFakeBuilder().title(DIVIDER_TITLE);
-					}
-					case 'documentTypeListItems': {
-						return () =>
-							documentTypes.map(({ name, title }) => createFakeBuilder().id(name).title(title));
-					}
-					default: {
-						return () => createFakeBuilder();
-					}
-				}
-			},
-		},
-	) as StructureBuilder;
-}
 
 describe('singleton plugin document actions', () => {
 	it('strips the duplicate action for a listed type', () => {
@@ -179,7 +86,7 @@ describe('singleton plugin new document options', () => {
 });
 
 describe('page structure', () => {
-	it('sorts every entry between the two dividers by title', () => {
+	it('lists the pages first, then the shared documents by title, then the settings', () => {
 		const structureBuilder = createFakeStructureBuilder([
 			{ name: 'testimonial', title: 'Zeugnis / Referenz' },
 			{ name: 'venue', title: 'Sportstätte' },
@@ -196,21 +103,28 @@ describe('page structure', () => {
 		) as FakeBuilder;
 
 		expect(root.getItems().map((item) => item.getTitle())).toStrictEqual([
+			'Startseite',
+			'Verein',
 			'News',
-			'Einzelseiten',
+			'Angebot',
 			DIVIDER_TITLE,
-			'Abteilungen',
 			'FAQ',
 			'Formulare',
-			'Gruppen',
 			'Personen',
 			'Sponsoren',
 			'Sportstätte',
-			'TSG-Echo',
 			'Zeugnis / Referenz',
 			DIVIDER_TITLE,
 			'KI-Anweisungen',
 			'Generelle Einstellungen',
 		]);
+	});
+});
+
+describe('singleton plugin form', () => {
+	it('puts the place of a single page above its form', () => {
+		const plugin = singletonPlugin(['site-settings']);
+
+		expect(plugin.form?.components?.input).toBe(SinglePageInput);
 	});
 });

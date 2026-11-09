@@ -64,8 +64,8 @@ const homePage = defineType({
 	groups: [general, content, meta],
 	icon: RiHome4Line,
 	name: 'home',
-	preview: getSinglePagePreview('Home'),
-	title: 'Home',
+	preview: getSinglePagePreview('Startseite'),
+	title: 'Startseite',
 	type: 'document',
 });
 
