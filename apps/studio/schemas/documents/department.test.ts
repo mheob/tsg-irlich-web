@@ -127,7 +127,7 @@ describe('department document', () => {
 
 		expect(faqs).toMatchObject({
 			group: 'content',
-			of: [{ to: [{ type: 'faq' }], type: 'reference' }],
+			of: [{ title: 'Frage', to: [{ type: 'faq' }], type: 'reference' }],
 			title: 'FAQ',
 			type: 'array',
 		});

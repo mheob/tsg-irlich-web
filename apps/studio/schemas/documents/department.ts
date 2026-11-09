@@ -149,7 +149,8 @@ const department = defineType({
 				'Optional. Die Reihenfolge hier ist die Reihenfolge auf der Abteilungsseite. Eine Frage kann in mehreren Abteilungen stehen und wird nur einmal gepflegt. Eine neue Frage zuerst veröffentlichen, dann die Abteilung.',
 			group: 'content',
 			name: 'faqs',
-			of: [defineArrayMember({ to: [{ type: 'faq' }], type: 'reference' })],
+			// Without a title the form and the validation call an entry "Reference to faq".
+			of: [defineArrayMember({ title: 'Frage', to: [{ type: 'faq' }], type: 'reference' })],
 			title: 'FAQ',
 			type: 'array',
 			validation: (Rule) => [Rule.unique().error('Eine Frage darf nur einmal ausgewählt werden')],
