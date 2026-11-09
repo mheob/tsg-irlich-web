@@ -2,6 +2,7 @@
 
 import { z } from 'zod';
 
+import { assertHuman } from '@/lib/actions/bot-protection';
 import { actionClient } from '@/lib/actions/safe-action';
 import { env } from '@/lib/env';
 
@@ -134,6 +135,7 @@ async function uploadFileToUrl(
 export const uploadToLinear = actionClient
 	.inputSchema(uploadSchema)
 	.action(async ({ parsedInput: { file } }) => {
+		await assertHuman();
 		const apiKey = env('LINEAR_API_KEY');
 
 		const { assetUrl, headers, uploadUrl } = await requestUploadUrl(apiKey, file);

@@ -1,11 +1,21 @@
+import { checkBotId } from 'botid/server';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import type * as uploadToLinearModule from '@/actions/upload-to-linear';
 
+import { BOT_VERDICT } from '../../test-utils/botid';
 import { loadWithEnv } from '../../test-utils/env';
 import { createFetchMock, type FetchCall } from '../../test-utils/fetch-mock';
 
 type UploadToLinearModule = typeof uploadToLinearModule;
+
+// The action asks BotID first. Every request is human unless a case says otherwise.
+vi.mock(import('botid/server'), async () => {
+	const { HUMAN_VERDICT } = await import('../../test-utils/botid');
+	return { checkBotId: vi.fn<typeof checkBotId>().mockResolvedValue(HUMAN_VERDICT) };
+});
+
+const mockedCheckBotId = vi.mocked(checkBotId);
 
 const LINEAR_ENV = { LINEAR_API_KEY: 'test-api-key' };
 
@@ -54,6 +64,31 @@ function parseGraphqlBody(call: FetchCall): { query: string; variables: Record<s
 	// here, so this narrows a JSON body this test file itself constructed, not an external payload.
 	return JSON.parse(call.body) as { query: string; variables: Record<string, unknown> };
 }
+
+describe('turning bots away', () => {
+	let mock: ReturnType<typeof createFetchMock> | undefined;
+
+	afterEach(() => {
+		mock?.restore();
+		vi.restoreAllMocks();
+	});
+
+	it('uploads nothing for a request BotID flags as a bot', async () => {
+		mock = createFetchMock();
+		const { uploadToLinear } = await loadWithEnv<UploadToLinearModule>(
+			'@/actions/upload-to-linear',
+			LINEAR_ENV,
+		);
+		const errorSpy = vi.spyOn(console, 'error').mockReturnValue();
+		mockedCheckBotId.mockResolvedValueOnce(BOT_VERDICT);
+
+		const result = await uploadToLinear({ file: imageFile([1, 2, 3]) });
+
+		expect(result).toStrictEqual({ serverError: GENERIC_SERVER_ERROR });
+		expect(errorSpy).toHaveBeenCalledExactlyOnceWith('Action error:', 'Bot detected');
+		expect(mock.calls).toStrictEqual([]);
+	});
+});
 
 describe('validating the uploaded file', () => {
 	let mock: ReturnType<typeof createFetchMock> | undefined;

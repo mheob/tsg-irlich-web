@@ -1,3 +1,4 @@
+import { checkBotId } from 'botid/server';
 import type { Resend } from 'resend';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
@@ -9,10 +10,19 @@ import type { client } from '@/lib/sanity/client';
 import { contactReceiversQuery } from '@/lib/sanity/queries/pages/contact';
 import type { ContactFormData } from '@/lib/validations/contact-form';
 
+import { BOT_VERDICT } from '../../test-utils/botid';
 import { loadWithEnv } from '../../test-utils/env';
 import { clientFetchMock } from '../../test-utils/sanity-client-mock';
 
 type SendContactFormModule = typeof sendContactFormModule;
+
+// The action asks BotID first. Every request is human unless a case says otherwise.
+vi.mock(import('botid/server'), async () => {
+	const { HUMAN_VERDICT } = await import('../../test-utils/botid');
+	return { checkBotId: vi.fn<typeof checkBotId>().mockResolvedValue(HUMAN_VERDICT) };
+});
+
+const mockedCheckBotId = vi.mocked(checkBotId);
 
 // `sendContactForm` calls `resend.emails.send` (see `src/lib/resend.ts`) directly, so the whole
 // module is replaced with a fake `Resend` instance whose `emails.send` is a spy. This sidesteps
@@ -86,6 +96,31 @@ function mockSendSuccess(): void {
 		headers: null,
 	});
 }
+
+describe('turning bots away', () => {
+	afterEach(() => {
+		vi.restoreAllMocks();
+		mockedSend.mockReset();
+		mockedFetch.mockReset();
+	});
+
+	it('sends nothing and looks no receiver up for a request BotID flags as a bot', async () => {
+		const errorSpy = vi.spyOn(console, 'error').mockReturnValue();
+		mockedCheckBotId.mockResolvedValueOnce(BOT_VERDICT);
+		mockedFetch.mockResolvedValue(RECEIVERS);
+		const { sendContactForm } = await loadWithEnv<SendContactFormModule>(
+			'@/actions/send-contact-form',
+			{ NODE_ENV: 'production' },
+		);
+
+		const result = await sendContactForm(validContactInput({ receiver: 'football' }));
+
+		expect(result).toStrictEqual({ serverError: GENERIC_SERVER_ERROR });
+		expect(errorSpy).toHaveBeenCalledWith('Action error:', 'Bot detected');
+		expect(mockedFetch).not.toHaveBeenCalled();
+		expect(mockedSend).not.toHaveBeenCalled();
+	});
+});
 
 describe('choosing the email recipient', () => {
 	afterEach(() => {

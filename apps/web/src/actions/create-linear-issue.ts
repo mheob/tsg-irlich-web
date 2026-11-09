@@ -2,6 +2,7 @@
 
 import { z } from 'zod';
 
+import { assertHuman } from '@/lib/actions/bot-protection';
 import { actionClient } from '@/lib/actions/safe-action';
 import { env } from '@/lib/env';
 import { feedbackFormSchema } from '@/lib/validations/feedback';
@@ -122,6 +123,7 @@ function extractIssueResult(result: z.infer<typeof linearResponseSchema>): {
 export const createLinearIssue = actionClient
 	.inputSchema(feedbackFormSchema)
 	.action(async ({ parsedInput: data }) => {
+		await assertHuman();
 		const apiKey = env('LINEAR_API_KEY');
 		const assigneeId = env('LINEAR_ASSIGNEE_ID');
 		const labelId = env('LINEAR_LABEL_ID');

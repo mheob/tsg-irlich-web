@@ -1,9 +1,11 @@
+import { checkBotId } from 'botid/server';
 import { headers } from 'next/headers';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import type * as subscribeToNewsletterModule from '@/actions/subscribe-to-newsletter';
 import type * as cleverreachModule from '@/lib/cleverreach';
 
+import { BOT_VERDICT } from '../../test-utils/botid';
 import { loadWithEnv } from '../../test-utils/env';
 import { createFetchMock, type FetchCall } from '../../test-utils/fetch-mock';
 
@@ -21,6 +23,14 @@ type NewsletterErrorState = Extract<
 vi.mock(import('next/headers'), () => ({ headers: vi.fn() }));
 
 const mockedHeaders = vi.mocked(headers);
+
+// The action asks BotID first. Every request is human unless a case says otherwise.
+vi.mock(import('botid/server'), async () => {
+	const { HUMAN_VERDICT } = await import('../../test-utils/botid');
+	return { checkBotId: vi.fn<typeof checkBotId>().mockResolvedValue(HUMAN_VERDICT) };
+});
+
+const mockedCheckBotId = vi.mocked(checkBotId);
 
 const CLEVERREACH_ENV = {
 	CLEVERREACH_CLIENT_ID: 'test-client-id',
@@ -48,6 +58,38 @@ function emailFormData(email: string): FormData {
 	formData.set('email', email);
 	return formData;
 }
+
+describe('turning bots away', () => {
+	let mock: ReturnType<typeof createFetchMock> | undefined;
+
+	afterEach(() => {
+		mock?.restore();
+		vi.restoreAllMocks();
+		mockedHeaders.mockReset();
+	});
+
+	// The state goes back to the browser as it is, so it names no reason a bot could learn from:
+	// a visitor BotID got wrong reads the same message as after any other failure.
+	it('answers a request BotID flags as a bot with the generic error, without contacting cleverreach', async () => {
+		mock = createFetchMock();
+		const { subscribeToNewsletter } = await loadWithEnv<SubscribeToNewsletterModule>(
+			'@/actions/subscribe-to-newsletter',
+			CLEVERREACH_ENV,
+		);
+		mockedCheckBotId.mockResolvedValueOnce(BOT_VERDICT);
+
+		const result = await subscribeToNewsletter(null, emailFormData('person@example.com'));
+
+		expect(result).toStrictEqual({
+			error: 'Request rejected',
+			message: 'Ein Fehler ist aufgetreten. Bitte versuche es später erneut.',
+			success: false,
+			title: 'Fehler',
+		});
+		expect(mock.calls).toStrictEqual([]);
+		expect(mockedHeaders).not.toHaveBeenCalled();
+	});
+});
 
 describe('validating the submitted email before contacting cleverreach', () => {
 	let mock: ReturnType<typeof createFetchMock> | undefined;
