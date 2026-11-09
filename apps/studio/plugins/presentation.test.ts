@@ -71,11 +71,14 @@ describe('location queries', () => {
 		expect(query).toContain('"href": "/angebot/" + department->slug.current,');
 	});
 
-	it('shows a FAQ on the page of every department it belongs to', () => {
+	// The department lists its questions in `faqs` (WEB-431), so the FAQ finds its pages backwards.
+	it('shows a FAQ on the page of every department that lists it', () => {
 		const query = LOCATION_QUERIES.faq;
 
-		expect(query).toContain('_id in ^.departments[]._ref');
+		expect(query).toContain('_type == "department" && ^._id in faqs[]._ref');
+		expect(query).not.toContain('departments[]');
 		expect(query).toContain('defined(slug.current)');
+		expect(query).toContain('order(sortOrder asc)');
 		expect(query).toContain('"href": "/angebot/" + slug.current');
 	});
 
