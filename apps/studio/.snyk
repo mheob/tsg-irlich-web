@@ -20,16 +20,6 @@ ignore:
           glob patterns from this repository's own configuration and never outside input. Revisit
           once braces publishes a patched release.
         expires: 2026-11-16T00:00:00.000Z
-  SNYK-JS-MINIMATCH-22111072:
-    - '*':
-        reason: >-
-          minimatch is only fixed in 11.0.1, a major release the Sanity CLI has not moved to yet,
-          and the flaw needs a crafted glob pattern parsed with optimizationLevel 2 or higher.
-          10.2.6 reaches this project only through @oclif/core below the Sanity CLI (through
-          sanity), which matches the CLI's own command files and never outside input; nothing of
-          it is part of the static studio bundle. Revisit once the Sanity CLI moves to
-          minimatch 11.
-        expires: 2026-12-01T00:00:00.000Z
   SNYK-JS-PICOMATCH-21248802:
     - '*':
         reason: >-

@@ -24,6 +24,11 @@ minimumReleaseAgeExclude:
   - "@mheob/*"
 
 overrides:
+  # @oclif/core (through the Sanity CLI) asks for minimatch ^10.2.5 even in its latest release,
+  # and 10.x amplifies brace patterns into a denial of service (GHSA-g3hv-75wg-m249); 11.0.1 fixes
+  # it. 11.0 drops `makeRe()`, the `AST` class and the `debug` option, while oclif only calls
+  # `minimatch(name, pattern)` to pick its plugins from the dependency names
+  "@oclif/core>minimatch": "^11.0.5"
   # @module-federation/dts-plugin (through the Sanity CLI's workbench) pins adm-zip 0.6.0, which
   # allocates whatever uncompressed size an archive declares (GHSA-7q85-xj36-vmfc); 0.6.1 fixes it
   adm-zip: "^0.6.1"
@@ -39,7 +44,7 @@ overrides:
   # handling in URL normalization (CVE-2026-76172); 3.1.6 fixes it and stays in ajv's ^3 range
   fast-uri: "^3.1.6"
   js-yaml: ">=4.3.1"
-  # @react-email/ui pins an exact next release (16.3.0 at first, 16.4.1 as of 6.11.3), so it
+  # @react-email/ui pins an exact next release (16.3.0 at first, 16.4.3 as of 6.11.8), so it
   # only picks up a Next.js security fix once it publishes again. 16.3.3 fixed code execution
   # through AVIF content in the image optimizer (SNYK-JS-NEXT-19269945), 16.3.8 an SSRF
   # (CVE-2026-94483), and 16.4.1 two remote code executions (GHSA-2464-fhr4-w9xw,
@@ -146,8 +151,8 @@ catalog:
   botid: ^1.5.12
 
   # E-mail templates
-  "@react-email/ui": ^6.11.6
-  react-email: ^6.11.6
+  "@react-email/ui": ^6.11.8
+  react-email: ^6.11.8
 
   # Tests: Vitest environment and plugins, end-to-end, accessibility and Lighthouse
   "@axe-core/playwright": ^4.14.0

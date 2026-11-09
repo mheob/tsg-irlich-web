@@ -20,29 +20,17 @@ ignore:
           glob patterns from this repository's own configuration and never outside input. Revisit
           once braces publishes a patched release.
         expires: 2026-11-16T00:00:00.000Z
-  SNYK-JS-GLOB-22112102:
-    - '*':
-        reason: >-
-          glob is only fixed in 14.0.2, a major release none of its dependents has moved to yet,
-          and Snyk still lists the 13.0.7 backport as affected. The flaw only hits a caller that
-          bounds a walk with an AbortSignal. 13.0.6 reaches this project through tooling only: the
-          react-email CLI (through @tsgi-web/email), which lists the template folder, and
-          @sentry/bundler-plugins below lighthouse (through @lhci/cli, a dev dependency), which
-          globs only for a source map upload that this repository's Lighthouse run never does.
-          Rendering a mail does not load it, and neither runs in the deployed website or sees
-          outside input. Revisit once react-email and Lighthouse move to glob 14.
-        expires: 2026-12-06T00:00:00.000Z
   SNYK-JS-MINIMATCH-22111072:
     - '*':
         reason: >-
-          minimatch is only fixed in 11.0.1, a major release none of its dependents has moved to
-          yet, and the flaw needs a crafted glob pattern parsed with optimizationLevel 2 or higher.
-          10.2.6 reaches this project through tooling only: @oclif/core below the Sanity CLI
-          (through next-sanity and sanity), which matches the CLI's own command files, and glob
-          below the react-email CLI (through @tsgi-web/email), which lists the template folder.
-          3.1.5 sits below @lhci/cli (chrome-launcher, rimraf, glob), a dev dependency that removes
-          its own temporary Chrome profile. None of them runs in the deployed website or sees
-          outside input. Revisit once Sanity, react-email and Lighthouse CI move to minimatch 11.
+          minimatch is only fixed in 11.0.1, and the flaw needs a crafted glob pattern parsed with
+          optimizationLevel 2 or higher. The 10.x copies are gone (react-email and @sentry/node
+          moved to glob 14, @oclif/core is overridden to 11), but 3.1.5 still sits below @lhci/cli
+          (chrome-launcher 0.13, rimraf 3, glob 7), a dev dependency that removes its own
+          temporary Chrome profile. glob 7 builds on the minimatch 3 API, which 11 no longer has,
+          so it cannot be pinned forward, and GitHub's advisory does not list 3.x at all. None of
+          it runs in the deployed website or sees outside input. Revisit once Lighthouse CI drops
+          rimraf 3.
         expires: 2026-12-01T00:00:00.000Z
   SNYK-JS-PICOMATCH-21248802:
     - '*':
