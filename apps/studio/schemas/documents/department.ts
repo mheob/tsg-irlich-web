@@ -142,6 +142,19 @@ const department = defineType({
 			validation: (Rule) => [Rule.max(4).error('Maximal 4 Statistiken dürfen gesetzt werden')],
 		}),
 
+		// Strong references, like the contact persons: a question a department still shows cannot be
+		// deleted, and a new question is published before the department that shows it.
+		defineField({
+			description:
+				'Optional. Die Reihenfolge hier ist die Reihenfolge auf der Abteilungsseite. Eine Frage kann in mehreren Abteilungen stehen und wird nur einmal gepflegt. Eine neue Frage zuerst veröffentlichen, dann die Abteilung.',
+			group: 'content',
+			name: 'faqs',
+			of: [defineArrayMember({ to: [{ type: 'faq' }], type: 'reference' })],
+			title: 'FAQ',
+			type: 'array',
+			validation: (Rule) => [Rule.unique().error('Eine Frage darf nur einmal ausgewählt werden')],
+		}),
+
 		defineField({
 			description: 'Optional. Die Reihenfolge hier ist die Reihenfolge auf der Abteilungsseite.',
 			group: 'content',

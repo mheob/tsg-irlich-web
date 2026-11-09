@@ -10,6 +10,7 @@ interface ChainRule {
 	assetRequired: () => ChainRule;
 	error: (message: string) => ChainRule;
 	required: () => ChainRule;
+	unique: () => ChainRule;
 }
 
 interface ValidatedField {
@@ -44,6 +45,10 @@ function recordValidationChain(name: string): string[] {
 		},
 		required: () => {
 			calls.push('required');
+			return rule;
+		},
+		unique: () => {
+			calls.push('unique');
 			return rule;
 		},
 	};
@@ -106,6 +111,34 @@ describe('department document', () => {
 			title: 'Suchbegriffe',
 			type: 'array',
 		});
+	});
+
+	// The page shows Stats › FAQ › Ansprechpartner, so the form keeps the same order.
+	it('lists its FAQ between the stats and the contact persons', () => {
+		const fieldNames = department.fields.map((field) => field.name);
+
+		expect(fieldNames.indexOf('faqs')).toBe(fieldNames.indexOf('stats') + 1);
+		expect(fieldNames.indexOf('contactPersons')).toBe(fieldNames.indexOf('faqs') + 1);
+	});
+
+	// A strong reference keeps a question that a department still shows from being deleted.
+	it('keeps its FAQ as a sortable list of strong references in the content tab', () => {
+		const faqs = department.fields.find((field) => field.name === 'faqs');
+
+		expect(faqs).toMatchObject({
+			group: 'content',
+			of: [{ to: [{ type: 'faq' }], type: 'reference' }],
+			title: 'FAQ',
+			type: 'array',
+		});
+		expect(faqs).not.toHaveProperty('of.0.weak');
+	});
+
+	it('refuses the same FAQ twice', () => {
+		expect(recordValidationChain('faqs')).toStrictEqual([
+			'unique',
+			'error: Eine Frage darf nur einmal ausgewählt werden',
+		]);
 	});
 
 	it('starts with team sport switched off', () => {
