@@ -37,7 +37,10 @@ describe('single pages', () => {
 			}),
 		);
 
-		expect(subPages).toStrictEqual([{ parentPath: '/verein', path: '/verein/echo' }]);
+		expect(subPages).toStrictEqual([
+			{ parentPath: '/verein', path: '/verein/echo' },
+			{ parentPath: '/verein', path: '/verein/partner' },
+		]);
 	});
 
 	it('tells on every page shared by a kind of page where a single one is edited', () => {
@@ -50,6 +53,13 @@ describe('single pages', () => {
 });
 
 describe('finding a single page', () => {
+	it('finds the place of the partner page', () => {
+		expect(findSinglePage('partnerPage')).toStrictEqual({
+			parent: 'aboutUs',
+			path: '/verein/partner',
+		});
+	});
+
 	it('finds the place of a sub page', () => {
 		expect(findSinglePage('echoOverview')).toStrictEqual({
 			parent: 'aboutUs',
@@ -88,6 +98,6 @@ describe('page layout', () => {
 	});
 
 	it('lists the pages of the club under its main page', () => {
-		expect(getPlacedPages().slice(1, 3)).toStrictEqual(['aboutUs', 'echoOverview']);
+		expect(getPlacedPages().slice(1, 4)).toStrictEqual(['aboutUs', 'echoOverview', 'partnerPage']);
 	});
 });

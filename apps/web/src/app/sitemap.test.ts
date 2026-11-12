@@ -83,6 +83,7 @@ describe(sitemap, () => {
 			'http://localhost:3000/angebot',
 			'http://localhost:3000/news',
 			'http://localhost:3000/verein',
+			'http://localhost:3000/verein/partner',
 			'http://localhost:3000/verein/echo',
 			'http://localhost:3000/kontakt',
 			'http://localhost:3000/kontakt/feedback',
@@ -91,6 +92,19 @@ describe(sitemap, () => {
 			'http://localhost:3000/impressum',
 			'http://localhost:3000/barrierefreiheit',
 		]);
+	});
+
+	it('lists the partner page right after the club page, monthly at 0.6', async () => {
+		mockSanity({});
+
+		const entries = await sitemap();
+		const index = entries.findIndex((entry) => entry.url === 'http://localhost:3000/verein');
+
+		expect(entries[index + 1]).toStrictEqual({
+			changeFrequency: 'monthly',
+			priority: 0.6,
+			url: 'http://localhost:3000/verein/partner',
+		});
 	});
 
 	it('gives the home page the highest priority', async () => {

@@ -13,6 +13,7 @@ const STATIC_ROUTES: { name: string; route: string }[] = [
 	{ name: 'home', route: '/' },
 	{ name: 'club', route: '/verein' },
 	{ name: 'echo', route: '/verein/echo' },
+	{ name: 'partner', route: '/verein/partner' },
 	{ name: 'offers', route: '/angebot' },
 	{ name: 'news', route: '/news' },
 	{ name: 'membership', route: '/mitgliedschaft' },

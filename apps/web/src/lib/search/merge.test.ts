@@ -239,6 +239,23 @@ describe(mergePageHits, () => {
 		expect(hit).toMatchObject({ href: '/verein/echo/2010', kind: 'echo', meta: 'TSG-Echo' });
 	});
 
+	it('links the partner page below the club page', () => {
+		const [hit] = mergePageHits([
+			{
+				...NO_EXTRAS,
+				_id: 'partnerPage',
+				_score: 3,
+				_type: 'partnerPage',
+				department: null,
+				image: TANZEN.image,
+				slug: 'partner',
+				title: 'Sponsoren & Partner',
+			},
+		]);
+
+		expect(hit).toMatchObject({ href: '/verein/partner', kind: 'page', meta: 'Seite' });
+	});
+
 	it('sorts by score, then by title in German order', () => {
 		const hits = mergePageHits([
 			page({ ...ZUMBA, _id: 'group-volleyball', slug: 'volleyball', title: 'Volleyball' }, 3),

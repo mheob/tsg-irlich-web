@@ -14,6 +14,26 @@ import {
 	searchTextsQuery,
 } from './search';
 
+/** The intros of the partner page's sections, its lead fields. */
+const PARTNER_LEAD_PATHS = [
+	'content.whySection.intro',
+	'content.waysSection.intro',
+	'content.partnersSection.intro',
+] as const;
+
+/** The cards of the partner page, its body fields. Its sponsors' names are not searched. */
+const PARTNER_BODY_PATHS = [
+	'content.whySection.reasons[].title',
+	'content.whySection.reasons[].text',
+	'content.waysSection.ways[].title',
+	'content.waysSection.ways[].text',
+	'content.waysSection.ways[].benefits[]',
+] as const;
+
+const PARTNER_PATHS = [...PARTNER_LEAD_PATHS, ...PARTNER_BODY_PATHS];
+const PARTNER_LEAD = `[${PARTNER_LEAD_PATHS.join(', ')}]`;
+const PARTNER_BODY = `[${PARTNER_BODY_PATHS.join(', ')}]`;
+
 /** The queries the search term reaches. */
 const TERM_QUERIES = [
 	['the candidates', searchCandidatesQuery],
@@ -30,11 +50,22 @@ const ALL_QUERIES = [
 ] as const;
 
 /**
+ * Writes an array of fields that spans several lines on one line, as `[a, b]`.
+ *
+ * @param lhs - The left-hand side of a match
+ * @returns The same fields, separated by single spaces
+ */
+function collapseWhitespace(lhs: string): string {
+	return lhs.replaceAll(/\s+/gu, ' ').replaceAll('[ ', '[').replaceAll(' ]', ']');
+}
+
+/**
  * Reads the score terms of a query.
  *
  * @param query - The GROQ query
  * @returns Every `boost(<lhs> match text::query($q), <weight>)` term, with the guard of a term
- * written as `boost(<guard>, 0) && boost(…)` (an empty string for a term without a guard)
+ * written as `boost(<guard>, 0) && boost(…)` (an empty string for a term without a guard) and an
+ * array of fields written on one line
  */
 function getScoreTerms(query: string): ScoreTerm[] {
 	const term =
@@ -42,7 +73,7 @@ function getScoreTerms(query: string): ScoreTerm[] {
 
 	return [...query.matchAll(term)].map((match) => ({
 		guard: match.groups?.guard ?? '',
-		lhs: match.groups?.lhs ?? '',
+		lhs: collapseWhitespace(match.groups?.lhs ?? ''),
 		weight: Number(match.groups?.weight),
 	}));
 }
@@ -164,6 +195,7 @@ describe('search queries', () => {
 				'contact',
 				'newsOverview',
 				'echoOverview',
+				'partnerPage',
 			]);
 			expect(searchCandidatesQuery).toContain(
 				`_type in [${SEARCH_PAGE_TYPES.map((type) => `'${type}'`).join(', ')}]`,
@@ -198,6 +230,8 @@ describe('search queries', () => {
 			{ guard: '', lhs: '[firstName, lastName]', weight: WEIGHTS.lead },
 			{ guard: '', lhs: 'affiliations[].taskDescription', weight: WEIGHTS.body },
 			{ guard: 'indexable != false', lhs: 'extractedText', weight: WEIGHTS.body },
+			{ guard: '', lhs: PARTNER_LEAD, weight: WEIGHTS.lead },
+			{ guard: '', lhs: PARTNER_BODY, weight: WEIGHTS.body },
 		])('weigh $lhs with $weight', (term) => {
 			expect(getScoreTerms(searchCandidatesQuery)).toContainEqual(term);
 		});
@@ -264,6 +298,24 @@ describe('search queries', () => {
 			}
 		});
 
+		// The partner page takes part in the last catch-all term, so its fields belong into it.
+		it('score words that sit in different fields of the partner page', () => {
+			const [, everyOtherPage] = getCatchAllTerms(searchCandidatesQuery);
+			const fields = everyOtherPage.lhs.slice(1, -1).split(', ');
+
+			expect(everyOtherPage.guard).not.toContain("'partnerPage'");
+			for (const path of PARTNER_PATHS) {
+				expect(fields).toContain(path);
+			}
+		});
+
+		// The partner page lists contact persons, so a person found by name leads there too.
+		it('lead a person to the partner page that lists them', () => {
+			expect(searchCandidatesQuery).toContain(
+				`"listedOn": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage'] && references(^._id)]`,
+			);
+		});
+
 		// Review focus 3: the catch-all terms must not let the text of a non-indexable issue in.
 		it('never put the text of a tsg-echo issue into a catch-all term', () => {
 			for (const { lhs } of getCatchAllTerms(searchCandidatesQuery)) {
@@ -277,6 +329,14 @@ describe('search queries', () => {
 				/\| order\(_score desc\)\s*\[_score != 0\]\s*\[0\.\.\.\$limit\]/u,
 			);
 			expect(searchCandidatesQuery).toContain('"_score": math::sum([_score])');
+		});
+	});
+
+	describe('the texts', () => {
+		it('cut the snippet of the partner page from the intros of „Gründe“ and „Unterstützung“', () => {
+			expect(searchTextsQuery).toContain(
+				`_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, '')`,
+			);
 		});
 	});
 
