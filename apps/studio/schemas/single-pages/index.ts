@@ -10,6 +10,7 @@ import newsArticlePage from './news-article';
 import newsOverviewPage from './news-overview';
 import newsOverviewCategoryPage from './news-overview-category';
 import departmentsPage from './offer';
+import partnerPage from './partner-page';
 import privacyPage from './privacy';
 import searchPage from './search-page';
 import singleGroupPage from './single-group';
@@ -31,6 +32,7 @@ const singlePages = [
 	newsArticlePage,
 	newsOverviewCategoryPage,
 	newsOverviewPage,
+	partnerPage,
 	privacyPage,
 	searchPage,
 	singleGroupPage,

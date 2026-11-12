@@ -252,6 +252,13 @@ export type EchoOverviewReference = {
   [internalGroqTypeReferenceTo]?: "echoOverview";
 };
 
+export type PartnerPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "partnerPage";
+};
+
 export type ContactReference = {
   _ref: string;
   _type: "reference";
@@ -346,6 +353,7 @@ export type BlockContent = {
             | HomeReference
             | AboutUsReference
             | EchoOverviewReference
+            | PartnerPageReference
             | ContactReference
             | DepartmentsPageReference
             | DepartmentReference
@@ -420,6 +428,7 @@ export type NavigationLink = {
     | HomeReference
     | AboutUsReference
     | EchoOverviewReference
+    | PartnerPageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -468,6 +477,7 @@ export type MainNavigationLink = {
     | HomeReference
     | AboutUsReference
     | EchoOverviewReference
+    | PartnerPageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -488,6 +498,7 @@ export type InternalLink = {
     | HomeReference
     | AboutUsReference
     | EchoOverviewReference
+    | PartnerPageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -954,6 +965,7 @@ export type Faq = {
             | HomeReference
             | AboutUsReference
             | EchoOverviewReference
+            | PartnerPageReference
             | ContactReference
             | DepartmentsPageReference
             | DepartmentReference
@@ -1490,6 +1502,86 @@ export type Contact = {
   };
 };
 
+export type PartnerPage = {
+  _id: string;
+  _type: "partnerPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  heroImage: ExtendedImage;
+  content: {
+    whySection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      reasons?: Array<{
+        title: string;
+        text: string;
+        icon:
+          | "map-pin"
+          | "trending-up"
+          | "heart-handshake"
+          | "handshake"
+          | "shirt"
+          | "fence"
+          | "globe"
+          | "gift"
+          | "trophy"
+          | "megaphone"
+          | "users"
+          | "heart"
+          | "star";
+        _type: "partnerReason";
+        _key: string;
+      }>;
+    };
+    waysSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      ways?: Array<{
+        title: string;
+        text: string;
+        benefits?: Array<string>;
+        icon:
+          | "map-pin"
+          | "trending-up"
+          | "heart-handshake"
+          | "handshake"
+          | "shirt"
+          | "fence"
+          | "globe"
+          | "gift"
+          | "trophy"
+          | "megaphone"
+          | "users"
+          | "heart"
+          | "star";
+        cta: string;
+        _type: "partnerWay";
+        _key: string;
+      }>;
+      ideaText?: string;
+      ideaCta?: string;
+    };
+    partnersSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      ownLogoText?: string;
+    };
+    contactPersonsSection: ContactPersonsSection;
+  };
+  inquiry: {
+    email: string;
+    subject: string;
+  };
+  meta?: MetaFields;
+};
+
 export type EchoOverview = {
   _id: string;
   _type: "echoOverview";
@@ -1893,6 +1985,7 @@ export type AllSanitySchemaTypes =
   | HomeReference
   | AboutUsReference
   | EchoOverviewReference
+  | PartnerPageReference
   | ContactReference
   | DepartmentsPageReference
   | DepartmentReference
@@ -1962,6 +2055,7 @@ export type AllSanitySchemaTypes =
   | Department
   | DepartmentsPage
   | Contact
+  | PartnerPage
   | EchoOverview
   | TestimonialReference
   | Home
@@ -2087,6 +2181,7 @@ export type DepartmentPageQueryResult = {
                   | NewsArticleReference
                   | NewsCategoryReference
                   | NewsOverviewReference
+                  | PartnerPageReference
                   | PrivacyReference;
                 _type: "internalLink";
                 _key: string;
@@ -2165,6 +2260,12 @@ export type DepartmentPageQueryResult = {
                     }
                   | {
                       _type: "newsOverview";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "partnerPage";
                       slug: string | null;
                       category: null;
                       department: null;
@@ -3607,6 +3708,12 @@ export type MainNavigationQueryResult = {
               department: null;
             }
           | {
+              _type: "partnerPage";
+              slug: string | null;
+              category: null;
+              department: null;
+            }
+          | {
               _type: "privacy";
               slug: string | null;
               category: null;
@@ -3710,6 +3817,12 @@ export type MainNavigationQueryResult = {
                     department: null;
                   }
                 | {
+                    _type: "partnerPage";
+                    slug: string | null;
+                    category: null;
+                    department: null;
+                  }
+                | {
                     _type: "privacy";
                     slug: string | null;
                     category: null;
@@ -3776,6 +3889,7 @@ export type AboutUsPageQueryResult = {
                           | NewsArticleReference
                           | NewsCategoryReference
                           | NewsOverviewReference
+                          | PartnerPageReference
                           | PrivacyReference;
                         _type: "internalLink";
                         _key: string;
@@ -3859,6 +3973,12 @@ export type AboutUsPageQueryResult = {
                               department: null;
                             }
                           | {
+                              _type: "partnerPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
+                            }
+                          | {
                               _type: "privacy";
                               slug: string | null;
                               category: null;
@@ -3922,6 +4042,7 @@ export type AboutUsPageQueryResult = {
                             | NewsArticleReference
                             | NewsCategoryReference
                             | NewsOverviewReference
+                            | PartnerPageReference
                             | PrivacyReference;
                           _type: "internalLink";
                           _key: string;
@@ -4005,6 +4126,12 @@ export type AboutUsPageQueryResult = {
                                 department: null;
                               }
                             | {
+                                _type: "partnerPage";
+                                slug: string | null;
+                                category: null;
+                                department: null;
+                              }
+                            | {
                                 _type: "privacy";
                                 slug: string | null;
                                 category: null;
@@ -4062,6 +4189,7 @@ export type AboutUsPageQueryResult = {
                           | NewsArticleReference
                           | NewsCategoryReference
                           | NewsOverviewReference
+                          | PartnerPageReference
                           | PrivacyReference;
                         _type: "internalLink";
                         _key: string;
@@ -4140,6 +4268,12 @@ export type AboutUsPageQueryResult = {
                             }
                           | {
                               _type: "newsOverview";
+                              slug: string | null;
+                              category: null;
+                              department: null;
+                            }
+                          | {
+                              _type: "partnerPage";
                               slug: string | null;
                               category: null;
                               department: null;
@@ -4237,6 +4371,7 @@ export type AccessibilityPageQueryResult = {
                       | NewsArticleReference
                       | NewsCategoryReference
                       | NewsOverviewReference
+                      | PartnerPageReference
                       | PrivacyReference;
                     _type: "internalLink";
                     _key: string;
@@ -4315,6 +4450,12 @@ export type AccessibilityPageQueryResult = {
                         }
                       | {
                           _type: "newsOverview";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "partnerPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -4723,6 +4864,12 @@ export type ImprintPageQueryResult = {
           department: null;
         }
       | {
+          _type: "partnerPage";
+          slug: string | null;
+          category: null;
+          department: null;
+        }
+      | {
           _type: "privacy";
           slug: string | null;
           category: null;
@@ -4787,6 +4934,7 @@ export type MembershipPageQueryResult = {
                         | NewsArticleReference
                         | NewsCategoryReference
                         | NewsOverviewReference
+                        | PartnerPageReference
                         | PrivacyReference;
                       _type: "internalLink";
                       _key: string;
@@ -4865,6 +5013,12 @@ export type MembershipPageQueryResult = {
                           }
                         | {
                             _type: "newsOverview";
+                            slug: string | null;
+                            category: null;
+                            department: null;
+                          }
+                        | {
+                            _type: "partnerPage";
                             slug: string | null;
                             category: null;
                             department: null;
@@ -5026,6 +5180,7 @@ export type NewsArticleContentQueryResult = {
                           | NewsArticleReference
                           | NewsCategoryReference
                           | NewsOverviewReference
+                          | PartnerPageReference
                           | PrivacyReference;
                         _type: "internalLink";
                         _key: string;
@@ -5109,6 +5264,12 @@ export type NewsArticleContentQueryResult = {
                               department: null;
                             }
                           | {
+                              _type: "partnerPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
+                            }
+                          | {
                               _type: "privacy";
                               slug: string | null;
                               category: null;
@@ -5180,6 +5341,7 @@ export type NewsArticleContentQueryResult = {
                                 | NewsArticleReference
                                 | NewsCategoryReference
                                 | NewsOverviewReference
+                                | PartnerPageReference
                                 | PrivacyReference;
                               _type: "internalLink";
                               _key: string;
@@ -5258,6 +5420,12 @@ export type NewsArticleContentQueryResult = {
                                   }
                                 | {
                                     _type: "newsOverview";
+                                    slug: string | null;
+                                    category: null;
+                                    department: null;
+                                  }
+                                | {
+                                    _type: "partnerPage";
                                     slug: string | null;
                                     category: null;
                                     department: null;
@@ -5764,6 +5932,7 @@ export type PrivacyPageQueryResult = {
                       | NewsArticleReference
                       | NewsCategoryReference
                       | NewsOverviewReference
+                      | PartnerPageReference
                       | PrivacyReference;
                     _type: "internalLink";
                     _key: string;
@@ -5842,6 +6011,12 @@ export type PrivacyPageQueryResult = {
                         }
                       | {
                           _type: "newsOverview";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "partnerPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -5898,6 +6073,7 @@ export type PrivacyPageQueryResult = {
                       | NewsArticleReference
                       | NewsCategoryReference
                       | NewsOverviewReference
+                      | PartnerPageReference
                       | PrivacyReference;
                     _type: "internalLink";
                     _key: string;
@@ -5976,6 +6152,12 @@ export type PrivacyPageQueryResult = {
                         }
                       | {
                           _type: "newsOverview";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "partnerPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -6452,6 +6634,12 @@ export type SearchPageQueryResult = {
                 }
               | {
                   _type: "newsOverview";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "partnerPage";
                   slug: string | null;
                   category: null;
                   department: null;

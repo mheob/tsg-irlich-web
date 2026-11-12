@@ -17,6 +17,10 @@ describe('internal link targets', () => {
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'echoOverview' });
 	});
 
+	it('offers the partner page', () => {
+		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'partnerPage' });
+	});
+
 	it('offers departments and groups', () => {
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'department' });
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'group' });

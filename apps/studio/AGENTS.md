@@ -63,7 +63,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 The desk follows the areas of the website, so the editors find a page where it sits on the website and see which page lies below which. `PAGE_LAYOUT` in `structure/pages.ts` holds the upper block in the order of the website, and `getPageListItems` in `structure/sections.ts` builds it:
 
 - **Startseite**, **Mitgliedschaft**, **Kontakt** and **Suche** stand on their own.
-- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions.
+- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview and the partner page („Sponsoren & Partner“) below „Unterseiten“.
 - **Rechtliches** holds imprint, privacy and accessibility side by side, without a main page.
 
 Below a divider follow the documents several areas share (FAQ, forms, persons, sponsors, venues, testimonials), sorted by title, and below another the settings. A single page that `PAGE_LAYOUT` does not place still shows up, under „Weitere Seiten“ at the end of the upper block, so a new page cannot go missing from the desk.
@@ -230,6 +230,16 @@ The content images of the website live in the studio, not in the web app (WEB-38
 - **Ansprechpartner.** The contact persons section below the search.
 
 It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose. The website reads it as published, like every part of the search, also while draft mode is on, so a preview would show nothing of an edit. The singleton is in `schemas/single-pages/index.ts`, and the web app's revalidation route handles it (`searchPage` revalidates the whole layout). Both live webhook filters list the type (`docs/SANITY_WEBHOOK_SETUP.md`).
+
+## Partner page
+
+`partnerPage` is the singleton behind `/verein/partner` („Sponsoren & Partner“, `schemas/single-pages/partner-page/`), with the fixed slug `partner`. It sits under „Verein“ next to the TSG-Echo overview and is an internal link target, so menus can link it. Besides the hero (title, subtitle, hero image) and `meta`, it holds every visible text of the page:
+
+- **Inhalte** with four sub tabs: „Gründe“ (`reasons`), „Unterstützung“ (`ways`, plus `ideaText` and `ideaCta`), „Partner“ (`ownLogoText`, the text of the last tile) and „Ansprechpartner“. Each of the first three has the default section header.
+- **Anfragen**: the address (initially `partner@tsg-irlich.de`) and the subject (initially „Sponsoring bei der TSG Irlich“) of every button. A card button of `ways` adds the card title to the subject.
+- The cards pick their `icon` from `PARTNER_ICONS` in `@tsgi-web/shared/partner-icons` (kebab-case Lucide names, which the web app maps to components). `reasons` and `ways` warn, never fail, when they do not hold exactly four cards, because the grid is built for four.
+
+It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the search page.
 
 ## Content migrations
 

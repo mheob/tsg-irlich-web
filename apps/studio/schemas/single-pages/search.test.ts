@@ -10,6 +10,7 @@ import imprintPage from './imprint';
 import membershipPage from './membership';
 import newsOverviewPage from './news-overview';
 import offerPage from './offer';
+import partnerPage from './partner-page';
 import privacyPage from './privacy';
 
 interface SinglePage {
@@ -28,6 +29,7 @@ const PAGES = [
 	membershipPage,
 	newsOverviewPage,
 	offerPage,
+	partnerPage,
 	privacyPage,
 ] as unknown as SinglePage[];
 

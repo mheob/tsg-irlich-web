@@ -1299,6 +1299,36 @@
 	},
 	{
 		"type": "type",
+		"name": "partnerPage.reference",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_ref": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					}
+				},
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "reference"
+					}
+				},
+				"_weak": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			},
+			"dereferencesTo": "partnerPage"
+		}
+	},
+	{
+		"type": "type",
 		"name": "contact.reference",
 		"value": {
 			"type": "object",
@@ -1765,6 +1795,10 @@
 																	},
 																	{
 																		"type": "inline",
+																		"name": "partnerPage.reference"
+																	},
+																	{
+																		"type": "inline",
 																		"name": "contact.reference"
 																	},
 																	{
@@ -2176,6 +2210,10 @@
 							},
 							{
 								"type": "inline",
+								"name": "partnerPage.reference"
+							},
+							{
+								"type": "inline",
 								"name": "contact.reference"
 							},
 							{
@@ -2431,6 +2469,10 @@
 							},
 							{
 								"type": "inline",
+								"name": "partnerPage.reference"
+							},
+							{
+								"type": "inline",
 								"name": "contact.reference"
 							},
 							{
@@ -2516,6 +2558,10 @@
 							{
 								"type": "inline",
 								"name": "echoOverview.reference"
+							},
+							{
+								"type": "inline",
+								"name": "partnerPage.reference"
 							},
 							{
 								"type": "inline",
@@ -5366,6 +5412,10 @@
 																{
 																	"type": "inline",
 																	"name": "echoOverview.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "partnerPage.reference"
 																},
 																{
 																	"type": "inline",
@@ -8321,6 +8371,459 @@
 					}
 				},
 				"optional": false
+			}
+		}
+	},
+	{
+		"name": "partnerPage",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "partnerPage"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"slug": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "slug"
+				},
+				"optional": true
+			},
+			"title": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"subtitle": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
+			},
+			"content": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "object",
+					"attributes": {
+						"whySection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"reasons": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "array",
+											"of": {
+												"type": "object",
+												"attributes": {
+													"title": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"text": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"icon": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "union",
+															"of": [
+																{
+																	"type": "string",
+																	"value": "map-pin"
+																},
+																{
+																	"type": "string",
+																	"value": "trending-up"
+																},
+																{
+																	"type": "string",
+																	"value": "heart-handshake"
+																},
+																{
+																	"type": "string",
+																	"value": "handshake"
+																},
+																{
+																	"type": "string",
+																	"value": "shirt"
+																},
+																{
+																	"type": "string",
+																	"value": "fence"
+																},
+																{
+																	"type": "string",
+																	"value": "globe"
+																},
+																{
+																	"type": "string",
+																	"value": "gift"
+																},
+																{
+																	"type": "string",
+																	"value": "trophy"
+																},
+																{
+																	"type": "string",
+																	"value": "megaphone"
+																},
+																{
+																	"type": "string",
+																	"value": "users"
+																},
+																{
+																	"type": "string",
+																	"value": "heart"
+																},
+																{
+																	"type": "string",
+																	"value": "star"
+																}
+															]
+														},
+														"optional": false
+													},
+													"_type": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string",
+															"value": "partnerReason"
+														}
+													}
+												},
+												"rest": {
+													"type": "object",
+													"attributes": {
+														"_key": {
+															"type": "objectAttribute",
+															"value": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
+						"waysSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"ways": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "array",
+											"of": {
+												"type": "object",
+												"attributes": {
+													"title": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"text": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"benefits": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "array",
+															"of": {
+																"type": "string"
+															}
+														},
+														"optional": true
+													},
+													"icon": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "union",
+															"of": [
+																{
+																	"type": "string",
+																	"value": "map-pin"
+																},
+																{
+																	"type": "string",
+																	"value": "trending-up"
+																},
+																{
+																	"type": "string",
+																	"value": "heart-handshake"
+																},
+																{
+																	"type": "string",
+																	"value": "handshake"
+																},
+																{
+																	"type": "string",
+																	"value": "shirt"
+																},
+																{
+																	"type": "string",
+																	"value": "fence"
+																},
+																{
+																	"type": "string",
+																	"value": "globe"
+																},
+																{
+																	"type": "string",
+																	"value": "gift"
+																},
+																{
+																	"type": "string",
+																	"value": "trophy"
+																},
+																{
+																	"type": "string",
+																	"value": "megaphone"
+																},
+																{
+																	"type": "string",
+																	"value": "users"
+																},
+																{
+																	"type": "string",
+																	"value": "heart"
+																},
+																{
+																	"type": "string",
+																	"value": "star"
+																}
+															]
+														},
+														"optional": false
+													},
+													"cta": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"_type": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string",
+															"value": "partnerWay"
+														}
+													}
+												},
+												"rest": {
+													"type": "object",
+													"attributes": {
+														"_key": {
+															"type": "objectAttribute",
+															"value": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										},
+										"optional": true
+									},
+									"ideaText": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"ideaCta": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
+						"partnersSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"ownLogoText": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
+						"contactPersonsSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "inline",
+								"name": "contactPersonsSection"
+							},
+							"optional": false
+						}
+					}
+				},
+				"optional": false
+			},
+			"inquiry": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "object",
+					"attributes": {
+						"email": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "string"
+							},
+							"optional": false
+						},
+						"subject": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "string"
+							},
+							"optional": false
+						}
+					}
+				},
+				"optional": false
+			},
+			"meta": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "metaFields"
+				},
+				"optional": true
 			}
 		}
 	},

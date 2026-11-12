@@ -62,6 +62,7 @@ describe('page list items', () => {
 			'aboutUs',
 			'Unterseiten',
 			'echoOverview',
+			'partnerPage',
 			'Inhalte',
 			'TSG-Echo Ausgaben',
 		]);
@@ -127,6 +128,8 @@ describe('pages missing from the layout', () => {
 
 		expect(getItemTitles(items.find((item) => item.getId() === 'club')?.getChild())).toStrictEqual([
 			'aboutUs',
+			'Unterseiten',
+			'partnerPage',
 			'Inhalte',
 			'TSG-Echo Ausgaben',
 		]);

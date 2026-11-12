@@ -15,6 +15,7 @@ type SinglePageType =
 	| 'news-article-page'
 	| 'newsOverview'
 	| 'newsOverviewCategory'
+	| 'partnerPage'
 	| 'privacy'
 	| 'searchPage'
 	| 'singleGroupPage';
@@ -67,6 +68,7 @@ const SINGLE_PAGES: Readonly<Record<SinglePageType, SinglePageInfo>> = {
 		note: 'Was du hier änderst, gilt für jede Kategorieseite. Eine einzelne Kategorie bearbeitest du unter News → News-Kategorie.',
 		path: '/news/[kategorie]',
 	},
+	partnerPage: { parent: 'aboutUs', path: '/verein/partner' },
 	privacy: { path: '/datenschutz' },
 	searchPage: { path: '/suche' },
 	singleGroupPage: {
@@ -87,7 +89,7 @@ const PAGE_LAYOUT: readonly PageLayoutEntry[] = [
 		icon: RiCommunityLine,
 		id: 'club',
 		mainPage: 'aboutUs',
-		pages: ['echoOverview'],
+		pages: ['echoOverview', 'partnerPage'],
 		title: 'Verein',
 	},
 	{
