@@ -240,7 +240,7 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 - The cards pick their `icon` from `PARTNER_ICONS` in `@tsgi-web/shared/partner-icons` (kebab-case Lucide names, which the web app maps to components). `reasons` and `ways` warn, never fail, when they do not hold exactly four cards, because the grid is built for four.
 - `scripts/create-partner-page.ts` creates the start content (the texts of the prototype, the hero image of `aboutUs`, the PR team as contact persons) as the draft `drafts.partnerPage`: `pnpm --filter studio exec sanity exec scripts/create-partner-page.ts --with-user-token -- --dataset <dataset>`. It never publishes and never overwrites: when the draft or the published page exists, it prints so and writes nothing.
 
-It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the search page.
+It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the search page. Both live revalidation webhooks must list `partnerPage` in their type filter, or the page keeps its old state after a publish (`docs/SANITY_WEBHOOK_SETUP.md`).
 
 ## Content migrations
 
