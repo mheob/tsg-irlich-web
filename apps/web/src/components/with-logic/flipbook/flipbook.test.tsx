@@ -4,10 +4,10 @@ import type {
 	HTMLFlipBookProps,
 	PageFlip,
 } from '@gullabs/react-flipbook';
-import { act } from '@testing-library/react';
+import { act, within } from '@testing-library/react';
 import { forwardRef, useImperativeHandle } from 'react';
 import type { ForwardedRef } from 'react';
-import { describe, expect, it, vi } from 'vite-plus/test';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../../test-utils/render';
 import { Flipbook } from './flipbook';
@@ -182,5 +182,144 @@ describe('the flipbook', () => {
 		await user.click(getByRole('button', { name: 'Nächste Seite' }));
 
 		expect(book.flipNext).toHaveBeenCalledOnce();
+	});
+});
+
+/** The size every element reports, the book's box and each page alike. */
+const PAGE_BOX = new DOMRect(0, 0, 400, 566);
+
+/**
+ * Makes `document.elementsFromPoint`, which jsdom lacks, report the given elements at any point.
+ *
+ * @param elements - The elements under the pointer, topmost first.
+ */
+function stubElementsFromPoint(...elements: Element[]): void {
+	Object.defineProperty(document, 'elementsFromPoint', {
+		configurable: true,
+		value: () => elements,
+	});
+}
+
+/**
+ * The enlarged page inside the lens. The lens repeats what the page shows, so it is hidden from
+ * assistive technology.
+ *
+ * @param container - The rendered book.
+ * @returns The image, or `null` without a lens.
+ */
+function lensImage(container: HTMLElement): HTMLElement | null {
+	return within(container).queryByRole('presentation', { hidden: true });
+}
+
+describe('the lens', () => {
+	afterEach(() => {
+		Reflect.deleteProperty(document, 'elementsFromPoint');
+		vi.restoreAllMocks();
+	});
+
+	it('starts switched off and leaves the pointer to the book', () => {
+		const { getByRole } = renderBook();
+
+		expect(getByRole('button', { name: 'Lupe' }).getAttribute('aria-pressed')).toBe('false');
+		expect(bookProps().pointerInput).toBeUndefined();
+	});
+
+	// A click or a drag meant for the lens must not turn the page under it.
+	it('takes the page turns away from the pointer while it is on', async () => {
+		const { getByRole, user } = renderBook();
+		const lens = getByRole('button', { name: 'Lupe' });
+
+		await user.click(lens);
+
+		expect(lens.getAttribute('aria-pressed')).toBe('true');
+		expect(bookProps().pointerInput).toStrictEqual([]);
+
+		await user.click(lens);
+
+		expect(lens.getAttribute('aria-pressed')).toBe('false');
+		expect(bookProps().pointerInput).toBeUndefined();
+	});
+
+	it('shows the page under the mouse enlarged', async () => {
+		vi.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue(PAGE_BOX);
+		const { container, getByAltText, getByRole, user } = renderBook();
+		const page = getByAltText('Seite 2 von 3');
+		stubElementsFromPoint(page);
+
+		await user.click(getByRole('button', { name: 'Lupe' }));
+		await user.pointer({ coords: { clientX: 100, clientY: 200 }, target: page });
+
+		expect(lensImage(container)?.getAttribute('src')).toBe(PAGES[1]?.src);
+		expect(lensImage(container)?.style.width).toBe('1000px');
+		expect(lensImage(container)?.style.left).toBe('calc(50% - 250px)');
+	});
+
+	it('follows a finger that touches the page', async () => {
+		vi.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue(PAGE_BOX);
+		const { container, getByAltText, getByRole, user } = renderBook();
+		const page = getByAltText('Seite 3 von 3');
+		stubElementsFromPoint(page);
+
+		await user.click(getByRole('button', { name: 'Lupe' }));
+		await user.pointer({ coords: { clientX: 10, clientY: 20 }, keys: '[TouchA>]', target: page });
+
+		expect(lensImage(container)?.getAttribute('src')).toBe(PAGES[2]?.src);
+	});
+
+	it('shows nothing while it is off', async () => {
+		const { container, getByAltText, user } = renderBook();
+		const page = getByAltText('Seite 1 von 3');
+		stubElementsFromPoint(page);
+
+		await user.pointer({ coords: { clientX: 100, clientY: 200 }, target: page });
+
+		expect(lensImage(container)).toBeNull();
+	});
+
+	it('shows nothing beside the pages', async () => {
+		const { container, getByAltText, getByRole, user } = renderBook();
+		stubElementsFromPoint();
+
+		await user.click(getByRole('button', { name: 'Lupe' }));
+		await user.pointer({
+			coords: { clientX: 5, clientY: 5 },
+			target: getByAltText('Seite 1 von 3'),
+		});
+
+		expect(lensImage(container)).toBeNull();
+	});
+
+	it('disappears when the pointer leaves the book', async () => {
+		const { container, getByAltText, getByRole, user } = renderBook();
+		const page = getByAltText('Seite 1 von 3');
+		const toggle = getByRole('button', { name: 'Lupe' });
+		stubElementsFromPoint(page);
+		await user.click(toggle);
+		await user.pointer({ target: page });
+
+		expect(lensImage(container)).not.toBeNull();
+
+		await user.pointer({ target: toggle });
+
+		expect(lensImage(container)).toBeNull();
+	});
+
+	// Switched on again, a lens left over from before would sit where the pointer no longer is.
+	it('disappears with its switch and stays away until the pointer moves', async () => {
+		const { container, getByAltText, getByRole, user } = renderBook();
+		const page = getByAltText('Seite 1 von 3');
+		const toggle = getByRole('button', { name: 'Lupe' });
+		stubElementsFromPoint(page);
+		await user.click(toggle);
+		await user.pointer({ target: page });
+
+		toggle.focus();
+		await user.keyboard(' ');
+
+		expect(lensImage(container)).toBeNull();
+
+		await user.keyboard(' ');
+
+		expect(lensImage(container)).toBeNull();
 	});
 });

@@ -11,7 +11,13 @@ const VIEWPORTS = [
 	{ height: 800, name: 'a laptop', width: 1280 },
 	{ height: 375, name: 'a phone held sideways', width: 667 },
 	{ height: 844, name: 'a phone', width: 390 },
-];
+] as const;
+
+/** The navigation bar once the page is scrolled; it stays fixed over the top of the book. */
+const FIXED_BAR_HEIGHT = 64;
+
+/** The engine's longest page turn, in milliseconds. */
+const TURN_DURATION = 1000;
 
 interface Box {
 	height: number;
@@ -67,6 +73,50 @@ test.describe('a tsg-echo issue', () => {
 			expect(Math.abs(download.y - downloadBefore.y)).toBeLessThanOrEqual(TOLERANCE);
 		});
 	}
+
+	// WEB-436: on a wide but low screen the book grew taller than the screen, and the controls below
+	// it fell out of view as soon as the book was read from its top.
+	test('fits the book and its controls on a low laptop screen', async ({ page }) => {
+		const viewport = { height: 720, width: 1366 };
+		await page.setViewportSize(viewport);
+		await openNewestEchoIssue(page);
+		const next = page.getByRole('button', { name: 'Nächste Seite' });
+		await next.waitFor();
+
+		const book = await boxOf(page.getByLabel(/zum Durchblättern$/u));
+		const controls = await boxOf(next);
+
+		expect(controls.y + controls.height - book.y).toBeLessThanOrEqual(
+			viewport.height - FIXED_BAR_HEIGHT,
+		);
+	});
+
+	// A click or a drag meant for the lens must not turn the page under it.
+	test('turns no page by a click on it while the lens is on', async ({ page }) => {
+		await page.setViewportSize(VIEWPORTS[0]);
+		await openNewestEchoIssue(page);
+		const lens = page.getByRole('button', { name: 'Lupe' });
+		const indicator = page.getByText(/^Seiten? \d+(?:–\d+)? von \d+$/u);
+		await expect(indicator).toHaveText(/^Seite 1 von/u);
+		// The mouse only reaches what is on screen. With the controls in view the whole book is, and
+		// clicking the toggle scrolls nothing, which would move the page away from the corner.
+		await lens.scrollIntoViewIfNeeded();
+		const leaf = await boxOf(page.getByAltText(/^Seite 1 von \d+$/u));
+		const corner = { x: leaf.x + leaf.width - 10, y: leaf.y + leaf.height - 10 };
+
+		await lens.click();
+		await expect(lens).toHaveAttribute('aria-pressed', 'true');
+		await page.mouse.click(corner.x, corner.y);
+		// A turn the click had started would have reached the next spread by now.
+		await page.waitForTimeout(TURN_DURATION);
+
+		await expect(indicator).toHaveText(/^Seite 1 von/u);
+
+		await lens.click();
+		await page.mouse.click(corner.x, corner.y);
+
+		await expect(indicator).not.toHaveText(/^Seite 1 von/u);
+	});
 });
 
 test.describe('the tsg-echo archive files', () => {

@@ -1,8 +1,8 @@
 'use client';
 
 import { lazy, Suspense, useMemo, useSyncExternalStore } from 'react';
-import type { CSSProperties } from 'react';
 
+import { getBookStyle } from './book-size';
 import type { FlipbookProps } from './flipbook';
 import type { FlipbookPage } from './types';
 
@@ -56,11 +56,8 @@ function isServer(): boolean {
  */
 function FlipbookLazy({ cover, ...props }: Readonly<FlipbookLazyProps>) {
 	const isClient = useSyncExternalStore(subscribe, isBrowser, isServer);
-	const style = useMemo<EchoBoxStyle>(
-		() => ({
-			'--echo-page': `${props.pageWidth} / ${props.pageHeight}`,
-			'--echo-spread': `${props.pageWidth * 2} / ${props.pageHeight}`,
-		}),
+	const style = useMemo(
+		() => getBookStyle(props.pageWidth, props.pageHeight),
 		[props.pageHeight, props.pageWidth],
 	);
 
@@ -86,8 +83,13 @@ function FlipbookLazy({ cover, ...props }: Readonly<FlipbookLazyProps>) {
 	);
 
 	return (
-		// The container query of the boxes follows this width, which is also the engine's.
-		<div className="@container flex w-full max-w-5xl flex-col gap-6" style={style}>
+		// The container query of the boxes follows this width, which is also the engine's. A spread
+		// needs two of the narrowest pages plus the container's padding (32rem); below that the book
+		// shows single pages, and their height decides how wide they may get.
+		<div
+			className="@container flex w-full max-w-(--echo-page-max) flex-col gap-6 min-[32rem]:max-w-(--echo-spread-max)"
+			style={style}
+		>
 			{isClient ? (
 				<Suspense fallback={placeholder}>
 					<Flipbook {...props} />
@@ -98,9 +100,6 @@ function FlipbookLazy({ cover, ...props }: Readonly<FlipbookLazyProps>) {
 		</div>
 	);
 }
-
-/** The aspect ratios of a page and of a spread, as custom properties for the reserved box. */
-type EchoBoxStyle = CSSProperties & Record<'--echo-page' | '--echo-spread', string>;
 
 interface FlipbookLazyProps extends FlipbookProps {
 	cover?: FlipbookPage;
