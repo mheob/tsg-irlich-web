@@ -1,0 +1,272 @@
+{
+	"body": {
+		"result": {
+			"partnerPage": {
+				"_createdAt": "2026-11-12T11:31:57Z",
+				"_id": "partnerPage",
+				"_rev": "HS0Dvy6gaeYZV9hTjna3Hb",
+				"_type": "partnerPage",
+				"_updatedAt": "2026-11-12T11:32:08Z",
+				"content": {
+					"contactPersonsSection": {
+						"contactPersons": [
+							{
+								"_id": "b9c684aa-f914-4c32-8619-fde519d41315",
+								"contactAs": "both",
+								"email": "presse@tsg-irlich.de",
+								"firstName": "Philipp",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Philipp Pfeiffer im T-shirt der TSG Irlich auf einem Fußballplatz",
+									"asset": {
+										"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+										"_type": "reference"
+									},
+									"crop": {
+										"_type": "sanity.imageCrop",
+										"bottom": 0.10636665814369727,
+										"left": 0,
+										"right": 0,
+										"top": 0
+									},
+									"description": "Philipp Pfeiffer, Vorstandsmitglied und Jugendtrainer",
+									"hotspot": {
+										"_type": "sanity.imageHotspot",
+										"height": 0.738174379953976,
+										"width": 0.5472598653370835,
+										"x": 0.4836358987471234,
+										"y": 0.49727264979118724
+									}
+								},
+								"lastName": "Pfeiffer",
+								"phone": "+49 170 2418600",
+								"role": "Vorstand Öffentlichkeitsarbeit",
+								"taskDescription": "In meinem Ehrenamt gestalte und steuere ich die gesamte PR und Kommunikation der TSG. Ich leite das PR-Team, das unsere Social-Media-Kanäle und unsere Website verwaltet, Printmedien gestaltet und das 'TSG Echo' publiziert. Ich bin zudem Ansprechpartner für Projektplanungen."
+							},
+							{
+								"_id": "62de97e4-4c14-4336-89f0-615645b28053",
+								"contactAs": "both",
+								"email": "pr@tsg-irlich.de",
+								"firstName": "Louisa",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Louisa Krechel in einem blauen Shirt mit TSG-Logo auf einem Sportplatz.",
+									"asset": {
+										"_ref": "image-7c2516eeffb75e433ff90758c1bd0f8257f181b2-600x600-webp",
+										"_type": "reference"
+									}
+								},
+								"lastName": "Krechel",
+								"phone": "+49 1520 5856305",
+								"role": "PR-Team",
+								"taskDescription": "Ich unterstütze den \"Vorstand Öffentlichkeitsarbeit\" bei allen Aufgaben in diesem Bereich. Dazu gehören die Kommunikation von Neuigkeiten über Social Media, die Homepage und Printmedien, die Gestaltung von Flyern, Kampagnen und anderen Marketing-Maßnahmen sowie die Fotografie von Events, Auftritten und Spielen der TSG."
+							},
+							{
+								"_id": "7ba77a4c-f4f1-45ca-9b7a-bd8eac97b9e1",
+								"contactAs": "both",
+								"email": "pr@tsg-irlich.de",
+								"firstName": "Sophie",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Sophie Thomé  in einem blauen Shirt der TSG Irlich auf einem Sportplatz.",
+									"asset": {
+										"_ref": "image-1925a9de14692c1889b9c5c9a0aff271a50adfad-600x600-webp",
+										"_type": "reference"
+									}
+								},
+								"lastName": "Thomé",
+								"phone": "+49 172 9097412",
+								"role": "PR-Team",
+								"taskDescription": "Ich unterstütze den \"Vorstand Öffentlichkeitsarbeit\" bei allen Aufgaben in diesem Bereich. Dazu gehören die Kommunikation von Neuigkeiten über Social Media, die Homepage und Printmedien, die Gestaltung von Flyern, Kampagnen und anderen Marketing-Maßnahmen sowie die Fotografie von Events, Auftritten und Spielen der TSG."
+							}
+						],
+						"intro": "Fragen zum Sponsoring oder eine eigene Idee? Unser PR-Team meldet sich persönlich bei dir.",
+						"subtitle": "Ansprechpartner",
+						"title": "Dein Draht zum PR-Team"
+					},
+					"partnersSection": {
+						"intro": "Danke an alle Unternehmen, die unsere Vereinsarbeit möglich machen.",
+						"ownLogoText": "Dein Logo hier?",
+						"subtitle": "Unsere Partner und Sponsoren",
+						"title": "Stark an unserer Seite"
+					},
+					"waysSection": {
+						"ideaCta": "Jetzt Kontakt aufnehmen",
+						"ideaText": "Du hast eine eigene Idee? Wir schnüren gern ein individuelles Paket.",
+						"intro": "Ob kleiner Betrieb oder großes Unternehmen: Jede Unterstützung hilft. Gemeinsam finden wir die Form, die zu dir passt.",
+						"subtitle": "So kannst du uns unterstützen",
+						"title": "Viele Wege, ein Ziel",
+						"ways": [
+							{
+								"_key": "trikotwerbung",
+								"_type": "partnerWay",
+								"benefits": [
+									"Logo auf einem Trikotsatz",
+									"Mannschaftsfoto für deine Kanäle",
+									"Nennung auf der Website"
+								],
+								"cta": "Anfragen",
+								"icon": "shirt",
+								"text": "Dein Logo auf den Trikots einer Mannschaft, sichtbar bei jedem Spiel und jedem Turnier.",
+								"title": "Trikotwerbung"
+							},
+							{
+								"_key": "bandenwerbung",
+								"_type": "partnerWay",
+								"benefits": [
+									"Bande in bester Sichtlage",
+									"Präsenz bei jedem Heimspiel",
+									"Nennung auf der Website"
+								],
+								"cta": "Anfragen",
+								"icon": "fence",
+								"text": "Eine Werbebande an unserem Sportplatz, bei jedem Heimspiel und jedem Training im Blick.",
+								"title": "Bandenwerbung"
+							},
+							{
+								"_key": "online-partner",
+								"_type": "partnerWay",
+								"benefits": [
+									"Logo mit Link auf dieser Seite",
+									"Erwähnung im Newsletter",
+									"Beitrag auf Social Media"
+								],
+								"cta": "Anfragen",
+								"icon": "globe",
+								"text": "Dein Logo mit Link auf unserer Website und im Newsletter, das ganze Jahr über.",
+								"title": "Online-Partner"
+							},
+							{
+								"_key": "sachspenden",
+								"_type": "partnerWay",
+								"benefits": [
+									"Bälle und Trainingsmaterial",
+									"Ausrüstung für Teams und Kurse",
+									"Verpflegung bei Festen"
+								],
+								"cta": "Anfragen",
+								"icon": "gift",
+								"text": "Material, Ausrüstung oder Verpflegung für unsere Veranstaltungen. Jede Hilfe zählt.",
+								"title": "Sachspenden"
+							}
+						]
+					},
+					"whySection": {
+						"intro": "Mit deinem Engagement unterstützt du nicht nur einen Verein. Du förderst Sport, Gemeinschaft und die Zukunft von Kindern und Jugendlichen in Irlich und Neuwied.",
+						"reasons": [
+							{
+								"_key": "regionale-sichtbarkeit",
+								"_type": "partnerReason",
+								"icon": "map-pin",
+								"text": "Dein Unternehmen ist dort präsent, wo sich Irlich trifft: am Spielfeldrand, auf den Trikots und bei unseren Festen.",
+								"title": "Regionale Sichtbarkeit"
+							},
+							{
+								"_key": "reichweite-online",
+								"_type": "partnerReason",
+								"icon": "trending-up",
+								"text": "Über 100.000 Aufrufe im Monat auf Social Media, dazu Website und Newsletter. Das erreicht mehr Menschen als eine Bande allein.",
+								"title": "Reichweite online"
+							},
+							{
+								"_key": "positives-image",
+								"_type": "partnerReason",
+								"icon": "heart-handshake",
+								"text": "Dein Beitrag fließt direkt in Training, Material und Nachwuchsarbeit. So zeigst du Verantwortung für die Region.",
+								"title": "Positives Image"
+							},
+							{
+								"_key": "langfristige-partnerschaft",
+								"_type": "partnerReason",
+								"icon": "handshake",
+								"text": "Wir setzen auf Verlässlichkeit statt Einmal-Aktionen und finden gemeinsam das Paket, das zu dir passt.",
+								"title": "Langfristige Partnerschaft"
+							}
+						],
+						"subtitle": "Warum Sponsor bei der TSG werden?",
+						"title": "Mehr als nur ein Logo"
+					}
+				},
+				"heroImage": {
+					"_type": "extendedImage",
+					"alt": "Luftaufnahme des Vereinsheims „Pappelstübchen“ der TSG Irlich mit Terrasse, Tischen und Sonnenschirmen, dahinter Bäume und der Sportplatz",
+					"asset": {
+						"_ref": "image-bf810a9943f31d1c51a5d4bbe43baccc3bec32cb-4094x2160-webp",
+						"_type": "reference"
+					}
+				},
+				"inquiry": {
+					"email": "partner@tsg-irlich.de",
+					"subject": "Sponsoring bei der TSG Irlich"
+				},
+				"slug": {
+					"_type": "slug",
+					"current": "partner"
+				},
+				"subtitle": "Gemeinsam stark",
+				"title": "Sponsoren & Partner"
+			},
+			"sponsors": [
+				{
+					"_id": "f6f95815-acc9-4db3-b7d6-f408a4eacfc4",
+					"logo": {
+						"_type": "image",
+						"asset": {
+							"_ref": "image-d8e642db018c8649ecf637f4365da340934df81b-400x120-webp",
+							"_type": "reference"
+						}
+					},
+					"name": "Abbas",
+					"website": "https://abbas-medizintechnik.de/"
+				},
+				{
+					"_id": "899c87c1-457a-4077-8f30-f0697f3d6d47",
+					"logo": {
+						"_type": "image",
+						"asset": {
+							"_ref": "image-4fa574c98b2541a26ec96f11f6a948ef28efd7a7-400x120-webp",
+							"_type": "reference"
+						}
+					},
+					"name": "Ingo Jann",
+					"website": null
+				},
+				{
+					"_id": "967028ee-8c58-4dd1-b367-2f09fb2fb6da",
+					"logo": {
+						"_type": "image",
+						"asset": {
+							"_ref": "image-5c7229941a6e99bc50dbc4dea7475f3fe36bc1f1-400x120-webp",
+							"_type": "reference"
+						}
+					},
+					"name": "Rewe Müller",
+					"website": "https://www.rewe-mueller.de/"
+				},
+				{
+					"_id": "f0651443-8920-4633-9264-f0619984d93e",
+					"logo": {
+						"_type": "image",
+						"asset": {
+							"_ref": "image-54c06a763f0e0977a6bb492fdbac45b95bd361db-400x120-webp",
+							"_type": "reference"
+						}
+					},
+					"name": "SWN",
+					"website": "https://www.swn-neuwied.de/"
+				}
+			]
+		},
+		"syncTags": [
+			"s1:GP6TuQ",
+			"s1:yrvRmQ",
+			"s1:lvB0iQ",
+			"s1:NuVTmQ",
+			"s1:OkI8Gg",
+			"s1:YSzUng",
+			"s1:eOuqJg"
+		],
+		"ms": 10
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09%7B%0A%09%09%22partnerPage%22%3A+*%5B_type+%3D%3D+%27partnerPage%27%5D%5B0%5D+%7B%0A%09%09%09...%2C%0A%09%09%09content+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09contactPersonsSection+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%09%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09%22sponsors%22%3A+*%5B_type+%3D%3D+%27sponsors%27%5D+%7B+_id%2C+name%2C+website%2C+logo+%7D+%7C+order%28name+asc%29%0A%09%7D%0A&returnQuery=false"
+}
