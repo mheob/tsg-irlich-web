@@ -61,10 +61,12 @@ Without the staging webhook, every content change on staging that is not read th
 
    Both live webhooks carry the filter below since 2026-11-01. It belongs to the departments model (WEB-384): the single `group` type replaces the six `group.*` types, and `department` and `groupsPage` are new. `accessibility` joined with the page images (WEB-389), when the page got a hero image of its own, and `searchPage` with the site search (WEB-204), whose singleton holds the placeholder of the search panel in the navigation on every page. `news-article-page`, `newsOverviewCategory` and `sponsors` joined with WEB-415, when the articles and the category pages became cached: until then they rendered on every request and needed no webhook. A hook without them leaves those pages on their old texts until the next article or category change revalidates the news routes.
 
+   `partnerPage` (WEB-326, the partner page at `/verein/partner`) has to join the filter of both live webhooks before the page is released. This document only records the filter, the change itself is made in Sanity. A hook without it leaves the page on its old texts.
+
    `form` (WEB-278, the registration forms at `/anmeldung/[slug]`) joined both live webhooks on 2026-11-08, before the form builder was merged; until a deployment carries the route, its handler falls back to revalidating `/`. A hook without it leaves a published form's page and the sitemap on their old state.
 
    ```groq
-   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "form", "group", "groupsPage", "home", "imprint", "membership", "news-article-page", "news.article", "news.category", "newsOverview", "newsOverviewCategory", "person", "privacy", "searchPage", "site-settings", "sponsors", "testimonial", "venue"]
+   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "form", "group", "groupsPage", "home", "imprint", "membership", "news-article-page", "news.article", "news.category", "newsOverview", "newsOverviewCategory", "partnerPage", "person", "privacy", "searchPage", "site-settings", "sponsors", "testimonial", "venue"]
    ```
 
    **Projection** (what is sent to the webhook):
@@ -125,7 +127,8 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **News** (`_type: "news.article"`, `"news.category"`): `/news`, every category page `/news/[category]` and article `/news/[category]/[slug]`, the group pages, which show the latest articles of their category, and `/sitemap.xml`, which lists every article and category. The later pages of the overview and the categories (`?seite=N`) are cached under the internal routes `next.config.ts` rewrites them to, `/news/seite/[page]` and `/news/[category]/seite/[page]`, and only those paths reach them, so every handler that revalidates an overview names them too (WEB-415)
 - **Category pages** (`_type: "newsOverviewCategory"`, their texts and contact persons): every page of every category
 - **Article hero** (`_type: "news-article-page"`): every article
-- **Sponsors** (`_type: "sponsors"`): the home page and every article
+- **Sponsors** (`_type: "sponsors"`): the home page, every article and the partner page `/verein/partner`
+- **Partner page** (`_type: "partnerPage"`): `/verein/partner`. `person` and `aboutUs` already revalidate `/verein` as a layout, which covers it
 - **Form** (`_type: "form"`): the page `/anmeldung/[slug]`, and `/sitemap.xml` through the generic `revalidateTag('form')`, since its query of the forms carries that tag
 - **Department** (`_type: "department"`): the home page, which links the departments, and the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`
 - **Group** (`_type: "group"`): the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`. The payload only carries the slug of the group, not the one of its department, so a single group path cannot be built

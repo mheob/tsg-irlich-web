@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 import { env } from '@/lib/env';
-import { ECHO_OVERVIEW_PATH } from '@/utils/links';
+import { ECHO_OVERVIEW_PATH, PARTNER_PAGE_PATH } from '@/utils/links';
 
 interface WebhookBody {
 	_type: string;
@@ -134,6 +134,10 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	},
 	// The texts and the contact persons of every category page.
 	newsOverviewCategory: revalidateNewsCategories,
+	// The page of the partners, which shows the sponsors as well.
+	partnerPage: () => {
+		revalidatePath(PARTNER_PAGE_PATH);
+	},
 	person: () => {
 		revalidatePath('/');
 		revalidatePath('/angebot', 'layout');
@@ -142,7 +146,7 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 		revalidateNewsOverviews();
 		revalidateNewsArticles();
 		revalidatePath('/mitgliedschaft');
-		// The about page and the TSG-Echo pages below it.
+		// The about page and the pages below it: the TSG-Echo pages and the partner page.
 		revalidatePath('/verein', 'layout');
 	},
 	privacy: () => {
@@ -157,10 +161,11 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	'site-settings': () => {
 		revalidatePath('/', 'layout');
 	},
-	// The home page and every article show the sponsors.
+	// The home page, every article and the partner page show the sponsors.
 	sponsors: () => {
 		revalidatePath('/');
 		revalidateNewsArticles();
+		revalidatePath(PARTNER_PAGE_PATH);
 	},
 	testimonial: () => {
 		revalidatePath('/');

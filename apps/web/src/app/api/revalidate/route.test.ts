@@ -99,6 +99,7 @@ describe('sanity revalidation webhook', () => {
 		['home', ['/']],
 		['imprint', ['/impressum']],
 		['membership', ['/mitgliedschaft']],
+		['partnerPage', ['/verein/partner']],
 		['privacy', ['/datenschutz']],
 		['testimonial', ['/']],
 	])('revalidates %s at %j', async (type, expected) => {
@@ -366,7 +367,7 @@ describe('sanity revalidation webhook', () => {
 		expect(mockedRevalidatePath.mock.calls).toStrictEqual([['/news/[category]/[slug]', 'page']]);
 	});
 
-	it('revalidates the home page and every article for the sponsors', async () => {
+	it('revalidates the home page, every article and the partner page for the sponsors', async () => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: 'sponsors' }));
 
 		await POST(REQUEST);
@@ -374,6 +375,7 @@ describe('sanity revalidation webhook', () => {
 		expect(mockedRevalidatePath.mock.calls).toStrictEqual([
 			['/'],
 			['/news/[category]/[slug]', 'page'],
+			['/verein/partner'],
 		]);
 	});
 

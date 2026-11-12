@@ -16,6 +16,12 @@ const ECHO_ISSUE_TYPE = 'echo.issue';
 /** The path of the TSG-Echo archive. */
 const ECHO_OVERVIEW_PATH = '/verein/echo';
 
+/** The single page of the partners. Its slug is `partner`, but it lives below the club page. */
+const PARTNER_PAGE_TYPE = 'partnerPage';
+
+/** The path of the partner page. */
+const PARTNER_PAGE_PATH = '/verein/partner';
+
 /** The document type of a department, which is served below the offer page. */
 const DEPARTMENT_TYPE = 'department';
 
@@ -64,6 +70,7 @@ const PATH_RESOLVERS = new Map<string, PathResolver>([
 	[NEWS_CATEGORY_TYPE, (slug) => `/news/${slug}`],
 	[ECHO_OVERVIEW_TYPE, () => ECHO_OVERVIEW_PATH],
 	[ECHO_ISSUE_TYPE, getEchoIssuePath],
+	[PARTNER_PAGE_TYPE, () => PARTNER_PAGE_PATH],
 ]);
 
 /**
@@ -126,4 +133,10 @@ interface InternalLinkTarget {
 	slug?: string | null;
 }
 
-export { ECHO_OVERVIEW_PATH, getEchoIssuePath, getInternalHref, type InternalLinkTarget };
+export {
+	ECHO_OVERVIEW_PATH,
+	getEchoIssuePath,
+	getInternalHref,
+	type InternalLinkTarget,
+	PARTNER_PAGE_PATH,
+};
