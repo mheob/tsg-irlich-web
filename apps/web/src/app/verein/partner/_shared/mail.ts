@@ -1,11 +1,8 @@
 import type { Inquiry } from './types';
 
-// Builds the `mailto:` link of an inquiry. With a topic (the title of a card) the subject reads
-// `<subject>: <topic>`.
-function getMailHref(inquiry: Inquiry, topic?: string): string {
-	const subject = topic ? `${inquiry.subject}: ${topic}` : inquiry.subject;
-
-	return `mailto:${inquiry.email}?subject=${encodeURIComponent(subject)}`;
+// Builds the `mailto:` link of an inquiry, with the subject encoded for the URL.
+function getMailHref(inquiry: Inquiry): string {
+	return `mailto:${inquiry.email}?subject=${encodeURIComponent(inquiry.subject)}`;
 }
 
 export { getMailHref };

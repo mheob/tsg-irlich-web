@@ -252,9 +252,14 @@ describe('partner page', () => {
 		},
 	);
 
-	it('requires the button label of every way', () => {
-		expect(recordValidationChains(cardField('ways', 'cta'))).toStrictEqual([
-			['required', 'error: Der Button-Text ist erforderlich'],
+	// The cards of `ways` carry no button of their own (WEB-326 follow-up): the own-idea button below
+	// them starts every inquiry.
+	it('gives a way a title, a text, benefits and an icon, but no button', () => {
+		expect(cards('ways').of?.[0]?.fields.map((wayField) => wayField.name)).toStrictEqual([
+			'title',
+			'text',
+			'benefits',
+			'icon',
 		]);
 	});
 

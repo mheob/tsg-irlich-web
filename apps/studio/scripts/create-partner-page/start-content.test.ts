@@ -39,13 +39,8 @@ describe('the start content of the partner page', () => {
 			'Online-Partner',
 			'Sachspenden',
 		]);
-		expect(ways.map((way) => way.cta)).toStrictEqual([
-			'Anfragen',
-			'Anfragen',
-			'Anfragen',
-			'Anfragen',
-		]);
 		expect(ways.map((way) => way.benefits.length)).toStrictEqual([3, 3, 3, 3]);
+		expect(ways.every((way) => !('cta' in way))).toBe(true);
 	});
 
 	it('only uses icons the studio offers', () => {

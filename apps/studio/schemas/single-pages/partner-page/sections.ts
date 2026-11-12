@@ -96,14 +96,6 @@ const waysSection = defineField({
 							type: 'array',
 						}),
 						iconField,
-						defineField({
-							description:
-								'Die Beschriftung des Buttons, der eine Anfrage zu dieser Karte startet.',
-							name: 'cta',
-							title: 'Button',
-							type: 'string',
-							validation: (Rule) => [Rule.required().error('Der Button-Text ist erforderlich')],
-						}),
 					],
 					name: 'partnerWay',
 					title: 'Möglichkeit',

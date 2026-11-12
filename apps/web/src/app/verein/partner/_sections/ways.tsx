@@ -34,7 +34,7 @@ function Ways({ ideaCta, ideaText, inquiry, intro, subtitle, title, ways }: Read
 					{ways.map((way) => (
 						<article
 							className={cn(
-								'flex flex-col justify-between rounded-xl bg-background p-8 text-black shadow-lg',
+								'rounded-xl bg-background p-8 text-black shadow-lg',
 								'transition-all duration-300 hover:bg-background-high-contrast lg:hover:-translate-y-4',
 							)}
 							key={way._key}
@@ -61,13 +61,6 @@ function Ways({ ideaCta, ideaText, inquiry, intro, subtitle, title, ways }: Read
 									</ul>
 								) : null}
 							</div>
-
-							<footer className="mt-8">
-								<ButtonLink href={getMailHref(inquiry, way.title)} fullWidth>
-									{way.cta}
-									<span className="sr-only">: {way.title}</span>
-								</ButtonLink>
-							</footer>
 						</article>
 					))}
 				</div>
