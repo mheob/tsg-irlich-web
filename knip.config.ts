@@ -19,9 +19,14 @@ const config: KnipConfig = {
 			ignoreDependencies: ['@vitest/coverage-v8', 'vitest'],
 		},
 		'apps/studio': {
-			// Run through `sanity exec` (`import:echo`, `ocr:echo` and the e2e form by hand), which Knip's
-			// script parser skips
-			entry: ['scripts/create-e2e-form.ts', 'scripts/import-echo.ts', 'scripts/ocr-echo.ts'],
+			// Run through `sanity exec` (`import:echo`, `ocr:echo`, the e2e form and the partner page by
+			// hand), which Knip's script parser skips
+			entry: [
+				'scripts/create-e2e-form.ts',
+				'scripts/create-partner-page.ts',
+				'scripts/import-echo.ts',
+				'scripts/ocr-echo.ts',
+			],
 		},
 		'apps/web': {
 			entry: [
