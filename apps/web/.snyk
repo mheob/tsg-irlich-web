@@ -20,6 +20,16 @@ ignore:
           glob patterns from this repository's own configuration and never outside input. Revisit
           once braces publishes a patched release.
         expires: 2026-11-16T00:00:00.000Z
+  SNYK-JS-FFLATE-22392372:
+    - '*':
+        reason: >-
+          fflate has no fixed version: 0.8.3 is the latest published release and every version
+          from 0.4.8 is affected (CVE-2026-122146, published 2026-11-10). The flaw is in
+          unzipSync, which allocates whatever uncompressed size a crafted ZIP archive declares.
+          It reaches this project only through @vitest/ui below vitest, the optional peer of
+          get-it below @sanity/client, which extracts no archive from outside input and does not
+          run in the deployed website. Revisit once fflate publishes a patched release.
+        expires: 2026-12-12T00:00:00.000Z
   SNYK-JS-MINIMATCH-22111072:
     - '*':
         reason: >-
