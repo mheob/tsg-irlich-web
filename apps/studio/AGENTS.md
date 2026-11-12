@@ -26,7 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, and `create-e2e-form.ts`, which seeds the e2e registration form) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, `create-e2e-form.ts`, which seeds the e2e registration form, and `create-partner-page.ts`, which creates the partner page's start content as a draft) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -238,6 +238,7 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 - **Inhalte** with four sub tabs: „Gründe“ (`reasons`), „Unterstützung“ (`ways`, plus `ideaText` and `ideaCta`), „Partner“ (`ownLogoText`, the text of the last tile) and „Ansprechpartner“. Each of the first three has the default section header.
 - **Anfragen**: the address (initially `partner@tsg-irlich.de`) and the subject (initially „Sponsoring bei der TSG Irlich“) of every button. A card button of `ways` adds the card title to the subject.
 - The cards pick their `icon` from `PARTNER_ICONS` in `@tsgi-web/shared/partner-icons` (kebab-case Lucide names, which the web app maps to components). `reasons` and `ways` warn, never fail, when they do not hold exactly four cards, because the grid is built for four.
+- `scripts/create-partner-page.ts` creates the start content (the texts of the prototype, the hero image of `aboutUs`, the PR team as contact persons) as the draft `drafts.partnerPage`: `pnpm --filter studio exec sanity exec scripts/create-partner-page.ts --with-user-token -- --dataset <dataset>`. It never publishes and never overwrites: when the draft or the published page exists, it prints so and writes nothing.
 
 It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the search page.
 
