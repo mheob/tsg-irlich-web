@@ -5163,7 +5163,7 @@
 				"value": {
 					"type": "string"
 				},
-				"optional": false
+				"optional": true
 			},
 			"logo": {
 				"type": "objectAttribute",

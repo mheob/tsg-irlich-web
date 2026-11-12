@@ -5,7 +5,7 @@ import { ExternalLink } from './external-link';
 interface SponsorLinkProps {
 	/** The logo, a single element. */
 	children: ReactElement;
-	/** The sponsor's website from Sanity, where it is a required field. */
+	/** The sponsor's website from Sanity, where it is an optional field. */
 	website?: null | string;
 }
 

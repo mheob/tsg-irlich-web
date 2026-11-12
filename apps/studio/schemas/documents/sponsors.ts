@@ -17,12 +17,11 @@ const sponsors = defineType({
 		}),
 
 		defineField({
-			description: 'Die Website des Sponsors.',
+			description: 'Die Website des Sponsors. Ohne Website erscheint das Logo ohne Link.',
 			name: 'website',
 			title: 'Website',
 			type: 'url',
 			validation: (Rule) => [
-				Rule.required().error('Die Website ist erforderlich'),
 				Rule.uri({ scheme: ['http', 'https'] }).error('Die Website muss eine gültige URL sein'),
 			],
 		}),

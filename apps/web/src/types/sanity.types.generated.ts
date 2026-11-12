@@ -922,7 +922,7 @@ export type Sponsors = {
   _updatedAt: string;
   _rev: string;
   name: string;
-  website: string;
+  website?: string;
   logo: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -6664,7 +6664,7 @@ export type SponsorsQueryResult = Array<{
     crop?: SanityImageCrop;
     _type: "image";
   };
-  website: string;
+  website: string | null;
 }>;
 
 // Source: src/lib/sanity/queries/sitemap.ts
