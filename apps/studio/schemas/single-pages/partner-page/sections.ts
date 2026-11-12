@@ -115,13 +115,15 @@ const waysSection = defineField({
 			validation: (Rule) => [Rule.custom(validateCardCount).warning()],
 		}),
 		defineField({
-			description: 'Zum Beispiel „Du hast eine eigene Idee? …“.',
+			description:
+				'Zum Beispiel „Du hast eine eigene Idee? …“. Die Zeile erscheint nur, wenn Text und Button ausgefüllt sind.',
 			name: 'ideaText',
 			title: 'Text für eigene Ideen',
 			type: 'string',
 		}),
 		defineField({
-			description: 'Zum Beispiel „Jetzt Kontakt aufnehmen“.',
+			description:
+				'Zum Beispiel „Jetzt Kontakt aufnehmen“. Die Zeile erscheint nur, wenn Text und Button ausgefüllt sind.',
 			name: 'ideaCta',
 			title: 'Button für eigene Ideen',
 			type: 'string',

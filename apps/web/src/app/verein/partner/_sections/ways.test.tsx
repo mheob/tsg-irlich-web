@@ -54,9 +54,17 @@ describe('the ways section of the partner page', () => {
 	it('links each card button to a mail with the card title', () => {
 		const { getByRole } = renderWithUser(<Ways {...buildSection()} inquiry={INQUIRY} />);
 
-		expect(getByRole('link', { name: 'Trikotwerbung anfragen' }).getAttribute('href')).toBe(
+		expect(getByRole('link', { name: /^Trikotwerbung anfragen/u }).getAttribute('href')).toBe(
 			getMailHref(INQUIRY, 'Trikotwerbung'),
 		);
+	});
+
+	it('names each card button after its card', () => {
+		const { getAllByRole } = renderWithUser(<Ways {...buildSection()} inquiry={INQUIRY} />);
+		const names = getAllByRole('link').map((link) => link.textContent);
+
+		expect(names[0]).toBe('Trikotwerbung anfragen: Trikotwerbung');
+		expect(names[1]).toBe('Bande anfragen: Bande');
 	});
 
 	it('lists the benefits of a card and omits the list without any', () => {

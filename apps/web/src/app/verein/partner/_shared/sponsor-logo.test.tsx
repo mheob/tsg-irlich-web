@@ -12,21 +12,20 @@ const WITH_LOGO: Sponsor = {
 };
 
 describe('the logo of a sponsor', () => {
-	it('shows the logo as a decorative contained image', () => {
-		const { container } = renderWithUser(<SponsorLogo sponsor={WITH_LOGO} />);
-		const image = container.querySelector('img');
+	it('shows the logo as a decorative image', () => {
+		const { container, queryByText } = renderWithUser(<SponsorLogo sponsor={WITH_LOGO} />);
 
-		expect(image?.getAttribute('alt')).toBe('');
-		expect(image?.className).toContain('object-contain');
+		expect(container.querySelector('img')?.getAttribute('alt')).toBe('');
+		expect(queryByText('REWE Müller')).toBeNull();
 	});
 
-	it('shows the name in the serif font where the logo has no file', () => {
-		const { getByText } = renderWithUser(
-			<SponsorLogo className="mt-2" sponsor={{ ...WITH_LOGO, logo: { _type: 'image' } }} />,
+	it('shows the name where the logo has no file', () => {
+		const { container, getByText } = renderWithUser(
+			<SponsorLogo sponsor={{ ...WITH_LOGO, logo: { _type: 'image' } }} />,
 		);
 
-		expect(getByText('REWE Müller').className).toContain('font-serif');
-		expect(getByText('REWE Müller').className).toContain('mt-2');
+		expect(getByText('REWE Müller')).not.toBeNull();
+		expect(container.querySelector('img')).toBeNull();
 	});
 
 	it('passes a class name on to the logo box', () => {

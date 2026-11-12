@@ -75,6 +75,26 @@ describe('partner page', () => {
 		});
 	});
 
+	describe('meta description fallback', () => {
+		it('describes the page with the intro of the first section', async () => {
+			const document = buildPage() as { partnerPage: { content: Record<string, unknown> } };
+			mockedFetch.mockResolvedValue({
+				...document,
+				partnerPage: {
+					...document.partnerPage,
+					content: {
+						...document.partnerPage.content,
+						whySection: { intro: 'Warum du Partner wirst', title: 'Warum' },
+					},
+				},
+			});
+
+			await expect(generateMetadata()).resolves.toMatchObject({
+				description: 'Warum du Partner wirst',
+			});
+		});
+	});
+
 	describe('rendering', () => {
 		it('answers 404 without a published page', async () => {
 			mockedFetch.mockResolvedValue({ partnerPage: null, sponsors: [] });

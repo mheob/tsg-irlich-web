@@ -65,6 +65,7 @@ function Ways({ ideaCta, ideaText, inquiry, intro, subtitle, title, ways }: Read
 							<footer className="mt-8">
 								<ButtonLink href={getMailHref(inquiry, way.title)} fullWidth>
 									{way.cta}
+									<span className="sr-only">: {way.title}</span>
 								</ButtonLink>
 							</footer>
 						</article>

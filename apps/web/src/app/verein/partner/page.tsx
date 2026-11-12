@@ -8,6 +8,7 @@ import { client } from '@/lib/sanity/client';
 import { partnerPageQuery } from '@/lib/sanity/queries/pages/partner';
 import type { PartnerPageQueryResult } from '@/types/sanity.types';
 import { getPageHeroImage } from '@/utils/hero-image';
+import { PARTNER_PAGE_PATH } from '@/utils/links';
 import { getPageMetadata } from '@/utils/metadata';
 
 import { Partners } from './_sections/partners';
@@ -22,9 +23,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	}
 
 	return getPageMetadata({
+		// Without a meta description of the editors, the intro of the first section describes the page.
+		description: partnerPage.content.whySection?.intro,
 		image: partnerPage.heroImage,
 		meta: partnerPage.meta,
-		path: '/verein/partner',
+		path: PARTNER_PAGE_PATH,
 		title: partnerPage.title,
 	});
 }

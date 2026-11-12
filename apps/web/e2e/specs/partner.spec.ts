@@ -9,14 +9,14 @@ const REASONS = [
 	'Langfristige Partnerschaft',
 ];
 
-/** The cards of „Viele Wege, ein Ziel“ in the recorded page, the first one with its button first. */
+/** The cards of „Viele Wege, ein Ziel“ in the recorded page. */
 const WAYS = ['Trikotwerbung', 'Bandenwerbung', 'Online-Partner', 'Sachspenden'];
 
 /** A card button adds the title of its card to the subject of the inquiry. */
 const FIRST_WAY_INQUIRY =
 	'mailto:partner@tsg-irlich.de?subject=Sponsoring%20bei%20der%20TSG%20Irlich%3A%20Trikotwerbung';
 
-/** Every other button asks with the subject as it is. */
+/** The idea button and the own-logo tile ask with the subject as it is. */
 const PLAIN_INQUIRY = 'mailto:partner@tsg-irlich.de?subject=Sponsoring%20bei%20der%20TSG%20Irlich';
 
 test.describe('partner page', () => {
@@ -49,11 +49,14 @@ test.describe('partner page', () => {
 		await expect(tile.getByRole('link')).toHaveCount(0);
 	});
 
-	test('sends every inquiry to the partner address', async ({ page }) => {
-		await expect(page.getByRole('link', { exact: true, name: 'Anfragen' }).first()).toHaveAttribute(
+	test('sends the card and idea inquiries to the partner address', async ({ page }) => {
+		await expect(page.getByRole('link', { name: /^Anfragen\s*: Trikotwerbung$/u })).toHaveAttribute(
 			'href',
 			FIRST_WAY_INQUIRY,
 		);
+		await expect(
+			page.getByRole('link', { exact: true, name: 'Jetzt Kontakt aufnehmen' }),
+		).toHaveAttribute('href', PLAIN_INQUIRY);
 		await expect(page.getByRole('link', { exact: true, name: 'Dein Logo hier?' })).toHaveAttribute(
 			'href',
 			PLAIN_INQUIRY,

@@ -35,11 +35,15 @@ describe('a sponsor tile', () => {
 	});
 
 	it('shows the name where the logo has no file', () => {
-		const { getAllByText } = renderWithUser(<SponsorTile sponsor={SPONSOR} />);
+		const { getByRole } = renderWithUser(<SponsorTile sponsor={SPONSOR} />);
 
-		expect(getAllByText('REWE Müller')).toHaveLength(2);
+		// The fallback name in the logo box is hidden from assistive technology, so the name is read once.
+		expect(
+			getByRole('link', { name: 'REWE Müllerrewe-mueller.de(öffnet in neuem Fenster)' }),
+		).not.toBeNull();
 	});
 
+	// jsdom cannot observe hover or focus styles, so the grey-at-rest classes are checked directly.
 	it('greys the logo until hover or focus', () => {
 		const { container } = renderWithUser(<SponsorTile sponsor={SPONSOR} />);
 		const classes = container.querySelector('.grayscale')?.className;
@@ -49,6 +53,7 @@ describe('a sponsor tile', () => {
 		expect(classes).toContain('group-focus-visible:grayscale-0');
 	});
 
+	// Same limit as above: the hover class is the only observable trace of the behaviour.
 	it('turns the logo of a tile without a website colourful on hover only', () => {
 		const { container } = renderWithUser(<SponsorTile sponsor={{ ...SPONSOR, website: null }} />);
 		const classes = container.querySelector('.grayscale')?.className;

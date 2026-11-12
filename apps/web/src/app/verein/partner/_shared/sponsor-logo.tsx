@@ -15,7 +15,10 @@ function SponsorLogo({ className, sponsor }: Readonly<SponsorLogoProps>) {
 
 	if (!src) {
 		return (
-			<span className={cn('font-serif text-3xl text-primary uppercase', className)}>
+			<span
+				aria-hidden="true"
+				className={cn('font-serif text-3xl text-primary uppercase', className)}
+			>
 				{sponsor.name}
 			</span>
 		);
