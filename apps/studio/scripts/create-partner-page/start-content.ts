@@ -57,7 +57,6 @@ function buildStartContent(heroImage: SanityImageObject | undefined): PartnerPag
 							'Mannschaftsfoto für deine Kanäle',
 							'Nennung auf der Website',
 						],
-						cta: 'Anfragen',
 						icon: 'shirt',
 						text: 'Dein Logo auf den Trikots einer Mannschaft, sichtbar bei jedem Spiel und jedem Turnier.',
 						title: 'Trikotwerbung',
@@ -70,7 +69,6 @@ function buildStartContent(heroImage: SanityImageObject | undefined): PartnerPag
 							'Präsenz bei jedem Heimspiel',
 							'Nennung auf der Website',
 						],
-						cta: 'Anfragen',
 						icon: 'fence',
 						text: 'Eine Werbebande an unserem Sportplatz, bei jedem Heimspiel und jedem Training im Blick.',
 						title: 'Bandenwerbung',
@@ -83,7 +81,6 @@ function buildStartContent(heroImage: SanityImageObject | undefined): PartnerPag
 							'Erwähnung im Newsletter',
 							'Beitrag auf Social Media',
 						],
-						cta: 'Anfragen',
 						icon: 'globe',
 						text: 'Dein Logo mit Link auf unserer Website und im Newsletter, das ganze Jahr über.',
 						title: 'Online-Partner',
@@ -96,7 +93,6 @@ function buildStartContent(heroImage: SanityImageObject | undefined): PartnerPag
 							'Ausrüstung für Teams und Kurse',
 							'Verpflegung bei Festen',
 						],
-						cta: 'Anfragen',
 						icon: 'gift',
 						text: 'Material, Ausrüstung oder Verpflegung für unsere Veranstaltungen. Jede Hilfe zählt.',
 						title: 'Sachspenden',
@@ -200,7 +196,7 @@ interface PartnerPageDraft {
 		waysSection: PartnerSectionHeader & {
 			ideaCta: string;
 			ideaText: string;
-			ways: (PartnerCard & { _type: 'partnerWay'; benefits: string[]; cta: string })[];
+			ways: (PartnerCard & { _type: 'partnerWay'; benefits: string[] })[];
 		};
 		whySection: PartnerSectionHeader & {
 			reasons: (PartnerCard & { _type: 'partnerReason' })[];

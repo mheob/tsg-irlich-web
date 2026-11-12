@@ -12,10 +12,6 @@ const REASONS = [
 /** The cards of „Viele Wege, ein Ziel“ in the recorded page. */
 const WAYS = ['Trikotwerbung', 'Bandenwerbung', 'Online-Partner', 'Sachspenden'];
 
-/** A card button adds the title of its card to the subject of the inquiry. */
-const FIRST_WAY_INQUIRY =
-	'mailto:partner@tsg-irlich.de?subject=Sponsoring%20bei%20der%20TSG%20Irlich%3A%20Trikotwerbung';
-
 /** The idea button and the own-logo tile ask with the subject as it is. */
 const PLAIN_INQUIRY = 'mailto:partner@tsg-irlich.de?subject=Sponsoring%20bei%20der%20TSG%20Irlich';
 
@@ -49,11 +45,7 @@ test.describe('partner page', () => {
 		await expect(tile.getByRole('link')).toHaveCount(0);
 	});
 
-	test('sends the card and idea inquiries to the partner address', async ({ page }) => {
-		await expect(page.getByRole('link', { name: /^Anfragen\s*: Trikotwerbung$/u })).toHaveAttribute(
-			'href',
-			FIRST_WAY_INQUIRY,
-		);
+	test('sends the idea and own-logo inquiries to the partner address', async ({ page }) => {
 		await expect(
 			page.getByRole('link', { exact: true, name: 'Jetzt Kontakt aufnehmen' }),
 		).toHaveAttribute('href', PLAIN_INQUIRY);
@@ -61,5 +53,30 @@ test.describe('partner page', () => {
 			'href',
 			PLAIN_INQUIRY,
 		);
+	});
+
+	test('puts no inquiry button into the cards of the ways', async ({ page }) => {
+		for (const title of WAYS) {
+			const card = page.getByRole('article').filter({
+				has: page.getByRole('heading', { exact: true, level: 3, name: title }),
+			});
+
+			await expect(card).toBeVisible();
+			await expect(card.getByRole('link')).toHaveCount(0);
+		}
+	});
+
+	// Four sponsors and the own-logo tile: the desktop viewport lays them out in rows of three, so
+	// the own-logo tile shares the second row with the last sponsor instead of standing alone.
+	test('never leaves the own-logo tile alone in its row', async ({ isMobile, page }) => {
+		test.skip(isMobile, 'the phone layout lets the tile span the whole row instead');
+
+		const ownTile = await page
+			.getByRole('link', { exact: true, name: 'Dein Logo hier?' })
+			.boundingBox();
+		const lastSponsor = await page.getByRole('link', { name: /^SWN\b/u }).boundingBox();
+
+		expect(ownTile).not.toBeNull();
+		expect(ownTile?.y).toBe(lastSponsor?.y);
 	});
 });

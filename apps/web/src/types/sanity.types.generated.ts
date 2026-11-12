@@ -1560,7 +1560,6 @@ export type PartnerPage = {
           | "users"
           | "heart"
           | "star";
-        cta: string;
         _type: "partnerWay";
         _key: string;
       }>;
@@ -5945,7 +5944,6 @@ export type PartnerPageQueryResult = {
             | "trending-up"
             | "trophy"
             | "users";
-          cta: string;
           _type: "partnerWay";
           _key: string;
         }>;

@@ -12,7 +12,6 @@ function buildWay(title: string, benefits?: string[]) {
 		_key: title,
 		_type: 'partnerWay',
 		benefits,
-		cta: `${title} anfragen`,
 		icon: 'shirt',
 		text: `Text zu ${title}`,
 		title,
@@ -51,20 +50,13 @@ describe('the ways section of the partner page', () => {
 		expect(container.innerHTML).toBe('');
 	});
 
-	it('links each card button to a mail with the card title', () => {
-		const { getByRole } = renderWithUser(<Ways {...buildSection()} inquiry={INQUIRY} />);
-
-		expect(getByRole('link', { name: /^Trikotwerbung anfragen/u }).getAttribute('href')).toBe(
-			getMailHref(INQUIRY, 'Trikotwerbung'),
-		);
-	});
-
-	it('names each card button after its card', () => {
+	it('puts no inquiry button into the cards', () => {
 		const { getAllByRole } = renderWithUser(<Ways {...buildSection()} inquiry={INQUIRY} />);
-		const names = getAllByRole('link').map((link) => link.textContent);
 
-		expect(names[0]).toBe('Trikotwerbung anfragen: Trikotwerbung');
-		expect(names[1]).toBe('Bande anfragen: Bande');
+		expect(getAllByRole('article').map((card) => card.querySelector('a'))).toStrictEqual([
+			null,
+			null,
+		]);
 	});
 
 	it('lists the benefits of a card and omits the list without any', () => {
