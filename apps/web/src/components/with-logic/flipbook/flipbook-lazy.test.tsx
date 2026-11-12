@@ -64,12 +64,21 @@ describe('the lazily loaded flipbook', () => {
 
 	it('reserves the shape of a page and of a spread before the book loads', () => {
 		const { container } = renderWithUser(lazyBook());
+		const style = container.firstElementChild?.getAttribute('style');
 
-		expect(container.firstElementChild?.getAttribute('style')).toContain(
-			'--echo-page: 1414 / 2000',
-		);
-		expect(container.firstElementChild?.getAttribute('style')).toContain(
-			'--echo-spread: 2828 / 2000',
+		expect(style).toContain('--echo-page: 1414 / 2000');
+		expect(style).toContain('--echo-spread: 2828 / 2000');
+	});
+
+	// WEB-436: on a wide but low screen the book grew taller than the screen and pushed its controls
+	// out of view, so the height left on screen decides how wide it may get.
+	it('lets the height left on screen decide how wide the book gets', () => {
+		const { container } = renderWithUser(lazyBook());
+		const style = container.firstElementChild?.getAttribute('style');
+
+		expect(style).toContain('--echo-page-max: max(240px, (100svh - 10.5rem) * 0.707)');
+		expect(style).toContain(
+			'--echo-spread-max: max(480px, min(64rem, (100svh - 10.5rem) * 1.414))',
 		);
 	});
 });

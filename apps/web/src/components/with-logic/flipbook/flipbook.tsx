@@ -1,19 +1,26 @@
 'use client';
 
 import { HTMLFlipBook } from '@gullabs/react-flipbook';
-import type { BookSnapshot, FlipBookHandle } from '@gullabs/react-flipbook';
+import type { BookSnapshot, FlipBookHandle, PointerKind } from '@gullabs/react-flipbook';
+import { ZoomIn } from 'lucide-react';
 import { useMemo, useRef, useState } from 'react';
 
-import { ArrowButton } from '@/components/ui/arrow-button';
+import { cn } from '@tsgi-web/shared';
 
+import { ArrowButton } from '@/components/ui/arrow-button';
+import { Toggle } from '@/components/ui/toggle';
+
+import { MIN_PAGE_WIDTH } from './book-size';
 import { describeSpread } from './describe-spread';
+import { MagnifierLens } from './magnifier-lens';
 import type { FlipbookPage } from './types';
+import { useMagnifier } from './use-magnifier';
 
 /** Mount only the spreads around the current one; a 52-page scan would otherwise load every page. */
 const LAZY_RADIUS = 2;
 
-/** The narrowest a page gets before the book stops shrinking. */
-const MIN_PAGE_WIDTH = 240;
+/** No pointer turns a page while the lens follows it. */
+const NO_POINTERS: readonly PointerKind[] = [];
 
 /** A page is half the viewport next to its neighbour, the whole viewport on its own. */
 const PAGE_SIZES = '(min-width: 48rem) 50vw, 100vw';
@@ -21,7 +28,9 @@ const PAGE_SIZES = '(min-width: 48rem) 50vw, 100vw';
 /**
  * A TSG-Echo issue to leaf through: a spread from `md` up, a single page on a phone. The book brings
  * keyboard turning and reduced motion; the buttons and the indicator below it are ours, because a
- * screen reader in browse mode never receives the arrow keys.
+ * screen reader in browse mode never receives the arrow keys. The lens next to them enlarges the
+ * page under the pointer; while it is on, only the buttons and the keyboard turn a page, so a click
+ * or a drag meant for the lens cannot.
  *
  * @param props - The book's props.
  * @param props.label - The book's accessible name.
@@ -33,6 +42,7 @@ const PAGE_SIZES = '(min-width: 48rem) 50vw, 100vw';
 function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProps>) {
 	const book = useRef<FlipBookHandle | null>(null);
 	const [spread, setSpread] = useState<Spread>({ pageCount: pages.length, visiblePages: [0] });
+	const magnifier = useMagnifier();
 
 	// The engine tears the book down when its children change identity, so the leaves are built once.
 	const leaves = useMemo(
@@ -85,7 +95,15 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 	return (
 		<>
 			{/* The engine shows single pages below twice `MIN_PAGE_WIDTH`, so the box switches there. */}
-			<div className="aspect-(--echo-page) w-full @min-[480px]:aspect-(--echo-spread)">
+			{/* A finger on the page moves the lens instead of the page while the lens is on. */}
+			<div
+				className={cn(
+					'relative aspect-(--echo-page) w-full @min-[480px]:aspect-(--echo-spread)',
+					magnifier.isOn && 'cursor-zoom-in touch-none',
+					magnifier.lens !== undefined && 'cursor-none',
+				)}
+				{...magnifier.handlers}
+			>
 				<HTMLFlipBook
 					aria-label={label}
 					autoSize
@@ -99,6 +117,7 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 					onChangeOrientation={syncOrientation}
 					onLoaded={syncSpread}
 					onPageChange={syncSpread}
+					pointerInput={magnifier.isOn ? NO_POINTERS : undefined}
 					ref={book}
 					respectReducedMotion
 					roleDescription="Heft"
@@ -109,8 +128,10 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 				>
 					{leaves}
 				</HTMLFlipBook>
+				{magnifier.lens && <MagnifierLens lens={magnifier.lens} />}
 			</div>
-			<div className="flex h-12 items-center justify-center gap-4">
+			{/* One row on a phone too, so the box the cover reserved for the controls still fits. */}
+			<div className="relative flex h-12 items-center justify-center gap-4">
 				<ArrowButton
 					aria-disabled={isAtStart}
 					aria-label="Vorherige Seite"
@@ -130,6 +151,16 @@ function Flipbook({ label, pageHeight, pageWidth, pages }: Readonly<FlipbookProp
 					size="size-6"
 					variant="secondary"
 				/>
+				<Toggle
+					className="rounded-full sm:absolute sm:right-0"
+					onPressedChange={magnifier.handleToggle}
+					pressed={magnifier.isOn}
+					size="lg"
+					variant="outline"
+				>
+					<ZoomIn aria-hidden className="size-5" />
+					<span className="max-sm:sr-only">Lupe</span>
+				</Toggle>
 			</div>
 		</>
 	);
