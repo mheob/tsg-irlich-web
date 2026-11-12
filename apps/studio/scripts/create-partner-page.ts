@@ -23,7 +23,13 @@ import {
 const API_VERSION = '2026-10-01';
 
 const dataset = readDataset(process.argv.slice(2));
-const client = getCliClient({ apiVersion: API_VERSION }).withConfig({ dataset, useCdn: false });
+// `raw` sees drafts; the default perspective since API 2025-02-19 is `published` and hides them.
+// The `aboutUs` lookup below names its id, so it still reads the published document.
+const client = getCliClient({ apiVersion: API_VERSION }).withConfig({
+	dataset,
+	perspective: 'raw',
+	useCdn: false,
+});
 
 const existing = await client.fetch<string[]>(`*[_id in $ids]._id`, {
 	ids: ['partnerPage', PARTNER_PAGE_ID],
