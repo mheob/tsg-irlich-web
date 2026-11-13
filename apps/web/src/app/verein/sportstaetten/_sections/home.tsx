@@ -54,7 +54,8 @@ function Home({ fallbackImage, inquiry, section }: Readonly<HomeProps>) {
 											{turfBox.title}
 										</p>
 									)}
-									{turfBox.text && <p className="mt-2">{turfBox.text}</p>}
+									{/* The global `p` colour does not inherit, so the text needs its own on the blue box. */}
+									{turfBox.text && <p className="mt-2 text-primary-foreground">{turfBox.text}</p>}
 									{turfBox.linkText && (
 										<a
 											className="mt-4 inline-block font-bold text-secondary underline-offset-4 hover:underline"

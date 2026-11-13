@@ -15,6 +15,7 @@ const STATIC_ROUTES: { name: string; route: string }[] = [
 	{ name: 'echo', route: '/verein/echo' },
 	{ name: 'partner', route: '/verein/partner' },
 	{ name: 'volunteer', route: '/verein/ehrenamt' },
+	{ name: 'venues', route: '/verein/sportstaetten' },
 	{ name: 'offers', route: '/angebot' },
 	{ name: 'news', route: '/news' },
 	{ name: 'membership', route: '/mitgliedschaft' },

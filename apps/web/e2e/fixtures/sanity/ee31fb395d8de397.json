@@ -1,0 +1,1062 @@
+{
+	"body": {
+		"result": {
+			"fallbackImage": {
+				"_type": "extendedImage",
+				"alt": "Sporthalle mit drei verschiedenen Trainingsgruppen: Links üben Kinder und ein Trainer in weißen Taekwondo-Anzügen mit schwarzem Gürtel synchrone Kicks, in der Mitte zeigen Mädchen in türkis-blauen Gymnastik-Trikots mit bunten Federn eine Beinübung, und rechts spielen Kinder unter Anleitung von Trainern in dunkelblauen Shirts Fußball auf einer grünen Kunstrasenfläche. Im Hintergrund sind bunte Gymnastikbälle und Sportgeräte zu sehen.",
+				"asset": {
+					"_ref": "image-8f13e339ee9df0bad86fd4d3df596364a6e7fca0-4094x2160-webp",
+					"_type": "reference"
+				}
+			},
+			"venuePage": {
+				"_createdAt": "2026-11-13T12:08:49Z",
+				"_id": "venuePage",
+				"_rev": "J7vGSUg8gO4bMEbVe6MuEQ",
+				"_type": "venuePage",
+				"_updatedAt": "2026-11-13T12:08:55Z",
+				"content": {
+					"contactPersonsSection": {
+						"contactPersons": [
+							{
+								"_id": "2e62c3c7-6d23-4799-9701-a08256d0c1b2",
+								"contactAs": "both",
+								"email": "vorsitz@tsg-irlich.de",
+								"firstName": "Alexander",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Alexander Hof in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz.",
+									"asset": {
+										"_ref": "image-1e4595eb53901b21a62170411d838b4bc0e65adc-600x600-webp",
+										"_type": "reference"
+									},
+									"crop": {
+										"_type": "sanity.imageCrop",
+										"bottom": 0,
+										"left": 0,
+										"right": 0,
+										"top": 0
+									},
+									"hotspot": {
+										"_type": "sanity.imageHotspot",
+										"height": 0.89125541277692,
+										"width": 0.9561294492393759,
+										"x": 0.521935275380312,
+										"y": 0.5543722936115401
+									}
+								},
+								"lastName": "Hof",
+								"phone": "+49 170 4489500",
+								"role": "Vorsitzender",
+								"taskDescription": "Als Vorsitzender gestalte ich die strategische Ausrichtung und Weiterentwicklung des Vereins. Ich repräsentiere ihn nach außen, pflege den Austausch mit der Kommune, Verbänden und Sponsoren und setze mein Netzwerk gezielt für eine erfolgreiche Zusammenarbeit ein."
+							},
+							{
+								"_id": "429f8069-7868-4fef-96ca-cfb9d88f68a3",
+								"contactAs": "email",
+								"email": "finanzen@tsg-irlich.de",
+								"firstName": "René",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "René Linn in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz. ",
+									"asset": {
+										"_ref": "image-9a54eec0662a8a7b613a63a7f2a85acc75bfbf06-600x600-webp",
+										"_type": "reference"
+									}
+								},
+								"lastName": "Linn",
+								"phone": "+49 160 1818712",
+								"role": "Vorstand Finanzen",
+								"taskDescription": "Ich verantworte die gesamte Finanzverwaltung der TSG Irlich. Von Abrechnungen bis zu Steuerfragen. Zudem plane und kontrolliere ich die Finanzen und sorge für eine transparente sowie nachhaltige Haushaltsführung des Vereins. Bei Fragen zu Finanzthemen bin ich ihr Ansprechpartner."
+							},
+							{
+								"_id": "51dfa04b-7577-48d0-9434-a096e0b3ff42",
+								"contactAs": "both",
+								"email": "verwaltung@tsg-irlich.de",
+								"firstName": "Melina",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Melina Dinter im Polo der TSG Irlich auf einem Fußballplatz",
+									"asset": {
+										"_ref": "image-32c7a18d61105ff1d2a01e528209cb5edf7effd2-600x600-webp",
+										"_type": "reference"
+									}
+								},
+								"lastName": "Dinter",
+								"phone": "+49 151 50422094",
+								"role": "Vorstand Verwaltung",
+								"taskDescription": "Als Vorstand Verwaltung kümmere ich mich um alle administrativen Aufgaben. Von Vertragsabwicklung über Versicherungen bis zu Protokollen und Post. Ich betreue die digitale Mitgliederverwaltung und sorge für eine reibungslose Dokumentation und Kommunikation."
+							},
+							{
+								"_id": "b9c684aa-f914-4c32-8619-fde519d41315",
+								"contactAs": "both",
+								"email": "presse@tsg-irlich.de",
+								"firstName": "Philipp",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Philipp Pfeiffer im T-shirt der TSG Irlich auf einem Fußballplatz",
+									"asset": {
+										"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+										"_type": "reference"
+									},
+									"crop": {
+										"_type": "sanity.imageCrop",
+										"bottom": 0.10636665814369727,
+										"left": 0,
+										"right": 0,
+										"top": 0
+									},
+									"description": "Philipp Pfeiffer, Vorstandsmitglied und Jugendtrainer",
+									"hotspot": {
+										"_type": "sanity.imageHotspot",
+										"height": 0.738174379953976,
+										"width": 0.5472598653370835,
+										"x": 0.4836358987471234,
+										"y": 0.49727264979118724
+									}
+								},
+								"lastName": "Pfeiffer",
+								"phone": "+49 170 2418600",
+								"role": "Vorstand Öffentlichkeitsarbeit",
+								"taskDescription": "In meinem Ehrenamt gestalte und steuere ich die gesamte PR und Kommunikation der TSG. Ich leite das PR-Team, das unsere Social-Media-Kanäle und unsere Website verwaltet, Printmedien gestaltet und das 'TSG Echo' publiziert. Ich bin zudem Ansprechpartner für Projektplanungen."
+							}
+						],
+						"intro": "Fragen zu unseren Sportstätten, zur Nutzung oder eine Idee für den Platz? Der Vorstand ist gern für dich da.",
+						"subtitle": "Ansprechpartner",
+						"title": "Dein Draht zum Vorstand"
+					},
+					"homeSection": {
+						"intro": "Im Pappelstadion schlägt das Herz der TSG: Hier trainieren und spielen unsere Fußballteams, und gleich nebenan trifft sich der ganze Verein im Pappelstübchen.",
+						"subtitle": "Unsere Heimat",
+						"title": "Pappelstadion & Pappelstübchen",
+						"turfBox": {
+							"linkText": "Sprich uns an, wenn du helfen willst",
+							"text": "Seit vielen Jahren kämpfen wir für einen Kunstrasenplatz im Pappelstadion. Er würde den Spielbetrieb wetterunabhängig machen und unseren Nachwuchs stärken.",
+							"title": "Unser Traum: Kunstrasen"
+						},
+						"venues": [
+							{
+								"_id": "2f1440fa-d543-427b-8792-d891e29000d8",
+								"description": [
+									{
+										"_key": "stadion-1",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "stadion-1-span",
+												"_type": "span",
+												"marks": [],
+												"text": "Das Pappelstadion Irlich ist seit Jahrzehnten die Heimat der TSG Irlich. Der Aschenplatz in der Gotenstraße bietet eine rustikale, aber charmante Kulisse für Spiele und Trainingseinheiten der TSG-Teams. Direkt angrenzend befindet sich das Vereinsheim mit der gemütlichen Gaststätte „Pappelstübchen“, wo sich Mitglieder und Gäste nach einem spannenden Spiel oder nach Feierabend austauschen und treffen können. Das Vereinsheim ist nicht nur ein Ort der Geselligkeit, sondern auch ein wichtiger Bestandteil des Vereinslebens, der die Gemeinschaft und den Zusammenhalt stärkt."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								],
+								"features": [
+									"Aschenplatz in Großfeldgröße",
+									"Flutlicht für Training und Spiele",
+									"Umkleiden und Duschen",
+									"Zuschauerbereich am Spielfeldrand",
+									"Vereinsheim direkt angrenzend"
+								],
+								"groups": [
+									{
+										"_id": "group-9150a863-c01f-463e-ba03-130b0dfd1fd1",
+										"department": "fussball",
+										"slug": "1-mannschaft",
+										"title": "1. Mannschaft",
+										"weekdays": ["wednesday", "friday"]
+									},
+									{
+										"_id": "group-6e8e12eb-de76-4ff4-9dc9-214237c1aeab",
+										"department": "fussball",
+										"slug": "bambinis",
+										"title": "Bambinis",
+										"weekdays": ["friday"]
+									},
+									{
+										"_id": "group-776252d2-bf70-482b-a749-c58b5e3cd21a",
+										"department": "fussball",
+										"slug": "d-jugend",
+										"title": "D-Jugend",
+										"weekdays": ["monday", "tuesday"]
+									},
+									{
+										"_id": "group-751bf33f-4a6f-4b4d-83b0-628778d85bea",
+										"department": "fussball",
+										"slug": "e-jugend",
+										"title": "E-Jugend",
+										"weekdays": ["tuesday"]
+									},
+									{
+										"_id": "group-455ec903-0dc3-4c37-ba25-ca760a7642ed",
+										"department": "fussball",
+										"slug": "f-jugend",
+										"title": "F-Jugend",
+										"weekdays": ["thursday"]
+									},
+									{
+										"_id": "group-f654dfc8-31c4-4156-9c91-18aaaeae8337",
+										"department": "fussball",
+										"slug": "montagskicker",
+										"title": "Montagskicker",
+										"weekdays": ["monday"]
+									}
+								],
+								"location": {
+									"city": "Neuwied",
+									"houseNumber": "20",
+									"name": "Pappelstadion Neuwied/Irlich",
+									"street": "Gotenstraße",
+									"zipCode": "56567"
+								},
+								"mainImage": {
+									"_type": "image",
+									"alt": "Das Pappelstadion in Irlich aus der Vogelperspektive - die Heimat der TSG Irlich.",
+									"asset": {
+										"_ref": "image-156ef90d279d9eac5ccb909e9510e32097512fb3-4000x2250-jpg",
+										"_type": "reference"
+									},
+									"description": "Das Pappelstadion in Irlich aus der Vogelperspektive - die Heimat der TSG Irlich."
+								},
+								"openingHours": null,
+								"title": "Pappelstadion",
+								"type": "cinder"
+							},
+							{
+								"_id": "968c56f9-7a9c-462f-be2b-8f269075b007",
+								"description": [
+									{
+										"_key": "stuebchen-1",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "stuebchen-1-span",
+												"_type": "span",
+												"marks": [],
+												"text": "Das „Pappelstübchen“ ist das Vereinsheim der TSG Irlich und bietet eine gemütliche Kneipenatmosphäre mit einer großzügigen Sonnenterrasse. Es ist der ideale Ort für einen entspannten Abend mit Freunden, bei dem auch ein Darts-Automat für Unterhaltung sorgt. Die rustikale Einrichtung und die familiäre Atmosphäre machen das „Pappelstübchen“ zu einem beliebten Treffpunkt. Die Raucherkneipe bietet über die Terrasse zudem eine direkte Anbindung zum benachbarten Fußballplatz."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								],
+								"features": [
+									"Treffpunkt nach Training und Spiel",
+									"Terrasse mit Blick auf den Platz",
+									"Heimspiele live und gemeinsam"
+								],
+								"groups": [],
+								"location": {
+									"city": "Neuwied",
+									"houseNumber": "20",
+									"name": "Pappelstübchen Irlich",
+									"street": "Gotenstraße",
+									"zipCode": "56567"
+								},
+								"mainImage": {
+									"_type": "image",
+									"alt": "Das Pappelstübchen mit wunderschöner Terrasse.",
+									"asset": {
+										"_ref": "image-a895944ee6cbef30c4dc2739e836d5347f721d16-4000x2250-jpg",
+										"_type": "reference"
+									}
+								},
+								"openingHours": [
+									{
+										"_key": "hours-1",
+										"_type": "venueOpeningHours",
+										"days": "Dienstag bis Freitag",
+										"time": "ab 17 Uhr"
+									},
+									{
+										"_key": "hours-2",
+										"_type": "venueOpeningHours",
+										"days": "Samstag und Sonntag",
+										"time": "zu den Heimspielen"
+									}
+								],
+								"title": "Vereinsheim Pappelstübchen",
+								"type": "clubhouse"
+							}
+						]
+					},
+					"othersSection": {
+						"intro": "Nicht alle Gruppen passen ins Pappelstadion. Unsere Kurse, die Breitensportgruppen und viele Jugendteams trainieren in Hallen und auf Plätzen in Irlich und der Nachbarschaft.",
+						"subtitle": "Alle weiteren Sportanlagen",
+						"title": "Hier sind wir außerdem aktiv"
+					}
+				},
+				"heroImage": {
+					"_type": "image",
+					"alt": "Das Pappelstadion in Irlich aus der Vogelperspektive - die Heimat der TSG Irlich.",
+					"asset": {
+						"_ref": "image-156ef90d279d9eac5ccb909e9510e32097512fb3-4000x2250-jpg",
+						"_type": "reference"
+					},
+					"description": "Das Pappelstadion in Irlich aus der Vogelperspektive - die Heimat der TSG Irlich."
+				},
+				"inquiry": {
+					"email": "info@tsg-irlich.de",
+					"subject": "Frage zu den Sportstätten der TSG Irlich"
+				},
+				"slug": {
+					"_type": "slug",
+					"current": "sportstaetten"
+				},
+				"subtitle": "Hier spielt die TSG",
+				"title": "Sportstätten"
+			},
+			"venues": [
+				{
+					"_id": "50ca3e46-28d8-4a70-860b-07b3f832af46",
+					"description": [
+						{
+							"_key": "7eebd27d7857",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "2ee135a8939c0",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Gymnastikhalle im Nachbarort Feldkirchen befindet sich an der Grundschule und wird von der TSG Irlich für ihr Kursangebot genutzt. Die Gymnastikhalle hat eine Größe von 12x14 Metern."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": null,
+					"groups": [],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "41",
+						"name": "Gymnastikhalle Grundschule Feldkirchen",
+						"street": "Schillerstraße",
+						"zipCode": "56567"
+					},
+					"mainImage": {
+						"_type": "image",
+						"alt": "Die Gymnastikhalle im Nachbarort Feldkirchen",
+						"asset": {
+							"_ref": "image-3a958db0b49582e4160fdbb4abc7e99efb155215-4000x2250-jpg",
+							"_type": "reference"
+						}
+					},
+					"openingHours": null,
+					"title": "Gymnastikhalle Grundschule Feldkirchen",
+					"type": "hall-1"
+				},
+				{
+					"_id": "6cfbe736-644b-4819-8b4d-1946aaacd92e",
+					"description": [
+						{
+							"_key": "a5a3bea2570c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "4fe25f442dff0",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Mehrzweckhalle (MZH) neben der Grundschule St. Peter und Paul im Herzen von Irlich ist eine vielseitig nutzbare Halle. Die Geräteturnhalle hat die Maße 15 x 27 Meter und bietet ausreichend Platz für sportliche Aktivitäten und Events. Direkt angrenzend befindet sich ein Foyer, das zusätzlichen Raum für Veranstaltungen bietet."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": null,
+					"groups": [
+						{
+							"_id": "group-ef51d678-cf8f-474e-b549-7b1fc9fe8c85",
+							"department": "kurse",
+							"slug": "aerobic",
+							"title": "Aerobic",
+							"weekdays": ["wednesday"]
+						},
+						{
+							"_id": "group-5c5c2800-c35f-44d5-8bd9-b564cfed0925",
+							"department": "weitere-sportarten",
+							"slug": "badminton",
+							"title": "Badminton",
+							"weekdays": ["monday", "monday"]
+						},
+						{
+							"_id": "group-d19cd71a-29f4-4376-9e94-c4b7e41285db",
+							"department": "kinderturnen",
+							"slug": "eltern-kind-turnen",
+							"title": "Eltern-Kind Turnen",
+							"weekdays": ["wednesday"]
+						},
+						{
+							"_id": "group-4d6fb5c8-26c1-4c52-8023-fe39e4dbc925",
+							"department": "tanzen",
+							"slug": "funky-diamonds",
+							"title": "Funky Diamonds",
+							"weekdays": ["tuesday"]
+						},
+						{
+							"_id": "group-a6870da4-5514-4f14-ae23-e03579d24763",
+							"department": "kinderturnen",
+							"slug": "kinderturnen-ab-3",
+							"title": "Kinderturnen 3-6 Jahre",
+							"weekdays": ["wednesday"]
+						},
+						{
+							"_id": "group-ae56b66c-2d1b-4fd3-ade1-fe9a20771fd1",
+							"department": "kinderturnen",
+							"slug": "kinderturnen-ab-6",
+							"title": "Kinderturnen 6-8 Jahre",
+							"weekdays": ["monday"]
+						},
+						{
+							"_id": "group-7729f40d-9678-4561-8de1-3ae9b58160c1",
+							"department": "kinderturnen",
+							"slug": "kinderturnen-ab-8",
+							"title": "Kinderturnen 8-13 Jahre",
+							"weekdays": ["wednesday"]
+						},
+						{
+							"_id": "group-c4afdd11-fc43-4481-89c8-20075150dac2",
+							"department": "tanzen",
+							"slug": "magic-diamonds",
+							"title": "Magic Diamonds",
+							"weekdays": ["tuesday"]
+						},
+						{
+							"_id": "group-d09e92ac-7f4f-4920-9126-7245d93e41ee",
+							"department": "kurse",
+							"slug": "pilates",
+							"title": "Pilates",
+							"weekdays": ["monday"]
+						},
+						{
+							"_id": "group-81cf7146-c544-4ef7-a36b-3e6047d7acd9",
+							"department": "weitere-sportarten",
+							"slug": "rope-skipping",
+							"title": "Rope Skipping",
+							"weekdays": ["wednesday", "thursday"]
+						},
+						{
+							"_id": "group-54eb7b14-d686-4b35-b344-695cb79e957a",
+							"department": "tanzen",
+							"slug": "sweet-diamonds",
+							"title": "Sweet Diamonds",
+							"weekdays": ["thursday"]
+						},
+						{
+							"_id": "group-38c14563-5c29-4a0e-88d5-3af417fdcd85",
+							"department": "kurse",
+							"slug": "yoga",
+							"title": "Yoga",
+							"weekdays": ["wednesday"]
+						}
+					],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "5",
+						"name": "Mehrzweckhalle Irlich",
+						"street": "Apostelstraße",
+						"zipCode": "56567"
+					},
+					"mainImage": {
+						"_type": "image",
+						"alt": "Die Mehrzweckhalle an der Grundschule Irlich",
+						"asset": {
+							"_ref": "image-92065e479cf70420aa6a9c8fce88ba4676e7dc26-3000x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0.14250000000000007,
+							"left": 0,
+							"right": 0,
+							"top": 0.16750000000000007
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.47999999999999954,
+							"width": 1,
+							"x": 0.5,
+							"y": 0.5
+						}
+					},
+					"openingHours": null,
+					"title": "Mehrzweckhalle Irlich",
+					"type": "hall-1"
+				},
+				{
+					"_id": "2f1440fa-d543-427b-8792-d891e29000d8",
+					"description": [
+						{
+							"_key": "stadion-1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "stadion-1-span",
+									"_type": "span",
+									"marks": [],
+									"text": "Das Pappelstadion Irlich ist seit Jahrzehnten die Heimat der TSG Irlich. Der Aschenplatz in der Gotenstraße bietet eine rustikale, aber charmante Kulisse für Spiele und Trainingseinheiten der TSG-Teams. Direkt angrenzend befindet sich das Vereinsheim mit der gemütlichen Gaststätte „Pappelstübchen“, wo sich Mitglieder und Gäste nach einem spannenden Spiel oder nach Feierabend austauschen und treffen können. Das Vereinsheim ist nicht nur ein Ort der Geselligkeit, sondern auch ein wichtiger Bestandteil des Vereinslebens, der die Gemeinschaft und den Zusammenhalt stärkt."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": [
+						"Aschenplatz in Großfeldgröße",
+						"Flutlicht für Training und Spiele",
+						"Umkleiden und Duschen",
+						"Zuschauerbereich am Spielfeldrand",
+						"Vereinsheim direkt angrenzend"
+					],
+					"groups": [
+						{
+							"_id": "group-9150a863-c01f-463e-ba03-130b0dfd1fd1",
+							"department": "fussball",
+							"slug": "1-mannschaft",
+							"title": "1. Mannschaft",
+							"weekdays": ["wednesday", "friday"]
+						},
+						{
+							"_id": "group-6e8e12eb-de76-4ff4-9dc9-214237c1aeab",
+							"department": "fussball",
+							"slug": "bambinis",
+							"title": "Bambinis",
+							"weekdays": ["friday"]
+						},
+						{
+							"_id": "group-776252d2-bf70-482b-a749-c58b5e3cd21a",
+							"department": "fussball",
+							"slug": "d-jugend",
+							"title": "D-Jugend",
+							"weekdays": ["monday", "tuesday"]
+						},
+						{
+							"_id": "group-751bf33f-4a6f-4b4d-83b0-628778d85bea",
+							"department": "fussball",
+							"slug": "e-jugend",
+							"title": "E-Jugend",
+							"weekdays": ["tuesday"]
+						},
+						{
+							"_id": "group-455ec903-0dc3-4c37-ba25-ca760a7642ed",
+							"department": "fussball",
+							"slug": "f-jugend",
+							"title": "F-Jugend",
+							"weekdays": ["thursday"]
+						},
+						{
+							"_id": "group-f654dfc8-31c4-4156-9c91-18aaaeae8337",
+							"department": "fussball",
+							"slug": "montagskicker",
+							"title": "Montagskicker",
+							"weekdays": ["monday"]
+						}
+					],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "20",
+						"name": "Pappelstadion Neuwied/Irlich",
+						"street": "Gotenstraße",
+						"zipCode": "56567"
+					},
+					"mainImage": {
+						"_type": "image",
+						"alt": "Das Pappelstadion in Irlich aus der Vogelperspektive - die Heimat der TSG Irlich.",
+						"asset": {
+							"_ref": "image-156ef90d279d9eac5ccb909e9510e32097512fb3-4000x2250-jpg",
+							"_type": "reference"
+						},
+						"description": "Das Pappelstadion in Irlich aus der Vogelperspektive - die Heimat der TSG Irlich."
+					},
+					"openingHours": null,
+					"title": "Pappelstadion",
+					"type": "cinder"
+				},
+				{
+					"_id": "044de207-3af7-4121-bcec-11cafebce68c",
+					"description": [
+						{
+							"_key": "0fc16ae5ada5",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "271f1699d76f0",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Sportplatz im Nachbarort Feldkirchen, die Heimat des SV Feldkirchen, befindet sich in der Schillerstraße. Es handelt sich um einen modernen Kunstrasenplatz, der optimale Bedingungen für sportliche Aktivitäten bietet. Die Jugendteams der JSG Irlich/Wied nutzen diesen Platz regelmäßig für Training und Spiele."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": null,
+					"groups": [
+						{
+							"_id": "group-5406e87c-46ca-4966-b37f-e6c52ced2fc2",
+							"department": "fussball",
+							"slug": "a-jugend",
+							"title": "A-Jugend",
+							"weekdays": ["tuesday", "wednesday"]
+						},
+						{
+							"_id": "group-197f97a5-1d6b-4394-8315-2305785f2f28",
+							"department": "fussball",
+							"slug": "c-jugend",
+							"title": "C-Jugend",
+							"weekdays": ["tuesday", "thursday", "friday"]
+						}
+					],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "3",
+						"name": "Sportplatz Feldkirchen",
+						"street": "Thomas-Mann-Straße",
+						"zipCode": "56567"
+					},
+					"mainImage": {
+						"_type": "image",
+						"alt": "Der Kunstrasenplatz des SV in Feldkirchen",
+						"asset": {
+							"_ref": "image-78973616efe9b149977c5fd7cf7d674279491fef-4000x2250-jpg",
+							"_type": "reference"
+						}
+					},
+					"openingHours": null,
+					"title": "Sportplatz Feldkirchen",
+					"type": "artificial-turf"
+				},
+				{
+					"_id": "9918d3c2-b4db-44c8-9075-9496cefc74f5",
+					"description": [
+						{
+							"_key": "5f2f04bdd35f",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "1a3c3f64fd970",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Sportplatz in Hüllenberg ist ein Naturrasenplatz am ruhigen Ortsrand. Direkt am Platz befindet sich das Vereinslokal des SV Hüllenberg, das \"Clubhaus am Sportplatz\". Hier können Besucher nach dem Spiel oder Training einkehren. In den Sommermonaten ist der Sportplatz Hüllenberg Spiel- und Trainingsort der JSG-Teams."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": null,
+					"groups": [
+						{
+							"_id": "group-f4df4614-78f5-458a-9b69-41a2c2c34183",
+							"department": "fussball",
+							"slug": "b-jugend",
+							"title": "B-Jugend",
+							"weekdays": ["tuesday", "thursday"]
+						}
+					],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "10",
+						"name": "Sportplatz Hüllenberg",
+						"street": "Windhauser Weg",
+						"zipCode": "56567"
+					},
+					"mainImage": {
+						"_type": "image",
+						"alt": "Der Naturrasenplatz des SV in Hüllenberg",
+						"asset": {
+							"_ref": "image-ad6c7d5eff1260a35da18257e5e2a77be3c3a33d-4000x2250-jpg",
+							"_type": "reference"
+						}
+					},
+					"openingHours": null,
+					"title": "Sportplatz Hüllenberg",
+					"type": "grass"
+				},
+				{
+					"_id": "1da91d6e-4802-4519-b957-ba9130c7cda7",
+					"description": [
+						{
+							"_key": "77a8f56fa697",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "fb194cc738260",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Rasenplatz des VfL Wied Niederbieber, gelegen an der Augustenthaler Straße neben der Carmen-Sylva-Schule, dient als Heimspielstätte unseres JSG-Partners. Die Sportanlage bietet in den Sommermonaten eine ideale Umgebung für Fußballspiele und Trainingseinheiten unserer Jugendteams."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						},
+						{
+							"_key": "57416b7b415c",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "ee4fdd7558e10",
+									"_type": "span",
+									"marks": [],
+									"text": "Der Rasenplatz ist bekannt für seine gepflegte Spielfläche, die optimale Bedingungen für spannende Fußballbegegnungen bietet. Die Nähe zur Carmen-Sylva-Schule ermöglicht es, dass Schüler und Sportbegeisterte gleichermaßen von der Sportstätte profitieren können."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": null,
+					"groups": [
+						{
+							"_id": "group-776252d2-bf70-482b-a749-c58b5e3cd21a",
+							"department": "fussball",
+							"slug": "d-jugend",
+							"title": "D-Jugend",
+							"weekdays": ["thursday"]
+						},
+						{
+							"_id": "group-751bf33f-4a6f-4b4d-83b0-628778d85bea",
+							"department": "fussball",
+							"slug": "e-jugend",
+							"title": "E-Jugend",
+							"weekdays": ["thursday"]
+						},
+						{
+							"_id": "group-455ec903-0dc3-4c37-ba25-ca760a7642ed",
+							"department": "fussball",
+							"slug": "f-jugend",
+							"title": "F-Jugend",
+							"weekdays": ["tuesday"]
+						}
+					],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "23",
+						"name": "Sportplatz Niederbieber",
+						"street": "Augustenthaler Straße",
+						"zipCode": "56567"
+					},
+					"mainImage": {
+						"_type": "image",
+						"alt": "Der Naturrasenplatz des VfL in Niederbieber",
+						"asset": {
+							"_ref": "image-209edc4a28b3238fd4cd26a628add9a973167b8a-4000x2250-jpg",
+							"_type": "reference"
+						}
+					},
+					"openingHours": null,
+					"title": "Sportplatz Niederbieber",
+					"type": "grass"
+				},
+				{
+					"_id": "3870ef4d-1fbf-4934-a5a9-b7103999f01c",
+					"description": [
+						{
+							"_key": "1a5420c37696",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "88e08f58a63b",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Große Turnhalle der Carmen-Sylva-Schule im Ortsteil Niederbieber steht nach jahrelanger Sperrung endlich wieder für den Schul- und Vereinssport zur Verfügung."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": null,
+					"groups": [
+						{
+							"_id": "group-197f97a5-1d6b-4394-8315-2305785f2f28",
+							"department": "fussball",
+							"slug": "c-jugend",
+							"title": "C-Jugend",
+							"weekdays": ["wednesday"]
+						},
+						{
+							"_id": "group-751bf33f-4a6f-4b4d-83b0-628778d85bea",
+							"department": "fussball",
+							"slug": "e-jugend",
+							"title": "E-Jugend",
+							"weekdays": ["tuesday", "thursday"]
+						},
+						{
+							"_id": "group-455ec903-0dc3-4c37-ba25-ca760a7642ed",
+							"department": "fussball",
+							"slug": "f-jugend",
+							"title": "F-Jugend",
+							"weekdays": ["tuesday"]
+						}
+					],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "23",
+						"name": "Turnhalle Niederbieber",
+						"street": "Augustenthaler Straße",
+						"zipCode": "56567"
+					},
+					"mainImage": null,
+					"openingHours": null,
+					"title": "Turnhalle Niederbieber",
+					"type": "hall-3"
+				},
+				{
+					"_id": "9a94832d-67f4-4347-a7bc-57901cfd4d3a",
+					"description": [
+						{
+							"_key": "2d364aa6e545",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "a23c592ffa610",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Turnhalle der Robert-Krups-Schule in Neuwied ist eine großzügige Geräteturnhalle, die Teil der kooperativen Realschule ist. Mit Maßen von 18 x 33 Metern bietet sie ausreichend Platz für vielfältige sportliche Aktivitäten und Veranstaltungen. Die moderne Ausstattung und die großzügige Fläche machen sie zu einem idealen Ort für den Sportunterricht und Vereinssport. Nach der Generalsanierung, die fast 2 Mio. Euro kostete und in einer rekordverdächtigen Bauzeit von nur 16 Monaten abgeschlossen wurde, wurde die Turnhalle im November 2016 wiedereröffnet."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": null,
+					"groups": [
+						{
+							"_id": "group-97a04238-e4f1-4d8f-9169-036357664b88",
+							"department": "kurse",
+							"slug": "after-work-fitness",
+							"title": "After-Work-Fitness",
+							"weekdays": ["monday"]
+						},
+						{
+							"_id": "group-42490d75-7576-4d76-902a-be9e7a454cf2",
+							"department": "fussball",
+							"slug": "alte-herren",
+							"title": "Alte Herren",
+							"weekdays": ["wednesday"]
+						},
+						{
+							"_id": "group-f4df4614-78f5-458a-9b69-41a2c2c34183",
+							"department": "fussball",
+							"slug": "b-jugend",
+							"title": "B-Jugend",
+							"weekdays": ["tuesday", "thursday"]
+						},
+						{
+							"_id": "group-6e8e12eb-de76-4ff4-9dc9-214237c1aeab",
+							"department": "fussball",
+							"slug": "bambinis",
+							"title": "Bambinis",
+							"weekdays": ["friday"]
+						},
+						{
+							"_id": "group-776252d2-bf70-482b-a749-c58b5e3cd21a",
+							"department": "fussball",
+							"slug": "d-jugend",
+							"title": "D-Jugend",
+							"weekdays": ["tuesday", "thursday"]
+						},
+						{
+							"_id": "group-85948ebb-3e1d-4c73-a078-f1d5ece34ff9",
+							"department": "weitere-sportarten",
+							"slug": "frauengymnastik",
+							"title": "Frauengymnastik",
+							"weekdays": ["wednesday"]
+						},
+						{
+							"_id": "group-4d6fb5c8-26c1-4c52-8023-fe39e4dbc925",
+							"department": "tanzen",
+							"slug": "funky-diamonds",
+							"title": "Funky Diamonds",
+							"weekdays": ["tuesday"]
+						},
+						{
+							"_id": "group-99a99cb7-a09c-4e81-9ace-453367c48b1f",
+							"department": "weitere-sportarten",
+							"slug": "jedermaenner",
+							"title": "Jedermänner",
+							"weekdays": ["friday"]
+						},
+						{
+							"_id": "group-d335e539-9078-4304-97e5-3defb9dc06f8",
+							"department": "tanzen",
+							"slug": "little-diamonds",
+							"title": "Little Diamonds",
+							"weekdays": ["monday"]
+						},
+						{
+							"_id": "group-e5006896-2511-4b62-a914-76aadb1901fc",
+							"department": "taekwondo",
+							"slug": "mini-scorpions",
+							"title": "Mini Scorpions",
+							"weekdays": ["saturday"]
+						},
+						{
+							"_id": "group-f654dfc8-31c4-4156-9c91-18aaaeae8337",
+							"department": "fussball",
+							"slug": "montagskicker",
+							"title": "Montagskicker",
+							"weekdays": ["monday"]
+						},
+						{
+							"_id": "group-e6b44dce-48a9-4d0d-b115-84d5b33c1e0b",
+							"department": "taekwondo",
+							"slug": "scorpions",
+							"title": "Scorpions",
+							"weekdays": ["friday"]
+						},
+						{
+							"_id": "group-d1366a67-c0ba-4f28-9559-2059ecfedcd8",
+							"department": "taekwondo",
+							"slug": "selbstverteidigung",
+							"title": "Selbstverteidigung",
+							"weekdays": ["saturday"]
+						}
+					],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "21",
+						"name": "Turnhalle Robert-Krups-Schule Irlich",
+						"street": "Marienstraße",
+						"zipCode": "56567"
+					},
+					"mainImage": {
+						"_type": "image",
+						"alt": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion",
+						"asset": {
+							"_ref": "image-c6ce126a8971e3f1fada153c0cf6698a8bbbdef2-4000x2250-jpg",
+							"_type": "reference"
+						},
+						"description": "Die moderne Zwei-Feld-Halle in direkter Nähe zum Irlicher Pappelstadion"
+					},
+					"openingHours": null,
+					"title": "Turnhalle Robert-Krups-Schule",
+					"type": "hall-2"
+				},
+				{
+					"_id": "c61807c0-e58f-4d18-a347-3fc7c6d7e97b",
+					"description": [
+						{
+							"_key": "f6e6bf0b5fc2",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "f2dda4c8ba88",
+									"_type": "span",
+									"marks": [],
+									"text": "Die Turnhalle der Sonnenlandschule steht als Sporthalle in Neuwied Stadt zur Verfügung. Eigentümer ist die Stadt Neuwied."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": null,
+					"groups": [
+						{
+							"_id": "group-5406e87c-46ca-4966-b37f-e6c52ced2fc2",
+							"department": "fussball",
+							"slug": "a-jugend",
+							"title": "A-Jugend",
+							"weekdays": ["wednesday"]
+						}
+					],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "46",
+						"name": "Turnhalle Sonnenlandschule",
+						"street": "Sonnenstraße",
+						"zipCode": "56564"
+					},
+					"mainImage": null,
+					"openingHours": null,
+					"title": "Turnhalle Sonnenlandschule",
+					"type": "hall-2"
+				},
+				{
+					"_id": "968c56f9-7a9c-462f-be2b-8f269075b007",
+					"description": [
+						{
+							"_key": "stuebchen-1",
+							"_type": "block",
+							"children": [
+								{
+									"_key": "stuebchen-1-span",
+									"_type": "span",
+									"marks": [],
+									"text": "Das „Pappelstübchen“ ist das Vereinsheim der TSG Irlich und bietet eine gemütliche Kneipenatmosphäre mit einer großzügigen Sonnenterrasse. Es ist der ideale Ort für einen entspannten Abend mit Freunden, bei dem auch ein Darts-Automat für Unterhaltung sorgt. Die rustikale Einrichtung und die familiäre Atmosphäre machen das „Pappelstübchen“ zu einem beliebten Treffpunkt. Die Raucherkneipe bietet über die Terrasse zudem eine direkte Anbindung zum benachbarten Fußballplatz."
+								}
+							],
+							"markDefs": [],
+							"style": "normal"
+						}
+					],
+					"features": [
+						"Treffpunkt nach Training und Spiel",
+						"Terrasse mit Blick auf den Platz",
+						"Heimspiele live und gemeinsam"
+					],
+					"groups": [],
+					"location": {
+						"city": "Neuwied",
+						"houseNumber": "20",
+						"name": "Pappelstübchen Irlich",
+						"street": "Gotenstraße",
+						"zipCode": "56567"
+					},
+					"mainImage": {
+						"_type": "image",
+						"alt": "Das Pappelstübchen mit wunderschöner Terrasse.",
+						"asset": {
+							"_ref": "image-a895944ee6cbef30c4dc2739e836d5347f721d16-4000x2250-jpg",
+							"_type": "reference"
+						}
+					},
+					"openingHours": [
+						{
+							"_key": "hours-1",
+							"_type": "venueOpeningHours",
+							"days": "Dienstag bis Freitag",
+							"time": "ab 17 Uhr"
+						},
+						{
+							"_key": "hours-2",
+							"_type": "venueOpeningHours",
+							"days": "Samstag und Sonntag",
+							"time": "zu den Heimspielen"
+						}
+					],
+					"title": "Vereinsheim Pappelstübchen",
+					"type": "clubhouse"
+				}
+			]
+		},
+		"syncTags": [
+			"s1:Mvlp1g",
+			"s1:y+gLqA",
+			"s1:Z4VvIg",
+			"s1:NuVTmQ",
+			"s1:uMx6JQ",
+			"s1:PeVrtw",
+			"s1:rTlNag",
+			"s1:N029bQ",
+			"s1:eOuqJg",
+			"s1:yJoVrQ",
+			"s1:BpJQvw",
+			"s1:YiSa0Q",
+			"s1:0P7oqA",
+			"s1:OD7l+Q",
+			"s1:W7KMkg",
+			"s1:GpchFg",
+			"s1:SgUpiQ",
+			"s1:pAHVYA",
+			"s1:w2LXFQ",
+			"s1:3mbpCw"
+		],
+		"ms": 49
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09%7B%0A%09%09%22venuePage%22%3A+*%5B_type+%3D%3D+%27venuePage%27%5D%5B0%5D+%7B%0A%09%09%09...%2C%0A%09%09%09content+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09homeSection+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09venues%5B%5D-%3E+%7B+%0A%09_id%2C%0A%09title%2C%0A%09type%2C%0A%09mainImage%2C%0A%09location%2C%0A%09features%2C%0A%09openingHours%2C%0A%09%22description%22%3A+description.text%2C%0A%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+references%28%5E._id%29+%26%26+defined%28slug.current%29%5D+%7C+order%28title+asc%29+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22department%22%3A+department-%3Eslug.current%2C%0A%09%09%22weekdays%22%3A+training.trainingTimes%5Bvenue._ref+%3D%3D+%5E.%5E._id%5D.weekday%0A%09%7D%0A+%7D%0A%09%09%09%09%7D%2C%0A%09%09%09%09contactPersonsSection+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%09%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09%22venues%22%3A+*%5B_type+%3D%3D+%27venue%27%5D+%7C+order%28title+asc%29+%7B+%0A%09_id%2C%0A%09title%2C%0A%09type%2C%0A%09mainImage%2C%0A%09location%2C%0A%09features%2C%0A%09openingHours%2C%0A%09%22description%22%3A+description.text%2C%0A%09%22groups%22%3A+*%5B_type+%3D%3D+%27group%27+%26%26+references%28%5E._id%29+%26%26+defined%28slug.current%29%5D+%7C+order%28title+asc%29+%7B%0A%09%09_id%2C%0A%09%09title%2C%0A%09%09%22slug%22%3A+slug.current%2C%0A%09%09%22department%22%3A+department-%3Eslug.current%2C%0A%09%09%22weekdays%22%3A+training.trainingTimes%5Bvenue._ref+%3D%3D+%5E.%5E._id%5D.weekday%0A%09%7D%0A+%7D%2C%0A%09%09%22fallbackImage%22%3A+*%5B_type+%3D%3D+%27site-settings%27%5D%5B0%5D.fallbackImage%0A%09%7D%0A&returnQuery=false"
+}

@@ -23,6 +23,7 @@ const STATIC_ROUTES = [
 	'/verein/echo',
 	'/verein/partner',
 	'/verein/ehrenamt',
+	'/verein/sportstaetten',
 	'/angebot',
 	'/news',
 	'/mitgliedschaft',
