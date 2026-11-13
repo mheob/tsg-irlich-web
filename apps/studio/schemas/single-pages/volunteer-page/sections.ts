@@ -5,6 +5,7 @@ import { defineArrayMember, defineField } from 'sanity';
 
 import { PAGE_ICONS } from '@tsgi-web/shared/page-icons';
 
+import { PageIconInput } from '@/components/page-icon-input';
 import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
 const REASON_COUNT = 6;
@@ -13,6 +14,7 @@ const TITLE_WARNING_LENGTH = 65;
 const TEXT_WARNING_LENGTH = 160;
 
 const iconField = defineField({
+	components: { input: PageIconInput },
 	description: 'Das Symbol, das zur Karte gehört.',
 	name: 'icon',
 	options: { list: [...PAGE_ICONS] },

@@ -2,11 +2,14 @@ import { describe, expect, it } from 'vite-plus/test';
 
 import { PAGE_ICONS } from '@tsgi-web/shared/page-icons';
 
+import { PageIconInput } from '@/components/page-icon-input';
+
 import volunteerPage from './index';
 
 interface PageField {
 	fields?: PageField[];
 	group?: string;
+	components?: { input?: unknown };
 	initialValue?: unknown;
 	name: string;
 	of?: { fields?: PageField[]; to?: { type: string }[]; type?: string }[];
@@ -173,6 +176,11 @@ describe('volunteer page', () => {
 	it('offers the shared icon list on every reason and area', () => {
 		expect(itemField(reasons, 'icon').options?.list).toStrictEqual(PAGE_ICONS);
 		expect(itemField(areas, 'icon').options?.list).toStrictEqual(PAGE_ICONS);
+	});
+
+	it('previews the chosen icon on every reason and area', () => {
+		expect(itemField(reasons, 'icon').components?.input).toBe(PageIconInput);
+		expect(itemField(areas, 'icon').components?.input).toBe(PageIconInput);
 	});
 
 	it('asks for an image with alt text on every area', () => {

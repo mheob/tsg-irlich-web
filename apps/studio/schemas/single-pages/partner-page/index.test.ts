@@ -2,11 +2,14 @@ import { describe, expect, it } from 'vite-plus/test';
 
 import { PAGE_ICONS } from '@tsgi-web/shared/page-icons';
 
+import { PageIconInput } from '@/components/page-icon-input';
+
 import partnerPage from './index';
 
 interface PageField {
 	fields?: PageField[];
 	group?: string;
+	components?: { input?: unknown };
 	initialValue?: unknown;
 	name: string;
 	of?: { fields: PageField[] }[];
@@ -266,6 +269,11 @@ describe('partner page', () => {
 	it('offers the shared icon list on every card', () => {
 		expect(cardField('reasons', 'icon').options?.list).toStrictEqual(PAGE_ICONS);
 		expect(cardField('ways', 'icon').options?.list).toStrictEqual(PAGE_ICONS);
+	});
+
+	it('previews the chosen icon on every card', () => {
+		expect(cardField('reasons', 'icon').components?.input).toBe(PageIconInput);
+		expect(cardField('ways', 'icon').components?.input).toBe(PageIconInput);
 	});
 
 	it('shows a fixed title in lists', () => {
