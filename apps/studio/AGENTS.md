@@ -26,7 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, `create-e2e-form.ts`, which seeds the e2e registration form, `create-partner-page.ts` and `create-volunteer-page.ts`, which create the start content of the partner and the volunteer page as a draft; `scripts/shared` holds what several of them use, such as `readDataset`) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, `create-e2e-form.ts`, which seeds the e2e registration form, `create-partner-page.ts`, `create-volunteer-page.ts` and `create-venue-page.ts`, which create the start content of the partner, the volunteer and the venue page as a draft; `scripts/shared` holds what several of them use, such as `readDataset` and the ids of the board) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -271,6 +271,8 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 - `turfBox.linkText` is required once the box has a title or a text, because the website shows the box then. An empty box is left out.
 - **Anfragen**: the address (initially `info@tsg-irlich.de`) and the subject (initially „Frage zu den Sportstätten der TSG Irlich“) of the turf box's link.
 - The equipment and the opening hours of a venue live on the venue, see [Venues](#venues).
+
+- `scripts/create-venue-page.ts` creates the start content (the texts of the prototype, the image of the Pappelstadion as hero image, the two home venues and the board as contact persons) as the draft `drafts.venuePage`: `pnpm --filter studio exec sanity exec scripts/create-venue-page.ts --with-user-token -- --dataset <dataset>`. Like the partner script it never publishes and never overwrites, and it writes no venue: equipment, opening hours and the type „Vereinsheim“ are set by the editors. It stops with an error when Pappelstadion or Pappelstübchen is not published in the dataset, since the draft references both.
 
 It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the partner page. Both live revalidation webhooks must list `venuePage` in their type filter (`docs/SANITY_WEBHOOK_SETUP.md`).
 
