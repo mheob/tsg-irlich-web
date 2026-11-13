@@ -179,6 +179,11 @@ describe('volunteer page', () => {
 		expect(itemField(areas, 'image').type).toBe('extendedImage');
 	});
 
+	// An image object that only carries an alt text would pass `required()` alone.
+	it('asks for the image file of every area, not only its alt text', () => {
+		expect(recordedRuleCalls(itemField(areas, 'image'))).toContain('assetRequired');
+	});
+
 	it('quotes testimonials as voices', () => {
 		expect(subField(section('voicesSection'), 'testimonials').of).toStrictEqual([
 			expect.objectContaining({ to: [{ type: 'testimonial' }], type: 'reference' }),

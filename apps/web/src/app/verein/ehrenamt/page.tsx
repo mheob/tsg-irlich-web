@@ -63,7 +63,12 @@ export default async function VolunteerPage() {
 				subTitle={volunteerPage.subtitle}
 				title={volunteerPage.title}
 			/>
-			{whySection && <Reasons hasPositions={positions.length > 0} section={whySection} />}
+			{whySection && (
+				<Reasons
+					hasPositions={Boolean(positionsSection) && positions.length > 0}
+					section={whySection}
+				/>
+			)}
 			{voicesSection && (
 				<Voices section={voicesSection} testimonials={resolved(voicesSection.testimonials)} />
 			)}

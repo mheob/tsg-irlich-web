@@ -183,6 +183,18 @@ describe('volunteer page', () => {
 			expect(findElement(await VolunteerPage(), Reasons)?.props.hasPositions).toBe(false);
 		});
 
+		// Without the section there is nothing the button could jump to.
+		it('tells the reasons there are no positions to show without their section', async () => {
+			const document = buildPage() as { volunteerPage: { content: Record<string, unknown> } };
+			const { positionsSection: _omitted, ...content } = document.volunteerPage.content;
+			mockedFetch.mockResolvedValue({
+				...document,
+				volunteerPage: { ...document.volunteerPage, content },
+			});
+
+			expect(findElement(await VolunteerPage(), Reasons)?.props.hasPositions).toBe(false);
+		});
+
 		it('drops a contact person and a testimonial that no longer resolve', async () => {
 			mockedFetch.mockResolvedValue(
 				buildPage({ contactPersons: [PERSON, null], testimonials: [null, TESTIMONIAL] }),

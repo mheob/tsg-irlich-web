@@ -147,7 +147,9 @@ const areasSection = defineField({
 							name: 'image',
 							title: 'Bild',
 							type: 'extendedImage',
-							validation: (Rule) => [Rule.required().error('Das Bild ist erforderlich')],
+							validation: (Rule) => [
+								Rule.required().assetRequired().error('Das Bild ist erforderlich'),
+							],
 						}),
 						iconField,
 						defineField({
