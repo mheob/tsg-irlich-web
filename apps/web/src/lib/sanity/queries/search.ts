@@ -25,13 +25,14 @@ const SEARCH_PAGE_TYPES = [
 	'echoOverview',
 	'partnerPage',
 	'volunteerPage',
+	'volunteer.position',
 ] as const;
 
 /**
  * `SEARCH_PAGE_TYPES` as a GROQ array. Sanity TypeGen cannot read an array built at runtime, so the
  * list is spelled out a second time; a test keeps both in step.
  */
-const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage']`;
+const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position']`;
 
 /** The pages that list a person in their contact persons section. Group pages list theirs by team. */
 const contactPersonPageTypeList = /* groq */ `['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage']`;
@@ -92,8 +93,10 @@ const searchTarget = /* groq */ `
  *   searched. The volunteer page joins both terms: its first section uses the paths of the partner
  *   page's `whySection`, and the intros of its areas and open positions and the titles, texts and
  *   tasks of its areas are added. No other type has these paths, so neither term needs a guard.
- *   The titles of the open positions are not searched: `score()` refuses a subquery such as
- *   `*[_type == 'volunteer.position'].title` or `count(*[…])` ("score() function received
+ * - An open position (`volunteer.position`) has no page of its own. It is a candidate found by its
+ *   title, like any page, and leads to the volunteer page, the way a FAQ leads to its departments.
+ *   A position cannot lift the page's own score instead: `score()` refuses a match on a subquery
+ *   such as `*[_type == 'volunteer.position'].title` or `count(*[…])` ("score() function received
  *   unexpected expression", measured on `development` on 2026-11-13).
  */
 const pageScore = /* groq */ `
@@ -177,6 +180,9 @@ const searchCandidatesQuery = defineQuery(`
 	| order(_score desc) [_score != 0] [0...$limit] {
 		${searchTarget},
 		"_score": math::sum([_score]),
+		_type == 'volunteer.position' => {
+			"targets": *[_type == 'volunteerPage'] { ${searchTarget} }
+		},
 		_type == 'faq' => {
 			question,
 			"targets": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { ${searchTarget} }

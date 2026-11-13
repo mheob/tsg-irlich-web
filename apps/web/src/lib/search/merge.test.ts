@@ -213,6 +213,55 @@ describe(mergePageHits, () => {
 		]);
 	});
 
+	it('turns an open position into the volunteer page, with its title as snippet', () => {
+		const volunteerPage = {
+			...NO_EXTRAS,
+			_id: 'volunteerPage',
+			_type: 'volunteerPage' as const,
+			department: null,
+			image: TANZEN.image,
+			slug: 'ehrenamt',
+			title: 'Engagiere dich',
+		};
+		const [hit] = mergePageHits([
+			{
+				...NO_EXTRAS,
+				_id: 'position-1',
+				_score: 10,
+				_type: 'volunteer.position',
+				department: null,
+				slug: null,
+				targets: [volunteerPage],
+				title: 'Schiedsrichter/in',
+			},
+		]);
+
+		expect(hit).toMatchObject({
+			href: '/verein/ehrenamt',
+			id: 'volunteerPage',
+			score: 10,
+			snippet: 'Offene Aufgabe: Schiedsrichter/in',
+			title: 'Engagiere dich',
+		});
+	});
+
+	it('drops an open position while the volunteer page is not published', () => {
+		expect(
+			mergePageHits([
+				{
+					...NO_EXTRAS,
+					_id: 'position-1',
+					_score: 10,
+					_type: 'volunteer.position',
+					department: null,
+					slug: null,
+					targets: [],
+					title: 'Schiedsrichter/in',
+				},
+			]),
+		).toStrictEqual([]);
+	});
+
 	it('keeps the snippet of the source with the highest score', () => {
 		expect(mergePageHits([faq({ _score: 4 }), page(TANZEN, 2)])[0]).toMatchObject({
 			score: 4,

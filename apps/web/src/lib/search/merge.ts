@@ -7,7 +7,7 @@ import { getSearchThumbnail } from './thumbnail';
 import type { SearchCandidate, SearchHit, SearchHitKind } from './types';
 
 /** The search types without a page of their own. They lead to the pages that show them. */
-const TYPES_WITHOUT_PAGE = new Set<string>(['faq', 'person']);
+const TYPES_WITHOUT_PAGE = new Set<string>(['faq', 'person', 'volunteer.position']);
 
 /**
  * The types a hit may link to: every page type of the search plus the news article.
@@ -197,7 +197,21 @@ function getFaqHits(faq: FaqCandidate): (SearchHit | undefined)[] {
 }
 
 /**
- * The hits a candidate gives: a FAQ or a person its pages, any other candidate itself.
+ * The volunteer page an open position leads to, with the title of the position as its snippet.
+ *
+ * @param position - The open position.
+ * @returns The hit, or none while the volunteer page is not published.
+ */
+function getPositionHits(position: PositionCandidate): (SearchHit | undefined)[] {
+	const title = clean(position.title);
+	const snippet = title ? `Offene Aufgabe: ${title}` : undefined;
+
+	return existing(position.targets).map((page) => toSearchHit(page, position._score, snippet));
+}
+
+/**
+ * The hits a candidate gives: a FAQ, a person or an open position its pages, any other candidate
+ * itself.
  *
  * @param candidate - The candidate.
  * @returns The hits, `undefined` for a page that has no address.
@@ -208,6 +222,9 @@ function getCandidateHits(candidate: SearchCandidate): (SearchHit | undefined)[]
 	}
 	if (candidate._type === 'person') {
 		return getPersonHits(candidate);
+	}
+	if (candidate._type === 'volunteer.position') {
+		return getPositionHits(candidate);
 	}
 	return [toSearchHit(candidate, candidate._score)];
 }
@@ -226,7 +243,8 @@ function compareHits(first: SearchHit, second: SearchHit): number {
 /**
  * Turns the candidates of the „Seiten“ group into its hits.
  *
- * - A FAQ becomes the departments that show it, a person the pages that show them.
+ * - A FAQ becomes the departments that show it, a person the pages that show them, an open
+ *   position the volunteer page.
  * - A page found more than once, through its own content or through several persons or FAQs, is
  *   listed once, with its highest score and the snippet of the source that gave it.
  * - A page without an address is left out.
@@ -249,6 +267,7 @@ function mergePageHits(candidates: readonly SearchCandidate[]): SearchHit[] {
 
 type FaqCandidate = Extract<SearchCandidate, { _type: 'faq' }>;
 type PersonCandidate = Extract<SearchCandidate, { _type: 'person' }>;
+type PositionCandidate = Extract<SearchCandidate, { _type: 'volunteer.position' }>;
 type Affiliation = NonNullable<PersonCandidate['affiliations']>[number];
 
 /** The department of a group or the category of an article, as the search queries project it. */

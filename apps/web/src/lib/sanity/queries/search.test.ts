@@ -214,6 +214,7 @@ describe('search queries', () => {
 				'echoOverview',
 				'partnerPage',
 				'volunteerPage',
+				'volunteer.position',
 			]);
 			expect(searchCandidatesQuery).toContain(
 				`_type in [${SEARCH_PAGE_TYPES.map((type) => `'${type}'`).join(', ')}]`,
@@ -336,6 +337,13 @@ describe('search queries', () => {
 			for (const path of VOLUNTEER_PATHS) {
 				expect(fields).toContain(path);
 			}
+		});
+
+		// A position has no page of its own: it is found by its title and leads to the volunteer page.
+		it('lead an open position to the volunteer page', () => {
+			expect(searchCandidatesQuery).toContain(
+				`_type == 'volunteer.position' => {\n\t\t\t"targets": *[_type == 'volunteerPage']`,
+			);
 		});
 
 		// The partner page lists contact persons, so a person found by name leads there too.
