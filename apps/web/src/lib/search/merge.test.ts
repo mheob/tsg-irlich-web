@@ -256,6 +256,23 @@ describe(mergePageHits, () => {
 		expect(hit).toMatchObject({ href: '/verein/partner', kind: 'page', meta: 'Seite' });
 	});
 
+	it('links the volunteer page below the club page', () => {
+		const [hit] = mergePageHits([
+			{
+				...NO_EXTRAS,
+				_id: 'volunteerPage',
+				_score: 3,
+				_type: 'volunteerPage',
+				department: null,
+				image: TANZEN.image,
+				slug: 'ehrenamt',
+				title: 'Ehrenamt',
+			},
+		]);
+
+		expect(hit).toMatchObject({ href: '/verein/ehrenamt', kind: 'page', meta: 'Seite' });
+	});
+
 	it('sorts by score, then by title in German order', () => {
 		const hits = mergePageHits([
 			page({ ...ZUMBA, _id: 'group-volleyball', slug: 'volleyball', title: 'Volleyball' }, 3),
