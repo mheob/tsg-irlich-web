@@ -22,6 +22,9 @@ const PARTNER_PAGE_TYPE = 'partnerPage';
 /** The path of the partner page. */
 const PARTNER_PAGE_PATH = '/verein/partner';
 
+/** The path of the volunteer page. Its slug is `ehrenamt`, but it lives below the club page. */
+const VOLUNTEER_PAGE_PATH = '/verein/ehrenamt';
+
 /** The document type of a department, which is served below the offer page. */
 const DEPARTMENT_TYPE = 'department';
 
@@ -139,4 +142,5 @@ export {
 	getInternalHref,
 	type InternalLinkTarget,
 	PARTNER_PAGE_PATH,
+	VOLUNTEER_PAGE_PATH,
 };
