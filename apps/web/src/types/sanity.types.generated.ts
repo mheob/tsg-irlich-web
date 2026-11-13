@@ -6706,6 +6706,200 @@ export type PrivacyPageQueryResult = {
   };
 } | null;
 
+// Source: src/lib/sanity/queries/pages/venue.ts
+// Variable: venuePageQuery
+// Query: {		"venuePage": *[_type == 'venuePage'][0] {			...,			content {				...,				homeSection {					...,					venues[]-> { 	_id,	title,	type,	mainImage,	location,	features,	openingHours,	"description": description.text,	"groups": *[_type == 'group' && references(^._id) && defined(slug.current)] | order(title asc) {		_id,		title,		"slug": slug.current,		"department": department->slug.current,		"weekdays": training.trainingTimes[venue._ref == ^.^._id].weekday	} }				},				contactPersonsSection {					...,					contactPersons[]-> {						  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,					}				}			}		},		"venues": *[_type == 'venue'] | order(title asc) { 	_id,	title,	type,	mainImage,	location,	features,	openingHours,	"description": description.text,	"groups": *[_type == 'group' && references(^._id) && defined(slug.current)] | order(title asc) {		_id,		title,		"slug": slug.current,		"department": department->slug.current,		"weekdays": training.trainingTimes[venue._ref == ^.^._id].weekday	} },		"fallbackImage": *[_type == 'site-settings'][0].fallbackImage	}
+export type VenuePageQueryResult = {
+  venuePage: {
+    _id: string;
+    _type: "venuePage";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    slug?: Slug;
+    title: string;
+    subtitle: string;
+    heroImage: ExtendedImage;
+    content: {
+      homeSection: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        venues: Array<{
+          _id: string;
+          title: string;
+          type:
+            | "artificial-turf"
+            | "cinder"
+            | "clubhouse"
+            | "grass"
+            | "hall-1"
+            | "hall-2"
+            | "hall-3"
+            | "hybrid";
+          mainImage: {
+            asset?: SanityImageAssetReference;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            alt: string;
+            description?: string;
+            _type: "image";
+          } | null;
+          location: {
+            name: string;
+            street: string;
+            houseNumber: string;
+            zipCode?: string;
+            city: string;
+          } | null;
+          features: Array<string> | null;
+          openingHours: Array<{
+            days: string;
+            time: string;
+            _type: "venueOpeningHours";
+            _key: string;
+          }> | null;
+          description: Array<{
+            children?: Array<{
+              marks?: Array<string>;
+              text?: string;
+              _type: "span";
+              _key: string;
+            }>;
+            style?: "normal";
+            listItem?: "bullet" | "number";
+            markDefs?: Array<{
+              href?: string;
+              _type: "link";
+              _key: string;
+            }>;
+            level?: number;
+            _type: "block";
+            _key: string;
+          }> | null;
+          groups: Array<{
+            _id: string;
+            title: string;
+            slug: string;
+            department: string;
+            weekdays: Array<
+              | "friday"
+              | "monday"
+              | "saturday"
+              | "sunday"
+              | "thursday"
+              | "tuesday"
+              | "wednesday"
+            > | null;
+          }>;
+        }>;
+        turfBox?: {
+          title?: string;
+          text?: string;
+          linkText?: string;
+        };
+      } | null;
+      othersSection?: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+      };
+      contactPersonsSection: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        contactPersons: Array<{
+          _id: string;
+          firstName: string;
+          lastName: string;
+          phone: string | null;
+          image: ExtendedImage;
+          contactAs: "both" | "email" | "phone" | "whatsapp";
+          email: string | null;
+          role: string | null;
+          taskDescription: string | null;
+        }>;
+      };
+    };
+    inquiry: {
+      email: string;
+      subject: string;
+    };
+    meta?: MetaFields;
+  } | null;
+  venues: Array<{
+    _id: string;
+    title: string;
+    type:
+      | "artificial-turf"
+      | "cinder"
+      | "clubhouse"
+      | "grass"
+      | "hall-1"
+      | "hall-2"
+      | "hall-3"
+      | "hybrid";
+    mainImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      description?: string;
+      _type: "image";
+    } | null;
+    location: {
+      name: string;
+      street: string;
+      houseNumber: string;
+      zipCode?: string;
+      city: string;
+    } | null;
+    features: Array<string> | null;
+    openingHours: Array<{
+      days: string;
+      time: string;
+      _type: "venueOpeningHours";
+      _key: string;
+    }> | null;
+    description: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    groups: Array<{
+      _id: string;
+      title: string;
+      slug: string;
+      department: string;
+      weekdays: Array<
+        | "friday"
+        | "monday"
+        | "saturday"
+        | "sunday"
+        | "thursday"
+        | "tuesday"
+        | "wednesday"
+      > | null;
+    }>;
+  }>;
+  fallbackImage: ExtendedImage | null;
+};
+
 // Source: src/lib/sanity/queries/pages/volunteer.ts
 // Variable: volunteerPageQuery
 // Query: {		"volunteerPage": *[_type == 'volunteerPage'][0] {			...,			content {				...,				voicesSection {					...,					testimonials[]-> { _id, firstName, lastName, image, quote, role }				},				contactPersonsSection {					...,					contactPersons[]-> {						  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,					}				}			}		},		"positions": *[_type == 'volunteer.position'] | order(_createdAt desc) {			_id,			title,			area,			effort,			teaser,			tasks,			profile,			offer		}	}
@@ -7714,6 +7908,7 @@ declare global {
     '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
     '\n\t{\n\t\t"partnerPage": *[_type == \'partnerPage\'][0] {\n\t\t\t...,\n\t\t\tcontent {\n\t\t\t\t...,\n\t\t\t\tcontactPersonsSection {\n\t\t\t\t\t...,\n\t\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"sponsors": *[_type == \'sponsors\'] { _id, name, website, logo } | order(name asc)\n\t}\n': PartnerPageQueryResult;
     '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tintroText { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': PrivacyPageQueryResult;
+    '\n\t{\n\t\t"venuePage": *[_type == \'venuePage\'][0] {\n\t\t\t...,\n\t\t\tcontent {\n\t\t\t\t...,\n\t\t\t\thomeSection {\n\t\t\t\t\t...,\n\t\t\t\t\tvenues[]-> { \n\t_id,\n\ttitle,\n\ttype,\n\tmainImage,\n\tlocation,\n\tfeatures,\n\topeningHours,\n\t"description": description.text,\n\t"groups": *[_type == \'group\' && references(^._id) && defined(slug.current)] | order(title asc) {\n\t\t_id,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"department": department->slug.current,\n\t\t"weekdays": training.trainingTimes[venue._ref == ^.^._id].weekday\n\t}\n }\n\t\t\t\t},\n\t\t\t\tcontactPersonsSection {\n\t\t\t\t\t...,\n\t\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"venues": *[_type == \'venue\'] | order(title asc) { \n\t_id,\n\ttitle,\n\ttype,\n\tmainImage,\n\tlocation,\n\tfeatures,\n\topeningHours,\n\t"description": description.text,\n\t"groups": *[_type == \'group\' && references(^._id) && defined(slug.current)] | order(title asc) {\n\t\t_id,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"department": department->slug.current,\n\t\t"weekdays": training.trainingTimes[venue._ref == ^.^._id].weekday\n\t}\n },\n\t\t"fallbackImage": *[_type == \'site-settings\'][0].fallbackImage\n\t}\n': VenuePageQueryResult;
     '\n\t{\n\t\t"volunteerPage": *[_type == \'volunteerPage\'][0] {\n\t\t\t...,\n\t\t\tcontent {\n\t\t\t\t...,\n\t\t\t\tvoicesSection {\n\t\t\t\t\t...,\n\t\t\t\t\ttestimonials[]-> { _id, firstName, lastName, image, quote, role }\n\t\t\t\t},\n\t\t\t\tcontactPersonsSection {\n\t\t\t\t\t...,\n\t\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"positions": *[_type == \'volunteer.position\'] | order(_createdAt desc) {\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tarea,\n\t\t\teffort,\n\t\t\tteaser,\n\t\t\ttasks,\n\t\t\tprofile,\n\t\t\toffer\n\t\t}\n\t}\n': VolunteerPageQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName },\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
     "\n\t*[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]\n\t| score(\n\tboost(title match text::query($q), 10),\n\tboost(searchTerms[] match text::query($q), 8),\n\tboost(subtitle match text::query($q), 3),\n\tboost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),\n\tboost(intro.text[].children[].text match text::query($q), 3),\n\tboost(content.introSection.intro.text[].children[].text match text::query($q), 3),\n\tboost(description.text[].children[].text match text::query($q), 3),\n\tboost(question match text::query($q), 3),\n\tboost([firstName, lastName] match text::query($q), 3),\n\tboost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro] match text::query($q), 3),\n\tboost(answer[].children[].text match text::query($q), 1),\n\tboost(training.trainingDescription.text[].children[].text match text::query($q), 1),\n\tboost(content.visionSection.longVision.text[].children[].text match text::query($q), 1),\n\tboost(references(*[_type == 'role' && title match text::query($q)]._id), 1),\n\tboost(affiliations[].taskDescription match text::query($q), 1),\n\tboost([\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[],\n\t\tcontent.areasSection.areas[].title,\n\t\tcontent.areasSection.areas[].text,\n\t\tcontent.areasSection.areas[].tasks[]\n\t] match text::query($q), 1),\n\tboost(indexable != false, 0) && boost(extractedText match text::query($q), 1),\n\tboost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),\n\tboost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([\n\t\ttitle,\n\t\tsearchTerms[],\n\t\tsubtitle,\n\t\tintro.text[].children[].text,\n\t\tcontent.introSection.intro.text[].children[].text,\n\t\tdescription.text[].children[].text,\n\t\tquestion,\n\t\tfirstName,\n\t\tlastName,\n\t\tanswer[].children[].text,\n\t\ttraining.trainingDescription.text[].children[].text,\n\t\tcontent.visionSection.longVision.text[].children[].text,\n\t\taffiliations[].taskDescription,\n\t\tcontent.whySection.intro,\n\t\tcontent.waysSection.intro,\n\t\tcontent.partnersSection.intro,\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[],\n\t\tcontent.areasSection.intro,\n\t\tcontent.positionsSection.intro,\n\t\tcontent.areasSection.areas[].title,\n\t\tcontent.areasSection.areas[].text,\n\t\tcontent.areasSection.areas[].tasks[]\n\t] match text::query($q), 1)\n)\n\t| order(_score desc) [_score != 0] [0...$limit] {\n\t\t\n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n,\n\t\t\"_score\": math::sum([_score]),\n\t\t_type == 'volunteer.position' => {\n\t\t\t\"targets\": *[_type == 'volunteerPage'] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'faq' => {\n\t\t\tquestion,\n\t\t\t\"targets\": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'person' => {\n\t\t\tfirstName,\n\t\t\tlastName,\n\t\t\t\"nameMatches\": [firstName, lastName] match text::query($q),\n\t\t\t\"affiliations\": affiliations[] {\n\t\t\t\t\"role\": role->title,\n\t\t\t\t\"roleMatches\": [role->title, taskDescription] match text::query($q),\n\t\t\t\t\"team\": team-> { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t\t},\n\t\t\t\"listedOn\": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage'] && references(^._id)] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t}\n\t}\n": SearchCandidatesQueryResult;
