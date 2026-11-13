@@ -86,6 +86,21 @@ describe('home section', () => {
 		expect(screen.queryByRole('link', { name: 'Sprich uns an' })).toBeNull();
 	});
 
+	// An empty title still leaves a text that is worth showing.
+	it('shows the turf box with a text but no title', () => {
+		renderWithUser(
+			<Home
+				inquiry={INQUIRY}
+				section={section({
+					turfBox: { linkText: 'Sprich uns an', text: 'Ein Kunstrasen hilft uns.', title: '' },
+				})}
+			/>,
+		);
+
+		expect(screen.getByText('Ein Kunstrasen hilft uns.')).not.toBeNull();
+		expect(screen.getByRole('link', { name: 'Sprich uns an' })).not.toBeNull();
+	});
+
 	it('shows the opening hours of the clubhouse', () => {
 		renderWithUser(<Home inquiry={INQUIRY} section={section()} />);
 

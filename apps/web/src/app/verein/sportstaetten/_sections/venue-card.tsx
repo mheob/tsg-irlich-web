@@ -43,9 +43,11 @@ function VenueCard({ fallbackImage, venue }: Readonly<VenueCardProps>) {
 				<VenueAddress venue={venue} />
 				<VenueWeekdays venue={venue} />
 				<VenueGroups limit={GROUP_LIMIT} venue={venue} />
-				<div className="mt-auto">
-					<VenueRouteButton venue={venue} />
-				</div>
+				{venue.location && (
+					<div className="mt-auto">
+						<VenueRouteButton venue={venue} />
+					</div>
+				)}
 			</div>
 		</article>
 	);

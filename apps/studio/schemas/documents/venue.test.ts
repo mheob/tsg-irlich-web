@@ -103,6 +103,11 @@ describe('venue document', () => {
 		expect(recordedRuleCalls(features)).not.toContain('required');
 	});
 
+	// The page keys the list by the point itself, so the same point twice would collide.
+	it('asks for every equipment point only once', () => {
+		expect(recordedRuleCalls(getField('features'))).toContain('unique');
+	});
+
 	it('holds the opening hours as rows of required days and time', () => {
 		const openingHours = getField('openingHours');
 

@@ -72,7 +72,11 @@ function VenueRouteButton({ variant = 'secondary', venue }: Readonly<RouteButton
  * @returns The list of groups, or nothing while none of them has a page.
  */
 function VenueGroups({ className, limit, venue }: Readonly<VenueGroupsProps>) {
-	const groups = venue.groups.filter((group) => getGroupHref(group));
+	const groups = venue.groups.flatMap((group) => {
+		const href = getGroupHref(group);
+
+		return href ? [{ ...group, href }] : [];
+	});
 
 	if (groups.length === 0) {
 		return null;
@@ -87,7 +91,7 @@ function VenueGroups({ className, limit, venue }: Readonly<VenueGroupsProps>) {
 				<li key={group._id}>
 					<Link
 						className="inline-flex rounded-full bg-primary-light/10 px-3 py-1 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-						href={getGroupHref(group) ?? '/angebot'}
+						href={group.href}
 					>
 						{group.title}
 					</Link>

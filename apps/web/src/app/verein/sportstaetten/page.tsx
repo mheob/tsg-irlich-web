@@ -13,8 +13,18 @@ import { getPageMetadata } from '@/utils/metadata';
 
 import { Home } from './_sections/home';
 import { Others } from './_sections/others';
-import type { Venue } from './_shared/types';
 import { splitOtherVenues } from './_shared/venues';
+
+/**
+ * Drops the entries of a dereferenced list that no longer resolve: the query returns `null` for a
+ * reference to a deleted or unpublished document.
+ *
+ * @param items - The list as the query returns it.
+ * @returns The entries that resolved.
+ */
+function resolved<T>(items: null | readonly (null | T)[] | undefined): T[] {
+	return (items ?? []).filter((item): item is T => item !== null);
+}
 
 export async function generateMetadata(): Promise<Metadata> {
 	const { venuePage } = await client.fetch<VenuePageQueryResult>(venuePageQuery);
@@ -43,11 +53,8 @@ export default async function VenuePage() {
 
 	const { content, inquiry } = venuePage;
 	const { contactPersonsSection, homeSection, othersSection } = content;
-	// A reference that no longer resolves comes back as `null` from the query.
-	const contactPersons = contactPersonsSection.contactPersons.filter(
-		(person): person is NonNullable<typeof person> => person !== null,
-	);
-	const homeVenues = (homeSection?.venues ?? []).filter((venue): venue is Venue => venue !== null);
+	const contactPersons = resolved(contactPersonsSection.contactPersons);
+	const homeVenues = resolved(homeSection?.venues);
 	const { fields, halls } = splitOtherVenues(venues, new Set(homeVenues.map((venue) => venue._id)));
 
 	return (

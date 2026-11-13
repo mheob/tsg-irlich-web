@@ -24,7 +24,9 @@ function Home({ fallbackImage, inquiry, section }: Readonly<HomeProps>) {
 	}
 
 	const { turfBox } = section;
-	const hasTurfBox = Boolean(turfBox?.title ?? turfBox?.text);
+	// An empty title still leaves a text that is worth showing, so `??` would hide the box.
+	// oxlint-disable-next-line typescript/prefer-nullish-coalescing
+	const hasTurfBox = Boolean(turfBox?.title || turfBox?.text);
 
 	return (
 		<section className="container py-10 md:py-28">

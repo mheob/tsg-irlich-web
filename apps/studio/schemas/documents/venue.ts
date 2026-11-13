@@ -92,6 +92,7 @@ const venue = defineType({
 			title: 'Ausstattung',
 			type: 'array',
 			validation: (Rule) => [
+				Rule.unique().error('Jeden Punkt nur einmal nennen'),
 				Rule.max(8).warning('Mehr als 8 Punkte werden schnell unübersichtlich'),
 			],
 		}),
