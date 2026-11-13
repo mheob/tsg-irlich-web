@@ -7,7 +7,7 @@ import { getSearchThumbnail } from './thumbnail';
 import type { SearchCandidate, SearchHit, SearchHitKind } from './types';
 
 /** The search types without a page of their own. They lead to the pages that show them. */
-const TYPES_WITHOUT_PAGE = new Set<string>(['faq', 'person', 'volunteer.position']);
+const TYPES_WITHOUT_PAGE = new Set<string>(['faq', 'person', 'venue', 'volunteer.position']);
 
 /**
  * The types a hit may link to: every page type of the search plus the news article.
@@ -210,8 +210,21 @@ function getPositionHits(position: PositionCandidate): (SearchHit | undefined)[]
 }
 
 /**
- * The hits a candidate gives: a FAQ, a person or an open position its pages, any other candidate
- * itself.
+ * The venue page a venue leads to, with the name of the venue as its snippet.
+ *
+ * @param venue - The venue.
+ * @returns The hit, or none while the venue page is not published.
+ */
+function getVenueHits(venue: VenueCandidate): (SearchHit | undefined)[] {
+	const title = clean(venue.title);
+	const snippet = title ? `Sportstätte: ${title}` : undefined;
+
+	return existing(venue.targets).map((page) => toSearchHit(page, venue._score, snippet));
+}
+
+/**
+ * The hits a candidate gives: a FAQ, a person, an open position or a venue its pages, any other
+ * candidate itself.
  *
  * @param candidate - The candidate.
  * @returns The hits, `undefined` for a page that has no address.
@@ -225,6 +238,9 @@ function getCandidateHits(candidate: SearchCandidate): (SearchHit | undefined)[]
 	}
 	if (candidate._type === 'volunteer.position') {
 		return getPositionHits(candidate);
+	}
+	if (candidate._type === 'venue') {
+		return getVenueHits(candidate);
 	}
 	return [toSearchHit(candidate, candidate._score)];
 }
@@ -244,7 +260,7 @@ function compareHits(first: SearchHit, second: SearchHit): number {
  * Turns the candidates of the „Seiten“ group into its hits.
  *
  * - A FAQ becomes the departments that show it, a person the pages that show them, an open
- *   position the volunteer page.
+ *   position the volunteer page and a venue the venue page.
  * - A page found more than once, through its own content or through several persons or FAQs, is
  *   listed once, with its highest score and the snippet of the source that gave it.
  * - A page without an address is left out.
@@ -268,6 +284,7 @@ function mergePageHits(candidates: readonly SearchCandidate[]): SearchHit[] {
 type FaqCandidate = Extract<SearchCandidate, { _type: 'faq' }>;
 type PersonCandidate = Extract<SearchCandidate, { _type: 'person' }>;
 type PositionCandidate = Extract<SearchCandidate, { _type: 'volunteer.position' }>;
+type VenueCandidate = Extract<SearchCandidate, { _type: 'venue' }>;
 type Affiliation = NonNullable<PersonCandidate['affiliations']>[number];
 
 /** The department of a group or the category of an article, as the search queries project it. */
