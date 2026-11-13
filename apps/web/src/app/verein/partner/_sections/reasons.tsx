@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { PageIcon } from '@/components/ui/page-icon';
 import { SectionHeader } from '@/components/ui/section-header';
 
-import { PartnerIcon } from '../_shared/partner-icon';
 import type { ReasonsSection } from '../_shared/types';
 
 // „Warum Sponsor werden?“: the feature cards, laid out like the ones of the home page.
@@ -23,7 +23,7 @@ function Reasons({ intro, reasons, subtitle, title }: Readonly<ReasonsSection>) 
 							className="transition-colors hover:bg-primary hover:text-primary-foreground"
 							key={reason._key}
 						>
-							<PartnerIcon aria-hidden="true" icon={reason.icon} size={60} strokeWidth={1} />
+							<PageIcon aria-hidden="true" icon={reason.icon} size={60} strokeWidth={1} />
 							<CardHeader>
 								<CardTitle className="mt-4 text-xl uppercase md:text-2xl">{reason.title}</CardTitle>
 							</CardHeader>

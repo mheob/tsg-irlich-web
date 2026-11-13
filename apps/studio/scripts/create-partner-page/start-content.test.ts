@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vite-plus/test';
 
-import { PARTNER_ICONS } from '@tsgi-web/shared/partner-icons';
+import { PAGE_ICONS } from '@tsgi-web/shared/page-icons';
 
 import { buildStartContent, readDataset } from './start-content';
 
@@ -44,7 +44,7 @@ describe('the start content of the partner page', () => {
 	});
 
 	it('only uses icons the studio offers', () => {
-		const offered = PARTNER_ICONS.map((icon) => icon.value);
+		const offered = PAGE_ICONS.map((icon) => icon.value);
 		expect(offered).toStrictEqual(
 			expect.arrayContaining([...reasons, ...ways].map((card) => card.icon)),
 		);

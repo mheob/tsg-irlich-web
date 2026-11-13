@@ -3,10 +3,10 @@ import { CircleCheck } from 'lucide-react';
 import { cn } from '@tsgi-web/shared';
 
 import { ButtonLink } from '@/components/ui/button';
+import { PageIcon } from '@/components/ui/page-icon';
 import { SectionHeader } from '@/components/ui/section-header';
+import { getMailHref } from '@/utils/mail';
 
-import { getMailHref } from '../_shared/mail';
-import { PartnerIcon } from '../_shared/partner-icon';
 import type { Inquiry, WaysSection } from '../_shared/types';
 
 import pricingStyles from '@/components/section/pricing.module.css';
@@ -42,7 +42,7 @@ function Ways({ ideaCta, ideaText, inquiry, intro, subtitle, title, ways }: Read
 							<div>
 								<header className="flex flex-col items-start gap-4">
 									<div className="rounded-2xl bg-primary-light/15 p-4 text-primary">
-										<PartnerIcon aria-hidden="true" icon={way.icon} size={40} strokeWidth={1} />
+										<PageIcon aria-hidden="true" icon={way.icon} size={40} strokeWidth={1} />
 									</div>
 									<h3 className="font-serif text-3xl uppercase md:text-4xl">{way.title}</h3>
 								</header>

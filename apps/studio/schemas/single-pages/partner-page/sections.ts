@@ -3,7 +3,7 @@
 import { RiHandHeartLine, RiTeamLine, RiVipCrownLine } from 'react-icons/ri';
 import { defineField } from 'sanity';
 
-import { PARTNER_ICONS } from '@tsgi-web/shared/partner-icons';
+import { PAGE_ICONS } from '@tsgi-web/shared/page-icons';
 
 import { getDefaultPageSectionFieldsWithGroup } from '@/shared/fields/general';
 
@@ -14,7 +14,7 @@ const TEXT_WARNING_LENGTH = 160;
 const iconField = defineField({
 	description: 'Das Symbol, das über der Karte steht.',
 	name: 'icon',
-	options: { list: [...PARTNER_ICONS] },
+	options: { list: [...PAGE_ICONS] },
 	title: 'Icon',
 	type: 'string',
 	validation: (Rule) => [Rule.required().error('Das Icon ist erforderlich')],

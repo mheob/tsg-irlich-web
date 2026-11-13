@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test';
 
-import { PARTNER_ICONS } from '@tsgi-web/shared/partner-icons';
+import { PAGE_ICONS } from '@tsgi-web/shared/page-icons';
 
 import partnerPage from './index';
 
@@ -264,8 +264,8 @@ describe('partner page', () => {
 	});
 
 	it('offers the shared icon list on every card', () => {
-		expect(cardField('reasons', 'icon').options?.list).toStrictEqual(PARTNER_ICONS);
-		expect(cardField('ways', 'icon').options?.list).toStrictEqual(PARTNER_ICONS);
+		expect(cardField('reasons', 'icon').options?.list).toStrictEqual(PAGE_ICONS);
+		expect(cardField('ways', 'icon').options?.list).toStrictEqual(PAGE_ICONS);
 	});
 
 	it('shows a fixed title in lists', () => {
