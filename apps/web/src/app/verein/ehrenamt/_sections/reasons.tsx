@@ -51,7 +51,10 @@ function Reasons({ hasPositions, section }: Readonly<ReasonsProps>) {
 								strokeWidth={1}
 							/>
 							<h3 className="mt-4 font-serif text-2xl uppercase">{reason.title}</h3>
-							<p className="mt-2 text-sm md:text-base">{reason.text}</p>
+							{/* The global `p` colour does not inherit, so the text follows the hover itself. */}
+							<p className="mt-2 text-sm transition-colors group-hover:text-primary-foreground md:text-base">
+								{reason.text}
+							</p>
 						</li>
 					))}
 				</ul>

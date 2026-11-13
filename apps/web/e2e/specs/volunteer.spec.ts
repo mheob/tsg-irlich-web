@@ -1,3 +1,4 @@
+import { expectNoAxeViolations } from '../support/axe';
 import { waitForPage } from '../support/navigation';
 import { expect, test } from '../support/test';
 
@@ -37,6 +38,23 @@ test.describe('volunteer page', () => {
 		for (const title of [...REASONS, ...AREAS]) {
 			await expect(page.getByRole('heading', { exact: true, level: 3, name: title })).toBeVisible();
 		}
+	});
+
+	// The sweep scans the page at rest; a reason card turns blue only under the pointer. Phones have
+	// no hover, so the state only exists on the desktop.
+	test('keeps a reason card readable while hovered', async ({ isMobile, page }, testInfo) => {
+		test.skip(isMobile, 'phones have no hover state');
+
+		await page
+			.getByRole('listitem')
+			.filter({ has: page.getByRole('heading', { exact: true, level: 3, name: 'Gemeinschaft' }) })
+			.hover();
+		// Scan the colours the card ends on, not a frame of its transition.
+		await page.evaluate(async () => {
+			await Promise.all(document.getAnimations().map(async (animation) => animation.finished));
+		});
+
+		await expectNoAxeViolations(page, testInfo, '/verein/ehrenamt');
 	});
 
 	test('jumps from the reasons to the open positions', async ({ page }) => {

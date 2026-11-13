@@ -53,7 +53,7 @@ function Voices({ section, testimonials }: Readonly<VoicesProps>) {
 							)}
 							key={testimonial._id}
 						>
-							<Quote aria-hidden="true" className="size-10 text-secondary-dark" strokeWidth={1} />
+							<Quote aria-hidden="true" className="size-10 text-primary" strokeWidth={1} />
 							<blockquote className="flex-1 text-lg md:text-xl">„{testimonial.quote}“</blockquote>
 							<div className="flex items-center gap-4 border-t pt-4">
 								<Portrait
