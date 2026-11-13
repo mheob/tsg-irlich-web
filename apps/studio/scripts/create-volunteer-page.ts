@@ -16,27 +16,26 @@ import process from 'node:process';
 import { getCliClient } from 'sanity/cli';
 
 import {
+	AREA_GROUP_SLUGS,
+	assertPlaceholdersAllowed,
 	buildPlaceholderPositions,
 	buildStartContent,
 	hasPlaceholderFlag,
 	PLACEHOLDER_FLAG,
+	START_IMAGES_QUERY,
+	type StartImagesResult,
+	toStartImages,
 	VOLUNTEER_PAGE_ID,
-	type SanityImageObject,
 } from './create-volunteer-page/start-content';
 import { readDataset } from './shared/read-dataset';
 
 const API_VERSION = '2026-10-01';
 
-/** The groups whose card images stand in for the first two areas, in the order of the areas. */
-const AREA_GROUP_SLUGS = ['1-mannschaft', 'a-jugend'] as const;
-
 const argv = process.argv.slice(2);
 const dataset = readDataset(argv, [PLACEHOLDER_FLAG]);
 const withPlaceholders = hasPlaceholderFlag(argv);
 
-if (withPlaceholders && dataset === 'production') {
-	throw new Error('Platzhalter-Aufgaben gehören nicht nach production.');
-}
+assertPlaceholdersAllowed(dataset, withPlaceholders);
 
 // `raw` sees drafts; the default perspective since API 2025-02-19 is `published` and hides them.
 // The image lookups below name published ids or filter out drafts, so they read published content.
@@ -53,37 +52,10 @@ const existing = await client.fetch<string[]>(`*[_id in $ids]._id`, {
 if (existing.length > 0) {
 	console.log(`Die Ehrenamtsseite existiert schon in ${dataset}, nichts geschrieben.`);
 } else {
-	const images = await client.fetch<{
-		groups: { featuredImage: SanityImageObject | null; slug: string }[];
-		heroImage: SanityImageObject | null;
-		site: { fallbackImage: SanityImageObject | null; vision: SanityImageObject | null } | null;
-	}>(
-		`{
-			"heroImage": *[_id == 'aboutUs'][0].heroImage,
-			"groups": *[_type == 'group' && !(_id in path('drafts.**')) && slug.current in $slugs] {
-				"slug": slug.current,
-				featuredImage
-			},
-			"site": *[_type == 'site-settings' && !(_id in path('drafts.**'))][0] {
-				fallbackImage,
-				"vision": visionImages[0]
-			}
-		}`,
-		{ slugs: [...AREA_GROUP_SLUGS] },
-	);
-	const groupImage = (slug: string): SanityImageObject | undefined =>
-		images.groups.find((group) => group.slug === slug)?.featuredImage ?? undefined;
-
-	const page = await client.create(
-		buildStartContent({
-			areaImages: [
-				...AREA_GROUP_SLUGS.map((slug) => groupImage(slug)),
-				images.site?.fallbackImage ?? undefined,
-				images.site?.vision ?? undefined,
-			],
-			heroImage: images.heroImage ?? undefined,
-		}),
-	);
+	const images = await client.fetch<StartImagesResult>(START_IMAGES_QUERY, {
+		slugs: [...AREA_GROUP_SLUGS],
+	});
+	const page = await client.create(buildStartContent(toStartImages(images)));
 
 	console.log(
 		`Projekt ${client.config().projectId}, Dataset ${dataset}: Entwurf ${page._id} angelegt (Revision ${page._rev}).`,

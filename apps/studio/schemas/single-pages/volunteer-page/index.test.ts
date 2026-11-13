@@ -74,6 +74,31 @@ function customCheck(target: PageField): Check | undefined {
 	return check;
 }
 
+/**
+ * Runs the validation of a field against a rule that records the name of every method called on
+ * it, so a test can tell whether the field is required.
+ *
+ * @param target - The field.
+ * @returns The names of the called rule methods.
+ */
+function recordedRuleCalls(target: PageField): string[] {
+	const calls: string[] = [];
+	const rule: object = new Proxy(
+		{},
+		{
+			get:
+				(_target, property) =>
+				(..._args: unknown[]) => {
+					calls.push(String(property));
+					return rule;
+				},
+		},
+	);
+	target.validation?.(rule);
+
+	return calls;
+}
+
 const reasons = subField(section('whySection'), 'reasons');
 const areas = subField(section('areasSection'), 'areas');
 const steps = subField(section('positionsSection'), 'steps');
@@ -171,5 +196,32 @@ describe('volunteer page', () => {
 
 	it('shows a fixed title in lists', () => {
 		expect(volunteerPage.preview.prepare()).toStrictEqual({ title: 'Ehrenamt' });
+	});
+
+	it.each([
+		['the content', () => field('content')],
+		['the inquiry', () => field('inquiry')],
+		['the inquiry address', () => subField(field('inquiry'), 'email')],
+		['the inquiry subject', () => subField(field('inquiry'), 'subject')],
+		['the title of a reason', () => itemField(reasons, 'title')],
+		['the text of a reason', () => itemField(reasons, 'text')],
+		['the icon of a reason', () => itemField(reasons, 'icon')],
+		['the image of an area', () => itemField(areas, 'image')],
+		['the title of a step', () => itemField(steps, 'title')],
+		['the button of the open positions', () => subField(section('positionsSection'), 'cta')],
+		[
+			'a heading of the open positions',
+			() => subField(section('positionsSection'), 'tasksHeading'),
+		],
+	])('requires %s', (_name, target) => {
+		expect(recordedRuleCalls(target())).toContain('required');
+	});
+
+	it.each([
+		['the button of the reasons', () => subField(section('whySection'), 'cta')],
+		['the card for own ideas', () => subField(section('positionsSection'), 'otherTitle')],
+		['the voices', () => subField(section('voicesSection'), 'testimonials')],
+	])('lets %s stay empty', (_name, target) => {
+		expect(recordedRuleCalls(target())).not.toContain('required');
 	});
 });

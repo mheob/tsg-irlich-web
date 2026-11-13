@@ -4,9 +4,11 @@ import { describe, expect, it } from 'vite-plus/test';
 import { PAGE_ICONS } from '@tsgi-web/shared/page-icons';
 
 import {
+	assertPlaceholdersAllowed,
 	buildPlaceholderPositions,
 	buildStartContent,
 	hasPlaceholderFlag,
+	toStartImages,
 	VOLUNTEER_PAGE_ID,
 } from './start-content';
 
@@ -196,5 +198,50 @@ describe('the placeholder flag', () => {
 
 	it('is not set without it', () => {
 		expect(hasPlaceholderFlag(['--', '--dataset', 'development'])).toBe(false);
+	});
+});
+
+describe('the start images', () => {
+	it('takes the group images, the fallback and the first vision image in the order of the areas', () => {
+		const images = toStartImages({
+			groups: [
+				{ featuredImage: image('youth'), slug: 'a-jugend' },
+				{ featuredImage: image('team'), slug: '1-mannschaft' },
+			],
+			heroImage: HERO_IMAGE,
+			site: { fallbackImage: image('fallback'), vision: image('vision') },
+		});
+
+		expect(images).toStrictEqual({
+			areaImages: [image('team'), image('youth'), image('fallback'), image('vision')],
+			heroImage: HERO_IMAGE,
+		});
+	});
+
+	it('leaves a place empty where an image is missing', () => {
+		expect(
+			toStartImages({
+				groups: [{ featuredImage: null, slug: '1-mannschaft' }],
+				heroImage: null,
+				site: null,
+			}),
+		).toStrictEqual({ areaImages: [undefined, undefined, undefined, undefined] });
+	});
+});
+
+describe('the placeholder guard', () => {
+	it('refuses placeholders for production', () => {
+		expect(() => {
+			assertPlaceholdersAllowed('production', true);
+		}).toThrow('Platzhalter-Aufgaben gehören nicht nach production.');
+	});
+
+	it('lets placeholders go to development and production go without them', () => {
+		expect(() => {
+			assertPlaceholdersAllowed('development', true);
+		}).not.toThrow();
+		expect(() => {
+			assertPlaceholdersAllowed('production', false);
+		}).not.toThrow();
 	});
 });

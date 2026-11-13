@@ -274,6 +274,60 @@ function buildPlaceholderPositions(): VolunteerPositionDraft[] {
 	}));
 }
 
+/** The groups whose card images stand in for the first two areas, in the order of the areas. */
+const AREA_GROUP_SLUGS = ['1-mannschaft', 'a-jugend'] as const;
+
+/**
+ * What the script reads for the images of the start content: the hero image of `aboutUs`, the card
+ * images of the groups in `AREA_GROUP_SLUGS` and two images of the site settings. `$slugs` takes
+ * `AREA_GROUP_SLUGS`. Drafts are left out, so a draft image never reaches the page.
+ */
+const START_IMAGES_QUERY = `{
+	"heroImage": *[_id == 'aboutUs'][0].heroImage,
+	"groups": *[_type == 'group' && !(_id in path('drafts.**')) && slug.current in $slugs] {
+		"slug": slug.current,
+		featuredImage
+	},
+	"site": *[_type == 'site-settings' && !(_id in path('drafts.**'))][0] {
+		fallbackImage,
+		"vision": visionImages[0]
+	}
+}`;
+
+/**
+ * Puts the images the script read into the order of the areas: the two group images, the fallback
+ * image, the first vision image. A missing image leaves its place empty.
+ *
+ * @param result - The answer to `START_IMAGES_QUERY`.
+ * @returns The images for `buildStartContent`.
+ */
+function toStartImages(result: StartImagesResult): StartImages {
+	const groupImage = (slug: string): SanityImageObject | undefined =>
+		result.groups.find((group) => group.slug === slug)?.featuredImage ?? undefined;
+
+	return {
+		areaImages: [
+			...AREA_GROUP_SLUGS.map((slug) => groupImage(slug)),
+			result.site?.fallbackImage ?? undefined,
+			result.site?.vision ?? undefined,
+		],
+		...(result.heroImage ? { heroImage: result.heroImage } : {}),
+	};
+}
+
+/**
+ * Stops the script before it writes anything when placeholder positions are asked for production.
+ *
+ * @param dataset - The dataset the script writes to.
+ * @param withPlaceholders - Whether `--with-placeholder-positions` is given.
+ * @throws {Error} For placeholders in production.
+ */
+function assertPlaceholdersAllowed(dataset: string, withPlaceholders: boolean): void {
+	if (withPlaceholders && dataset === 'production') {
+		throw new Error('Platzhalter-Aufgaben gehören nicht nach production.');
+	}
+}
+
 /**
  * Tells whether the script should also write the placeholder positions.
  *
@@ -290,6 +344,12 @@ interface SanityImageObject {
 	asset: { _ref: string; _type: 'reference' };
 	crop?: { bottom: number; left: number; right: number; top: number };
 	hotspot?: { height: number; width: number; x: number; y: number };
+}
+
+interface StartImagesResult {
+	groups: { featuredImage: null | SanityImageObject; slug: string }[];
+	heroImage: null | SanityImageObject;
+	site: null | { fallbackImage: null | SanityImageObject; vision: null | SanityImageObject };
 }
 
 interface StartImages {
@@ -362,10 +422,14 @@ interface VolunteerPositionDraft {
 }
 
 export {
+	AREA_GROUP_SLUGS,
+	assertPlaceholdersAllowed,
 	buildPlaceholderPositions,
 	buildStartContent,
 	hasPlaceholderFlag,
 	PLACEHOLDER_FLAG,
+	START_IMAGES_QUERY,
+	toStartImages,
 	VOLUNTEER_PAGE_ID,
 };
-export type { SanityImageObject, VolunteerPageDraft, VolunteerPositionDraft };
+export type { StartImagesResult, VolunteerPageDraft, VolunteerPositionDraft };
