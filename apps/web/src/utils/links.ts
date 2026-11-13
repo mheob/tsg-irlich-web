@@ -28,6 +28,9 @@ const VOLUNTEER_PAGE_TYPE = 'volunteerPage';
 /** The path of the volunteer page. */
 const VOLUNTEER_PAGE_PATH = '/verein/ehrenamt';
 
+/** The path of the venue page. */
+const VENUE_PAGE_PATH = '/verein/sportstaetten';
+
 /** The document type of a department, which is served below the offer page. */
 const DEPARTMENT_TYPE = 'department';
 
@@ -146,5 +149,6 @@ export {
 	getInternalHref,
 	type InternalLinkTarget,
 	PARTNER_PAGE_PATH,
+	VENUE_PAGE_PATH,
 	VOLUNTEER_PAGE_PATH,
 };
