@@ -89,6 +89,10 @@ describe('resolving internal link targets', () => {
 		expect(getInternalHref({ _type: 'partnerPage', slug: 'partner' })).toBe('/verein/partner');
 	});
 
+	it('resolves the volunteer page below the club page', () => {
+		expect(getInternalHref({ _type: 'volunteerPage', slug: 'ehrenamt' })).toBe('/verein/ehrenamt');
+	});
+
 	it('resolves a TSG-Echo issue below the archive', () => {
 		expect(getInternalHref({ _type: 'echo.issue', slug: 'tsg-echo-2025' })).toBe(
 			'/verein/echo/tsg-echo-2025',

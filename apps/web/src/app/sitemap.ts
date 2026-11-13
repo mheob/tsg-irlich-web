@@ -22,6 +22,7 @@ import {
 	getEchoIssuePath,
 	getInternalHref,
 	PARTNER_PAGE_PATH,
+	VOLUNTEER_PAGE_PATH,
 } from '@/utils/links';
 import { getBaseUrl } from '@/utils/url';
 
@@ -95,6 +96,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			changeFrequency: 'monthly',
 			priority: 0.6,
 			url: `${baseUrl}${PARTNER_PAGE_PATH}`,
+		},
+		{
+			changeFrequency: 'monthly',
+			priority: 0.6,
+			url: `${baseUrl}${VOLUNTEER_PAGE_PATH}`,
 		},
 		{
 			changeFrequency: 'monthly',

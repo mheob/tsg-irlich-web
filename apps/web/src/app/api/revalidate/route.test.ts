@@ -101,7 +101,9 @@ describe('sanity revalidation webhook', () => {
 		['membership', ['/mitgliedschaft']],
 		['partnerPage', ['/verein/partner']],
 		['privacy', ['/datenschutz']],
-		['testimonial', ['/']],
+		['testimonial', ['/', '/verein/ehrenamt']],
+		['volunteerPage', ['/verein/ehrenamt']],
+		['volunteer.position', ['/verein/ehrenamt']],
 	])('revalidates %s at %j', async (type, expected) => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: type }));
 

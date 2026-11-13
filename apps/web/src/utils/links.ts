@@ -22,7 +22,10 @@ const PARTNER_PAGE_TYPE = 'partnerPage';
 /** The path of the partner page. */
 const PARTNER_PAGE_PATH = '/verein/partner';
 
-/** The path of the volunteer page. Its slug is `ehrenamt`, but it lives below the club page. */
+/** The single page of the volunteers. Its slug is `ehrenamt`, but it lives below the club page. */
+const VOLUNTEER_PAGE_TYPE = 'volunteerPage';
+
+/** The path of the volunteer page. */
 const VOLUNTEER_PAGE_PATH = '/verein/ehrenamt';
 
 /** The document type of a department, which is served below the offer page. */
@@ -74,6 +77,7 @@ const PATH_RESOLVERS = new Map<string, PathResolver>([
 	[ECHO_OVERVIEW_TYPE, () => ECHO_OVERVIEW_PATH],
 	[ECHO_ISSUE_TYPE, getEchoIssuePath],
 	[PARTNER_PAGE_TYPE, () => PARTNER_PAGE_PATH],
+	[VOLUNTEER_PAGE_TYPE, () => VOLUNTEER_PAGE_PATH],
 ]);
 
 /**
