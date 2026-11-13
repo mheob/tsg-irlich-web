@@ -3,8 +3,8 @@ import { Plus } from 'lucide-react';
 import { cn } from '@tsgi-web/shared';
 
 import { SectionHeader } from '@/components/ui/section-header';
+import { getMailHref } from '@/utils/mail';
 
-import { getMailHref } from '../_shared/mail';
 import { getPartnerColumns } from '../_shared/partner-grid';
 import type { PartnerColumns } from '../_shared/partner-grid';
 import type { Inquiry, PartnersSection, Sponsor } from '../_shared/types';

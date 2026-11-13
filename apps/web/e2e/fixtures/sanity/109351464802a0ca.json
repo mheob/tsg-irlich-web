@@ -1,0 +1,488 @@
+{
+	"body": {
+		"result": {
+			"positions": [
+				{
+					"_id": "volunteer-position-placeholder-4",
+					"area": "Vereinsorganisation",
+					"effort": "nach Absprache",
+					"offer": [
+						"Einblick in die Vereinsarbeit",
+						"Flexible Zeiteinteilung",
+						"Ein offenes Vorstandsteam"
+					],
+					"profile": ["Organisationstalent", "Lust auf Verantwortung", "Teamgeist"],
+					"tasks": ["Verwaltung und Finanzen", "Öffentlichkeitsarbeit", "Projekte im Verein"],
+					"teaser": "Du möchtest nicht auf dem Platz stehen, sondern den Verein organisatorisch voranbringen? Im Vereinsmanagement gibt es viele Möglichkeiten.",
+					"title": "Unterstützung im Vorstand"
+				},
+				{
+					"_id": "volunteer-position-placeholder-3",
+					"area": "Fußball",
+					"effort": "nach Absprache",
+					"offer": ["Neulingslehrgang", "Pate für die ersten Spiele", "Aufwandsentschädigung"],
+					"profile": ["Interesse am Fußball", "Mut zu Entscheidungen", "Fairness"],
+					"tasks": ["Spiele im Kreis leiten", "Regelkunde auffrischen", "Den Verein vertreten"],
+					"teaser": "Jeder Verein muss Schiedsrichter stellen. Wir begleiten dich durch den Lehrgang und bei deinen ersten Spielen – Jugendliche und Erwachsene sind willkommen.",
+					"title": "Schiedsrichter/in"
+				},
+				{
+					"_id": "volunteer-position-placeholder-2",
+					"area": "Fußball",
+					"effort": "2× pro Woche + Spieltage",
+					"offer": ["Einstieg ins Trainerteam", "Trainerlehrgänge", "Teamkleidung"],
+					"profile": ["Spaß am Fußball", "Geduld mit Kindern", "Zeit am Wochenende"],
+					"tasks": [
+						"Training mitgestalten",
+						"Kinder zu Spielen begleiten",
+						"Eltern als Ansprechpartner"
+					],
+					"teaser": "Unsere F-Jugend wächst. Du unterstützt das Trainerteam im Training und begleitest die Kinder zu ihren Spielen am Wochenende.",
+					"title": "Co-Trainer/in F-Jugend"
+				},
+				{
+					"_id": "volunteer-position-placeholder-1",
+					"area": "Kinderturnen",
+					"effort": "wöchentlich, ca. 2 Std.",
+					"offer": [
+						"Unterstützung bei Lizenz und Fortbildung",
+						"Ein herzliches Team",
+						"Raum für eigene Ideen"
+					],
+					"profile": [
+						"Freude an der Arbeit mit Kindern",
+						"Zuverlässigkeit",
+						"Turnerfahrung ist kein Muss"
+					],
+					"tasks": [
+						"Turnstunden mitgestalten",
+						"Geräte auf- und abbauen",
+						"Die Übungsleiterin unterstützen"
+					],
+					"teaser": "Für unser Kinderturnen suchen wir Unterstützung bei der Gestaltung und Durchführung der Turnstunden für Kinder von 3 bis 6 Jahren.",
+					"title": "Übungsleiter/in Kinderturnen"
+				}
+			],
+			"volunteerPage": {
+				"_createdAt": "2026-11-13T07:54:29Z",
+				"_id": "volunteerPage",
+				"_rev": "U17EwgzNfQyaQg0u7BTrjt",
+				"_type": "volunteerPage",
+				"_updatedAt": "2026-11-13T07:54:49Z",
+				"content": {
+					"areasSection": {
+						"areas": [
+							{
+								"_key": "area-1",
+								"_type": "volunteerArea",
+								"icon": "dumbbell",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Sport & Mannschaften",
+									"asset": {
+										"_ref": "image-a6abf54daebf1b59f4d2d9ffef90e5453ba2e17b-6000x4000-jpg",
+										"_type": "reference"
+									},
+									"crop": {
+										"_type": "sanity.imageCrop",
+										"bottom": 0,
+										"left": 0,
+										"right": 0.05551443197543121,
+										"top": 0.09960171824172158
+									},
+									"description": "Die 1. Mannschaft der TSG Irlich",
+									"hotspot": {
+										"_type": "sanity.imageHotspot",
+										"height": 0.5113952772960696,
+										"width": 0.9129969116115498,
+										"x": 0.4725126906812197,
+										"y": 0.40467657856918987
+									}
+								},
+								"tasks": [
+									"Training leiten oder unterstützen",
+									"Mannschaften begleiten",
+									"Kurse betreuen"
+								],
+								"text": "Als Trainer, Übungsleiterin oder Betreuer begleitest du eine Mannschaft oder Gruppe – vom Kinderturnen bis zu den Alten Herren.",
+								"title": "Sport & Mannschaften"
+							},
+							{
+								"_key": "area-2",
+								"_type": "volunteerArea",
+								"icon": "flag",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Schiedsrichter & Spielbetrieb",
+									"asset": {
+										"_ref": "image-843448fee760b95366e6a9ca34a8fab873762c4d-2674x2006-jpg",
+										"_type": "reference"
+									},
+									"crop": {
+										"_type": "sanity.imageCrop",
+										"bottom": 0,
+										"left": 0,
+										"right": 0,
+										"top": 0
+									},
+									"description": "Die beiden A-Junioren-Teams der JSG Irlich",
+									"hotspot": {
+										"_type": "sanity.imageHotspot",
+										"height": 0.6352815141224057,
+										"width": 1,
+										"x": 0.5,
+										"y": 0.3775898523739997
+									}
+								},
+								"tasks": ["Spiele leiten", "Spieltage organisieren", "Platz und Material betreuen"],
+								"text": "Ohne Schiedsrichter kein Spiel. Du pfeifst selbst, hilfst am Spieltag oder kümmerst dich um Platz und Organisation.",
+								"title": "Schiedsrichter & Spielbetrieb"
+							},
+							{
+								"_key": "area-3",
+								"_type": "volunteerArea",
+								"icon": "building-2",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Verein & Organisation",
+									"asset": {
+										"_ref": "image-8f13e339ee9df0bad86fd4d3df596364a6e7fca0-4094x2160-webp",
+										"_type": "reference"
+									}
+								},
+								"tasks": ["Mitglieder und Finanzen", "Social Media und TSG-Echo", "Sponsoring"],
+								"text": "Hinter jedem Training steckt Organisation. Du unterstützt den Vorstand bei Verwaltung, Finanzen oder Öffentlichkeitsarbeit.",
+								"title": "Verein & Organisation"
+							},
+							{
+								"_key": "area-4",
+								"_type": "volunteerArea",
+								"icon": "party-popper",
+								"image": {
+									"_key": "vision-1",
+									"_type": "extendedImage",
+									"alt": "Veranstaltungen & Helfer",
+									"asset": {
+										"_ref": "image-6a064c960f0e2aec77a174807aa871900cb2d729-600x600-webp",
+										"_type": "reference"
+									}
+								},
+								"tasks": ["Auf- und Abbau", "Verpflegung und Kasse", "Orga-Team"],
+								"text": "Ob Sportfest, Turnier oder Weihnachtsfeier – bei unseren Veranstaltungen zählt jede helfende Hand, auch nur für ein paar Stunden.",
+								"title": "Veranstaltungen & Helfer"
+							}
+						],
+						"intro": "Ehrenamt bei der TSG ist vielfältig. Ob regelmäßig oder nur ab und zu, auf dem Platz oder im Hintergrund – jeder Beitrag zählt.",
+						"subtitle": "Viele Aufgaben – ein Ziel",
+						"title": "So kannst du dich einbringen"
+					},
+					"contactPersonsSection": {
+						"contactPersons": [
+							{
+								"_id": "2e62c3c7-6d23-4799-9701-a08256d0c1b2",
+								"contactAs": "both",
+								"email": "vorsitz@tsg-irlich.de",
+								"firstName": "Alexander",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Alexander Hof in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz.",
+									"asset": {
+										"_ref": "image-1e4595eb53901b21a62170411d838b4bc0e65adc-600x600-webp",
+										"_type": "reference"
+									},
+									"crop": {
+										"_type": "sanity.imageCrop",
+										"bottom": 0,
+										"left": 0,
+										"right": 0,
+										"top": 0
+									},
+									"hotspot": {
+										"_type": "sanity.imageHotspot",
+										"height": 0.89125541277692,
+										"width": 0.9561294492393759,
+										"x": 0.521935275380312,
+										"y": 0.5543722936115401
+									}
+								},
+								"lastName": "Hof",
+								"phone": "+49 170 4489500",
+								"role": "Vorsitzender",
+								"taskDescription": "Als Vorsitzender gestalte ich die strategische Ausrichtung und Weiterentwicklung des Vereins. Ich repräsentiere ihn nach außen, pflege den Austausch mit der Kommune, Verbänden und Sponsoren und setze mein Netzwerk gezielt für eine erfolgreiche Zusammenarbeit ein."
+							},
+							{
+								"_id": "429f8069-7868-4fef-96ca-cfb9d88f68a3",
+								"contactAs": "email",
+								"email": "finanzen@tsg-irlich.de",
+								"firstName": "René",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "René Linn in einem Polo T-Shirt der TSG Irlich auf einem Fußballplatz. ",
+									"asset": {
+										"_ref": "image-9a54eec0662a8a7b613a63a7f2a85acc75bfbf06-600x600-webp",
+										"_type": "reference"
+									}
+								},
+								"lastName": "Linn",
+								"phone": "+49 160 1818712",
+								"role": "Vorstand Finanzen",
+								"taskDescription": "Ich verantworte die gesamte Finanzverwaltung der TSG Irlich. Von Abrechnungen bis zu Steuerfragen. Zudem plane und kontrolliere ich die Finanzen und sorge für eine transparente sowie nachhaltige Haushaltsführung des Vereins. Bei Fragen zu Finanzthemen bin ich ihr Ansprechpartner."
+							},
+							{
+								"_id": "51dfa04b-7577-48d0-9434-a096e0b3ff42",
+								"contactAs": "both",
+								"email": "verwaltung@tsg-irlich.de",
+								"firstName": "Melina",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Melina Dinter im Polo der TSG Irlich auf einem Fußballplatz",
+									"asset": {
+										"_ref": "image-32c7a18d61105ff1d2a01e528209cb5edf7effd2-600x600-webp",
+										"_type": "reference"
+									}
+								},
+								"lastName": "Dinter",
+								"phone": "+49 151 50422094",
+								"role": "Vorstand Verwaltung",
+								"taskDescription": "Als Vorstand Verwaltung kümmere ich mich um alle administrativen Aufgaben. Von Vertragsabwicklung über Versicherungen bis zu Protokollen und Post. Ich betreue die digitale Mitgliederverwaltung und sorge für eine reibungslose Dokumentation und Kommunikation."
+							},
+							{
+								"_id": "b9c684aa-f914-4c32-8619-fde519d41315",
+								"contactAs": "both",
+								"email": "presse@tsg-irlich.de",
+								"firstName": "Philipp",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Philipp Pfeiffer im T-shirt der TSG Irlich auf einem Fußballplatz",
+									"asset": {
+										"_ref": "image-4d6231e9e4be3c55357a21fb4d922d39af7067a7-600x600-webp",
+										"_type": "reference"
+									},
+									"crop": {
+										"_type": "sanity.imageCrop",
+										"bottom": 0.10636665814369727,
+										"left": 0,
+										"right": 0,
+										"top": 0
+									},
+									"description": "Philipp Pfeiffer, Vorstandsmitglied und Jugendtrainer",
+									"hotspot": {
+										"_type": "sanity.imageHotspot",
+										"height": 0.738174379953976,
+										"width": 0.5472598653370835,
+										"x": 0.4836358987471234,
+										"y": 0.49727264979118724
+									}
+								},
+								"lastName": "Pfeiffer",
+								"phone": "+49 170 2418600",
+								"role": "Vorstand Öffentlichkeitsarbeit",
+								"taskDescription": "In meinem Ehrenamt gestalte und steuere ich die gesamte PR und Kommunikation der TSG. Ich leite das PR-Team, das unsere Social-Media-Kanäle und unsere Website verwaltet, Printmedien gestaltet und das 'TSG Echo' publiziert. Ich bin zudem Ansprechpartner für Projektplanungen."
+							}
+						],
+						"intro": "Du hast Fragen zum Ehrenamt oder möchtest direkt loslegen? Unser Vorstand freut sich auf dich.",
+						"subtitle": "Ansprechpartner",
+						"title": "Dein Vorstand"
+					},
+					"positionsSection": {
+						"cta": "Jetzt melden",
+						"intro": "Für einige Bereiche freuen wir uns aktuell besonders über Unterstützung. Vielleicht ist ja genau die richtige Aufgabe für dich dabei?",
+						"offerHeading": "Das bieten wir",
+						"otherText": "Erzähl uns, was du dir vorstellen kannst – wir finden etwas für dich.",
+						"otherTitle": "Nichts Passendes dabei?",
+						"profileHeading": "Das bringst du mit",
+						"steps": [
+							{
+								"_key": "step-1",
+								"_type": "volunteerStep",
+								"text": "Per E-Mail, Telefon oder direkt beim Training. Sag uns kurz, was dich interessiert.",
+								"title": "Melde dich"
+							},
+							{
+								"_key": "step-2",
+								"_type": "volunteerStep",
+								"text": "Wir treffen uns unverbindlich und finden gemeinsam die Aufgabe, die zu dir passt.",
+								"title": "Lerne uns kennen"
+							},
+							{
+								"_key": "step-3",
+								"_type": "volunteerStep",
+								"text": "Du startest in deinem Tempo – mit festen Ansprechpartnern an deiner Seite.",
+								"title": "Leg los"
+							}
+						],
+						"subtitle": "Aktuell gesucht",
+						"tasksHeading": "Deine Aufgaben",
+						"title": "Wir suchen Verstärkung"
+					},
+					"voicesSection": {
+						"intro": "Warum wir uns bei der TSG engagieren – in unseren eigenen Worten.",
+						"subtitle": "Stimmen aus dem Verein",
+						"testimonials": [
+							{
+								"_id": "84814923-c80b-4ef3-8187-3e1b4e704e61",
+								"firstName": "Christian",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Christian Krechel in einem roten T-shirt vor einer weißen Wand",
+									"asset": {
+										"_ref": "image-63d7ab016d0f5fddf287644ef57bbe1e99669bdf-979x1305-jpg",
+										"_type": "reference"
+									},
+									"description": "Christian Krechel "
+								},
+								"lastName": "Krechel",
+								"quote": "Ich finde es beeindruckend, welche großes Spektrum die TSG mit ihrem sportlichen Angebot abdeckt. Egal ob Wettkampf-, Breiten- oder Gesundheitssport, egal ob alt oder jung, egal ob Fußball, Tanzen, Taekwondo, Turnen, Wandern, Badminton, Rope-Skipping und und und - für jeden ist was dabei!",
+								"role": "Ehemaliger Jugendtrainer "
+							},
+							{
+								"_id": "5e4f48b0-8fbb-4787-b68d-d63eaf1284ba",
+								"firstName": "Louisa",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Louisa Krechel in einer schwarzen Softshelljacke der TSG Irlich vor einer weißen Leinwand ",
+									"asset": {
+										"_ref": "image-d2e8d8687a4518a6bfbc887b740fc8310957824e-4000x6000-jpg",
+										"_type": "reference"
+									},
+									"crop": {
+										"_type": "sanity.imageCrop",
+										"bottom": 0.22795946898496244,
+										"left": 0.14284245770676682,
+										"right": 0.14193197838345872,
+										"top": 0.1744122709116542
+									},
+									"hotspot": {
+										"_type": "sanity.imageHotspot",
+										"height": 0.4362140213815789,
+										"width": 0.7152255639097744,
+										"x": 0.5004552396616541,
+										"y": 0.39251928160244365
+									}
+								},
+								"lastName": "Krechel",
+								"quote": "An der TSG schätze ich sehr, dass sie so vielseitig ist. Der Verein bietet nicht nur eine Möglichkeit Sport zu treiben, sondern auch Freunde zu treffen und neue Freundschaften zu knüpfen. Egal ob organisierte Feste oder Ausflüge mit einzelnen Gruppen, hier ist ganzjährig was los. ",
+								"role": "Mitglied und ehemalige Übungsleiterin"
+							},
+							{
+								"_id": "66be054a-5d97-4bd3-a68e-258a5c03f726",
+								"firstName": "Philipp",
+								"image": {
+									"_type": "extendedImage",
+									"alt": "Philipp Pfeiffer, Vorstandsmitglied",
+									"asset": {
+										"_ref": "image-5407a2d36b05ae3c0867b2d1c4eecde3ef254562-3648x5472-jpg",
+										"_type": "reference"
+									},
+									"crop": {
+										"_type": "sanity.imageCrop",
+										"bottom": 0.17025563909774433,
+										"left": 0,
+										"right": 0,
+										"top": 0.10515789473684214
+									},
+									"hotspot": {
+										"_type": "sanity.imageHotspot",
+										"height": 0.3790676691729327,
+										"width": 0.6691729323308266,
+										"x": 0.5037593984962405,
+										"y": 0.32223308270676704
+									}
+								},
+								"lastName": "Pfeiffer",
+								"quote": "Ein Verein, der Tradition, Leidenschaft und Teamgeist lebt. Hier zählt nicht nur der Sport, sondern auch der Zusammenhalt. Jeder wird herzlich aufgenommen, und man fühlt sich sofort als Teil einer großen Familie. Einfach einzigartig!",
+								"role": "Vorstandsmitglied"
+							}
+						],
+						"title": "Darum machen wir mit"
+					},
+					"whySection": {
+						"cta": "Offene Aufgaben ansehen",
+						"intro": "Ehrenamt bedeutet nicht nur, Aufgaben zu übernehmen. Du wirst Teil einer starken Gemeinschaft, entwickelst dich weiter und hältst unseren Verein lebendig – auf und neben dem Platz.",
+						"reasons": [
+							{
+								"_key": "reason-1",
+								"_type": "volunteerReason",
+								"icon": "users",
+								"text": "Du lernst Menschen aus allen Abteilungen kennen und wirst Teil eines Teams, das zusammenhält.",
+								"title": "Gemeinschaft"
+							},
+							{
+								"_key": "reason-2",
+								"_type": "volunteerReason",
+								"icon": "graduation-cap",
+								"text": "Du sammelst Erfahrung, übernimmst Verantwortung und kannst Lizenzen und Fortbildungen machen.",
+								"title": "Persönliche Entwicklung"
+							},
+							{
+								"_key": "reason-3",
+								"_type": "volunteerReason",
+								"icon": "heart",
+								"text": "Du tust etwas Gutes – für Kinder und Jugendliche, für den Verein und für Irlich.",
+								"title": "Sinn stiften"
+							},
+							{
+								"_key": "reason-4",
+								"_type": "volunteerReason",
+								"icon": "trophy",
+								"text": "Du machst Training, Spiele und Kurse erst möglich und begleitest unsere Sportler auf ihrem Weg.",
+								"title": "Sport fördern"
+							},
+							{
+								"_key": "reason-5",
+								"_type": "volunteerReason",
+								"icon": "lightbulb",
+								"text": "Du gestaltest mit, bringst neue Impulse ein und entwickelst den Verein aktiv weiter.",
+								"title": "Ideen einbringen"
+							},
+							{
+								"_key": "reason-6",
+								"_type": "volunteerReason",
+								"icon": "award",
+								"text": "Dein Einsatz wird gesehen und macht einen echten Unterschied – im Verein und in der Region.",
+								"title": "Wertschätzung"
+							}
+						],
+						"subtitle": "Warum engagieren?",
+						"title": "Gemeinsam mehr erreichen"
+					}
+				},
+				"heroImage": {
+					"_type": "extendedImage",
+					"alt": "Luftaufnahme des Vereinsheims „Pappelstübchen“ der TSG Irlich mit Terrasse, Tischen und Sonnenschirmen, dahinter Bäume und der Sportplatz",
+					"asset": {
+						"_ref": "image-bf810a9943f31d1c51a5d4bbe43baccc3bec32cb-4094x2160-webp",
+						"_type": "reference"
+					}
+				},
+				"inquiry": {
+					"email": "info@tsg-irlich.de",
+					"subject": "Ehrenamt bei der TSG Irlich"
+				},
+				"slug": {
+					"_type": "slug",
+					"current": "ehrenamt"
+				},
+				"subtitle": "Ehrenamt bei der TSG",
+				"title": "Engagiere dich"
+			}
+		},
+		"syncTags": [
+			"s1:N029bQ",
+			"s1:i9Ou0A",
+			"s1:eOuqJg",
+			"s1:y+gLqA",
+			"s1:NuVTmQ",
+			"s1:OwJJOA",
+			"s1:SgUpiQ",
+			"s1:PeVrtw",
+			"s1:BpJQvw",
+			"s1:dzsUTA",
+			"s1:/iNbNg",
+			"s1:hkRMww",
+			"s1:yJoVrQ"
+		],
+		"ms": 17
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09%7B%0A%09%09%22volunteerPage%22%3A+*%5B_type+%3D%3D+%27volunteerPage%27%5D%5B0%5D+%7B%0A%09%09%09...%2C%0A%09%09%09content+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09voicesSection+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09testimonials%5B%5D-%3E+%7B+_id%2C+firstName%2C+lastName%2C+image%2C+quote%2C+role+%7D%0A%09%09%09%09%7D%2C%0A%09%09%09%09contactPersonsSection+%7B%0A%09%09%09%09%09...%2C%0A%09%09%09%09%09contactPersons%5B%5D-%3E+%7B%0A%09%09%09%09%09%09%0A++_id%2C%0A++firstName%2C%0A++lastName%2C%0A++phone%2C%0A++image%2C%0A++contactAs%2C%0A++%22email%22%3A+affiliations%5B0%5D.role-%3Eemail%2C%0A++%22role%22%3A+affiliations%5B0%5D.role-%3Etitle%2C%0A++%22taskDescription%22%3A+affiliations%5B0%5D.taskDescription%2C%0A%0A%09%09%09%09%09%7D%0A%09%09%09%09%7D%0A%09%09%09%7D%0A%09%09%7D%2C%0A%09%09%22positions%22%3A+*%5B_type+%3D%3D+%27volunteer.position%27%5D+%7C+order%28_createdAt+desc%29+%7B%0A%09%09%09_id%2C%0A%09%09%09title%2C%0A%09%09%09area%2C%0A%09%09%09effort%2C%0A%09%09%09teaser%2C%0A%09%09%09tasks%2C%0A%09%09%09profile%2C%0A%09%09%09offer%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
+}

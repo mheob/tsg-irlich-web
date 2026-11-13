@@ -63,8 +63,10 @@ describe('page list items', () => {
 			'Unterseiten',
 			'echoOverview',
 			'partnerPage',
+			'volunteerPage',
 			'Inhalte',
 			'TSG-Echo Ausgaben',
+			'Offene Aufgaben',
 		]);
 	});
 
@@ -130,8 +132,10 @@ describe('pages missing from the layout', () => {
 			'aboutUs',
 			'Unterseiten',
 			'partnerPage',
+			'volunteerPage',
 			'Inhalte',
 			'TSG-Echo Ausgaben',
+			'Offene Aufgaben',
 		]);
 	});
 

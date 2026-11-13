@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vite-plus/test';
 
+import { getMailHref } from '@/utils/mail';
+
 import { renderWithUser } from '../../../../../test-utils/render';
-import { getMailHref } from '../_shared/mail';
 import type { PartnersSection, Sponsor } from '../_shared/types';
 import { Partners } from './partners';
 

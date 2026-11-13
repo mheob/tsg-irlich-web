@@ -30,9 +30,26 @@ const PARTNER_BODY_PATHS = [
 	'content.waysSection.ways[].benefits[]',
 ] as const;
 
+/**
+ * The intros of the volunteer page that the partner page lacks. Its first section shares the paths
+ * of the partner page's `whySection`, so those already count.
+ */
+const VOLUNTEER_LEAD_PATHS = [
+	'content.areasSection.intro',
+	'content.positionsSection.intro',
+] as const;
+
+/** The areas of the volunteer page, its body fields besides the shared reasons. */
+const VOLUNTEER_BODY_PATHS = [
+	'content.areasSection.areas[].title',
+	'content.areasSection.areas[].text',
+	'content.areasSection.areas[].tasks[]',
+] as const;
+
 const PARTNER_PATHS = [...PARTNER_LEAD_PATHS, ...PARTNER_BODY_PATHS];
-const PARTNER_LEAD = `[${PARTNER_LEAD_PATHS.join(', ')}]`;
-const PARTNER_BODY = `[${PARTNER_BODY_PATHS.join(', ')}]`;
+const VOLUNTEER_PATHS = [...VOLUNTEER_LEAD_PATHS, ...VOLUNTEER_BODY_PATHS];
+const PAGE_LEAD = `[${[...PARTNER_LEAD_PATHS, ...VOLUNTEER_LEAD_PATHS].join(', ')}]`;
+const PAGE_BODY = `[${[...PARTNER_BODY_PATHS, ...VOLUNTEER_BODY_PATHS].join(', ')}]`;
 
 /** The queries the search term reaches. */
 const TERM_QUERIES = [
@@ -196,6 +213,8 @@ describe('search queries', () => {
 				'newsOverview',
 				'echoOverview',
 				'partnerPage',
+				'volunteerPage',
+				'volunteer.position',
 			]);
 			expect(searchCandidatesQuery).toContain(
 				`_type in [${SEARCH_PAGE_TYPES.map((type) => `'${type}'`).join(', ')}]`,
@@ -230,8 +249,8 @@ describe('search queries', () => {
 			{ guard: '', lhs: '[firstName, lastName]', weight: WEIGHTS.lead },
 			{ guard: '', lhs: 'affiliations[].taskDescription', weight: WEIGHTS.body },
 			{ guard: 'indexable != false', lhs: 'extractedText', weight: WEIGHTS.body },
-			{ guard: '', lhs: PARTNER_LEAD, weight: WEIGHTS.lead },
-			{ guard: '', lhs: PARTNER_BODY, weight: WEIGHTS.body },
+			{ guard: '', lhs: PAGE_LEAD, weight: WEIGHTS.lead },
+			{ guard: '', lhs: PAGE_BODY, weight: WEIGHTS.body },
 		])('weigh $lhs with $weight', (term) => {
 			expect(getScoreTerms(searchCandidatesQuery)).toContainEqual(term);
 		});
@@ -309,10 +328,28 @@ describe('search queries', () => {
 			}
 		});
 
+		// The volunteer page takes part in the same term, with the fields the partner page lacks.
+		it('score words that sit in different fields of the volunteer page', () => {
+			const [, everyOtherPage] = getCatchAllTerms(searchCandidatesQuery);
+			const fields = everyOtherPage.lhs.slice(1, -1).split(', ');
+
+			expect(everyOtherPage.guard).not.toContain("'volunteerPage'");
+			for (const path of VOLUNTEER_PATHS) {
+				expect(fields).toContain(path);
+			}
+		});
+
+		// A position has no page of its own: it is found by its title and leads to the volunteer page.
+		it('lead an open position to the volunteer page', () => {
+			expect(searchCandidatesQuery).toContain(
+				`_type == 'volunteer.position' => {\n\t\t\t"targets": *[_type == 'volunteerPage']`,
+			);
+		});
+
 		// The partner page lists contact persons, so a person found by name leads there too.
 		it('lead a person to the partner page that lists them', () => {
 			expect(searchCandidatesQuery).toContain(
-				`"listedOn": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage'] && references(^._id)]`,
+				`"listedOn": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage'] && references(^._id)]`,
 			);
 		});
 
@@ -336,6 +373,12 @@ describe('search queries', () => {
 		it('cut the snippet of the partner page from the intros of „Gründe“ and „Unterstützung“', () => {
 			expect(searchTextsQuery).toContain(
 				`_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, '')`,
+			);
+		});
+
+		it('cut the snippet of the volunteer page from the intros of „Gründe“ and „Bereiche“', () => {
+			expect(searchTextsQuery).toContain(
+				`_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, '')`,
 			);
 		});
 	});

@@ -26,7 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, `create-e2e-form.ts`, which seeds the e2e registration form, and `create-partner-page.ts`, which creates the partner page's start content as a draft) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, `create-e2e-form.ts`, which seeds the e2e registration form, `create-partner-page.ts` and `create-volunteer-page.ts`, which create the start content of the partner and the volunteer page as a draft; `scripts/shared` holds what several of them use, such as `readDataset`) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -63,7 +63,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 The desk follows the areas of the website, so the editors find a page where it sits on the website and see which page lies below which. `PAGE_LAYOUT` in `structure/pages.ts` holds the upper block in the order of the website, and `getPageListItems` in `structure/sections.ts` builds it:
 
 - **Startseite**, **Mitgliedschaft**, **Kontakt** and **Suche** stand on their own.
-- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview and the partner page („Sponsoren & Partner“) below „Unterseiten“.
+- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview, the partner page („Sponsoren & Partner“) and the volunteer page („Ehrenamt“) below „Unterseiten“, and the TSG-Echo issues and the open volunteer positions („Offene Aufgaben“, newest first) below „Inhalte“.
 - **Rechtliches** holds imprint, privacy and accessibility side by side, without a main page.
 
 Below a divider follow the documents several areas share (FAQ, forms, persons, sponsors, venues, testimonials), sorted by title, and below another the settings. A single page that `PAGE_LAYOUT` does not place still shows up, under „Weitere Seiten“ at the end of the upper block, so a new page cannot go missing from the desk.
@@ -237,10 +237,30 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 
 - **Inhalte** with four sub tabs: „Gründe“ (`reasons`), „Unterstützung“ (`ways`, plus `ideaText` and `ideaCta`), „Partner“ (`ownLogoText`, the text of the last tile) and „Ansprechpartner“. Each of the first three has the default section header.
 - **Anfragen**: the address (initially `partner@tsg-irlich.de`) and the subject (initially „Sponsoring bei der TSG Irlich“) of the two inquiry links, the button below the cards of `ways` (`ideaCta`) and the own-logo tile. The cards of `ways` have no button of their own; the club dropped them after the first review.
-- The cards pick their `icon` from `PARTNER_ICONS` in `@tsgi-web/shared/partner-icons` (kebab-case Lucide names, which the web app maps to components). `reasons` and `ways` warn, never fail, when they do not hold exactly four cards, because the grid is built for four.
+- The cards pick their `icon` from `PAGE_ICONS` in `@tsgi-web/shared/page-icons` (kebab-case Lucide names, which `PageIcon` in the web app maps to components; the volunteer page shares the list). Their input (`PageIconInput`, `components/page-icon-input.tsx`) shows the chosen icon next to the select, drawn with the same Lucide icons through `react-icons/lu`; a value of the list without an entry there fails the type check. `reasons` and `ways` warn, never fail, when they do not hold exactly four cards, because the grid is built for four.
 - `scripts/create-partner-page.ts` creates the start content (the texts of the prototype, the hero image of `aboutUs`, the PR team as contact persons) as the draft `drafts.partnerPage`: `pnpm --filter studio exec sanity exec scripts/create-partner-page.ts --with-user-token -- --dataset <dataset>`. It never publishes and never overwrites: when the draft or the published page exists, it prints so and writes nothing.
 
 It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the search page. Both live revalidation webhooks must list `partnerPage` in their type filter, or the page keeps its old state after a publish (`docs/SANITY_WEBHOOK_SETUP.md`).
+
+## Volunteer page
+
+`volunteerPage` is the singleton behind `/verein/ehrenamt` („Ehrenamt“, `schemas/single-pages/volunteer-page/`, WEB-190), with the fixed slug `ehrenamt`. It sits under „Verein“ after the partner page and is an internal link target. Besides the hero and `meta` it holds every visible text of the page:
+
+- **Inhalte** with five sub tabs, each with the default section header: „Gründe“ (`reasons`, cards with icon, plus the button `cta` that jumps to the open positions), „Stimmen“ (`testimonials`, references to `testimonial` documents; without one the section is left out), „Bereiche“ (`areas`, each with an image, an icon and example tasks), „Aktuell gesucht“ (`steps`, the headings of the three lists, the button `cta` of a position and the card for own ideas `otherTitle` / `otherText`) and „Ansprechpartner“.
+- **Anfragen**: the address (initially `info@tsg-irlich.de`) and the subject (initially „Ehrenamt bei der TSG Irlich“). A position's button appends its title to the subject.
+- The cards pick their `icon` from `PAGE_ICONS`, like the partner page. `reasons` warns at another number than six, `steps` at another number than three; the areas take any number.
+- The open positions are documents of their own, see [Volunteer positions](#volunteer-positions).
+- `scripts/create-volunteer-page.ts` creates the start content (the texts of the prototype, the hero image of `aboutUs`, the card images of the groups `1-mannschaft` and `a-jugend`, the fallback and the first vision image of the site settings for the areas, the board as contact persons, no voices) as the draft `drafts.volunteerPage`: `pnpm --filter studio exec sanity exec scripts/create-volunteer-page.ts --with-user-token -- --dataset <dataset>`. Like the partner script it never publishes and never overwrites. `--with-placeholder-positions` also writes the four positions of the prototype as drafts (`drafts.volunteer-position-placeholder-<n>`, with `createIfNotExists`) for `development`, the e2e fixtures and screenshots; with `--dataset production` the script refuses it before writing anything.
+
+It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the partner page. Both live revalidation webhooks must list `volunteerPage` and `volunteer.position` in their type filter (`docs/SANITY_WEBHOOK_SETUP.md`).
+
+## Volunteer positions
+
+`volunteer.position` („Offene Aufgabe“, `schemas/documents/volunteer.position.ts`, WEB-190) is one open position of the volunteer page `/verein/ehrenamt`: title, area (a short label such as „Fußball“, free text because not every area is a department), effort, teaser and the three lists „Deine Aufgaben“, „Das bringst du mit“ and „Das bieten wir“. A small document, so it has no tabs.
+
+- Every published position appears on the page, the newest first (`_createdAt`). The volunteer page does not list them, so a new one needs nothing but publishing.
+- Withdrawing a position means „Veröffentlichung zurücknehmen“: the document stays as a draft and can go live again later. Deleting it works as well.
+- Desk: „Verein“ → „Inhalte“ → „Offene Aufgaben“ (`getGroupVolunteer` in `structure/index.ts`), newest first; the type is kept out of the default list.
 
 ## Content migrations
 

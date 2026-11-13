@@ -64,6 +64,10 @@ describe('excluded default list items', () => {
 		expect(isExcludedDefaultListItem('faq')).toBe(false);
 	});
 
+	it('excludes the open volunteer positions, which have their own desk entry', () => {
+		expect(isExcludedDefaultListItem('volunteer.position')).toBe(false);
+	});
+
 	it('excludes form and form.submission, which have their own desk entry', () => {
 		expect(isExcludedDefaultListItem('form')).toBe(false);
 		expect(isExcludedDefaultListItem('form.submission')).toBe(false);
@@ -107,6 +111,27 @@ describe('desk group resolution', () => {
 		expect(lists).toStrictEqual(['echo.issue']);
 		expect(orderings).toStrictEqual([[{ direction: 'desc', field: 'releaseDate' }]]);
 		expect(titles).toContain('TSG-Echo Ausgaben');
+	});
+
+	it('resolves the volunteer group to the open positions, newest first', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		const items = getGroup(structureBuilder, 'volunteer');
+
+		const lists = calls
+			.filter((call) => call.method === 'documentTypeList')
+			.map((call) => call.args[0]);
+		const orderings = calls
+			.filter((call) => call.method === 'defaultOrdering')
+			.map((call) => call.args[0]);
+		const titles = calls.filter((call) => call.method === 'title').map((call) => call.args[0]);
+		const ids = calls.filter((call) => call.method === 'id').map((call) => call.args[0]);
+
+		expect(items).toHaveLength(1);
+		expect(lists).toStrictEqual(['volunteer.position']);
+		expect(orderings).toStrictEqual([[{ direction: 'desc', field: '_createdAt' }]]);
+		expect(titles).toContain('Offene Aufgaben');
+		expect(ids).toContain('volunteer-positions');
 	});
 
 	it('resolves the departments group to one list of the departments by sort order', () => {

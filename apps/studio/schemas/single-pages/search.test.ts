@@ -12,6 +12,7 @@ import newsOverviewPage from './news-overview';
 import offerPage from './offer';
 import partnerPage from './partner-page';
 import privacyPage from './privacy';
+import volunteerPage from './volunteer-page';
 
 interface SinglePage {
 	name: string;
@@ -30,6 +31,7 @@ const PAGES = [
 	newsOverviewPage,
 	offerPage,
 	partnerPage,
+	volunteerPage,
 	privacyPage,
 ] as unknown as SinglePage[];
 

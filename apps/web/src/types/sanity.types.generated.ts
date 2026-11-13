@@ -259,6 +259,13 @@ export type PartnerPageReference = {
   [internalGroqTypeReferenceTo]?: "partnerPage";
 };
 
+export type VolunteerPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "volunteerPage";
+};
+
 export type ContactReference = {
   _ref: string;
   _type: "reference";
@@ -354,6 +361,7 @@ export type BlockContent = {
             | AboutUsReference
             | EchoOverviewReference
             | PartnerPageReference
+            | VolunteerPageReference
             | ContactReference
             | DepartmentsPageReference
             | DepartmentReference
@@ -429,6 +437,7 @@ export type NavigationLink = {
     | AboutUsReference
     | EchoOverviewReference
     | PartnerPageReference
+    | VolunteerPageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -478,6 +487,7 @@ export type MainNavigationLink = {
     | AboutUsReference
     | EchoOverviewReference
     | PartnerPageReference
+    | VolunteerPageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -499,6 +509,7 @@ export type InternalLink = {
     | AboutUsReference
     | EchoOverviewReference
     | PartnerPageReference
+    | VolunteerPageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -966,6 +977,7 @@ export type Faq = {
             | AboutUsReference
             | EchoOverviewReference
             | PartnerPageReference
+            | VolunteerPageReference
             | ContactReference
             | DepartmentsPageReference
             | DepartmentReference
@@ -1041,6 +1053,21 @@ export type Role = {
   _rev: string;
   title: string;
   email?: string;
+};
+
+export type VolunteerPosition = {
+  _id: string;
+  _type: "volunteer.position";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  area: string;
+  effort?: string;
+  teaser: string;
+  tasks?: Array<string>;
+  profile?: Array<string>;
+  offer?: Array<string>;
 };
 
 export type EchoIssue = {
@@ -1502,6 +1529,127 @@ export type Contact = {
   };
 };
 
+export type TestimonialReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "testimonial";
+};
+
+export type VolunteerPage = {
+  _id: string;
+  _type: "volunteerPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  heroImage: ExtendedImage;
+  content: {
+    whySection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      cta?: string;
+      reasons?: Array<{
+        title: string;
+        text: string;
+        icon:
+          | "map-pin"
+          | "trending-up"
+          | "heart-handshake"
+          | "handshake"
+          | "shirt"
+          | "fence"
+          | "globe"
+          | "gift"
+          | "trophy"
+          | "megaphone"
+          | "users"
+          | "heart"
+          | "star"
+          | "graduation-cap"
+          | "lightbulb"
+          | "award"
+          | "dumbbell"
+          | "flag"
+          | "building-2"
+          | "party-popper";
+        _type: "volunteerReason";
+        _key: string;
+      }>;
+    };
+    voicesSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      testimonials?: Array<
+        {
+          _key: string;
+        } & TestimonialReference
+      >;
+    };
+    areasSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      areas?: Array<{
+        title: string;
+        text: string;
+        image: ExtendedImage;
+        icon:
+          | "map-pin"
+          | "trending-up"
+          | "heart-handshake"
+          | "handshake"
+          | "shirt"
+          | "fence"
+          | "globe"
+          | "gift"
+          | "trophy"
+          | "megaphone"
+          | "users"
+          | "heart"
+          | "star"
+          | "graduation-cap"
+          | "lightbulb"
+          | "award"
+          | "dumbbell"
+          | "flag"
+          | "building-2"
+          | "party-popper";
+        tasks?: Array<string>;
+        _type: "volunteerArea";
+        _key: string;
+      }>;
+    };
+    positionsSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      steps?: Array<{
+        title: string;
+        text: string;
+        _type: "volunteerStep";
+        _key: string;
+      }>;
+      tasksHeading: string;
+      profileHeading: string;
+      offerHeading: string;
+      cta: string;
+      otherTitle?: string;
+      otherText?: string;
+    };
+    contactPersonsSection: ContactPersonsSection;
+  };
+  inquiry: {
+    email: string;
+    subject: string;
+  };
+  meta?: MetaFields;
+};
+
 export type PartnerPage = {
   _id: string;
   _type: "partnerPage";
@@ -1533,7 +1681,14 @@ export type PartnerPage = {
           | "megaphone"
           | "users"
           | "heart"
-          | "star";
+          | "star"
+          | "graduation-cap"
+          | "lightbulb"
+          | "award"
+          | "dumbbell"
+          | "flag"
+          | "building-2"
+          | "party-popper";
         _type: "partnerReason";
         _key: string;
       }>;
@@ -1559,7 +1714,14 @@ export type PartnerPage = {
           | "megaphone"
           | "users"
           | "heart"
-          | "star";
+          | "star"
+          | "graduation-cap"
+          | "lightbulb"
+          | "award"
+          | "dumbbell"
+          | "flag"
+          | "building-2"
+          | "party-popper";
         _type: "partnerWay";
         _key: string;
       }>;
@@ -1592,13 +1754,6 @@ export type EchoOverview = {
   subtitle: string;
   intro?: SimpleBlockContent;
   meta?: MetaFields;
-};
-
-export type TestimonialReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "testimonial";
 };
 
 export type Home = {
@@ -1985,6 +2140,7 @@ export type AllSanitySchemaTypes =
   | AboutUsReference
   | EchoOverviewReference
   | PartnerPageReference
+  | VolunteerPageReference
   | ContactReference
   | DepartmentsPageReference
   | DepartmentReference
@@ -2039,6 +2195,7 @@ export type AllSanitySchemaTypes =
   | RoleReference
   | Person
   | Role
+  | VolunteerPosition
   | EchoIssue
   | AuthorReference
   | NewsArticle
@@ -2054,9 +2211,10 @@ export type AllSanitySchemaTypes =
   | Department
   | DepartmentsPage
   | Contact
+  | TestimonialReference
+  | VolunteerPage
   | PartnerPage
   | EchoOverview
-  | TestimonialReference
   | Home
   | Author
   | SanityAssistInstructionTask
@@ -2181,7 +2339,8 @@ export type DepartmentPageQueryResult = {
                   | NewsCategoryReference
                   | NewsOverviewReference
                   | PartnerPageReference
-                  | PrivacyReference;
+                  | PrivacyReference
+                  | VolunteerPageReference;
                 _type: "internalLink";
                 _key: string;
                 target:
@@ -2271,6 +2430,12 @@ export type DepartmentPageQueryResult = {
                     }
                   | {
                       _type: "privacy";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "volunteerPage";
                       slug: string | null;
                       category: null;
                       department: null;
@@ -3718,6 +3883,12 @@ export type MainNavigationQueryResult = {
               category: null;
               department: null;
             }
+          | {
+              _type: "volunteerPage";
+              slug: string | null;
+              category: null;
+              department: null;
+            }
           | null;
         hasTwoColumns: null;
         children: Array<never>;
@@ -3827,6 +3998,12 @@ export type MainNavigationQueryResult = {
                     category: null;
                     department: null;
                   }
+                | {
+                    _type: "volunteerPage";
+                    slug: string | null;
+                    category: null;
+                    department: null;
+                  }
                 | null;
               description: string | null;
             }>
@@ -3889,7 +4066,8 @@ export type AboutUsPageQueryResult = {
                           | NewsCategoryReference
                           | NewsOverviewReference
                           | PartnerPageReference
-                          | PrivacyReference;
+                          | PrivacyReference
+                          | VolunteerPageReference;
                         _type: "internalLink";
                         _key: string;
                         target:
@@ -3982,6 +4160,12 @@ export type AboutUsPageQueryResult = {
                               slug: string | null;
                               category: null;
                               department: null;
+                            }
+                          | {
+                              _type: "volunteerPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
                             };
                       }
                   >;
@@ -4042,7 +4226,8 @@ export type AboutUsPageQueryResult = {
                             | NewsCategoryReference
                             | NewsOverviewReference
                             | PartnerPageReference
-                            | PrivacyReference;
+                            | PrivacyReference
+                            | VolunteerPageReference;
                           _type: "internalLink";
                           _key: string;
                           target:
@@ -4135,6 +4320,12 @@ export type AboutUsPageQueryResult = {
                                 slug: string | null;
                                 category: null;
                                 department: null;
+                              }
+                            | {
+                                _type: "volunteerPage";
+                                slug: string | null;
+                                category: null;
+                                department: null;
                               };
                         }
                     >;
@@ -4189,7 +4380,8 @@ export type AboutUsPageQueryResult = {
                           | NewsCategoryReference
                           | NewsOverviewReference
                           | PartnerPageReference
-                          | PrivacyReference;
+                          | PrivacyReference
+                          | VolunteerPageReference;
                         _type: "internalLink";
                         _key: string;
                         target:
@@ -4282,6 +4474,12 @@ export type AboutUsPageQueryResult = {
                               slug: string | null;
                               category: null;
                               department: null;
+                            }
+                          | {
+                              _type: "volunteerPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
                             };
                       }
                   >;
@@ -4371,7 +4569,8 @@ export type AccessibilityPageQueryResult = {
                       | NewsCategoryReference
                       | NewsOverviewReference
                       | PartnerPageReference
-                      | PrivacyReference;
+                      | PrivacyReference
+                      | VolunteerPageReference;
                     _type: "internalLink";
                     _key: string;
                     target:
@@ -4461,6 +4660,12 @@ export type AccessibilityPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "volunteerPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -4873,6 +5078,12 @@ export type ImprintPageQueryResult = {
           slug: string | null;
           category: null;
           department: null;
+        }
+      | {
+          _type: "volunteerPage";
+          slug: string | null;
+          category: null;
+          department: null;
         };
   };
   responsible: string;
@@ -4934,7 +5145,8 @@ export type MembershipPageQueryResult = {
                         | NewsCategoryReference
                         | NewsOverviewReference
                         | PartnerPageReference
-                        | PrivacyReference;
+                        | PrivacyReference
+                        | VolunteerPageReference;
                       _type: "internalLink";
                       _key: string;
                       target:
@@ -5024,6 +5236,12 @@ export type MembershipPageQueryResult = {
                           }
                         | {
                             _type: "privacy";
+                            slug: string | null;
+                            category: null;
+                            department: null;
+                          }
+                        | {
+                            _type: "volunteerPage";
                             slug: string | null;
                             category: null;
                             department: null;
@@ -5180,7 +5398,8 @@ export type NewsArticleContentQueryResult = {
                           | NewsCategoryReference
                           | NewsOverviewReference
                           | PartnerPageReference
-                          | PrivacyReference;
+                          | PrivacyReference
+                          | VolunteerPageReference;
                         _type: "internalLink";
                         _key: string;
                         target:
@@ -5273,6 +5492,12 @@ export type NewsArticleContentQueryResult = {
                               slug: string | null;
                               category: null;
                               department: null;
+                            }
+                          | {
+                              _type: "volunteerPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
                             };
                       }
                   >;
@@ -5341,7 +5566,8 @@ export type NewsArticleContentQueryResult = {
                                 | NewsCategoryReference
                                 | NewsOverviewReference
                                 | PartnerPageReference
-                                | PrivacyReference;
+                                | PrivacyReference
+                                | VolunteerPageReference;
                               _type: "internalLink";
                               _key: string;
                               target:
@@ -5431,6 +5657,12 @@ export type NewsArticleContentQueryResult = {
                                   }
                                 | {
                                     _type: "privacy";
+                                    slug: string | null;
+                                    category: null;
+                                    department: null;
+                                  }
+                                | {
+                                    _type: "volunteerPage";
                                     slug: string | null;
                                     category: null;
                                     department: null;
@@ -5905,14 +6137,21 @@ export type PartnerPageQueryResult = {
           title: string;
           text: string;
           icon:
+            | "award"
+            | "building-2"
+            | "dumbbell"
             | "fence"
+            | "flag"
             | "gift"
             | "globe"
+            | "graduation-cap"
             | "handshake"
             | "heart-handshake"
             | "heart"
+            | "lightbulb"
             | "map-pin"
             | "megaphone"
+            | "party-popper"
             | "shirt"
             | "star"
             | "trending-up"
@@ -5931,14 +6170,21 @@ export type PartnerPageQueryResult = {
           text: string;
           benefits?: Array<string>;
           icon:
+            | "award"
+            | "building-2"
+            | "dumbbell"
             | "fence"
+            | "flag"
             | "gift"
             | "globe"
+            | "graduation-cap"
             | "handshake"
             | "heart-handshake"
             | "heart"
+            | "lightbulb"
             | "map-pin"
             | "megaphone"
+            | "party-popper"
             | "shirt"
             | "star"
             | "trending-up"
@@ -6043,7 +6289,8 @@ export type PrivacyPageQueryResult = {
                       | NewsCategoryReference
                       | NewsOverviewReference
                       | PartnerPageReference
-                      | PrivacyReference;
+                      | PrivacyReference
+                      | VolunteerPageReference;
                     _type: "internalLink";
                     _key: string;
                     target:
@@ -6133,6 +6380,12 @@ export type PrivacyPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "volunteerPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -6184,7 +6437,8 @@ export type PrivacyPageQueryResult = {
                       | NewsCategoryReference
                       | NewsOverviewReference
                       | PartnerPageReference
-                      | PrivacyReference;
+                      | PrivacyReference
+                      | VolunteerPageReference;
                     _type: "internalLink";
                     _key: string;
                     target:
@@ -6277,6 +6531,12 @@ export type PrivacyPageQueryResult = {
                           slug: string | null;
                           category: null;
                           department: null;
+                        }
+                      | {
+                          _type: "volunteerPage";
+                          slug: string | null;
+                          category: null;
+                          department: null;
                         };
                   }
               >;
@@ -6287,6 +6547,153 @@ export type PrivacyPageQueryResult = {
       | Array<never>;
   };
 } | null;
+
+// Source: src/lib/sanity/queries/pages/volunteer.ts
+// Variable: volunteerPageQuery
+// Query: {		"volunteerPage": *[_type == 'volunteerPage'][0] {			...,			content {				...,				voicesSection {					...,					testimonials[]-> { _id, firstName, lastName, image, quote, role }				},				contactPersonsSection {					...,					contactPersons[]-> {						  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,					}				}			}		},		"positions": *[_type == 'volunteer.position'] | order(_createdAt desc) {			_id,			title,			area,			effort,			teaser,			tasks,			profile,			offer		}	}
+export type VolunteerPageQueryResult = {
+  volunteerPage: {
+    _id: string;
+    _type: "volunteerPage";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    slug?: Slug;
+    title: string;
+    subtitle: string;
+    heroImage: ExtendedImage;
+    content: {
+      whySection?: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        cta?: string;
+        reasons?: Array<{
+          title: string;
+          text: string;
+          icon:
+            | "award"
+            | "building-2"
+            | "dumbbell"
+            | "fence"
+            | "flag"
+            | "gift"
+            | "globe"
+            | "graduation-cap"
+            | "handshake"
+            | "heart-handshake"
+            | "heart"
+            | "lightbulb"
+            | "map-pin"
+            | "megaphone"
+            | "party-popper"
+            | "shirt"
+            | "star"
+            | "trending-up"
+            | "trophy"
+            | "users";
+          _type: "volunteerReason";
+          _key: string;
+        }>;
+      };
+      voicesSection: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        testimonials: Array<{
+          _id: string;
+          firstName: string;
+          lastName: string;
+          image: ExtendedImage;
+          quote: string;
+          role: string;
+        }> | null;
+      } | null;
+      areasSection?: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        areas?: Array<{
+          title: string;
+          text: string;
+          image: ExtendedImage;
+          icon:
+            | "award"
+            | "building-2"
+            | "dumbbell"
+            | "fence"
+            | "flag"
+            | "gift"
+            | "globe"
+            | "graduation-cap"
+            | "handshake"
+            | "heart-handshake"
+            | "heart"
+            | "lightbulb"
+            | "map-pin"
+            | "megaphone"
+            | "party-popper"
+            | "shirt"
+            | "star"
+            | "trending-up"
+            | "trophy"
+            | "users";
+          tasks?: Array<string>;
+          _type: "volunteerArea";
+          _key: string;
+        }>;
+      };
+      positionsSection?: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        steps?: Array<{
+          title: string;
+          text: string;
+          _type: "volunteerStep";
+          _key: string;
+        }>;
+        tasksHeading: string;
+        profileHeading: string;
+        offerHeading: string;
+        cta: string;
+        otherTitle?: string;
+        otherText?: string;
+      };
+      contactPersonsSection: {
+        title: string;
+        subtitle: string;
+        intro?: string;
+        contactPersons: Array<{
+          _id: string;
+          firstName: string;
+          lastName: string;
+          phone: string | null;
+          image: ExtendedImage;
+          contactAs: "both" | "email" | "phone" | "whatsapp";
+          email: string | null;
+          role: string | null;
+          taskDescription: string | null;
+        }>;
+      };
+    };
+    inquiry: {
+      email: string;
+      subject: string;
+    };
+    meta?: MetaFields;
+  } | null;
+  positions: Array<{
+    _id: string;
+    title: string;
+    area: string;
+    effort: string | null;
+    teaser: string;
+    tasks: Array<string> | null;
+    profile: Array<string> | null;
+    offer: Array<string> | null;
+  }>;
+};
 
 // Source: src/lib/sanity/queries/rss.ts
 // Variable: rssNewsArticlesQuery
@@ -6308,7 +6715,7 @@ export type RssNewsArticlesQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/search.ts
 // Variable: searchCandidatesQuery
-// Query: *[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]	| score(	boost(title match text::query($q), 10),	boost(searchTerms[] match text::query($q), 8),	boost(subtitle match text::query($q), 3),	boost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),	boost(intro.text[].children[].text match text::query($q), 3),	boost(content.introSection.intro.text[].children[].text match text::query($q), 3),	boost(description.text[].children[].text match text::query($q), 3),	boost(question match text::query($q), 3),	boost([firstName, lastName] match text::query($q), 3),	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro] match text::query($q), 3),	boost(answer[].children[].text match text::query($q), 1),	boost(training.trainingDescription.text[].children[].text match text::query($q), 1),	boost(content.visionSection.longVision.text[].children[].text match text::query($q), 1),	boost(references(*[_type == 'role' && title match text::query($q)]._id), 1),	boost(affiliations[].taskDescription match text::query($q), 1),	boost([		content.whySection.reasons[].title,		content.whySection.reasons[].text,		content.waysSection.ways[].title,		content.waysSection.ways[].text,		content.waysSection.ways[].benefits[]	] match text::query($q), 1),	boost(indexable != false, 0) && boost(extractedText match text::query($q), 1),	boost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),	boost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([		title,		searchTerms[],		subtitle,		intro.text[].children[].text,		content.introSection.intro.text[].children[].text,		description.text[].children[].text,		question,		firstName,		lastName,		answer[].children[].text,		training.trainingDescription.text[].children[].text,		content.visionSection.longVision.text[].children[].text,		affiliations[].taskDescription,		content.whySection.intro,		content.waysSection.intro,		content.partnersSection.intro,		content.whySection.reasons[].title,		content.whySection.reasons[].text,		content.waysSection.ways[].title,		content.waysSection.ways[].text,		content.waysSection.ways[].benefits[]	] match text::query($q), 1))	| order(_score desc) [_score != 0] [0...$limit] {			_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	),		"_score": math::sum([_score]),		_type == 'faq' => {			question,			"targets": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		},		_type == 'person' => {			firstName,			lastName,			"nameMatches": [firstName, lastName] match text::query($q),			"affiliations": affiliations[] {				"role": role->title,				"roleMatches": [role->title, taskDescription] match text::query($q),				"team": team-> { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }			},			"listedOn": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage'] && references(^._id)] { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		}	}
+// Query: *[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]	| score(	boost(title match text::query($q), 10),	boost(searchTerms[] match text::query($q), 8),	boost(subtitle match text::query($q), 3),	boost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),	boost(intro.text[].children[].text match text::query($q), 3),	boost(content.introSection.intro.text[].children[].text match text::query($q), 3),	boost(description.text[].children[].text match text::query($q), 3),	boost(question match text::query($q), 3),	boost([firstName, lastName] match text::query($q), 3),	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro] match text::query($q), 3),	boost(answer[].children[].text match text::query($q), 1),	boost(training.trainingDescription.text[].children[].text match text::query($q), 1),	boost(content.visionSection.longVision.text[].children[].text match text::query($q), 1),	boost(references(*[_type == 'role' && title match text::query($q)]._id), 1),	boost(affiliations[].taskDescription match text::query($q), 1),	boost([		content.whySection.reasons[].title,		content.whySection.reasons[].text,		content.waysSection.ways[].title,		content.waysSection.ways[].text,		content.waysSection.ways[].benefits[],		content.areasSection.areas[].title,		content.areasSection.areas[].text,		content.areasSection.areas[].tasks[]	] match text::query($q), 1),	boost(indexable != false, 0) && boost(extractedText match text::query($q), 1),	boost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),	boost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([		title,		searchTerms[],		subtitle,		intro.text[].children[].text,		content.introSection.intro.text[].children[].text,		description.text[].children[].text,		question,		firstName,		lastName,		answer[].children[].text,		training.trainingDescription.text[].children[].text,		content.visionSection.longVision.text[].children[].text,		affiliations[].taskDescription,		content.whySection.intro,		content.waysSection.intro,		content.partnersSection.intro,		content.whySection.reasons[].title,		content.whySection.reasons[].text,		content.waysSection.ways[].title,		content.waysSection.ways[].text,		content.waysSection.ways[].benefits[],		content.areasSection.intro,		content.positionsSection.intro,		content.areasSection.areas[].title,		content.areasSection.areas[].text,		content.areasSection.areas[].tasks[]	] match text::query($q), 1))	| order(_score desc) [_score != 0] [0...$limit] {			_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	),		"_score": math::sum([_score]),		_type == 'volunteer.position' => {			"targets": *[_type == 'volunteerPage'] { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		},		_type == 'faq' => {			question,			"targets": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		},		_type == 'person' => {			firstName,			lastName,			"nameMatches": [firstName, lastName] match text::query($q),			"affiliations": affiliations[] {				"role": role->title,				"roleMatches": [role->title, taskDescription] match text::query($q),				"team": team-> { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }			},			"listedOn": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage'] && references(^._id)] { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		}	}
 export type SearchCandidatesQueryResult = Array<
   | {
       _id: string;
@@ -6608,7 +7015,53 @@ export type SearchCandidatesQueryResult = Array<
             indexable: null;
             image: ExtendedImage;
           }
+        | {
+            _id: string;
+            _type: "volunteerPage";
+            title: string;
+            slug: string | null;
+            department: null;
+            category: null;
+            publishedAt: null;
+            indexable: null;
+            image: ExtendedImage;
+          }
       >;
+    }
+  | {
+      _id: string;
+      _type: "volunteer.position";
+      title: string;
+      slug: null;
+      department: null;
+      category: null;
+      publishedAt: null;
+      indexable: null;
+      image: null;
+      _score: number;
+      targets: Array<{
+        _id: string;
+        _type: "volunteerPage";
+        title: string;
+        slug: string | null;
+        department: null;
+        category: null;
+        publishedAt: null;
+        indexable: null;
+        image: ExtendedImage;
+      }>;
+    }
+  | {
+      _id: string;
+      _type: "volunteerPage";
+      title: string;
+      slug: string | null;
+      department: null;
+      category: null;
+      publishedAt: null;
+      indexable: null;
+      image: ExtendedImage;
+      _score: number;
     }
 >;
 
@@ -6638,7 +7091,7 @@ export type SearchNewsCountQueryResult = number;
 
 // Source: src/lib/sanity/queries/search.ts
 // Variable: searchTextsQuery
-// Query: *[_id in $ids] {		_id,		"text": select(			_type == 'news.article' => pt::text(body[_type == 'blockContent'].text[]),			_type == 'department' => intro,			_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),			_type in ['membership', 'echoOverview'] => pt::text(intro.text),			_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),			_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),			_type == 'echo.issue' => select(indexable != false => extractedText),			subtitle		)	}
+// Query: *[_id in $ids] {		_id,		"text": select(			_type == 'news.article' => pt::text(body[_type == 'blockContent'].text[]),			_type == 'department' => intro,			_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),			_type in ['membership', 'echoOverview'] => pt::text(intro.text),			_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),			_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),			_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, ''),			_type == 'echo.issue' => select(indexable != false => extractedText),			subtitle		)	}
 export type SearchTextsQueryResult = Array<
   | {
       _id: string;
@@ -6783,6 +7236,12 @@ export type SearchPageQueryResult = {
                 }
               | {
                   _type: "privacy";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "volunteerPage";
                   slug: string | null;
                   category: null;
                   department: null;
@@ -7091,11 +7550,12 @@ declare global {
     '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
     '\n\t{\n\t\t"partnerPage": *[_type == \'partnerPage\'][0] {\n\t\t\t...,\n\t\t\tcontent {\n\t\t\t\t...,\n\t\t\t\tcontactPersonsSection {\n\t\t\t\t\t...,\n\t\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"sponsors": *[_type == \'sponsors\'] { _id, name, website, logo } | order(name asc)\n\t}\n': PartnerPageQueryResult;
     '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tintroText { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': PrivacyPageQueryResult;
+    '\n\t{\n\t\t"volunteerPage": *[_type == \'volunteerPage\'][0] {\n\t\t\t...,\n\t\t\tcontent {\n\t\t\t\t...,\n\t\t\t\tvoicesSection {\n\t\t\t\t\t...,\n\t\t\t\t\ttestimonials[]-> { _id, firstName, lastName, image, quote, role }\n\t\t\t\t},\n\t\t\t\tcontactPersonsSection {\n\t\t\t\t\t...,\n\t\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"positions": *[_type == \'volunteer.position\'] | order(_createdAt desc) {\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tarea,\n\t\t\teffort,\n\t\t\tteaser,\n\t\t\ttasks,\n\t\t\tprofile,\n\t\t\toffer\n\t\t}\n\t}\n': VolunteerPageQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName },\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
-    "\n\t*[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]\n\t| score(\n\tboost(title match text::query($q), 10),\n\tboost(searchTerms[] match text::query($q), 8),\n\tboost(subtitle match text::query($q), 3),\n\tboost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),\n\tboost(intro.text[].children[].text match text::query($q), 3),\n\tboost(content.introSection.intro.text[].children[].text match text::query($q), 3),\n\tboost(description.text[].children[].text match text::query($q), 3),\n\tboost(question match text::query($q), 3),\n\tboost([firstName, lastName] match text::query($q), 3),\n\tboost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro] match text::query($q), 3),\n\tboost(answer[].children[].text match text::query($q), 1),\n\tboost(training.trainingDescription.text[].children[].text match text::query($q), 1),\n\tboost(content.visionSection.longVision.text[].children[].text match text::query($q), 1),\n\tboost(references(*[_type == 'role' && title match text::query($q)]._id), 1),\n\tboost(affiliations[].taskDescription match text::query($q), 1),\n\tboost([\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[]\n\t] match text::query($q), 1),\n\tboost(indexable != false, 0) && boost(extractedText match text::query($q), 1),\n\tboost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),\n\tboost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([\n\t\ttitle,\n\t\tsearchTerms[],\n\t\tsubtitle,\n\t\tintro.text[].children[].text,\n\t\tcontent.introSection.intro.text[].children[].text,\n\t\tdescription.text[].children[].text,\n\t\tquestion,\n\t\tfirstName,\n\t\tlastName,\n\t\tanswer[].children[].text,\n\t\ttraining.trainingDescription.text[].children[].text,\n\t\tcontent.visionSection.longVision.text[].children[].text,\n\t\taffiliations[].taskDescription,\n\t\tcontent.whySection.intro,\n\t\tcontent.waysSection.intro,\n\t\tcontent.partnersSection.intro,\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[]\n\t] match text::query($q), 1)\n)\n\t| order(_score desc) [_score != 0] [0...$limit] {\n\t\t\n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n,\n\t\t\"_score\": math::sum([_score]),\n\t\t_type == 'faq' => {\n\t\t\tquestion,\n\t\t\t\"targets\": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'person' => {\n\t\t\tfirstName,\n\t\t\tlastName,\n\t\t\t\"nameMatches\": [firstName, lastName] match text::query($q),\n\t\t\t\"affiliations\": affiliations[] {\n\t\t\t\t\"role\": role->title,\n\t\t\t\t\"roleMatches\": [role->title, taskDescription] match text::query($q),\n\t\t\t\t\"team\": team-> { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t\t},\n\t\t\t\"listedOn\": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage'] && references(^._id)] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t}\n\t}\n": SearchCandidatesQueryResult;
+    "\n\t*[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]\n\t| score(\n\tboost(title match text::query($q), 10),\n\tboost(searchTerms[] match text::query($q), 8),\n\tboost(subtitle match text::query($q), 3),\n\tboost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),\n\tboost(intro.text[].children[].text match text::query($q), 3),\n\tboost(content.introSection.intro.text[].children[].text match text::query($q), 3),\n\tboost(description.text[].children[].text match text::query($q), 3),\n\tboost(question match text::query($q), 3),\n\tboost([firstName, lastName] match text::query($q), 3),\n\tboost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro] match text::query($q), 3),\n\tboost(answer[].children[].text match text::query($q), 1),\n\tboost(training.trainingDescription.text[].children[].text match text::query($q), 1),\n\tboost(content.visionSection.longVision.text[].children[].text match text::query($q), 1),\n\tboost(references(*[_type == 'role' && title match text::query($q)]._id), 1),\n\tboost(affiliations[].taskDescription match text::query($q), 1),\n\tboost([\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[],\n\t\tcontent.areasSection.areas[].title,\n\t\tcontent.areasSection.areas[].text,\n\t\tcontent.areasSection.areas[].tasks[]\n\t] match text::query($q), 1),\n\tboost(indexable != false, 0) && boost(extractedText match text::query($q), 1),\n\tboost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),\n\tboost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([\n\t\ttitle,\n\t\tsearchTerms[],\n\t\tsubtitle,\n\t\tintro.text[].children[].text,\n\t\tcontent.introSection.intro.text[].children[].text,\n\t\tdescription.text[].children[].text,\n\t\tquestion,\n\t\tfirstName,\n\t\tlastName,\n\t\tanswer[].children[].text,\n\t\ttraining.trainingDescription.text[].children[].text,\n\t\tcontent.visionSection.longVision.text[].children[].text,\n\t\taffiliations[].taskDescription,\n\t\tcontent.whySection.intro,\n\t\tcontent.waysSection.intro,\n\t\tcontent.partnersSection.intro,\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[],\n\t\tcontent.areasSection.intro,\n\t\tcontent.positionsSection.intro,\n\t\tcontent.areasSection.areas[].title,\n\t\tcontent.areasSection.areas[].text,\n\t\tcontent.areasSection.areas[].tasks[]\n\t] match text::query($q), 1)\n)\n\t| order(_score desc) [_score != 0] [0...$limit] {\n\t\t\n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n,\n\t\t\"_score\": math::sum([_score]),\n\t\t_type == 'volunteer.position' => {\n\t\t\t\"targets\": *[_type == 'volunteerPage'] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'faq' => {\n\t\t\tquestion,\n\t\t\t\"targets\": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'person' => {\n\t\t\tfirstName,\n\t\t\tlastName,\n\t\t\t\"nameMatches\": [firstName, lastName] match text::query($q),\n\t\t\t\"affiliations\": affiliations[] {\n\t\t\t\t\"role\": role->title,\n\t\t\t\t\"roleMatches\": [role->title, taskDescription] match text::query($q),\n\t\t\t\t\"team\": team-> { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t\t},\n\t\t\t\"listedOn\": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage'] && references(^._id)] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t}\n\t}\n": SearchCandidatesQueryResult;
     '\n\t*[_type == \'news.article\' && [title, body[].text[].children[].text] match text::query($q)]\n\t| score(\n\t\tboost(title match text::query($q), 10),\n\t\tboost(body[].text[].children[].text match text::query($q), 1),\n\t\tboost([title, body[].text[].children[].text] match text::query($q), 1)\n\t)\n\t| order(_score desc, publishedAt desc) [$start...$end] {\n\t\t\n\t_id,\n\t_type,\n\ttitle,\n\t"slug": slug.current,\n\t"department": department-> { title, "slug": slug.current },\n\t"category": categories[0]-> { title, "slug": slug.current },\n\tpublishedAt,\n\tindexable,\n\t"image": select(\n\t\t_type == \'department\' => cardImage,\n\t\t_type in [\'group\', \'news.article\'] => featuredImage,\n\t\t_type == \'echo.issue\' => pages[0],\n\t\t_type == \'home\' => null,\n\t\theroImage\n\t)\n,\n\t\t"_score": math::sum([_score])\n\t}\n': SearchNewsQueryResult;
     "count(*[_type == 'news.article' && [title, body[].text[].children[].text] match text::query($q)])": SearchNewsCountQueryResult;
-    "\n\t*[_id in $ids] {\n\t\t_id,\n\t\t\"text\": select(\n\t\t\t_type == 'news.article' => pt::text(body[_type == 'blockContent'].text[]),\n\t\t\t_type == 'department' => intro,\n\t\t\t_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),\n\t\t\t_type in ['membership', 'echoOverview'] => pt::text(intro.text),\n\t\t\t_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),\n\t\t\t_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),\n\t\t\t_type == 'echo.issue' => select(indexable != false => extractedText),\n\t\t\tsubtitle\n\t\t)\n\t}\n": SearchTextsQueryResult;
+    "\n\t*[_id in $ids] {\n\t\t_id,\n\t\t\"text\": select(\n\t\t\t_type == 'news.article' => pt::text(body[_type == 'blockContent'].text[]),\n\t\t\t_type == 'department' => intro,\n\t\t\t_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),\n\t\t\t_type in ['membership', 'echoOverview'] => pt::text(intro.text),\n\t\t\t_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),\n\t\t\t_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),\n\t\t\t_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, ''),\n\t\t\t_type == 'echo.issue' => select(indexable != false => extractedText),\n\t\t\tsubtitle\n\t\t)\n\t}\n": SearchTextsQueryResult;
     '\n\t*[_type == \'searchPage\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tnoResults {\n\t\t\t\t...,\n\t\t\t\t"links": coalesce(links[] {\n\t\t\t\t\t_key,\n\t\t\t\t\ttitle,\n\t\t\t\t\tlinkType,\n\t\t\t\t\thref,\n\t\t\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n\t\t\t\t}, [])\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': SearchPageQueryResult;
     "*[_type == 'searchPage'][0].content.searchSection.placeholder": SearchPlaceholderQueryResult;
     "\n\t*[_type == 'searchPage'][0].content.popularSearches { title, pinnedTerms, blockedTerms }\n": SearchPopularSettingsQueryResult;

@@ -1329,6 +1329,36 @@
 	},
 	{
 		"type": "type",
+		"name": "volunteerPage.reference",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_ref": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					}
+				},
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "reference"
+					}
+				},
+				"_weak": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			},
+			"dereferencesTo": "volunteerPage"
+		}
+	},
+	{
+		"type": "type",
 		"name": "contact.reference",
 		"value": {
 			"type": "object",
@@ -1799,6 +1829,10 @@
 																	},
 																	{
 																		"type": "inline",
+																		"name": "volunteerPage.reference"
+																	},
+																	{
+																		"type": "inline",
 																		"name": "contact.reference"
 																	},
 																	{
@@ -2214,6 +2248,10 @@
 							},
 							{
 								"type": "inline",
+								"name": "volunteerPage.reference"
+							},
+							{
+								"type": "inline",
 								"name": "contact.reference"
 							},
 							{
@@ -2473,6 +2511,10 @@
 							},
 							{
 								"type": "inline",
+								"name": "volunteerPage.reference"
+							},
+							{
+								"type": "inline",
 								"name": "contact.reference"
 							},
 							{
@@ -2562,6 +2604,10 @@
 							{
 								"type": "inline",
 								"name": "partnerPage.reference"
+							},
+							{
+								"type": "inline",
+								"name": "volunteerPage.reference"
 							},
 							{
 								"type": "inline",
@@ -5419,6 +5465,10 @@
 																},
 																{
 																	"type": "inline",
+																	"name": "volunteerPage.reference"
+																},
+																{
+																	"type": "inline",
 																	"name": "contact.reference"
 																},
 																{
@@ -5853,6 +5903,101 @@
 				"type": "objectAttribute",
 				"value": {
 					"type": "string"
+				},
+				"optional": true
+			}
+		}
+	},
+	{
+		"name": "volunteer.position",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "volunteer.position"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"title": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"area": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"effort": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"teaser": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"tasks": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
+			},
+			"profile": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
+			},
+			"offer": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
 				},
 				"optional": true
 			}
@@ -8375,6 +8520,670 @@
 		}
 	},
 	{
+		"type": "type",
+		"name": "testimonial.reference",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_ref": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					}
+				},
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "reference"
+					}
+				},
+				"_weak": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			},
+			"dereferencesTo": "testimonial"
+		}
+	},
+	{
+		"name": "volunteerPage",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "volunteerPage"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"slug": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "slug"
+				},
+				"optional": true
+			},
+			"title": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"subtitle": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
+			},
+			"content": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "object",
+					"attributes": {
+						"whySection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"cta": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"reasons": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "array",
+											"of": {
+												"type": "object",
+												"attributes": {
+													"title": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"text": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"icon": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "union",
+															"of": [
+																{
+																	"type": "string",
+																	"value": "map-pin"
+																},
+																{
+																	"type": "string",
+																	"value": "trending-up"
+																},
+																{
+																	"type": "string",
+																	"value": "heart-handshake"
+																},
+																{
+																	"type": "string",
+																	"value": "handshake"
+																},
+																{
+																	"type": "string",
+																	"value": "shirt"
+																},
+																{
+																	"type": "string",
+																	"value": "fence"
+																},
+																{
+																	"type": "string",
+																	"value": "globe"
+																},
+																{
+																	"type": "string",
+																	"value": "gift"
+																},
+																{
+																	"type": "string",
+																	"value": "trophy"
+																},
+																{
+																	"type": "string",
+																	"value": "megaphone"
+																},
+																{
+																	"type": "string",
+																	"value": "users"
+																},
+																{
+																	"type": "string",
+																	"value": "heart"
+																},
+																{
+																	"type": "string",
+																	"value": "star"
+																},
+																{
+																	"type": "string",
+																	"value": "graduation-cap"
+																},
+																{
+																	"type": "string",
+																	"value": "lightbulb"
+																},
+																{
+																	"type": "string",
+																	"value": "award"
+																},
+																{
+																	"type": "string",
+																	"value": "dumbbell"
+																},
+																{
+																	"type": "string",
+																	"value": "flag"
+																},
+																{
+																	"type": "string",
+																	"value": "building-2"
+																},
+																{
+																	"type": "string",
+																	"value": "party-popper"
+																}
+															]
+														},
+														"optional": false
+													},
+													"_type": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string",
+															"value": "volunteerReason"
+														}
+													}
+												},
+												"rest": {
+													"type": "object",
+													"attributes": {
+														"_key": {
+															"type": "objectAttribute",
+															"value": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
+						"voicesSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"testimonials": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "array",
+											"of": {
+												"type": "object",
+												"attributes": {
+													"_key": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														}
+													}
+												},
+												"rest": {
+													"type": "inline",
+													"name": "testimonial.reference"
+												}
+											}
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
+						"areasSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"areas": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "array",
+											"of": {
+												"type": "object",
+												"attributes": {
+													"title": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"text": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"image": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "inline",
+															"name": "extendedImage"
+														},
+														"optional": false
+													},
+													"icon": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "union",
+															"of": [
+																{
+																	"type": "string",
+																	"value": "map-pin"
+																},
+																{
+																	"type": "string",
+																	"value": "trending-up"
+																},
+																{
+																	"type": "string",
+																	"value": "heart-handshake"
+																},
+																{
+																	"type": "string",
+																	"value": "handshake"
+																},
+																{
+																	"type": "string",
+																	"value": "shirt"
+																},
+																{
+																	"type": "string",
+																	"value": "fence"
+																},
+																{
+																	"type": "string",
+																	"value": "globe"
+																},
+																{
+																	"type": "string",
+																	"value": "gift"
+																},
+																{
+																	"type": "string",
+																	"value": "trophy"
+																},
+																{
+																	"type": "string",
+																	"value": "megaphone"
+																},
+																{
+																	"type": "string",
+																	"value": "users"
+																},
+																{
+																	"type": "string",
+																	"value": "heart"
+																},
+																{
+																	"type": "string",
+																	"value": "star"
+																},
+																{
+																	"type": "string",
+																	"value": "graduation-cap"
+																},
+																{
+																	"type": "string",
+																	"value": "lightbulb"
+																},
+																{
+																	"type": "string",
+																	"value": "award"
+																},
+																{
+																	"type": "string",
+																	"value": "dumbbell"
+																},
+																{
+																	"type": "string",
+																	"value": "flag"
+																},
+																{
+																	"type": "string",
+																	"value": "building-2"
+																},
+																{
+																	"type": "string",
+																	"value": "party-popper"
+																}
+															]
+														},
+														"optional": false
+													},
+													"tasks": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "array",
+															"of": {
+																"type": "string"
+															}
+														},
+														"optional": true
+													},
+													"_type": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string",
+															"value": "volunteerArea"
+														}
+													}
+												},
+												"rest": {
+													"type": "object",
+													"attributes": {
+														"_key": {
+															"type": "objectAttribute",
+															"value": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
+						"positionsSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"steps": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "array",
+											"of": {
+												"type": "object",
+												"attributes": {
+													"title": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"text": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														},
+														"optional": false
+													},
+													"_type": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string",
+															"value": "volunteerStep"
+														}
+													}
+												},
+												"rest": {
+													"type": "object",
+													"attributes": {
+														"_key": {
+															"type": "objectAttribute",
+															"value": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										},
+										"optional": true
+									},
+									"tasksHeading": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"profileHeading": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"offerHeading": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"cta": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"otherTitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"otherText": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
+						"contactPersonsSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "inline",
+								"name": "contactPersonsSection"
+							},
+							"optional": false
+						}
+					}
+				},
+				"optional": false
+			},
+			"inquiry": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "object",
+					"attributes": {
+						"email": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "string"
+							},
+							"optional": false
+						},
+						"subject": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "string"
+							},
+							"optional": false
+						}
+					}
+				},
+				"optional": false
+			},
+			"meta": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "metaFields"
+				},
+				"optional": true
+			}
+		}
+	},
+	{
 		"name": "partnerPage",
 		"type": "document",
 		"attributes": {
@@ -8547,6 +9356,34 @@
 																{
 																	"type": "string",
 																	"value": "star"
+																},
+																{
+																	"type": "string",
+																	"value": "graduation-cap"
+																},
+																{
+																	"type": "string",
+																	"value": "lightbulb"
+																},
+																{
+																	"type": "string",
+																	"value": "award"
+																},
+																{
+																	"type": "string",
+																	"value": "dumbbell"
+																},
+																{
+																	"type": "string",
+																	"value": "flag"
+																},
+																{
+																	"type": "string",
+																	"value": "building-2"
+																},
+																{
+																	"type": "string",
+																	"value": "party-popper"
 																}
 															]
 														},
@@ -8692,6 +9529,34 @@
 																{
 																	"type": "string",
 																	"value": "star"
+																},
+																{
+																	"type": "string",
+																	"value": "graduation-cap"
+																},
+																{
+																	"type": "string",
+																	"value": "lightbulb"
+																},
+																{
+																	"type": "string",
+																	"value": "award"
+																},
+																{
+																	"type": "string",
+																	"value": "dumbbell"
+																},
+																{
+																	"type": "string",
+																	"value": "flag"
+																},
+																{
+																	"type": "string",
+																	"value": "building-2"
+																},
+																{
+																	"type": "string",
+																	"value": "party-popper"
 																}
 															]
 														},
@@ -8893,36 +9758,6 @@
 				},
 				"optional": true
 			}
-		}
-	},
-	{
-		"type": "type",
-		"name": "testimonial.reference",
-		"value": {
-			"type": "object",
-			"attributes": {
-				"_ref": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string"
-					}
-				},
-				"_type": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "string",
-						"value": "reference"
-					}
-				},
-				"_weak": {
-					"type": "objectAttribute",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": true
-				}
-			},
-			"dereferencesTo": "testimonial"
 		}
 	},
 	{

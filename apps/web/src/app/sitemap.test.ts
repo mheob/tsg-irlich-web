@@ -84,6 +84,7 @@ describe(sitemap, () => {
 			'http://localhost:3000/news',
 			'http://localhost:3000/verein',
 			'http://localhost:3000/verein/partner',
+			'http://localhost:3000/verein/ehrenamt',
 			'http://localhost:3000/verein/echo',
 			'http://localhost:3000/kontakt',
 			'http://localhost:3000/kontakt/feedback',
@@ -104,6 +105,21 @@ describe(sitemap, () => {
 			changeFrequency: 'monthly',
 			priority: 0.6,
 			url: 'http://localhost:3000/verein/partner',
+		});
+	});
+
+	it('lists the volunteer page right after the partner page, monthly at 0.6', async () => {
+		mockSanity({});
+
+		const entries = await sitemap();
+		const index = entries.findIndex(
+			(entry) => entry.url === 'http://localhost:3000/verein/partner',
+		);
+
+		expect(entries[index + 1]).toStrictEqual({
+			changeFrequency: 'monthly',
+			priority: 0.6,
+			url: 'http://localhost:3000/verein/ehrenamt',
 		});
 	});
 

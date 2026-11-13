@@ -24,16 +24,18 @@ const SEARCH_PAGE_TYPES = [
 	'newsOverview',
 	'echoOverview',
 	'partnerPage',
+	'volunteerPage',
+	'volunteer.position',
 ] as const;
 
 /**
  * `SEARCH_PAGE_TYPES` as a GROQ array. Sanity TypeGen cannot read an array built at runtime, so the
  * list is spelled out a second time; a test keeps both in step.
  */
-const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage']`;
+const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position']`;
 
 /** The pages that list a person in their contact persons section. Group pages list theirs by team. */
-const contactPersonPageTypeList = /* groq */ `['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage']`;
+const contactPersonPageTypeList = /* groq */ `['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage']`;
 
 /**
  * Everything a hit needs to become a link with a meta line and a thumbnail. The image is the one
@@ -87,8 +89,15 @@ const searchTarget = /* groq */ `
  *   at all, nor does the issue take part in the terms over all fields: the spec searches an issue by
  *   its title and its text only.
  * - The partner page is searched by its texts: the plain-text intros of its three sections weigh as
- *   lead, the titles, texts and benefits of its cards as body. No other type has these paths, so
- *   neither term needs a guard. The names of its sponsors are not searched.
+ *   lead, the titles, texts and benefits of its cards as body. The names of its sponsors are not
+ *   searched. The volunteer page joins both terms: its first section uses the paths of the partner
+ *   page's `whySection`, and the intros of its areas and open positions and the titles, texts and
+ *   tasks of its areas are added. No other type has these paths, so neither term needs a guard.
+ * - An open position (`volunteer.position`) has no page of its own. It is a candidate found by its
+ *   title, like any page, and leads to the volunteer page, the way a FAQ leads to its departments.
+ *   A position cannot lift the page's own score instead: `score()` refuses a match on a subquery
+ *   such as `*[_type == 'volunteer.position'].title` or `count(*[…])` ("score() function received
+ *   unexpected expression", measured on `development` on 2026-11-13).
  */
 const pageScore = /* groq */ `
 	boost(title match text::query($q), ${WEIGHTS.title}),
@@ -100,7 +109,7 @@ const pageScore = /* groq */ `
 	boost(description.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
 	boost(question match text::query($q), ${WEIGHTS.lead}),
 	boost([firstName, lastName] match text::query($q), ${WEIGHTS.lead}),
-	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro] match text::query($q), ${WEIGHTS.lead}),
+	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro] match text::query($q), ${WEIGHTS.lead}),
 	boost(answer[].children[].text match text::query($q), ${WEIGHTS.body}),
 	boost(training.trainingDescription.text[].children[].text match text::query($q), ${WEIGHTS.body}),
 	boost(content.visionSection.longVision.text[].children[].text match text::query($q), ${WEIGHTS.body}),
@@ -111,7 +120,10 @@ const pageScore = /* groq */ `
 		content.whySection.reasons[].text,
 		content.waysSection.ways[].title,
 		content.waysSection.ways[].text,
-		content.waysSection.ways[].benefits[]
+		content.waysSection.ways[].benefits[],
+		content.areasSection.areas[].title,
+		content.areasSection.areas[].text,
+		content.areasSection.areas[].tasks[]
 	] match text::query($q), ${WEIGHTS.body}),
 	boost(indexable != false, 0) && boost(extractedText match text::query($q), ${WEIGHTS.body}),
 	boost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), ${WEIGHTS.body}),
@@ -136,7 +148,12 @@ const pageScore = /* groq */ `
 		content.whySection.reasons[].text,
 		content.waysSection.ways[].title,
 		content.waysSection.ways[].text,
-		content.waysSection.ways[].benefits[]
+		content.waysSection.ways[].benefits[],
+		content.areasSection.intro,
+		content.positionsSection.intro,
+		content.areasSection.areas[].title,
+		content.areasSection.areas[].text,
+		content.areasSection.areas[].tasks[]
 	] match text::query($q), ${WEIGHTS.body})
 `;
 
@@ -163,6 +180,9 @@ const searchCandidatesQuery = defineQuery(`
 	| order(_score desc) [_score != 0] [0...$limit] {
 		${searchTarget},
 		"_score": math::sum([_score]),
+		_type == 'volunteer.position' => {
+			"targets": *[_type == 'volunteerPage'] { ${searchTarget} }
+		},
 		_type == 'faq' => {
 			question,
 			"targets": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { ${searchTarget} }
@@ -222,7 +242,7 @@ const searchNewsCountQuery = defineQuery(`count(*[${newsFilter}])`);
  * The plain text of every hit a snippet is cut from. Two parts are joined with `coalesce()`,
  * because a missing part would make the whole string `null`. A TSG-Echo issue only gives its text
  * when it is indexable. The partner page gives the intros of its sections „Gründe“ and
- * „Unterstützung“.
+ * „Unterstützung“, the volunteer page those of „Gründe“ and „Bereiche“.
  *
  * @param ids - The ids of the hits that need a snippet
  * @returns The id and the text of every hit
@@ -237,6 +257,7 @@ const searchTextsQuery = defineQuery(`
 			_type in ['membership', 'echoOverview'] => pt::text(intro.text),
 			_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),
 			_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),
+			_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, ''),
 			_type == 'echo.issue' => select(indexable != false => extractedText),
 			subtitle
 		)

@@ -21,6 +21,10 @@ describe('internal link targets', () => {
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'partnerPage' });
 	});
 
+	it('offers the volunteer page', () => {
+		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'volunteerPage' });
+	});
+
 	it('offers departments and groups', () => {
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'department' });
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'group' });

@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 import { env } from '@/lib/env';
-import { ECHO_OVERVIEW_PATH, PARTNER_PAGE_PATH } from '@/utils/links';
+import { ECHO_OVERVIEW_PATH, PARTNER_PAGE_PATH, VOLUNTEER_PAGE_PATH } from '@/utils/links';
 
 interface WebhookBody {
 	_type: string;
@@ -167,13 +167,22 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 		revalidateNewsArticles();
 		revalidatePath(PARTNER_PAGE_PATH);
 	},
+	// The home page and the voices of the volunteer page quote testimonials.
 	testimonial: () => {
 		revalidatePath('/');
+		revalidatePath(VOLUNTEER_PAGE_PATH);
 	},
 	// A venue is referenced by the training times of a group, and its slug is no part of any URL.
 	venue: () => {
 		revalidatePath('/angebot');
 		revalidatePath('/angebot/[group]/[singleGroup]', 'page');
+	},
+	// Every published position appears on the volunteer page.
+	'volunteer.position': () => {
+		revalidatePath(VOLUNTEER_PAGE_PATH);
+	},
+	volunteerPage: () => {
+		revalidatePath(VOLUNTEER_PAGE_PATH);
 	},
 };
 

@@ -16,9 +16,9 @@ import { getCliClient } from 'sanity/cli';
 import {
 	buildStartContent,
 	PARTNER_PAGE_ID,
-	readDataset,
 	type SanityImageObject,
 } from './create-partner-page/start-content';
+import { readDataset } from './shared/read-dataset';
 
 const API_VERSION = '2026-10-01';
 
