@@ -245,6 +245,55 @@ describe(mergePageHits, () => {
 		});
 	});
 
+	it('turns a venue into the venue page, with its name as snippet', () => {
+		const venuePage = {
+			...NO_EXTRAS,
+			_id: 'venuePage',
+			_type: 'venuePage' as const,
+			department: null,
+			image: TANZEN.image,
+			slug: 'sportstaetten',
+			title: 'Sportstätten',
+		};
+		const [hit] = mergePageHits([
+			{
+				...NO_EXTRAS,
+				_id: 'venue-1',
+				_score: 7,
+				_type: 'venue',
+				department: null,
+				slug: null,
+				targets: [venuePage],
+				title: 'Mehrzweckhalle Irlich',
+			},
+		]);
+
+		expect(hit).toMatchObject({
+			href: '/verein/sportstaetten',
+			id: 'venuePage',
+			score: 7,
+			snippet: 'Sportstätte: Mehrzweckhalle Irlich',
+			title: 'Sportstätten',
+		});
+	});
+
+	it('drops a venue while the venue page is not published', () => {
+		expect(
+			mergePageHits([
+				{
+					...NO_EXTRAS,
+					_id: 'venue-1',
+					_score: 7,
+					_type: 'venue',
+					department: null,
+					slug: null,
+					targets: [],
+					title: 'Mehrzweckhalle Irlich',
+				},
+			]),
+		).toStrictEqual([]);
+	});
+
 	it('drops an open position while the volunteer page is not published', () => {
 		expect(
 			mergePageHits([

@@ -26,16 +26,18 @@ const SEARCH_PAGE_TYPES = [
 	'partnerPage',
 	'volunteerPage',
 	'volunteer.position',
+	'venuePage',
+	'venue',
 ] as const;
 
 /**
  * `SEARCH_PAGE_TYPES` as a GROQ array. Sanity TypeGen cannot read an array built at runtime, so the
  * list is spelled out a second time; a test keeps both in step.
  */
-const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position']`;
+const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position', 'venuePage', 'venue']`;
 
 /** The pages that list a person in their contact persons section. Group pages list theirs by team. */
-const contactPersonPageTypeList = /* groq */ `['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage']`;
+const contactPersonPageTypeList = /* groq */ `['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage', 'venuePage']`;
 
 /**
  * Everything a hit needs to become a link with a meta line and a thumbnail. The image is the one
@@ -93,6 +95,12 @@ const searchTarget = /* groq */ `
  *   searched. The volunteer page joins both terms: its first section uses the paths of the partner
  *   page's `whySection`, and the intros of its areas and open positions and the titles, texts and
  *   tasks of its areas are added. No other type has these paths, so neither term needs a guard.
+ * - The venue page is searched by the intros of its two sections, which join the lead term and the
+ *   last catch-all term. A venue (`venue`) has no page of its own either: it is a candidate found
+ *   by its name and its description, and leads to the venue page, like an open position to the
+ *   volunteer page. Its name weighs as a title and its description as a lead field, which the
+ *   existing terms already cover („Mehrzweckhalle*“ scores the venue 13 and the one group whose
+ *   description names it 3, measured on `development` on 2026-11-13).
  * - An open position (`volunteer.position`) has no page of its own. It is a candidate found by its
  *   title, like any page, and leads to the volunteer page, the way a FAQ leads to its departments.
  *   A position cannot lift the page's own score instead: `score()` refuses a match on a subquery
@@ -109,7 +117,7 @@ const pageScore = /* groq */ `
 	boost(description.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
 	boost(question match text::query($q), ${WEIGHTS.lead}),
 	boost([firstName, lastName] match text::query($q), ${WEIGHTS.lead}),
-	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro] match text::query($q), ${WEIGHTS.lead}),
+	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro, content.homeSection.intro, content.othersSection.intro] match text::query($q), ${WEIGHTS.lead}),
 	boost(answer[].children[].text match text::query($q), ${WEIGHTS.body}),
 	boost(training.trainingDescription.text[].children[].text match text::query($q), ${WEIGHTS.body}),
 	boost(content.visionSection.longVision.text[].children[].text match text::query($q), ${WEIGHTS.body}),
@@ -151,6 +159,8 @@ const pageScore = /* groq */ `
 		content.waysSection.ways[].benefits[],
 		content.areasSection.intro,
 		content.positionsSection.intro,
+		content.homeSection.intro,
+		content.othersSection.intro,
 		content.areasSection.areas[].title,
 		content.areasSection.areas[].text,
 		content.areasSection.areas[].tasks[]
@@ -182,6 +192,9 @@ const searchCandidatesQuery = defineQuery(`
 		"_score": math::sum([_score]),
 		_type == 'volunteer.position' => {
 			"targets": *[_type == 'volunteerPage'] { ${searchTarget} }
+		},
+		_type == 'venue' => {
+			"targets": *[_type == 'venuePage'] { ${searchTarget} }
 		},
 		_type == 'faq' => {
 			question,
@@ -258,6 +271,7 @@ const searchTextsQuery = defineQuery(`
 			_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),
 			_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),
 			_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, ''),
+			_type == 'venuePage' => coalesce(content.homeSection.intro, '') + ' ' + coalesce(content.othersSection.intro, ''),
 			_type == 'echo.issue' => select(indexable != false => extractedText),
 			subtitle
 		)

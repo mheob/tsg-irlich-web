@@ -64,9 +64,11 @@ describe('page list items', () => {
 			'echoOverview',
 			'partnerPage',
 			'volunteerPage',
+			'venuePage',
 			'Inhalte',
 			'TSG-Echo Ausgaben',
 			'Offene Aufgaben',
+			'Sportstätten',
 		]);
 	});
 
@@ -133,9 +135,11 @@ describe('pages missing from the layout', () => {
 			'Unterseiten',
 			'partnerPage',
 			'volunteerPage',
+			'venuePage',
 			'Inhalte',
 			'TSG-Echo Ausgaben',
 			'Offene Aufgaben',
+			'Sportstätten',
 		]);
 	});
 

@@ -257,7 +257,7 @@ describe('sanity revalidation webhook', () => {
 		]);
 	});
 
-	it('revalidates the whole offer for a group, but not the home page', async () => {
+	it('revalidates the whole offer and the venue page for a group', async () => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: 'group', slug: { current: 'herren' } }));
 
 		await POST(REQUEST);
@@ -266,6 +266,7 @@ describe('sanity revalidation webhook', () => {
 			['/angebot', 'layout'],
 			['/sitemap.xml'],
 			['/llms.txt'],
+			['/verein/sportstaetten'],
 		]);
 		expect(revalidatedPaths()).not.toContain('/');
 	});
@@ -381,13 +382,25 @@ describe('sanity revalidation webhook', () => {
 		]);
 	});
 
-	it('revalidates the group pages a venue is referenced from', async () => {
+	it('revalidates the group pages and the venue page a venue is shown on', async () => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: 'venue', slug: { current: 'turnhalle' } }));
 
 		// The venue slug is no part of any URL, so it must not end up in a revalidated path.
 		await POST(REQUEST);
 
-		expect(revalidatedPaths()).toStrictEqual(['/angebot', '/angebot/[group]/[singleGroup]']);
+		expect(revalidatedPaths()).toStrictEqual([
+			'/angebot',
+			'/angebot/[group]/[singleGroup]',
+			'/verein/sportstaetten',
+		]);
+	});
+
+	it('revalidates the venue page for the venue page itself', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'venuePage' }));
+
+		await POST(REQUEST);
+
+		expect(revalidatedPaths()).toStrictEqual(['/verein/sportstaetten']);
 	});
 
 	it('falls back to the home page for an unknown document type', async () => {

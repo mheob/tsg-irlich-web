@@ -65,10 +65,12 @@ Without the staging webhook, every content change on staging that is not read th
 
    `volunteerPage` and `volunteer.position` (WEB-190, the volunteer page at `/verein/ehrenamt` and its open positions) join the filter of both live webhooks the same way: staging after the merge into `next`, production after the release and before the editors publish the start-content draft. Without `volunteer.position` a published or withdrawn position only shows after the next deployment; without `volunteerPage` the first publish keeps the prerendered 404.
 
+   `venuePage` (WEB-149, the venue page at `/verein/sportstaetten`) joins the filter of both live webhooks the same way: staging after the merge into `next`, production after the release and before the editors publish the start-content draft. Without it the first publish keeps the prerendered 404. `venue` and `group` are already in the filter, and both now revalidate the venue page as well.
+
    `form` (WEB-278, the registration forms at `/anmeldung/[slug]`) joined both live webhooks on 2026-11-08, before the form builder was merged; until a deployment carries the route, its handler falls back to revalidating `/`. A hook without it leaves a published form's page and the sitemap on their old state.
 
    ```groq
-   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "form", "group", "groupsPage", "home", "imprint", "membership", "news-article-page", "news.article", "news.category", "newsOverview", "newsOverviewCategory", "partnerPage", "person", "privacy", "searchPage", "site-settings", "sponsors", "testimonial", "venue", "volunteer.position", "volunteerPage"]
+   _type in ["aboutUs", "accessibility", "contact", "department", "departmentsPage", "echo.issue", "echoOverview", "faq", "form", "group", "groupsPage", "home", "imprint", "membership", "news-article-page", "news.article", "news.category", "newsOverview", "newsOverviewCategory", "partnerPage", "person", "privacy", "searchPage", "site-settings", "sponsors", "testimonial", "venue", "venuePage", "volunteer.position", "volunteerPage"]
    ```
 
    **Projection** (what is sent to the webhook):
@@ -132,6 +134,7 @@ The route [`apps/web/src/app/api/revalidate/route.ts`](apps/web/src/app/api/reva
 - **Sponsors** (`_type: "sponsors"`): the home page, every article and the partner page `/verein/partner`
 - **Partner page** (`_type: "partnerPage"`): `/verein/partner`. `person` and `aboutUs` already revalidate `/verein` as a layout, which covers it
 - **Volunteer page and positions** (`_type: "volunteerPage"`, `"volunteer.position"`): `/verein/ehrenamt`, which shows every published position. `person` and `aboutUs` cover it through the `/verein` layout as well
+- **Venue page** (`_type: "venuePage"`): `/verein/sportstaetten`. A `venue` and a `group` revalidate it too, since the page shows every venue with the groups that train there
 - **Form** (`_type: "form"`): the page `/anmeldung/[slug]`, and `/sitemap.xml` through the generic `revalidateTag('form')`, since its query of the forms carries that tag
 - **Department** (`_type: "department"`): the home page, which links the departments, and the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`
 - **Group** (`_type: "group"`): the whole `/angebot` layout, `/sitemap.xml` and `/llms.txt`. The payload only carries the slug of the group, not the one of its department, so a single group path cannot be built

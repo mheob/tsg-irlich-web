@@ -85,6 +85,7 @@ describe(sitemap, () => {
 			'http://localhost:3000/verein',
 			'http://localhost:3000/verein/partner',
 			'http://localhost:3000/verein/ehrenamt',
+			'http://localhost:3000/verein/sportstaetten',
 			'http://localhost:3000/verein/echo',
 			'http://localhost:3000/kontakt',
 			'http://localhost:3000/kontakt/feedback',
@@ -120,6 +121,11 @@ describe(sitemap, () => {
 			changeFrequency: 'monthly',
 			priority: 0.6,
 			url: 'http://localhost:3000/verein/ehrenamt',
+		});
+		expect(entries[index + 2]).toStrictEqual({
+			changeFrequency: 'monthly',
+			priority: 0.6,
+			url: 'http://localhost:3000/verein/sportstaetten',
 		});
 	});
 

@@ -8,6 +8,7 @@ const INTERNAL_LINK_TARGETS: { type: string }[] = [
 	{ type: 'echoOverview' },
 	{ type: 'partnerPage' },
 	{ type: 'volunteerPage' },
+	{ type: 'venuePage' },
 	{ type: 'contact' },
 	{ type: 'departmentsPage' },
 	{ type: 'department' },

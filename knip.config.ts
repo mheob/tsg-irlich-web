@@ -24,6 +24,7 @@ const config: KnipConfig = {
 			entry: [
 				'scripts/create-e2e-form.ts',
 				'scripts/create-partner-page.ts',
+				'scripts/create-venue-page.ts',
 				'scripts/create-volunteer-page.ts',
 				'scripts/import-echo.ts',
 				'scripts/ocr-echo.ts',

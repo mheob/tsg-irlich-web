@@ -5,7 +5,12 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 import { env } from '@/lib/env';
-import { ECHO_OVERVIEW_PATH, PARTNER_PAGE_PATH, VOLUNTEER_PAGE_PATH } from '@/utils/links';
+import {
+	ECHO_OVERVIEW_PATH,
+	PARTNER_PAGE_PATH,
+	VENUE_PAGE_PATH,
+	VOLUNTEER_PAGE_PATH,
+} from '@/utils/links';
 
 interface WebhookBody {
 	_type: string;
@@ -104,7 +109,11 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	form: () => {
 		revalidatePath('/anmeldung/[slug]', 'page');
 	},
-	group: revalidateOfferRoutes,
+	// The venue page names the groups that train at a venue and their training days.
+	group: () => {
+		revalidateOfferRoutes();
+		revalidatePath(VENUE_PAGE_PATH);
+	},
 	// The groups page holds the content of every department page.
 	groupsPage: () => {
 		revalidatePath('/angebot/[group]', 'page');
@@ -173,9 +182,14 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 		revalidatePath(VOLUNTEER_PAGE_PATH);
 	},
 	// A venue is referenced by the training times of a group, and its slug is no part of any URL.
+	// The venue page shows every venue, so it is revalidated as well.
 	venue: () => {
 		revalidatePath('/angebot');
 		revalidatePath('/angebot/[group]/[singleGroup]', 'page');
+		revalidatePath(VENUE_PAGE_PATH);
+	},
+	venuePage: () => {
+		revalidatePath(VENUE_PAGE_PATH);
 	},
 	// Every published position appears on the volunteer page.
 	'volunteer.position': () => {

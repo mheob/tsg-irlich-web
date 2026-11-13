@@ -28,6 +28,12 @@ const VOLUNTEER_PAGE_TYPE = 'volunteerPage';
 /** The path of the volunteer page. */
 const VOLUNTEER_PAGE_PATH = '/verein/ehrenamt';
 
+/** The single page of the venues. Its slug is `sportstaetten`, but it lives below the club page. */
+const VENUE_PAGE_TYPE = 'venuePage';
+
+/** The path of the venue page. */
+const VENUE_PAGE_PATH = '/verein/sportstaetten';
+
 /** The document type of a department, which is served below the offer page. */
 const DEPARTMENT_TYPE = 'department';
 
@@ -78,6 +84,7 @@ const PATH_RESOLVERS = new Map<string, PathResolver>([
 	[ECHO_ISSUE_TYPE, getEchoIssuePath],
 	[PARTNER_PAGE_TYPE, () => PARTNER_PAGE_PATH],
 	[VOLUNTEER_PAGE_TYPE, () => VOLUNTEER_PAGE_PATH],
+	[VENUE_PAGE_TYPE, () => VENUE_PAGE_PATH],
 ]);
 
 /**
@@ -146,5 +153,6 @@ export {
 	getInternalHref,
 	type InternalLinkTarget,
 	PARTNER_PAGE_PATH,
+	VENUE_PAGE_PATH,
 	VOLUNTEER_PAGE_PATH,
 };

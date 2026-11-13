@@ -93,6 +93,12 @@ describe('resolving internal link targets', () => {
 		expect(getInternalHref({ _type: 'volunteerPage', slug: 'ehrenamt' })).toBe('/verein/ehrenamt');
 	});
 
+	it('resolves the venue page below the club page', () => {
+		expect(getInternalHref({ _type: 'venuePage', slug: 'sportstaetten' })).toBe(
+			'/verein/sportstaetten',
+		);
+	});
+
 	it('resolves a TSG-Echo issue below the archive', () => {
 		expect(getInternalHref({ _type: 'echo.issue', slug: 'tsg-echo-2025' })).toBe(
 			'/verein/echo/tsg-echo-2025',

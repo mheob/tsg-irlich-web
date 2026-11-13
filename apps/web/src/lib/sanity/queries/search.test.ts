@@ -46,9 +46,12 @@ const VOLUNTEER_BODY_PATHS = [
 	'content.areasSection.areas[].tasks[]',
 ] as const;
 
+/** The intros of the venue page. Its venues are searched as documents of their own. */
+const VENUE_LEAD_PATHS = ['content.homeSection.intro', 'content.othersSection.intro'] as const;
+
 const PARTNER_PATHS = [...PARTNER_LEAD_PATHS, ...PARTNER_BODY_PATHS];
 const VOLUNTEER_PATHS = [...VOLUNTEER_LEAD_PATHS, ...VOLUNTEER_BODY_PATHS];
-const PAGE_LEAD = `[${[...PARTNER_LEAD_PATHS, ...VOLUNTEER_LEAD_PATHS].join(', ')}]`;
+const PAGE_LEAD = `[${[...PARTNER_LEAD_PATHS, ...VOLUNTEER_LEAD_PATHS, ...VENUE_LEAD_PATHS].join(', ')}]`;
 const PAGE_BODY = `[${[...PARTNER_BODY_PATHS, ...VOLUNTEER_BODY_PATHS].join(', ')}]`;
 
 /** The queries the search term reaches. */
@@ -215,6 +218,8 @@ describe('search queries', () => {
 				'partnerPage',
 				'volunteerPage',
 				'volunteer.position',
+				'venuePage',
+				'venue',
 			]);
 			expect(searchCandidatesQuery).toContain(
 				`_type in [${SEARCH_PAGE_TYPES.map((type) => `'${type}'`).join(', ')}]`,
@@ -339,6 +344,24 @@ describe('search queries', () => {
 			}
 		});
 
+		// The venue page takes part in the same term, with the intros of its two sections.
+		it('score words that sit in different fields of the venue page', () => {
+			const [, everyOtherPage] = getCatchAllTerms(searchCandidatesQuery);
+			const fields = everyOtherPage.lhs.slice(1, -1).split(', ');
+
+			expect(everyOtherPage.guard).not.toContain("'venuePage'");
+			for (const path of VENUE_LEAD_PATHS) {
+				expect(fields).toContain(path);
+			}
+		});
+
+		// A venue has no page of its own: it is found by its name and leads to the venue page.
+		it('lead a venue to the venue page', () => {
+			expect(searchCandidatesQuery).toContain(
+				`_type == 'venue' => {\n\t\t\t"targets": *[_type == 'venuePage']`,
+			);
+		});
+
 		// A position has no page of its own: it is found by its title and leads to the volunteer page.
 		it('lead an open position to the volunteer page', () => {
 			expect(searchCandidatesQuery).toContain(
@@ -349,7 +372,7 @@ describe('search queries', () => {
 		// The partner page lists contact persons, so a person found by name leads there too.
 		it('lead a person to the partner page that lists them', () => {
 			expect(searchCandidatesQuery).toContain(
-				`"listedOn": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage'] && references(^._id)]`,
+				`"listedOn": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage', 'venuePage'] && references(^._id)]`,
 			);
 		});
 
@@ -379,6 +402,12 @@ describe('search queries', () => {
 		it('cut the snippet of the volunteer page from the intros of „Gründe“ and „Bereiche“', () => {
 			expect(searchTextsQuery).toContain(
 				`_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, '')`,
+			);
+		});
+
+		it('cut the snippet of the venue page from the intros of its two sections', () => {
+			expect(searchTextsQuery).toContain(
+				`_type == 'venuePage' => coalesce(content.homeSection.intro, '') + ' ' + coalesce(content.othersSection.intro, '')`,
 			);
 		});
 	});

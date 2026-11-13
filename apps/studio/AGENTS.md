@@ -26,7 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, `create-e2e-form.ts`, which seeds the e2e registration form, `create-partner-page.ts` and `create-volunteer-page.ts`, which create the start content of the partner and the volunteer page as a draft; `scripts/shared` holds what several of them use, such as `readDataset`) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, `create-e2e-form.ts`, which seeds the e2e registration form, `create-partner-page.ts`, `create-volunteer-page.ts` and `create-venue-page.ts`, which create the start content of the partner, the volunteer and the venue page as a draft; `scripts/shared` holds what several of them use, such as `readDataset` and the ids of the board) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -63,10 +63,10 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 The desk follows the areas of the website, so the editors find a page where it sits on the website and see which page lies below which. `PAGE_LAYOUT` in `structure/pages.ts` holds the upper block in the order of the website, and `getPageListItems` in `structure/sections.ts` builds it:
 
 - **Startseite**, **Mitgliedschaft**, **Kontakt** and **Suche** stand on their own.
-- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview, the partner page („Sponsoren & Partner“) and the volunteer page („Ehrenamt“) below „Unterseiten“, and the TSG-Echo issues and the open volunteer positions („Offene Aufgaben“, newest first) below „Inhalte“.
+- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview, the partner page („Sponsoren & Partner“), the volunteer page („Ehrenamt“) and the venue page („Sportstätten“) below „Unterseiten“, and the TSG-Echo issues, the open volunteer positions („Offene Aufgaben“, newest first) and the venues („Sportstätten“, by title) below „Inhalte“.
 - **Rechtliches** holds imprint, privacy and accessibility side by side, without a main page.
 
-Below a divider follow the documents several areas share (FAQ, forms, persons, sponsors, venues, testimonials), sorted by title, and below another the settings. A single page that `PAGE_LAYOUT` does not place still shows up, under „Weitere Seiten“ at the end of the upper block, so a new page cannot go missing from the desk.
+Below a divider follow the documents several areas share (FAQ, forms, persons, sponsors, testimonials), sorted by title, and below another the settings. A single page that `PAGE_LAYOUT` does not place still shows up, under „Weitere Seiten“ at the end of the upper block, so a new page cannot go missing from the desk.
 
 `SINGLE_PAGES` (same file) gives every single page its address on the website and, for a sub page, the page it sits under. `SinglePageInput` (`components/single-page-input.tsx`), which the singleton plugin registers as `form.components.input`, puts that above the form of the page: „Adresse auf der Website: /verein/echo · Unterseite von „Über uns““. It wraps every input of the studio but only acts on the root of a single page. Four pages hold what every page of one kind shares rather than a page of their own: „Alle Kategorieseiten“ (`newsOverviewCategory`), „Alle Artikelseiten“ (`news-article-page`), „Alle Abteilungsseiten“ (`groupsPage`) and „Alle Gruppenseiten“ (`singleGroupPage`). Their address has a part in brackets (`/news/[kategorie]/[artikel]`), and their `note` says that an edit applies to every page of the kind and where a single article, category, department or group is edited instead. The names avoid „Vorlage“, which the studio already uses for the templates behind „Neu“.
 
@@ -261,6 +261,29 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 - Every published position appears on the page, the newest first (`_createdAt`). The volunteer page does not list them, so a new one needs nothing but publishing.
 - Withdrawing a position means „Veröffentlichung zurücknehmen“: the document stays as a draft and can go live again later. Deleting it works as well.
 - Desk: „Verein“ → „Inhalte“ → „Offene Aufgaben“ (`getGroupVolunteer` in `structure/index.ts`), newest first; the type is kept out of the default list.
+
+## Venue page
+
+`venuePage` is the singleton behind `/verein/sportstaetten` („Sportstätten“, `schemas/single-pages/venue-page/`, WEB-149), with the fixed slug `sportstaetten`. It sits under „Verein“ after the volunteer page and is an internal link target. Besides the hero and `meta` it holds:
+
+- **Inhalte** with four sub tabs: „Heimat“ (the default section header, `venues`, exactly two references to the home venues, and the optional `turfBox` with title, text and link text), „Statistiken“ (the shared `statsField`, the same three to four numbers the club page has), „Weitere Sportanlagen“ (only the section header) and „Ansprechpartner“.
+- `venues` errors for any other number than two and for the same venue twice. The first one stands with its image on the left and carries the turf box. Every other venue appears below on its own, as a hall or a field; nothing lists them.
+- `turfBox.linkText` is required once the box has a title or a text, because the website shows the box then. An empty box is left out.
+- **Anfragen**: the address (initially `info@tsg-irlich.de`) and the subject (initially „Frage zu den Sportstätten der TSG Irlich“) of the turf box's link.
+- The equipment and the opening hours of a venue live on the venue, see [Venues](#venues).
+
+- `scripts/create-venue-page.ts` creates the start content (the texts of the prototype, the image of the Pappelstadion as hero image, the two home venues, the four numbers as the dataset stands today and the board as contact persons) as the draft `drafts.venuePage`: `pnpm --filter studio exec sanity exec scripts/create-venue-page.ts --with-user-token -- --dataset <dataset>`. Like the partner script it never publishes and never overwrites, and it writes no venue: equipment, opening hours and the type „Vereinsheim“ are set by the editors. It stops with an error when Pappelstadion or Pappelstübchen is not published in the dataset, since the draft references both.
+
+It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the partner page. Both live revalidation webhooks must list `venuePage` in their type filter (`docs/SANITY_WEBHOOK_SETUP.md`).
+
+## Venues
+
+`venue` („Sportstätte“, `schemas/documents/venue.ts`) is a hall, a field or the clubhouse. Groups name it in their training times, and the venue page `/verein/sportstaetten` (WEB-149) shows every venue.
+
+- „Art“ lists three sizes of hall, four kinds of field and, since WEB-149, „Vereinsheim“ (`clubhouse`). The web app's `TrainingTimeSection` takes its type union from the generated `Venue['type']`, so a new kind needs no change there.
+- „Ausstattung“ (`features`) is an optional list of short points (a warning above 8 points and above 48 characters). „Öffnungszeiten“ (`openingHours`) is a list of rows with „Tage“ and „Zeit“, both required, and only visible for a „Vereinsheim“. The venue page shows both for its two home venues.
+- The description appears on the venue page, which its field description says, since nothing else on the website shows it.
+- Desk: „Verein“ → „Inhalte“ → „Sportstätten“ (`getGroupVenues` in `structure/index.ts`), by title; the type is kept out of the default list.
 
 ## Content migrations
 
