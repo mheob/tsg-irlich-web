@@ -149,7 +149,6 @@ function createPublishWithSlugHistoryAction(
 
 	// The studio calls an action as a hook and never renders it, so there is no fast refresh to keep
 	// working, and it needs the original action and the pending ids from this closure.
-	// oxlint-disable-next-line react/only-export-components
 	const PublishWithSlugHistoryAction: DocumentActionComponent = (props) => {
 		const original = publishAction(props);
 		const client = useClient({ apiVersion: SLUG_HISTORY_API_VERSION });

@@ -56,10 +56,9 @@ const report = await runOcrSwap(
 		store: createSwapStore(client),
 		textLayer: {
 			exists: async (file) =>
-				access(file).then(
-					() => true,
-					() => false,
-				),
+				access(file)
+					.then(() => true)
+					.catch(() => false),
 			folder: options.folder,
 			makeDirectory: async (directory) => {
 				await mkdir(directory, { recursive: true });

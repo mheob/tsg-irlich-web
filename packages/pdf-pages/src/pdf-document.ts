@@ -35,10 +35,9 @@ function getDefaultDataDir(): string {
  * @throws {Error} When the directory does not hold the pdf.js data files.
  */
 async function getDataOptions(dataDir: string): Promise<PdfjsDataOptions> {
-	const found = await access(path.join(dataDir, PROBE_FILE)).then(
-		() => true,
-		() => false,
-	);
+	const found = await access(path.join(dataDir, PROBE_FILE))
+		.then(() => true)
+		.catch(() => false);
 	if (!found) {
 		throw new Error(`Die Daten von pdf.js fehlen unter ${dataDir}.`);
 	}

@@ -16,7 +16,7 @@ set -euo pipefail
 # baseline that fails its comparison. A change smaller than `maxDiffPixelRatio` passes, so its
 # baseline stays as it was; `--update-snapshots=all` rewrites every one.
 
-readonly IMAGE='mcr.microsoft.com/playwright:v1.64.1-noble@sha256:47b510dd9230bf0b9bfc9b20102241e577ea7a99334ab4c3ca19f19770e9b8ea'
+readonly IMAGE='mcr.microsoft.com/playwright:v1.65.0-noble@sha256:9beb546099e11f52d62e505537914870e01a67e0e6b00ae41da4775324e73dbe'
 readonly VOLUME_PREFIX='tsg-irlich-e2e'
 # `pwuser` is the image's own unprivileged account and the same UID the CI job runs as, so Chromium
 # keeps its sandbox in both places.
