@@ -266,6 +266,13 @@ export type VolunteerPageReference = {
   [internalGroqTypeReferenceTo]?: "volunteerPage";
 };
 
+export type VenuePageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "venuePage";
+};
+
 export type ContactReference = {
   _ref: string;
   _type: "reference";
@@ -362,6 +369,7 @@ export type BlockContent = {
             | EchoOverviewReference
             | PartnerPageReference
             | VolunteerPageReference
+            | VenuePageReference
             | ContactReference
             | DepartmentsPageReference
             | DepartmentReference
@@ -438,6 +446,7 @@ export type NavigationLink = {
     | EchoOverviewReference
     | PartnerPageReference
     | VolunteerPageReference
+    | VenuePageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -488,6 +497,7 @@ export type MainNavigationLink = {
     | EchoOverviewReference
     | PartnerPageReference
     | VolunteerPageReference
+    | VenuePageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -510,6 +520,7 @@ export type InternalLink = {
     | EchoOverviewReference
     | PartnerPageReference
     | VolunteerPageReference
+    | VenuePageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -986,6 +997,7 @@ export type Faq = {
             | EchoOverviewReference
             | PartnerPageReference
             | VolunteerPageReference
+            | VenuePageReference
             | ContactReference
             | DepartmentsPageReference
             | DepartmentReference
@@ -1535,6 +1547,46 @@ export type Contact = {
     >;
     contactPersonsSection: ContactPersonsSection;
   };
+};
+
+export type VenuePage = {
+  _id: string;
+  _type: "venuePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  heroImage: ExtendedImage;
+  content: {
+    homeSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      venues: Array<
+        {
+          _key: string;
+        } & VenueReference
+      >;
+      turfBox?: {
+        title?: string;
+        text?: string;
+        linkText?: string;
+      };
+    };
+    othersSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+    };
+    contactPersonsSection: ContactPersonsSection;
+  };
+  inquiry: {
+    email: string;
+    subject: string;
+  };
+  meta?: MetaFields;
 };
 
 export type TestimonialReference = {
@@ -2149,6 +2201,7 @@ export type AllSanitySchemaTypes =
   | EchoOverviewReference
   | PartnerPageReference
   | VolunteerPageReference
+  | VenuePageReference
   | ContactReference
   | DepartmentsPageReference
   | DepartmentReference
@@ -2219,6 +2272,7 @@ export type AllSanitySchemaTypes =
   | Department
   | DepartmentsPage
   | Contact
+  | VenuePage
   | TestimonialReference
   | VolunteerPage
   | PartnerPage
@@ -2348,6 +2402,7 @@ export type DepartmentPageQueryResult = {
                   | NewsOverviewReference
                   | PartnerPageReference
                   | PrivacyReference
+                  | VenuePageReference
                   | VolunteerPageReference;
                 _type: "internalLink";
                 _key: string;
@@ -2438,6 +2493,12 @@ export type DepartmentPageQueryResult = {
                     }
                   | {
                       _type: "privacy";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "venuePage";
                       slug: string | null;
                       category: null;
                       department: null;
@@ -3892,6 +3953,12 @@ export type MainNavigationQueryResult = {
               department: null;
             }
           | {
+              _type: "venuePage";
+              slug: string | null;
+              category: null;
+              department: null;
+            }
+          | {
               _type: "volunteerPage";
               slug: string | null;
               category: null;
@@ -4007,6 +4074,12 @@ export type MainNavigationQueryResult = {
                     department: null;
                   }
                 | {
+                    _type: "venuePage";
+                    slug: string | null;
+                    category: null;
+                    department: null;
+                  }
+                | {
                     _type: "volunteerPage";
                     slug: string | null;
                     category: null;
@@ -4075,6 +4148,7 @@ export type AboutUsPageQueryResult = {
                           | NewsOverviewReference
                           | PartnerPageReference
                           | PrivacyReference
+                          | VenuePageReference
                           | VolunteerPageReference;
                         _type: "internalLink";
                         _key: string;
@@ -4170,6 +4244,12 @@ export type AboutUsPageQueryResult = {
                               department: null;
                             }
                           | {
+                              _type: "venuePage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
+                            }
+                          | {
                               _type: "volunteerPage";
                               slug: string | null;
                               category: null;
@@ -4235,6 +4315,7 @@ export type AboutUsPageQueryResult = {
                             | NewsOverviewReference
                             | PartnerPageReference
                             | PrivacyReference
+                            | VenuePageReference
                             | VolunteerPageReference;
                           _type: "internalLink";
                           _key: string;
@@ -4330,6 +4411,12 @@ export type AboutUsPageQueryResult = {
                                 department: null;
                               }
                             | {
+                                _type: "venuePage";
+                                slug: string | null;
+                                category: null;
+                                department: null;
+                              }
+                            | {
                                 _type: "volunteerPage";
                                 slug: string | null;
                                 category: null;
@@ -4389,6 +4476,7 @@ export type AboutUsPageQueryResult = {
                           | NewsOverviewReference
                           | PartnerPageReference
                           | PrivacyReference
+                          | VenuePageReference
                           | VolunteerPageReference;
                         _type: "internalLink";
                         _key: string;
@@ -4479,6 +4567,12 @@ export type AboutUsPageQueryResult = {
                             }
                           | {
                               _type: "privacy";
+                              slug: string | null;
+                              category: null;
+                              department: null;
+                            }
+                          | {
+                              _type: "venuePage";
                               slug: string | null;
                               category: null;
                               department: null;
@@ -4578,6 +4672,7 @@ export type AccessibilityPageQueryResult = {
                       | NewsOverviewReference
                       | PartnerPageReference
                       | PrivacyReference
+                      | VenuePageReference
                       | VolunteerPageReference;
                     _type: "internalLink";
                     _key: string;
@@ -4668,6 +4763,12 @@ export type AccessibilityPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "venuePage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -5088,6 +5189,12 @@ export type ImprintPageQueryResult = {
           department: null;
         }
       | {
+          _type: "venuePage";
+          slug: string | null;
+          category: null;
+          department: null;
+        }
+      | {
           _type: "volunteerPage";
           slug: string | null;
           category: null;
@@ -5154,6 +5261,7 @@ export type MembershipPageQueryResult = {
                         | NewsOverviewReference
                         | PartnerPageReference
                         | PrivacyReference
+                        | VenuePageReference
                         | VolunteerPageReference;
                       _type: "internalLink";
                       _key: string;
@@ -5244,6 +5352,12 @@ export type MembershipPageQueryResult = {
                           }
                         | {
                             _type: "privacy";
+                            slug: string | null;
+                            category: null;
+                            department: null;
+                          }
+                        | {
+                            _type: "venuePage";
                             slug: string | null;
                             category: null;
                             department: null;
@@ -5407,6 +5521,7 @@ export type NewsArticleContentQueryResult = {
                           | NewsOverviewReference
                           | PartnerPageReference
                           | PrivacyReference
+                          | VenuePageReference
                           | VolunteerPageReference;
                         _type: "internalLink";
                         _key: string;
@@ -5502,6 +5617,12 @@ export type NewsArticleContentQueryResult = {
                               department: null;
                             }
                           | {
+                              _type: "venuePage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
+                            }
+                          | {
                               _type: "volunteerPage";
                               slug: string | null;
                               category: null;
@@ -5575,6 +5696,7 @@ export type NewsArticleContentQueryResult = {
                                 | NewsOverviewReference
                                 | PartnerPageReference
                                 | PrivacyReference
+                                | VenuePageReference
                                 | VolunteerPageReference;
                               _type: "internalLink";
                               _key: string;
@@ -5665,6 +5787,12 @@ export type NewsArticleContentQueryResult = {
                                   }
                                 | {
                                     _type: "privacy";
+                                    slug: string | null;
+                                    category: null;
+                                    department: null;
+                                  }
+                                | {
+                                    _type: "venuePage";
                                     slug: string | null;
                                     category: null;
                                     department: null;
@@ -6306,6 +6434,7 @@ export type PrivacyPageQueryResult = {
                       | NewsOverviewReference
                       | PartnerPageReference
                       | PrivacyReference
+                      | VenuePageReference
                       | VolunteerPageReference;
                     _type: "internalLink";
                     _key: string;
@@ -6396,6 +6525,12 @@ export type PrivacyPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "venuePage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -6454,6 +6589,7 @@ export type PrivacyPageQueryResult = {
                       | NewsOverviewReference
                       | PartnerPageReference
                       | PrivacyReference
+                      | VenuePageReference
                       | VolunteerPageReference;
                     _type: "internalLink";
                     _key: string;
@@ -6544,6 +6680,12 @@ export type PrivacyPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "venuePage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -7252,6 +7394,12 @@ export type SearchPageQueryResult = {
                 }
               | {
                   _type: "privacy";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "venuePage";
                   slug: string | null;
                   category: null;
                   department: null;

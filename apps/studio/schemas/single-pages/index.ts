@@ -14,6 +14,7 @@ import partnerPage from './partner-page';
 import privacyPage from './privacy';
 import searchPage from './search-page';
 import singleGroupPage from './single-group';
+import venuePage from './venue-page';
 import volunteerPage from './volunteer-page';
 
 /**
@@ -37,6 +38,7 @@ const singlePages = [
 	privacyPage,
 	searchPage,
 	singleGroupPage,
+	venuePage,
 	volunteerPage,
 ];
 

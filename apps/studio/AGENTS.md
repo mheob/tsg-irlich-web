@@ -63,7 +63,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 The desk follows the areas of the website, so the editors find a page where it sits on the website and see which page lies below which. `PAGE_LAYOUT` in `structure/pages.ts` holds the upper block in the order of the website, and `getPageListItems` in `structure/sections.ts` builds it:
 
 - **Startseite**, **Mitgliedschaft**, **Kontakt** and **Suche** stand on their own.
-- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview, the partner page („Sponsoren & Partner“) and the volunteer page („Ehrenamt“) below „Unterseiten“, and the TSG-Echo issues, the open volunteer positions („Offene Aufgaben“, newest first) and the venues („Sportstätten“, by title) below „Inhalte“.
+- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview, the partner page („Sponsoren & Partner“), the volunteer page („Ehrenamt“) and the venue page („Sportstätten“) below „Unterseiten“, and the TSG-Echo issues, the open volunteer positions („Offene Aufgaben“, newest first) and the venues („Sportstätten“, by title) below „Inhalte“.
 - **Rechtliches** holds imprint, privacy and accessibility side by side, without a main page.
 
 Below a divider follow the documents several areas share (FAQ, forms, persons, sponsors, testimonials), sorted by title, and below another the settings. A single page that `PAGE_LAYOUT` does not place still shows up, under „Weitere Seiten“ at the end of the upper block, so a new page cannot go missing from the desk.
@@ -261,6 +261,18 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 - Every published position appears on the page, the newest first (`_createdAt`). The volunteer page does not list them, so a new one needs nothing but publishing.
 - Withdrawing a position means „Veröffentlichung zurücknehmen“: the document stays as a draft and can go live again later. Deleting it works as well.
 - Desk: „Verein“ → „Inhalte“ → „Offene Aufgaben“ (`getGroupVolunteer` in `structure/index.ts`), newest first; the type is kept out of the default list.
+
+## Venue page
+
+`venuePage` is the singleton behind `/verein/sportstaetten` („Sportstätten“, `schemas/single-pages/venue-page/`, WEB-149), with the fixed slug `sportstaetten`. It sits under „Verein“ after the volunteer page and is an internal link target. Besides the hero and `meta` it holds:
+
+- **Inhalte** with three sub tabs: „Heimat“ (the default section header, `venues`, exactly two references to the home venues, and the optional `turfBox` with title, text and link text), „Weitere Sportanlagen“ (only the section header) and „Ansprechpartner“.
+- `venues` errors for any other number than two and for the same venue twice. The first one stands with its image on the left and carries the turf box. Every other venue appears below on its own, as a hall or a field; nothing lists them.
+- `turfBox.linkText` is required once the box has a title or a text, because the website shows the box then. An empty box is left out.
+- **Anfragen**: the address (initially `info@tsg-irlich.de`) and the subject (initially „Frage zu den Sportstätten der TSG Irlich“) of the turf box's link.
+- The equipment and the opening hours of a venue live on the venue, see [Venues](#venues).
+
+It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the partner page. Both live revalidation webhooks must list `venuePage` in their type filter (`docs/SANITY_WEBHOOK_SETUP.md`).
 
 ## Venues
 

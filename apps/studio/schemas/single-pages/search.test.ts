@@ -12,6 +12,7 @@ import newsOverviewPage from './news-overview';
 import offerPage from './offer';
 import partnerPage from './partner-page';
 import privacyPage from './privacy';
+import venuePage from './venue-page';
 import volunteerPage from './volunteer-page';
 
 interface SinglePage {
@@ -32,6 +33,7 @@ const PAGES = [
 	offerPage,
 	partnerPage,
 	volunteerPage,
+	venuePage,
 	privacyPage,
 ] as unknown as SinglePage[];
 

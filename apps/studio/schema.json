@@ -1359,6 +1359,36 @@
 	},
 	{
 		"type": "type",
+		"name": "venuePage.reference",
+		"value": {
+			"type": "object",
+			"attributes": {
+				"_ref": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string"
+					}
+				},
+				"_type": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "string",
+						"value": "reference"
+					}
+				},
+				"_weak": {
+					"type": "objectAttribute",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": true
+				}
+			},
+			"dereferencesTo": "venuePage"
+		}
+	},
+	{
+		"type": "type",
 		"name": "contact.reference",
 		"value": {
 			"type": "object",
@@ -1833,6 +1863,10 @@
 																	},
 																	{
 																		"type": "inline",
+																		"name": "venuePage.reference"
+																	},
+																	{
+																		"type": "inline",
 																		"name": "contact.reference"
 																	},
 																	{
@@ -2252,6 +2286,10 @@
 							},
 							{
 								"type": "inline",
+								"name": "venuePage.reference"
+							},
+							{
+								"type": "inline",
 								"name": "contact.reference"
 							},
 							{
@@ -2515,6 +2553,10 @@
 							},
 							{
 								"type": "inline",
+								"name": "venuePage.reference"
+							},
+							{
+								"type": "inline",
 								"name": "contact.reference"
 							},
 							{
@@ -2608,6 +2650,10 @@
 							{
 								"type": "inline",
 								"name": "volunteerPage.reference"
+							},
+							{
+								"type": "inline",
+								"name": "venuePage.reference"
 							},
 							{
 								"type": "inline",
@@ -5524,6 +5570,10 @@
 																{
 																	"type": "inline",
 																	"name": "volunteerPage.reference"
+																},
+																{
+																	"type": "inline",
+																	"name": "venuePage.reference"
 																},
 																{
 																	"type": "inline",
@@ -8574,6 +8624,233 @@
 					}
 				},
 				"optional": false
+			}
+		}
+	},
+	{
+		"name": "venuePage",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "venuePage"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"slug": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "slug"
+				},
+				"optional": true
+			},
+			"title": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"subtitle": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"heroImage": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "extendedImage"
+				},
+				"optional": false
+			},
+			"content": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "object",
+					"attributes": {
+						"homeSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									},
+									"venues": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "array",
+											"of": {
+												"type": "object",
+												"attributes": {
+													"_key": {
+														"type": "objectAttribute",
+														"value": {
+															"type": "string"
+														}
+													}
+												},
+												"rest": {
+													"type": "inline",
+													"name": "venue.reference"
+												}
+											}
+										},
+										"optional": false
+									},
+									"turfBox": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "object",
+											"attributes": {
+												"title": {
+													"type": "objectAttribute",
+													"value": {
+														"type": "string"
+													},
+													"optional": true
+												},
+												"text": {
+													"type": "objectAttribute",
+													"value": {
+														"type": "string"
+													},
+													"optional": true
+												},
+												"linkText": {
+													"type": "objectAttribute",
+													"value": {
+														"type": "string"
+													},
+													"optional": true
+												}
+											}
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
+						"othersSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "object",
+								"attributes": {
+									"title": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"subtitle": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": false
+									},
+									"intro": {
+										"type": "objectAttribute",
+										"value": {
+											"type": "string"
+										},
+										"optional": true
+									}
+								}
+							},
+							"optional": true
+						},
+						"contactPersonsSection": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "inline",
+								"name": "contactPersonsSection"
+							},
+							"optional": false
+						}
+					}
+				},
+				"optional": false
+			},
+			"inquiry": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "object",
+					"attributes": {
+						"email": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "string"
+							},
+							"optional": false
+						},
+						"subject": {
+							"type": "objectAttribute",
+							"value": {
+								"type": "string"
+							},
+							"optional": false
+						}
+					}
+				},
+				"optional": false
+			},
+			"meta": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "inline",
+					"name": "metaFields"
+				},
+				"optional": true
 			}
 		}
 	},
