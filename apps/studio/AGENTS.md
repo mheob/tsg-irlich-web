@@ -26,7 +26,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 | Path | Contains |
 | --- | --- |
 | `schemas/documents` | editable document types (`news.article`, `person`, `department`, `group`, …) |
-| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, `create-e2e-form.ts`, which seeds the e2e registration form, and `create-partner-page.ts`, which creates the partner page's start content as a draft) |
+| `scripts` | one-off scripts run through `sanity exec` (the TSG-Echo archive import and text layer, `create-e2e-form.ts`, which seeds the e2e registration form, `create-partner-page.ts` and `create-volunteer-page.ts`, which create the start content of the partner and the volunteer page as a draft; `scripts/shared` holds what several of them use, such as `readDataset`) |
 | `schemas/single-pages` | one-off page documents (home, contact, news overview, …) |
 | `schemas/singletons` | global documents such as the site settings |
 | `schemas/objects` | reusable objects (links, images, stats, …) |
@@ -250,6 +250,7 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 - **Anfragen**: the address (initially `info@tsg-irlich.de`) and the subject (initially „Ehrenamt bei der TSG Irlich“). A position's button appends its title to the subject.
 - The cards pick their `icon` from `PAGE_ICONS`, like the partner page. `reasons` warns at another number than six, `steps` at another number than three; the areas take any number.
 - The open positions are documents of their own, see [Volunteer positions](#volunteer-positions).
+- `scripts/create-volunteer-page.ts` creates the start content (the texts of the prototype, the hero image of `aboutUs`, the card images of the groups `1-mannschaft` and `a-jugend`, the fallback and the first vision image of the site settings for the areas, the board as contact persons, no voices) as the draft `drafts.volunteerPage`: `pnpm --filter studio exec sanity exec scripts/create-volunteer-page.ts --with-user-token -- --dataset <dataset>`. Like the partner script it never publishes and never overwrites. `--with-placeholder-positions` also writes the four positions of the prototype as drafts (`drafts.volunteer-position-placeholder-<n>`, with `createIfNotExists`) for `development`, the e2e fixtures and screenshots; with `--dataset production` the script refuses it before writing anything.
 
 It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the partner page. Both live revalidation webhooks must list `volunteerPage` and `volunteer.position` in their type filter (`docs/SANITY_WEBHOOK_SETUP.md`).
 

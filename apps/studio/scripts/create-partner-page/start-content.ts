@@ -1,7 +1,3 @@
-import { parseArgs } from 'node:util';
-
-const SEPARATOR = '--';
-
 const PARTNER_PAGE_ID = 'drafts.partnerPage';
 
 /** The people of the PR team, in the order the page lists them. */
@@ -144,26 +140,6 @@ function buildStartContent(heroImage: SanityImageObject | undefined): PartnerPag
 	};
 }
 
-/**
- * Reads the dataset the start content is written to. It has to be named, since the studio's `.env`
- * points the CLI at `production`.
- *
- * @param argv - The arguments after the script path, with or without the leading `--`.
- * @returns The dataset.
- * @throws {Error} For a missing dataset or an unknown option.
- */
-function readDataset(argv: readonly string[]): string {
-	const { values } = parseArgs({
-		args: argv[0] === SEPARATOR ? argv.slice(1) : [...argv],
-		options: { dataset: { type: 'string' } },
-		strict: true,
-	});
-	if (!values.dataset) {
-		throw new Error('--dataset fehlt, z. B. --dataset development.');
-	}
-	return values.dataset;
-}
-
 /** The image object of `aboutUs.heroImage`: the asset reference plus hotspot and crop if set. */
 interface SanityImageObject {
 	_type: string;
@@ -209,5 +185,5 @@ interface PartnerPageDraft {
 	title: string;
 }
 
-export { buildStartContent, PARTNER_PAGE_ID, readDataset };
+export { buildStartContent, PARTNER_PAGE_ID };
 export type { PartnerPageDraft, SanityImageObject };

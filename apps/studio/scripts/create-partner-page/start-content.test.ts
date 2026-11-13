@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vite-plus/test';
 
 import { PAGE_ICONS } from '@tsgi-web/shared/page-icons';
 
-import { buildStartContent, readDataset } from './start-content';
+import { buildStartContent } from './start-content';
 
 const HERO_IMAGE = {
 	_type: 'extendedImage',
@@ -88,19 +88,5 @@ describe('the start content of the partner page', () => {
 	it('leaves the hero image out when there is none', () => {
 		// oxlint-disable-next-line unicorn/no-useless-undefined
 		expect('heroImage' in buildStartContent(undefined)).toBe(false);
-	});
-});
-
-describe('the dataset of the start content', () => {
-	it('reads the dataset after the separator of sanity exec', () => {
-		expect(readDataset(['--', '--dataset', 'production'])).toBe('production');
-	});
-
-	it('reads the dataset without a separator', () => {
-		expect(readDataset(['--dataset', 'development'])).toBe('development');
-	});
-
-	it('refuses to guess a dataset', () => {
-		expect(() => readDataset([])).toThrow('--dataset fehlt, z. B. --dataset development.');
 	});
 });
