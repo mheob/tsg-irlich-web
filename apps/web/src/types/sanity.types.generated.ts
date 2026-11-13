@@ -259,6 +259,13 @@ export type PartnerPageReference = {
   [internalGroqTypeReferenceTo]?: "partnerPage";
 };
 
+export type VolunteerPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "volunteerPage";
+};
+
 export type ContactReference = {
   _ref: string;
   _type: "reference";
@@ -354,6 +361,7 @@ export type BlockContent = {
             | AboutUsReference
             | EchoOverviewReference
             | PartnerPageReference
+            | VolunteerPageReference
             | ContactReference
             | DepartmentsPageReference
             | DepartmentReference
@@ -429,6 +437,7 @@ export type NavigationLink = {
     | AboutUsReference
     | EchoOverviewReference
     | PartnerPageReference
+    | VolunteerPageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -478,6 +487,7 @@ export type MainNavigationLink = {
     | AboutUsReference
     | EchoOverviewReference
     | PartnerPageReference
+    | VolunteerPageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -499,6 +509,7 @@ export type InternalLink = {
     | AboutUsReference
     | EchoOverviewReference
     | PartnerPageReference
+    | VolunteerPageReference
     | ContactReference
     | DepartmentsPageReference
     | DepartmentReference
@@ -966,6 +977,7 @@ export type Faq = {
             | AboutUsReference
             | EchoOverviewReference
             | PartnerPageReference
+            | VolunteerPageReference
             | ContactReference
             | DepartmentsPageReference
             | DepartmentReference
@@ -1517,6 +1529,127 @@ export type Contact = {
   };
 };
 
+export type TestimonialReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "testimonial";
+};
+
+export type VolunteerPage = {
+  _id: string;
+  _type: "volunteerPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  heroImage: ExtendedImage;
+  content: {
+    whySection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      cta?: string;
+      reasons?: Array<{
+        title: string;
+        text: string;
+        icon:
+          | "map-pin"
+          | "trending-up"
+          | "heart-handshake"
+          | "handshake"
+          | "shirt"
+          | "fence"
+          | "globe"
+          | "gift"
+          | "trophy"
+          | "megaphone"
+          | "users"
+          | "heart"
+          | "star"
+          | "graduation-cap"
+          | "lightbulb"
+          | "award"
+          | "dumbbell"
+          | "flag"
+          | "building-2"
+          | "party-popper";
+        _type: "volunteerReason";
+        _key: string;
+      }>;
+    };
+    voicesSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      testimonials?: Array<
+        {
+          _key: string;
+        } & TestimonialReference
+      >;
+    };
+    areasSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      areas?: Array<{
+        title: string;
+        text: string;
+        image: ExtendedImage;
+        icon:
+          | "map-pin"
+          | "trending-up"
+          | "heart-handshake"
+          | "handshake"
+          | "shirt"
+          | "fence"
+          | "globe"
+          | "gift"
+          | "trophy"
+          | "megaphone"
+          | "users"
+          | "heart"
+          | "star"
+          | "graduation-cap"
+          | "lightbulb"
+          | "award"
+          | "dumbbell"
+          | "flag"
+          | "building-2"
+          | "party-popper";
+        tasks?: Array<string>;
+        _type: "volunteerArea";
+        _key: string;
+      }>;
+    };
+    positionsSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      steps?: Array<{
+        title: string;
+        text: string;
+        _type: "volunteerStep";
+        _key: string;
+      }>;
+      tasksHeading: string;
+      profileHeading: string;
+      offerHeading: string;
+      cta: string;
+      otherTitle?: string;
+      otherText?: string;
+    };
+    contactPersonsSection: ContactPersonsSection;
+  };
+  inquiry: {
+    email: string;
+    subject: string;
+  };
+  meta?: MetaFields;
+};
+
 export type PartnerPage = {
   _id: string;
   _type: "partnerPage";
@@ -1621,13 +1754,6 @@ export type EchoOverview = {
   subtitle: string;
   intro?: SimpleBlockContent;
   meta?: MetaFields;
-};
-
-export type TestimonialReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "testimonial";
 };
 
 export type Home = {
@@ -2014,6 +2140,7 @@ export type AllSanitySchemaTypes =
   | AboutUsReference
   | EchoOverviewReference
   | PartnerPageReference
+  | VolunteerPageReference
   | ContactReference
   | DepartmentsPageReference
   | DepartmentReference
@@ -2084,9 +2211,10 @@ export type AllSanitySchemaTypes =
   | Department
   | DepartmentsPage
   | Contact
+  | TestimonialReference
+  | VolunteerPage
   | PartnerPage
   | EchoOverview
-  | TestimonialReference
   | Home
   | Author
   | SanityAssistInstructionTask
@@ -2211,7 +2339,8 @@ export type DepartmentPageQueryResult = {
                   | NewsCategoryReference
                   | NewsOverviewReference
                   | PartnerPageReference
-                  | PrivacyReference;
+                  | PrivacyReference
+                  | VolunteerPageReference;
                 _type: "internalLink";
                 _key: string;
                 target:
@@ -2301,6 +2430,12 @@ export type DepartmentPageQueryResult = {
                     }
                   | {
                       _type: "privacy";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "volunteerPage";
                       slug: string | null;
                       category: null;
                       department: null;
@@ -3748,6 +3883,12 @@ export type MainNavigationQueryResult = {
               category: null;
               department: null;
             }
+          | {
+              _type: "volunteerPage";
+              slug: string | null;
+              category: null;
+              department: null;
+            }
           | null;
         hasTwoColumns: null;
         children: Array<never>;
@@ -3857,6 +3998,12 @@ export type MainNavigationQueryResult = {
                     category: null;
                     department: null;
                   }
+                | {
+                    _type: "volunteerPage";
+                    slug: string | null;
+                    category: null;
+                    department: null;
+                  }
                 | null;
               description: string | null;
             }>
@@ -3919,7 +4066,8 @@ export type AboutUsPageQueryResult = {
                           | NewsCategoryReference
                           | NewsOverviewReference
                           | PartnerPageReference
-                          | PrivacyReference;
+                          | PrivacyReference
+                          | VolunteerPageReference;
                         _type: "internalLink";
                         _key: string;
                         target:
@@ -4012,6 +4160,12 @@ export type AboutUsPageQueryResult = {
                               slug: string | null;
                               category: null;
                               department: null;
+                            }
+                          | {
+                              _type: "volunteerPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
                             };
                       }
                   >;
@@ -4072,7 +4226,8 @@ export type AboutUsPageQueryResult = {
                             | NewsCategoryReference
                             | NewsOverviewReference
                             | PartnerPageReference
-                            | PrivacyReference;
+                            | PrivacyReference
+                            | VolunteerPageReference;
                           _type: "internalLink";
                           _key: string;
                           target:
@@ -4165,6 +4320,12 @@ export type AboutUsPageQueryResult = {
                                 slug: string | null;
                                 category: null;
                                 department: null;
+                              }
+                            | {
+                                _type: "volunteerPage";
+                                slug: string | null;
+                                category: null;
+                                department: null;
                               };
                         }
                     >;
@@ -4219,7 +4380,8 @@ export type AboutUsPageQueryResult = {
                           | NewsCategoryReference
                           | NewsOverviewReference
                           | PartnerPageReference
-                          | PrivacyReference;
+                          | PrivacyReference
+                          | VolunteerPageReference;
                         _type: "internalLink";
                         _key: string;
                         target:
@@ -4312,6 +4474,12 @@ export type AboutUsPageQueryResult = {
                               slug: string | null;
                               category: null;
                               department: null;
+                            }
+                          | {
+                              _type: "volunteerPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
                             };
                       }
                   >;
@@ -4401,7 +4569,8 @@ export type AccessibilityPageQueryResult = {
                       | NewsCategoryReference
                       | NewsOverviewReference
                       | PartnerPageReference
-                      | PrivacyReference;
+                      | PrivacyReference
+                      | VolunteerPageReference;
                     _type: "internalLink";
                     _key: string;
                     target:
@@ -4491,6 +4660,12 @@ export type AccessibilityPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "volunteerPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -4903,6 +5078,12 @@ export type ImprintPageQueryResult = {
           slug: string | null;
           category: null;
           department: null;
+        }
+      | {
+          _type: "volunteerPage";
+          slug: string | null;
+          category: null;
+          department: null;
         };
   };
   responsible: string;
@@ -4964,7 +5145,8 @@ export type MembershipPageQueryResult = {
                         | NewsCategoryReference
                         | NewsOverviewReference
                         | PartnerPageReference
-                        | PrivacyReference;
+                        | PrivacyReference
+                        | VolunteerPageReference;
                       _type: "internalLink";
                       _key: string;
                       target:
@@ -5054,6 +5236,12 @@ export type MembershipPageQueryResult = {
                           }
                         | {
                             _type: "privacy";
+                            slug: string | null;
+                            category: null;
+                            department: null;
+                          }
+                        | {
+                            _type: "volunteerPage";
                             slug: string | null;
                             category: null;
                             department: null;
@@ -5210,7 +5398,8 @@ export type NewsArticleContentQueryResult = {
                           | NewsCategoryReference
                           | NewsOverviewReference
                           | PartnerPageReference
-                          | PrivacyReference;
+                          | PrivacyReference
+                          | VolunteerPageReference;
                         _type: "internalLink";
                         _key: string;
                         target:
@@ -5303,6 +5492,12 @@ export type NewsArticleContentQueryResult = {
                               slug: string | null;
                               category: null;
                               department: null;
+                            }
+                          | {
+                              _type: "volunteerPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
                             };
                       }
                   >;
@@ -5371,7 +5566,8 @@ export type NewsArticleContentQueryResult = {
                                 | NewsCategoryReference
                                 | NewsOverviewReference
                                 | PartnerPageReference
-                                | PrivacyReference;
+                                | PrivacyReference
+                                | VolunteerPageReference;
                               _type: "internalLink";
                               _key: string;
                               target:
@@ -5461,6 +5657,12 @@ export type NewsArticleContentQueryResult = {
                                   }
                                 | {
                                     _type: "privacy";
+                                    slug: string | null;
+                                    category: null;
+                                    department: null;
+                                  }
+                                | {
+                                    _type: "volunteerPage";
                                     slug: string | null;
                                     category: null;
                                     department: null;
@@ -6087,7 +6289,8 @@ export type PrivacyPageQueryResult = {
                       | NewsCategoryReference
                       | NewsOverviewReference
                       | PartnerPageReference
-                      | PrivacyReference;
+                      | PrivacyReference
+                      | VolunteerPageReference;
                     _type: "internalLink";
                     _key: string;
                     target:
@@ -6177,6 +6380,12 @@ export type PrivacyPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "volunteerPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -6228,7 +6437,8 @@ export type PrivacyPageQueryResult = {
                       | NewsCategoryReference
                       | NewsOverviewReference
                       | PartnerPageReference
-                      | PrivacyReference;
+                      | PrivacyReference
+                      | VolunteerPageReference;
                     _type: "internalLink";
                     _key: string;
                     target:
@@ -6318,6 +6528,12 @@ export type PrivacyPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "volunteerPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -6827,6 +7043,12 @@ export type SearchPageQueryResult = {
                 }
               | {
                   _type: "privacy";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "volunteerPage";
                   slug: string | null;
                   category: null;
                   department: null;

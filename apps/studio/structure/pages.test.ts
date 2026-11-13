@@ -40,6 +40,7 @@ describe('single pages', () => {
 		expect(subPages).toStrictEqual([
 			{ parentPath: '/verein', path: '/verein/echo' },
 			{ parentPath: '/verein', path: '/verein/partner' },
+			{ parentPath: '/verein', path: '/verein/ehrenamt' },
 		]);
 	});
 
@@ -57,6 +58,13 @@ describe('finding a single page', () => {
 		expect(findSinglePage('partnerPage')).toStrictEqual({
 			parent: 'aboutUs',
 			path: '/verein/partner',
+		});
+	});
+
+	it('finds the place of the volunteer page', () => {
+		expect(findSinglePage('volunteerPage')).toStrictEqual({
+			parent: 'aboutUs',
+			path: '/verein/ehrenamt',
 		});
 	});
 
@@ -98,6 +106,11 @@ describe('page layout', () => {
 	});
 
 	it('lists the pages of the club under its main page', () => {
-		expect(getPlacedPages().slice(1, 4)).toStrictEqual(['aboutUs', 'echoOverview', 'partnerPage']);
+		expect(getPlacedPages().slice(1, 5)).toStrictEqual([
+			'aboutUs',
+			'echoOverview',
+			'partnerPage',
+			'volunteerPage',
+		]);
 	});
 });

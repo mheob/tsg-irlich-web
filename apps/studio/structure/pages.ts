@@ -18,7 +18,8 @@ type SinglePageType =
 	| 'partnerPage'
 	| 'privacy'
 	| 'searchPage'
-	| 'singleGroupPage';
+	| 'singleGroupPage'
+	| 'volunteerPage';
 
 /** The desk groups of `structure/index.ts` that a section lists below its pages. */
 type SectionContent = 'departments' | 'echo' | 'faq' | 'groups' | 'news' | 'volunteer';
@@ -75,6 +76,7 @@ const SINGLE_PAGES: Readonly<Record<SinglePageType, SinglePageInfo>> = {
 		note: 'Was du hier änderst, gilt für jede Gruppenseite. Eine einzelne Gruppe bearbeitest du unter Angebot → Gruppen.',
 		path: '/angebot/[abteilung]/[gruppe]',
 	},
+	volunteerPage: { parent: 'aboutUs', path: '/verein/ehrenamt' },
 };
 
 /**
@@ -89,7 +91,7 @@ const PAGE_LAYOUT: readonly PageLayoutEntry[] = [
 		icon: RiCommunityLine,
 		id: 'club',
 		mainPage: 'aboutUs',
-		pages: ['echoOverview', 'partnerPage'],
+		pages: ['echoOverview', 'partnerPage', 'volunteerPage'],
 		title: 'Verein',
 	},
 	{

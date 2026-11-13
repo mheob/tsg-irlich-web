@@ -14,6 +14,7 @@ import partnerPage from './partner-page';
 import privacyPage from './privacy';
 import searchPage from './search-page';
 import singleGroupPage from './single-group';
+import volunteerPage from './volunteer-page';
 
 /**
  * Every single page: one document per type, opened from the desk by `structure/sections.ts` and
@@ -36,6 +37,7 @@ const singlePages = [
 	privacyPage,
 	searchPage,
 	singleGroupPage,
+	volunteerPage,
 ];
 
 export { singlePages };

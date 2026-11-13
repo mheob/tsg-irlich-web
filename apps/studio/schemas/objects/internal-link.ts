@@ -7,6 +7,7 @@ const INTERNAL_LINK_TARGETS: { type: string }[] = [
 	{ type: 'aboutUs' },
 	{ type: 'echoOverview' },
 	{ type: 'partnerPage' },
+	{ type: 'volunteerPage' },
 	{ type: 'contact' },
 	{ type: 'departmentsPage' },
 	{ type: 'department' },

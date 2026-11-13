@@ -12,6 +12,7 @@ import newsOverviewPage from './news-overview';
 import offerPage from './offer';
 import partnerPage from './partner-page';
 import privacyPage from './privacy';
+import volunteerPage from './volunteer-page';
 
 interface PageField {
 	description?: string;
@@ -44,6 +45,7 @@ const LANDSCAPE_PAGES: readonly [string, PageSchema, string][] = [
 	['privacy', privacyPage, LANDSCAPE_HERO_DESCRIPTION],
 	['accessibility', accessibilityPage, LANDSCAPE_HERO_DESCRIPTION],
 	['partnerPage', partnerPage, LANDSCAPE_HERO_DESCRIPTION],
+	['volunteerPage', volunteerPage, LANDSCAPE_HERO_DESCRIPTION],
 ];
 
 function fieldsOf(page: PageSchema): PageField[] {

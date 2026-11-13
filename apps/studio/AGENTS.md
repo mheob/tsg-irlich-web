@@ -63,7 +63,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 The desk follows the areas of the website, so the editors find a page where it sits on the website and see which page lies below which. `PAGE_LAYOUT` in `structure/pages.ts` holds the upper block in the order of the website, and `getPageListItems` in `structure/sections.ts` builds it:
 
 - **Startseite**, **Mitgliedschaft**, **Kontakt** and **Suche** stand on their own.
-- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview and the partner page („Sponsoren & Partner“) below „Unterseiten“, and the TSG-Echo issues and the open volunteer positions („Offene Aufgaben“, newest first) below „Inhalte“.
+- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview, the partner page („Sponsoren & Partner“) and the volunteer page („Ehrenamt“) below „Unterseiten“, and the TSG-Echo issues and the open volunteer positions („Offene Aufgaben“, newest first) below „Inhalte“.
 - **Rechtliches** holds imprint, privacy and accessibility side by side, without a main page.
 
 Below a divider follow the documents several areas share (FAQ, forms, persons, sponsors, venues, testimonials), sorted by title, and below another the settings. A single page that `PAGE_LAYOUT` does not place still shows up, under „Weitere Seiten“ at the end of the upper block, so a new page cannot go missing from the desk.
@@ -241,6 +241,17 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 - `scripts/create-partner-page.ts` creates the start content (the texts of the prototype, the hero image of `aboutUs`, the PR team as contact persons) as the draft `drafts.partnerPage`: `pnpm --filter studio exec sanity exec scripts/create-partner-page.ts --with-user-token -- --dataset <dataset>`. It never publishes and never overwrites: when the draft or the published page exists, it prints so and writes nothing.
 
 It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the search page. Both live revalidation webhooks must list `partnerPage` in their type filter, or the page keeps its old state after a publish (`docs/SANITY_WEBHOOK_SETUP.md`).
+
+## Volunteer page
+
+`volunteerPage` is the singleton behind `/verein/ehrenamt` („Ehrenamt“, `schemas/single-pages/volunteer-page/`, WEB-190), with the fixed slug `ehrenamt`. It sits under „Verein“ after the partner page and is an internal link target. Besides the hero and `meta` it holds every visible text of the page:
+
+- **Inhalte** with five sub tabs, each with the default section header: „Gründe“ (`reasons`, cards with icon, plus the button `cta` that jumps to the open positions), „Stimmen“ (`testimonials`, references to `testimonial` documents; without one the section is left out), „Bereiche“ (`areas`, each with an image, an icon and example tasks), „Aktuell gesucht“ (`steps`, the headings of the three lists, the button `cta` of a position and the card for own ideas `otherTitle` / `otherText`) and „Ansprechpartner“.
+- **Anfragen**: the address (initially `info@tsg-irlich.de`) and the subject (initially „Ehrenamt bei der TSG Irlich“). A position's button appends its title to the subject.
+- The cards pick their `icon` from `PAGE_ICONS`, like the partner page. `reasons` warns at another number than six, `steps` at another number than three; the areas take any number.
+- The open positions are documents of their own, see [Volunteer positions](#volunteer-positions).
+
+It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the partner page. Both live revalidation webhooks must list `volunteerPage` and `volunteer.position` in their type filter (`docs/SANITY_WEBHOOK_SETUP.md`).
 
 ## Volunteer positions
 
