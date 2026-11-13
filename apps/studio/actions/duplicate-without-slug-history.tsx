@@ -28,7 +28,6 @@ function createDuplicateWithoutSlugHistoryAction(
 ): DocumentActionComponent {
 	// The studio calls an action as a hook and never renders it, so there is no fast refresh to keep
 	// working, and it needs the original action from this closure.
-	// oxlint-disable-next-line react/only-export-components
 	const DuplicateWithoutSlugHistoryAction: DocumentActionComponent = (props) => {
 		const duplicateProps: DuplicateActionProps = { ...props, mapDocument: withoutSlugHistory };
 		return duplicateAction(duplicateProps);

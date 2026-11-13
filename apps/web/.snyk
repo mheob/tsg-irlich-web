@@ -10,7 +10,7 @@ ignore:
           @sanity/cli-build, through next-sanity and sanity), which extracts the type archives of
           Sanity's own module-federation remotes while building; nothing in the deployed website
           runs it. Revisit once adm-zip publishes a patched release.
-        expires: 2026-11-25T00:00:00.000Z
+        expires: 2026-12-13T00:00:00.000Z
   SNYK-JS-BRACES-19963945:
     - '*':
         reason: >-
@@ -19,7 +19,7 @@ ignore:
           (micromatch, chokidar and fast-glob below @sanity/cli and @sanity/codegen), which expands
           glob patterns from this repository's own configuration and never outside input. Revisit
           once braces publishes a patched release.
-        expires: 2026-11-16T00:00:00.000Z
+        expires: 2026-12-13T00:00:00.000Z
   SNYK-JS-FFLATE-22392372:
     - '*':
         reason: >-
@@ -42,14 +42,4 @@ ignore:
           it runs in the deployed website or sees outside input. Revisit once Lighthouse CI drops
           rimraf 3.
         expires: 2026-12-01T00:00:00.000Z
-  SNYK-JS-PICOMATCH-21248802:
-    - '*':
-        reason: >-
-          picomatch has no fixed version: 4.0.7 is the latest published release and every version
-          is affected (CVE-2026-112366). It reaches this project only through tooling: chokidar and
-          anymatch below @sanity/codegen (Sanity's CLI, through next-sanity and sanity), and vitest
-          as the optional peer of get-it below @sanity/client. Both compile glob patterns from this
-          repository's own configuration, never outside input, and neither runs in the deployed
-          app. Revisit once picomatch publishes a patched release.
-        expires: 2026-11-16T00:00:00.000Z
 patch: {}

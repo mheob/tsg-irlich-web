@@ -1,6 +1,6 @@
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { access, mkdir, readFile, rename, rm } from 'node:fs/promises';
+import { mkdir, readFile, rename, rm } from 'node:fs/promises';
 import os from 'node:os';
 import process from 'node:process';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -14,6 +14,7 @@ import { readPageTexts } from '@tsgi-web/pdf-pages';
 import { parseOcrManifestText } from './ocr-echo/manifest';
 import { createOcrTools } from './ocr-echo/ocrmypdf';
 import { parseOcrOptions } from './ocr-echo/options';
+import { pathExists } from './ocr-echo/path-exists';
 import { isSuccessful, runOcrSwap, summarize } from './ocr-echo/run-ocr';
 import { createSwapStore } from './ocr-echo/swap-store';
 
@@ -55,11 +56,7 @@ const report = await runOcrSwap(
 		sha1: (bytes) => createHash('sha1').update(bytes).digest('hex'),
 		store: createSwapStore(client),
 		textLayer: {
-			exists: async (file) =>
-				access(file).then(
-					() => true,
-					() => false,
-				),
+			exists: pathExists,
 			folder: options.folder,
 			makeDirectory: async (directory) => {
 				await mkdir(directory, { recursive: true });

@@ -29,13 +29,12 @@ overrides:
   # it. 11.0 drops `makeRe()`, the `AST` class and the `debug` option, while oclif only calls
   # `minimatch(name, pattern)` to pick its plugins from the dependency names
   "@oclif/core>minimatch": "^11.0.5"
-  # @module-federation/dts-plugin (through the Sanity CLI's workbench) pins adm-zip 0.6.0, which
-  # allocates whatever uncompressed size an archive declares (GHSA-7q85-xj36-vmfc); 0.6.1 fixes it
-  adm-zip: "^0.6.1"
   # get-uri (through proxy-agent, through @lhci/cli) pins basic-ftp ^5, whose directory-listing
   # parser backtracks quadratically (GHSA-c475-qrg2-pj4r). Only 6.2.1 fixes it; 6.0's one breaking
-  # change turns off separate transfer hosts by default, and Lighthouse CI never fetches over FTP
-  basic-ftp: "^6.2.1"
+  # change turns off separate transfer hosts by default, and Lighthouse CI never fetches over FTP.
+  # 6.2.3 and 6.2.4 fix two crashes of the client: CR/LF in a password (GHSA-r4jh-29pc-gfqr) and
+  # a `__proto__` fact in an MLSD listing (GHSA-5pm8-86m8-9m6r)
+  basic-ftp: "^6.2.6"
   # cve-lite-cli pins better-sqlite3 12, whose install script runs the unmaintained
   # prebuild-install and prints Node's DEP0176 deprecation on every install. 13.x ships the
   # prebuilt bindings inside the package, so nothing is built at install time any more
@@ -51,22 +50,14 @@ overrides:
   # GHSA-673q-mjm6-r5xr) and a Server Actions denial of service (CVE-2026-94482).
   # The override replaces the `catalog:` spec of apps/web as well, so it has to move together
   # with the catalog entry, or the app stays on the older release
-  next: "^16.4.5"
+  next: "^16.4.6"
   # @tailwindcss/typography pins 6.0.10, which is vulnerable to uncontrolled recursion
   # in `toString()` (CVE-2026-9358, fixed in 6.1.3) and parses flat selectors in quadratic time
   # (CVE-2026-104844), which only 7.1.6 fixes. 7.0's one breaking change makes insertions during
   # iteration safe, and the plugin inserts nothing while it iterates; the generated CSS is
   # byte-identical to the one 6.1.4 produced
   postcss-selector-parser: "^7.1.6"
-  # @puppeteer/browsers 3.x (through puppeteer-core) wants proxy-agent >=8.0.1, while @lhci/cli
-  # still asks for ^6.5.0 and lighthouse for ^7.1.0. 8.x is the same `ProxyAgent` surface and only carries the proxy support behind a
-  # browser download and an `lhci upload` — neither of which this repo's Lighthouse run does
-  proxy-agent: "^8.0.2"
   smol-toml: ">=1.6.1"
-  # @lhci/cli pulls tmp 0.0.33 (through inquirer → external-editor) and 0.1.0, both of which
-  # write through a symlinked path parameter (GHSA-52f5-9888-hmc6, GHSA-ph9p-34f9-6g65); 0.2.6
-  # fixes both and keeps the `fileSync`/`dirSync` API the two call sites use
-  tmp: "^0.2.6"
   # Bounded to v7: jsdom (via the Sanity CLI) deep-imports undici v7 internals that v8 removed.
   # 7.30.2 fixes the redirect and cache interceptor flaws in 7.30.1 (CVE-2026-116630 and three
   # sibling advisories) that get-it pulls in below @sanity/client
@@ -79,8 +70,8 @@ overrides:
 # manifests reference it with `catalog:`. Only workspace packages stay on `workspace:*`.
 catalog:
   # Vite+ toolchain: `vp migrate` re-pins these to the release it runs, keep them together
-  vite: npm:@voidzero-dev/vite-plus-core@1.5.0
-  vite-plus: 1.5.0
+  vite: npm:@voidzero-dev/vite-plus-core@1.6.0
+  vite-plus: 1.6.0
   vitest: 5.1.0
   "@vitest/coverage-v8": 5.1.0
 
@@ -91,12 +82,12 @@ catalog:
   "@mheob/oxlint-config": ^4.1.2
   "@mheob/tsconfig": ^3.0.2
   "@types/node": ^26.6.6
-  cve-lite-cli: ^1.40.0
+  cve-lite-cli: ^1.41.2
   czg: ^1.14.0
-  eslint-plugin-better-tailwindcss: ^4.10.0
-  knip: ^6.44.1
+  eslint-plugin-better-tailwindcss: ^4.11.0
+  knip: ^6.45.1
   lefthook: ^2.2.2
-  turbo: ^2.11.10
+  turbo: ^2.11.11
   typescript: ^7.0.2
 
   # React
@@ -108,64 +99,64 @@ catalog:
   # Next.js app
   "@base-ui/react": ^1.9.0
   "@gullabs/react-flipbook": ^3.2.2
-  "@hookform/resolvers": ^7.0.3
+  "@hookform/resolvers": ^7.0.6
   "@icons-pack/react-simple-icons": ^13.15.1
   "@vercel/analytics": ^2.0.1
-  "@vercel/speed-insights": ^2.0.0
+  "@vercel/speed-insights": ^2.1.0
   class-variance-authority: ^0.7.1
-  lucide-react: ^1.69.0
-  motion: ^14.9.1
-  next: ^16.4.5
+  lucide-react: ^1.72.0
+  motion: ^14.13.0
+  next: ^16.4.6
   next-safe-action: ^8.7.3
-  react-hook-form: ^7.91.0
-  resend: ^6.37.0
+  react-hook-form: ^7.92.0
+  resend: ^6.38.0
   schema-dts: ^2.1.0
   server-only: ^0.0.1
   zod: ^4.6.7
 
   # Styling
-  "@tailwindcss/postcss": ^4.3.4
+  "@tailwindcss/postcss": ^4.3.5
   "@tailwindcss/typography": ^0.5.20
   clsx: ^2.1.1
   postcss: ^8.5.32
   postcss-load-config: ^6.0.1
   tailwind-merge: ^3.7.0
-  tailwindcss: ^4.3.4
+  tailwindcss: ^4.3.5
 
   # Sanity: the Studio, its plugins and the clients of the web app
-  "@sanity/assist": ^6.2.6
-  "@sanity/client": ^8.14.1
-  "@sanity/icons": ^5.2.3
+  "@sanity/assist": ^6.3.0
+  "@sanity/client": ^8.15.1
+  "@sanity/icons": ^5.3.0
   "@sanity/image-url": ^2.1.1
   "@sanity/locale-de-de": ^1.1.37
-  "@sanity/ui": ^4.4.10
-  "@sanity/vision": ^6.22.0
+  "@sanity/ui": ^4.4.11
+  "@sanity/vision": ^6.23.0
   next-sanity: ^13.4.0
   react-icons: ^5.7.0
-  sanity: ^6.22.0
-  sanity-plugin-media: ^6.6.2
+  sanity: ^6.23.0
+  sanity-plugin-media: ^6.6.3
   slugify: ^1.6.9
   styled-components: ^6.6.0
 
   # Spam protection: the server action checks every submission with Vercel BotID
-  botid: ^1.5.12
+  botid: ^1.5.13
 
   # E-mail templates
-  "@react-email/ui": ^6.11.8
-  react-email: ^6.11.8
+  "@react-email/ui": ^6.11.11
+  react-email: ^6.11.11
 
   # Tests: Vitest environment and plugins, end-to-end, accessibility and Lighthouse
   "@axe-core/playwright": ^4.14.0
-  "@lhci/cli": ^0.16.0
-  "@playwright/test": ^1.64.1
+  "@lhci/cli": ^0.16.1
+  "@playwright/test": ^1.65.0
   "@testing-library/react": ^16.3.3
-  "@testing-library/user-event": ^14.6.8
-  "@vitejs/plugin-react": ^6.2.1
+  "@testing-library/user-event": ^14.6.10
+  "@vitejs/plugin-react": ^6.3.0
   jsdom: ^31.0.0
-  msw: ^3.0.3
+  msw: ^3.0.5
 
   # PDF pages: rendering and text extraction for the TSG-Echo, plus pdf-lib for the test fixtures
-  "@napi-rs/canvas": ^1.1.0
+  "@napi-rs/canvas": ^1.1.1
   pdf-lib: ^1.17.1
   pdfjs-dist: ^6.5.438
   write-excel-file: ^4.1.1
