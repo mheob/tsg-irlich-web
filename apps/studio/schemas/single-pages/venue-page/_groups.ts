@@ -3,6 +3,11 @@ const home = {
 	title: 'Heimat',
 };
 
+const stats = {
+	name: 'stats',
+	title: 'Statistiken',
+};
+
 const others = {
 	name: 'others',
 	title: 'Weitere Sportanlagen',
@@ -13,4 +18,4 @@ const contactPersons = {
 	title: 'Ansprechpartner',
 };
 
-export { contactPersons, home, others };
+export { contactPersons, home, others, stats };

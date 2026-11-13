@@ -11,6 +11,18 @@ const HOME_VENUE_IDS = [
 	'968c56f9-7a9c-462f-be2b-8f269075b007',
 ] as const;
 
+/**
+ * The numbers of the band between the two sections, as the dataset stands today: nine venues to do
+ * sport at (the clubhouse counts at none of them), five halls, four fields and the groups that
+ * train there. The editors keep them up to date, like the numbers of the club page.
+ */
+const START_STATS = [
+	{ title: 'Sportstätten', value: 9 },
+	{ title: 'Hallen', value: 5 },
+	{ title: 'Plätze', value: 4 },
+	{ title: 'Gruppen trainieren hier', value: 29 },
+] as const;
+
 /** The published home venues with their image; the script reads in the `raw` perspective. */
 const START_QUERY = `*[_id in $ids && !(_id in path('drafts.**'))] { _id, mainImage }`;
 
@@ -60,6 +72,12 @@ function buildStartContent(heroImage?: SanityImageObject): VenuePageDraft {
 				subtitle: 'Alle weiteren Sportanlagen',
 				title: 'Hier sind wir außerdem aktiv',
 			},
+			stats: START_STATS.map(({ title, value }, index) => ({
+				_key: `stat-${index + 1}`,
+				_type: 'stats' as const,
+				title,
+				value,
+			})),
 		},
 		inquiry: { email: 'info@tsg-irlich.de', subject: 'Frage zu den Sportstätten der TSG Irlich' },
 		slug: { _type: 'slug', current: 'sportstaetten' },
@@ -126,6 +144,7 @@ interface VenuePageDraft {
 			venues: Reference[];
 		};
 		othersSection: SectionHeader;
+		stats: { _key: string; _type: 'stats'; title: string; value: number }[];
 	};
 	heroImage?: SanityImageObject;
 	inquiry: { email: string; subject: string };

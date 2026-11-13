@@ -1575,6 +1575,11 @@ export type VenuePage = {
         linkText?: string;
       };
     };
+    stats: Array<
+      {
+        _key: string;
+      } & Stats
+    >;
     othersSection?: {
       title: string;
       subtitle: string;
@@ -6800,6 +6805,11 @@ export type VenuePageQueryResult = {
           linkText?: string;
         };
       } | null;
+      stats: Array<
+        {
+          _key: string;
+        } & Stats
+      >;
       othersSection?: {
         title: string;
         subtitle: string;

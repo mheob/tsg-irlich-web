@@ -23,9 +23,7 @@ function VenueGrid({ fallbackImage, title, venues }: Readonly<VenueGridProps>) {
 
 	return (
 		<div className="mt-12 md:mt-20">
-			<h3 className="font-serif text-3xl uppercase md:text-4xl">
-				{title} <span className="text-primary-light">({venues.length})</span>
-			</h3>
+			<h3 className="font-serif text-3xl uppercase md:text-4xl">{title}</h3>
 			<div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3">
 				{venues.map((venue) => (
 					<VenueCard fallbackImage={fallbackImage} key={venue._id} venue={venue} />

@@ -30,22 +30,22 @@ const HALLS = [venue(), venue({ _id: 'venue-2', title: 'Turnhalle Niederbieber',
 const FIELDS = [venue({ _id: 'venue-3', title: 'Sportplatz Hüllenberg', type: 'grass' })];
 
 describe('other venues', () => {
-	it('lists the halls and the fields under their headings with their counts', () => {
+	it('lists the halls and the fields under their headings', () => {
 		renderWithUser(<Others fields={FIELDS} halls={HALLS} section={SECTION} />);
 
 		expect(
 			screen.getByRole('heading', { level: 2, name: 'Hier sind wir außerdem aktiv' }),
 		).not.toBeNull();
-		expect(screen.getByRole('heading', { level: 3, name: 'Hallen (2)' })).not.toBeNull();
-		expect(screen.getByRole('heading', { level: 3, name: 'Plätze (1)' })).not.toBeNull();
+		expect(screen.getByRole('heading', { level: 3, name: 'Hallen' })).not.toBeNull();
+		expect(screen.getByRole('heading', { level: 3, name: 'Plätze' })).not.toBeNull();
 		expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(3);
 	});
 
 	it('leaves a heading out when it has no venue', () => {
 		renderWithUser(<Others fields={[]} halls={HALLS} section={SECTION} />);
 
-		expect(screen.queryByRole('heading', { level: 3, name: /Plätze/u })).toBeNull();
-		expect(screen.getByRole('heading', { level: 3, name: 'Hallen (2)' })).not.toBeNull();
+		expect(screen.queryByRole('heading', { level: 3, name: 'Plätze' })).toBeNull();
+		expect(screen.getByRole('heading', { level: 3, name: 'Hallen' })).not.toBeNull();
 	});
 
 	it('leaves the section out without other venues', () => {

@@ -6,9 +6,10 @@ import { defaultHeroFields, getHiddenSlugField } from '@/shared/fields/general';
 import { getHeroImageField, LANDSCAPE_HERO_DESCRIPTION } from '@/shared/fields/hero-image';
 import { metaField } from '@/shared/fields/meta';
 import { contactPersonsSectionField } from '@/shared/sections/contact-persons';
+import { statsField } from '@/shared/sections/stats';
 import { getSinglePagePreview } from '@/utils/previews';
 
-import { contactPersons, home, others } from './_groups';
+import { contactPersons, home, others, stats } from './_groups';
 import { homeSection, othersSection } from './sections';
 
 const inquiry = { name: 'inquiry', title: 'Anfragen' };
@@ -28,9 +29,9 @@ const venuePage = defineType({
 
 		// Content
 		defineField({
-			fields: [homeSection, othersSection, contactPersonsSectionField],
+			fields: [homeSection, statsField, othersSection, contactPersonsSectionField],
 			group: 'content',
-			groups: [home, others, contactPersons],
+			groups: [home, stats, others, contactPersons],
 			icon: RiLinksLine,
 			name: 'content',
 			title: 'Inhalte',

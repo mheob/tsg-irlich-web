@@ -4,9 +4,9 @@ import { expect, test } from '../support/test';
 /** The two venues the recorded page shows as the home of the club, in that order. */
 const HOME_VENUES = ['Pappelstadion', 'Vereinsheim Pappelstübchen'];
 
-/** What the recorded dataset holds besides the home venues. */
-const HALLS = 'Hallen (5)';
-const FIELDS = 'Plätze (3)';
+/** The headings the other venues stand under. */
+const HALLS = 'Hallen';
+const FIELDS = 'Plätze';
 
 const TURF_MAIL =
 	'mailto:info@tsg-irlich.de?subject=Frage%20zu%20den%20Sportst%C3%A4tten%20der%20TSG%20Irlich';
@@ -24,8 +24,14 @@ test.describe('venue page', () => {
 			await expect(page.getByRole('heading', { exact: true, level: 3, name: title })).toBeVisible();
 		}
 
-		await expect(page.getByRole('heading', { level: 3, name: HALLS })).toBeVisible();
-		await expect(page.getByRole('heading', { level: 3, name: FIELDS })).toBeVisible();
+		await expect(page.getByRole('heading', { exact: true, level: 3, name: HALLS })).toBeVisible();
+		await expect(page.getByRole('heading', { exact: true, level: 3, name: FIELDS })).toBeVisible();
+	});
+
+	// The numbers themselves count up from zero, so only their names are asserted here; what the
+	// page counts is pinned by the unit tests of `getVenueStats` and of the page.
+	test('names the numbers between the two sections', async ({ page }) => {
+		await expect(page.getByText('Gruppen trainieren hier')).toBeVisible();
 	});
 
 	test('shows the opening hours of the clubhouse and offers nothing to rent', async ({ page }) => {

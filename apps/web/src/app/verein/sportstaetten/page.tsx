@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
+import { Stats } from '@/components/section/stats';
 import { client } from '@/lib/sanity/client';
 import { venuePageQuery } from '@/lib/sanity/queries/pages/venue';
 import type { VenuePageQueryResult } from '@/types/sanity.types';
@@ -52,7 +53,7 @@ export default async function VenuePage() {
 	}
 
 	const { content, inquiry } = venuePage;
-	const { contactPersonsSection, homeSection, othersSection } = content;
+	const { contactPersonsSection, homeSection, othersSection, stats } = content;
 	const contactPersons = resolved(contactPersonsSection.contactPersons);
 	const homeVenues = resolved(homeSection?.venues);
 	const { fields, halls } = splitOtherVenues(venues, new Set(homeVenues.map((venue) => venue._id)));
@@ -67,6 +68,7 @@ export default async function VenuePage() {
 			{homeSection && (
 				<Home fallbackImage={fallbackImage} inquiry={inquiry} section={homeSection} />
 			)}
+			{stats && <Stats stats={stats} withBackground />}
 			{othersSection && (
 				<Others
 					fallbackImage={fallbackImage}

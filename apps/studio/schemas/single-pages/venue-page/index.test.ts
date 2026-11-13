@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vite-plus/test';
 
+import { statsField } from '@/shared/sections/stats';
+
 import venuePage from './index';
 
 interface PageField {
@@ -124,12 +126,18 @@ describe('venue page', () => {
 		]);
 	});
 
-	it('splits the content into three sections, each in its own tab', () => {
+	it('splits the content into four sections, each in its own tab', () => {
 		expect(field('content').fields?.map(({ group, name }) => [name, group])).toStrictEqual([
 			['homeSection', 'home'],
+			['stats', 'stats'],
 			['othersSection', 'others'],
 			['contactPersonsSection', 'contactPersons'],
 		]);
+	});
+
+	// The same field the club page uses, so the editors maintain the numbers as they do there.
+	it('takes the shared statistics field', () => {
+		expect(section('stats')).toBe(statsField);
 	});
 
 	it('presets the inquiry address and subject', () => {

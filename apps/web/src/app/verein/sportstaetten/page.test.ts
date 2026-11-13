@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 import { ContactPersons } from '@/components/section/contact-persons';
 import { Hero } from '@/components/section/hero';
 import { Newsletter } from '@/components/section/newsletter';
+import { Stats } from '@/components/section/stats';
 import type { client } from '@/lib/sanity/client';
 
 import { itFollowsTheMetadataContract } from '../../../../test-utils/page-contract';
@@ -34,6 +35,11 @@ const INQUIRY = {
 	email: 'info@tsg-irlich.de',
 	subject: 'Frage zu den Sportstätten der TSG Irlich',
 };
+
+const STATS = [
+	{ _key: 'stat-1', _type: 'stats', title: 'Sportstätten', value: 9 },
+	{ _key: 'stat-2', _type: 'stats', title: 'Gruppen trainieren hier', value: 29 },
+];
 
 const STADIUM = { _id: 'stadium', groups: [], title: 'Pappelstadion', type: 'cinder' };
 const CLUBHOUSE = {
@@ -69,6 +75,7 @@ function buildPage({
 					venues: homeVenues,
 				},
 				othersSection: { subtitle: 'Alle weiteren', title: 'Hier sind wir außerdem aktiv' },
+				stats: STATS,
 			},
 			inquiry: INQUIRY,
 			meta,
@@ -152,6 +159,7 @@ describe('venue page', () => {
 			expect(page.props.children.map((child) => child.type)).toStrictEqual([
 				Hero,
 				Home,
+				Stats,
 				Others,
 				ContactPersons,
 				Newsletter,
@@ -171,6 +179,7 @@ describe('venue page', () => {
 			const page = await VenuePage();
 
 			expect(findElement(page, Home)).toBeUndefined();
+			expect(findElement(page, Stats)).toBeUndefined();
 			expect(findElement(page, Others)).toBeUndefined();
 			expect(findElement(page, ContactPersons)).toBeDefined();
 		});
@@ -192,6 +201,12 @@ describe('venue page', () => {
 
 			expect(others?.props.fields).toStrictEqual([FIELD]);
 			expect(others?.props.halls).toStrictEqual([HALL]);
+		});
+
+		it('shows the numbers the editors maintain', async () => {
+			mockedFetch.mockResolvedValue(buildPage());
+
+			expect(findElement(await VenuePage(), Stats)?.props.stats).toStrictEqual(STATS);
 		});
 
 		it('hands the inquiry to the home section', async () => {

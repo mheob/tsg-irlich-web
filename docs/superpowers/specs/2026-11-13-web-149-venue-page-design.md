@@ -30,7 +30,7 @@ Vom Nutzer entschieden (2026-11-12 mit dem Verein, 2026-11-13 im Gespräch):
 | Frage | Entscheidung |
 | --- | --- |
 | Variante | Komplett Variante A „Vertraut“. |
-| Zähler (Sportstätten, Hallen, Plätze, Gruppen) aus A | Entfällt. |
+| Zähler (Sportstätten, Hallen, Plätze, Gruppen) aus A | Bleiben, als Band zwischen den beiden Abschnitten. Die Redaktion pflegt sie im Studio wie auf der Vereinsseite, mit demselben geteilten Feld „Statistiken“ (Titel und Zahl). _(2026-11-14 vom Nutzer geändert: erst gestrichen, dann zurückgeholt.)_ |
 | Welche weiteren Sportstätten erscheinen | Alle automatisch: jede Sportstätte außer den beiden im Heimat-Block. Eine neue Sportstätte erscheint ohne Zutun der Redaktion, auch eine ohne Gruppe (Gymnastikhalle Feldkirchen). |
 | Weißraum im Heimat-Block | Mockup-Variante 2 „Details als Leiste darunter“: oben Bild neben Art, Name und Beschreibung, darunter über die volle Breite eine Leiste mit Ausstattung, Adresse mit „Route planen“ und „Hier trainieren“, danach der Kasten. |
 | Pappelstübchen mieten | Nach Rücksprache mit dem Verein aktuell nicht möglich. Kein Miet-Text, kein Button, keine Felder für die Pächterin. |
@@ -48,6 +48,7 @@ Als meine Entscheidung festgehalten:
 - **Beschreibung:** Die Seite zeigt im Heimat-Block die ganze Beschreibung der Sportstätte, nicht nur den ersten Absatz wie der Prototyp. Sie erscheint sonst nirgends, die Redaktion kürzt sie beim Livegang (siehe Livegang). Die Karten der weiteren Sportstätten zeigen keine Beschreibung, wie in Variante A.
 - **Kunstrasen-Kasten:** optionales Objekt im Singleton mit Titel, Text und Linktext. Der Link öffnet eine Mail an die Adresse aus dem Anfrage-Objekt mit dessen Betreff. Ohne Titel und Text fällt der Kasten weg. Sein Symbol (Funkeln) steht fest im Code.
 - **Öffnungszeiten-Kasten:** erscheint bei einer Heimat-Sportstätte mit mindestens einer Zeile Öffnungszeiten. Ohne Zeilen fällt er weg.
+- **Zahlen:** Die Seite rechnet nichts; die Redaktion pflegt die Zahlen im Studio. Der Startinhalt bringt den heutigen Stand mit: 9 Sportstätten, 5 Hallen, 4 Plätze, 29 Gruppen (ein Vereinsheim zählt bei keiner Zahl mit).
 - **Gruppierung der weiteren Sportstätten:** „Hallen“ sind alle Arten `hall-*`, „Plätze“ alle Platzarten (Aschen-, Hybridrasen-, Kunstrasen-, Rasenplatz). Eine Gruppe ohne Sportstätte fällt weg. Ein Vereinsheim, das nicht im Heimat-Block steht, erscheint nicht (es ist weder Halle noch Platz; heute gibt es nur eines). Innerhalb einer Gruppe nach Name sortiert.
 - **Gruppen einer Sportstätte:** jede veröffentlichte Gruppe mit Slug, die in einer ihrer Trainingszeiten auf die Sportstätte verweist, nach Titel sortiert, verlinkt auf ihre Gruppenseite. Die Trainingstage (Mo–So) sind alle Wochentage dieser Trainingszeiten über alle Saisons, wie im Prototyp.
 - **Fehlendes Foto:** Statt der Plakette „Noch kein Foto“ des Prototyps zeigt eine Sportstätte ohne Bild das Fallback-Bild der Website-Einstellungen, wie die Gruppenkarten.
@@ -68,9 +69,10 @@ Als meine Entscheidung festgehalten:
    - **Leiste** über die volle Breite, mit Trennlinie oben: „Das bietet …“ mit der Ausstattung als Häkchenliste, „So findest du hin“ mit Adresse und „Route planen“, „Hier trainieren“ mit den Gruppen als Chips. Eine Spalte ohne Inhalt fällt weg, die übrigen teilen sich die Breite.
    - **Kasten** über die volle Breite: beim ersten Block der Kunstrasen-Kasten (blau, mit Link „Sprich uns an …“), beim Vereinsheim der Kasten Öffnungszeiten (Rahmen, Tabelle Tage/Zeit).
    - **Handy**: alles untereinander: Bild, Kicker, Name, Beschreibung, die Spalten der Leiste, der Kasten.
-3. **Weitere Sportanlagen**: Hintergrund der Gruppenübersicht. Abschnittskopf zentriert, darunter „Hallen (n)“ und „Plätze (n)“ als Zwischenüberschriften, je ein Raster aus Bildkarten (Desktop 3, Tablet 2, Handy 1 Spalte). Eine Karte: Bild mit Verlauf, darauf Art als gelbe Plakette und Name; darunter Adresse, Trainingstage Mo–So (aktive Tage blau, für Screenreader als Liste der Namen), bis zu 4 Gruppen als Chips und „+ n weitere“, unten „Route planen“. Eine leere Gruppe (keine Hallen bzw. keine Plätze) fällt weg.
-4. **Ansprechpartner**: `ContactPersons` wie überall.
-5. **Newsletter**.
+3. **Zahlen**: das übliche Band auf hellem Hintergrund (`Stats`, wie auf der Vereinsseite), zwischen den beiden Abschnitten. Ohne Statistiken fällt es weg.
+4. **Weitere Sportanlagen**: Hintergrund der Gruppenübersicht. Abschnittskopf zentriert, darunter „Hallen“ und „Plätze“ als Zwischenüberschriften, je ein Raster aus Bildkarten (Desktop 3, Tablet 2, Handy 1 Spalte). Eine Karte: Bild mit Verlauf, darauf Art als gelbe Plakette und Name; darunter Adresse, Trainingstage Mo–So (aktive Tage blau, für Screenreader als Liste der Namen), bis zu 4 Gruppen als Chips und „+ n weitere“, unten „Route planen“. Eine leere Gruppe (keine Hallen bzw. keine Plätze) fällt weg.
+5. **Ansprechpartner**: `ContactPersons` wie überall.
+6. **Newsletter**.
 
 ## Inhalt des Singletons `venuePage`
 
@@ -78,6 +80,7 @@ Alle Felder mit deutschen Titeln und Beschreibungen. Die Tabs folgen `apps/studi
 
 - **Allgemein:** Titel, Untertitel (`defaultHeroFields`), Hero-Bild (`getHeroImageField(LANDSCAPE_HERO_DESCRIPTION)`), versteckter Slug `sportstaetten`.
 - **Heimat:** Abschnittskopf (`getDefaultPageSectionFieldsWithGroup`), Referenzen auf genau zwei Sportstätten, Kunstrasen-Kasten (Titel, Text, Linktext).
+- **Statistiken:** das geteilte Feld `statsField`, drei bis vier Zahlen mit Titel und Wert, wie auf der Vereinsseite.
 - **Weitere Sportanlagen:** Abschnittskopf.
 - **Ansprechpartner:** `contactPersonsSectionField`.
 - **Anfragen:** E-Mail-Adresse und Betreff (siehe oben).
@@ -125,7 +128,6 @@ Welche Felder Pflicht sind, entscheidet der Builder. Der Maßstab ist derselbe w
 
 **Nicht-Ziele**
 
-- Die Zähler aus Variante A.
 - Vermietung des Pappelstübchens, Felder für die Pächterin.
 - Der Abschnitt „Anfahrt“ aus Variante B.
 - Eine Karte (bräuchte Koordinaten und eine Einwilligung wegen Datenschutz), Platz- oder Hallenordnung als Download, Infos zur Barrierefreiheit (Ideen aus dem Prototyp-Kommentar, für später).

@@ -29,7 +29,7 @@ function keyOf(item: unknown): string[] {
 
 describe('venue page start content', () => {
 	const draft = buildStartContent(STADIUM_IMAGE);
-	const { contactPersonsSection, homeSection, othersSection } = draft.content;
+	const { contactPersonsSection, homeSection, othersSection, stats } = draft.content;
 
 	it('writes the draft of the singleton', () => {
 		expect(draft).toMatchObject({ _id: VENUE_PAGE_ID, _type: 'venuePage' });
@@ -66,6 +66,15 @@ describe('venue page start content', () => {
 		});
 	});
 
+	it('starts the band with the four numbers of today', () => {
+		expect(stats.map(({ title, value }) => [title, value])).toStrictEqual([
+			['Sportstätten', 9],
+			['Hallen', 5],
+			['Plätze', 4],
+			['Gruppen trainieren hier', 29],
+		]);
+	});
+
 	it('heads the other venues like the prototype', () => {
 		expect(othersSection).toMatchObject({
 			subtitle: 'Alle weiteren Sportanlagen',
@@ -80,12 +89,12 @@ describe('venue page start content', () => {
 	});
 
 	it('gives every array item a unique key', () => {
-		const keys = [...homeSection.venues, ...contactPersonsSection.contactPersons].flatMap((item) =>
-			keyOf(item),
+		const keys = [...homeSection.venues, ...contactPersonsSection.contactPersons, ...stats].flatMap(
+			(item) => keyOf(item),
 		);
 
 		expect(new Set(keys).size).toBe(keys.length);
-		expect(keys).toHaveLength(homeSection.venues.length + BOARD_IDS.length);
+		expect(keys).toHaveLength(homeSection.venues.length + BOARD_IDS.length + stats.length);
 	});
 
 	it('presets the inquiry', () => {

@@ -266,13 +266,13 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 
 `venuePage` is the singleton behind `/verein/sportstaetten` („Sportstätten“, `schemas/single-pages/venue-page/`, WEB-149), with the fixed slug `sportstaetten`. It sits under „Verein“ after the volunteer page and is an internal link target. Besides the hero and `meta` it holds:
 
-- **Inhalte** with three sub tabs: „Heimat“ (the default section header, `venues`, exactly two references to the home venues, and the optional `turfBox` with title, text and link text), „Weitere Sportanlagen“ (only the section header) and „Ansprechpartner“.
+- **Inhalte** with four sub tabs: „Heimat“ (the default section header, `venues`, exactly two references to the home venues, and the optional `turfBox` with title, text and link text), „Statistiken“ (the shared `statsField`, the same three to four numbers the club page has), „Weitere Sportanlagen“ (only the section header) and „Ansprechpartner“.
 - `venues` errors for any other number than two and for the same venue twice. The first one stands with its image on the left and carries the turf box. Every other venue appears below on its own, as a hall or a field; nothing lists them.
 - `turfBox.linkText` is required once the box has a title or a text, because the website shows the box then. An empty box is left out.
 - **Anfragen**: the address (initially `info@tsg-irlich.de`) and the subject (initially „Frage zu den Sportstätten der TSG Irlich“) of the turf box's link.
 - The equipment and the opening hours of a venue live on the venue, see [Venues](#venues).
 
-- `scripts/create-venue-page.ts` creates the start content (the texts of the prototype, the image of the Pappelstadion as hero image, the two home venues and the board as contact persons) as the draft `drafts.venuePage`: `pnpm --filter studio exec sanity exec scripts/create-venue-page.ts --with-user-token -- --dataset <dataset>`. Like the partner script it never publishes and never overwrites, and it writes no venue: equipment, opening hours and the type „Vereinsheim“ are set by the editors. It stops with an error when Pappelstadion or Pappelstübchen is not published in the dataset, since the draft references both.
+- `scripts/create-venue-page.ts` creates the start content (the texts of the prototype, the image of the Pappelstadion as hero image, the two home venues, the four numbers as the dataset stands today and the board as contact persons) as the draft `drafts.venuePage`: `pnpm --filter studio exec sanity exec scripts/create-venue-page.ts --with-user-token -- --dataset <dataset>`. Like the partner script it never publishes and never overwrites, and it writes no venue: equipment, opening hours and the type „Vereinsheim“ are set by the editors. It stops with an error when Pappelstadion or Pappelstübchen is not published in the dataset, since the draft references both.
 
 It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the partner page. Both live revalidation webhooks must list `venuePage` in their type filter (`docs/SANITY_WEBHOOK_SETUP.md`).
 
