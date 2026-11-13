@@ -4,6 +4,7 @@ import type {
 	SanityImageHotspot,
 	SimpleBlockContent,
 	TrainingTime,
+	Venue,
 } from './sanity.types.generated';
 
 /**
@@ -45,6 +46,6 @@ export interface TrainingTimeSection extends Omit<TrainingTime, 'venue'> {
 		_updatedAt: string;
 		description: SimpleBlockContent;
 		title: string;
-		type: 'artificial-turf' | 'cinder' | 'grass' | 'hall-1' | 'hall-2' | 'hall-3' | 'hybrid';
+		type: Venue['type'];
 	};
 }

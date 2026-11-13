@@ -86,6 +86,7 @@ describe('singleton plugin new document options', () => {
 });
 
 describe('page structure', () => {
+	// The venues sit under „Verein“ → „Inhalte“, so they no longer show among the shared documents.
 	it('lists the pages first, then the shared documents by title, then the settings', () => {
 		const structureBuilder = createFakeStructureBuilder([
 			{ name: 'testimonial', title: 'Zeugnis / Referenz' },
@@ -112,7 +113,6 @@ describe('page structure', () => {
 			'Formulare',
 			'Personen',
 			'Sponsoren',
-			'Sportstätte',
 			'Zeugnis / Referenz',
 			DIVIDER_TITLE,
 			'KI-Anweisungen',

@@ -1,11 +1,35 @@
 // oxlint-disable no-magic-numbers
 
 import { RiMap2Line } from 'react-icons/ri';
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 import { postalAddressFields } from '@/shared/fields/postal-address';
 
 import extendedImage from '../objects/extended-image';
+
+/** One row of the opening hours of a clubhouse, such as „Dienstag bis Freitag · ab 17 Uhr“. */
+const openingHoursRow = defineArrayMember({
+	fields: [
+		defineField({
+			description: 'Zum Beispiel „Dienstag bis Freitag“.',
+			name: 'days',
+			title: 'Tage',
+			type: 'string',
+			validation: (Rule) => [Rule.required().error('Die Tage sind erforderlich')],
+		}),
+		defineField({
+			description: 'Zum Beispiel „ab 17 Uhr“.',
+			name: 'time',
+			title: 'Zeit',
+			type: 'string',
+			validation: (Rule) => [Rule.required().error('Die Zeit ist erforderlich')],
+		}),
+	],
+	name: 'venueOpeningHours',
+	preview: { select: { subtitle: 'time', title: 'days' } },
+	title: 'Zeitraum',
+	type: 'object',
+});
 
 const venue = defineType({
 	fields: [
@@ -20,7 +44,7 @@ const venue = defineType({
 		}),
 
 		defineField({
-			description: 'Eine kurze Beschreibung der Sportstätte.',
+			description: 'Eine kurze Beschreibung der Sportstätte. Erscheint auf der Sportstättenseite.',
 			name: 'description',
 			title: 'Beschreibung',
 			type: 'simpleBlockContent',
@@ -39,6 +63,7 @@ const venue = defineType({
 					{ title: 'Hybridrasenplatz', value: 'hybrid' },
 					{ title: 'Kunstrasenplatz', value: 'artificial-turf' },
 					{ title: 'Rasenplatz', value: 'grass' },
+					{ title: 'Vereinsheim', value: 'clubhouse' },
 				],
 			},
 			title: 'Art',
@@ -50,6 +75,34 @@ const venue = defineType({
 			...extendedImage,
 			name: 'mainImage',
 			title: 'Image',
+		}),
+
+		defineField({
+			description:
+				'Was die Sportstätte bietet, ein kurzer Punkt je Zeile, etwa „Flutlicht für Training und Spiele“. Erscheint auf der Sportstättenseite, wenn die Sportstätte dort im Bereich „Heimat“ steht.',
+			name: 'features',
+			of: [
+				defineArrayMember({
+					type: 'string',
+					validation: (Rule) => [
+						Rule.max(48).warning('Ein Punkt sollte nicht länger als 48 Zeichen sein'),
+					],
+				}),
+			],
+			title: 'Ausstattung',
+			type: 'array',
+			validation: (Rule) => [
+				Rule.max(8).warning('Mehr als 8 Punkte werden schnell unübersichtlich'),
+			],
+		}),
+
+		defineField({
+			description: 'Wann das Vereinsheim geöffnet hat, eine Zeile je Zeitraum.',
+			hidden: ({ document }) => document?.type !== 'clubhouse',
+			name: 'openingHours',
+			of: [openingHoursRow],
+			title: 'Öffnungszeiten',
+			type: 'array',
 		}),
 
 		defineField({

@@ -889,7 +889,8 @@ export type Venue = {
     | "cinder"
     | "hybrid"
     | "artificial-turf"
-    | "grass";
+    | "grass"
+    | "clubhouse";
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -899,6 +900,13 @@ export type Venue = {
     description?: string;
     _type: "image";
   };
+  features?: Array<string>;
+  openingHours?: Array<{
+    days: string;
+    time: string;
+    _type: "venueOpeningHours";
+    _key: string;
+  }>;
   location?: {
     name: string;
     street: string;
@@ -5932,6 +5940,7 @@ export type GroupPageQueryResult = {
         type:
           | "artificial-turf"
           | "cinder"
+          | "clubhouse"
           | "grass"
           | "hall-1"
           | "hall-2"
@@ -5946,6 +5955,13 @@ export type GroupPageQueryResult = {
           description?: string;
           _type: "image";
         };
+        features?: Array<string>;
+        openingHours?: Array<{
+          days: string;
+          time: string;
+          _type: "venueOpeningHours";
+          _key: string;
+        }>;
         location?: {
           name: string;
           street: string;

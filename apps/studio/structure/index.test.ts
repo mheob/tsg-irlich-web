@@ -68,6 +68,10 @@ describe('excluded default list items', () => {
 		expect(isExcludedDefaultListItem('volunteer.position')).toBe(false);
 	});
 
+	it('excludes the venues, which have their own desk entry', () => {
+		expect(isExcludedDefaultListItem('venue')).toBe(false);
+	});
+
 	it('excludes form and form.submission, which have their own desk entry', () => {
 		expect(isExcludedDefaultListItem('form')).toBe(false);
 		expect(isExcludedDefaultListItem('form.submission')).toBe(false);
@@ -132,6 +136,27 @@ describe('desk group resolution', () => {
 		expect(orderings).toStrictEqual([[{ direction: 'desc', field: '_createdAt' }]]);
 		expect(titles).toContain('Offene Aufgaben');
 		expect(ids).toContain('volunteer-positions');
+	});
+
+	it('resolves the venues group to the venues by title', () => {
+		const { calls, structureBuilder } = createRecordingStructureBuilder();
+
+		const items = getGroup(structureBuilder, 'venues');
+
+		const lists = calls
+			.filter((call) => call.method === 'documentTypeList')
+			.map((call) => call.args[0]);
+		const orderings = calls
+			.filter((call) => call.method === 'defaultOrdering')
+			.map((call) => call.args[0]);
+		const titles = calls.filter((call) => call.method === 'title').map((call) => call.args[0]);
+		const ids = calls.filter((call) => call.method === 'id').map((call) => call.args[0]);
+
+		expect(items).toHaveLength(1);
+		expect(lists).toStrictEqual(['venue']);
+		expect(orderings).toStrictEqual([[{ direction: 'asc', field: 'title' }]]);
+		expect(titles).toContain('Sportstätten');
+		expect(ids).toContain('venues');
 	});
 
 	it('resolves the departments group to one list of the departments by sort order', () => {

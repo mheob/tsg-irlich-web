@@ -67,6 +67,7 @@ describe('page list items', () => {
 			'Inhalte',
 			'TSG-Echo Ausgaben',
 			'Offene Aufgaben',
+			'Sportstätten',
 		]);
 	});
 
@@ -136,6 +137,7 @@ describe('pages missing from the layout', () => {
 			'Inhalte',
 			'TSG-Echo Ausgaben',
 			'Offene Aufgaben',
+			'Sportstätten',
 		]);
 	});
 

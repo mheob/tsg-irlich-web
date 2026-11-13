@@ -22,7 +22,7 @@ type SinglePageType =
 	| 'volunteerPage';
 
 /** The desk groups of `structure/index.ts` that a section lists below its pages. */
-type SectionContent = 'departments' | 'echo' | 'faq' | 'groups' | 'news' | 'volunteer';
+type SectionContent = 'departments' | 'echo' | 'faq' | 'groups' | 'news' | 'venues' | 'volunteer';
 
 /** Where a single page sits on the website, as the editors see it above the form. */
 interface SinglePageInfo {
@@ -87,7 +87,7 @@ const SINGLE_PAGES: Readonly<Record<SinglePageType, SinglePageInfo>> = {
 const PAGE_LAYOUT: readonly PageLayoutEntry[] = [
 	'home',
 	{
-		content: ['echo', 'volunteer'],
+		content: ['echo', 'volunteer', 'venues'],
 		icon: RiCommunityLine,
 		id: 'club',
 		mainPage: 'aboutUs',

@@ -4935,6 +4935,10 @@
 						{
 							"type": "string",
 							"value": "grass"
+						},
+						{
+							"type": "string",
+							"value": "clubhouse"
 						}
 					]
 				},
@@ -4995,6 +4999,60 @@
 							"value": {
 								"type": "string",
 								"value": "image"
+							}
+						}
+					}
+				},
+				"optional": true
+			},
+			"features": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
+			},
+			"openingHours": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "object",
+						"attributes": {
+							"days": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								},
+								"optional": false
+							},
+							"time": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string"
+								},
+								"optional": false
+							},
+							"_type": {
+								"type": "objectAttribute",
+								"value": {
+									"type": "string",
+									"value": "venueOpeningHours"
+								}
+							}
+						},
+						"rest": {
+							"type": "object",
+							"attributes": {
+								"_key": {
+									"type": "objectAttribute",
+									"value": {
+										"type": "string"
+									}
+								}
 							}
 						}
 					}

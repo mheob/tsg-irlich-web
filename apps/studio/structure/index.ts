@@ -1,5 +1,6 @@
 import {
 	RiBookOpenLine,
+	RiMap2Line,
 	RiOpenaiLine,
 	RiParentLine,
 	RiQuestionAnswerLine,
@@ -20,6 +21,7 @@ type DocumentGroup =
 	| 'news'
 	| 'persons'
 	| 'settings'
+	| 'venues'
 	| 'volunteer';
 
 /**
@@ -70,6 +72,27 @@ function getGroupVolunteer(S: StructureBuilder): ListItemBuilder[] {
 				S.documentTypeList('volunteer.position')
 					.title('Offene Aufgaben')
 					.defaultOrdering([{ direction: 'desc', field: '_createdAt' }]),
+			),
+	];
+}
+
+/**
+ * Returns the group for the venues, by title: the venue page shows every venue, so the editors
+ * find them under „Verein“.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the venues.
+ */
+function getGroupVenues(S: StructureBuilder): ListItemBuilder[] {
+	return [
+		S.listItem()
+			.title('Sportstätten')
+			.id('venues')
+			.icon(RiMap2Line)
+			.child(
+				S.documentTypeList('venue')
+					.title('Sportstätten')
+					.defaultOrdering([{ direction: 'asc', field: 'title' }]),
 			),
 	];
 }
@@ -270,6 +293,7 @@ function isExcludedDefaultListItem(id?: string): boolean {
 		'news.category',
 		'person',
 		'role',
+		'venue',
 		'volunteer.position',
 	].includes(id);
 }
@@ -291,6 +315,7 @@ function getGroup(S: StructureBuilder, name: DocumentGroup): ListItemBuilder[] {
 		news: () => getGroupNews(S),
 		persons: () => getGroupPersons(S),
 		settings: () => getGroupSettings(S),
+		venues: () => getGroupVenues(S),
 		volunteer: () => getGroupVolunteer(S),
 	};
 	// An unknown name still falls back to the settings, as before.
