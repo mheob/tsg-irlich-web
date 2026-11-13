@@ -63,7 +63,7 @@ The web app's `src/types/sanity.types.generated.ts` is generated from that extra
 The desk follows the areas of the website, so the editors find a page where it sits on the website and see which page lies below which. `PAGE_LAYOUT` in `structure/pages.ts` holds the upper block in the order of the website, and `getPageListItems` in `structure/sections.ts` builds it:
 
 - **Startseite**, **Mitgliedschaft**, **Kontakt** and **Suche** stand on their own.
-- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview and the partner page („Sponsoren & Partner“) below „Unterseiten“.
+- **Verein** (`/verein`), **News** (`/news`) and **Angebot** (`/angebot`) each open their main page, then the pages below it after the divider „Unterseiten“, then the documents those pages show after the divider „Inhalte“: the TSG-Echo issues, the news articles and categories, the departments, groups and questions. The club area lists the TSG-Echo overview and the partner page („Sponsoren & Partner“) below „Unterseiten“, and the TSG-Echo issues and the open volunteer positions („Offene Aufgaben“, newest first) below „Inhalte“.
 - **Rechtliches** holds imprint, privacy and accessibility side by side, without a main page.
 
 Below a divider follow the documents several areas share (FAQ, forms, persons, sponsors, venues, testimonials), sorted by title, and below another the settings. A single page that `PAGE_LAYOUT` does not place still shows up, under „Weitere Seiten“ at the end of the upper block, so a new page cannot go missing from the desk.
@@ -241,6 +241,14 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 - `scripts/create-partner-page.ts` creates the start content (the texts of the prototype, the hero image of `aboutUs`, the PR team as contact persons) as the draft `drafts.partnerPage`: `pnpm --filter studio exec sanity exec scripts/create-partner-page.ts --with-user-token -- --dataset <dataset>`. It never publishes and never overwrites: when the draft or the published page exists, it prints so and writes nothing.
 
 It has no `mainDocuments` route and no `locations` entry in `plugins/presentation.ts`, on purpose, like the search page. Both live revalidation webhooks must list `partnerPage` in their type filter, or the page keeps its old state after a publish (`docs/SANITY_WEBHOOK_SETUP.md`).
+
+## Volunteer positions
+
+`volunteer.position` („Offene Aufgabe“, `schemas/documents/volunteer.position.ts`, WEB-190) is one open position of the volunteer page `/verein/ehrenamt`: title, area (a short label such as „Fußball“, free text because not every area is a department), effort, teaser and the three lists „Deine Aufgaben“, „Das bringst du mit“ and „Das bieten wir“. A small document, so it has no tabs.
+
+- Every published position appears on the page, the newest first (`_createdAt`). The volunteer page does not list them, so a new one needs nothing but publishing.
+- Withdrawing a position means „Veröffentlichung zurücknehmen“: the document stays as a draft and can go live again later. Deleting it works as well.
+- Desk: „Verein“ → „Inhalte“ → „Offene Aufgaben“ (`getGroupVolunteer` in `structure/index.ts`), newest first; the type is kept out of the default list.
 
 ## Content migrations
 

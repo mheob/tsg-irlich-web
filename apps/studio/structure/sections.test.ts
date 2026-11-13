@@ -65,6 +65,7 @@ describe('page list items', () => {
 			'partnerPage',
 			'Inhalte',
 			'TSG-Echo Ausgaben',
+			'Offene Aufgaben',
 		]);
 	});
 
@@ -132,6 +133,7 @@ describe('pages missing from the layout', () => {
 			'partnerPage',
 			'Inhalte',
 			'TSG-Echo Ausgaben',
+			'Offene Aufgaben',
 		]);
 	});
 

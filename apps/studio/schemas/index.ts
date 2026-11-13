@@ -15,6 +15,7 @@ import role from './documents/role';
 import sponsors from './documents/sponsors';
 import testimonial from './documents/testimonial';
 import venue from './documents/venue';
+import volunteerPosition from './documents/volunteer.position';
 import columns from './objects/columns';
 import contactTo from './objects/contact-to';
 import documentDownload from './objects/document-download';
@@ -57,6 +58,7 @@ export const schemaTypes = [
 	newsArticle,
 	newsCategory,
 	echoIssue,
+	volunteerPosition,
 
 	author,
 	person,

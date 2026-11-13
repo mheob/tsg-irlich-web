@@ -1043,6 +1043,21 @@ export type Role = {
   email?: string;
 };
 
+export type VolunteerPosition = {
+  _id: string;
+  _type: "volunteer.position";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  area: string;
+  effort?: string;
+  teaser: string;
+  tasks?: Array<string>;
+  profile?: Array<string>;
+  offer?: Array<string>;
+};
+
 export type EchoIssue = {
   _id: string;
   _type: "echo.issue";
@@ -1533,7 +1548,14 @@ export type PartnerPage = {
           | "megaphone"
           | "users"
           | "heart"
-          | "star";
+          | "star"
+          | "graduation-cap"
+          | "lightbulb"
+          | "award"
+          | "dumbbell"
+          | "flag"
+          | "building-2"
+          | "party-popper";
         _type: "partnerReason";
         _key: string;
       }>;
@@ -1559,7 +1581,14 @@ export type PartnerPage = {
           | "megaphone"
           | "users"
           | "heart"
-          | "star";
+          | "star"
+          | "graduation-cap"
+          | "lightbulb"
+          | "award"
+          | "dumbbell"
+          | "flag"
+          | "building-2"
+          | "party-popper";
         _type: "partnerWay";
         _key: string;
       }>;
@@ -2039,6 +2068,7 @@ export type AllSanitySchemaTypes =
   | RoleReference
   | Person
   | Role
+  | VolunteerPosition
   | EchoIssue
   | AuthorReference
   | NewsArticle
@@ -5905,14 +5935,21 @@ export type PartnerPageQueryResult = {
           title: string;
           text: string;
           icon:
+            | "award"
+            | "building-2"
+            | "dumbbell"
             | "fence"
+            | "flag"
             | "gift"
             | "globe"
+            | "graduation-cap"
             | "handshake"
             | "heart-handshake"
             | "heart"
+            | "lightbulb"
             | "map-pin"
             | "megaphone"
+            | "party-popper"
             | "shirt"
             | "star"
             | "trending-up"
@@ -5931,14 +5968,21 @@ export type PartnerPageQueryResult = {
           text: string;
           benefits?: Array<string>;
           icon:
+            | "award"
+            | "building-2"
+            | "dumbbell"
             | "fence"
+            | "flag"
             | "gift"
             | "globe"
+            | "graduation-cap"
             | "handshake"
             | "heart-handshake"
             | "heart"
+            | "lightbulb"
             | "map-pin"
             | "megaphone"
+            | "party-popper"
             | "shirt"
             | "star"
             | "trending-up"

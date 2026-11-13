@@ -5859,6 +5859,101 @@
 		}
 	},
 	{
+		"name": "volunteer.position",
+		"type": "document",
+		"attributes": {
+			"_id": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_type": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string",
+					"value": "volunteer.position"
+				}
+			},
+			"_createdAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_updatedAt": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"_rev": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				}
+			},
+			"title": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"area": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"effort": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": true
+			},
+			"teaser": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "string"
+				},
+				"optional": false
+			},
+			"tasks": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
+			},
+			"profile": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
+			},
+			"offer": {
+				"type": "objectAttribute",
+				"value": {
+					"type": "array",
+					"of": {
+						"type": "string"
+					}
+				},
+				"optional": true
+			}
+		}
+	},
+	{
 		"name": "echo.issue",
 		"type": "document",
 		"attributes": {
@@ -8547,6 +8642,34 @@
 																{
 																	"type": "string",
 																	"value": "star"
+																},
+																{
+																	"type": "string",
+																	"value": "graduation-cap"
+																},
+																{
+																	"type": "string",
+																	"value": "lightbulb"
+																},
+																{
+																	"type": "string",
+																	"value": "award"
+																},
+																{
+																	"type": "string",
+																	"value": "dumbbell"
+																},
+																{
+																	"type": "string",
+																	"value": "flag"
+																},
+																{
+																	"type": "string",
+																	"value": "building-2"
+																},
+																{
+																	"type": "string",
+																	"value": "party-popper"
 																}
 															]
 														},
@@ -8692,6 +8815,34 @@
 																{
 																	"type": "string",
 																	"value": "star"
+																},
+																{
+																	"type": "string",
+																	"value": "graduation-cap"
+																},
+																{
+																	"type": "string",
+																	"value": "lightbulb"
+																},
+																{
+																	"type": "string",
+																	"value": "award"
+																},
+																{
+																	"type": "string",
+																	"value": "dumbbell"
+																},
+																{
+																	"type": "string",
+																	"value": "flag"
+																},
+																{
+																	"type": "string",
+																	"value": "building-2"
+																},
+																{
+																	"type": "string",
+																	"value": "party-popper"
 																}
 															]
 														},

@@ -84,7 +84,7 @@ pnpm run cve                         # Audit the dependencies with cve-lite
 
 ### Sanity CMS Integration
 
-- **Content types**: Departments (the sports departments), Groups (the teams and courses within a department), News, People, Testimonials, TSG-Echo issues
+- **Content types**: Departments (the sports departments), Groups (the teams and courses within a department), News, People, Testimonials, TSG-Echo issues, open volunteer positions
 - **GROQ queries** in `src/lib/sanity/queries/`
 - **Type generation** from Sanity schema to TypeScript
 - **Image optimization** with next/image and Sanity image URLs

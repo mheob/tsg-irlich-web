@@ -7,6 +7,7 @@ import {
 	RiSurveyLine,
 	RiTeamLine,
 	RiTrophyLine,
+	RiUserHeartLine,
 } from 'react-icons/ri';
 import type { DocumentListBuilder, ListItemBuilder, StructureBuilder } from 'sanity/structure';
 
@@ -18,7 +19,8 @@ type DocumentGroup =
 	| 'groups'
 	| 'news'
 	| 'persons'
-	| 'settings';
+	| 'settings'
+	| 'volunteer';
 
 /**
  * Returns the documents of the news: the articles and their categories. The section „News“ of
@@ -47,6 +49,27 @@ function getGroupEcho(S: StructureBuilder): ListItemBuilder[] {
 				S.documentTypeList('echo.issue')
 					.title('TSG-Echo Ausgaben')
 					.defaultOrdering([{ direction: 'desc', field: 'releaseDate' }]),
+			),
+	];
+}
+
+/**
+ * Returns the group for the open positions of the volunteer page, newest first: the page shows
+ * every published one in that order.
+ *
+ * @param S - The structure builder.
+ * @returns The group for the open positions.
+ */
+function getGroupVolunteer(S: StructureBuilder): ListItemBuilder[] {
+	return [
+		S.listItem()
+			.title('Offene Aufgaben')
+			.id('volunteer-positions')
+			.icon(RiUserHeartLine)
+			.child(
+				S.documentTypeList('volunteer.position')
+					.title('Offene Aufgaben')
+					.defaultOrdering([{ direction: 'desc', field: '_createdAt' }]),
 			),
 	];
 }
@@ -247,6 +270,7 @@ function isExcludedDefaultListItem(id?: string): boolean {
 		'news.category',
 		'person',
 		'role',
+		'volunteer.position',
 	].includes(id);
 }
 
@@ -267,6 +291,7 @@ function getGroup(S: StructureBuilder, name: DocumentGroup): ListItemBuilder[] {
 		news: () => getGroupNews(S),
 		persons: () => getGroupPersons(S),
 		settings: () => getGroupSettings(S),
+		volunteer: () => getGroupVolunteer(S),
 	};
 	// An unknown name still falls back to the settings, as before.
 	const resolve = (groups as Partial<typeof groups>)[name] ?? groups.settings;
