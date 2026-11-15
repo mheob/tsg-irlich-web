@@ -15,7 +15,8 @@ jobs:
     # The visual regression baselines are pixel-comparable only against the image that produced
     # them, so the whole suite runs inside the pinned Playwright container — the same one
     # `apps/web/scripts/update-screenshots.sh` uses locally. The tag has to be bumped together with
-    # `@playwright/test` and with the image name in that script.
+    # `@playwright/test` and with the image name in that script; Renovate's `playwright` group in
+    # `.github/renovate.json` does all three in one branch.
     container:
       image: mcr.microsoft.com/playwright:v1.65.1-noble@sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579
       # `pwuser` — the image's unprivileged account, and the UID the workspace belongs to. As root,

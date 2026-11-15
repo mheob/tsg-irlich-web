@@ -398,6 +398,8 @@ The container ships its browsers under `/ms-playwright`, and two things have to 
 
 **Baselines are Linux-only.** A screenshot is comparable against the platform that produced it and nothing else, so both CI and the local update path run inside the pinned container `mcr.microsoft.com/playwright:v1.65.1-noble`. Outside Linux `visual.spec.ts` skips itself, which keeps a macOS `pnpm run test:e2e` from writing baselines nobody can match. The image tag appears in `.github/workflows/e2e.yml` and in `apps/web/scripts/update-screenshots.sh`, and both have to be bumped together with `@playwright/test`.
 
+The image only ships the browsers of its own Playwright release, so a tag that does not match `@playwright/test` fails every test at browser launch. Renovate's `playwright` group in `.github/renovate.json` therefore moves all three together and opens its branch only once each of them is ready (`minimumGroupSize: 3`): the npm package waits out `minimumReleaseAge`, while the image from mcr.microsoft.com carries no release date and would otherwise arrive alone. A regex manager there finds the image in the screenshot script.
+
 #### Approving an intended design change
 
 ```bash
