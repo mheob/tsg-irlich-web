@@ -50,8 +50,14 @@ const CategoryComboboxField = lazy(async () => {
 	return { default: component };
 });
 
-function isStronger(next: Activation, current: Activation): boolean {
-	return ACTIVATIONS.indexOf(next) > ACTIVATIONS.indexOf(current);
+/**
+ * The state update that applies a reason to load the combobox, unless the current one is stronger.
+ *
+ * @param next - The new reason.
+ * @returns The updater for `setActivation`.
+ */
+function strongerOf(next: Activation): (current: Activation) => Activation {
+	return (current) => (ACTIVATIONS.indexOf(next) > ACTIVATIONS.indexOf(current) ? next : current);
 }
 
 /**
@@ -176,7 +182,7 @@ export function CategoryCombobox({
 
 	function activate(next: Activation) {
 		startTransition(() => {
-			setActivation((current) => (isStronger(next, current) ? next : current));
+			setActivation(strongerOf(next));
 		});
 	}
 
@@ -184,7 +190,7 @@ export function CategoryCombobox({
 		() =>
 			afterLoad(() => {
 				startTransition(() => {
-					setActivation((current) => (current === 'none' ? 'load' : current));
+					setActivation(strongerOf('load'));
 				});
 			}),
 		[],
