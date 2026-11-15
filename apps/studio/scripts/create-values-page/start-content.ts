@@ -60,11 +60,20 @@ const HIGHLIGHTS: Readonly<Partial<Record<string, readonly string[]>>> = {
 	'Gesellschaftliche Verantwortung': ['Teamgeist', 'Hilfsbereitschaft', 'Respekt', 'Gemeinschaft'],
 };
 
+/**
+ * The number of departments as the club counts them today (2026-11-15). The long vision still says
+ * 18; the counters of the club page say 14 as well.
+ */
+const DEPARTMENT_COUNT = 14;
+
+/** The departments as the long vision words them, with whatever number it names. */
+const DEPARTMENTS_IN_TEXT = /\b\d+ verschiedenen Sparten\b/gu;
+
 /** The facts the intro of the long vision names. */
 const FACTS = [
 	{ label: 'gegründet', value: '1882' },
 	{ label: 'Mitglieder', value: '~700' },
-	{ label: 'Sparten', value: '18' },
+	{ label: 'Sparten', value: String(DEPARTMENT_COUNT) },
 	{ label: 'Vereinsfarben', value: 'Blau & Gelb' },
 ] as const;
 
@@ -187,7 +196,12 @@ function buildStartContent(source: StartSource): undefined | ValuesPageDraft {
 	}
 
 	const { heroImage, introImage, longVision } = aboutUs;
-	const { intro, values } = splitLongVision(longVision);
+	const { intro: introText, values } = splitLongVision(longVision);
+	// The long vision names an outdated number of departments; the page states today's.
+	const intro = introText.replaceAll(
+		DEPARTMENTS_IN_TEXT,
+		`${DEPARTMENT_COUNT} verschiedenen Sparten`,
+	);
 	const published = new Set(source.targets);
 	const image = introImage ? withoutKey(introImage) : undefined;
 
