@@ -91,6 +91,21 @@ describe('values page start content', () => {
 		});
 	});
 
+	it('states today’s 14 departments where the long vision still names another number', () => {
+		const draft = draftOf({
+			aboutUs: {
+				longVision: [
+					block('intro', 'Die TSG bietet ein Sportangebot in 18 verschiedenen Sparten.'),
+					block('h-all', 'Sportverein für alle', 'h3'),
+				],
+			},
+		});
+
+		expect(draft.content.aboutSection.intro).toBe(
+			'Die TSG bietet ein Sportangebot in 14 verschiedenen Sparten.',
+		);
+	});
+
 	it('uses the first intro image of the club page without its array key', () => {
 		expect(draftOf().content.aboutSection.image).toStrictEqual({
 			_type: 'extendedImage',
@@ -105,7 +120,7 @@ describe('values page start content', () => {
 		).toStrictEqual([
 			'1882 gegründet',
 			'~700 Mitglieder',
-			'18 Sparten',
+			'14 Sparten',
 			'Blau & Gelb Vereinsfarben',
 		]);
 	});

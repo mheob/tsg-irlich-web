@@ -3,9 +3,15 @@
 		"result": {
 			"_createdAt": "2026-11-15T07:23:54Z",
 			"_id": "valuesPage",
-			"_rev": "yYnDpHS6qhdLWxocavwlqn",
+			"_rev": "yYnDpHS6qhdLWxocavx8pJ",
+			"_system": {
+				"base": {
+					"id": "valuesPage",
+					"rev": "J7vGSUg8gO4bMEbVeApszA"
+				}
+			},
 			"_type": "valuesPage",
-			"_updatedAt": "2026-11-15T07:24:27Z",
+			"_updatedAt": "2026-11-15T08:25:22Z",
 			"content": {
 				"aboutSection": {
 					"facts": [
@@ -25,7 +31,7 @@
 							"_key": "fact-3",
 							"_type": "valuesFact",
 							"label": "Sparten",
-							"value": "18"
+							"value": "14"
 						},
 						{
 							"_key": "fact-4",
@@ -56,7 +62,7 @@
 							"y": 0.3031366432718135
 						}
 					},
-					"intro": "Die Turn- und Sportgemeinde Irlich 1882 e.V. wurde im Jahr 1882 gegründet und ist einer der ältesten und traditionsreichsten Vereine im Kreis Neuwied. Die TSG bietet seinen rund 700 Mitgliedern ein vielfältiges Sportangebot in 18 verschiedenen Sparten. Die Vereinsfarben sind Blau und Gelb und die sportliche Heimat befindet sich in der Gotenstraße in Irlich.",
+					"intro": "Die Turn- und Sportgemeinde Irlich 1882 e.V. wurde im Jahr 1882 gegründet und ist einer der ältesten und traditionsreichsten Vereine im Kreis Neuwied. Die TSG bietet seinen rund 700 Mitgliedern ein vielfältiges Sportangebot in 14 verschiedenen Sparten. Die Vereinsfarben sind Blau und Gelb und die sportliche Heimat befindet sich in der Gotenstraße in Irlich.",
 					"subtitle": "Wer wir sind",
 					"title": "Turn- und Sportgemeinde Irlich 1882 e.V."
 				},
@@ -270,7 +276,7 @@
 			"title": "Unsere Werte"
 		},
 		"syncTags": ["s1:LGzQZA", "s1:RTKmCw", "s1:NG5dWA"],
-		"ms": 7
+		"ms": 8
 	},
 	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27valuesPage%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09...%2C%0A%09%09%09joinSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09%22links%22%3A+coalesce%28links%5B%5D+%7B%0A%09%09%09%09%09_key%2C%0A%09%09%09%09%09title%2C%0A%09%09%09%09%09linkType%2C%0A%09%09%09%09%09href%2C%0A%09%09%09%09%09%22link%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D%0A%09%09%09%09%7D%2C+%5B%5D%29%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
 }
