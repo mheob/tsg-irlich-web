@@ -2,6 +2,17 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["github>mheob/renovate-config"],
 	"schedule": ["before 4am on Thursday"],
+	"customManagers": [
+		{
+			"customType": "regex",
+			"description": "The screenshot script pins the same Playwright image as the e2e workflow, so the baselines it writes are the ones CI compares against. No built-in manager reads a shell script.",
+			"managerFilePatterns": ["/^apps/web/scripts/update-screenshots\\.sh$/"],
+			"matchStrings": [
+				"readonly IMAGE='(?<depName>mcr\\.microsoft\\.com/playwright):(?<currentValue>[^@']+)@(?<currentDigest>sha256:[a-f0-9]{64})'"
+			],
+			"datasourceTemplate": "docker"
+		}
+	],
 	"packageRules": [
 		{
 			"description": "Every dependency lives in the pnpm catalog, whose entries are neither `dependencies` nor `devDependencies`. The `bump` strategy of mheob/renovate-config does not reach them, so Renovate would only refresh the lockfile; keep raising the ranges as before.",
@@ -21,6 +32,14 @@
 			"prBodyNotes": [
 				"Run `vp migrate` on this branch and commit the result, so `vitest` and `@vitest/coverage-v8` follow the runner the new release bundles."
 			]
+		},
+		{
+			"description": "The Playwright image ships the browsers of exactly one Playwright release, so `@playwright/test` has to match its tag. An npm release waits out `minimumReleaseAge`, while mcr.microsoft.com reports no release date and the image would come at once (WEB-444). Open the branch only when all three are ready: the package, the image of the e2e workflow and the image of the screenshot script. A digest-only rebuild of the same tag keeps its browsers and stays in the non-major group.",
+			"matchPackageNames": ["@playwright/test", "mcr.microsoft.com/playwright"],
+			"matchUpdateTypes": ["major", "minor", "patch"],
+			"groupName": "playwright",
+			"groupSlug": "playwright",
+			"minimumGroupSize": 3
 		}
 	]
 }
