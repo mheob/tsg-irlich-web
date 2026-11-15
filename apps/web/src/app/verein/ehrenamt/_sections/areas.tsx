@@ -5,6 +5,7 @@ import { cn } from '@tsgi-web/shared';
 import { PageIcon } from '@/components/ui/page-icon';
 import { SectionHeader } from '@/components/ui/section-header';
 import { urlForImage } from '@/lib/sanity/utils';
+import { withUniqueKeys } from '@/utils/keys';
 
 import type { AreasSection } from '../_shared/types';
 
@@ -98,10 +99,10 @@ function Areas({ section }: Readonly<{ section: AreasSection }>) {
 										aria-label={`Beispielaufgaben ${area.title}`}
 										className="mt-6 flex flex-wrap gap-2"
 									>
-										{area.tasks.map((task) => (
+										{withUniqueKeys(area.tasks, (task) => task).map(({ key, value: task }) => (
 											<li
 												className="rounded-full bg-primary-light/10 px-3 py-1 text-sm font-semibold text-primary"
-												key={task}
+												key={key}
 											>
 												{task}
 											</li>

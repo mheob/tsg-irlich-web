@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../../../test-utils/render';
 import type { AreasSection } from '../_shared/types';
@@ -57,6 +57,18 @@ describe('the areas section of the volunteer page', () => {
 		expect(getByRole('list', { name: 'Beispielaufgaben Sport' }).textContent).toBe(
 			'Aufgabe in Sport',
 		);
+	});
+
+	it('lists an example task entered twice without clashing keys', () => {
+		const errorSpy = vi.spyOn(console, 'error').mockReturnValue();
+		const { getByRole } = renderWithUser(
+			<Areas section={buildSection([buildArea('Sport', { tasks: ['Fahren', 'Fahren'] })])} />,
+		);
+
+		expect(
+			getByRole('list', { name: 'Beispielaufgaben Sport' }).querySelectorAll('li'),
+		).toHaveLength(2);
+		expect(errorSpy).not.toHaveBeenCalled();
 	});
 
 	it('leaves the task list out of an area without tasks', () => {
