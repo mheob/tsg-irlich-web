@@ -1,5 +1,5 @@
 import { RiArticleLine } from 'react-icons/ri';
-import type { PreviewValue } from 'sanity';
+import type { PreviewValue, ValidationError } from 'sanity';
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
 import { content, excerpt, general, meta } from '@/shared/field-groups';
@@ -9,6 +9,7 @@ import { formattedSlugField, titleField } from '@/shared/fields/general';
 import { authorField, metaField } from '@/shared/fields/meta';
 import { previousArticleSlugsField } from '@/shared/fields/slug-history';
 import { getFieldWithGroup } from '@/utils/fields';
+import { getSkippedHeadings } from '@/utils/heading-order';
 import { formatDate } from '@/utils/time';
 
 /**
@@ -19,6 +20,26 @@ const TITLE_SEARCH_WEIGHT = 5;
 
 /** More than a handful of files under an article buries the ones that matter (WEB-277). */
 const MAX_DOWNLOADS = 5;
+
+/**
+ * Marks every subheading of the body that skips a level: an H3 with no H2 above it, right below the
+ * `h1` of the headline (WEB-301). A warning, not an error, so an article can still be published.
+ *
+ * @param body - The `body` of the article.
+ * @returns `true`, or one marker on each such heading, relative to `body`.
+ */
+function validateArticleHeadings(body: unknown): true | ValidationError[] {
+	const skipped = getSkippedHeadings(body);
+	if (skipped.length === 0) {
+		return true;
+	}
+
+	return skipped.map(({ blockKey, sectionKey }) => ({
+		message:
+			'Diese H3 steht ohne H2 darüber. Nimm H2 für Zwischenüberschriften und H3 nur für Unterpunkte unter einer H2.',
+		path: [{ _key: sectionKey }, 'text', { _key: blockKey }],
+	}));
+}
 
 const newsArticle = defineType({
 	fields: [
@@ -57,6 +78,8 @@ const newsArticle = defineType({
 		// Content
 		defineField({
 			...contentField,
+			description:
+				'Abschnitte mit Inhalt hinzufügen, bearbeiten und neu anordnen. Zwischenüberschriften im Text sind H2, H3 nur für Unterpunkte unter einer H2: Die Überschrift des Artikels ist schon die oberste Ebene.',
 			of: [
 				{ type: 'blockContent' },
 				{ type: 'blockquote' },
@@ -65,6 +88,7 @@ const newsArticle = defineType({
 				{ type: 'mainImage' },
 				{ type: 'spacer' },
 			],
+			validation: (Rule) => Rule.custom((body) => validateArticleHeadings(body)).warning(),
 		}),
 
 		defineField({
@@ -117,4 +141,5 @@ const newsArticle = defineType({
 	type: 'document',
 });
 
+export { validateArticleHeadings };
 export default newsArticle;
