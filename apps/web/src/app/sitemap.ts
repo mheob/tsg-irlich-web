@@ -22,6 +22,7 @@ import {
 	getEchoIssuePath,
 	getInternalHref,
 	PARTNER_PAGE_PATH,
+	VALUES_PAGE_PATH,
 	VENUE_PAGE_PATH,
 	VOLUNTEER_PAGE_PATH,
 } from '@/utils/links';
@@ -92,6 +93,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			changeFrequency: 'monthly',
 			priority: 0.7,
 			url: `${baseUrl}/verein`,
+		},
+		{
+			changeFrequency: 'yearly',
+			priority: 0.5,
+			url: `${baseUrl}${VALUES_PAGE_PATH}`,
 		},
 		{
 			changeFrequency: 'monthly',

@@ -42,36 +42,28 @@ describe('the vision section', () => {
 		]);
 	});
 
-	it('shows the long vision of the club page in its dialog', async () => {
-		const { findByRole, getByRole, user } = renderWithUser(
+	it('leads from the home page to the values page', () => {
+		const { getByRole } = renderVision();
+
+		expect(getByRole('link', { name: 'Mehr erfahren' }).getAttribute('href')).toBe('/verein/werte');
+	});
+
+	it('leads from the club page to the values page with its own button text', () => {
+		const { getByRole, queryByRole } = renderWithUser(
 			<Vision
 				_type="aboutUs"
-				ctaLongVision="Unsere ganze Vision"
+				ctaLongVision="Siehe dir unsere Werte an"
 				images={VISION_IMAGES}
 				intro="Sport verbindet."
-				longVision={{
-					_type: 'blockContent',
-					text: [
-						{
-							_key: 'vision-block',
-							_type: 'block',
-							children: [
-								{ _key: 'vision-span', _type: 'span', marks: [], text: 'Ein Verein für alle.' },
-							],
-							markDefs: [],
-							style: 'normal',
-						},
-					],
-				}}
-				longVisionTitle="Die Vision der TSG"
 				subtitle="Unsere Vision"
 				title="Gemeinsam bewegen"
 			/>,
 		);
 
-		await user.click(getByRole('button', { name: 'Unsere ganze Vision' }));
-
-		const dialog = await findByRole('dialog', { name: 'Die Vision der TSG' });
-		expect(dialog.textContent).toContain('Ein Verein für alle.');
+		expect(getByRole('link', { name: 'Siehe dir unsere Werte an' }).getAttribute('href')).toBe(
+			'/verein/werte',
+		);
+		// WEB-150: the long vision moved to its own page, so the button opens no dialog any more.
+		expect(queryByRole('button')).toBeNull();
 	});
 });

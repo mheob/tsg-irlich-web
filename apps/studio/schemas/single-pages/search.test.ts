@@ -12,6 +12,7 @@ import newsOverviewPage from './news-overview';
 import offerPage from './offer';
 import partnerPage from './partner-page';
 import privacyPage from './privacy';
+import valuesPage from './values-page';
 import venuePage from './venue-page';
 import volunteerPage from './volunteer-page';
 
@@ -34,6 +35,7 @@ const PAGES = [
 	partnerPage,
 	volunteerPage,
 	venuePage,
+	valuesPage,
 	privacyPage,
 ] as unknown as SinglePage[];
 

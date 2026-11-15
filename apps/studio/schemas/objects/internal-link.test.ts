@@ -29,6 +29,10 @@ describe('internal link targets', () => {
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'venuePage' });
 	});
 
+	it('offers the values page', () => {
+		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'valuesPage' });
+	});
+
 	it('offers departments and groups', () => {
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'department' });
 		expect(INTERNAL_LINK_TARGETS).toContainEqual({ type: 'group' });

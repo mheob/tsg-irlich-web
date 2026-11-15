@@ -4,12 +4,10 @@ import Link from 'next/link';
 import { cn } from '@tsgi-web/shared';
 
 import { ButtonLink } from '@/components/ui/button';
-import { PortableText } from '@/components/ui/portable-text';
 import { SectionHeader } from '@/components/ui/section-header';
 import type { ResolvedImage } from '@/types/image.types';
 import type { AboutUs, Home } from '@/types/sanity.types';
-
-import { LongVisionDialog } from './vision.dialog';
+import { VALUES_PAGE_PATH } from '@/utils/links';
 
 import styles from './vision.module.css';
 
@@ -101,19 +99,10 @@ export function Vision(props: Readonly<VisionProps>) {
 						{props.intro}
 					</SectionHeader>
 
-					{props._type === 'home' && (
-						<ButtonLink className="relative mt-12" render={<Link href="/verein#vision-section" />}>
-							{props.cta}
-						</ButtonLink>
-					)}
-					{props._type === 'aboutUs' && (
-						<LongVisionDialog
-							ctaLongVision={props.ctaLongVision}
-							longVisionTitle={props.longVisionTitle}
-						>
-							{props.longVision?.text && <PortableText value={props.longVision.text} />}
-						</LongVisionDialog>
-					)}
+					{/* Both pages lead to the values page (WEB-150); only the field of the button text differs. */}
+					<ButtonLink className="relative mt-12" render={<Link href={VALUES_PAGE_PATH} />}>
+						{props._type === 'home' ? props.cta : props.ctaLongVision}
+					</ButtonLink>
 				</div>
 			</div>
 		</section>

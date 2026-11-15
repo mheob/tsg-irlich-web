@@ -83,6 +83,7 @@ describe(sitemap, () => {
 			'http://localhost:3000/angebot',
 			'http://localhost:3000/news',
 			'http://localhost:3000/verein',
+			'http://localhost:3000/verein/werte',
 			'http://localhost:3000/verein/partner',
 			'http://localhost:3000/verein/ehrenamt',
 			'http://localhost:3000/verein/sportstaetten',
@@ -96,11 +97,24 @@ describe(sitemap, () => {
 		]);
 	});
 
-	it('lists the partner page right after the club page, monthly at 0.6', async () => {
+	it('lists the values page right after the club page, yearly at 0.5', async () => {
 		mockSanity({});
 
 		const entries = await sitemap();
 		const index = entries.findIndex((entry) => entry.url === 'http://localhost:3000/verein');
+
+		expect(entries[index + 1]).toStrictEqual({
+			changeFrequency: 'yearly',
+			priority: 0.5,
+			url: 'http://localhost:3000/verein/werte',
+		});
+	});
+
+	it('lists the partner page right after the values page, monthly at 0.6', async () => {
+		mockSanity({});
+
+		const entries = await sitemap();
+		const index = entries.findIndex((entry) => entry.url === 'http://localhost:3000/verein/werte');
 
 		expect(entries[index + 1]).toStrictEqual({
 			changeFrequency: 'monthly',

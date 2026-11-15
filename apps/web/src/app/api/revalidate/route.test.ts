@@ -395,6 +395,14 @@ describe('sanity revalidation webhook', () => {
 		]);
 	});
 
+	it('revalidates the values page for the values page itself', async () => {
+		mockedParseBody.mockResolvedValue(parsed({ _type: 'valuesPage' }));
+
+		await POST(REQUEST);
+
+		expect(revalidatedPaths()).toStrictEqual(['/verein/werte']);
+	});
+
 	it('revalidates the venue page for the venue page itself', async () => {
 		mockedParseBody.mockResolvedValue(parsed({ _type: 'venuePage' }));
 

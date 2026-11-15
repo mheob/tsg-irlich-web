@@ -61,6 +61,7 @@ describe('page list items', () => {
 		expect(getItemTitles(findListItem('club')?.getChild())).toStrictEqual([
 			'aboutUs',
 			'Unterseiten',
+			'valuesPage',
 			'echoOverview',
 			'partnerPage',
 			'volunteerPage',
@@ -133,6 +134,7 @@ describe('pages missing from the layout', () => {
 		expect(getItemTitles(items.find((item) => item.getId() === 'club')?.getChild())).toStrictEqual([
 			'aboutUs',
 			'Unterseiten',
+			'valuesPage',
 			'partnerPage',
 			'volunteerPage',
 			'venuePage',
