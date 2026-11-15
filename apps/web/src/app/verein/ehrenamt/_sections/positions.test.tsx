@@ -134,6 +134,21 @@ describe('the open positions of the volunteer page', () => {
 		expect(queryByRole('link', { name: /Erzähl uns/u })).toBeNull();
 	});
 
+	it('shows only the header and the steps without positions and without the other card', () => {
+		const { getByRole, queryAllByRole } = renderWithUser(
+			<Positions
+				inquiry={INQUIRY}
+				positions={[]}
+				section={buildSection({ otherTitle: undefined })}
+			/>,
+		);
+
+		expect(getByRole('heading', { level: 2, name: 'Wir suchen Verstärkung' })).not.toBeNull();
+		expect(getByRole('list', { name: 'So geht es' })).not.toBeNull();
+		expect(queryAllByRole('button')).toHaveLength(0);
+		expect(queryAllByRole('link')).toHaveLength(0);
+	});
+
 	it('shows steps and the other card but no accordion without positions', () => {
 		const { getByRole, queryAllByRole } = renderWithUser(
 			<Positions inquiry={INQUIRY} positions={[]} section={buildSection()} />,
