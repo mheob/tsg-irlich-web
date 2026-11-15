@@ -1,24 +1,30 @@
 import { CircleCheck } from 'lucide-react';
+import { useId } from 'react';
 
 import { ButtonLink } from '@/components/ui/button';
+import { withUniqueKeys } from '@/utils/keys';
 
 import type { Position } from '../_shared/types';
 
 /**
- * One list of an open position under its heading, such as „Deine Aufgaben“.
+ * One list of an open position under its heading, such as „Deine Aufgaben“. The heading names the
+ * list, so a screen reader does not read the same words twice.
  *
  * @param props - The heading and the items.
  * @param props.heading - The heading from the studio.
+ * @param props.headingId - The id of the heading, unique on the page.
  * @param props.items - The items; the caller leaves an empty list out.
  * @returns The list.
  */
-function DetailList({ heading, items }: Readonly<{ heading: string; items: string[] }>) {
+function DetailList({ heading, headingId, items }: Readonly<DetailListProps>) {
 	return (
 		<div>
-			<h4 className="font-sans-serif font-bold uppercase">{heading}</h4>
-			<ul aria-label={heading} className="mt-2 space-y-2">
-				{items.map((item) => (
-					<li className="flex items-start gap-2 text-sm md:text-base" key={item}>
+			<h4 className="font-sans-serif font-bold uppercase" id={headingId}>
+				{heading}
+			</h4>
+			<ul aria-labelledby={headingId} className="mt-2 space-y-2">
+				{withUniqueKeys(items, (item) => item).map(({ key, value: item }) => (
+					<li className="flex items-start gap-2 text-sm md:text-base" key={key}>
 						<CircleCheck aria-hidden="true" className="mt-0.5 size-5 min-w-5 text-primary-light" />
 						{item}
 					</li>
@@ -40,11 +46,12 @@ function DetailList({ heading, items }: Readonly<{ heading: string; items: strin
  * @returns The details.
  */
 function PositionDetails({ cta, headings, href, position }: Readonly<PositionDetailsProps>) {
+	const id = useId();
 	const lists = [
-		{ heading: headings.tasks, items: position.tasks },
-		{ heading: headings.profile, items: position.profile },
-		{ heading: headings.offer, items: position.offer },
-	].filter((list): list is { heading: string; items: string[] } => Boolean(list.items?.length));
+		{ heading: headings.tasks, items: position.tasks, name: 'tasks' },
+		{ heading: headings.profile, items: position.profile, name: 'profile' },
+		{ heading: headings.offer, items: position.offer, name: 'offer' },
+	].filter((list): list is DetailListEntry => Boolean(list.items?.length));
 
 	return (
 		<>
@@ -52,7 +59,12 @@ function PositionDetails({ cta, headings, href, position }: Readonly<PositionDet
 			{lists.length > 0 && (
 				<div className="mt-6 grid gap-6 md:grid-cols-3">
 					{lists.map((list) => (
-						<DetailList heading={list.heading} items={list.items} key={list.heading} />
+						<DetailList
+							heading={list.heading}
+							headingId={`${id}-${list.name}`}
+							items={list.items}
+							key={list.name}
+						/>
 					))}
 				</div>
 			)}
@@ -63,6 +75,18 @@ function PositionDetails({ cta, headings, href, position }: Readonly<PositionDet
 			</div>
 		</>
 	);
+}
+
+interface DetailListProps {
+	heading: string;
+	headingId: string;
+	items: string[];
+}
+
+interface DetailListEntry {
+	heading: string;
+	items: string[];
+	name: string;
 }
 
 interface PositionDetailsProps {

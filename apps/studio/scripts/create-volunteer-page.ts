@@ -38,12 +38,15 @@ const withPlaceholders = hasPlaceholderFlag(argv);
 assertPlaceholdersAllowed(dataset, withPlaceholders);
 
 // `raw` sees drafts; the default perspective since API 2025-02-19 is `published` and hides them.
-// The image lookups below name published ids or filter out drafts, so they read published content.
+// The page must not exist as a draft either, so the check whether it exists reads `raw`.
 const client = getCliClient({ apiVersion: API_VERSION }).withConfig({
 	dataset,
 	perspective: 'raw',
 	useCdn: false,
 });
+// The images come from published documents only. `raw` would also return the versions of a content
+// release, and a group or the site settings in a release could hand the page an unpublished image.
+const publishedClient = client.withConfig({ perspective: 'published' });
 
 const existing = await client.fetch<string[]>(`*[_id in $ids]._id`, {
 	ids: ['volunteerPage', VOLUNTEER_PAGE_ID],
@@ -52,7 +55,7 @@ const existing = await client.fetch<string[]>(`*[_id in $ids]._id`, {
 if (existing.length > 0) {
 	console.log(`Die Ehrenamtsseite existiert schon in ${dataset}, nichts geschrieben.`);
 } else {
-	const images = await client.fetch<StartImagesResult>(START_IMAGES_QUERY, {
+	const images = await publishedClient.fetch<StartImagesResult>(START_IMAGES_QUERY, {
 		slugs: [...AREA_GROUP_SLUGS],
 	});
 	const page = await client.create(buildStartContent(toStartImages(images)));

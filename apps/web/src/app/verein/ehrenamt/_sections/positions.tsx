@@ -21,7 +21,8 @@ import downloadStyles from '@/app/mitgliedschaft/_sections/downloads.module.css'
 /**
  * „Aktuell gesucht“ from variant B: the header and the steps on the left, the open positions as an
  * accordion on the right, the first one open, and a card for an idea of one's own below them.
- * Without a published position the steps and the card stay.
+ * Without a published position the steps and the card stay; without the card as well, the header
+ * and the steps take the whole width instead of leaving the right half empty.
  *
  * @param props - The section, the positions and where the mails go.
  * @param props.inquiry - The address and subject of the mails.
@@ -36,14 +37,25 @@ function Positions({ inquiry, positions, section }: Readonly<PositionsProps>) {
 		profile: section.profileHeading,
 		tasks: section.tasksHeading,
 	};
+	const hasAside = positions.length > 0 || Boolean(otherTitle);
 
 	return (
-		<section className="relative z-0 bg-background-low-contrast" id={POSITIONS_ANCHOR}>
+		// The button of the reasons jumps here, and the margin keeps the fixed navigation off the
+		// header on a phone, where the section's own padding is too small for it.
+		<section
+			className="relative z-0 scroll-mt-16 bg-background-low-contrast md:scroll-mt-0"
+			id={POSITIONS_ANCHOR}
+		>
 			<div className={downloadStyles.bg} />
 			<div className={downloadStyles.bgBalls} />
 
-			<div className="container py-10 md:py-28 lg:grid lg:grid-cols-[4fr_8fr] lg:gap-16">
-				<div className="self-start lg:sticky lg:top-36">
+			<div
+				className={cn(
+					'container py-10 md:py-28',
+					hasAside && 'lg:grid lg:grid-cols-[4fr_8fr] lg:gap-16',
+				)}
+			>
+				<div className={cn(hasAside && 'self-start lg:sticky lg:top-36')}>
 					<SectionHeader isCenteredOnDesktop={false} subTitle={subtitle} title={title} isCentered>
 						{intro}
 					</SectionHeader>
@@ -68,56 +80,58 @@ function Positions({ inquiry, positions, section }: Readonly<PositionsProps>) {
 					) : null}
 				</div>
 
-				<div className="mt-12 flex flex-col gap-4 lg:mt-0">
-					{positions.length > 0 && (
-						<Accordion defaultValue={[positions[0]?._id]} multiple={false}>
-							{positions.map((position) => (
-								<AccordionItem key={position._id} value={position._id}>
-									<AccordionTrigger>
-										<span className="flex flex-col gap-2 text-left md:flex-row md:items-center md:gap-6">
-											<span className="font-serif text-2xl text-foreground uppercase md:text-3xl">
-												{position.title}
+				{hasAside && (
+					<div className="mt-12 flex flex-col gap-4 lg:mt-0">
+						{positions.length > 0 && (
+							<Accordion defaultValue={[positions[0]?._id]} multiple={false}>
+								{positions.map((position) => (
+									<AccordionItem key={position._id} value={position._id}>
+										<AccordionTrigger>
+											<span className="flex flex-col gap-2 text-left md:flex-row md:items-center md:gap-6">
+												<span className="font-serif text-2xl text-foreground uppercase md:text-3xl">
+													{position.title}
+												</span>
+												<span className="flex flex-wrap gap-2">
+													<Badge size="sm">{position.area}</Badge>
+													{position.effort && (
+														<Badge size="sm" variant="ghost">
+															<Clock aria-hidden="true" />
+															{position.effort}
+														</Badge>
+													)}
+												</span>
 											</span>
-											<span className="flex flex-wrap gap-2">
-												<Badge size="sm">{position.area}</Badge>
-												{position.effort && (
-													<Badge size="sm" variant="ghost">
-														<Clock aria-hidden="true" />
-														{position.effort}
-													</Badge>
-												)}
-											</span>
-										</span>
-									</AccordionTrigger>
-									<AccordionContent>
-										<PositionDetails
-											cta={cta}
-											headings={headings}
-											href={getMailHref(inquiry, position.title)}
-											position={position}
-										/>
-									</AccordionContent>
-								</AccordionItem>
-							))}
-						</Accordion>
-					)}
+										</AccordionTrigger>
+										<AccordionContent>
+											<PositionDetails
+												cta={cta}
+												headings={headings}
+												href={getMailHref(inquiry, position.title)}
+												position={position}
+											/>
+										</AccordionContent>
+									</AccordionItem>
+								))}
+							</Accordion>
+						)}
 
-					{otherTitle && (
-						<a
-							className={cn(
-								'flex items-center gap-4 rounded-xl border-2 border-dashed border-primary/30 p-6 text-primary',
-								'transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground',
-							)}
-							href={getMailHref(inquiry)}
-						>
-							<Plus aria-hidden="true" className="size-8 shrink-0" />
-							<span>
-								<span className="block font-serif text-2xl uppercase">{otherTitle}</span>
-								{otherText && <span className="block text-sm md:text-base">{otherText}</span>}
-							</span>
-						</a>
-					)}
-				</div>
+						{otherTitle && (
+							<a
+								className={cn(
+									'flex items-center gap-4 rounded-xl border-2 border-dashed border-primary/30 p-6 text-primary',
+									'transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground',
+								)}
+								href={getMailHref(inquiry)}
+							>
+								<Plus aria-hidden="true" className="size-8 shrink-0" />
+								<span>
+									<span className="block font-serif text-2xl uppercase">{otherTitle}</span>
+									{otherText && <span className="block text-sm md:text-base">{otherText}</span>}
+								</span>
+							</a>
+						)}
+					</div>
+				)}
 			</div>
 		</section>
 	);

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../../../test-utils/render';
 import type { Testimonial, VoicesSection } from '../_shared/types';
@@ -47,6 +47,16 @@ describe('the voices section of the volunteer page', () => {
 		);
 
 		expect(getAllByRole('blockquote')).toHaveLength(2);
+	});
+
+	it('shows a testimonial chosen twice without clashing keys', () => {
+		const errorSpy = vi.spyOn(console, 'error').mockReturnValue();
+		const { getAllByRole } = renderWithUser(
+			<Voices section={SECTION} testimonials={[buildTestimonial(), buildTestimonial()]} />,
+		);
+
+		expect(getAllByRole('blockquote')).toHaveLength(2);
+		expect(errorSpy).not.toHaveBeenCalled();
 	});
 
 	it('shows the initials where the testimonial has no portrait', () => {

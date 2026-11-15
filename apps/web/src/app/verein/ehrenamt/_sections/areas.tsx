@@ -5,11 +5,17 @@ import { cn } from '@tsgi-web/shared';
 import { PageIcon } from '@/components/ui/page-icon';
 import { SectionHeader } from '@/components/ui/section-header';
 import { urlForImage } from '@/lib/sanity/utils';
+import { withUniqueKeys } from '@/utils/keys';
 
 import type { AreasSection } from '../_shared/types';
 
-const IMAGE_HEIGHT = 900;
-const IMAGE_WIDTH = 1200;
+/**
+ * The source the optimizer scales from, in the 4:3 of the box. From 48rem up an area's image takes
+ * half the container, up to about 860 px on the widest screens and so 1,730 px on a sharp one. The
+ * optimizer never scales an image up.
+ */
+const IMAGE_HEIGHT = 1440;
+const IMAGE_WIDTH = 1920;
 const DIGITS = 2;
 
 /**
@@ -98,10 +104,10 @@ function Areas({ section }: Readonly<{ section: AreasSection }>) {
 										aria-label={`Beispielaufgaben ${area.title}`}
 										className="mt-6 flex flex-wrap gap-2"
 									>
-										{area.tasks.map((task) => (
+										{withUniqueKeys(area.tasks, (task) => task).map(({ key, value: task }) => (
 											<li
 												className="rounded-full bg-primary-light/10 px-3 py-1 text-sm font-semibold text-primary"
-												key={task}
+												key={key}
 											>
 												{task}
 											</li>

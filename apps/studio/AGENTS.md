@@ -258,7 +258,7 @@ It has no `mainDocuments` route and no `locations` entry in `plugins/presentatio
 
 `volunteer.position` („Offene Aufgabe“, `schemas/documents/volunteer.position.ts`, WEB-190) is one open position of the volunteer page `/verein/ehrenamt`: title, area (a short label such as „Fußball“, free text because not every area is a department), effort, teaser and the three lists „Deine Aufgaben“, „Das bringst du mit“ and „Das bieten wir“. A small document, so it has no tabs.
 
-- Every published position appears on the page, the newest first (`_createdAt`). The volunteer page does not list them, so a new one needs nothing but publishing.
+- Every published position appears on the page, the newest first (`_createdAt`, two of the same second by their id, so the one that starts open stays the same). The volunteer page does not list them, so a new one needs nothing but publishing.
 - Withdrawing a position means „Veröffentlichung zurücknehmen“: the document stays as a draft and can go live again later. Deleting it works as well.
 - Desk: „Verein“ → „Inhalte“ → „Offene Aufgaben“ (`getGroupVolunteer` in `structure/index.ts`), newest first; the type is kept out of the default list.
 
