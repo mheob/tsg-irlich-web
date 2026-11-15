@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 
 import { Hero } from '@/components/section/hero';
+import { Newsletter } from '@/components/section/newsletter';
 import type { client } from '@/lib/sanity/client';
 
 import { itFollowsTheMetadataContract } from '../../../../test-utils/page-contract';
@@ -99,7 +100,7 @@ describe('values page', () => {
 			expect(hero?.props).toMatchObject({ subTitle: 'Unser Leitbild', title: 'Unsere Werte' });
 		});
 
-		it('renders hero, „Wer wir sind“, the values and the closing call in this order', async () => {
+		it('renders hero, „Wer wir sind“, the values, the closing call and the newsletter in this order', async () => {
 			mockedFetch.mockResolvedValue(buildPage());
 
 			const page = (await ValuesPage()) as { props: { children: { type: unknown }[] } };
@@ -109,6 +110,7 @@ describe('values page', () => {
 				About,
 				Values,
 				Join,
+				Newsletter,
 			]);
 		});
 
@@ -131,6 +133,7 @@ describe('values page', () => {
 			expect(findElement(page, About)).toBeUndefined();
 			expect(findElement(page, Values)).toBeUndefined();
 			expect(findElement(page, Join)).toBeUndefined();
+			expect(findElement(page, Newsletter)).toBeDefined();
 		});
 	});
 });
