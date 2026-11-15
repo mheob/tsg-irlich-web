@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { Hero } from '@/components/section/hero';
+import { Newsletter } from '@/components/section/newsletter';
 import { client } from '@/lib/sanity/client';
 import { valuesPageQuery } from '@/lib/sanity/queries/pages/values';
 import type { ValuesPageQueryResult } from '@/types/sanity.types';
@@ -55,6 +56,7 @@ export default async function ValuesPage() {
 			{aboutSection && <About section={aboutSection} />}
 			{valuesSection && <Values section={valuesSection} />}
 			{joinSection && <Join section={joinSection} />}
+			<Newsletter />
 		</>
 	);
 }

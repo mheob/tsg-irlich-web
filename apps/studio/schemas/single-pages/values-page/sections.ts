@@ -223,7 +223,7 @@ const joinSection = defineField({
 		}),
 		defineField({
 			description:
-				'Höchstens zwei Buttons, etwa zur Mitgliedschaft und zum Ehrenamt. Der erste ist blau, der zweite umrandet.',
+				'Höchstens zwei Buttons, etwa zur Mitgliedschaft und zum Ehrenamt. Der erste ist gelb, der zweite umrandet.',
 			name: 'links',
 			of: [defineArrayMember({ type: 'navigationLink' })],
 			title: 'Buttons',
