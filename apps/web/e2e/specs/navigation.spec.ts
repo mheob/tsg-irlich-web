@@ -311,9 +311,8 @@ test.describe('navigation', () => {
 		await page.goto('/');
 		await waitForPage(page);
 
-		// The three the home page carries. `landmark-unique` would report them, but it is an axe
-		// `best-practice` rule and the sweep deliberately runs the WCAG tags only, so this spec is
-		// what holds the names in place.
+		// The three the home page carries. The axe sweep's `landmark-unique` only reports two
+		// landmarks that share a name; this spec holds the names themselves in place.
 		for (const name of ['Hauptnavigation', 'Fußzeilennavigation', 'Social Media']) {
 			await expect(page.getByRole('navigation', { exact: true, name })).toHaveCount(1);
 		}

@@ -5,20 +5,15 @@ import { expect } from '@playwright/test';
 import { KNOWN_VIOLATIONS } from './axe-baseline';
 
 /**
- * The rule sets the sweep runs: WCAG 2.1, level A and AA — the conformance target the club's
- * accessibility statement names. `best-practice` and the experimental rules stay out as a whole;
- * they report advice rather than a conformance failure, and a suite that blocks on advice gets
- * muted.
+ * The rule sets the sweep runs. WCAG 2.1, level A and AA, is the conformance target the club's
+ * accessibility statement names. `best-practice` reports no conformance failure but the structure a
+ * screen reader moves through: one `h1`, no skipped heading level, landmarks it can tell apart,
+ * content inside a landmark. Two of its rules ran on their own since WEB-413; the whole set joined
+ * once it passed on every route and state in both projects (WEB-301). A rule a later axe release
+ * adds shows up in that release's update, which fixes it or lists it in the baseline. The
+ * experimental rules stay out: they may change or disappear between releases.
  */
-const WCAG_21_AA_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
-
-/**
- * The `best-practice` rules the sweep runs on top of the WCAG tags (WEB-413, WEB-301). A page
- * without an `h1` and a heading that skips a level cost search engines their strongest signal and
- * screen-reader users the outline they jump through. axe runs a rule enabled under `rules` whatever
- * `runOnly` says, so one scan covers both; `withTags` and `withRules` would overwrite each other.
- */
-const BEST_PRACTICE_RULES = ['heading-order', 'page-has-heading-one'];
+const AXE_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'];
 
 /**
  * Base UI's focus guards: the two visually hidden spans its focus trap puts around a modal popup.
@@ -75,10 +70,7 @@ export async function expectNoAxeViolations(
 	route: string,
 ): Promise<void> {
 	const results = await new AxeBuilder({ page })
-		.options({
-			rules: Object.fromEntries(BEST_PRACTICE_RULES.map((rule) => [rule, { enabled: true }])),
-			runOnly: { type: 'tag', values: WCAG_21_AA_TAGS },
-		})
+		.withTags(AXE_TAGS)
 		.exclude(BASE_UI_FOCUS_GUARD)
 		.analyze();
 	const known = new Set(KNOWN_VIOLATIONS[route]);
