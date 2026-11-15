@@ -1,10 +1,9 @@
-import type { ComponentProps, HTMLAttributes, ReactNode } from 'react';
-import type { FieldValues } from 'react-hook-form';
+import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
-import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from '../with-logic/form';
-
+// A plain text input. The version bound to a react-hook-form field is `InputWithLabel` in its own
+// file, so this one stays free of the form library (WEB-448).
 function Input({ className, type, ...props }: ComponentProps<'input'>) {
 	return (
 		<input
@@ -22,30 +21,4 @@ function Input({ className, type, ...props }: ComponentProps<'input'>) {
 	);
 }
 
-interface InputWithLabelProps extends ComponentProps<typeof Input> {
-	children?: HTMLAttributes<HTMLLabelElement>['children'];
-	description?: ReactNode;
-	field?: FieldValues;
-	wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
-}
-
-function InputWithLabel({
-	children,
-	description,
-	field,
-	wrapperClassName,
-	...props
-}: Readonly<InputWithLabelProps>) {
-	return (
-		<FormItem className={wrapperClassName}>
-			<FormLabel>{children}</FormLabel>
-			<FormControl>
-				<Input {...field} {...props} />
-			</FormControl>
-			{description && <FormDescription className="max-w-none px-3">{description}</FormDescription>}
-			<FormMessage />
-		</FormItem>
-	);
-}
-
-export { Input, InputWithLabel };
+export { Input };

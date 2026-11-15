@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { InputWithLabel } from '@/components/ui/input';
+import { InputWithLabel } from '@/components/ui/input-with-label';
 import { PortableText } from '@/components/ui/portable-text';
 import { TextareaWithLabel } from '@/components/ui/textarea';
 import type { AnyFormField } from '@/lib/forms/types';

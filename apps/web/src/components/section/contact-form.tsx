@@ -10,7 +10,7 @@ import { settle } from '@tsgi-web/shared';
 
 import { sendContactForm } from '@/actions/send-contact-form';
 import { Button } from '@/components/ui/button';
-import { InputWithLabel } from '@/components/ui/input';
+import { InputWithLabel } from '@/components/ui/input-with-label';
 import { SectionHeader } from '@/components/ui/section-header';
 import { SelectWithLabel } from '@/components/ui/select';
 import { TextareaWithLabel } from '@/components/ui/textarea';
