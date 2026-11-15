@@ -124,6 +124,7 @@ const voicesSection = defineField({
 			of: [defineArrayMember({ to: [{ type: 'testimonial' }], type: 'reference' })],
 			title: 'Zitate',
 			type: 'array',
+			validation: (Rule) => [Rule.unique().error('Jedes Zitat darf nur einmal vorkommen')],
 		}),
 	],
 	group: 'voices',

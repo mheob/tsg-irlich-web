@@ -198,6 +198,13 @@ describe('volunteer page', () => {
 		]);
 	});
 
+	// The page would show a quote chosen twice twice.
+	it('refuses the same testimonial twice', () => {
+		const testimonials = subField(section('voicesSection'), 'testimonials');
+
+		expect(recordedRuleCalls(testimonials)).toStrictEqual(['unique', 'error']);
+	});
+
 	it.each([
 		['tasksHeading', 'Deine Aufgaben'],
 		['profileHeading', 'Das bringst du mit'],

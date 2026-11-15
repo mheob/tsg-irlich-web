@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 import { renderWithUser } from '../../../../../test-utils/render';
 import type { Position } from '../_shared/types';
@@ -44,6 +44,48 @@ describe('the details of an open position', () => {
 		expect(getByRole('list', { name: 'Das bringst du mit' }).textContent).toBe('Fairness');
 		expect(getByRole('list', { name: 'Das bieten wir' }).textContent).toBe('Neulingslehrgang');
 		expect(getByRole('heading', { level: 4, name: 'Deine Aufgaben' })).not.toBeNull();
+	});
+
+	it('names each list by its heading instead of repeating the words', () => {
+		const { getByRole } = renderDetails(buildPosition());
+		const list = getByRole('list', { name: 'Deine Aufgaben' });
+
+		expect(list.getAttribute('aria-label')).toBeNull();
+		expect(document.querySelector(`[id="${list.getAttribute('aria-labelledby')}"]`)).toBe(
+			getByRole('heading', { level: 4, name: 'Deine Aufgaben' }),
+		);
+	});
+
+	it('gives the headings of two positions ids of their own', () => {
+		const { getAllByRole } = renderWithUser(
+			<>
+				<PositionDetails
+					cta="Jetzt melden"
+					headings={HEADINGS}
+					href="mailto:a"
+					position={buildPosition()}
+				/>
+				<PositionDetails
+					cta="Jetzt melden"
+					headings={HEADINGS}
+					href="mailto:b"
+					position={buildPosition()}
+				/>
+			</>,
+		);
+		const ids = getAllByRole('heading', { level: 4 }).map((heading) => heading.id);
+
+		expect(new Set(ids).size).toBe(ids.length);
+	});
+
+	it('lists a point entered twice without clashing keys', () => {
+		const errorSpy = vi.spyOn(console, 'error').mockReturnValue();
+		const { getByRole } = renderDetails(
+			buildPosition({ tasks: ['Spiele leiten', 'Spiele leiten'] }),
+		);
+
+		expect(getByRole('list', { name: 'Deine Aufgaben' }).querySelectorAll('li')).toHaveLength(2);
+		expect(errorSpy).not.toHaveBeenCalled();
 	});
 
 	it('leaves an empty or missing list out', () => {
