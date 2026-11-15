@@ -9,7 +9,7 @@ export default defineConfig({
 			// Vitest 4 replaced `coverage.all` with this: without it only files a test happens to
 			// import are scored, so an untested file drops out of the denominator instead of
 			// counting as uncovered.
-			include: ['src/**/*.{ts,tsx}'],
+			include: ['src/**/*.{ts,tsx}', 'scripts/**/*.ts'],
 			provider: 'v8',
 			reporter: ['text', 'html', 'lcov'],
 			reportsDirectory: './coverage',
@@ -32,7 +32,7 @@ export default defineConfig({
 				test: {
 					environment: 'node',
 					exclude: ['src/{components,hooks}/**', 'node_modules/**'],
-					include: ['src/**/*.test.ts'],
+					include: ['src/**/*.test.ts', 'scripts/**/*.test.ts'],
 					name: { color: 'green', label: 'node' },
 				},
 			},
