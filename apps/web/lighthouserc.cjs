@@ -13,8 +13,13 @@
 
 const process = require('node:process');
 
-/** How often each URL is measured. Lighthouse CI reports the median run of the three. */
-const RUNS_PER_URL = 3;
+/**
+ * How often each URL is measured; Lighthouse CI reports the median run. Five rather than three
+ * (WEB-447): on a shared runner the LCP of one route moved by up to three seconds between runs, and
+ * the median of three still landed on an outlier. The workflow warms the preview with one more run
+ * before these, whose result it throws away.
+ */
+const RUNS_PER_URL = 5;
 
 /** The metric budgets, in the units Lighthouse reports them in (milliseconds, and CLS unitless). */
 const LARGEST_CONTENTFUL_PAINT_MS = 2500;

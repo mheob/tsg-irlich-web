@@ -76,6 +76,20 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
+      # A fresh preview answers its first requests from cold caches: the edge, the function and the
+      # image optimizer, which renders every image variant on its first request. The first of the
+      # measured runs used to pay for that, up to two seconds of LCP more than the runs after it
+      # (WEB-447). One run whose result is thrown away warms exactly what the measured runs load,
+      # the image variants of the emulated phone included. `lhci autorun` below starts by clearing
+      # what this run collected.
+      - name: Warm Up the Preview
+        if: ${{ env.VERCEL_AUTOMATION_BYPASS_SECRET != '' }}
+        continue-on-error: true
+        run: pnpm --filter web exec lhci collect --numberOfRuns=1
+        env:
+          LHCI_BASE_URL: ${{ inputs.url || github.event.deployment_status.environment_url }}
+          LHCI_ROUTE: ${{ matrix.route }}
+
       # Lighthouse drives the Chrome the runner image already ships; there is no browser to install.
       # `LHCI_BASE_URL` is the deployment this event was raised for, so every pull request is scored
       # against its own preview, and `LHCI_ROUTE` the one route this job measures.
