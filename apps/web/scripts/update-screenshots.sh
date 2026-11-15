@@ -58,7 +58,6 @@ exec docker run --rm --init \
 	--platform linux/amd64 \
 	--ipc=host \
 	--user "${CONTAINER_UID}" \
-	--env COREPACK_ENABLE_DOWNLOAD_PROMPT=0 \
 	--env HOME=/home/pwuser \
 	--workdir /work \
 	--volume "${repo_root}:/work" \
@@ -77,18 +76,28 @@ exec docker run --rm --init \
 				| tar -xz -C "${node_dir}" --strip-components=1
 		fi
 
-		export PATH="${node_dir}/bin:${HOME}/.bin:${PATH}"
+		export PATH="${node_dir}/bin:${PATH}"
 
-		# Corepack needs a writable install directory; the global one belongs to root, and it does
-		# not create the directory itself.
-		mkdir -p "${HOME}/.bin"
-		corepack enable --install-directory "${HOME}/.bin"
+		# pnpm in the version `packageManager` pins, as `pnpm/action-setup` installs it in CI. Node
+		# stopped shipping Corepack with version 25, so npm installs it into the home volume, once per
+		# version. A hash after the version (`pnpm@x.y.z+sha512.…`) is not part of it.
+		pnpm_version="$(node -p "require(\"/work/package.json\").packageManager.split(\"@\")[1].split(\"+\")[0]")"
+		pnpm_dir="${HOME}/.pnpm/${pnpm_version}"
 
-		# `--store-dir` as a flag, not as `npm_config_store_dir`: pnpm 11 does not read the npm-style
-		# environment config for this setting. Without it pnpm puts the store next to the project
-		# root, which is the bind-mounted working tree — a 500 MB directory appearing in `git status`
-		# on the host. `.gitignore` covers it as well, so a leak can never be committed.
-		pnpm install --frozen-lockfile --ignore-scripts --store-dir "${HOME}/.pnpm-store"
+		if [ ! -x "${pnpm_dir}/bin/pnpm" ]; then
+			npm install --global --prefix "${pnpm_dir}" --no-audit --no-fund "pnpm@${pnpm_version}"
+		fi
+
+		export PATH="${pnpm_dir}/bin:${PATH}"
+
+		# The store lives in the home volume, set in the global pnpm config there rather than as a flag
+		# of the install: `pnpm run` and `pnpm exec` check the install first and refuse a store other
+		# than the one the dependencies are linked from (ERR_PNPM_UNEXPECTED_STORE). pnpm 11 reads no
+		# `npm_config_store_dir`. Without the setting pnpm puts the store next to the project root,
+		# which is the bind-mounted working tree — a 500 MB directory appearing in `git status` on the
+		# host. `.gitignore` covers it as well, so a leak can never be committed.
+		pnpm config set --location global store-dir "${HOME}/.pnpm-store"
+		pnpm install --frozen-lockfile --ignore-scripts
 		pnpm --filter web run typegen:routes
 		# The image optimizer keeps its results in `.next/cache/images`, which lives in a named volume
 		# and outlasts the build. CI starts without it, so a baseline taken from an image the mocks no
