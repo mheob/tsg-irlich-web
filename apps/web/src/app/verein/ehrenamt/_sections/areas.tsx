@@ -9,8 +9,13 @@ import { withUniqueKeys } from '@/utils/keys';
 
 import type { AreasSection } from '../_shared/types';
 
-const IMAGE_HEIGHT = 900;
-const IMAGE_WIDTH = 1200;
+/**
+ * The source the optimizer scales from, in the 4:3 of the box. From 48rem up an area's image takes
+ * half the container, up to about 860 px on the widest screens and so 1,730 px on a sharp one. The
+ * optimizer never scales an image up.
+ */
+const IMAGE_HEIGHT = 1440;
+const IMAGE_WIDTH = 1920;
 const DIGITS = 2;
 
 /**
