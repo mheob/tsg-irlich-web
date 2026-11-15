@@ -270,15 +270,16 @@ const AREA_GROUP_SLUGS = ['1-mannschaft', 'a-jugend'] as const;
 /**
  * What the script reads for the images of the start content: the hero image of `aboutUs`, the card
  * images of the groups in `AREA_GROUP_SLUGS` and two images of the site settings. `$slugs` takes
- * `AREA_GROUP_SLUGS`. Drafts are left out, so a draft image never reaches the page.
+ * `AREA_GROUP_SLUGS`. The script runs it with the perspective `published`, so neither a draft nor
+ * the version of a content release reaches the page.
  */
 const START_IMAGES_QUERY = `{
 	"heroImage": *[_id == 'aboutUs'][0].heroImage,
-	"groups": *[_type == 'group' && !(_id in path('drafts.**')) && slug.current in $slugs] {
+	"groups": *[_type == 'group' && slug.current in $slugs] {
 		"slug": slug.current,
 		featuredImage
 	},
-	"site": *[_type == 'site-settings' && !(_id in path('drafts.**'))][0] {
+	"site": *[_type == 'site-settings'][0] {
 		fallbackImage,
 		"vision": visionImages[0]
 	}
