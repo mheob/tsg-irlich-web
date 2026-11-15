@@ -14,10 +14,10 @@ test.describe('news', () => {
 		const combobox = page.getByRole('combobox', { name: 'News-Kategorie' });
 		await expect(combobox).toHaveValue('Alle News');
 
-		// `waitForPage` proves the App Router exists, not that this island is hydrated. On a slow runner
-		// WebKit gets to the server-rendered input first: the typed text lands in the DOM, and hydration
-		// then puts the selection back. Only a hydrated combobox opens its list, so opening it, retried
-		// until it works, doubles as the wait for hydration.
+		// `waitForPage` proves the App Router exists, not that this island is hydrated. The server renders
+		// a read-only placeholder, and only a hydrated one loads the combobox when it is pressed, which
+		// then opens its list (WEB-448). Opening the list, retried until it works, doubles as the wait
+		// for hydration and for the combobox to load; typing before that would land in the placeholder.
 		await expect(async () => {
 			await combobox.click();
 			await expect(page.getByRole('listbox')).toBeVisible({ timeout: 1000 });

@@ -4,22 +4,28 @@ import type { ComponentProps } from 'react';
 
 import { cn } from '@tsgi-web/shared';
 
+import {
+	COMBOBOX_INPUT_CLASS_NAME,
+	COMBOBOX_INPUT_GROUP_CLASS_NAME,
+	COMBOBOX_TRIGGER_CLASS_NAME,
+} from './combobox-classes';
+
 const Combobox = BaseCombobox.Root;
 
 function ComboboxInput({ className, ...props }: ComponentProps<typeof BaseCombobox.Input>) {
 	return (
-		<BaseCombobox.InputGroup className="relative w-full" data-slot="combobox-input-group">
+		<BaseCombobox.InputGroup
+			className={COMBOBOX_INPUT_GROUP_CLASS_NAME}
+			data-slot="combobox-input-group"
+		>
 			<BaseCombobox.Input
-				className={cn(
-					'flex w-full rounded-md border border-input bg-background-high-contrast py-2 pr-10 pl-4 text-base shadow-sm transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-lg',
-					className,
-				)}
+				className={cn(COMBOBOX_INPUT_CLASS_NAME, className)}
 				data-slot="combobox-input"
 				{...props}
 			/>
 			<BaseCombobox.Trigger
 				aria-label="Auswahl öffnen"
-				className="absolute inset-y-0 right-0 flex w-10 items-center justify-center text-muted-foreground"
+				className={COMBOBOX_TRIGGER_CLASS_NAME}
 				data-slot="combobox-trigger"
 			>
 				<ChevronDownIcon className="size-4 opacity-50" />
