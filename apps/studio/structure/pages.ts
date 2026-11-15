@@ -19,6 +19,7 @@ type SinglePageType =
 	| 'privacy'
 	| 'searchPage'
 	| 'singleGroupPage'
+	| 'valuesPage'
 	| 'venuePage'
 	| 'volunteerPage';
 
@@ -77,6 +78,7 @@ const SINGLE_PAGES: Readonly<Record<SinglePageType, SinglePageInfo>> = {
 		note: 'Was du hier änderst, gilt für jede Gruppenseite. Eine einzelne Gruppe bearbeitest du unter Angebot → Gruppen.',
 		path: '/angebot/[abteilung]/[gruppe]',
 	},
+	valuesPage: { parent: 'aboutUs', path: '/verein/werte' },
 	venuePage: { parent: 'aboutUs', path: '/verein/sportstaetten' },
 	volunteerPage: { parent: 'aboutUs', path: '/verein/ehrenamt' },
 };
@@ -93,7 +95,7 @@ const PAGE_LAYOUT: readonly PageLayoutEntry[] = [
 		icon: RiCommunityLine,
 		id: 'club',
 		mainPage: 'aboutUs',
-		pages: ['echoOverview', 'partnerPage', 'volunteerPage', 'venuePage'],
+		pages: ['valuesPage', 'echoOverview', 'partnerPage', 'volunteerPage', 'venuePage'],
 		title: 'Verein',
 	},
 	{

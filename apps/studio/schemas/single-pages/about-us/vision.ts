@@ -9,36 +9,18 @@ export const visionField = defineField({
 	fields: [
 		...getDefaultPageSectionFieldsWithGroup(),
 
+		// The field keeps its name from the time the button opened the long vision in a dialog. The
+		// long vision itself moved to the values page (WEB-150), so renaming it would only cost a
+		// migration and a release in lockstep.
 		defineField({
-			description:
-				'Text, der auf dem Call to Action Button angezeigt wird, um die Lange Vision zu öffnen.',
+			description: 'Text des Buttons, der zur Seite „Unsere Werte“ (/verein/werte) führt.',
 			name: 'ctaLongVision',
-			title: 'Button Text zum Öffnen der Lange Vision',
+			title: 'Button-Text',
 			type: 'string',
 			validation: (Rule) => [
-				Rule.required()
-					.min(5)
-					.error(
-						'Der "Button Text zum Öffnen der Lange Vision" muss mindestens 5 Zeichen lang sein',
-					),
-				Rule.max(25).warning(
-					'Der "Button Text zum Öffnen der Lange Vision" sollte nicht länger als 25 Zeichen sein',
-				),
+				Rule.required().min(5).error('Der Button-Text muss mindestens 5 Zeichen lang sein'),
+				Rule.max(25).warning('Der Button-Text sollte nicht länger als 25 Zeichen sein'),
 			],
-		}),
-
-		defineField({
-			name: 'longVisionTitle',
-			title: 'Titel der Lange Vision',
-			type: 'string',
-			validation: (Rule) => [Rule.required().error('Der Titel der Lange Vision ist erforderlich')],
-		}),
-
-		defineField({
-			name: 'longVision',
-			title: 'Lange Vision',
-			type: 'blockContent',
-			validation: (Rule) => [Rule.required().error('Lange Vision ist erforderlich')],
 		}),
 	],
 	group: 'vision',

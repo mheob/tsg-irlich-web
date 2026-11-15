@@ -12,6 +12,7 @@ import newsOverviewPage from './news-overview';
 import offerPage from './offer';
 import partnerPage from './partner-page';
 import privacyPage from './privacy';
+import valuesPage from './values-page';
 import venuePage from './venue-page';
 import volunteerPage from './volunteer-page';
 
@@ -48,6 +49,7 @@ const LANDSCAPE_PAGES: readonly [string, PageSchema, string][] = [
 	['partnerPage', partnerPage, LANDSCAPE_HERO_DESCRIPTION],
 	['volunteerPage', volunteerPage, LANDSCAPE_HERO_DESCRIPTION],
 	['venuePage', venuePage, LANDSCAPE_HERO_DESCRIPTION],
+	['valuesPage', valuesPage, LANDSCAPE_HERO_DESCRIPTION],
 ];
 
 function fieldsOf(page: PageSchema): PageField[] {
