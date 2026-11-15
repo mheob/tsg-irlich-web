@@ -23,10 +23,6 @@ export const aboutUsPageQuery = defineQuery(`
 					description { ${blockContent} }
 				}
 			},
-			visionSection {
-				...,
-				longVision { ${blockContent} }
-			},
 			contactPersonsSection {
 				...,
 				contactPersons[]-> {

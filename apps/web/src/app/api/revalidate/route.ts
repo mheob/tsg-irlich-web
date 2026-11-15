@@ -8,6 +8,7 @@ import { env } from '@/lib/env';
 import {
 	ECHO_OVERVIEW_PATH,
 	PARTNER_PAGE_PATH,
+	VALUES_PAGE_PATH,
 	VENUE_PAGE_PATH,
 	VOLUNTEER_PAGE_PATH,
 } from '@/utils/links';
@@ -180,6 +181,10 @@ const REVALIDATION_MAP: Record<string, RevalidateHandler> = {
 	testimonial: () => {
 		revalidatePath('/');
 		revalidatePath(VOLUNTEER_PAGE_PATH);
+	},
+	// The values page, which no menu lists; home and the club page link it by its fixed path.
+	valuesPage: () => {
+		revalidatePath(VALUES_PAGE_PATH);
 	},
 	// A venue is referenced by the training times of a group, and its slug is no part of any URL.
 	// The venue page shows every venue, so it is revalidated as well.

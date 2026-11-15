@@ -18,6 +18,7 @@ const SEARCH_PAGE_TYPES = [
 	'person',
 	'home',
 	'aboutUs',
+	'valuesPage',
 	'departmentsPage',
 	'membership',
 	'contact',
@@ -34,7 +35,7 @@ const SEARCH_PAGE_TYPES = [
  * `SEARCH_PAGE_TYPES` as a GROQ array. Sanity TypeGen cannot read an array built at runtime, so the
  * list is spelled out a second time; a test keeps both in step.
  */
-const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position', 'venuePage', 'venue']`;
+const searchPageTypeList = /* groq */ `['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'valuesPage', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position', 'venuePage', 'venue']`;
 
 /** The pages that list a person in their contact persons section. Group pages list theirs by team. */
 const contactPersonPageTypeList = /* groq */ `['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage', 'venuePage']`;
@@ -101,6 +102,10 @@ const searchTarget = /* groq */ `
  *   volunteer page. Its name weighs as a title and its description as a lead field, which the
  *   existing terms already cover („Mehrzweckhalle*“ scores the venue 13 and the one group whose
  *   description names it 3, measured on `development` on 2026-11-13).
+ * - The values page (WEB-150) is searched by the plain-text intro of „Wer wir sind“ as lead and by
+ *   the titles, core statements, texts, quotes and highlights of its values and its closing section
+ *   as body, in one term and in the last catch-all term. It took the long vision over from the club
+ *   page, whose text the search read before. No other type has these paths either.
  * - An open position (`volunteer.position`) has no page of its own. It is a candidate found by its
  *   title, like any page, and leads to the volunteer page, the way a FAQ leads to its departments.
  *   A position cannot lift the page's own score instead: `score()` refuses a match on a subquery
@@ -117,10 +122,18 @@ const pageScore = /* groq */ `
 	boost(description.text[].children[].text match text::query($q), ${WEIGHTS.lead}),
 	boost(question match text::query($q), ${WEIGHTS.lead}),
 	boost([firstName, lastName] match text::query($q), ${WEIGHTS.lead}),
-	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro, content.homeSection.intro, content.othersSection.intro] match text::query($q), ${WEIGHTS.lead}),
+	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro, content.homeSection.intro, content.othersSection.intro, content.aboutSection.intro] match text::query($q), ${WEIGHTS.lead}),
 	boost(answer[].children[].text match text::query($q), ${WEIGHTS.body}),
 	boost(training.trainingDescription.text[].children[].text match text::query($q), ${WEIGHTS.body}),
-	boost(content.visionSection.longVision.text[].children[].text match text::query($q), ${WEIGHTS.body}),
+	boost([
+		content.valuesSection.values[].title,
+		content.valuesSection.values[].teaser,
+		content.valuesSection.values[].text.text[].children[].text,
+		content.valuesSection.values[].quote,
+		content.valuesSection.values[].highlights[],
+		content.joinSection.title,
+		content.joinSection.text
+	] match text::query($q), ${WEIGHTS.body}),
 	boost(references(*[_type == 'role' && title match text::query($q)]._id), ${WEIGHTS.body}),
 	boost(affiliations[].taskDescription match text::query($q), ${WEIGHTS.body}),
 	boost([
@@ -147,7 +160,14 @@ const pageScore = /* groq */ `
 		lastName,
 		answer[].children[].text,
 		training.trainingDescription.text[].children[].text,
-		content.visionSection.longVision.text[].children[].text,
+		content.aboutSection.intro,
+		content.valuesSection.values[].title,
+		content.valuesSection.values[].teaser,
+		content.valuesSection.values[].text.text[].children[].text,
+		content.valuesSection.values[].quote,
+		content.valuesSection.values[].highlights[],
+		content.joinSection.title,
+		content.joinSection.text,
 		affiliations[].taskDescription,
 		content.whySection.intro,
 		content.waysSection.intro,
@@ -255,7 +275,8 @@ const searchNewsCountQuery = defineQuery(`count(*[${newsFilter}])`);
  * The plain text of every hit a snippet is cut from. Two parts are joined with `coalesce()`,
  * because a missing part would make the whole string `null`. A TSG-Echo issue only gives its text
  * when it is indexable. The partner page gives the intros of its sections „Gründe“ and
- * „Unterstützung“, the volunteer page those of „Gründe“ and „Bereiche“.
+ * „Unterstützung“, the volunteer page those of „Gründe“ and „Bereiche“, the values page the intro of
+ * „Wer wir sind“ and the texts of its values.
  *
  * @param ids - The ids of the hits that need a snippet
  * @returns The id and the text of every hit
@@ -268,7 +289,8 @@ const searchTextsQuery = defineQuery(`
 			_type == 'department' => intro,
 			_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),
 			_type in ['membership', 'echoOverview'] => pt::text(intro.text),
-			_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),
+			_type == 'aboutUs' => pt::text(content.introSection.intro.text),
+			_type == 'valuesPage' => coalesce(content.aboutSection.intro, '') + ' ' + coalesce(pt::text(content.valuesSection.values[].text.text[]), ''),
 			_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),
 			_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, ''),
 			_type == 'venuePage' => coalesce(content.homeSection.intro, '') + ' ' + coalesce(content.othersSection.intro, ''),

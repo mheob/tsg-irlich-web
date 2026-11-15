@@ -252,6 +252,13 @@ export type EchoOverviewReference = {
   [internalGroqTypeReferenceTo]?: "echoOverview";
 };
 
+export type ValuesPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "valuesPage";
+};
+
 export type PartnerPageReference = {
   _ref: string;
   _type: "reference";
@@ -367,6 +374,7 @@ export type BlockContent = {
             | HomeReference
             | AboutUsReference
             | EchoOverviewReference
+            | ValuesPageReference
             | PartnerPageReference
             | VolunteerPageReference
             | VenuePageReference
@@ -444,6 +452,7 @@ export type NavigationLink = {
     | HomeReference
     | AboutUsReference
     | EchoOverviewReference
+    | ValuesPageReference
     | PartnerPageReference
     | VolunteerPageReference
     | VenuePageReference
@@ -495,6 +504,7 @@ export type MainNavigationLink = {
     | HomeReference
     | AboutUsReference
     | EchoOverviewReference
+    | ValuesPageReference
     | PartnerPageReference
     | VolunteerPageReference
     | VenuePageReference
@@ -518,6 +528,7 @@ export type InternalLink = {
     | HomeReference
     | AboutUsReference
     | EchoOverviewReference
+    | ValuesPageReference
     | PartnerPageReference
     | VolunteerPageReference
     | VenuePageReference
@@ -995,6 +1006,7 @@ export type Faq = {
             | HomeReference
             | AboutUsReference
             | EchoOverviewReference
+            | ValuesPageReference
             | PartnerPageReference
             | VolunteerPageReference
             | VenuePageReference
@@ -1216,8 +1228,6 @@ export type AboutUs = {
       subtitle: string;
       intro?: string;
       ctaLongVision: string;
-      longVisionTitle: string;
-      longVision: BlockContent;
     };
     stats: Array<
       {
@@ -1808,6 +1818,75 @@ export type PartnerPage = {
   meta?: MetaFields;
 };
 
+export type ValuesPage = {
+  _id: string;
+  _type: "valuesPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  heroImage: ExtendedImage;
+  content: {
+    aboutSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      image?: ExtendedImage;
+      facts?: Array<{
+        value: string;
+        label: string;
+        _type: "valuesFact";
+        _key: string;
+      }>;
+    };
+    valuesSection?: {
+      tocTitle: string;
+      values: Array<{
+        title: string;
+        icon:
+          | "map-pin"
+          | "trending-up"
+          | "heart-handshake"
+          | "handshake"
+          | "shirt"
+          | "fence"
+          | "globe"
+          | "gift"
+          | "trophy"
+          | "megaphone"
+          | "users"
+          | "heart"
+          | "star"
+          | "graduation-cap"
+          | "lightbulb"
+          | "award"
+          | "dumbbell"
+          | "flag"
+          | "building-2"
+          | "party-popper";
+        teaser?: string;
+        text: SimpleBlockContent;
+        quote?: string;
+        highlights?: Array<string>;
+        _type: "clubValue";
+        _key: string;
+      }>;
+    };
+    joinSection?: {
+      title: string;
+      text?: string;
+      links?: Array<
+        {
+          _key: string;
+        } & NavigationLink
+      >;
+    };
+  };
+  meta?: MetaFields;
+};
+
 export type EchoOverview = {
   _id: string;
   _type: "echoOverview";
@@ -2204,6 +2283,7 @@ export type AllSanitySchemaTypes =
   | HomeReference
   | AboutUsReference
   | EchoOverviewReference
+  | ValuesPageReference
   | PartnerPageReference
   | VolunteerPageReference
   | VenuePageReference
@@ -2281,6 +2361,7 @@ export type AllSanitySchemaTypes =
   | TestimonialReference
   | VolunteerPage
   | PartnerPage
+  | ValuesPage
   | EchoOverview
   | Home
   | Author
@@ -2407,6 +2488,7 @@ export type DepartmentPageQueryResult = {
                   | NewsOverviewReference
                   | PartnerPageReference
                   | PrivacyReference
+                  | ValuesPageReference
                   | VenuePageReference
                   | VolunteerPageReference;
                 _type: "internalLink";
@@ -2498,6 +2580,12 @@ export type DepartmentPageQueryResult = {
                     }
                   | {
                       _type: "privacy";
+                      slug: string | null;
+                      category: null;
+                      department: null;
+                    }
+                  | {
+                      _type: "valuesPage";
                       slug: string | null;
                       category: null;
                       department: null;
@@ -3958,6 +4046,12 @@ export type MainNavigationQueryResult = {
               department: null;
             }
           | {
+              _type: "valuesPage";
+              slug: string | null;
+              category: null;
+              department: null;
+            }
+          | {
               _type: "venuePage";
               slug: string | null;
               category: null;
@@ -4079,6 +4173,12 @@ export type MainNavigationQueryResult = {
                     department: null;
                   }
                 | {
+                    _type: "valuesPage";
+                    slug: string | null;
+                    category: null;
+                    department: null;
+                  }
+                | {
                     _type: "venuePage";
                     slug: string | null;
                     category: null;
@@ -4100,7 +4200,7 @@ export type MainNavigationQueryResult = {
 
 // Source: src/lib/sanity/queries/pages/about-us.ts
 // Variable: aboutUsPageQuery
-// Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			introSection {				...,				intro {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) }			},			chronicleSection {				...,				chronicleCategories[] {					...,					description {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) }				}			},			visionSection {				...,				longVision {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) }			},			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
+// Query: *[_type == 'aboutUs'][0] {		...,		content {			...,			introSection {				...,				intro {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) }			},			chronicleSection {				...,				chronicleCategories[] {					...,					description {   ...,  "text": coalesce(text[] { ...,   "markDefs": coalesce(markDefs[] {    ...,    _type == "internalLink" => { "target": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current } }  }, []) }, []) }				}			},			contactPersonsSection {				...,				contactPersons[]-> {					  _id,  firstName,  lastName,  phone,  image,  contactAs,  "email": affiliations[0].role->email,  "role": affiliations[0].role->title,  "taskDescription": affiliations[0].taskDescription,				}			}		}	}
 export type AboutUsPageQueryResult = {
   _id: string;
   _type: "aboutUs";
@@ -4153,6 +4253,7 @@ export type AboutUsPageQueryResult = {
                           | NewsOverviewReference
                           | PartnerPageReference
                           | PrivacyReference
+                          | ValuesPageReference
                           | VenuePageReference
                           | VolunteerPageReference;
                         _type: "internalLink";
@@ -4249,6 +4350,12 @@ export type AboutUsPageQueryResult = {
                               department: null;
                             }
                           | {
+                              _type: "valuesPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
+                            }
+                          | {
                               _type: "venuePage";
                               slug: string | null;
                               category: null;
@@ -4320,6 +4427,7 @@ export type AboutUsPageQueryResult = {
                             | NewsOverviewReference
                             | PartnerPageReference
                             | PrivacyReference
+                            | ValuesPageReference
                             | VenuePageReference
                             | VolunteerPageReference;
                           _type: "internalLink";
@@ -4416,6 +4524,12 @@ export type AboutUsPageQueryResult = {
                                 department: null;
                               }
                             | {
+                                _type: "valuesPage";
+                                slug: string | null;
+                                category: null;
+                                department: null;
+                              }
+                            | {
                                 _type: "venuePage";
                                 slug: string | null;
                                 category: null;
@@ -4443,159 +4557,6 @@ export type AboutUsPageQueryResult = {
       subtitle: string;
       intro?: string;
       ctaLongVision: string;
-      longVisionTitle: string;
-      longVision: {
-        _type: "blockContent";
-        text:
-          | Array<{
-              children?: Array<{
-                marks?: Array<string>;
-                text?: string;
-                _type: "span";
-                _key: string;
-              }>;
-              style?: "blockquote" | "h2" | "h3" | "normal";
-              listItem?: "bullet" | "number";
-              markDefs:
-                | Array<never>
-                | Array<
-                    | {
-                        href?: string;
-                        _type: "externalLink";
-                        _key: string;
-                      }
-                    | {
-                        link:
-                          | AboutUsReference
-                          | AccessibilityReference
-                          | ContactReference
-                          | DepartmentReference
-                          | DepartmentsPageReference
-                          | EchoOverviewReference
-                          | GroupReference
-                          | HomeReference
-                          | ImprintReference
-                          | MembershipReference
-                          | NewsArticleReference
-                          | NewsCategoryReference
-                          | NewsOverviewReference
-                          | PartnerPageReference
-                          | PrivacyReference
-                          | VenuePageReference
-                          | VolunteerPageReference;
-                        _type: "internalLink";
-                        _key: string;
-                        target:
-                          | {
-                              _type: "aboutUs";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "accessibility";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "contact";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "department";
-                              slug: string;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "departmentsPage";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "echoOverview";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "group";
-                              slug: string;
-                              category: null;
-                              department: string;
-                            }
-                          | {
-                              _type: "home";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "imprint";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "membership";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "news.article";
-                              slug: string;
-                              category: string | null;
-                              department: null;
-                            }
-                          | {
-                              _type: "news.category";
-                              slug: string;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "newsOverview";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "partnerPage";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "privacy";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "venuePage";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            }
-                          | {
-                              _type: "volunteerPage";
-                              slug: string | null;
-                              category: null;
-                              department: null;
-                            };
-                      }
-                  >;
-              level?: number;
-              _type: "block";
-              _key: string;
-            }>
-          | Array<never>;
-      };
     };
     stats: Array<
       {
@@ -4677,6 +4638,7 @@ export type AccessibilityPageQueryResult = {
                       | NewsOverviewReference
                       | PartnerPageReference
                       | PrivacyReference
+                      | ValuesPageReference
                       | VenuePageReference
                       | VolunteerPageReference;
                     _type: "internalLink";
@@ -4768,6 +4730,12 @@ export type AccessibilityPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "valuesPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -5194,6 +5162,12 @@ export type ImprintPageQueryResult = {
           department: null;
         }
       | {
+          _type: "valuesPage";
+          slug: string | null;
+          category: null;
+          department: null;
+        }
+      | {
           _type: "venuePage";
           slug: string | null;
           category: null;
@@ -5266,6 +5240,7 @@ export type MembershipPageQueryResult = {
                         | NewsOverviewReference
                         | PartnerPageReference
                         | PrivacyReference
+                        | ValuesPageReference
                         | VenuePageReference
                         | VolunteerPageReference;
                       _type: "internalLink";
@@ -5357,6 +5332,12 @@ export type MembershipPageQueryResult = {
                           }
                         | {
                             _type: "privacy";
+                            slug: string | null;
+                            category: null;
+                            department: null;
+                          }
+                        | {
+                            _type: "valuesPage";
                             slug: string | null;
                             category: null;
                             department: null;
@@ -5526,6 +5507,7 @@ export type NewsArticleContentQueryResult = {
                           | NewsOverviewReference
                           | PartnerPageReference
                           | PrivacyReference
+                          | ValuesPageReference
                           | VenuePageReference
                           | VolunteerPageReference;
                         _type: "internalLink";
@@ -5622,6 +5604,12 @@ export type NewsArticleContentQueryResult = {
                               department: null;
                             }
                           | {
+                              _type: "valuesPage";
+                              slug: string | null;
+                              category: null;
+                              department: null;
+                            }
+                          | {
                               _type: "venuePage";
                               slug: string | null;
                               category: null;
@@ -5701,6 +5689,7 @@ export type NewsArticleContentQueryResult = {
                                 | NewsOverviewReference
                                 | PartnerPageReference
                                 | PrivacyReference
+                                | ValuesPageReference
                                 | VenuePageReference
                                 | VolunteerPageReference;
                               _type: "internalLink";
@@ -5792,6 +5781,12 @@ export type NewsArticleContentQueryResult = {
                                   }
                                 | {
                                     _type: "privacy";
+                                    slug: string | null;
+                                    category: null;
+                                    department: null;
+                                  }
+                                | {
+                                    _type: "valuesPage";
                                     slug: string | null;
                                     category: null;
                                     department: null;
@@ -6439,6 +6434,7 @@ export type PrivacyPageQueryResult = {
                       | NewsOverviewReference
                       | PartnerPageReference
                       | PrivacyReference
+                      | ValuesPageReference
                       | VenuePageReference
                       | VolunteerPageReference;
                     _type: "internalLink";
@@ -6530,6 +6526,12 @@ export type PrivacyPageQueryResult = {
                         }
                       | {
                           _type: "privacy";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
+                          _type: "valuesPage";
                           slug: string | null;
                           category: null;
                           department: null;
@@ -6594,6 +6596,7 @@ export type PrivacyPageQueryResult = {
                       | NewsOverviewReference
                       | PartnerPageReference
                       | PrivacyReference
+                      | ValuesPageReference
                       | VenuePageReference
                       | VolunteerPageReference;
                     _type: "internalLink";
@@ -6690,6 +6693,12 @@ export type PrivacyPageQueryResult = {
                           department: null;
                         }
                       | {
+                          _type: "valuesPage";
+                          slug: string | null;
+                          category: null;
+                          department: null;
+                        }
+                      | {
                           _type: "venuePage";
                           slug: string | null;
                           category: null;
@@ -6709,6 +6718,191 @@ export type PrivacyPageQueryResult = {
         }>
       | Array<never>;
   };
+} | null;
+
+// Source: src/lib/sanity/queries/pages/values.ts
+// Variable: valuesPageQuery
+// Query: *[_type == 'valuesPage'][0] {		...,		content {			...,			joinSection {				...,				"links": coalesce(links[] {					_key,					title,					linkType,					href,					"link": link-> {   _type,  "slug": slug.current,  "category": categories[0]->slug.current,  "department": department->slug.current }				}, [])			}		}	}
+export type ValuesPageQueryResult = {
+  _id: string;
+  _type: "valuesPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title: string;
+  subtitle: string;
+  heroImage: ExtendedImage;
+  content: {
+    aboutSection?: {
+      title: string;
+      subtitle: string;
+      intro?: string;
+      image?: ExtendedImage;
+      facts?: Array<{
+        value: string;
+        label: string;
+        _type: "valuesFact";
+        _key: string;
+      }>;
+    };
+    valuesSection?: {
+      tocTitle: string;
+      values: Array<{
+        title: string;
+        icon:
+          | "award"
+          | "building-2"
+          | "dumbbell"
+          | "fence"
+          | "flag"
+          | "gift"
+          | "globe"
+          | "graduation-cap"
+          | "handshake"
+          | "heart-handshake"
+          | "heart"
+          | "lightbulb"
+          | "map-pin"
+          | "megaphone"
+          | "party-popper"
+          | "shirt"
+          | "star"
+          | "trending-up"
+          | "trophy"
+          | "users";
+        teaser?: string;
+        text: SimpleBlockContent;
+        quote?: string;
+        highlights?: Array<string>;
+        _type: "clubValue";
+        _key: string;
+      }>;
+    };
+    joinSection: {
+      title: string;
+      text?: string;
+      links:
+        | Array<{
+            _key: string;
+            title: string;
+            linkType: "external" | "internal";
+            href: string | null;
+            link:
+              | {
+                  _type: "aboutUs";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "accessibility";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "contact";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "department";
+                  slug: string;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "departmentsPage";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "echoOverview";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "group";
+                  slug: string;
+                  category: null;
+                  department: string;
+                }
+              | {
+                  _type: "home";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "imprint";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "membership";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "news.article";
+                  slug: string;
+                  category: string | null;
+                  department: null;
+                }
+              | {
+                  _type: "news.category";
+                  slug: string;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "newsOverview";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "partnerPage";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "privacy";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "valuesPage";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "venuePage";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "volunteerPage";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | null;
+          }>
+        | Array<never>;
+    } | null;
+  };
+  meta?: MetaFields;
 } | null;
 
 // Source: src/lib/sanity/queries/pages/venue.ts
@@ -7077,7 +7271,7 @@ export type RssNewsArticlesQueryResult = Array<{
 
 // Source: src/lib/sanity/queries/search.ts
 // Variable: searchCandidatesQuery
-// Query: *[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position', 'venuePage', 'venue'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]	| score(	boost(title match text::query($q), 10),	boost(searchTerms[] match text::query($q), 8),	boost(subtitle match text::query($q), 3),	boost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),	boost(intro.text[].children[].text match text::query($q), 3),	boost(content.introSection.intro.text[].children[].text match text::query($q), 3),	boost(description.text[].children[].text match text::query($q), 3),	boost(question match text::query($q), 3),	boost([firstName, lastName] match text::query($q), 3),	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro, content.homeSection.intro, content.othersSection.intro] match text::query($q), 3),	boost(answer[].children[].text match text::query($q), 1),	boost(training.trainingDescription.text[].children[].text match text::query($q), 1),	boost(content.visionSection.longVision.text[].children[].text match text::query($q), 1),	boost(references(*[_type == 'role' && title match text::query($q)]._id), 1),	boost(affiliations[].taskDescription match text::query($q), 1),	boost([		content.whySection.reasons[].title,		content.whySection.reasons[].text,		content.waysSection.ways[].title,		content.waysSection.ways[].text,		content.waysSection.ways[].benefits[],		content.areasSection.areas[].title,		content.areasSection.areas[].text,		content.areasSection.areas[].tasks[]	] match text::query($q), 1),	boost(indexable != false, 0) && boost(extractedText match text::query($q), 1),	boost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),	boost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([		title,		searchTerms[],		subtitle,		intro.text[].children[].text,		content.introSection.intro.text[].children[].text,		description.text[].children[].text,		question,		firstName,		lastName,		answer[].children[].text,		training.trainingDescription.text[].children[].text,		content.visionSection.longVision.text[].children[].text,		affiliations[].taskDescription,		content.whySection.intro,		content.waysSection.intro,		content.partnersSection.intro,		content.whySection.reasons[].title,		content.whySection.reasons[].text,		content.waysSection.ways[].title,		content.waysSection.ways[].text,		content.waysSection.ways[].benefits[],		content.areasSection.intro,		content.positionsSection.intro,		content.homeSection.intro,		content.othersSection.intro,		content.areasSection.areas[].title,		content.areasSection.areas[].text,		content.areasSection.areas[].tasks[]	] match text::query($q), 1))	| order(_score desc) [_score != 0] [0...$limit] {			_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	),		"_score": math::sum([_score]),		_type == 'volunteer.position' => {			"targets": *[_type == 'volunteerPage'] { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		},		_type == 'venue' => {			"targets": *[_type == 'venuePage'] { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		},		_type == 'faq' => {			question,			"targets": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		},		_type == 'person' => {			firstName,			lastName,			"nameMatches": [firstName, lastName] match text::query($q),			"affiliations": affiliations[] {				"role": role->title,				"roleMatches": [role->title, taskDescription] match text::query($q),				"team": team-> { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }			},			"listedOn": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage', 'venuePage'] && references(^._id)] { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		}	}
+// Query: *[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'valuesPage', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position', 'venuePage', 'venue'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]	| score(	boost(title match text::query($q), 10),	boost(searchTerms[] match text::query($q), 8),	boost(subtitle match text::query($q), 3),	boost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),	boost(intro.text[].children[].text match text::query($q), 3),	boost(content.introSection.intro.text[].children[].text match text::query($q), 3),	boost(description.text[].children[].text match text::query($q), 3),	boost(question match text::query($q), 3),	boost([firstName, lastName] match text::query($q), 3),	boost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro, content.homeSection.intro, content.othersSection.intro, content.aboutSection.intro] match text::query($q), 3),	boost(answer[].children[].text match text::query($q), 1),	boost(training.trainingDescription.text[].children[].text match text::query($q), 1),	boost([		content.valuesSection.values[].title,		content.valuesSection.values[].teaser,		content.valuesSection.values[].text.text[].children[].text,		content.valuesSection.values[].quote,		content.valuesSection.values[].highlights[],		content.joinSection.title,		content.joinSection.text	] match text::query($q), 1),	boost(references(*[_type == 'role' && title match text::query($q)]._id), 1),	boost(affiliations[].taskDescription match text::query($q), 1),	boost([		content.whySection.reasons[].title,		content.whySection.reasons[].text,		content.waysSection.ways[].title,		content.waysSection.ways[].text,		content.waysSection.ways[].benefits[],		content.areasSection.areas[].title,		content.areasSection.areas[].text,		content.areasSection.areas[].tasks[]	] match text::query($q), 1),	boost(indexable != false, 0) && boost(extractedText match text::query($q), 1),	boost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),	boost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([		title,		searchTerms[],		subtitle,		intro.text[].children[].text,		content.introSection.intro.text[].children[].text,		description.text[].children[].text,		question,		firstName,		lastName,		answer[].children[].text,		training.trainingDescription.text[].children[].text,		content.aboutSection.intro,		content.valuesSection.values[].title,		content.valuesSection.values[].teaser,		content.valuesSection.values[].text.text[].children[].text,		content.valuesSection.values[].quote,		content.valuesSection.values[].highlights[],		content.joinSection.title,		content.joinSection.text,		affiliations[].taskDescription,		content.whySection.intro,		content.waysSection.intro,		content.partnersSection.intro,		content.whySection.reasons[].title,		content.whySection.reasons[].text,		content.waysSection.ways[].title,		content.waysSection.ways[].text,		content.waysSection.ways[].benefits[],		content.areasSection.intro,		content.positionsSection.intro,		content.homeSection.intro,		content.othersSection.intro,		content.areasSection.areas[].title,		content.areasSection.areas[].text,		content.areasSection.areas[].tasks[]	] match text::query($q), 1))	| order(_score desc) [_score != 0] [0...$limit] {			_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	),		"_score": math::sum([_score]),		_type == 'volunteer.position' => {			"targets": *[_type == 'volunteerPage'] { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		},		_type == 'venue' => {			"targets": *[_type == 'venuePage'] { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		},		_type == 'faq' => {			question,			"targets": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		},		_type == 'person' => {			firstName,			lastName,			"nameMatches": [firstName, lastName] match text::query($q),			"affiliations": affiliations[] {				"role": role->title,				"roleMatches": [role->title, taskDescription] match text::query($q),				"team": team-> { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }			},			"listedOn": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage', 'venuePage'] && references(^._id)] { 	_id,	_type,	title,	"slug": slug.current,	"department": department-> { title, "slug": slug.current },	"category": categories[0]-> { title, "slug": slug.current },	publishedAt,	indexable,	"image": select(		_type == 'department' => cardImage,		_type in ['group', 'news.article'] => featuredImage,		_type == 'echo.issue' => pages[0],		_type == 'home' => null,		heroImage	) }		}	}
 export type SearchCandidatesQueryResult = Array<
   | {
       _id: string;
@@ -7403,6 +7597,18 @@ export type SearchCandidatesQueryResult = Array<
     }
   | {
       _id: string;
+      _type: "valuesPage";
+      title: string;
+      slug: string | null;
+      department: null;
+      category: null;
+      publishedAt: null;
+      indexable: null;
+      image: ExtendedImage;
+      _score: number;
+    }
+  | {
+      _id: string;
       _type: "venue";
       title: string;
       slug: null;
@@ -7499,7 +7705,7 @@ export type SearchNewsCountQueryResult = number;
 
 // Source: src/lib/sanity/queries/search.ts
 // Variable: searchTextsQuery
-// Query: *[_id in $ids] {		_id,		"text": select(			_type == 'news.article' => pt::text(body[_type == 'blockContent'].text[]),			_type == 'department' => intro,			_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),			_type in ['membership', 'echoOverview'] => pt::text(intro.text),			_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),			_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),			_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, ''),			_type == 'venuePage' => coalesce(content.homeSection.intro, '') + ' ' + coalesce(content.othersSection.intro, ''),			_type == 'echo.issue' => select(indexable != false => extractedText),			subtitle		)	}
+// Query: *[_id in $ids] {		_id,		"text": select(			_type == 'news.article' => pt::text(body[_type == 'blockContent'].text[]),			_type == 'department' => intro,			_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),			_type in ['membership', 'echoOverview'] => pt::text(intro.text),			_type == 'aboutUs' => pt::text(content.introSection.intro.text),			_type == 'valuesPage' => coalesce(content.aboutSection.intro, '') + ' ' + coalesce(pt::text(content.valuesSection.values[].text.text[]), ''),			_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),			_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, ''),			_type == 'venuePage' => coalesce(content.homeSection.intro, '') + ' ' + coalesce(content.othersSection.intro, ''),			_type == 'echo.issue' => select(indexable != false => extractedText),			subtitle		)	}
 export type SearchTextsQueryResult = Array<
   | {
       _id: string;
@@ -7644,6 +7850,12 @@ export type SearchPageQueryResult = {
                 }
               | {
                   _type: "privacy";
+                  slug: string | null;
+                  category: null;
+                  department: null;
+                }
+              | {
+                  _type: "valuesPage";
                   slug: string | null;
                   category: null;
                   department: null;
@@ -7930,7 +8142,7 @@ declare global {
     '*[_type == "form.submission" && !defined(cleanedAt) && form->cleanupAt <= now() && !(_id in path("drafts.**"))]{ _id, _rev, answers }': DueSubmissionsQueryResult;
     '\n\t{\n\t\t"aboutUs": *[_type == \'aboutUs\'][0].meta.metaDescription,\n\t\t"contact": *[_type == \'site-settings\'][0].contact { email, phone, postalAddress },\n\t\t"departments": *[_type == \'department\' && defined(slug.current)] | order(sortOrder asc) {\n\t\t\ttitle,\n\t\t\t"description": meta.metaDescription,\n\t\t\t"slug": slug.current,\n\t\t\t"groups": *[_type == \'group\' && department._ref == ^._id] | order(sortOrder asc) {\n\t\t\t\t_type,\n\t\t\t\t"department": ^.slug.current,\n\t\t\t\t"description": meta.metaDescription,\n\t\t\t\t"slug": slug.current,\n\t\t\t\ttitle,\n\t\t\t\t"trainingTimes": training.trainingTimes[] {\n\t\t\t\t\tendTime,\n\t\t\t\t\tseason,\n\t\t\t\t\tstartTime,\n\t\t\t\t\t"venue": coalesce(venue->location.name, venue->title),\n\t\t\t\t\tweekday,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\t"description": *[_type == \'home\'][0].meta.metaDescription,\n\t\t"membership": *[_type == \'membership\'][0].meta.metaDescription,\n\t\t"prices": *[_type == \'home\'][0].content.pricingSection {\n\t\t\tpricingAdult { price, subtitle, title },\n\t\t\tpricingFamily { price, subtitle, title },\n\t\t\tpricingYouth { price, subtitle, title },\n\t\t},\n\t}\n': LlmsTxtQueryResult;
     '\n\t*[_type == \'site-settings\'][0] {\n\t\tmainNavigation[] {\n\t\t\t_type,\n\t\t\t\n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n,\n\t\t\thasTwoColumns,\n\t\t\t"children": coalesce(children[] { \n\t_key,\n\ttitle,\n\tlinkType,\n\thref,\n\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n, description }, [])\n\t\t}\n\t}\n': MainNavigationQueryResult;
-    '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tvisionSection {\n\t\t\t\t...,\n\t\t\t\tlongVision { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
+    '\n\t*[_type == \'aboutUs\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tintroSection {\n\t\t\t\t...,\n\t\t\t\tintro { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t},\n\t\t\tchronicleSection {\n\t\t\t\t...,\n\t\t\t\tchronicleCategories[] {\n\t\t\t\t\t...,\n\t\t\t\t\tdescription { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t\t\t\t}\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': AboutUsPageQueryResult;
     "*[_type == 'aboutUs'][0].heroImage": AboutUsHeroImageQueryResult;
     '\n\t*[_type == \'accessibility\'][0] {\n\t\t...,\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': AccessibilityPageQueryResult;
     '\n\t*[_type == \'contact\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\treceiver[] { _key, name },\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': ContactPageQueryResult;
@@ -7964,13 +8176,14 @@ declare global {
     '\n*[_type == \'departmentsPage\'][0] {\n\t...,\n\tcontent {\n\t\t...,\n\t\tcontactPersonsSection {\n\t\t\t...,\n\t\t\tcontactPersons[]-> {\n\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t}\n\t\t}\n\t}\n}\n': OfferPageQueryResult;
     '\n\t{\n\t\t"partnerPage": *[_type == \'partnerPage\'][0] {\n\t\t\t...,\n\t\t\tcontent {\n\t\t\t\t...,\n\t\t\t\tcontactPersonsSection {\n\t\t\t\t\t...,\n\t\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"sponsors": *[_type == \'sponsors\'] { _id, name, website, logo } | order(name asc)\n\t}\n': PartnerPageQueryResult;
     '\n\t*[_type == \'privacy\'][0] {\n\t\t...,\n\t\tintroText { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n },\n\t\tcontent { \n  ...,\n  "text": coalesce(text[] { ..., \n  "markDefs": coalesce(markDefs[] {\n    ...,\n    _type == "internalLink" => { "target": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n } }\n  }, [])\n }, [])\n }\n\t}\n': PrivacyPageQueryResult;
+    '\n\t*[_type == \'valuesPage\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tjoinSection {\n\t\t\t\t...,\n\t\t\t\t"links": coalesce(links[] {\n\t\t\t\t\t_key,\n\t\t\t\t\ttitle,\n\t\t\t\t\tlinkType,\n\t\t\t\t\thref,\n\t\t\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n\t\t\t\t}, [])\n\t\t\t}\n\t\t}\n\t}\n': ValuesPageQueryResult;
     '\n\t{\n\t\t"venuePage": *[_type == \'venuePage\'][0] {\n\t\t\t...,\n\t\t\tcontent {\n\t\t\t\t...,\n\t\t\t\thomeSection {\n\t\t\t\t\t...,\n\t\t\t\t\tvenues[]-> { \n\t_id,\n\ttitle,\n\ttype,\n\tmainImage,\n\tlocation,\n\tfeatures,\n\topeningHours,\n\t"description": description.text,\n\t"groups": *[_type == \'group\' && references(^._id) && defined(slug.current)] | order(title asc) {\n\t\t_id,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"department": department->slug.current,\n\t\t"weekdays": training.trainingTimes[venue._ref == ^.^._id].weekday\n\t}\n }\n\t\t\t\t},\n\t\t\t\tcontactPersonsSection {\n\t\t\t\t\t...,\n\t\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"venues": *[_type == \'venue\'] | order(title asc) { \n\t_id,\n\ttitle,\n\ttype,\n\tmainImage,\n\tlocation,\n\tfeatures,\n\topeningHours,\n\t"description": description.text,\n\t"groups": *[_type == \'group\' && references(^._id) && defined(slug.current)] | order(title asc) {\n\t\t_id,\n\t\ttitle,\n\t\t"slug": slug.current,\n\t\t"department": department->slug.current,\n\t\t"weekdays": training.trainingTimes[venue._ref == ^.^._id].weekday\n\t}\n },\n\t\t"fallbackImage": *[_type == \'site-settings\'][0].fallbackImage\n\t}\n': VenuePageQueryResult;
     '\n\t{\n\t\t"volunteerPage": *[_type == \'volunteerPage\'][0] {\n\t\t\t...,\n\t\t\tcontent {\n\t\t\t\t...,\n\t\t\t\tvoicesSection {\n\t\t\t\t\t...,\n\t\t\t\t\ttestimonials[]-> { _id, firstName, lastName, image, quote, role }\n\t\t\t\t},\n\t\t\t\tcontactPersonsSection {\n\t\t\t\t\t...,\n\t\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t"positions": *[_type == \'volunteer.position\'] | order(_createdAt desc, _id asc) {\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tarea,\n\t\t\teffort,\n\t\t\tteaser,\n\t\t\ttasks,\n\t\t\tprofile,\n\t\t\toffer\n\t\t}\n\t}\n': VolunteerPageQueryResult;
     '\n\t*[_type == \'news.article\' && defined(publishedAt)] | order(publishedAt desc) [0..49] {\n\t\ttitle,\n\t\texcerpt,\n\t\t"slug": slug.current,\n\t\t"category": categories[0]->slug.current,\n\t\t"categoryTitle": categories[0]->title,\n\t\t"author": author->{ firstName, lastName },\n\t\tfeaturedImage,\n\t\tpublishedAt,\n\t\t_updatedAt\n\t}\n': RssNewsArticlesQueryResult;
-    "\n\t*[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position', 'venuePage', 'venue'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]\n\t| score(\n\tboost(title match text::query($q), 10),\n\tboost(searchTerms[] match text::query($q), 8),\n\tboost(subtitle match text::query($q), 3),\n\tboost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),\n\tboost(intro.text[].children[].text match text::query($q), 3),\n\tboost(content.introSection.intro.text[].children[].text match text::query($q), 3),\n\tboost(description.text[].children[].text match text::query($q), 3),\n\tboost(question match text::query($q), 3),\n\tboost([firstName, lastName] match text::query($q), 3),\n\tboost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro, content.homeSection.intro, content.othersSection.intro] match text::query($q), 3),\n\tboost(answer[].children[].text match text::query($q), 1),\n\tboost(training.trainingDescription.text[].children[].text match text::query($q), 1),\n\tboost(content.visionSection.longVision.text[].children[].text match text::query($q), 1),\n\tboost(references(*[_type == 'role' && title match text::query($q)]._id), 1),\n\tboost(affiliations[].taskDescription match text::query($q), 1),\n\tboost([\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[],\n\t\tcontent.areasSection.areas[].title,\n\t\tcontent.areasSection.areas[].text,\n\t\tcontent.areasSection.areas[].tasks[]\n\t] match text::query($q), 1),\n\tboost(indexable != false, 0) && boost(extractedText match text::query($q), 1),\n\tboost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),\n\tboost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([\n\t\ttitle,\n\t\tsearchTerms[],\n\t\tsubtitle,\n\t\tintro.text[].children[].text,\n\t\tcontent.introSection.intro.text[].children[].text,\n\t\tdescription.text[].children[].text,\n\t\tquestion,\n\t\tfirstName,\n\t\tlastName,\n\t\tanswer[].children[].text,\n\t\ttraining.trainingDescription.text[].children[].text,\n\t\tcontent.visionSection.longVision.text[].children[].text,\n\t\taffiliations[].taskDescription,\n\t\tcontent.whySection.intro,\n\t\tcontent.waysSection.intro,\n\t\tcontent.partnersSection.intro,\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[],\n\t\tcontent.areasSection.intro,\n\t\tcontent.positionsSection.intro,\n\t\tcontent.homeSection.intro,\n\t\tcontent.othersSection.intro,\n\t\tcontent.areasSection.areas[].title,\n\t\tcontent.areasSection.areas[].text,\n\t\tcontent.areasSection.areas[].tasks[]\n\t] match text::query($q), 1)\n)\n\t| order(_score desc) [_score != 0] [0...$limit] {\n\t\t\n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n,\n\t\t\"_score\": math::sum([_score]),\n\t\t_type == 'volunteer.position' => {\n\t\t\t\"targets\": *[_type == 'volunteerPage'] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'venue' => {\n\t\t\t\"targets\": *[_type == 'venuePage'] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'faq' => {\n\t\t\tquestion,\n\t\t\t\"targets\": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'person' => {\n\t\t\tfirstName,\n\t\t\tlastName,\n\t\t\t\"nameMatches\": [firstName, lastName] match text::query($q),\n\t\t\t\"affiliations\": affiliations[] {\n\t\t\t\t\"role\": role->title,\n\t\t\t\t\"roleMatches\": [role->title, taskDescription] match text::query($q),\n\t\t\t\t\"team\": team-> { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t\t},\n\t\t\t\"listedOn\": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage', 'venuePage'] && references(^._id)] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t}\n\t}\n": SearchCandidatesQueryResult;
+    "\n\t*[_type in ['department', 'group', 'echo.issue', 'faq', 'person', 'home', 'aboutUs', 'valuesPage', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'echoOverview', 'partnerPage', 'volunteerPage', 'volunteer.position', 'venuePage', 'venue'] && (_type != 'echo.issue' || (_type == 'echo.issue' && render.status == 'done' && render.source == pdf.asset._ref && defined(slug.current) && count(pages) > 0))]\n\t| score(\n\tboost(title match text::query($q), 10),\n\tboost(searchTerms[] match text::query($q), 8),\n\tboost(subtitle match text::query($q), 3),\n\tboost(_type in ['department', 'home'], 0) && boost(intro match text::query($q), 3),\n\tboost(intro.text[].children[].text match text::query($q), 3),\n\tboost(content.introSection.intro.text[].children[].text match text::query($q), 3),\n\tboost(description.text[].children[].text match text::query($q), 3),\n\tboost(question match text::query($q), 3),\n\tboost([firstName, lastName] match text::query($q), 3),\n\tboost([content.whySection.intro, content.waysSection.intro, content.partnersSection.intro, content.areasSection.intro, content.positionsSection.intro, content.homeSection.intro, content.othersSection.intro, content.aboutSection.intro] match text::query($q), 3),\n\tboost(answer[].children[].text match text::query($q), 1),\n\tboost(training.trainingDescription.text[].children[].text match text::query($q), 1),\n\tboost([\n\t\tcontent.valuesSection.values[].title,\n\t\tcontent.valuesSection.values[].teaser,\n\t\tcontent.valuesSection.values[].text.text[].children[].text,\n\t\tcontent.valuesSection.values[].quote,\n\t\tcontent.valuesSection.values[].highlights[],\n\t\tcontent.joinSection.title,\n\t\tcontent.joinSection.text\n\t] match text::query($q), 1),\n\tboost(references(*[_type == 'role' && title match text::query($q)]._id), 1),\n\tboost(affiliations[].taskDescription match text::query($q), 1),\n\tboost([\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[],\n\t\tcontent.areasSection.areas[].title,\n\t\tcontent.areasSection.areas[].text,\n\t\tcontent.areasSection.areas[].tasks[]\n\t] match text::query($q), 1),\n\tboost(indexable != false, 0) && boost(extractedText match text::query($q), 1),\n\tboost(_type in ['department', 'home'], 0) && boost([title, searchTerms[], subtitle, intro] match text::query($q), 1),\n\tboost(!(_type in ['department', 'home', 'echo.issue']), 0) && boost([\n\t\ttitle,\n\t\tsearchTerms[],\n\t\tsubtitle,\n\t\tintro.text[].children[].text,\n\t\tcontent.introSection.intro.text[].children[].text,\n\t\tdescription.text[].children[].text,\n\t\tquestion,\n\t\tfirstName,\n\t\tlastName,\n\t\tanswer[].children[].text,\n\t\ttraining.trainingDescription.text[].children[].text,\n\t\tcontent.aboutSection.intro,\n\t\tcontent.valuesSection.values[].title,\n\t\tcontent.valuesSection.values[].teaser,\n\t\tcontent.valuesSection.values[].text.text[].children[].text,\n\t\tcontent.valuesSection.values[].quote,\n\t\tcontent.valuesSection.values[].highlights[],\n\t\tcontent.joinSection.title,\n\t\tcontent.joinSection.text,\n\t\taffiliations[].taskDescription,\n\t\tcontent.whySection.intro,\n\t\tcontent.waysSection.intro,\n\t\tcontent.partnersSection.intro,\n\t\tcontent.whySection.reasons[].title,\n\t\tcontent.whySection.reasons[].text,\n\t\tcontent.waysSection.ways[].title,\n\t\tcontent.waysSection.ways[].text,\n\t\tcontent.waysSection.ways[].benefits[],\n\t\tcontent.areasSection.intro,\n\t\tcontent.positionsSection.intro,\n\t\tcontent.homeSection.intro,\n\t\tcontent.othersSection.intro,\n\t\tcontent.areasSection.areas[].title,\n\t\tcontent.areasSection.areas[].text,\n\t\tcontent.areasSection.areas[].tasks[]\n\t] match text::query($q), 1)\n)\n\t| order(_score desc) [_score != 0] [0...$limit] {\n\t\t\n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n,\n\t\t\"_score\": math::sum([_score]),\n\t\t_type == 'volunteer.position' => {\n\t\t\t\"targets\": *[_type == 'volunteerPage'] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'venue' => {\n\t\t\t\"targets\": *[_type == 'venuePage'] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'faq' => {\n\t\t\tquestion,\n\t\t\t\"targets\": *[_type == 'department' && ^._id in faqs[]._ref] | order(sortOrder asc) { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t},\n\t\t_type == 'person' => {\n\t\t\tfirstName,\n\t\t\tlastName,\n\t\t\t\"nameMatches\": [firstName, lastName] match text::query($q),\n\t\t\t\"affiliations\": affiliations[] {\n\t\t\t\t\"role\": role->title,\n\t\t\t\t\"roleMatches\": [role->title, taskDescription] match text::query($q),\n\t\t\t\t\"team\": team-> { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t\t},\n\t\t\t\"listedOn\": *[_type in ['department', 'home', 'aboutUs', 'departmentsPage', 'membership', 'contact', 'newsOverview', 'newsOverviewCategory', 'partnerPage', 'volunteerPage', 'venuePage'] && references(^._id)] { \n\t_id,\n\t_type,\n\ttitle,\n\t\"slug\": slug.current,\n\t\"department\": department-> { title, \"slug\": slug.current },\n\t\"category\": categories[0]-> { title, \"slug\": slug.current },\n\tpublishedAt,\n\tindexable,\n\t\"image\": select(\n\t\t_type == 'department' => cardImage,\n\t\t_type in ['group', 'news.article'] => featuredImage,\n\t\t_type == 'echo.issue' => pages[0],\n\t\t_type == 'home' => null,\n\t\theroImage\n\t)\n }\n\t\t}\n\t}\n": SearchCandidatesQueryResult;
     '\n\t*[_type == \'news.article\' && [title, body[].text[].children[].text] match text::query($q)]\n\t| score(\n\t\tboost(title match text::query($q), 10),\n\t\tboost(body[].text[].children[].text match text::query($q), 1),\n\t\tboost([title, body[].text[].children[].text] match text::query($q), 1)\n\t)\n\t| order(_score desc, publishedAt desc) [$start...$end] {\n\t\t\n\t_id,\n\t_type,\n\ttitle,\n\t"slug": slug.current,\n\t"department": department-> { title, "slug": slug.current },\n\t"category": categories[0]-> { title, "slug": slug.current },\n\tpublishedAt,\n\tindexable,\n\t"image": select(\n\t\t_type == \'department\' => cardImage,\n\t\t_type in [\'group\', \'news.article\'] => featuredImage,\n\t\t_type == \'echo.issue\' => pages[0],\n\t\t_type == \'home\' => null,\n\t\theroImage\n\t)\n,\n\t\t"_score": math::sum([_score])\n\t}\n': SearchNewsQueryResult;
     "count(*[_type == 'news.article' && [title, body[].text[].children[].text] match text::query($q)])": SearchNewsCountQueryResult;
-    "\n\t*[_id in $ids] {\n\t\t_id,\n\t\t\"text\": select(\n\t\t\t_type == 'news.article' => pt::text(body[_type == 'blockContent'].text[]),\n\t\t\t_type == 'department' => intro,\n\t\t\t_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),\n\t\t\t_type in ['membership', 'echoOverview'] => pt::text(intro.text),\n\t\t\t_type == 'aboutUs' => coalesce(pt::text(content.introSection.intro.text), '') + ' ' + coalesce(pt::text(content.visionSection.longVision.text), ''),\n\t\t\t_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),\n\t\t\t_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, ''),\n\t\t\t_type == 'venuePage' => coalesce(content.homeSection.intro, '') + ' ' + coalesce(content.othersSection.intro, ''),\n\t\t\t_type == 'echo.issue' => select(indexable != false => extractedText),\n\t\t\tsubtitle\n\t\t)\n\t}\n": SearchTextsQueryResult;
+    "\n\t*[_id in $ids] {\n\t\t_id,\n\t\t\"text\": select(\n\t\t\t_type == 'news.article' => pt::text(body[_type == 'blockContent'].text[]),\n\t\t\t_type == 'department' => intro,\n\t\t\t_type == 'group' => coalesce(pt::text(description.text), '') + ' ' + coalesce(pt::text(training.trainingDescription.text), ''),\n\t\t\t_type in ['membership', 'echoOverview'] => pt::text(intro.text),\n\t\t\t_type == 'aboutUs' => pt::text(content.introSection.intro.text),\n\t\t\t_type == 'valuesPage' => coalesce(content.aboutSection.intro, '') + ' ' + coalesce(pt::text(content.valuesSection.values[].text.text[]), ''),\n\t\t\t_type == 'partnerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.waysSection.intro, ''),\n\t\t\t_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, ''),\n\t\t\t_type == 'venuePage' => coalesce(content.homeSection.intro, '') + ' ' + coalesce(content.othersSection.intro, ''),\n\t\t\t_type == 'echo.issue' => select(indexable != false => extractedText),\n\t\t\tsubtitle\n\t\t)\n\t}\n": SearchTextsQueryResult;
     '\n\t*[_type == \'searchPage\'][0] {\n\t\t...,\n\t\tcontent {\n\t\t\t...,\n\t\t\tnoResults {\n\t\t\t\t...,\n\t\t\t\t"links": coalesce(links[] {\n\t\t\t\t\t_key,\n\t\t\t\t\ttitle,\n\t\t\t\t\tlinkType,\n\t\t\t\t\thref,\n\t\t\t\t\t"link": link-> { \n  _type,\n  "slug": slug.current,\n  "category": categories[0]->slug.current,\n  "department": department->slug.current\n }\n\t\t\t\t}, [])\n\t\t\t},\n\t\t\tcontactPersonsSection {\n\t\t\t\t...,\n\t\t\t\tcontactPersons[]-> {\n\t\t\t\t\t\n  _id,\n  firstName,\n  lastName,\n  phone,\n  image,\n  contactAs,\n  "email": affiliations[0].role->email,\n  "role": affiliations[0].role->title,\n  "taskDescription": affiliations[0].taskDescription,\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n': SearchPageQueryResult;
     "*[_type == 'searchPage'][0].content.searchSection.placeholder": SearchPlaceholderQueryResult;
     "\n\t*[_type == 'searchPage'][0].content.popularSearches { title, pinnedTerms, blockedTerms }\n": SearchPopularSettingsQueryResult;

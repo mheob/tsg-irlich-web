@@ -28,6 +28,12 @@ const VOLUNTEER_PAGE_TYPE = 'volunteerPage';
 /** The path of the volunteer page. */
 const VOLUNTEER_PAGE_PATH = '/verein/ehrenamt';
 
+/** The single page of the club's values. Its slug is `werte`, but it lives below the club page. */
+const VALUES_PAGE_TYPE = 'valuesPage';
+
+/** The path of the values page. No menu lists it; the vision sections of home and club link it. */
+const VALUES_PAGE_PATH = '/verein/werte';
+
 /** The single page of the venues. Its slug is `sportstaetten`, but it lives below the club page. */
 const VENUE_PAGE_TYPE = 'venuePage';
 
@@ -84,6 +90,7 @@ const PATH_RESOLVERS = new Map<string, PathResolver>([
 	[ECHO_ISSUE_TYPE, getEchoIssuePath],
 	[PARTNER_PAGE_TYPE, () => PARTNER_PAGE_PATH],
 	[VOLUNTEER_PAGE_TYPE, () => VOLUNTEER_PAGE_PATH],
+	[VALUES_PAGE_TYPE, () => VALUES_PAGE_PATH],
 	[VENUE_PAGE_TYPE, () => VENUE_PAGE_PATH],
 ]);
 
@@ -153,6 +160,7 @@ export {
 	getInternalHref,
 	type InternalLinkTarget,
 	PARTNER_PAGE_PATH,
+	VALUES_PAGE_PATH,
 	VENUE_PAGE_PATH,
 	VOLUNTEER_PAGE_PATH,
 };

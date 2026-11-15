@@ -1,0 +1,276 @@
+{
+	"body": {
+		"result": {
+			"_createdAt": "2026-11-15T07:23:54Z",
+			"_id": "valuesPage",
+			"_rev": "yYnDpHS6qhdLWxocavwlqn",
+			"_type": "valuesPage",
+			"_updatedAt": "2026-11-15T07:24:27Z",
+			"content": {
+				"aboutSection": {
+					"facts": [
+						{
+							"_key": "fact-1",
+							"_type": "valuesFact",
+							"label": "gegründet",
+							"value": "1882"
+						},
+						{
+							"_key": "fact-2",
+							"_type": "valuesFact",
+							"label": "Mitglieder",
+							"value": "~700"
+						},
+						{
+							"_key": "fact-3",
+							"_type": "valuesFact",
+							"label": "Sparten",
+							"value": "18"
+						},
+						{
+							"_key": "fact-4",
+							"_type": "valuesFact",
+							"label": "Vereinsfarben",
+							"value": "Blau & Gelb"
+						}
+					],
+					"image": {
+						"_type": "extendedImage",
+						"alt": "Taekwondo Duell",
+						"asset": {
+							"_ref": "image-57ed6f0f695123214ce8add9ce5b065299810d2f-3200x4000-jpg",
+							"_type": "reference"
+						},
+						"crop": {
+							"_type": "sanity.imageCrop",
+							"bottom": 0,
+							"left": 0,
+							"right": 0,
+							"top": 0
+						},
+						"hotspot": {
+							"_type": "sanity.imageHotspot",
+							"height": 0.5563642665280305,
+							"width": 0.9930679837206473,
+							"x": 0.49653399186032365,
+							"y": 0.3031366432718135
+						}
+					},
+					"intro": "Die Turn- und Sportgemeinde Irlich 1882 e.V. wurde im Jahr 1882 gegründet und ist einer der ältesten und traditionsreichsten Vereine im Kreis Neuwied. Die TSG bietet seinen rund 700 Mitgliedern ein vielfältiges Sportangebot in 18 verschiedenen Sparten. Die Vereinsfarben sind Blau und Gelb und die sportliche Heimat befindet sich in der Gotenstraße in Irlich.",
+					"subtitle": "Wer wir sind",
+					"title": "Turn- und Sportgemeinde Irlich 1882 e.V."
+				},
+				"joinSection": {
+					"links": [
+						{
+							"_key": "membership",
+							"href": null,
+							"link": {
+								"_type": "membership",
+								"category": null,
+								"department": null,
+								"slug": "mitgliedschaft"
+							},
+							"linkType": "internal",
+							"title": "Mitglied werden"
+						},
+						{
+							"_key": "volunteerPage",
+							"href": null,
+							"link": {
+								"_type": "volunteerPage",
+								"category": null,
+								"department": null,
+								"slug": "ehrenamt"
+							},
+							"linkType": "internal",
+							"title": "Ehrenamt entdecken"
+						}
+					],
+					"text": "Werte entstehen nicht auf dem Papier, sondern auf dem Platz, in der Halle und im Vereinsheim. Mach mit – als Mitglied, im Ehrenamt oder als Teil unserer Gemeinschaft.",
+					"title": "Werte leben – mach mit!"
+				},
+				"valuesSection": {
+					"tocTitle": "Inhalt",
+					"values": [
+						{
+							"_key": "8c5d7768877e",
+							"_type": "clubValue",
+							"icon": "users",
+							"teaser": "Sport für die ganze Familie – unabhängig von Alter und Leistungsniveau.",
+							"text": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "0857c18e72c4",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "62fe51616b73",
+												"_type": "span",
+												"marks": [],
+												"text": "Die TSG Irlich ist ein integrativer Sportverein für alle sportbegeisterten Menschen, unabhängig vom Alter oder Leistungsniveau. Wir bieten ein breites und vielfältiges Angebot an Sportaktivitäten für die ganze Familie, das sowohl die körperliche Fitness als auch das soziale Miteinander fördert. Dabei legen wir großen Wert auf soziale Verantwortung, Fairness und die Schaffung eines Ortes, an dem soziale und sportliche Begegnungen stattfinden können."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"title": "Sportverein für alle"
+						},
+						{
+							"_key": "c2be13d54fe7",
+							"_type": "clubValue",
+							"icon": "heart",
+							"quote": "Wir glauben an die verbindende Kraft des Sports!",
+							"teaser": "Eine sportliche Heimat für alle Menschen – eine Kultur der Offenheit.",
+							"text": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "c8ea38755cc0",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "22c9ea26570a",
+												"_type": "span",
+												"marks": [],
+												"text": "Wir glauben an die verbindende Kraft des Sports!\nDeshalb geben wir Menschen eine sportliche Heimat – unabhängig von Herkunft, Glaube, Hautfarbe, Geschlecht, sexueller Orientierung und körperlicher oder geistiger Beeinträchtigung. Damit fördern wir eine Kultur der Offenheit."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"title": "Vielfalt"
+						},
+						{
+							"_key": "d24b616c3ea7",
+							"_type": "clubValue",
+							"icon": "globe",
+							"teaser": "Im Verein kommen Nationen, Kulturen und Religionen zusammen.",
+							"text": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "f7b57f8bdc39",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "359ab32f8e9e",
+												"_type": "span",
+												"marks": [],
+												"text": "Seit jeher steht der Vereinssport auch für die Völkerverständigung, für gelebte Integration und Toleranz. Denn an kaum einem Ort kommen Menschen so vieler unterschiedlicher Nationen, Kulturen und Religionen zusammen wie im Verein – und erleben noch dazu zusammen Erfolg, Misserfolg und große Emotionen."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"title": "Integration"
+						},
+						{
+							"_key": "1029d55fa4f5",
+							"_type": "clubValue",
+							"highlights": ["Teamgeist", "Hilfsbereitschaft", "Respekt", "Gemeinschaft"],
+							"icon": "graduation-cap",
+							"teaser": "Kinder- und Jugendarbeit, die Werte fürs Leben vermittelt.",
+							"text": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "c6bb004c9e63",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "be553045b512",
+												"_type": "span",
+												"marks": [],
+												"text": "Besonders wichtig ist uns die Kinder- Jugendarbeit in Irlich und Umgebung. Durch den Einsatz unserer Ehrenamtlichen vermitteln wir der nächsten Generation unsere Werte: Teamgeist, Hilfsbereitschaft, Respekt und Gemeinschaft. Dies fördert nicht nur individuelle Fähigkeiten, sondern stärkt auch das soziale Miteinander und die gesellschaftliche Verantwortung. Die Entwicklung der Persönlichkeit und das Vermitteln von gesellschaftlich relevanten Werten wie Hilfsbereitschaft, Ehrlichkeit und Verantwortungsbewusstsein nimmt einen ebenso großen Stellenwert ein wie die sportliche Ausbildung."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"title": "Gesellschaftliche Verantwortung"
+						},
+						{
+							"_key": "7ad4db72aa9e",
+							"_type": "clubValue",
+							"icon": "heart-handshake",
+							"teaser": "Engagierte Ehrenamtliche sind das Herzstück unseres Vereins.",
+							"text": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "f0643ec22823",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "7fb18e663b1b",
+												"_type": "span",
+												"marks": [],
+												"text": "Unser Verein zeichnet sich dadurch aus, dass bei uns alle Altersgruppen trainieren können – vom Kleinkind bis hin zu den Senioren. Das Herzstück bilden dabei unsere engagierten und kompetenten Ehrenamtlichen, die mit viel Leidenschaft und Fachwissen dafür sorgen, dass jedes Mitglied die bestmögliche Unterstützung erhält."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"title": "Ehrenamt"
+						},
+						{
+							"_key": "06a72b04ca9a",
+							"_type": "clubValue",
+							"icon": "party-popper",
+							"teaser": "Als mitgliederstärkster Verein im Ort beleben wir die Dorfgemeinschaft.",
+							"text": {
+								"_type": "simpleBlockContent",
+								"text": [
+									{
+										"_key": "a1e4a866a50f",
+										"_type": "block",
+										"children": [
+											{
+												"_key": "ea05e1d35a89",
+												"_type": "span",
+												"marks": [],
+												"text": "Neben unseren sportlichen Aktivitäten engagieren wir uns als mitgliederstärkster Verein im Ort aktiv im Dorfleben von Irlich am Rhein. Wir sehen uns als wichtigen Bestandteil der Dorf-Gemeinschaft und tragen durch unsere vielfältigen Angebote zur Belebung und Stärkung des sozialen Zusammenhalts bei. Bei der TSG Irlich wird nicht nur Sport großgeschrieben, sondern auch das Miteinander und die gegenseitige Unterstützung."
+											}
+										],
+										"markDefs": [],
+										"style": "normal"
+									}
+								]
+							},
+							"title": "Dorfleben"
+						}
+					]
+				}
+			},
+			"heroImage": {
+				"_type": "extendedImage",
+				"alt": "Luftaufnahme des Vereinsheims „Pappelstübchen“ der TSG Irlich mit Terrasse, Tischen und Sonnenschirmen, dahinter Bäume und der Sportplatz",
+				"asset": {
+					"_ref": "image-bf810a9943f31d1c51a5d4bbe43baccc3bec32cb-4094x2160-webp",
+					"_type": "reference"
+				}
+			},
+			"slug": {
+				"_type": "slug",
+				"current": "werte"
+			},
+			"subtitle": "Unser Leitbild",
+			"title": "Unsere Werte"
+		},
+		"syncTags": ["s1:LGzQZA", "s1:RTKmCw", "s1:NG5dWA"],
+		"ms": 7
+	},
+	"url": "/v2025-02-19/data/query/development?query=%0A%09*%5B_type+%3D%3D+%27valuesPage%27%5D%5B0%5D+%7B%0A%09%09...%2C%0A%09%09content+%7B%0A%09%09%09...%2C%0A%09%09%09joinSection+%7B%0A%09%09%09%09...%2C%0A%09%09%09%09%22links%22%3A+coalesce%28links%5B%5D+%7B%0A%09%09%09%09%09_key%2C%0A%09%09%09%09%09title%2C%0A%09%09%09%09%09linkType%2C%0A%09%09%09%09%09href%2C%0A%09%09%09%09%09%22link%22%3A+link-%3E+%7B+%0A++_type%2C%0A++%22slug%22%3A+slug.current%2C%0A++%22category%22%3A+categories%5B0%5D-%3Eslug.current%2C%0A++%22department%22%3A+department-%3Eslug.current%0A+%7D%0A%09%09%09%09%7D%2C+%5B%5D%29%0A%09%09%09%7D%0A%09%09%7D%0A%09%7D%0A&returnQuery=false"
+}

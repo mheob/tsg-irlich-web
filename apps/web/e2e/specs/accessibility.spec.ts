@@ -24,6 +24,7 @@ const STATIC_ROUTES = [
 	'/verein/partner',
 	'/verein/ehrenamt',
 	'/verein/sportstaetten',
+	'/verein/werte',
 	'/angebot',
 	'/news',
 	'/mitgliedschaft',

@@ -93,6 +93,10 @@ describe('resolving internal link targets', () => {
 		expect(getInternalHref({ _type: 'volunteerPage', slug: 'ehrenamt' })).toBe('/verein/ehrenamt');
 	});
 
+	it('resolves the values page below the club page', () => {
+		expect(getInternalHref({ _type: 'valuesPage', slug: 'werte' })).toBe('/verein/werte');
+	});
+
 	it('resolves the venue page below the club page', () => {
 		expect(getInternalHref({ _type: 'venuePage', slug: 'sportstaetten' })).toBe(
 			'/verein/sportstaetten',

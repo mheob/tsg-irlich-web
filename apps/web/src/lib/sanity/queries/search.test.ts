@@ -49,9 +49,22 @@ const VOLUNTEER_BODY_PATHS = [
 /** The intros of the venue page. Its venues are searched as documents of their own. */
 const VENUE_LEAD_PATHS = ['content.homeSection.intro', 'content.othersSection.intro'] as const;
 
+/** What the values page (WEB-150) is searched by, besides its title and subtitle. */
+const VALUES_LEAD_PATHS = ['content.aboutSection.intro'] as const;
+const VALUES_BODY_PATHS = [
+	'content.valuesSection.values[].title',
+	'content.valuesSection.values[].teaser',
+	'content.valuesSection.values[].text.text[].children[].text',
+	'content.valuesSection.values[].quote',
+	'content.valuesSection.values[].highlights[]',
+	'content.joinSection.title',
+	'content.joinSection.text',
+] as const;
+
 const PARTNER_PATHS = [...PARTNER_LEAD_PATHS, ...PARTNER_BODY_PATHS];
 const VOLUNTEER_PATHS = [...VOLUNTEER_LEAD_PATHS, ...VOLUNTEER_BODY_PATHS];
-const PAGE_LEAD = `[${[...PARTNER_LEAD_PATHS, ...VOLUNTEER_LEAD_PATHS, ...VENUE_LEAD_PATHS].join(', ')}]`;
+const PAGE_LEAD = `[${[...PARTNER_LEAD_PATHS, ...VOLUNTEER_LEAD_PATHS, ...VENUE_LEAD_PATHS, ...VALUES_LEAD_PATHS].join(', ')}]`;
+const VALUES_BODY = `[${VALUES_BODY_PATHS.join(', ')}]`;
 const PAGE_BODY = `[${[...PARTNER_BODY_PATHS, ...VOLUNTEER_BODY_PATHS].join(', ')}]`;
 
 /** The queries the search term reaches. */
@@ -210,6 +223,7 @@ describe('search queries', () => {
 				'person',
 				'home',
 				'aboutUs',
+				'valuesPage',
 				'departmentsPage',
 				'membership',
 				'contact',
@@ -256,6 +270,7 @@ describe('search queries', () => {
 			{ guard: 'indexable != false', lhs: 'extractedText', weight: WEIGHTS.body },
 			{ guard: '', lhs: PAGE_LEAD, weight: WEIGHTS.lead },
 			{ guard: '', lhs: PAGE_BODY, weight: WEIGHTS.body },
+			{ guard: '', lhs: VALUES_BODY, weight: WEIGHTS.body },
 		])('weigh $lhs with $weight', (term) => {
 			expect(getScoreTerms(searchCandidatesQuery)).toContainEqual(term);
 		});
@@ -355,6 +370,23 @@ describe('search queries', () => {
 			}
 		});
 
+		// The values page takes part in the same term, with its intro and the texts of its values.
+		it('score words that sit in different fields of the values page', () => {
+			const [, everyOtherPage] = getCatchAllTerms(searchCandidatesQuery);
+			const fields = everyOtherPage.lhs.slice(1, -1).split(', ');
+
+			expect(everyOtherPage.guard).not.toContain("'valuesPage'");
+			for (const path of [...VALUES_LEAD_PATHS, ...VALUES_BODY_PATHS]) {
+				expect(fields).toContain(path);
+			}
+		});
+
+		// The long vision moved from the club page to the values page (WEB-150).
+		it('no longer search the long vision of the club page', () => {
+			expect(searchCandidatesQuery).not.toContain('longVision');
+			expect(searchTextsQuery).not.toContain('longVision');
+		});
+
 		// A venue has no page of its own: it is found by its name and leads to the venue page.
 		it('lead a venue to the venue page', () => {
 			expect(searchCandidatesQuery).toContain(
@@ -402,6 +434,12 @@ describe('search queries', () => {
 		it('cut the snippet of the volunteer page from the intros of „Gründe“ and „Bereiche“', () => {
 			expect(searchTextsQuery).toContain(
 				`_type == 'volunteerPage' => coalesce(content.whySection.intro, '') + ' ' + coalesce(content.areasSection.intro, '')`,
+			);
+		});
+
+		it('cut the snippet of the values page from its intro and the texts of its values', () => {
+			expect(searchTextsQuery).toContain(
+				`_type == 'valuesPage' => coalesce(content.aboutSection.intro, '') + ' ' + coalesce(pt::text(content.valuesSection.values[].text.text[]), '')`,
 			);
 		});
 

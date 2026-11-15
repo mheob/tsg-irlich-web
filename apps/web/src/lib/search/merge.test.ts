@@ -371,6 +371,23 @@ describe(mergePageHits, () => {
 		expect(hit).toMatchObject({ href: '/verein/ehrenamt', kind: 'page', meta: 'Seite' });
 	});
 
+	it('links the values page below the club page', () => {
+		const [hit] = mergePageHits([
+			{
+				...NO_EXTRAS,
+				_id: 'valuesPage',
+				_score: 3,
+				_type: 'valuesPage',
+				department: null,
+				image: TANZEN.image,
+				slug: 'werte',
+				title: 'Unsere Werte',
+			},
+		]);
+
+		expect(hit).toMatchObject({ href: '/verein/werte', kind: 'page', meta: 'Seite' });
+	});
+
 	it('sorts by score, then by title in German order', () => {
 		const hits = mergePageHits([
 			page({ ...ZUMBA, _id: 'group-volleyball', slug: 'volleyball', title: 'Volleyball' }, 3),
