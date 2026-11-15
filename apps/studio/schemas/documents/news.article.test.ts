@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vite-plus/test';
 import { formattedSlugField } from '@/shared/fields/general';
 import { previousArticleSlugsField } from '@/shared/fields/slug-history';
 
-import newsArticle from './news.article';
+import newsArticle, { validateArticleHeadings } from './news.article';
 
 interface NewsArticleSelection {
 	readonly media?: PreviewValue['media'];
@@ -112,6 +112,67 @@ describe('news article downloads', () => {
 			'max: 5',
 			'error: Maximal 5 Downloads dürfen gesetzt werden',
 		]);
+	});
+});
+
+describe('news article headings', () => {
+	const skippingBody = [
+		{
+			_key: 'a',
+			_type: 'blockContent',
+			text: [
+				{ _key: 'a1', _type: 'block', children: [], style: 'h3' },
+				{ _key: 'a2', _type: 'block', children: [], style: 'h2' },
+				{ _key: 'a3', _type: 'block', children: [], style: 'h3' },
+			],
+		},
+	];
+
+	it('marks the H3 above the first H2 of the body', () => {
+		expect(validateArticleHeadings(skippingBody)).toStrictEqual([
+			{
+				message:
+					'Diese H3 steht ohne H2 darüber. Nimm H2 für Zwischenüberschriften und H3 nur für Unterpunkte unter einer H2.',
+				path: [{ _key: 'a' }, 'text', { _key: 'a1' }],
+			},
+		]);
+	});
+
+	it('accepts a body that opens with an H2 and an empty one', () => {
+		const body = [
+			{
+				_key: 'a',
+				_type: 'blockContent',
+				text: [
+					{ _key: 'a1', _type: 'block', children: [], style: 'h2' },
+					{ _key: 'a2', _type: 'block', children: [], style: 'h3' },
+				],
+			},
+		];
+
+		expect(validateArticleHeadings(body)).toBe(true);
+		expect(validateArticleHeadings([])).toBe(true);
+	});
+
+	it('runs the check on the sections as a warning, so the article can still be published', () => {
+		const calls: string[] = [];
+		let validator: ((value: unknown) => unknown) | undefined;
+		const rule = {
+			custom: (candidate: (value: unknown) => unknown) => {
+				calls.push('custom');
+				validator = candidate;
+				return rule;
+			},
+			warning: () => {
+				calls.push('warning');
+				return rule;
+			},
+		};
+
+		(getArticleField('body').validation as unknown as (value: typeof rule) => unknown)(rule);
+
+		expect(calls).toStrictEqual(['custom', 'warning']);
+		expect(validator?.(skippingBody)).toStrictEqual(validateArticleHeadings(skippingBody));
 	});
 });
 
