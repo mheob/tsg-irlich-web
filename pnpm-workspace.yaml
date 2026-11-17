@@ -82,7 +82,7 @@ catalog:
   "@mheob/oxlint-config": ^4.1.2
   "@mheob/tsconfig": ^3.0.2
   "@types/node": ^26.6.6
-  cve-lite-cli: ^1.41.2
+  cve-lite-cli: ^1.41.4
   czg: ^1.14.0
   eslint-plugin-better-tailwindcss: ^4.11.0
   knip: ^6.45.1
@@ -105,11 +105,11 @@ catalog:
   "@vercel/speed-insights": ^2.1.0
   class-variance-authority: ^0.7.1
   lucide-react: ^1.72.0
-  motion: ^14.13.0
+  motion: ^14.14.0
   next: ^16.4.6
   next-safe-action: ^8.7.3
   react-hook-form: ^7.92.0
-  resend: ^6.38.0
+  resend: ^6.38.1
   schema-dts: ^2.1.0
   server-only: ^0.0.1
   zod: ^4.6.7
@@ -118,18 +118,18 @@ catalog:
   "@tailwindcss/postcss": ^4.3.5
   "@tailwindcss/typography": ^0.5.20
   clsx: ^2.1.1
-  postcss: ^8.5.32
+  postcss: ^8.5.33
   postcss-load-config: ^6.0.1
   tailwind-merge: ^3.7.0
   tailwindcss: ^4.3.5
 
   # Sanity: the Studio, its plugins and the clients of the web app
   "@sanity/assist": ^6.3.0
-  "@sanity/client": ^8.15.1
+  "@sanity/client": ^8.16.0
   "@sanity/icons": ^5.3.0
   "@sanity/image-url": ^2.1.1
   "@sanity/locale-de-de": ^1.1.37
-  "@sanity/ui": ^4.4.11
+  "@sanity/ui": ^4.4.12
   "@sanity/vision": ^6.23.0
   next-sanity: ^13.4.0
   react-icons: ^5.7.0
@@ -142,8 +142,8 @@ catalog:
   botid: ^1.5.13
 
   # E-mail templates
-  "@react-email/ui": ^6.11.11
-  react-email: ^6.11.11
+  "@react-email/ui": ^6.11.13
+  react-email: ^6.11.13
 
   # Tests: Vitest environment and plugins, end-to-end, accessibility and Lighthouse
   "@axe-core/playwright": ^4.14.0
@@ -152,7 +152,7 @@ catalog:
   "@testing-library/react": ^16.3.3
   "@testing-library/user-event": ^14.6.10
   "@vitejs/plugin-react": ^6.3.0
-  jsdom: ^31.0.0
+  jsdom: ^31.0.1
   msw: ^3.0.5
 
   # PDF pages: rendering and text extraction for the TSG-Echo, plus pdf-lib for the test fixtures
